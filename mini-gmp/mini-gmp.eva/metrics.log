@@ -1,0 +1,61 @@
+[metrics] Eva coverage statistics
+=======================
+Syntactically reachable functions = 47 (out of 250)
+Semantically reached functions = 27
+Coverage estimation = 57.4% 
+
+Unreached functions (20) =
+  <gmp.h>: __gmpz_and; __gmpz_gcd; __gmpz_ior; __gmpz_lcm; __gmpz_mul;
+    __gmpz_sub; __gmpz_xor; 
+  <mini-gmp.c>: gmp_default_realloc; gmp_xrealloc_limbs; mpn_add_1; mpn_cmp4;
+    mpn_get_base_info; mpn_mul_1; mpn_set_str_other; mpn_sub; mpn_sub_1;
+    mpn_sub_n; mpz_abs_sub; mpz_realloc; 
+  <tests/testutils.h>: dump;
+[metrics] References to non-analyzed functions
+------------------------------------
+Function hex_random_op3 calls __gmpz_sub (at tests/hex-random.c:163)
+Function hex_random_op3 calls __gmpz_mul (at tests/hex-random.c:166)
+Function hex_random_op3 calls __gmpz_mul (at tests/hex-random.c:174)
+Function hex_random_op3 calls __gmpz_mul (at tests/hex-random.c:175)
+Function hex_random_op3 calls __gmpz_gcd (at tests/hex-random.c:177)
+Function hex_random_op3 calls __gmpz_mul (at tests/hex-random.c:185)
+Function hex_random_op3 calls __gmpz_mul (at tests/hex-random.c:186)
+Function hex_random_op3 calls __gmpz_lcm (at tests/hex-random.c:188)
+Function hex_random_op3 calls __gmpz_and (at tests/hex-random.c:191)
+Function hex_random_op3 calls __gmpz_ior (at tests/hex-random.c:194)
+Function hex_random_op3 calls __gmpz_xor (at tests/hex-random.c:197)
+Function mpn_add calls mpn_add_1 (at mini-gmp.c:441)
+Function mpz_abs_add calls mpz_realloc (at mini-gmp.c:1908)
+Function mpz_add calls mpz_abs_sub (at mini-gmp.c:1949)
+Function mpz_set_str calls mpz_realloc (at mini-gmp.c:4170)
+Function mpz_set_str calls mpn_get_base_info (at mini-gmp.c:4176)
+Function mpz_set_str calls mpz_realloc (at mini-gmp.c:4178)
+Function mpz_set_str calls mpn_set_str_other (at mini-gmp.c:4179)
+Function testmain calls dump (at tests/t-add.c:46)
+Function testmain calls dump (at tests/t-add.c:47)
+Function testmain calls dump (at tests/t-add.c:48)
+Function testmain calls dump (at tests/t-add.c:49)
+Initializer of gmp_reallocate_func references gmp_default_realloc (at mini-gmp.c:284)
+[metrics] Statements analyzed by Eva
+--------------------------
+356 stmts in analyzed functions, 198 stmts analyzed (55.6%)
+gmp_default_alloc: 5 stmts out of 5 (100.0%)
+gmp_default_free: 2 stmts out of 2 (100.0%)
+gmp_xalloc_limbs: 2 stmts out of 2 (100.0%)
+mini_random_op3: 8 stmts out of 8 (100.0%)
+mpz_clear: 2 stmts out of 2 (100.0%)
+mpz_init: 4 stmts out of 4 (100.0%)
+set_str: 5 stmts out of 5 (100.0%)
+mpn_add: 4 stmts out of 5 (80.0%)
+testmain: 19 stmts out of 25 (76.0%)
+mpz_add: 5 stmts out of 7 (71.4%)
+gmp_die: 2 stmts out of 3 (66.7%)
+mpz_set_str: 51 stmts out of 88 (58.0%)
+mpn_normalized_size: 4 stmts out of 7 (57.1%)
+hex_random_op3: 35 stmts out of 64 (54.7%)
+mpz_abs_add: 13 stmts out of 24 (54.2%)
+mpz_cmp: 9 stmts out of 19 (47.4%)
+mpn_cmp: 6 stmts out of 14 (42.9%)
+mpn_set_str_bits: 12 stmts out of 28 (42.9%)
+mpn_add_n: 6 stmts out of 15 (40.0%)
+mpn_base_power_of_two_p: 4 stmts out of 29 (13.8%)
