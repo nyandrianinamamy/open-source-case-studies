@@ -5553,32 +5553,33 @@ void __gmp_randinit_default(__gmp_randstate_struct *);
 
 void __gmp_randseed_ui(__gmp_randstate_struct *, unsigned long);
 
-/*@ assigns \result, *, __fc_random_counter;
+/*@ assigns \result, *a, __fc_random_counter;
     assigns \result \from __fc_random_counter;
-    assigns * \from __fc_random_counter;
+    assigns *a \from __fc_random_counter;
     assigns __fc_random_counter \from __fc_random_counter;
  */
-unsigned long __gmp_urandomb_ui(__gmp_randstate_struct *, unsigned long);
+unsigned long __gmp_urandomb_ui(__gmp_randstate_struct * /*[1]*/ a,
+                                unsigned long b);
 
-/*@ requires \valid();
-    ensures \initialized(\old());
-    assigns \result, *;
-    assigns \result \from ;
-    assigns * \from ;
-    allocates \old();
+/*@ requires \valid(strp);
+    ensures \initialized(\old(strp));
+    assigns \result, *strp;
+    assigns \result \from fmt;
+    assigns *strp \from fmt;
+    allocates \old(strp);
  */
-int __gmp_asprintf(char **, char const *, void * const *__va_params);
+int __gmp_asprintf(char **strp, char const *fmt, void * const *__va_params);
 
-/*@ requires \valid();
-    ensures \initialized(\old());
-    assigns *;
-    assigns * \from , ;
+/*@ requires \valid(res);
+    ensures \initialized(\old(res));
+    assigns *res;
+    assigns *res \from a, b;
  */
-void __gmpz_add(mpz_ptr, mpz_srcptr, mpz_srcptr);
+void __gmpz_add(mpz_ptr res, mpz_srcptr a, mpz_srcptr b);
 
-/*@ assigns *;
-    assigns * \from , ; */
-void __gmpz_and(mpz_ptr, mpz_srcptr, mpz_srcptr);
+/*@ assigns *res;
+    assigns *res \from a, b; */
+void __gmpz_and(mpz_ptr res, mpz_srcptr a, mpz_srcptr b);
 
 void __gmpz_cdiv_q_2exp(mpz_ptr, mpz_srcptr, mp_bitcnt_t);
 
@@ -5586,11 +5587,11 @@ void __gmpz_cdiv_qr(mpz_ptr, mpz_ptr, mpz_srcptr, mpz_srcptr);
 
 void __gmpz_cdiv_r_2exp(mpz_ptr, mpz_srcptr, mp_bitcnt_t);
 
-/*@ assigns *, __fc_random_counter;
-    assigns * \from __fc_random_counter;
+/*@ assigns *a, __fc_random_counter;
+    assigns *a \from __fc_random_counter;
     assigns __fc_random_counter \from __fc_random_counter;
  */
-void __gmpz_clear(mpz_ptr);
+void __gmpz_clear(mpz_ptr a);
 
 void __gmpz_clrbit(mpz_ptr, mp_bitcnt_t);
 
@@ -5608,42 +5609,43 @@ void __gmpz_fdiv_qr(mpz_ptr, mpz_ptr, mpz_srcptr, mpz_srcptr);
 
 void __gmpz_fdiv_r_2exp(mpz_ptr, mpz_srcptr, mp_bitcnt_t);
 
-/*@ assigns *;
-    assigns * \from , ; */
-void __gmpz_gcd(mpz_ptr, mpz_srcptr, mpz_srcptr);
+/*@ assigns *res;
+    assigns *res \from a, b; */
+void __gmpz_gcd(mpz_ptr res, mpz_srcptr a, mpz_srcptr b);
 
 char *__gmpz_get_str(char *, int, mpz_srcptr);
 
-/*@ assigns *, __fc_random_counter;
-    assigns * \from __fc_random_counter;
+/*@ assigns *a, __fc_random_counter;
+    assigns *a \from __fc_random_counter;
     assigns __fc_random_counter \from __fc_random_counter;
  */
-void __gmpz_init(mpz_ptr);
+void __gmpz_init(mpz_ptr a);
 
-/*@ assigns *;
-    assigns * \from , ; */
-void __gmpz_ior(mpz_ptr, mpz_srcptr, mpz_srcptr);
+/*@ assigns *res;
+    assigns *res \from a, b; */
+void __gmpz_ior(mpz_ptr res, mpz_srcptr a, mpz_srcptr b);
 
-/*@ assigns *;
-    assigns * \from , ; */
-void __gmpz_lcm(mpz_ptr, mpz_srcptr, mpz_srcptr);
+/*@ assigns *res;
+    assigns *res \from a, b; */
+void __gmpz_lcm(mpz_ptr res, mpz_srcptr a, mpz_srcptr b);
 
-/*@ assigns *;
-    assigns * \from , ; */
-void __gmpz_mul(mpz_ptr, mpz_srcptr, mpz_srcptr);
+/*@ assigns *res;
+    assigns *res \from a, b; */
+void __gmpz_mul(mpz_ptr res, mpz_srcptr a, mpz_srcptr b);
 
-/*@ assigns *;
-    assigns * \from ; */
-void __gmpz_neg(mpz_ptr, mpz_srcptr);
+/*@ assigns *res;
+    assigns *res \from a; */
+void __gmpz_neg(mpz_ptr res, mpz_srcptr a);
 
 void __gmpz_powm(mpz_ptr, mpz_srcptr, mpz_srcptr, mpz_srcptr);
 
-/*@ assigns *, *, __fc_random_counter;
-    assigns * \from __fc_random_counter;
-    assigns * \from __fc_random_counter;
+/*@ assigns *a, *b, __fc_random_counter;
+    assigns *a \from __fc_random_counter;
+    assigns *b \from __fc_random_counter;
     assigns __fc_random_counter \from __fc_random_counter;
  */
-void __gmpz_rrandomb(mpz_ptr, __gmp_randstate_struct *, mp_bitcnt_t);
+void __gmpz_rrandomb(mpz_ptr a, __gmp_randstate_struct * /*[1]*/ b,
+                     mp_bitcnt_t c);
 
 mp_bitcnt_t __gmpz_scan0(mpz_srcptr, mp_bitcnt_t) __attribute__((__pure__));
 
@@ -5655,9 +5657,9 @@ void __gmpz_set_ui(mpz_ptr, unsigned long);
 
 void __gmpz_setbit(mpz_ptr, mp_bitcnt_t);
 
-/*@ assigns *;
-    assigns * \from , ; */
-void __gmpz_sub(mpz_ptr, mpz_srcptr, mpz_srcptr);
+/*@ assigns *res;
+    assigns *res \from a, b; */
+void __gmpz_sub(mpz_ptr res, mpz_srcptr a, mpz_srcptr b);
 
 void __gmpz_tdiv_q_2exp(mpz_ptr, mpz_srcptr, mp_bitcnt_t);
 
@@ -5667,9 +5669,9 @@ void __gmpz_tdiv_r_2exp(mpz_ptr, mpz_srcptr, mp_bitcnt_t);
 
 void __gmpz_urandomb(mpz_ptr, __gmp_randstate_struct *, mp_bitcnt_t);
 
-/*@ assigns *;
-    assigns * \from , ; */
-void __gmpz_xor(mpz_ptr, mpz_srcptr, mpz_srcptr);
+/*@ assigns *res;
+    assigns *res \from a, b; */
+void __gmpz_xor(mpz_ptr res, mpz_srcptr a, mpz_srcptr b);
 
 static gmp_randstate_t state;
 /*@ requires valid_read_string(format);
