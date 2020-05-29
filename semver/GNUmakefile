@@ -35,7 +35,7 @@ FCFLAGS     += \
 # (Optional) Eva-specific flags
 EVAFLAGS    += \
   -eva-warn-key builtins:missing-spec=abort \
-  -eva-builtin calloc:Frama_C_calloc_fresh \
+  -eva-alloc-builtin fresh \
   -slevel 82 \
 
 # (MANDATORY) Name of the main target
