@@ -1,9 +1,9 @@
 directory	file	line	function	property kind	status	property
-FRAMAC_SHARE/libc	math.h	398	frexpf	assigns clause	Unknown	assigns \result, *exp;
-FRAMAC_SHARE/libc	math.h	398	frexpf	from clause	Unknown	assigns *exp \from *exp, value;
-FRAMAC_SHARE/libc	math.h	398	frexpf	from clause	Unknown	assigns \result \from *exp, value;
-FRAMAC_SHARE/libc	math.h	405	ldexp	assigns clause	Unknown	assigns \nothing;
-FRAMAC_SHARE/libc	math.h	405	ldexp	from clause	Unknown	assigns \result \from x, exp;
+FRAMAC_SHARE/libc	math.h	351	frexpf	assigns clause	Unknown	assigns \result, *exp;
+FRAMAC_SHARE/libc	math.h	351	frexpf	from clause	Unknown	assigns *exp \from *exp, value;
+FRAMAC_SHARE/libc	math.h	351	frexpf	from clause	Unknown	assigns \result \from *exp, value;
+FRAMAC_SHARE/libc	math.h	358	ldexp	assigns clause	Unknown	assigns \nothing;
+FRAMAC_SHARE/libc	math.h	358	ldexp	from clause	Unknown	assigns \result \from x, exp;
 sw/airborne/autopilot	estimator.c	116	estimator_update_state_infrared	is_nan	Unknown	¬\is_NaN(\mul_float(rad_of_ir, (float)ir_roll))
 sw/airborne/autopilot	estimator.c	118	estimator_update_state_infrared	is_nan	Unknown	¬\is_NaN(\mul_float(rad_of_ir, (float)ir_pitch))
 sw/airborne/autopilot	estimator.c	158	estimator_update_ir_estim	is_nan	Unknown	¬\is_NaN(\div_float(estimator_update_ir_estim_sum_xy, estimator_update_ir_estim_sum_xx))
