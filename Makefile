@@ -86,29 +86,29 @@ QUICK_TARGETS=$(filter-out polarssl gzip124 libmodbus monocypher chrony,$(TARGET
 all: $(TARGETS)
 
 $(TARGETS):
-	+$(MAKE) -C $@
+	+$(MAKE) -C $@/.frama-c
 
 quick: $(QUICK_TARGETS)
 
 %.clean:
-	$(MAKE) -C $* clean
+	$(MAKE) -C $*/.frama-c clean
 
 clean: $(addsuffix .clean,$(TARGETS))
 
 %.parse:
-	$(MAKE) -C $* parse
+	$(MAKE) -C $*/.frama-c parse
 
 parse: $(addsuffix .parse,$(TARGETS))
 
 %.stats:
-	$(MAKE) -C $* stats
+	$(MAKE) -C $*/.frama-c stats
 
 stats: $(addsuffix .stats,$(TARGETS))
 
 display-targets:
 	@echo $(foreach target,$(TARGETS),\
 	        $(addprefix $(target)/,\
-	          $(shell $(MAKE) --quiet -C $(target) display-targets)))
+	          $(shell $(MAKE) --quiet -C $(target)/.frama-c display-targets)))
 
 .PHONY: $(TARGETS) frama-c/build/bin/frama-c clean-all help stats-all
 

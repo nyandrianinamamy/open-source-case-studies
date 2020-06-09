@@ -1,1 +1,0 @@
-../gzip124/frama-c-path.mk

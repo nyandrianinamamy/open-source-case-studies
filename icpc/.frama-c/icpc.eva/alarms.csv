@@ -1,0 +1,10 @@
+directory	file	line	function	property kind	status	property
+FRAMAC_SHARE/libc	math.h	325	exp	precondition	Unknown	finite_domain: x ≤ 0x1.62e42fefa39efp+9
+FRAMAC_SHARE/libc	math.h	449	fabs	precondition	Unknown	finite_arg: \is_finite(x)
+FRAMAC_SHARE/libc	stdio.h	207	fprintf	assigns clause	Unknown	assigns \result, *stream;
+FRAMAC_SHARE/libc	stdio.h	207	fprintf	from clause	Unknown	assigns *stream \from *stream, *(format + (0 ..));
+FRAMAC_SHARE/libc	stdio.h	207	fprintf	from clause	Unknown	assigns \result \from *stream, *(format + (0 ..));
+src	impls.c	26	PT1_Filter	precondition of exp	Unknown	finite_domain: x ≤ 0x1.62e42fefa39efp+9
+src	impls.c	96	Sleep	signed_overflow	Unknown	_t + delayMs ≤ 2147483647
+src	roco.c	170	RoCo_process	precondition of fabs	Unknown	finite_arg: \is_finite(x)
+src	roco.c	228	RoCo_process	precondition of fabs	Unknown	finite_arg: \is_finite(x)

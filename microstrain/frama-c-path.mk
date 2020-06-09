@@ -1,1 +1,0 @@
-../frama-c-path.mk
