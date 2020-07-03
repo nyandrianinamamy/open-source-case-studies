@@ -70,6 +70,7 @@ TARGETS=\
   papabench \
   polarssl \
   qlz \
+  safestringlib \
   semver \
   solitaire \
   tweetnacl-usable \
