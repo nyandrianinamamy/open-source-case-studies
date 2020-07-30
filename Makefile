@@ -85,6 +85,9 @@ QUICK_TARGETS=$(filter-out polarssl gzip124 libmodbus monocypher chrony,$(TARGET
 
 all: $(TARGETS)
 
+summary:
+	frama-c/share/analysis-scripts/summary.py
+
 $(TARGETS):
 	+$(MAKE) -C $@/.frama-c
 
