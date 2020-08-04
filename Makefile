@@ -52,6 +52,7 @@ frama-c/build/bin/frama-c:
 TARGETS=\
   2048 \
   basic-cwe-examples \
+  bench-moerman2018 \
   cerberus \
   chrony \
   debie1 \

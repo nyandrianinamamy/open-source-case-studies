@@ -120,6 +120,7 @@ when available. We also summarize the license of each directory below.
 
 - `2048`: MIT
 - `basic-cwe-examples`: see `LICENSE`
+- `bench-moerman2018`: MIT
 - `chrony`: GPL
 - `debie1`: distribution and use authorized by Patria Aviation Oy,
             Space Systems Finland Ltd. and Tidorum Ltd, see `README.txt`
