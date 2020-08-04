@@ -141,6 +141,7 @@ when available. We also summarize the license of each directory below.
 - `papabench`: GPL
 - `polarssl`: GPL
 - `qlz`: GPL
+- `safestringlib`: MIT
 - `semver`: MIT
 - `solitaire`: public domain (see `solitaire.c`)
 - `tweetnacl-usable`: public domain (see `LICENSE.txt`)
