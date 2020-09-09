@@ -21,7 +21,7 @@ FCFLAGS     += \
 
 ## Eva-specific flags
 EVAFLAGS    += \
-  -slevel 16 \
+  -eva-slevel 16 \
   -eva-domains equality \
 
 ## GUI-only flags

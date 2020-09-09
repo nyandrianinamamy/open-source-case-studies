@@ -25,7 +25,7 @@ FCFLAGS     += \
 
 ## Eva-specific flags
 EVAFLAGS    += \
-  -slevel 8 \
+  -eva-slevel 8 \
   -eva-split-return auto \
   -eva-warn-key signed-overflow=inactive \
   -eva-warn-key builtins:missing-spec=abort \

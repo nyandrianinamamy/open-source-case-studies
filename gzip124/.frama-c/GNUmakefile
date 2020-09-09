@@ -29,7 +29,7 @@ FCFLAGS  += \
 
 ## Eva-specific flags
 EVAFLAGS += \
-  -slevel 4 \
+  -eva-slevel 4 \
   -eva-no-alloc-returns-null \
   -eva-no-builtins-auto \
   -eva-widening-delay 3 \

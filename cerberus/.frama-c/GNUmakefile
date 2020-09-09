@@ -25,7 +25,7 @@ FCFLAGS     += \
 ## Eva-specific flags
 EVAFLAGS    += \
   -eva-warn-key builtins:missing-spec=abort \
-  -slevel 6000 \
+  -eva-slevel 6000 \
 
 ## GUI-only flags
 FCGUIFLAGS += \
