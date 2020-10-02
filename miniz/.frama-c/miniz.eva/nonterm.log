@@ -1,0 +1,16 @@
+miniz_tdef.c:1043:[nonterm] warning: non-terminating statement
+stack: tdefl_record_literal :: miniz_tdef.c:1193 <-
+       tdefl_compress_normal :: miniz_tdef.c:1293 <-
+       tdefl_compress :: miniz.c:264 <-
+       mz_deflate :: miniz.c:335 <-
+       mz_compress2 :: miniz.c:348 <-
+       mz_compress :: examples/example1.c:43 <-
+       main
+miniz_tdef.c:1088:[nonterm] warning: non-terminating loop
+stack: tdefl_compress_normal :: miniz_tdef.c:1293 <-
+       tdefl_compress :: miniz.c:264 <-
+       mz_deflate :: miniz.c:335 <-
+       mz_compress2 :: miniz.c:348 <-
+       mz_compress :: examples/example1.c:43 <-
+       main
+miniz_tdef.c:1313:[nonterm] warning: unreachable return

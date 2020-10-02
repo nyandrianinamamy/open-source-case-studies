@@ -137,6 +137,7 @@ when available. We also summarize the license of each directory below.
 - `libspng`: BSD 2-clause, see `LICENSE`
 - `mibench`: several (see `LICENSE` file inside each subdirectory)
 - `mini-gmp`:  LGPL or GPL
+- `miniz`:  MIT
 - `microstrain`: GPL and others, see `LICENSE`
 - `monocypher`: see `README`
 - `papabench`: GPL

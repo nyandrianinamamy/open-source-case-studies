@@ -1,0 +1,51 @@
+[metrics] Eva coverage statistics
+=======================
+Syntactically reachable functions = 41 (out of 58)
+Semantically reached functions = 18
+Coverage estimation = 43.9% 
+
+Unreached functions (23) =
+  <miniz.c>: miniz_def_free_func; mz_adler32; mz_inflate; mz_inflateEnd;
+    mz_inflateInit; mz_inflateInit2; mz_uncompress; mz_uncompress2; 
+  <miniz_tdef.c>: tdefl_calculate_minimum_redundancy; tdefl_compress_block;
+    tdefl_compress_fast; tdefl_compress_lz_codes; tdefl_flush_block;
+    tdefl_flush_output_buffer; tdefl_get_adler32;
+    tdefl_huffman_enforce_max_code_size; tdefl_optimize_huffman_table;
+    tdefl_radix_sort_syms; TDEFL_READ_UNALIGNED_WORD32; tdefl_record_match;
+    tdefl_start_dynamic_block; tdefl_start_static_block; 
+  <miniz_tinfl.h>: tinfl_decompress;
+[metrics] References to non-analyzed functions
+------------------------------------
+Function main calls mz_uncompress (at examples/example1.c:66)
+Function mz_deflate calls tdefl_get_adler32 (at miniz.c:268)
+Function mz_deflateInit2 references miniz_def_free_func (at miniz.c:213)
+Function tdefl_compress calls tdefl_flush_output_buffer (at miniz_tdef.c:1280)
+Function tdefl_compress calls tdefl_compress_fast (at miniz_tdef.c:1287)
+Function tdefl_compress calls mz_adler32 (at miniz_tdef.c:1298)
+Function tdefl_compress calls tdefl_flush_block (at miniz_tdef.c:1302)
+Function tdefl_compress calls tdefl_flush_output_buffer (at miniz_tdef.c:1313)
+Function tdefl_compress_normal calls tdefl_record_match (at miniz_tdef.c:1174)
+Function tdefl_compress_normal calls tdefl_record_match (at miniz_tdef.c:1187)
+Function tdefl_compress_normal calls tdefl_record_match (at miniz_tdef.c:1196)
+Function tdefl_compress_normal calls tdefl_flush_block (at miniz_tdef.c:1217)
+[metrics] Statements analyzed by Eva
+--------------------------
+781 stmts in analyzed functions, 334 stmts analyzed (42.8%)
+TDEFL_READ_UNALIGNED_WORD: 2 stmts out of 2 (100.0%)
+TDEFL_READ_UNALIGNED_WORD2: 2 stmts out of 2 (100.0%)
+miniz_def_alloc_func: 2 stmts out of 2 (100.0%)
+mz_compress: 2 stmts out of 2 (100.0%)
+mz_compressBound: 2 stmts out of 2 (100.0%)
+mz_deflateInit: 2 stmts out of 2 (100.0%)
+tdefl_init: 80 stmts out of 80 (100.0%)
+mz_deflateBound: 4 stmts out of 5 (80.0%)
+mz_compress2: 20 stmts out of 27 (74.1%)
+tdefl_create_comp_flags_from_zip_params: 17 stmts out of 29 (58.6%)
+mz_deflateInit2: 27 stmts out of 47 (57.4%)
+mz_deflateEnd: 4 stmts out of 9 (44.4%)
+tdefl_record_literal: 6 stmts out of 15 (40.0%)
+main: 27 stmts out of 74 (36.5%)
+tdefl_compress_normal: 57 stmts out of 166 (34.3%)
+tdefl_compress: 33 stmts out of 103 (32.0%)
+mz_deflate: 20 stmts out of 72 (27.8%)
+tdefl_find_match: 27 stmts out of 142 (19.0%)
