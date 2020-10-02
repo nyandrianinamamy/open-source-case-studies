@@ -79,23 +79,27 @@
  mpz_ui_sub (0 call); mpz_xor (0 call); set_str (15 calls);
  testmain (0 call); 
 
-Undefined functions (40)
-========================
- __gmp_asprintf (15 calls); __gmp_randinit_default (1 call);
- __gmp_randseed_ui (1 call); __gmp_urandomb_ui (22 calls);
- __gmpz_add (1 call); __gmpz_and (1 call); __gmpz_cdiv_q_2exp (1 call);
- __gmpz_cdiv_qr (1 call); __gmpz_cdiv_r_2exp (1 call);
- __gmpz_clear (17 calls); __gmpz_clrbit (1 call); __gmpz_cmp_ui (1 call);
+Specified-only functions (15)
+=============================
+ __gmp_asprintf (15 calls); __gmp_urandomb_ui (22 calls);
+ __gmpz_add (1 call); __gmpz_and (1 call); __gmpz_clear (17 calls);
+ __gmpz_gcd (2 calls); __gmpz_init (17 calls); __gmpz_ior (1 call);
+ __gmpz_lcm (1 call); __gmpz_mul (6 calls); __gmpz_neg (11 calls);
+ __gmpz_rrandomb (15 calls); __gmpz_sub (1 call); __gmpz_xor (1 call);
+ asprintf (0 call); 
+
+Undefined and unspecified functions (25)
+========================================
+ __gmp_randinit_default (1 call); __gmp_randseed_ui (1 call);
+ __gmpz_cdiv_q_2exp (1 call); __gmpz_cdiv_qr (1 call);
+ __gmpz_cdiv_r_2exp (1 call); __gmpz_clrbit (1 call); __gmpz_cmp_ui (1 call);
  __gmpz_combit (1 call); __gmpz_divexact (1 call); __gmpz_export (1 call);
  __gmpz_fdiv_q_2exp (1 call); __gmpz_fdiv_qr (1 call);
- __gmpz_fdiv_r_2exp (1 call); __gmpz_gcd (2 calls); __gmpz_get_str (2 calls);
- __gmpz_init (17 calls); __gmpz_ior (1 call); __gmpz_lcm (1 call);
- __gmpz_mul (6 calls); __gmpz_neg (11 calls); __gmpz_powm (1 call);
- __gmpz_rrandomb (15 calls); __gmpz_scan0 (1 call); __gmpz_scan1 (1 call);
- __gmpz_set (3 calls); __gmpz_set_ui (1 call); __gmpz_setbit (1 call);
- __gmpz_sub (1 call); __gmpz_tdiv_q_2exp (1 call); __gmpz_tdiv_qr (1 call);
- __gmpz_tdiv_r_2exp (1 call); __gmpz_urandomb (1 call); __gmpz_xor (1 call);
- asprintf (0 call); dump (4 calls); 
+ __gmpz_fdiv_r_2exp (1 call); __gmpz_get_str (2 calls); __gmpz_powm (1 call);
+ __gmpz_scan0 (1 call); __gmpz_scan1 (1 call); __gmpz_set (3 calls);
+ __gmpz_set_ui (1 call); __gmpz_setbit (1 call); __gmpz_tdiv_q_2exp (1 call);
+ __gmpz_tdiv_qr (1 call); __gmpz_tdiv_r_2exp (1 call);
+ __gmpz_urandomb (1 call); dump (4 calls); 
 
 'Extern' global variables (0)
 =============================
