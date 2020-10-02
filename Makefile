@@ -67,6 +67,7 @@ TARGETS=\
   libspng \
   microstrain \
   mini-gmp \
+  miniz \
   monocypher \
   papabench \
   polarssl \
