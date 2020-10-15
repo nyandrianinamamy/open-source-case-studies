@@ -95,12 +95,12 @@ int printf_va_3(char const * __restrict format, void *param0);
 void print_free_list(word_t *p)
 {
   word_t *q = p;
-  printf_va_1("free list: ");
+  printf("free list: "); /* printf_va_1 */
   while (q != (word_t *)0) {
-    printf_va_2("%p ",(void *)q);
+    printf("%p ",(void *)q); /* printf_va_2 */
     q = (word_t *)*q;
   }
-  printf_va_3("%p\n",(void *)q);
+  printf("%p\n",(void *)q); /* printf_va_3 */
   return;
 }
 
@@ -142,7 +142,7 @@ int main(void)
   a = alloc((unsigned long)2048);
   b = alloc((unsigned long)2048);
   c = alloc((unsigned long)65536);
-  printf_va_4("a=%p b=%p c=%p\n",a,b,c);
+  printf("a=%p b=%p c=%p\n",a,b,c); /* printf_va_4 */
   print_free_list(kfree_list);
   __retres = 0;
   return __retres;

@@ -33,7 +33,7 @@ void f(st1 *s1p, st2 *s2p)
 {
   s1p->i1 = 2;
   s2p->i2 = 3;
-  printf_va_1("f: s1p->i1 = %i\n",s1p->i1);
+  printf("f: s1p->i1 = %i\n",s1p->i1); /* printf_va_1 */
   return;
 }
 
@@ -60,7 +60,7 @@ int main(void)
   st1 *s1p = & s;
   s2p = (st2 *)s1p;
   f(s1p,s2p);
-  printf_va_2("s.i1=%i  s1p->i1=%i  s2p->i2=%i\n",s.i1,s1p->i1,s2p->i2);
+  printf("s.i1=%i  s1p->i1=%i  s2p->i2=%i\n",s.i1,s1p->i1,s2p->i2); /* printf_va_2 */
   __retres = 0;
   return __retres;
 }

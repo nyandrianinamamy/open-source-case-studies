@@ -67,8 +67,8 @@ int main(void)
   intptr_t uz = (int)(& z);
   intptr_t uw = (int)(& w);
   intptr_t offsetzw = uw - uz;
-  printf_va_1("Addresses: &x=%i &y=%i offsetxy=%i \n",ux,uy,offsetxy);
-  printf_va_2("Addresses: &z=%i &w=%i offsetzw=%i \n",uz,uw,offsetzw);
+  printf("Addresses: &x=%i &y=%i offsetxy=%i \n",ux,uy,offsetxy); /* printf_va_1 */
+  printf("Addresses: &z=%i &w=%i offsetzw=%i \n",uz,uw,offsetzw); /* printf_va_2 */
   __FC_assert((offsetzw == offsetxy) != 0,
               "pointer_offset_from_subtraction_2_auto.c",13,
               "offsetzw==offsetxy");
@@ -77,7 +77,7 @@ int main(void)
   tmp = memcmp((void const *)(& p),(void const *)(& q),sizeof(p));
   if (tmp == 0) {
     *p = 11;
-    printf_va_3("x=%d  y=%d  *p=%d  *q=%d\n",x,y,*p,*q);
+    printf("x=%d  y=%d  *p=%d  *q=%d\n",x,y,*p,*q); /* printf_va_3 */
   }
   __retres = 0;
   return __retres;

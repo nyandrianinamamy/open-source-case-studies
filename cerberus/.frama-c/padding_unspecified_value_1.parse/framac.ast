@@ -36,7 +36,7 @@ int main(void)
     unsigned char *p = (unsigned char *)(& s) + offset_padding;
     *p = (unsigned char)'A';
     unsigned char c1 = *p;
-    printf_va_1("c1=%c\n",(int)c1);
+    printf("c1=%c\n",(int)c1); /* printf_va_1 */
   }
   __retres = 0;
   return __retres;

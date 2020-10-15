@@ -27,7 +27,7 @@ int main(void)
   void *p = malloc(sizeof(float));
   __FC_assert((p != (void *)0) != 0,"effective_type_6.c",2,"p != NULL");
   float f = *((float *)p);
-  printf_va_1("f=%f\n",(double)f);
+  printf("f=%f\n",(double)f); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

@@ -38,7 +38,7 @@ int main(void)
     st __constr_expr_0 = {.c = (char)'E', .f = (float)1.0, .i = 1};
     s = __constr_expr_0;
     unsigned char c2 = *p;
-    printf_va_1("c2=0x%x\n",(unsigned int)((int)c2));
+    printf("c2=0x%x\n",(unsigned int)((int)c2)); /* printf_va_1 */
   }
   __retres = 0;
   return __retres;

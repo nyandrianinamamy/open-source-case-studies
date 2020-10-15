@@ -31,7 +31,7 @@ int main(void)
   int __retres;
   struct s *f = (struct s *)0;
   uint8_t *p = & f->b;
-  printf_va_1("p=%p  offsetof(struct s,b)=0x%zx\n",(void *)p,1U);
+  printf("p=%p  offsetof(struct s,b)=0x%zx\n",(void *)p,1U); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

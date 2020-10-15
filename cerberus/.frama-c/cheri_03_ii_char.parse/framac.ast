@@ -31,8 +31,8 @@ int main(void)
   unsigned char *q = p + 11;
   q -= 10;
   *q = (unsigned char)1;
-  printf_va_1("x=0x%x  *p=0x%x  *q=0x%x\n",(unsigned int)x,
-              (unsigned int)((int)*p),(unsigned int)((int)*q));
+  printf("x=0x%x  *p=0x%x  *q=0x%x\n",(unsigned int)x,
+         (unsigned int)((int)*p),(unsigned int)((int)*q)); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

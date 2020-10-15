@@ -29,7 +29,7 @@ int main(void)
   int __retres;
   int *p = & x[& x[1] - x];
   *p = 11;
-  printf_va_1("x[1]=%d *p=%d\n",x[1],*p);
+  printf("x[1]=%d *p=%d\n",x[1],*p); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

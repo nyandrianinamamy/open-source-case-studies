@@ -70,11 +70,11 @@ int main(void)
   st s1 = {.c = (char)'A', .u = (unsigned short)0x1234};
   unsigned char *padding1 = (unsigned char *)(& s1) + offset_padding;
   *padding1 = (unsigned char)0xBA;
-  printf_va_1("*padding1=0x%x\n",(unsigned int)((int)*padding1));
+  printf("*padding1=0x%x\n",(unsigned int)((int)*padding1)); /* printf_va_1 */
   unsigned char *padding2 = (unsigned char *)(& s2) + offset_padding;
-  printf_va_2("*padding2=0x%x\n",(unsigned int)((int)*padding2));
+  printf("*padding2=0x%x\n",(unsigned int)((int)*padding2)); /* printf_va_2 */
   f(& s2,& s1);
-  printf_va_3("*padding2=0x%x\n",(unsigned int)((int)*padding2));
+  printf("*padding2=0x%x\n",(unsigned int)((int)*padding2)); /* printf_va_3 */
   __retres = 0;
   return __retres;
 }

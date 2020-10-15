@@ -545,7 +545,7 @@ void testmain(int argc, char **argv)
       mpz_add(res,(__mpz_struct const *)(a),(__mpz_struct const *)(b));
       tmp = mpz_cmp((__mpz_struct const *)(res),(__mpz_struct const *)(ref));
       if (tmp) {
-        fprintf_va_1(__fc_stderr,"mpz_add failed:\n");
+        fprintf(__fc_stderr,"mpz_add failed:\n"); /* fprintf_va_1 */
         dump("a",(__mpz_struct const *)(a));
         dump("b",(__mpz_struct const *)(b));
         dump("r",(__mpz_struct const *)(res));
@@ -579,7 +579,7 @@ int fprintf_va_2(FILE * __restrict stream, char const * __restrict format,
 
 static void gmp_die(char const *msg)
 {
-  fprintf_va_2(__fc_stderr,"%s\n",(char *)msg);
+  fprintf(__fc_stderr,"%s\n",(char *)msg); /* fprintf_va_2 */
   abort();
   return;
 }
@@ -5708,15 +5708,15 @@ void hex_random_init(void)
   if (env_seed) 
     if (*(env_seed + 0)) {
       seed = strtoul((char const *)env_seed,(char **)0,0);
-      if (seed) printf_va_1("Re-seeding with GMP_CHECK_RANDOMIZE=%lu\n",seed);
+      if (seed) printf("Re-seeding with GMP_CHECK_RANDOMIZE=%lu\n",seed); /* printf_va_1 */
       else {
         time_t tmp;
         pid_t tmp_0;
         tmp = time((time_t *)0);
         tmp_0 = getpid();
         seed = (unsigned long)(tmp + (time_t)tmp_0);
-        printf_va_2("Seed GMP_CHECK_RANDOMIZE=%lu (include this in bug reports)\n",
-                    seed);
+        printf("Seed GMP_CHECK_RANDOMIZE=%lu (include this in bug reports)\n",
+               seed); /* printf_va_2 */
       }
     }
     else seed = (unsigned long)4711;
@@ -6154,7 +6154,7 @@ static void set_str(__mpz_struct * /*[1]*/ r, char const *s)
   int tmp;
   tmp = mpz_set_str(r,s,16);
   if (tmp != 0) {
-    fprintf_va_3(__fc_stderr,"mpz_set_str failed on input %s\n",(char *)s);
+    fprintf(__fc_stderr,"mpz_set_str failed on input %s\n",(char *)s); /* fprintf_va_3 */
     abort();
   }
   return;

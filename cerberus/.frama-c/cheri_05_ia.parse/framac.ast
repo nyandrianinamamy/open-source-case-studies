@@ -33,7 +33,7 @@ int main(void)
   ql -= (uintptr_t)287343;
   int *q = (int *)ql;
   *q = 1;
-  printf_va_1("x=%i  *px=%i  *q=%i\n",x,*px,*q);
+  printf("x=%i  *px=%i  *q=%i\n",x,*px,*q); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

@@ -42,7 +42,7 @@ int main(void)
               "krebbers_biener_1.c",9,"sizeof(struct X) == 2 * sizeof(int)");
   unsigned char *p = malloc((unsigned int)3 * sizeof(int));
   tmp_0 = foo((struct X *)(p + sizeof(int)),(struct X *)p);
-  printf_va_1("%i\n",tmp_0);
+  printf("%i\n",tmp_0); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

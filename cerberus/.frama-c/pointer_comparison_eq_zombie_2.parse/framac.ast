@@ -47,10 +47,10 @@ int main(void)
     int j = 1;
     pj = & j;
     if (& i == pj) tmp = "true"; else tmp = "false";
-    printf_va_1("(&i==pj)=%s\n",(char *)tmp);
+    printf("(&i==pj)=%s\n",(char *)tmp); /* printf_va_1 */
   }
   if (& i == pj) tmp_0 = "true"; else tmp_0 = "false";
-  printf_va_2("(&i==pj)=%s\n",(char *)tmp_0);
+  printf("(&i==pj)=%s\n",(char *)tmp_0); /* printf_va_2 */
   __retres = 0;
   return __retres;
 }

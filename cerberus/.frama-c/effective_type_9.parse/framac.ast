@@ -45,7 +45,7 @@ int main(void)
   st1 s1 = {.c1 = (char)'A', .f1 = (float)1.0};
   *((st1 *)p) = s1;
   float f = ((st2 *)p)->f2;
-  printf_va_1("f=%f\n",(double)f);
+  printf("f=%f\n",(double)f); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

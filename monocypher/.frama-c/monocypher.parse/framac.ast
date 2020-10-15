@@ -5619,11 +5619,11 @@ void print_vector(u8 *buf, size_t size)
   {
     size_t i = (unsigned long)0;
     while (i < size) {
-      printf_va_1("%hhx%hhx",(int)*(buf + i) >> 4,(int)*(buf + i) & 0x0f);
+      printf("%hhx%hhx",(int)*(buf + i) >> 4,(int)*(buf + i) & 0x0f); /* printf_va_1 */
       i += (size_t)1;
     }
   }
-  printf_va_2(":\n");
+  printf(":\n"); /* printf_va_2 */
   return;
 }
 
@@ -436073,7 +436073,7 @@ static void *alloc(size_t size)
   }
   void *buf = malloc(size);
   if (buf == (void *)0) {
-    fprintf_va_1(__fc_stderr,"Allocation failed: 0x%zx bytes\n",size);
+    fprintf(__fc_stderr,"Allocation failed: 0x%zx bytes\n",size); /* fprintf_va_1 */
     exit(1);
   }
   __retres = buf;
@@ -436158,7 +436158,7 @@ static int test(void (*f)(vector const *, vector *), char const *name,
   ;
   ;
   if (status != 0) tmp_2 = "FAILED"; else tmp_2 = "OK";
-  printf_va_3("%s %4d tests: %s\n",(char *)tmp_2,nb_tests,(char *)name);
+  printf("%s %4d tests: %s\n",(char *)tmp_2,nb_tests,(char *)name); /* printf_va_3 */
   return status;
 }
 
@@ -436290,9 +436290,9 @@ static void x25519(vector const *in, vector *out)
                   (uint8_t const *)point->buf);
   int not_zero = zerocmp((u8 const *)out->buf,out->size);
   if (not_zero) 
-    if (report) printf_va_4("FAILURE: x25519 false all_zero report\n");
+    if (report) printf("FAILURE: x25519 false all_zero report\n"); /* printf_va_4 */
   if (! not_zero) 
-    if (! report) printf_va_5("FAILURE: x25519 failed to report zero\n");
+    if (! report) printf("FAILURE: x25519 failed to report zero\n"); /* printf_va_5 */
   return;
 }
 
@@ -436336,7 +436336,7 @@ static void edDSA(vector const *in, vector *out)
   crypto_sign(out2,(uint8_t const *)secret_k->buf,(uint8_t const *)0,
               (uint8_t const *)msg->buf,msg->size);
   tmp = memcmp((void const *)out->buf,(void const *)(out2),out->size);
-  if (tmp) printf_va_6("FAILURE: reconstructing public key yields different signature\n");
+  if (tmp) printf("FAILURE: reconstructing public key yields different signature\n"); /* printf_va_6 */
   return;
 }
 
@@ -436427,7 +436427,7 @@ static int test_x25519(void)
   int status =
     memcmp((void const *)(k),(void const *)(_1),(unsigned long)32);
   if (status != 0) tmp_0 = "FAILED"; else tmp_0 = "OK";
-  printf_va_7("%s: x25519 1\n",(char *)tmp_0);
+  printf("%s: x25519 1\n",(char *)tmp_0); /* printf_va_7 */
   u8 _1k[32] =
     {(unsigned char)0x68,
      (unsigned char)0x4c,
@@ -436471,7 +436471,7 @@ static int test_x25519(void)
   tmp_1 = memcmp((void const *)(k),(void const *)(_1k),(unsigned long)32);
   status |= tmp_1;
   if (status != 0) tmp_2 = "FAILED"; else tmp_2 = "OK";
-  printf_va_8("%s: x25519 1K\n",(char *)tmp_2);
+  printf("%s: x25519 1K\n",(char *)tmp_2); /* printf_va_8 */
   return status;
 }
 
@@ -436555,7 +436555,7 @@ static int p_verify(size_t size, int (*compare)(u8 const *, u8 const *))
   }
   ;
   if (status != 0) tmp_3 = "FAILED"; else tmp_3 = "OK";
-  printf_va_9("%s: crypto_verify%zu\n",(char *)tmp_3,size);
+  printf("%s: crypto_verify%zu\n",(char *)tmp_3,size); /* printf_va_9 */
   return status;
 }
 
@@ -436645,7 +436645,7 @@ static int p_chacha20(void)
     }
   }
   if (status != 0) tmp_1 = "FAILED"; else tmp_1 = "OK";
-  printf_va_10("%s: Chacha20 (incremental)\n",(char *)tmp_1);
+  printf("%s: Chacha20 (incremental)\n",(char *)tmp_1); /* printf_va_10 */
   return status;
 }
 
@@ -436686,7 +436686,7 @@ static int p_chacha20_same_ptr(void)
                (unsigned long)64);
   status |= tmp;
   if (status != 0) tmp_0 = "FAILED"; else tmp_0 = "OK";
-  printf_va_11("%s: Chacha20 (output == input)\n",(char *)tmp_0);
+  printf("%s: Chacha20 (output == input)\n",(char *)tmp_0); /* printf_va_11 */
   return status;
 }
 
@@ -436745,7 +436745,7 @@ static int p_chacha20_set_ctr(void)
     }
   }
   if (status != 0) tmp_1 = "FAILED"; else tmp_1 = "OK";
-  printf_va_12("%s: Chacha20 (set counter)\n",(char *)tmp_1);
+  printf("%s: Chacha20 (set counter)\n",(char *)tmp_1); /* printf_va_12 */
   return status;
 }
 
@@ -436794,7 +436794,7 @@ static int p_poly1305(void)
     }
   }
   if (status != 0) tmp_0 = "FAILED"; else tmp_0 = "OK";
-  printf_va_13("%s: Poly1305 (incremental)\n",(char *)tmp_0);
+  printf("%s: Poly1305 (incremental)\n",(char *)tmp_0); /* printf_va_13 */
   return status;
 }
 
@@ -436838,7 +436838,7 @@ static int p_poly1305_overlap(void)
     }
   }
   if (status != 0) tmp_0 = "FAILED"; else tmp_0 = "OK";
-  printf_va_14("%s: Poly1305 (overlaping i/o)\n",(char *)tmp_0);
+  printf("%s: Poly1305 (overlaping i/o)\n",(char *)tmp_0); /* printf_va_14 */
   return status;
 }
 
@@ -436885,7 +436885,7 @@ static int p_blake2b(void)
     }
   }
   if (status != 0) tmp_0 = "FAILED"; else tmp_0 = "OK";
-  printf_va_15("%s: Blake2b (incremental)\n",(char *)tmp_0);
+  printf("%s: Blake2b (incremental)\n",(char *)tmp_0); /* printf_va_15 */
   return status;
 }
 
@@ -436927,7 +436927,7 @@ static int p_blake2b_overlap(void)
     }
   }
   if (status != 0) tmp_0 = "FAILED"; else tmp_0 = "OK";
-  printf_va_16("%s: Blake2b (overlaping i/o)\n",(char *)tmp_0);
+  printf("%s: Blake2b (overlaping i/o)\n",(char *)tmp_0); /* printf_va_16 */
   return status;
 }
 
@@ -436974,7 +436974,7 @@ static int p_sha512(void)
     }
   }
   if (status != 0) tmp_0 = "FAILED"; else tmp_0 = "OK";
-  printf_va_17("%s: Sha512 (incremental)\n",(char *)tmp_0);
+  printf("%s: Sha512 (incremental)\n",(char *)tmp_0); /* printf_va_17 */
   return status;
 }
 
@@ -437015,7 +437015,7 @@ static int p_sha512_overlap(void)
     }
   }
   if (status != 0) tmp_0 = "FAILED"; else tmp_0 = "OK";
-  printf_va_18("%s: Sha512 (overlaping i/o)\n",(char *)tmp_0);
+  printf("%s: Sha512 (overlaping i/o)\n",(char *)tmp_0); /* printf_va_18 */
   return status;
 }
 
@@ -437059,7 +437059,7 @@ static int p_argon2i_easy(void)
   status |= tmp_0;
   free(work_area);
   if (status != 0) tmp_1 = "FAILED"; else tmp_1 = "OK";
-  printf_va_19("%s: Argon2i (easy interface)\n",(char *)tmp_1);
+  printf("%s: Argon2i (easy interface)\n",(char *)tmp_1); /* printf_va_19 */
   return status;
 }
 
@@ -437162,7 +437162,7 @@ static int p_argon2i_overlap(void)
   free((void *)work_area);
   free((void *)clean_work_area);
   if (status != 0) tmp_6 = "FAILED"; else tmp_6 = "OK";
-  printf_va_20("%s: Argon2i (overlaping i/o)\n",(char *)tmp_6);
+  printf("%s: Argon2i (overlaping i/o)\n",(char *)tmp_6); /* printf_va_20 */
   return status;
 }
 
@@ -437229,7 +437229,7 @@ static int p_eddsa_roundtrip(void)
     }
   }
   if (status != 0) tmp_4 = "FAILED"; else tmp_4 = "OK";
-  printf_va_21("%s: EdDSA (roundtrip)\n",(char *)tmp_4);
+  printf("%s: EdDSA (roundtrip)\n",(char *)tmp_4); /* printf_va_21 */
   return status;
 }
 
@@ -437271,7 +437271,7 @@ static int p_eddsa_random(void)
     }
   }
   if (status != 0) tmp_0 = "FAILED"; else tmp_0 = "OK";
-  printf_va_22("%s: EdDSA (random)\n",(char *)tmp_0);
+  printf("%s: EdDSA (random)\n",(char *)tmp_0); /* printf_va_22 */
   return status;
 }
 
@@ -437317,7 +437317,7 @@ static int p_eddsa_overlap(void)
     }
   }
   if (status != 0) tmp_0 = "FAILED"; else tmp_0 = "OK";
-  printf_va_23("%s: EdDSA (overlap)\n",(char *)tmp_0);
+  printf("%s: EdDSA (overlap)\n",(char *)tmp_0); /* printf_va_23 */
   return status;
 }
 
@@ -437391,7 +437391,7 @@ static int p_eddsa_incremental(void)
     }
   }
   if (status != 0) tmp_2 = "FAILED"; else tmp_2 = "OK";
-  printf_va_24("%s: EdDSA (incremental)\n",(char *)tmp_2);
+  printf("%s: EdDSA (incremental)\n",(char *)tmp_2); /* printf_va_24 */
   return status;
 }
 
@@ -437491,7 +437491,7 @@ static int p_aead(void)
     }
   }
   if (status != 0) tmp_8 = "FAILED"; else tmp_8 = "OK";
-  printf_va_25("%s: aead (roundtrip)\n",(char *)tmp_8);
+  printf("%s: aead (roundtrip)\n",(char *)tmp_8); /* printf_va_25 */
   return status;
 }
 
@@ -437631,7 +437631,7 @@ static int p_lock_incremental(void)
     }
   }
   if (status != 0) tmp_15 = "FAILED"; else tmp_15 = "OK";
-  printf_va_26("%s: aead (incremental)\n",(char *)tmp_15);
+  printf("%s: aead (incremental)\n",(char *)tmp_15); /* printf_va_26 */
   return status;
 }
 
@@ -437700,7 +437700,7 @@ static int p_auth(void)
     }
   }
   if (status != 0) tmp_2 = "FAILED"; else tmp_2 = "OK";
-  printf_va_27("%s: aead (authentication)\n",(char *)tmp_2);
+  printf("%s: aead (authentication)\n",(char *)tmp_2); /* printf_va_27 */
   return status;
 }
 
@@ -437805,8 +437805,8 @@ int main(void)
   int tmp_33;
   char const *tmp_34;
   int status = 0;
-  printf_va_28("\nTest against vectors");
-  printf_va_29("\n--------------------\n");
+  printf("\nTest against vectors"); /* printf_va_28 */
+  printf("\n--------------------\n"); /* printf_va_29 */
   tmp = test(& chacha20,"chacha20",(unsigned long)4,nb_chacha20_vectors,
              chacha20_vectors,chacha20_sizes);
   status |= tmp;
@@ -437849,8 +437849,8 @@ int main(void)
   status |= tmp_11;
   tmp_12 = test_x25519();
   status |= tmp_12;
-  printf_va_30("\nProperty based tests");
-  printf_va_31("\n--------------------\n");
+  printf("\nProperty based tests"); /* printf_va_30 */
+  printf("\n--------------------\n"); /* printf_va_31 */
   tmp_13 = p_verify16();
   status |= tmp_13;
   tmp_14 = p_verify32();
@@ -437895,7 +437895,7 @@ int main(void)
   status |= tmp_33;
   if (status != 0) tmp_34 = "SOME TESTS FAILED";
   else tmp_34 = "All tests OK!";
-  printf_va_32("\n%s\n\n",(char *)tmp_34);
+  printf("\n%s\n\n",(char *)tmp_34); /* printf_va_32 */
   return status;
 }
 

@@ -30,7 +30,7 @@ int main(void)
   int *q = p + 11;
   q -= 10;
   *q = 1;
-  printf_va_1("x[1]=%i  *q=%i\n",x[1],*q);
+  printf("x[1]=%i  *q=%i\n",x[1],*q); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

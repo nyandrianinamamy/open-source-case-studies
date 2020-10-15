@@ -45,7 +45,7 @@ int main(void)
   intptr_t ux = (int)(& x);
   intptr_t uy = (int)(& y);
   intptr_t offset = 4;
-  printf_va_1("Addresses: &x=%i &y=%i\n",ux,uy);
+  printf("Addresses: &x=%i &y=%i\n",ux,uy); /* printf_va_1 */
   int *q = & y;
   if (q != (int *)0) {
     int tmp;
@@ -53,7 +53,7 @@ int main(void)
     tmp = memcmp((void const *)(& p),(void const *)(& q),sizeof(p));
     if (tmp == 0) {
       *p = 11;
-      printf_va_2("x=%d  y=%d  *p=%d  *q=%d\n",x,y,*p,*q);
+      printf("x=%d  y=%d  *p=%d  *q=%d\n",x,y,*p,*q); /* printf_va_2 */
     }
   }
   __retres = 0;

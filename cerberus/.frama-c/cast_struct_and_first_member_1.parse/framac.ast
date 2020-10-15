@@ -34,7 +34,7 @@ int main(void)
   int *pi = & s.i;
   st *p = (st *)pi;
   p->f = (float)2.0;
-  printf_va_1("s.f=%f  p->f=%f\n",(double)s.f,(double)p->f);
+  printf("s.f=%f  p->f=%f\n",(double)s.f,(double)p->f); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

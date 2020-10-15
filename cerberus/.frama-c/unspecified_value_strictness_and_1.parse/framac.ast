@@ -30,7 +30,7 @@ int main(void)
   unsigned char *p = & c;
   unsigned char c2 = (unsigned char)((int)c | 1);
   unsigned char c3 = (unsigned char)((int)c2 & 1);
-  printf_va_1("c=%i  c2=%i  c3=%i\n",(int)c,(int)c2,(int)c3);
+  printf("c=%i  c2=%i  c3=%i\n",(int)c,(int)c2,(int)c3); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

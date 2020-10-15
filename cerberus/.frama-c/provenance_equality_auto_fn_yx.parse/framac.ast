@@ -27,7 +27,7 @@ void f(int *p, int *q)
   char const *tmp;
   _Bool b = (_Bool)(p == q);
   if (b) tmp = "true"; else tmp = "false";
-  printf_va_1("(p==q) = %s\n",(char *)tmp);
+  printf("(p==q) = %s\n",(char *)tmp); /* printf_va_1 */
   return;
 }
 
@@ -52,7 +52,7 @@ int main(void)
   int x = 1;
   int *p = & x + 1;
   int *q = & y;
-  printf_va_2("Addresses: p=%p q=%p\n",(void *)p,(void *)q);
+  printf("Addresses: p=%p q=%p\n",(void *)p,(void *)q); /* printf_va_2 */
   f(p,q);
   __retres = 0;
   return __retres;

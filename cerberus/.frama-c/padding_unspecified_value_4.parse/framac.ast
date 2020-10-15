@@ -38,7 +38,7 @@ int main(void)
   st s2 = {.c = (char)'E', .u = (unsigned short)1};
   s = s2;
   unsigned char c = *p;
-  printf_va_1("c=0x%x\n",(unsigned int)((int)c));
+  printf("c=0x%x\n",(unsigned int)((int)c)); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

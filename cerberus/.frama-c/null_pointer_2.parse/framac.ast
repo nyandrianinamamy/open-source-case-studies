@@ -48,9 +48,9 @@ int main(void)
   char *q = (char *)0;
   tmp = memcmp((void const *)(& p),(void const *)(& q),sizeof(p));
   _Bool b = (_Bool)(tmp == 0);
-  printf_va_1("p=%p q=%p\n",(void *)p,(void *)q);
+  printf("p=%p q=%p\n",(void *)p,(void *)q); /* printf_va_1 */
   if (b) tmp_0 = "equal"; else tmp_0 = "unequal";
-  printf_va_2("%s\n",(char *)tmp_0);
+  printf("%s\n",(char *)tmp_0); /* printf_va_2 */
   __retres = 0;
   return __retres;
 }

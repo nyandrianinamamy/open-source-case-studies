@@ -41,7 +41,7 @@ int main(void)
   float g;
   float f = (float)(- 1.0);
   g = fabs_single(f);
-  printf_va_1("g=%f\n",(double)g);
+  printf("g=%f\n",(double)g); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

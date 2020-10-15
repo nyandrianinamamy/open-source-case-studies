@@ -37,7 +37,8 @@ int main(void)
   int __retres;
   unsigned char c;
   unsigned char *p = & c;
-  if ((int)c == 'a') printf_va_1("equal\n"); else printf_va_2("nonequal\n");
+  if ((int)c == 'a') printf("equal\n"); /* printf_va_1 */
+  else printf("nonequal\n"); /* printf_va_2 */
   __retres = 0;
   return __retres;
 }

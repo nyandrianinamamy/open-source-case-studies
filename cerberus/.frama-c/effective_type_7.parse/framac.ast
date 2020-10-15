@@ -33,7 +33,7 @@ int main(void)
   __FC_assert((p != (void *)0) != 0,"effective_type_7.c",3,"p != NULL");
   ((st1 *)p)->c1 = (char)'A';
   float f = ((st1 *)p)->f1;
-  printf_va_1("f=%f\n",(double)f);
+  printf("f=%f\n",(double)f); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

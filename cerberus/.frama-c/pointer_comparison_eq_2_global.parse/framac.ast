@@ -32,7 +32,7 @@ int main(void)
   float *q = & f;
   _Bool b = (_Bool)((void *)p == (void *)q);
   if (b) tmp = "true"; else tmp = "false";
-  printf_va_1("(p==q) = %s\n",(char *)tmp);
+  printf("(p==q) = %s\n",(char *)tmp); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

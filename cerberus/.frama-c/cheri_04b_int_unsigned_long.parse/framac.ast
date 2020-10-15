@@ -31,7 +31,7 @@ int main(void)
   unsigned long ql = (unsigned long)px;
   int *q = (int *)ql;
   *q = 1;
-  printf_va_1("x=%i  *px=%i  *q=%i\n",x,*px,*q);
+  printf("x=%i  *px=%i  *q=%i\n",x,*px,*q); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

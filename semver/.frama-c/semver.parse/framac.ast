@@ -590,8 +590,8 @@ int sprintf_va_2(char * __restrict s, char const * __restrict format,
 static void concat_num(char *str, int x, char *sep)
 {
   char buf[50] = {(char)0};
-  if (sep == (char *)0) sprintf_va_1(buf,"%d",x);
-  else sprintf_va_2(buf,"%s%d",sep,x);
+  if (sep == (char *)0) sprintf(buf,"%d",x); /* sprintf_va_1 */
+  else sprintf(buf,"%s%d",sep,x); /* sprintf_va_2 */
   strcat(str,(char const *)(buf));
   return;
 }
@@ -613,7 +613,7 @@ int sprintf_va_3(char * __restrict s, char const * __restrict format,
 static void concat_char(char *str, char *x, char *sep)
 {
   char buf[50] = {(char)0};
-  sprintf_va_3(buf,"%s%s",sep,x);
+  sprintf(buf,"%s%s",sep,x); /* sprintf_va_3 */
   strcat(str,(char const *)(buf));
   return;
 }
@@ -829,7 +829,7 @@ int printf_va_2(char const * __restrict format);
 void test_parse_simple(void)
 {
   semver_t ver;
-  printf_va_1("\n# Test: %s\n",(char *)"parse_simple");
+  printf("\n# Test: %s\n",(char *)"parse_simple"); /* printf_va_1 */
   char buf[7] =
     {(char)'1',
      (char)'.',
@@ -844,7 +844,7 @@ void test_parse_simple(void)
   __FC_assert((ver.minor == 2) != 0,"semver_test.c",70,"ver.minor == 2");
   __FC_assert((ver.patch == 12) != 0,"semver_test.c",71,"ver.patch == 12");
   semver_free(& ver);
-  printf_va_2("OK\n");
+  printf("OK\n"); /* printf_va_2 */
   return;
 }
 
@@ -876,7 +876,7 @@ int printf_va_4(char const * __restrict format);
 
 void test_parse_major(void)
 {
-  printf_va_3("\n# Test: %s\n",(char *)"parse_major");
+  printf("\n# Test: %s\n",(char *)"parse_major"); /* printf_va_3 */
   char buf[2] = {(char)'2', (char)'\000'};
   semver_t ver =
     {.major = 0,
@@ -890,7 +890,7 @@ void test_parse_major(void)
   __FC_assert((ver.minor == 0) != 0,"semver_test.c",89,"ver.minor == 0");
   __FC_assert((ver.patch == 0) != 0,"semver_test.c",90,"ver.patch == 0");
   semver_free(& ver);
-  printf_va_4("OK\n");
+  printf("OK\n"); /* printf_va_4 */
   return;
 }
 
@@ -922,7 +922,7 @@ int printf_va_6(char const * __restrict format);
 
 void test_parse_minor(void)
 {
-  printf_va_5("\n# Test: %s\n",(char *)"parse_minor");
+  printf("\n# Test: %s\n",(char *)"parse_minor"); /* printf_va_5 */
   char buf[4] = {(char)'1', (char)'.', (char)'2', (char)'\000'};
   semver_t ver =
     {.major = 0,
@@ -936,7 +936,7 @@ void test_parse_minor(void)
   __FC_assert((ver.minor == 2) != 0,"semver_test.c",108,"ver.minor == 2");
   __FC_assert((ver.patch == 0) != 0,"semver_test.c",109,"ver.patch == 0");
   semver_free(& ver);
-  printf_va_6("OK\n");
+  printf("OK\n"); /* printf_va_6 */
   return;
 }
 
@@ -969,7 +969,7 @@ int printf_va_8(char const * __restrict format);
 void test_parse_prerelease(void)
 {
   int tmp_0;
-  printf_va_7("\n# Test: %s\n",(char *)"parse_prerelease");
+  printf("\n# Test: %s\n",(char *)"parse_prerelease"); /* printf_va_7 */
   char buf[22] =
     {(char)'1',
      (char)'.',
@@ -1008,7 +1008,7 @@ void test_parse_prerelease(void)
   __FC_assert((tmp_0 == 0) != 0,"semver_test.c",129,
               "strcmp(ver.prerelease, \"beta.alpha.1.1\") == 0");
   semver_free(& ver);
-  printf_va_8("OK\n");
+  printf("OK\n"); /* printf_va_8 */
   return;
 }
 
@@ -1041,7 +1041,7 @@ int printf_va_10(char const * __restrict format);
 void test_parse_metadata(void)
 {
   int tmp_0;
-  printf_va_9("\n# Test: %s\n",(char *)"parse_metadata");
+  printf("\n# Test: %s\n",(char *)"parse_metadata"); /* printf_va_9 */
   char buf[22] =
     {(char)'1',
      (char)'.',
@@ -1080,7 +1080,7 @@ void test_parse_metadata(void)
   __FC_assert((tmp_0 == 0) != 0,"semver_test.c",149,
               "strcmp(ver.metadata, \"20130313144700\") == 0");
   semver_free(& ver);
-  printf_va_10("OK\n");
+  printf("OK\n"); /* printf_va_10 */
   return;
 }
 
@@ -1114,7 +1114,7 @@ void test_parse_prerelerease_metadata(void)
 {
   int tmp_0;
   int tmp_1;
-  printf_va_11("\n# Test: %s\n",(char *)"parse_prerelease_metadata");
+  printf("\n# Test: %s\n",(char *)"parse_prerelease_metadata"); /* printf_va_11 */
   char buf[30] =
     {(char)'1',
      (char)'.',
@@ -1164,7 +1164,7 @@ void test_parse_prerelerease_metadata(void)
   __FC_assert((tmp_1 == 0) != 0,"semver_test.c",170,
               "strcmp(ver.metadata, \"20130313144700\") == 0");
   semver_free(& ver);
-  printf_va_12("OK\n");
+  printf("OK\n"); /* printf_va_12 */
   return;
 }
 
@@ -1196,7 +1196,7 @@ int printf_va_14(char const * __restrict format);
 
 void test_compare(void)
 {
-  printf_va_13("\n# Test: %s\n",(char *)"semver_compare");
+  printf("\n# Test: %s\n",(char *)"semver_compare"); /* printf_va_13 */
   struct test_case cases[13] =
     {{.x = (char *)"1", .y = (char *)"0", .expected = 1},
      {.x = (char *)"1", .y = (char *)"1", .expected = 0},
@@ -1212,7 +1212,7 @@ void test_compare(void)
      {.x = (char *)"1.2.2", .y = (char *)"1.1.9", .expected = 1},
      {.x = (char *)"1.2.2", .y = (char *)"1.2.9", .expected = -1}};
   suite_runner(cases,13,& semver_compare);
-  printf_va_14("OK\n");
+  printf("OK\n"); /* printf_va_14 */
   return;
 }
 
@@ -1244,7 +1244,7 @@ int printf_va_16(char const * __restrict format);
 
 void test_compare_full(void)
 {
-  printf_va_15("\n# Test: %s\n",(char *)"semver_compare_full");
+  printf("\n# Test: %s\n",(char *)"semver_compare_full"); /* printf_va_15 */
   struct test_case cases[21] =
     {{.x = (char *)"1.5.1", .y = (char *)"1.5.1-beta", .expected = 1},
      {.x = (char *)"1.5.1-beta", .y = (char *)"1.5.1", .expected = -1},
@@ -1300,7 +1300,7 @@ void test_compare_full(void)
       .y = (char *)"1.5.1-1.beta",
       .expected = 1}};
   suite_runner(cases,21,& semver_compare);
-  printf_va_16("OK\n");
+  printf("OK\n"); /* printf_va_16 */
   return;
 }
 
@@ -1332,7 +1332,7 @@ int printf_va_18(char const * __restrict format);
 
 void test_compare_spec(void)
 {
-  printf_va_17("\n# Test: %s\n",(char *)"semver_compare_spec");
+  printf("\n# Test: %s\n",(char *)"semver_compare_spec"); /* printf_va_17 */
   struct test_case cases[7] =
     {{.x = (char *)"1.0.0-alpha",
       .y = (char *)"1.0.0-alpha.1",
@@ -1350,7 +1350,7 @@ void test_compare_spec(void)
      {.x = (char *)"1.0.0-beta.11", .y = (char *)"1.0.0-rc.1", .expected = -1},
      {.x = (char *)"1.0.0-rc.1", .y = (char *)"1.0.0", .expected = -1}};
   suite_runner(cases,7,& semver_compare);
-  printf_va_18("OK\n");
+  printf("OK\n"); /* printf_va_18 */
   return;
 }
 
@@ -1382,7 +1382,7 @@ int printf_va_20(char const * __restrict format);
 
 void test_compare_gt(void)
 {
-  printf_va_19("\n# Test: %s\n",(char *)"semver_gt");
+  printf("\n# Test: %s\n",(char *)"semver_gt"); /* printf_va_19 */
   struct test_case cases[15] =
     {{.x = (char *)"1", .y = (char *)"0", .expected = 1},
      {.x = (char *)"1", .y = (char *)"3", .expected = 0},
@@ -1400,7 +1400,7 @@ void test_compare_gt(void)
      {.x = (char *)"1.1.5", .y = (char *)"1.1.9", .expected = 0},
      {.x = (char *)"1.2.2", .y = (char *)"1.2.9", .expected = 0}};
   suite_runner(cases,15,& semver_gt);
-  printf_va_20("OK\n");
+  printf("OK\n"); /* printf_va_20 */
   return;
 }
 
@@ -1432,7 +1432,7 @@ int printf_va_22(char const * __restrict format);
 
 void test_compare_lt(void)
 {
-  printf_va_21("\n# Test: %s\n",(char *)"semver_lt");
+  printf("\n# Test: %s\n",(char *)"semver_lt"); /* printf_va_21 */
   struct test_case cases[9] =
     {{.x = (char *)"1", .y = (char *)"0", .expected = 0},
      {.x = (char *)"1", .y = (char *)"3", .expected = 1},
@@ -1444,7 +1444,7 @@ void test_compare_lt(void)
      {.x = (char *)"1.1.5", .y = (char *)"1.1.9", .expected = 1},
      {.x = (char *)"1.2.2", .y = (char *)"1.2.9", .expected = 1}};
   suite_runner(cases,9,& semver_lt);
-  printf_va_22("OK\n");
+  printf("OK\n"); /* printf_va_22 */
   return;
 }
 
@@ -1476,7 +1476,7 @@ int printf_va_24(char const * __restrict format);
 
 void test_compare_eq(void)
 {
-  printf_va_23("\n# Test: %s\n",(char *)"semver_eq");
+  printf("\n# Test: %s\n",(char *)"semver_eq"); /* printf_va_23 */
   struct test_case cases[11] =
     {{.x = (char *)"1", .y = (char *)"0", .expected = 0},
      {.x = (char *)"1", .y = (char *)"3", .expected = 0},
@@ -1490,7 +1490,7 @@ void test_compare_eq(void)
      {.x = (char *)"1.2.2", .y = (char *)"1.2.9", .expected = 0},
      {.x = (char *)"1.0.0", .y = (char *)"1.0.0", .expected = 1}};
   suite_runner(cases,11,& semver_eq);
-  printf_va_24("OK\n");
+  printf("OK\n"); /* printf_va_24 */
   return;
 }
 
@@ -1522,7 +1522,7 @@ int printf_va_26(char const * __restrict format);
 
 void test_compare_neq(void)
 {
-  printf_va_25("\n# Test: %s\n",(char *)"semver_neq");
+  printf("\n# Test: %s\n",(char *)"semver_neq"); /* printf_va_25 */
   struct test_case cases[11] =
     {{.x = (char *)"1", .y = (char *)"0", .expected = 1},
      {.x = (char *)"1", .y = (char *)"3", .expected = 1},
@@ -1536,7 +1536,7 @@ void test_compare_neq(void)
      {.x = (char *)"1.2.2", .y = (char *)"1.2.9", .expected = 1},
      {.x = (char *)"1.0.0", .y = (char *)"1.0.0", .expected = 0}};
   suite_runner(cases,11,& semver_neq);
-  printf_va_26("OK\n");
+  printf("OK\n"); /* printf_va_26 */
   return;
 }
 
@@ -1568,7 +1568,7 @@ int printf_va_28(char const * __restrict format);
 
 void test_compare_gte(void)
 {
-  printf_va_27("\n# Test: %s\n",(char *)"semver_gte");
+  printf("\n# Test: %s\n",(char *)"semver_gte"); /* printf_va_27 */
   struct test_case cases[11] =
     {{.x = (char *)"1", .y = (char *)"0", .expected = 1},
      {.x = (char *)"1", .y = (char *)"3", .expected = 0},
@@ -1582,7 +1582,7 @@ void test_compare_gte(void)
      {.x = (char *)"1.2.2", .y = (char *)"1.2.9", .expected = 0},
      {.x = (char *)"1.0.0", .y = (char *)"1.0.0", .expected = 1}};
   suite_runner(cases,11,& semver_gte);
-  printf_va_28("OK\n");
+  printf("OK\n"); /* printf_va_28 */
   return;
 }
 
@@ -1614,7 +1614,7 @@ int printf_va_30(char const * __restrict format);
 
 void test_compare_lte(void)
 {
-  printf_va_29("\n# Test: %s\n",(char *)"semver_lte");
+  printf("\n# Test: %s\n",(char *)"semver_lte"); /* printf_va_29 */
   struct test_case cases[11] =
     {{.x = (char *)"1", .y = (char *)"0", .expected = 0},
      {.x = (char *)"1", .y = (char *)"3", .expected = 1},
@@ -1628,7 +1628,7 @@ void test_compare_lte(void)
      {.x = (char *)"1.2.2", .y = (char *)"1.2.9", .expected = 1},
      {.x = (char *)"1.0.0", .y = (char *)"1.0.0", .expected = 1}};
   suite_runner(cases,11,& semver_lte);
-  printf_va_30("OK\n");
+  printf("OK\n"); /* printf_va_30 */
   return;
 }
 
@@ -1661,7 +1661,7 @@ int printf_va_32(char const * __restrict format);
 void test_satisfies(void)
 {
   int i;
-  printf_va_31("\n# Test: %s\n",(char *)"semver_satisfies");
+  printf("\n# Test: %s\n",(char *)"semver_satisfies"); /* printf_va_31 */
   struct test_case_match cases[82] =
     {{.x = (char *)"1", .y = (char *)"0", .op = (char *)">=", .expected = 1},
      {.x = (char *)"1", .y = (char *)"3", .op = (char *)">=", .expected = 0},
@@ -1954,7 +1954,7 @@ void test_satisfies(void)
     }
     i ++;
   }
-  printf_va_32("OK\n");
+  printf("OK\n"); /* printf_va_32 */
   return;
 }
 
@@ -1988,7 +1988,7 @@ void test_render(void)
 {
   int tmp;
   int tmp_0;
-  printf_va_33("\n# Test: %s\n",(char *)"render");
+  printf("\n# Test: %s\n",(char *)"render"); /* printf_va_33 */
   semver_t ver =
     {.major = 1,
      .minor = 5,
@@ -2013,7 +2013,7 @@ void test_render(void)
   tmp_0 = strcmp((char const *)(str2),"1.5.8-alpha.1+1232323");
   __FC_assert((tmp_0 == 0) != 0,"semver_test.c",520,
               "strcmp((char *) str2, \"1.5.8-alpha.1+1232323\") == 0");
-  printf_va_34("OK\n");
+  printf("OK\n"); /* printf_va_34 */
   return;
 }
 
@@ -2049,7 +2049,7 @@ void test_numeric(void)
   int tmp_0;
   int tmp_1;
   int tmp_2;
-  printf_va_35("\n# Test: %s\n",(char *)"numeric");
+  printf("\n# Test: %s\n",(char *)"numeric"); /* printf_va_35 */
   semver_t v0 =
     {.major = 0,
      .minor = 5,
@@ -2086,7 +2086,7 @@ void test_numeric(void)
   tmp_2 = semver_numeric(& v3);
   __FC_assert((tmp_2 == 1025) != 0,"semver_test.c",539,
               "semver_numeric(&v3) == 1025");
-  printf_va_36("OK\n");
+  printf("OK\n"); /* printf_va_36 */
   return;
 }
 
@@ -2118,7 +2118,7 @@ int printf_va_38(char const * __restrict format);
 
 void test_bump(void)
 {
-  printf_va_37("\n# Test: %s\n",(char *)"bump");
+  printf("\n# Test: %s\n",(char *)"bump"); /* printf_va_37 */
   semver_t ver =
     {.major = 1,
      .minor = 5,
@@ -2146,7 +2146,7 @@ void test_bump(void)
   semver_bump(& ver3);
   __FC_assert((ver3.major == 1) != 0,"semver_test.c",564,"ver3.major == 1");
   semver_free(& ver3);
-  printf_va_38("OK\n");
+  printf("OK\n"); /* printf_va_38 */
   return;
 }
 
@@ -2178,7 +2178,7 @@ int printf_va_40(char const * __restrict format);
 
 void test_bump_minor(void)
 {
-  printf_va_39("\n# Test: %s\n",(char *)"bump_minor");
+  printf("\n# Test: %s\n",(char *)"bump_minor"); /* printf_va_39 */
   semver_t ver =
     {.major = 1,
      .minor = 5,
@@ -2197,7 +2197,7 @@ void test_bump_minor(void)
   semver_bump_minor(& ver2);
   __FC_assert((ver2.minor == 1) != 0,"semver_test.c",581,"ver2.minor == 1");
   semver_free(& ver2);
-  printf_va_40("OK\n");
+  printf("OK\n"); /* printf_va_40 */
   return;
 }
 
@@ -2229,7 +2229,7 @@ int printf_va_42(char const * __restrict format);
 
 void test_bump_patch(void)
 {
-  printf_va_41("\n# Test: %s\n",(char *)"bump_patch");
+  printf("\n# Test: %s\n",(char *)"bump_patch"); /* printf_va_41 */
   semver_t ver =
     {.major = 1,
      .minor = 5,
@@ -2248,7 +2248,7 @@ void test_bump_patch(void)
   semver_bump_patch(& ver2);
   __FC_assert((ver2.patch == 1) != 0,"semver_test.c",598,"ver2.patch == 1");
   semver_free(& ver2);
-  printf_va_42("OK\n");
+  printf("OK\n"); /* printf_va_42 */
   return;
 }
 
@@ -2280,7 +2280,7 @@ int printf_va_44(char const * __restrict format);
 
 void test_free(void)
 {
-  printf_va_43("\n# Test: %s\n",(char *)"free");
+  printf("\n# Test: %s\n",(char *)"free"); /* printf_va_43 */
   semver_t ver =
     {.major = 0,
      .minor = 0,
@@ -2305,7 +2305,7 @@ void test_free(void)
   semver_free(& ver2);
   __FC_assert((ver2.prerelease == (char *)0) != 0,"semver_test.c",624,
               "ver2.prerelease == NULL");
-  printf_va_44("OK\n");
+  printf("OK\n"); /* printf_va_44 */
   return;
 }
 
@@ -2338,7 +2338,7 @@ int printf_va_46(char const * __restrict format);
 void test_valid_chars(void)
 {
   int valid;
-  printf_va_45("\n# Test: %s\n",(char *)"valid_chars");
+  printf("\n# Test: %s\n",(char *)"valid_chars"); /* printf_va_45 */
   valid = semver_is_valid("1");
   __FC_assert((valid == 1) != 0,"semver_test.c",640,"valid == 1");
   valid = semver_is_valid("159");
@@ -2349,7 +2349,7 @@ void test_valid_chars(void)
   __FC_assert((valid == 0) != 0,"semver_test.c",649,"valid == 0");
   valid = semver_is_valid("&3@(");
   __FC_assert((valid == 0) != 0,"semver_test.c",652,"valid == 0");
-  printf_va_46("OK\n");
+  printf("OK\n"); /* printf_va_46 */
   return;
 }
 
@@ -2384,7 +2384,7 @@ void test_clean(void)
   int error;
   int tmp;
   int tmp_0;
-  printf_va_47("\n# Test: %s\n",(char *)"clean");
+  printf("\n# Test: %s\n",(char *)"clean"); /* printf_va_47 */
   char str[6] =
     {(char)'1', (char)'.', (char)'2', (char)'.', (char)'3', (char)'\000'};
   error = semver_clean(str);
@@ -2427,7 +2427,7 @@ void test_clean(void)
   __FC_assert((tmp_0 == 0) != 0,"semver_test.c",670,
               "strcmp(str2, \"1.2.3-beta.alpha+1234\") == 0");
   __FC_assert((error == 0) != 0,"semver_test.c",671,"error == 0");
-  printf_va_48("OK\n");
+  printf("OK\n"); /* printf_va_48 */
   return;
 }
 

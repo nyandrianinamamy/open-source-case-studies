@@ -44,7 +44,7 @@ int main(void)
     *p = (unsigned char)'D';
     g(& s.c,& s.f);
     unsigned char c4 = *p;
-    printf_va_1("c4=%c\n",(int)c4);
+    printf("c4=%c\n",(int)c4); /* printf_va_1 */
   }
   __retres = 0;
   return __retres;

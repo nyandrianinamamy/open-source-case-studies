@@ -70,16 +70,16 @@ int main(void)
   {
     int j = 1;
     pj = & j;
-    printf_va_1("pj=%p  &pj=%p\n",(void *)pj,(void *)(& pj));
+    printf("pj=%p  &pj=%p\n",(void *)pj,(void *)(& pj)); /* printf_va_1 */
   }
   {
     int k = 2;
     pk = & k;
-    printf_va_2("pk=%p  \n",(void *)pk);
+    printf("pk=%p  \n",(void *)pk); /* printf_va_2 */
     *pj = 3;
-    printf_va_3("k=%i\n",k);
+    printf("k=%i\n",k); /* printf_va_3 */
   }
-  printf_va_4("pj=%p  &pj=%p\n",(void *)pj,(void *)(& pj));
+  printf("pj=%p  &pj=%p\n",(void *)pj,(void *)(& pj)); /* printf_va_4 */
   __retres = 0;
   return __retres;
 }

@@ -50,9 +50,9 @@ int main(void)
   uintptr_t i = (unsigned int)px;
   u.ui = i;
   int *p = u.p;
-  printf_va_1("Addresses: p=%p &x=%p\n",(void *)p,(void *)(& x));
+  printf("Addresses: p=%p &x=%p\n",(void *)p,(void *)(& x)); /* printf_va_1 */
   *p = 11;
-  printf_va_2("x=%d *p=%d\n",x,*p);
+  printf("x=%d *p=%d\n",x,*p); /* printf_va_2 */
   __retres = 0;
   return __retres;
 }

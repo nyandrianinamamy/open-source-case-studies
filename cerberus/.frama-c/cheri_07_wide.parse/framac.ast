@@ -48,9 +48,8 @@ int main(void)
   uintptr_t k = j;
   int *q = (int *)k;
   *q = 2;
-  printf_va_1("i=0x%x UINT_MAX=0x%x ULONG_MAX=0x%lx\n",i,4294967295U,
-              4294967295UL);
-  printf_va_2("x=%i  *q=%i\n",x,*q);
+  printf("i=0x%x UINT_MAX=0x%x ULONG_MAX=0x%lx\n",i,4294967295U,4294967295UL); /* printf_va_1 */
+  printf("x=%i  *q=%i\n",x,*q); /* printf_va_2 */
   __retres = 0;
   return __retres;
 }

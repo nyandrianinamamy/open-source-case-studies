@@ -40,8 +40,8 @@ int main(int c, char **v)
   unsigned char j;
   unsigned char *p = & j;
   if (c == 4) j = (unsigned char)1; else j = (unsigned char)((int)j * 2);
-  printf_va_1("j:%u ",(unsigned int)((int)j));
-  printf_va_2("c:%d\n",c);
+  printf("j:%u ",(unsigned int)((int)j)); /* printf_va_1 */
+  printf("c:%d\n",c); /* printf_va_2 */
   __retres = 0;
   return __retres;
 }

@@ -46,7 +46,7 @@ int main(void)
   unsigned int y;
   unsigned int x = (unsigned int)0x11223344;
   y = bswap(x);
-  printf_va_1("y=0x%x\n",y);
+  printf("y=0x%x\n",y); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

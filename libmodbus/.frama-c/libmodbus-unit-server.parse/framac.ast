@@ -1088,9 +1088,9 @@ static void _modbus_rtu_ioctl_rts(modbus_t *ctx, int on)
 {
   int flags;
   int fd = ctx->s;
-  __va_ioctl_ptr(fd,0x5415,(void *)(& flags));
+  ioctl(fd,0x5415,(void *)(& flags)); /* __va_ioctl_ptr */
   if (on) flags |= 0x004; else flags &= ~ 0x004;
-  __va_ioctl_ptr(fd,0x5418,(void *)(& flags));
+  ioctl(fd,0x5418,(void *)(& flags)); /* __va_ioctl_ptr */
   return;
 }
 
@@ -1113,8 +1113,7 @@ static ssize_t _modbus_rtu_send(modbus_t *ctx, uint8_t const *req,
   modbus_rtu_t *ctx_rtu = (modbus_rtu_t *)ctx->backend_data;
   if (ctx_rtu->rts != 0) {
     ssize_t size;
-    if (ctx->debug) fprintf_va_1(__fc_stderr,
-                                 "Sending request using RTS signal\n");
+    if (ctx->debug) fprintf(__fc_stderr,"Sending request using RTS signal\n"); /* fprintf_va_1 */
     (*(ctx_rtu->set_rts))(ctx,ctx_rtu->rts == 1);
     usleep((unsigned int)ctx_rtu->rts_delay);
     size = write(ctx->s,(void const *)req,(unsigned long)req_length);
@@ -1152,7 +1151,7 @@ static int _modbus_rtu_receive(modbus_t *ctx, uint8_t *req)
     _modbus_receive_msg(ctx,req,MSG_CONFIRMATION);
     ctx_rtu->confirmation_to_ignore = 0;
     rc = 0;
-    if (ctx->debug) printf_va_1("Confirmation to ignore\n");
+    if (ctx->debug) printf("Confirmation to ignore\n"); /* printf_va_1 */
   }
   else {
     rc = _modbus_receive_msg(ctx,req,MSG_INDICATION);
@@ -1192,9 +1191,9 @@ static int _modbus_rtu_pre_check_confirmation(modbus_t *ctx,
   int __retres;
   if ((int)*(req + 0) != (int)*(rsp + 0)) {
     if ((int)*(req + 0) != 0) {
-      if (ctx->debug) fprintf_va_2(__fc_stderr,
-                                   "The responding slave %d isn\'t the requested slave %d\n",
-                                   (int)*(rsp + 0),(int)*(req + 0));
+      if (ctx->debug) fprintf(__fc_stderr,
+                              "The responding slave %d isn\'t the requested slave %d\n",
+                              (int)*(rsp + 0),(int)*(req + 0)); /* fprintf_va_2 */
       __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 6;
       __retres = -1;
       goto return_label;
@@ -1247,8 +1246,8 @@ static int _modbus_rtu_check_integrity(modbus_t *ctx, uint8_t *msg,
   int slave = (int)*(msg + 0);
   if (slave != ctx->slave) 
     if (slave != 0) {
-      if (ctx->debug) printf_va_2("Request for slave %d ignored (not %d)\n",
-                                  slave,ctx->slave);
+      if (ctx->debug) printf("Request for slave %d ignored (not %d)\n",slave,
+                             ctx->slave); /* printf_va_2 */
       __retres = 0;
       goto return_label;
     }
@@ -1260,10 +1259,10 @@ static int _modbus_rtu_check_integrity(modbus_t *ctx, uint8_t *msg,
     goto return_label;
   }
   else {
-    if (ctx->debug) fprintf_va_3(__fc_stderr,
-                                 "ERROR CRC received 0x%0X != CRC calculated 0x%0X\n",
-                                 (unsigned int)((int)crc_received),
-                                 (unsigned int)((int)crc_calculated));
+    if (ctx->debug) fprintf(__fc_stderr,
+                            "ERROR CRC received 0x%0X != CRC calculated 0x%0X\n",
+                            (unsigned int)((int)crc_received),
+                            (unsigned int)((int)crc_calculated)); /* fprintf_va_3 */
     if (ctx->error_recovery & MODBUS_ERROR_RECOVERY_PROTOCOL) _modbus_rtu_flush
                                                               (ctx);
     __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 1;
@@ -1331,21 +1330,20 @@ static int _modbus_rtu_connect(modbus_t *ctx)
   int tmp_0;
   int tmp_2;
   modbus_rtu_t *ctx_rtu = (modbus_rtu_t *)ctx->backend_data;
-  if (ctx->debug) printf_va_3("Opening %s at %d bauds (%c, %d, %d)\n",
-                              ctx_rtu->device,ctx_rtu->baud,
-                              (int)ctx_rtu->parity,(int)ctx_rtu->data_bit,
-                              (int)ctx_rtu->stop_bit);
+  if (ctx->debug) printf("Opening %s at %d bauds (%c, %d, %d)\n",
+                         ctx_rtu->device,ctx_rtu->baud,(int)ctx_rtu->parity,
+                         (int)ctx_rtu->data_bit,(int)ctx_rtu->stop_bit); /* printf_va_3 */
   flags = ((2 | 0x100) | 0x800) | 0x80;
   flags |= 0x80000;
-  ctx->s = __va_open_void((char const *)ctx_rtu->device,flags);
+  ctx->s = open((char const *)ctx_rtu->device,flags); /* __va_open_void */
   if (ctx->s == -1) {
     if (ctx->debug) {
       char *tmp;
       tmp = strerror(__fc_errno);
       ;
       ;
-      fprintf_va_4(__fc_stderr,"ERROR Can\'t open the device %s (%s)\n",
-                   ctx_rtu->device,tmp);
+      fprintf(__fc_stderr,"ERROR Can\'t open the device %s (%s)\n",
+              ctx_rtu->device,tmp); /* fprintf_va_4 */
     }
     __retres = -1;
     goto return_label;
@@ -1400,9 +1398,9 @@ static int _modbus_rtu_connect(modbus_t *ctx)
     case 4000000: speed = (unsigned int)0010017;
     break;
     default: speed = (unsigned int)0000015;
-    if (ctx->debug) fprintf_va_5(__fc_stderr,
-                                 "WARNING Unknown baud rate %d for %s (B9600 used)\n",
-                                 ctx_rtu->baud,ctx_rtu->device);
+    if (ctx->debug) fprintf(__fc_stderr,
+                            "WARNING Unknown baud rate %d for %s (B9600 used)\n",
+                            ctx_rtu->baud,ctx_rtu->device); /* fprintf_va_5 */
   }
   tmp_0 = cfsetispeed(& tios,speed);
   if (tmp_0 < 0) goto _LOR;
@@ -1481,8 +1479,8 @@ int modbus_rtu_set_serial_mode(modbus_t *ctx, int mode)
     goto return_label;
   }
   if ((ctx->backend)->backend_type == (unsigned int)_MODBUS_BACKEND_TYPE_RTU) {
-    if (ctx->debug) fprintf_va_6(__fc_stderr,
-                                 "This function isn\'t supported on your platform\n");
+    if (ctx->debug) fprintf(__fc_stderr,
+                            "This function isn\'t supported on your platform\n"); /* fprintf_va_6 */
     __fc_errno = 95;
     __retres = -1;
     goto return_label;
@@ -1513,8 +1511,8 @@ int modbus_rtu_get_serial_mode(modbus_t *ctx)
     goto return_label;
   }
   if ((ctx->backend)->backend_type == (unsigned int)_MODBUS_BACKEND_TYPE_RTU) {
-    if (ctx->debug) fprintf_va_7(__fc_stderr,
-                                 "This function isn\'t supported on your platform\n");
+    if (ctx->debug) fprintf(__fc_stderr,
+                            "This function isn\'t supported on your platform\n"); /* fprintf_va_7 */
     __fc_errno = 95;
     __retres = -1;
     goto return_label;
@@ -1693,8 +1691,8 @@ static int _modbus_rtu_select(modbus_t *ctx, fd_set *rset,
     s_rc = select(ctx->s + 1,rset,(fd_set *)0,(fd_set *)0,tv);
     if (! (s_rc == -1)) break;
     if (__fc_errno == 4) {
-      if (ctx->debug) fprintf_va_8(__fc_stderr,
-                                   "A non blocked signal was caught\n");
+      if (ctx->debug) fprintf(__fc_stderr,
+                              "A non blocked signal was caught\n"); /* fprintf_va_8 */
       FD_ZERO(rset);
       FD_SET(ctx->s,rset);
     }
@@ -1778,14 +1776,14 @@ modbus_t *modbus_new_rtu(char const *device, int baud, char parity,
     if ((int)*device == 0) {
       _LOR:
       {
-        fprintf_va_9(__fc_stderr,"The device string is empty\n");
+        fprintf(__fc_stderr,"The device string is empty\n"); /* fprintf_va_9 */
         __fc_errno = 22;
         __retres = (modbus_t *)0;
         goto return_label;
       }
     }
   if (baud == 0) {
-    fprintf_va_10(__fc_stderr,"The baud rate value must not be zero\n");
+    fprintf(__fc_stderr,"The baud rate value must not be zero\n"); /* fprintf_va_10 */
     __fc_errno = 22;
     __retres = (modbus_t *)0;
     goto return_label;
@@ -1959,12 +1957,12 @@ static int _modbus_tcp_pre_check_confirmation(modbus_t *ctx,
     if ((int)*(req + 1) != (int)*(rsp + 1)) {
       _LOR:
       {
-        if (ctx->debug) fprintf_va_11(__fc_stderr,
-                                      "Invalid transaction ID received 0x%X (not 0x%X)\n",
-                                      (unsigned int)(((int)*(rsp + 0) << 8) + (int)*(
-                                                     rsp + 1)),
-                                      (unsigned int)(((int)*(req + 0) << 8) + (int)*(
-                                                     req + 1)));
+        if (ctx->debug) fprintf(__fc_stderr,
+                                "Invalid transaction ID received 0x%X (not 0x%X)\n",
+                                (unsigned int)(((int)*(rsp + 0) << 8) + (int)*(
+                                               rsp + 1)),
+                                (unsigned int)(((int)*(req + 0) << 8) + (int)*(
+                                               req + 1))); /* fprintf_va_11 */
         __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 2;
         __retres = -1;
         goto return_label;
@@ -1972,10 +1970,10 @@ static int _modbus_tcp_pre_check_confirmation(modbus_t *ctx,
     }
   if ((int)*(rsp + 2) != 0x0) 
     if ((int)*(rsp + 3) != 0x0) {
-      if (ctx->debug) fprintf_va_12(__fc_stderr,
-                                    "Invalid protocol ID received 0x%X (not 0x0)\n",
-                                    (unsigned int)(((int)*(rsp + 2) << 8) + (int)*(
-                                                   rsp + 3)));
+      if (ctx->debug) fprintf(__fc_stderr,
+                              "Invalid protocol ID received 0x%X (not 0x0)\n",
+                              (unsigned int)(((int)*(rsp + 2) << 8) + (int)*(
+                                             rsp + 3))); /* fprintf_va_12 */
       __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 2;
       __retres = -1;
       goto return_label;
@@ -2080,8 +2078,7 @@ static int _modbus_tcp_connect(modbus_t *ctx)
     __retres = -1;
     goto return_label;
   }
-  if (ctx->debug) printf_va_4("Connecting to %s:%d\n",ctx_tcp->ip,
-                              ctx_tcp->port);
+  if (ctx->debug) printf("Connecting to %s:%d\n",ctx_tcp->ip,ctx_tcp->port); /* printf_va_4 */
   addr.sin_family = (unsigned short)2;
   addr.sin_port = htons((unsigned short)ctx_tcp->port);
   addr.sin_addr.s_addr = inet_addr((char const *)(ctx_tcp->ip));
@@ -2152,8 +2149,7 @@ static int _modbus_tcp_pi_connect(modbus_t *ctx)
       char const *tmp;
       tmp = gai_strerror(rc);
       ;
-      fprintf_va_13(__fc_stderr,"Error returned by getaddrinfo: %s\n",
-                    (char *)tmp);
+      fprintf(__fc_stderr,"Error returned by getaddrinfo: %s\n",(char *)tmp); /* fprintf_va_13 */
     }
     __fc_errno = 111;
     __retres = -1;
@@ -2168,8 +2164,8 @@ static int _modbus_tcp_pi_connect(modbus_t *ctx)
       s = socket(ai_ptr->ai_family,flags,ai_ptr->ai_protocol);
       if (s < 0) goto __Cont;
       if (ai_ptr->ai_family == 2) _modbus_tcp_set_ipv4_options(s);
-      if (ctx->debug) printf_va_5("Connecting to [%s]:%s\n",ctx_tcp_pi->node,
-                                  ctx_tcp_pi->service);
+      if (ctx->debug) printf("Connecting to [%s]:%s\n",ctx_tcp_pi->node,
+                             ctx_tcp_pi->service); /* printf_va_5 */
       rc = _connect(s,(struct sockaddr const *)ai_ptr->ai_addr,
                     ai_ptr->ai_addrlen,
                     (struct timeval const *)(& ctx->response_timeout));
@@ -2320,8 +2316,7 @@ int modbus_tcp_pi_listen(modbus_t *ctx, int nb_connection)
       char const *tmp;
       tmp = gai_strerror(rc);
       ;
-      fprintf_va_14(__fc_stderr,"Error returned by getaddrinfo: %s\n",
-                    (char *)tmp);
+      fprintf(__fc_stderr,"Error returned by getaddrinfo: %s\n",(char *)tmp); /* fprintf_va_14 */
     }
     __fc_errno = 111;
     __retres = -1;
@@ -2407,7 +2402,7 @@ int modbus_tcp_accept(modbus_t *ctx, int *s)
   if (ctx->debug) {
     char *tmp;
     tmp = inet_ntoa(addr.sin_addr);
-    printf_va_6("The client connection from %s is accepted\n",tmp);
+    printf("The client connection from %s is accepted\n",tmp); /* printf_va_6 */
   }
   __retres = ctx->s;
   return_label: return __retres;
@@ -2441,7 +2436,7 @@ int modbus_tcp_pi_accept(modbus_t *ctx, int *s)
     __retres = -1;
     goto return_label;
   }
-  if (ctx->debug) printf_va_7("The client connection is accepted.\n");
+  if (ctx->debug) printf("The client connection is accepted.\n"); /* printf_va_7 */
   __retres = ctx->s;
   return_label: return __retres;
 }
@@ -2467,8 +2462,8 @@ static int _modbus_tcp_select(modbus_t *ctx, fd_set *rset,
     s_rc = select(ctx->s + 1,rset,(fd_set *)0,(fd_set *)0,tv);
     if (! (s_rc == -1)) break;
     if (__fc_errno == 4) {
-      if (ctx->debug) fprintf_va_15(__fc_stderr,
-                                    "A non blocked signal was caught\n");
+      if (ctx->debug) fprintf(__fc_stderr,
+                              "A non blocked signal was caught\n"); /* fprintf_va_15 */
       FD_ZERO(rset);
       FD_SET(ctx->s,rset);
     }
@@ -2579,14 +2574,14 @@ modbus_t *modbus_new_tcp(char const *ip, int port)
     dest_size = sizeof(char) * (unsigned long)16;
     ret_size = strlcpy(ctx_tcp->ip,ip,dest_size);
     if (ret_size == (size_t)0) {
-      fprintf_va_16(__fc_stderr,"The IP string is empty\n");
+      fprintf(__fc_stderr,"The IP string is empty\n"); /* fprintf_va_16 */
       modbus_free(ctx);
       __fc_errno = 22;
       __retres = (modbus_t *)0;
       goto return_label;
     }
     if (ret_size >= dest_size) {
-      fprintf_va_17(__fc_stderr,"The IP string has been truncated\n");
+      fprintf(__fc_stderr,"The IP string has been truncated\n"); /* fprintf_va_17 */
       modbus_free(ctx);
       __fc_errno = 22;
       __retres = (modbus_t *)0;
@@ -2666,14 +2661,14 @@ modbus_t *modbus_new_tcp_pi(char const *node, char const *service)
     dest_size = sizeof(char) * (unsigned long)1025;
     ret_size = strlcpy(ctx_tcp_pi->node,node,dest_size);
     if (ret_size == (size_t)0) {
-      fprintf_va_18(__fc_stderr,"The node string is empty\n");
+      fprintf(__fc_stderr,"The node string is empty\n"); /* fprintf_va_18 */
       modbus_free(ctx);
       __fc_errno = 22;
       __retres = (modbus_t *)0;
       goto return_label;
     }
     if (ret_size >= dest_size) {
-      fprintf_va_19(__fc_stderr,"The node string has been truncated\n");
+      fprintf(__fc_stderr,"The node string has been truncated\n"); /* fprintf_va_19 */
       modbus_free(ctx);
       __fc_errno = 22;
       __retres = (modbus_t *)0;
@@ -2686,14 +2681,14 @@ modbus_t *modbus_new_tcp_pi(char const *node, char const *service)
   }
   else ret_size = (unsigned long)0;
   if (ret_size == (size_t)0) {
-    fprintf_va_20(__fc_stderr,"The service string is empty\n");
+    fprintf(__fc_stderr,"The service string is empty\n"); /* fprintf_va_20 */
     modbus_free(ctx);
     __fc_errno = 22;
     __retres = (modbus_t *)0;
     goto return_label;
   }
   if (ret_size >= dest_size) {
-    fprintf_va_21(__fc_stderr,"The service string has been truncated\n");
+    fprintf(__fc_stderr,"The service string has been truncated\n"); /* fprintf_va_21 */
     modbus_free(ctx);
     __fc_errno = 22;
     __retres = (modbus_t *)0;
@@ -2809,10 +2804,10 @@ void _error_print(modbus_t *ctx, char const *context)
     char const *tmp;
     tmp = modbus_strerror(__fc_errno);
     ;
-    fprintf_va_22(__fc_stderr,"ERROR %s",(char *)tmp);
-    if (context != (char const *)0) fprintf_va_23(__fc_stderr,": %s\n",
-                                                  (char *)context);
-    else fprintf_va_24(__fc_stderr,"\n");
+    fprintf(__fc_stderr,"ERROR %s",(char *)tmp); /* fprintf_va_22 */
+    if (context != (char const *)0) fprintf(__fc_stderr,": %s\n",
+                                            (char *)context); /* fprintf_va_23 */
+    else fprintf(__fc_stderr,"\n"); /* fprintf_va_24 */
   }
   return;
 }
@@ -2859,7 +2854,7 @@ int modbus_flush(modbus_t *ctx)
   }
   rc = (*((ctx->backend)->flush))(ctx);
   if (rc != -1) 
-    if (ctx->debug) printf_va_8("Bytes flushed (%d)\n",rc);
+    if (ctx->debug) printf("Bytes flushed (%d)\n",rc); /* printf_va_8 */
   __retres = rc;
   return_label: return __retres;
 }
@@ -2931,10 +2926,10 @@ static int send_msg(modbus_t *ctx, uint8_t *msg, int msg_length)
     i = 0;
     /*@ loop unroll 260; */
     while (i < msg_length) {
-      printf_va_9("[%.2X]",(unsigned int)((int)*(msg + i)));
+      printf("[%.2X]",(unsigned int)((int)*(msg + i))); /* printf_va_9 */
       i ++;
     }
-    printf_va_10("\n");
+    printf("\n"); /* printf_va_10 */
   }
   while (1) {
     {
@@ -3132,8 +3127,8 @@ int _modbus_receive_msg(modbus_t *ctx, uint8_t *msg, msg_type_t msg_type)
   int tmp_1;
   int msg_length = 0;
   if (ctx->debug) 
-    if (msg_type == (unsigned int)MSG_INDICATION) printf_va_11("Waiting for a indication...\n");
-    else printf_va_12("Waiting for a confirmation...\n");
+    if (msg_type == (unsigned int)MSG_INDICATION) printf("Waiting for a indication...\n"); /* printf_va_11 */
+    else printf("Waiting for a confirmation...\n"); /* printf_va_12 */
   FD_ZERO(& rset);
   FD_SET(ctx->s,& rset);
   step = _STEP_FUNCTION;
@@ -3194,7 +3189,7 @@ int _modbus_receive_msg(modbus_t *ctx, uint8_t *msg, msg_type_t msg_type)
       int i;
       i = 0;
       while (i < rc) {
-        printf_va_13("<%.2X>",(unsigned int)((int)*(msg + (msg_length + i))));
+        printf("<%.2X>",(unsigned int)((int)*(msg + (msg_length + i)))); /* printf_va_13 */
         i ++;
       }
     }
@@ -3237,7 +3232,7 @@ int _modbus_receive_msg(modbus_t *ctx, uint8_t *msg, msg_type_t msg_type)
           }
         }
   }
-  if (ctx->debug) printf_va_14("\n");
+  if (ctx->debug) printf("\n"); /* printf_va_14 */
   tmp_1 = (*((ctx->backend)->check_integrity))(ctx,msg,msg_length);
   __retres = tmp_1;
   return_label: return __retres;
@@ -3367,10 +3362,10 @@ static int check_confirmation(modbus_t *ctx, uint8_t *req, uint8_t *rsp,
         int req_nb_value;
         int rsp_nb_value;
         if (function != (int)*(req + offset)) {
-          if (ctx->debug) fprintf_va_25(__fc_stderr,
-                                        "Received function not corresponding to the request (0x%X != 0x%X)\n",
-                                        (unsigned int)function,
-                                        (unsigned int)((int)*(req + offset)));
+          if (ctx->debug) fprintf(__fc_stderr,
+                                  "Received function not corresponding to the request (0x%X != 0x%X)\n",
+                                  (unsigned int)function,
+                                  (unsigned int)((int)*(req + offset))); /* fprintf_va_25 */
           if (ctx->error_recovery & MODBUS_ERROR_RECOVERY_PROTOCOL) {
             _sleep_response_timeout(ctx);
             modbus_flush(ctx);
@@ -3413,9 +3408,9 @@ static int check_confirmation(modbus_t *ctx, uint8_t *req, uint8_t *rsp,
         }
         if (req_nb_value == rsp_nb_value) rc = rsp_nb_value;
         else {
-          if (ctx->debug) fprintf_va_26(__fc_stderr,
-                                        "Quantity not corresponding to the request (%d != %d)\n",
-                                        rsp_nb_value,req_nb_value);
+          if (ctx->debug) fprintf(__fc_stderr,
+                                  "Quantity not corresponding to the request (%d != %d)\n",
+                                  rsp_nb_value,req_nb_value); /* fprintf_va_26 */
           if (ctx->error_recovery & MODBUS_ERROR_RECOVERY_PROTOCOL) {
             _sleep_response_timeout(ctx);
             modbus_flush(ctx);
@@ -3429,9 +3424,9 @@ static int check_confirmation(modbus_t *ctx, uint8_t *req, uint8_t *rsp,
     else {
       _LAND_0:
       {
-        if (ctx->debug) fprintf_va_27(__fc_stderr,
-                                      "Message length not corresponding to the computed length (%d != %d)\n",
-                                      rsp_length,rsp_length_computed);
+        if (ctx->debug) fprintf(__fc_stderr,
+                                "Message length not corresponding to the computed length (%d != %d)\n",
+                                rsp_length,rsp_length_computed); /* fprintf_va_27 */
         if (ctx->error_recovery & MODBUS_ERROR_RECOVERY_PROTOCOL) {
           _sleep_response_timeout(ctx);
           modbus_flush(ctx);
@@ -3909,7 +3904,7 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
     }
     break;
     case 0x07: ;
-    if (ctx->debug) fprintf_va_28(__fc_stderr,"FIXME Not implemented\n");
+    if (ctx->debug) fprintf(__fc_stderr,"FIXME Not implemented\n"); /* fprintf_va_28 */
     __fc_errno = 92;
     __retres = -1;
     goto return_label;
@@ -4192,9 +4187,9 @@ int modbus_read_bits(modbus_t *ctx, int addr, int nb, uint8_t *dest)
     goto return_label;
   }
   if (nb > 2000) {
-    if (ctx->debug) fprintf_va_29(__fc_stderr,
-                                  "ERROR Too many bits requested (%d > %d)\n",
-                                  nb,2000);
+    if (ctx->debug) fprintf(__fc_stderr,
+                            "ERROR Too many bits requested (%d > %d)\n",nb,
+                            2000); /* fprintf_va_29 */
     __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 5;
     __retres = -1;
     goto return_label;
@@ -4235,9 +4230,9 @@ int modbus_read_input_bits(modbus_t *ctx, int addr, int nb, uint8_t *dest)
     goto return_label;
   }
   if (nb > 2000) {
-    if (ctx->debug) fprintf_va_30(__fc_stderr,
-                                  "ERROR Too many discrete inputs requested (%d > %d)\n",
-                                  nb,2000);
+    if (ctx->debug) fprintf(__fc_stderr,
+                            "ERROR Too many discrete inputs requested (%d > %d)\n",
+                            nb,2000); /* fprintf_va_30 */
     __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 5;
     __retres = -1;
     goto return_label;
@@ -4277,9 +4272,9 @@ static int read_registers(modbus_t *ctx, int function, int addr, int nb,
   uint8_t req[12];
   uint8_t rsp[260];
   if (nb > 125) {
-    if (ctx->debug) fprintf_va_31(__fc_stderr,
-                                  "ERROR Too many registers requested (%d > %d)\n",
-                                  nb,125);
+    if (ctx->debug) fprintf(__fc_stderr,
+                            "ERROR Too many registers requested (%d > %d)\n",
+                            nb,125); /* fprintf_va_31 */
     __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 5;
     __retres = -1;
     goto return_label;
@@ -4337,9 +4332,9 @@ int modbus_read_registers(modbus_t *ctx, int addr, int nb, uint16_t *dest)
     goto return_label;
   }
   if (nb > 125) {
-    if (ctx->debug) fprintf_va_32(__fc_stderr,
-                                  "ERROR Too many registers requested (%d > %d)\n",
-                                  nb,125);
+    if (ctx->debug) fprintf(__fc_stderr,
+                            "ERROR Too many registers requested (%d > %d)\n",
+                            nb,125); /* fprintf_va_32 */
     __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 5;
     __retres = -1;
     goto return_label;
@@ -4374,9 +4369,8 @@ int modbus_read_input_registers(modbus_t *ctx, int addr, int nb,
     goto return_label;
   }
   if (nb > 125) {
-    fprintf_va_33(__fc_stderr,
-                  "ERROR Too many input registers requested (%d > %d)\n",nb,
-                  125);
+    fprintf(__fc_stderr,
+            "ERROR Too many input registers requested (%d > %d)\n",nb,125); /* fprintf_va_33 */
     __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 5;
     __retres = -1;
     goto return_label;
@@ -4477,9 +4471,9 @@ int modbus_write_bits(modbus_t *ctx, int addr, int nb, uint8_t const *src)
     goto return_label;
   }
   if (nb > 1968) {
-    if (ctx->debug) fprintf_va_34(__fc_stderr,
-                                  "ERROR Writing too many bits (%d > %d)\n",
-                                  nb,1968);
+    if (ctx->debug) fprintf(__fc_stderr,
+                            "ERROR Writing too many bits (%d > %d)\n",nb,
+                            1968); /* fprintf_va_34 */
     __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 5;
     __retres = -1;
     goto return_label;
@@ -4564,9 +4558,9 @@ int modbus_write_registers(modbus_t *ctx, int addr, int nb,
     goto return_label;
   }
   if (nb > 123) {
-    if (ctx->debug) fprintf_va_35(__fc_stderr,
-                                  "ERROR Trying to write to too many registers (%d > %d)\n",
-                                  nb,123);
+    if (ctx->debug) fprintf(__fc_stderr,
+                            "ERROR Trying to write to too many registers (%d > %d)\n",
+                            nb,123); /* fprintf_va_35 */
     __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 5;
     __retres = -1;
     goto return_label;
@@ -4695,17 +4689,17 @@ int modbus_write_and_read_registers(modbus_t *ctx, int write_addr,
     goto return_label;
   }
   if (write_nb > 121) {
-    if (ctx->debug) fprintf_va_36(__fc_stderr,
-                                  "ERROR Too many registers to write (%d > %d)\n",
-                                  write_nb,121);
+    if (ctx->debug) fprintf(__fc_stderr,
+                            "ERROR Too many registers to write (%d > %d)\n",
+                            write_nb,121); /* fprintf_va_36 */
     __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 5;
     __retres = -1;
     goto return_label;
   }
   if (read_nb > 125) {
-    if (ctx->debug) fprintf_va_37(__fc_stderr,
-                                  "ERROR Too many registers requested (%d > %d)\n",
-                                  read_nb,125);
+    if (ctx->debug) fprintf(__fc_stderr,
+                            "ERROR Too many registers requested (%d > %d)\n",
+                            read_nb,125); /* fprintf_va_37 */
     __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 5;
     __retres = -1;
     goto return_label;
@@ -5309,8 +5303,8 @@ int main(int argc, char **argv)
         tmp = strcmp((char const *)*(argv + 1),"rtu");
         if (tmp == 0) use_backend = RTU;
         else {
-          printf_va_15("Usage:\n  %s [tcp|tcppi|rtu] - Modbus server for unit testing\n\n",
-                       *(argv + 0));
+          printf("Usage:\n  %s [tcp|tcppi|rtu] - Modbus server for unit testing\n\n",
+                 *(argv + 0)); /* printf_va_15 */
           __retres = -1;
           goto return_label;
         }
@@ -5346,8 +5340,7 @@ int main(int argc, char **argv)
     char const *tmp_2;
     tmp_2 = modbus_strerror(__fc_errno);
     ;
-    fprintf_va_38(__fc_stderr,"Failed to allocate the mapping: %s\n",
-                  (char *)tmp_2);
+    fprintf(__fc_stderr,"Failed to allocate the mapping: %s\n",(char *)tmp_2); /* fprintf_va_38 */
     modbus_free(ctx);
     __retres = -1;
     goto return_label;
@@ -5375,7 +5368,7 @@ int main(int argc, char **argv)
         char const *tmp_3;
         tmp_3 = modbus_strerror(__fc_errno);
         ;
-        fprintf_va_39(__fc_stderr,"Unable to connect %s\n",(char *)tmp_3);
+        fprintf(__fc_stderr,"Unable to connect %s\n",(char *)tmp_3); /* fprintf_va_39 */
         modbus_free(ctx);
         __retres = -1;
         goto return_label;
@@ -5392,14 +5385,14 @@ int main(int argc, char **argv)
     if ((int)*(query + header_length) == 0x03) 
       if (((int)*(query + (header_length + 3)) << 8) + (int)*(query + (
                                                               (header_length + 3) + 1)) == (int)UT_REGISTERS_NB_SPECIAL) {
-        printf_va_16("Set an incorrect number of values\n");
+        printf("Set an incorrect number of values\n"); /* printf_va_16 */
         *(query + (header_length + 3)) = (unsigned char)(((int)UT_REGISTERS_NB_SPECIAL - 1) >> 8);
         *(query + ((header_length + 3) + 1)) = (unsigned char)(((int)UT_REGISTERS_NB_SPECIAL - 1) & 0xFF);
       }
       else 
         if (((int)*(query + (header_length + 1)) << 8) + (int)*(query + (
                                                                 (header_length + 1) + 1)) == (int)UT_REGISTERS_ADDRESS_SPECIAL) {
-          printf_va_17("Reply to this special register address by an exception\n");
+          printf("Reply to this special register address by an exception\n"); /* printf_va_17 */
           modbus_reply_exception(ctx,(uint8_t const *)query,
                                  (unsigned int)MODBUS_EXCEPTION_SLAVE_OR_SERVER_BUSY);
           goto __Cont;
@@ -5416,7 +5409,7 @@ int main(int argc, char **argv)
                (unsigned char)0x02,
                (unsigned char)0x00,
                (unsigned char)0x00};
-            printf_va_18("Reply with an invalid TID or slave\n");
+            printf("Reply with an invalid TID or slave\n"); /* printf_va_18 */
             modbus_send_raw_request(ctx,raw_req,
                                     (int)((unsigned long)RAW_REQ_LENGTH * sizeof(uint8_t)));
             goto __Cont;
@@ -5425,7 +5418,7 @@ int main(int argc, char **argv)
             if (((int)*(query + (header_length + 1)) << 8) + (int)*(query + (
                                                                     (
                                                                     header_length + 1) + 1)) == (int)UT_REGISTERS_ADDRESS_SLEEP_500_MS) {
-              printf_va_19("Sleep 0.5 s before replying\n");
+              printf("Sleep 0.5 s before replying\n"); /* printf_va_19 */
               usleep((unsigned int)500000);
             }
             else 
@@ -5447,8 +5440,8 @@ int main(int argc, char **argv)
                 int req_length = 11;
                 int w_s = modbus_get_socket(ctx);
                 if (w_s == -1) {
-                  fprintf_va_40(__fc_stderr,
-                                "Unable to get a valid socket in special test\n");
+                  fprintf(__fc_stderr,
+                          "Unable to get a valid socket in special test\n"); /* fprintf_va_40 */
                   goto __Cont;
                 }
                 req[1] = *(query + 1);
@@ -5456,7 +5449,7 @@ int main(int argc, char **argv)
                 while (i < req_length) {
                   {
                     ssize_t tmp_6;
-                    printf_va_20("(%.2X)",(unsigned int)((int)req[i]));
+                    printf("(%.2X)",(unsigned int)((int)req[i])); /* printf_va_20 */
                     usleep((unsigned int)5000);
                     tmp_6 = send(w_s,(void const *)(& req[i]),
                                  (unsigned long)1,0x4000);
@@ -5472,7 +5465,7 @@ int main(int argc, char **argv)
     __Cont: ;
   }
   tmp_7 = modbus_strerror(__fc_errno);
-  printf_va_21("Quit the loop: %s\n",(char *)tmp_7);
+  printf("Quit the loop: %s\n",(char *)tmp_7); /* printf_va_21 */
   if (use_backend == TCP) 
     if (s != -1) close(s);
   modbus_mapping_free(mb_mapping);

@@ -64,7 +64,7 @@ int main(void)
   char const *tmp_4;
   int *p = & x;
   FILE *f = fopen("provenance_via_io_bytewise_global.tmp","w+b");
-  printf_va_1("Addresses: p=%p\n",(void *)p);
+  printf("Addresses: p=%p\n",(void *)p); /* printf_va_1 */
   tmp_0 = fwrite((void const *)(& p),(unsigned int)1,sizeof(int *),f);
   int nw = (int)tmp_0;
   if ((unsigned int)nw != sizeof(int *)) exit(1);
@@ -72,7 +72,7 @@ int main(void)
   tmp_1 = fread((void *)(& r),(unsigned int)1,sizeof(int *),f);
   int nr = (int)tmp_1;
   if ((unsigned int)nr != sizeof(int *)) exit(1);
-  printf_va_2("Addresses: r=%p\n",(void *)r);
+  printf("Addresses: r=%p\n",(void *)r); /* printf_va_2 */
   *r = 12;
   _Bool b1 = (_Bool)(r == p);
   tmp_2 = memcmp((void const *)(& r),(void const *)(& p),sizeof(r));
@@ -81,7 +81,7 @@ int main(void)
   if (b1) tmp_4 = "true"; else tmp_4 = "false";
   ;
   ;
-  printf_va_3("x=%i *r=%i b1=%s b2=%s\n",x,*r,(char *)tmp_4,(char *)tmp_3);
+  printf("x=%i *r=%i b1=%s b2=%s\n",x,*r,(char *)tmp_4,(char *)tmp_3); /* printf_va_3 */
   __retres = 0;
   return __retres;
 }

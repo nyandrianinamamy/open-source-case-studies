@@ -896,7 +896,7 @@ int printf_va_1(char const * __restrict format, int param0);
 
 void TST_Fail(int line)
 {
-  printf_va_1("FAIL (on line %d)\n",line);
+  printf("FAIL (on line %d)\n",line); /* printf_va_1 */
   exit(1);
   return;
 }
@@ -962,10 +962,11 @@ int main(int argc, char **argv)
         int tmp;
         tmp = strcmp((char const *)*(argv + i),"-s");
         if (tmp) {
-          _LAND: {
-                   fprintf_va_1(__fc_stderr,"Unknown option\n");
-                   exit(1);
-                 }
+          _LAND:
+          {
+            fprintf(__fc_stderr,"Unknown option\n"); /* fprintf_va_1 */
+            exit(1);
+          }
         }
         else 
           if (i + 1 < argc) {
@@ -983,12 +984,12 @@ int main(int argc, char **argv)
   if (seed) tmp_1 = (long)seed;
   else tmp_1 = tv.tv_sec ^ (long)(tv.tv_usec << 10);
   srandom((unsigned int)tmp_1);
-  printf_va_2("Testing %-30s ",test_name);
+  printf("Testing %-30s ",test_name); /* printf_va_2 */
   fflush(__fc_stdout);
   LOG_Initialise();
   test_unit();
   LOG_Finalise();
-  printf_va_3("PASS\n");
+  printf("PASS\n"); /* printf_va_3 */
   __retres = 0;
   return __retres;
 }
@@ -3022,11 +3023,11 @@ int CPS_ParseNTPSourceAdd(char *line, CPS_NTP_Source *src)
                                                         }
                                                         else {
                                                           int tmp_16;
-                                                          tmp_16 = sscanf_va_1
+                                                          tmp_16 = sscanf
                                                           ((char const *)line,
                                                            "%d%n",
                                                            & src->params.version,
-                                                           & n);
+                                                           & n); /* sscanf_va_1 */
                                                           if (tmp_16 != 1) {
                                                             __retres = 0;
                                                             goto return_label;
@@ -3035,11 +3036,11 @@ int CPS_ParseNTPSourceAdd(char *line, CPS_NTP_Source *src)
                                                       }
                                                       else {
                                                         int tmp_15;
-                                                        tmp_15 = sscanf_va_2
+                                                        tmp_15 = sscanf
                                                         ((char const *)line,
                                                          "%d%n",
                                                          & src->params.presend_minpoll,
-                                                         & n);
+                                                         & n); /* sscanf_va_2 */
                                                         if (tmp_15 != 1) {
                                                           __retres = 0;
                                                           goto return_label;
@@ -3048,11 +3049,11 @@ int CPS_ParseNTPSourceAdd(char *line, CPS_NTP_Source *src)
                                                     }
                                                     else {
                                                       int tmp_14;
-                                                      tmp_14 = sscanf_va_3
+                                                      tmp_14 = sscanf
                                                       ((char const *)line,
                                                        "%d%n",
                                                        & src->params.poll_target,
-                                                       & n);
+                                                       & n); /* sscanf_va_3 */
                                                       if (tmp_14 != 1) {
                                                         __retres = 0;
                                                         goto return_label;
@@ -3061,9 +3062,10 @@ int CPS_ParseNTPSourceAdd(char *line, CPS_NTP_Source *src)
                                                   }
                                                   else {
                                                     int tmp_13;
-                                                    tmp_13 = sscanf_va_4
-                                                    ((char const *)line,
-                                                     "%hu%n",& src->port,& n);
+                                                    tmp_13 = sscanf((char const *)line,
+                                                                    "%hu%n",
+                                                                    & src->port,
+                                                                    & n); /* sscanf_va_4 */
                                                     if (tmp_13 != 1) {
                                                       __retres = 0;
                                                       goto return_label;
@@ -3072,10 +3074,10 @@ int CPS_ParseNTPSourceAdd(char *line, CPS_NTP_Source *src)
                                                 }
                                                 else {
                                                   int tmp_12;
-                                                  tmp_12 = sscanf_va_5
-                                                  ((char const *)line,
-                                                   "%lf%n",
-                                                   & src->params.offset,& n);
+                                                  tmp_12 = sscanf((char const *)line,
+                                                                  "%lf%n",
+                                                                  & src->params.offset,
+                                                                  & n); /* sscanf_va_5 */
                                                   if (tmp_12 != 1) {
                                                     __retres = 0;
                                                     goto return_label;
@@ -3084,10 +3086,10 @@ int CPS_ParseNTPSourceAdd(char *line, CPS_NTP_Source *src)
                                               }
                                               else {
                                                 int tmp_11;
-                                                tmp_11 = sscanf_va_6((char const *)line,
-                                                                    "%d%n",
-                                                                    & src->params.min_stratum,
-                                                                    & n);
+                                                tmp_11 = sscanf((char const *)line,
+                                                                "%d%n",
+                                                                & src->params.min_stratum,
+                                                                & n); /* sscanf_va_6 */
                                                 if (tmp_11 != 1) {
                                                   __retres = 0;
                                                   goto return_label;
@@ -3096,10 +3098,10 @@ int CPS_ParseNTPSourceAdd(char *line, CPS_NTP_Source *src)
                                             }
                                             else {
                                               int tmp_10;
-                                              tmp_10 = sscanf_va_7((char const *)line,
-                                                                   "%d%n",
-                                                                   & src->params.min_samples,
-                                                                   & n);
+                                              tmp_10 = sscanf((char const *)line,
+                                                              "%d%n",
+                                                              & src->params.min_samples,
+                                                              & n); /* sscanf_va_7 */
                                               if (tmp_10 != 1) {
                                                 __retres = 0;
                                                 goto return_label;
@@ -3108,10 +3110,10 @@ int CPS_ParseNTPSourceAdd(char *line, CPS_NTP_Source *src)
                                           }
                                           else {
                                             int tmp_9;
-                                            tmp_9 = sscanf_va_8((char const *)line,
-                                                                "%d%n",
-                                                                & src->params.minpoll,
-                                                                & n);
+                                            tmp_9 = sscanf((char const *)line,
+                                                           "%d%n",
+                                                           & src->params.minpoll,
+                                                           & n); /* sscanf_va_8 */
                                             if (tmp_9 != 1) {
                                               __retres = 0;
                                               goto return_label;
@@ -3120,10 +3122,10 @@ int CPS_ParseNTPSourceAdd(char *line, CPS_NTP_Source *src)
                                         }
                                         else {
                                           int tmp_8;
-                                          tmp_8 = sscanf_va_9((char const *)line,
-                                                              "%lf%n",
-                                                              & src->params.min_delay,
-                                                              & n);
+                                          tmp_8 = sscanf((char const *)line,
+                                                         "%lf%n",
+                                                         & src->params.min_delay,
+                                                         & n); /* sscanf_va_9 */
                                           if (tmp_8 != 1) {
                                             __retres = 0;
                                             goto return_label;
@@ -3132,10 +3134,10 @@ int CPS_ParseNTPSourceAdd(char *line, CPS_NTP_Source *src)
                                       }
                                       else {
                                         int tmp_7;
-                                        tmp_7 = sscanf_va_10((char const *)line,
-                                                             "%d%n",
-                                                             & src->params.max_sources,
-                                                             & n);
+                                        tmp_7 = sscanf((char const *)line,
+                                                       "%d%n",
+                                                       & src->params.max_sources,
+                                                       & n); /* sscanf_va_10 */
                                         if (tmp_7 != 1) {
                                           __retres = 0;
                                           goto return_label;
@@ -3144,10 +3146,10 @@ int CPS_ParseNTPSourceAdd(char *line, CPS_NTP_Source *src)
                                     }
                                     else {
                                       int tmp_6;
-                                      tmp_6 = sscanf_va_11((char const *)line,
-                                                           "%d%n",
-                                                           & src->params.max_samples,
-                                                           & n);
+                                      tmp_6 = sscanf((char const *)line,
+                                                     "%d%n",
+                                                     & src->params.max_samples,
+                                                     & n); /* sscanf_va_11 */
                                       if (tmp_6 != 1) {
                                         __retres = 0;
                                         goto return_label;
@@ -3156,10 +3158,8 @@ int CPS_ParseNTPSourceAdd(char *line, CPS_NTP_Source *src)
                                   }
                                   else {
                                     int tmp_5;
-                                    tmp_5 = sscanf_va_12((char const *)line,
-                                                         "%d%n",
-                                                         & src->params.maxpoll,
-                                                         & n);
+                                    tmp_5 = sscanf((char const *)line,"%d%n",
+                                                   & src->params.maxpoll,& n); /* sscanf_va_12 */
                                     if (tmp_5 != 1) {
                                       __retres = 0;
                                       goto return_label;
@@ -3168,10 +3168,9 @@ int CPS_ParseNTPSourceAdd(char *line, CPS_NTP_Source *src)
                                 }
                                 else {
                                   int tmp_4;
-                                  tmp_4 = sscanf_va_13((char const *)line,
-                                                       "%lf%n",
-                                                       & src->params.max_delay_dev_ratio,
-                                                       & n);
+                                  tmp_4 = sscanf((char const *)line,"%lf%n",
+                                                 & src->params.max_delay_dev_ratio,
+                                                 & n); /* sscanf_va_13 */
                                   if (tmp_4 != 1) {
                                     __retres = 0;
                                     goto return_label;
@@ -3180,10 +3179,9 @@ int CPS_ParseNTPSourceAdd(char *line, CPS_NTP_Source *src)
                               }
                               else {
                                 int tmp_3;
-                                tmp_3 = sscanf_va_14((char const *)line,
-                                                     "%lf%n",
-                                                     & src->params.max_delay_ratio,
-                                                     & n);
+                                tmp_3 = sscanf((char const *)line,"%lf%n",
+                                               & src->params.max_delay_ratio,
+                                               & n); /* sscanf_va_14 */
                                 if (tmp_3 != 1) {
                                   __retres = 0;
                                   goto return_label;
@@ -3192,10 +3190,8 @@ int CPS_ParseNTPSourceAdd(char *line, CPS_NTP_Source *src)
                             }
                             else {
                               int tmp_2;
-                              tmp_2 = sscanf_va_15((char const *)line,
-                                                   "%lf%n",
-                                                   & src->params.max_delay,
-                                                   & n);
+                              tmp_2 = sscanf((char const *)line,"%lf%n",
+                                             & src->params.max_delay,& n); /* sscanf_va_15 */
                               if (tmp_2 != 1) {
                                 __retres = 0;
                                 goto return_label;
@@ -3204,9 +3200,8 @@ int CPS_ParseNTPSourceAdd(char *line, CPS_NTP_Source *src)
                           }
                           else {
                             int tmp_1;
-                            tmp_1 = sscanf_va_16((char const *)line,"%d%n",
-                                                 & src->params.filter_length,
-                                                 & n);
+                            tmp_1 = sscanf((char const *)line,"%d%n",
+                                           & src->params.filter_length,& n); /* sscanf_va_16 */
                             if (tmp_1 != 1) {
                               __retres = 0;
                               goto return_label;
@@ -3215,8 +3210,8 @@ int CPS_ParseNTPSourceAdd(char *line, CPS_NTP_Source *src)
                         }
                         else {
                           int tmp_0;
-                          tmp_0 = sscanf_va_17((char const *)line,"%lf%n",
-                                               & src->params.asymmetry,& n);
+                          tmp_0 = sscanf((char const *)line,"%lf%n",
+                                         & src->params.asymmetry,& n); /* sscanf_va_17 */
                           if (tmp_0 != 1) {
                             __retres = 0;
                             goto return_label;
@@ -3225,9 +3220,9 @@ int CPS_ParseNTPSourceAdd(char *line, CPS_NTP_Source *src)
                       }
                       else {
                         int tmp;
-                        tmp = sscanf_va_18((char const *)line,"%u%n",
-                                           (unsigned int *)(& src->params.authkey),
-                                           & n);
+                        tmp = sscanf((char const *)line,"%u%n",
+                                     (unsigned int *)(& src->params.authkey),
+                                     & n); /* sscanf_va_18 */
                         if (tmp != 1) {
                           __retres = 0;
                           goto return_label;
@@ -3320,7 +3315,7 @@ int CPS_ParseLocal(char *line, int *stratum, int *orphan, double *distance)
         }
         else {
           int tmp_0;
-          tmp_0 = sscanf_va_19((char const *)line,"%lf%n",distance,& n);
+          tmp_0 = sscanf((char const *)line,"%lf%n",distance,& n); /* sscanf_va_19 */
           if (tmp_0 != 1) {
             __retres = 0;
             goto return_label;
@@ -3334,7 +3329,7 @@ int CPS_ParseLocal(char *line, int *stratum, int *orphan, double *distance)
     }
     else {
       int tmp;
-      tmp = sscanf_va_20((char const *)line,"%d%n",stratum,& n);
+      tmp = sscanf((char const *)line,"%d%n",stratum,& n); /* sscanf_va_20 */
       if (tmp != 1) {
         __retres = 0;
         goto return_label;
@@ -3473,7 +3468,7 @@ int CPS_ParseKey(char *line, uint32_t *id, char const **hash, char **key)
       __retres = 0;
       goto return_label;
     }
-  tmp = sscanf_va_21((char const *)s1,"%u",(unsigned int *)id);
+  tmp = sscanf((char const *)s1,"%u",(unsigned int *)id); /* sscanf_va_21 */
   if (tmp != 1) {
     __retres = 0;
     goto return_label;
@@ -4542,7 +4537,7 @@ static int parse_int(char *line, int *result)
   int __retres;
   int tmp;
   check_number_of_args(line,1);
-  tmp = sscanf_va_22((char const *)line,"%d",result);
+  tmp = sscanf((char const *)line,"%d",result); /* sscanf_va_22 */
   if (tmp != 1) {
     command_parse_error();
     __retres = 0;
@@ -4570,7 +4565,7 @@ static int parse_double(char *line, double *result)
   int __retres;
   int tmp;
   check_number_of_args(line,1);
-  tmp = sscanf_va_23((char const *)line,"%lf",result);
+  tmp = sscanf((char const *)line,"%lf",result); /* sscanf_va_23 */
   if (tmp != 1) {
     command_parse_error();
     __retres = 0;
@@ -4633,7 +4628,7 @@ static void parse_ratelimit(char *line, int *enabled_0, int *interval,
     int tmp_2;
     opt = line;
     line = CPS_SplitWord(line);
-    tmp = sscanf_va_24((char const *)line,"%d%n",& val,& n);
+    tmp = sscanf((char const *)line,"%d%n",& val,& n); /* sscanf_va_24 */
     if (tmp != 1) {
       command_parse_error();
       goto return_label;
@@ -5066,10 +5061,9 @@ static void parse_refclock(char *line)
                                       }
                                       else {
                                         int tmp_13;
-                                        tmp_13 = sscanf_va_25((char const *)line,
-                                                              "%lf%n",
-                                                              & pulse_width,
-                                                              & n);
+                                        tmp_13 = sscanf((char const *)line,
+                                                        "%lf%n",
+                                                        & pulse_width,& n); /* sscanf_va_25 */
                                         if (tmp_13 != 1) break;
                                       }
                                     }
@@ -5080,9 +5074,8 @@ static void parse_refclock(char *line)
                                   }
                                   else {
                                     int tmp_12;
-                                    tmp_12 = sscanf_va_26((char const *)line,
-                                                          "%d%n",& stratum,
-                                                          & n);
+                                    tmp_12 = sscanf((char const *)line,
+                                                    "%d%n",& stratum,& n); /* sscanf_va_26 */
                                     if (tmp_12 != 1) break;
                                     else 
                                       if (stratum >= 16) break;
@@ -5092,17 +5085,15 @@ static void parse_refclock(char *line)
                                 }
                                 else {
                                   int tmp_11;
-                                  tmp_11 = sscanf_va_27((char const *)line,
-                                                        "%lf%n",
-                                                        & max_dispersion,& n);
+                                  tmp_11 = sscanf((char const *)line,"%lf%n",
+                                                  & max_dispersion,& n); /* sscanf_va_27 */
                                   if (tmp_11 != 1) break;
                                 }
                               }
                               else {
                                 int tmp_10;
-                                tmp_10 = sscanf_va_28((char const *)line,
-                                                      "%lf%n",& precision,
-                                                      & n);
+                                tmp_10 = sscanf((char const *)line,"%lf%n",
+                                                & precision,& n); /* sscanf_va_28 */
                                 if (tmp_10 != 1) break;
                               }
                             }
@@ -5113,68 +5104,66 @@ static void parse_refclock(char *line)
                           }
                           else {
                             int tmp_9;
-                            tmp_9 = sscanf_va_29((char const *)line,"%lf%n",
-                                                 & delay,& n);
+                            tmp_9 = sscanf((char const *)line,"%lf%n",
+                                           & delay,& n); /* sscanf_va_29 */
                             if (tmp_9 != 1) break;
                           }
                         }
                         else {
                           int tmp_8;
-                          tmp_8 = sscanf_va_30((char const *)line,"%lf%n",
-                                               & offset,& n);
+                          tmp_8 = sscanf((char const *)line,"%lf%n",& offset,
+                                         & n); /* sscanf_va_30 */
                           if (tmp_8 != 1) break;
                         }
                       }
                       else {
                         int tmp_7;
-                        tmp_7 = sscanf_va_31((char const *)line,"%d%n",
-                                             & max_samples_0,& n);
+                        tmp_7 = sscanf((char const *)line,"%d%n",
+                                       & max_samples_0,& n); /* sscanf_va_31 */
                         if (tmp_7 != 1) break;
                       }
                     }
                     else {
                       int tmp_6;
-                      tmp_6 = sscanf_va_32((char const *)line,"%d%n",
-                                           & max_lock_age,& n);
+                      tmp_6 = sscanf((char const *)line,"%d%n",
+                                     & max_lock_age,& n); /* sscanf_va_32 */
                       if (tmp_6 != 1) break;
                     }
                   }
                   else {
                     int tmp_5;
-                    tmp_5 = sscanf_va_33((char const *)line,"%d%n",
-                                         & min_samples_0,& n);
+                    tmp_5 = sscanf((char const *)line,"%d%n",& min_samples_0,
+                                   & n); /* sscanf_va_33 */
                     if (tmp_5 != 1) break;
                   }
                 }
                 else {
                   int tmp_4;
-                  tmp_4 = sscanf_va_34((char const *)line,"%d%n",& pps_rate,
-                                       & n);
+                  tmp_4 = sscanf((char const *)line,"%d%n",& pps_rate,& n); /* sscanf_va_34 */
                   if (tmp_4 != 1) break;
                 }
               }
               else {
                 int tmp_3;
-                tmp_3 = sscanf_va_35((char const *)line,"%d%n",
-                                     & filter_length,& n);
+                tmp_3 = sscanf((char const *)line,"%d%n",& filter_length,& n); /* sscanf_va_35 */
                 if (tmp_3 != 1) break;
               }
             }
             else {
               int tmp_2;
-              tmp_2 = sscanf_va_36((char const *)line,"%d%n",& dpoll,& n);
+              tmp_2 = sscanf((char const *)line,"%d%n",& dpoll,& n); /* sscanf_va_36 */
               if (tmp_2 != 1) break;
             }
           }
           else {
             int tmp_1;
-            tmp_1 = sscanf_va_37((char const *)line,"%d%n",& poll,& n);
+            tmp_1 = sscanf((char const *)line,"%d%n",& poll,& n); /* sscanf_va_37 */
             if (tmp_1 != 1) break;
           }
         }
         else {
           int tmp_0;
-          tmp_0 = sscanf_va_38((char const *)line,"%4s%n",(char *)(ref),& n);
+          tmp_0 = sscanf((char const *)line,"%4s%n",(char *)(ref),& n); /* sscanf_va_38 */
           if (tmp_0 != 1) break;
           lock_ref_id = ((((unsigned int)ref[0] << 24) | (unsigned int)(
                           (int)ref[1] << 16)) | (unsigned int)((int)ref[2] << 8)) | (unsigned int)ref[3];
@@ -5182,7 +5171,7 @@ static void parse_refclock(char *line)
       }
       else {
         int tmp;
-        tmp = sscanf_va_39((char const *)line,"%4s%n",(char *)(ref),& n);
+        tmp = sscanf((char const *)line,"%4s%n",(char *)(ref),& n); /* sscanf_va_39 */
         if (tmp != 1) break;
         ref_id = ((((unsigned int)ref[0] << 24) | (unsigned int)((int)ref[1] << 16)) | (unsigned int)(
                   (int)ref[2] << 8)) | (unsigned int)ref[3];
@@ -5303,7 +5292,7 @@ static void parse_initstepslew(char *line)
   if (restarted) goto return_label;
   ARR_SetSize(init_sources,(unsigned int)0);
   p = CPS_SplitWord(line);
-  tmp = sscanf_va_40((char const *)line,"%lf",& init_slew_threshold);
+  tmp = sscanf((char const *)line,"%lf",& init_slew_threshold); /* sscanf_va_40 */
   if (tmp != 1) {
     command_parse_error();
     goto return_label;
@@ -5371,7 +5360,7 @@ static void parse_clientloglimit(char *line)
 {
   int tmp;
   check_number_of_args(line,1);
-  tmp = sscanf_va_41((char const *)line,"%lu",& client_log_limit);
+  tmp = sscanf((char const *)line,"%lu",& client_log_limit); /* sscanf_va_41 */
   if (tmp != 1) command_parse_error();
   return;
 }
@@ -5397,8 +5386,7 @@ static void parse_fallbackdrift(char *line)
 {
   int tmp;
   check_number_of_args(line,2);
-  tmp = sscanf_va_42((char const *)line,"%d %d",& fb_drift_min,
-                     & fb_drift_max);
+  tmp = sscanf((char const *)line,"%d %d",& fb_drift_min,& fb_drift_max); /* sscanf_va_42 */
   if (tmp != 2) command_parse_error();
   return;
 }
@@ -5424,8 +5412,8 @@ static void parse_makestep(char *line)
 {
   int tmp;
   check_number_of_args(line,2);
-  tmp = sscanf_va_43((char const *)line,"%lf %d",& make_step_threshold,
-                     & make_step_limit);
+  tmp = sscanf((char const *)line,"%lf %d",& make_step_threshold,
+               & make_step_limit); /* sscanf_va_43 */
   if (tmp != 2) {
     make_step_limit = 0;
     command_parse_error();
@@ -5460,8 +5448,8 @@ static void parse_maxchange(char *line)
 {
   int tmp;
   check_number_of_args(line,3);
-  tmp = sscanf_va_44((char const *)line,"%lf %d %d",& max_offset,
-                     & max_offset_delay,& max_offset_ignore);
+  tmp = sscanf((char const *)line,"%lf %d %d",& max_offset,
+               & max_offset_delay,& max_offset_ignore); /* sscanf_va_44 */
   if (tmp != 3) {
     max_offset_delay = -1;
     command_parse_error();
@@ -5490,7 +5478,7 @@ static void parse_mailonchange(char *line)
   address = line;
   line = CPS_SplitWord(line);
   free((void *)mail_user_on_change);
-  tmp = sscanf_va_45((char const *)line,"%lf",& mail_change_threshold);
+  tmp = sscanf((char const *)line,"%lf",& mail_change_threshold); /* sscanf_va_45 */
   if (tmp == 1) mail_user_on_change = Strdup((char const *)address);
   else {
     mail_user_on_change = (char *)0;
@@ -5574,7 +5562,7 @@ static void parse_allow_deny(char *line, ARR_Instance restrictions, int allow)
     if (tmp_4) goto _LOR;
     else {
       int tmp_5;
-      tmp_5 = sscanf_va_46((char const *)p,"%lu.%lu.%lu.%lu",& a,& b,& c,& d);
+      tmp_5 = sscanf((char const *)p,"%lu.%lu.%lu.%lu",& a,& b,& c,& d); /* sscanf_va_46 */
       n = (unsigned long)tmp_5;
       if (n >= (unsigned long)1) {
         _LOR:
@@ -5619,8 +5607,8 @@ static void parse_allow_deny(char *line, ARR_Instance restrictions, int allow)
           if (slashpos) {
             int specified_subnet_bits;
             int n_0;
-            n_0 = sscanf_va_47((char const *)(slashpos + 1),"%d",
-                               & specified_subnet_bits);
+            n_0 = sscanf((char const *)(slashpos + 1),"%d",
+                         & specified_subnet_bits); /* sscanf_va_47 */
             if (n_0 == 1) new_node->subnet_bits = specified_subnet_bits;
             else command_parse_error();
           }
@@ -5736,7 +5724,7 @@ static void parse_broadcast(char *line)
   int tmp_0;
   p = line;
   line = CPS_SplitWord(line);
-  tmp = sscanf_va_48((char const *)p,"%d",& interval);
+  tmp = sscanf((char const *)p,"%d",& interval); /* sscanf_va_48 */
   if (tmp != 1) {
     command_parse_error();
     goto return_label;
@@ -5752,7 +5740,7 @@ static void parse_broadcast(char *line)
   line = CPS_SplitWord(line);
   if (*p) {
     int tmp_1;
-    tmp_1 = sscanf_va_49((char const *)p,"%d",& port);
+    tmp_1 = sscanf((char const *)p,"%d",& port); /* sscanf_va_49 */
     if (tmp_1 != 1) goto _LOR;
     else 
       if (*line) {
@@ -5794,8 +5782,8 @@ static void parse_smoothtime(char *line)
   char *tmp_1;
   tmp = get_number_of_args(line);
   if (tmp != 3) check_number_of_args(line,2);
-  tmp_0 = sscanf_va_50((char const *)line,"%lf %lf",& smooth_max_freq,
-                       & smooth_max_wander);
+  tmp_0 = sscanf((char const *)line,"%lf %lf",& smooth_max_freq,
+                 & smooth_max_wander); /* sscanf_va_50 */
   if (tmp_0 != 2) {
     smooth_max_freq = 0.0;
     command_parse_error();
@@ -5872,7 +5860,7 @@ static void parse_tempcomp(char *line)
   if (point_form) {
     int tmp_0;
     char *tmp_1;
-    tmp_0 = sscanf_va_51((char const *)line,"%lf",& tempcomp_interval);
+    tmp_0 = sscanf((char const *)line,"%lf",& tempcomp_interval); /* sscanf_va_51 */
     if (tmp_0 != 1) {
       command_parse_error();
       goto return_label;
@@ -5882,9 +5870,9 @@ static void parse_tempcomp(char *line)
   }
   else {
     int tmp_2;
-    tmp_2 = sscanf_va_52((char const *)line,"%lf %lf %lf %lf %lf",
-                         & tempcomp_interval,& tempcomp_T0,& tempcomp_k0,
-                         & tempcomp_k1,& tempcomp_k2);
+    tmp_2 = sscanf((char const *)line,"%lf %lf %lf %lf %lf",
+                   & tempcomp_interval,& tempcomp_T0,& tempcomp_k0,
+                   & tempcomp_k1,& tempcomp_k2); /* sscanf_va_52 */
     if (tmp_2 != 5) {
       command_parse_error();
       goto return_label;
@@ -6071,8 +6059,7 @@ static void parse_hwtimestamp(char *line)
                   else {
                     int tmp_5;
                     int tmp_8;
-                    tmp_5 = sscanf_va_53((char const *)line,"%4s%n",filter,
-                                         & n);
+                    tmp_5 = sscanf((char const *)line,"%4s%n",filter,& n); /* sscanf_va_53 */
                     if (tmp_5 != 1) break;
                     tmp_8 = strcasecmp((char const *)(filter),"none");
                     if (tmp_8) {
@@ -6091,43 +6078,41 @@ static void parse_hwtimestamp(char *line)
                 }
                 else {
                   int tmp_4;
-                  tmp_4 = sscanf_va_54((char const *)line,"%lf%n",
-                                       & iface->tx_comp,& n);
+                  tmp_4 = sscanf((char const *)line,"%lf%n",& iface->tx_comp,
+                                 & n); /* sscanf_va_54 */
                   if (tmp_4 != 1) break;
                 }
               }
               else {
                 int tmp_3;
-                tmp_3 = sscanf_va_55((char const *)line,"%lf%n",
-                                     & iface->rx_comp,& n);
+                tmp_3 = sscanf((char const *)line,"%lf%n",& iface->rx_comp,
+                               & n); /* sscanf_va_55 */
                 if (tmp_3 != 1) break;
               }
             }
             else {
               int tmp_2;
-              tmp_2 = sscanf_va_56((char const *)line,"%lf%n",
-                                   & iface->precision,& n);
+              tmp_2 = sscanf((char const *)line,"%lf%n",& iface->precision,
+                             & n); /* sscanf_va_56 */
               if (tmp_2 != 1) break;
             }
           }
           else {
             int tmp_1;
-            tmp_1 = sscanf_va_57((char const *)line,"%d%n",
-                                 & iface->min_samples,& n);
+            tmp_1 = sscanf((char const *)line,"%d%n",& iface->min_samples,
+                           & n); /* sscanf_va_57 */
             if (tmp_1 != 1) break;
           }
         }
         else {
           int tmp_0;
-          tmp_0 = sscanf_va_58((char const *)line,"%d%n",& iface->minpoll,
-                               & n);
+          tmp_0 = sscanf((char const *)line,"%d%n",& iface->minpoll,& n); /* sscanf_va_58 */
           if (tmp_0 != 1) break;
         }
       }
       else {
         int tmp;
-        tmp = sscanf_va_59((char const *)line,"%d%n",& iface->max_samples,
-                           & n);
+        tmp = sscanf((char const *)line,"%d%n",& iface->max_samples,& n); /* sscanf_va_59 */
         if (tmp != 1) break;
       }
     }
@@ -8412,7 +8397,7 @@ int DNS_IPAddress2Name(IPAddr *ip_addr, char *name, int len)
   }
   if (host) result = host->h_name;
   if (result == (char *)0) result = UTI_IPToString(ip_addr);
-  tmp = snprintf_va_1(name,(unsigned long)len,"%s",result);
+  tmp = snprintf(name,(unsigned long)len,"%s",result); /* snprintf_va_1 */
   ;
   if (tmp >= len) {
     __retres = 0;
@@ -8524,7 +8509,7 @@ static int prepare_socket(int family, int port_number, int client_only)
   UTI_FdSetCloexec(sock_fd);
   if (! client_only) {
     int tmp_4;
-    tmp_4 = __va_fcntl_int(sock_fd,4,0x800);
+    tmp_4 = fcntl(sock_fd,4,0x800); /* __va_fcntl_int */
     if (tmp_4) ;
   }
   memset((void *)(& my_addr),0,sizeof(my_addr));
@@ -9154,7 +9139,7 @@ void REF_Initialise(void)
     in = fopen((char const *)drift_file_0,"r");
     if (in) {
       int tmp;
-      tmp = fscanf_va_1(in,"%lf%lf",& file_freq_ppm,& file_skew_ppm);
+      tmp = fscanf(in,"%lf%lf",& file_freq_ppm,& file_skew_ppm); /* fscanf_va_1 */
       if (tmp == 2) {
         our_frequency_ppm = file_freq_ppm;
         our_skew = 1.0e-6 * file_skew_ppm;
@@ -9351,7 +9336,7 @@ static void update_drift_file(double freq_ppm, double skew)
     }
     goto return_label;
   }
-  r1 = fprintf_va_2(out,"%20.6f %20.6f\n",freq_ppm,1.0e6 * skew);
+  r1 = fprintf(out,"%20.6f %20.6f\n",freq_ppm,1.0e6 * skew); /* fprintf_va_2 */
   r2 = fclose(out);
   if (r1 < 0) goto _LOR;
   else 
@@ -9569,18 +9554,17 @@ static void maybe_log_offset(double offset, time_t now)
   }
   if (do_mail_change) 
     if (abs_offset > mail_change_threshold_0) {
-      snprintf_va_2(buffer,sizeof(buffer),"%s -t",
-                    (char *)"/usr/lib/sendmail");
+      snprintf(buffer,sizeof(buffer),"%s -t",(char *)"/usr/lib/sendmail"); /* snprintf_va_2 */
       p = popen((char const *)(buffer),"w");
       if (p) {
         int tmp;
         tmp = gethostname(host,sizeof(host));
         if (tmp < 0) strcpy(host,"<UNKNOWN>");
         host[sizeof(host) - (unsigned long)1] = (char)'\000';
-        fprintf_va_3(p,"To: %s\n",mail_change_user);
-        fprintf_va_4(p,
-                     "Subject: chronyd reports change to system clock on node [%s]\n",
-                     host);
+        fprintf(p,"To: %s\n",mail_change_user); /* fprintf_va_3 */
+        fprintf(p,
+                "Subject: chronyd reports change to system clock on node [%s]\n",
+                host); /* fprintf_va_4 */
         fputs("\n",p);
         tm = localtime((time_t const *)(& now));
         if (tm) {
@@ -9589,9 +9573,9 @@ static void maybe_log_offset(double offset, time_t now)
                    (struct tm const *)tm);
           fputs((char const *)(buffer),p);
         }
-        fprintf_va_5(p,
-                     "\n\nchronyd started to apply an adjustment of %.3f seconds to it,\n  which exceeded the reporting threshold of %.3f seconds\n\n",
-                     - offset,mail_change_threshold_0);
+        fprintf(p,
+                "\n\nchronyd started to apply an adjustment of %.3f seconds to it,\n  which exceeded the reporting threshold of %.3f seconds\n\n",
+                - offset,mail_change_threshold_0); /* fprintf_va_5 */
         pclose(p);
       }
       else {
@@ -13130,16 +13114,15 @@ static FILE *open_dumpfile(SRC_Instance inst, char const *mode_0)
     char *tmp;
     tmp = source_to_string(inst);
     ;
-    tmp_0 = snprintf_va_3(filename,sizeof(filename),"%s/%s.dat",dumpdir_0,
-                          tmp);
+    tmp_0 = snprintf(filename,sizeof(filename),"%s/%s.dat",dumpdir_0,tmp); /* snprintf_va_3 */
     if ((unsigned long)tmp_0 >= sizeof(filename)) goto _LOR; else goto _LAND;
   }
   else {
     _LAND: ;
     if (inst->type != (unsigned int)SRC_NTP) {
       int tmp_1;
-      tmp_1 = snprintf_va_4(filename,sizeof(filename),"%s/refid:%08x.dat",
-                            dumpdir_0,inst->ref_id);
+      tmp_1 = snprintf(filename,sizeof(filename),"%s/refid:%08x.dat",
+                       dumpdir_0,inst->ref_id); /* snprintf_va_4 */
       if ((unsigned long)tmp_1 >= sizeof(filename)) {
         _LOR:
         {
@@ -13269,7 +13252,7 @@ void SRC_RemoveDumpFiles(void)
   if ((int)*(dumpdir_0 + 0) == '\000') goto return_label;
   else {
     int tmp;
-    tmp = snprintf_va_5(pattern,sizeof(pattern),"%s/*.dat",dumpdir_0);
+    tmp = snprintf(pattern,sizeof(pattern),"%s/*.dat",dumpdir_0); /* snprintf_va_5 */
     if ((unsigned long)tmp >= sizeof(pattern)) goto return_label;
   }
   tmp_0 = glob((char const *)(pattern),0,
@@ -13285,7 +13268,7 @@ void SRC_RemoveDumpFiles(void)
       if (! s) goto __Cont;
       else {
         int tmp_1;
-        tmp_1 = snprintf_va_6(name,sizeof(name),"%s",s + 1);
+        tmp_1 = snprintf(name,sizeof(name),"%s",s + 1); /* snprintf_va_6 */
         if ((unsigned long)tmp_1 >= sizeof(name)) goto __Cont;
       }
       tmp_2 = strlen((char const *)(name));
@@ -14129,20 +14112,20 @@ void SST_SaveToFile(SST_Stats inst, FILE *out)
   int m;
   int i;
   int j;
-  fprintf_va_6(out,"%d\n",inst->n_samples);
+  fprintf(out,"%d\n",inst->n_samples); /* fprintf_va_6 */
   m = 0;
   while (m < inst->n_samples) {
     i = get_runsbuf_index(inst,m);
     j = get_buf_index(inst,m);
-    fprintf_va_7(out,"%08lx %08lx %.6e %.6e %.6e %.6e %.6e %.6e %.6e %d\n",
-                 (unsigned long)inst->sample_times[i].tv_sec,
-                 (unsigned long)inst->sample_times[i].tv_nsec / (unsigned long)1000,
-                 inst->offsets[i],inst->orig_offsets[j],inst->peer_delays[i],
-                 inst->peer_dispersions[j],inst->root_delays[j],
-                 inst->root_dispersions[j],1.0,inst->stratum);
+    fprintf(out,"%08lx %08lx %.6e %.6e %.6e %.6e %.6e %.6e %.6e %d\n",
+            (unsigned long)inst->sample_times[i].tv_sec,
+            (unsigned long)inst->sample_times[i].tv_nsec / (unsigned long)1000,
+            inst->offsets[i],inst->orig_offsets[j],inst->peer_delays[i],
+            inst->peer_dispersions[j],inst->root_delays[j],
+            inst->root_dispersions[j],1.0,inst->stratum); /* fprintf_va_7 */
     m ++;
   }
-  fprintf_va_8(out,"%d\n",inst->asymmetry_run);
+  fprintf(out,"%d\n",inst->asymmetry_run); /* fprintf_va_8 */
   return;
 }
 
@@ -14238,7 +14221,7 @@ int SST_LoadFromFile(SST_Stats inst, FILE *in)
   tmp_3 = fgets(line,(int)sizeof(line),in);
   if (tmp_3) {
     int tmp_4;
-    tmp_4 = sscanf_va_60((char const *)(line),"%d",& inst->n_samples);
+    tmp_4 = sscanf((char const *)(line),"%d",& inst->n_samples); /* sscanf_va_60 */
     if (tmp_4 == 1) {
       if (inst->n_samples >= 0) {
         if (inst->n_samples <= 64) {
@@ -14250,16 +14233,15 @@ int SST_LoadFromFile(SST_Stats inst, FILE *in)
               tmp = fgets(line,(int)sizeof(line),in);
               if (tmp) {
                 int tmp_0;
-                tmp_0 = sscanf_va_61((char const *)(line),
-                                     "%lx%lx%lf%lf%lf%lf%lf%lf%lf%d\n",
-                                     (unsigned long *)(& sec),& usec,
-                                     & inst->offsets[i],
-                                     & inst->orig_offsets[i],
-                                     & inst->peer_delays[i],
-                                     & inst->peer_dispersions[i],
-                                     & inst->root_delays[i],
-                                     & inst->root_dispersions[i],& weight,
-                                     & inst->stratum);
+                tmp_0 = sscanf((char const *)(line),
+                               "%lx%lx%lf%lf%lf%lf%lf%lf%lf%d\n",
+                               (unsigned long *)(& sec),& usec,
+                               & inst->offsets[i],& inst->orig_offsets[i],
+                               & inst->peer_delays[i],
+                               & inst->peer_dispersions[i],
+                               & inst->root_delays[i],
+                               & inst->root_dispersions[i],& weight,
+                               & inst->stratum); /* sscanf_va_61 */
                 if (tmp_0 != 10) {
                   _LOR:
                   {
@@ -14281,8 +14263,7 @@ int SST_LoadFromFile(SST_Stats inst, FILE *in)
           tmp_1 = fgets(line,(int)sizeof(line),in);
           if (tmp_1) {
             int tmp_2;
-            tmp_2 = sscanf_va_62((char const *)(line),"%d\n",
-                                 & inst->asymmetry_run);
+            tmp_2 = sscanf((char const *)(line),"%d\n",& inst->asymmetry_run); /* sscanf_va_62 */
             if (tmp_2 != 1) inst->asymmetry_run = 0;
           }
           else inst->asymmetry_run = 0;
@@ -14592,8 +14573,8 @@ char *UTI_TimespecToString(struct timespec *ts)
   char *result;
   pool_ptr = (pool_ptr + 1) % 16;
   result = buffer_pool[pool_ptr];
-  snprintf_va_7(result,(unsigned long)64,"%ld.%09lu",ts->tv_sec,
-                (unsigned long)ts->tv_nsec);
+  snprintf(result,(unsigned long)64,"%ld.%09lu",ts->tv_sec,
+           (unsigned long)ts->tv_nsec); /* snprintf_va_7 */
   return result;
 }
 
@@ -14705,27 +14686,29 @@ char *UTI_IPToString(IPAddr *addr)
   pool_ptr = (pool_ptr + 1) % 16;
   result = buffer_pool[pool_ptr];
   switch ((int)addr->family) {
-    case 0: snprintf_va_8(result,(unsigned long)64,"[UNSPEC]");
+    case 0:
+    snprintf(result,(unsigned long)64,"[UNSPEC]"); /* snprintf_va_8 */
     break;
     case 1: ip = (unsigned long)addr->addr.in4;
     a = (ip >> 24) & (unsigned long)0xff;
     b = (ip >> 16) & (unsigned long)0xff;
     c = (ip >> 8) & (unsigned long)0xff;
     d = (ip >> 0) & (unsigned long)0xff;
-    snprintf_va_9(result,(unsigned long)64,"%lu.%lu.%lu.%lu",a,b,c,d);
+    snprintf(result,(unsigned long)64,"%lu.%lu.%lu.%lu",a,b,c,d); /* snprintf_va_9 */
     break;
     case 2: ip6 = addr->addr.in6;
     __FC_assert((64 >= 40) != 0,"util.c",308,"BUFFER_LENGTH >= 40");
     a = (unsigned long)0;
     while (a < (unsigned long)8) {
-      snprintf_va_10(result + a * (unsigned long)5,
-                     (unsigned long)40 - a * (unsigned long)5,"%04x:",
-                     (unsigned int)(((int)*(ip6 + (unsigned long)2 * a) << 8) | (int)*(
-                                    ip6 + ((unsigned long)2 * a + (unsigned long)1))));
+      snprintf(result + a * (unsigned long)5,
+               (unsigned long)40 - a * (unsigned long)5,"%04x:",
+               (unsigned int)(((int)*(ip6 + (unsigned long)2 * a) << 8) | (int)*(
+                              ip6 + ((unsigned long)2 * a + (unsigned long)1)))); /* snprintf_va_10 */
       a ++;
     }
     break;
-    default: snprintf_va_11(result,(unsigned long)64,"[UNKNOWN]");
+    default:
+    snprintf(result,(unsigned long)64,"[UNKNOWN]"); /* snprintf_va_11 */
   }
   return result;
 }
@@ -14765,7 +14748,7 @@ int UTI_StringToIP(char const *addr, IPAddr *ip)
   unsigned long d;
   unsigned long n;
   int tmp;
-  tmp = sscanf_va_63(addr,"%lu.%lu.%lu.%lu",& a,& b,& c,& d);
+  tmp = sscanf(addr,"%lu.%lu.%lu.%lu",& a,& b,& c,& d); /* sscanf_va_63 */
   n = (unsigned long)tmp;
   if (n == (unsigned long)4) {
     ip->family = (unsigned short)1;
@@ -15017,14 +15000,15 @@ char *UTI_SockaddrToString(struct sockaddr *sa)
     ;
     tmp = UTI_IPToString(& ip);
     ;
-    snprintf_va_12(result,(unsigned long)64,"%s:%hu",tmp,(int)port);
+    snprintf(result,(unsigned long)64,"%s:%hu",tmp,(int)port); /* snprintf_va_12 */
     break;
     case 1: sun_path = ((struct sockaddr_un *)sa)->sun_path;
-    snprintf_va_13(result,(unsigned long)64,"%.*s",64 - 1,sun_path);
+    snprintf(result,(unsigned long)64,"%.*s",64 - 1,sun_path); /* snprintf_va_13 */
     tmp_0 = strlen((char const *)sun_path);
     if (tmp_0 >= (size_t)64) *(result + (64 - 2)) = (char)'>';
     break;
-    default: snprintf_va_14(result,(unsigned long)64,"[UNKNOWN]");
+    default:
+    snprintf(result,(unsigned long)64,"[UNKNOWN]"); /* snprintf_va_14 */
   }
   return result;
 }
@@ -15068,7 +15052,7 @@ char *UTI_TimeToLogForm(time_t t)
   stm = gmtime((time_t const *)(& t));
   if (stm) strftime(result,(unsigned long)64,"%Y-%m-%d %H:%M:%S",
                     (struct tm const *)stm);
-  else snprintf_va_15(result,(unsigned long)64,"INVALID    INVALID ");
+  else snprintf(result,(unsigned long)64,"INVALID    INVALID "); /* snprintf_va_15 */
   return result;
 }
 
@@ -15420,12 +15404,12 @@ int UTI_FdSetCloexec(int fd)
 {
   int __retres;
   int flags;
-  flags = __va_fcntl_void(fd,1);
+  flags = fcntl(fd,1); /* __va_fcntl_void */
   if (flags != -1) {
     int tmp_0;
     int tmp;
     flags |= 1;
-    tmp = __va_fcntl_int(fd,2,flags);
+    tmp = fcntl(fd,2,flags); /* __va_fcntl_int */
     if (tmp) tmp_0 = 0; else tmp_0 = 1;
     __retres = tmp_0;
     goto return_label;
@@ -15544,8 +15528,7 @@ char *UTI_PathToDir(char const *path)
     goto return_label;
   }
   dir = (char *)Malloc((unsigned long)((slash - path) + (long)1));
-  snprintf_va_16(dir,(unsigned long)((slash - path) + (long)1),"%s",
-                 (char *)path);
+  snprintf(dir,(unsigned long)((slash - path) + (long)1),"%s",(char *)path); /* snprintf_va_16 */
   __retres = dir;
   return_label: return __retres;
 }

@@ -30,7 +30,7 @@ int main(void)
   unsigned long i = (unsigned long)p;
   int *q = (int *)i;
   *q = 11;
-  printf_va_1("*p=%d  *q=%d\n",*p,*q);
+  printf("*p=%d  *q=%d\n",*p,*q); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

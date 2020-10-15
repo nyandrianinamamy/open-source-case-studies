@@ -45,11 +45,11 @@ int main(void)
   int tmp;
   int *p = (& x[1] + (& y[1] - & y[1])) + 1;
   int *q = y;
-  printf_va_1("Addresses: p=%p q=%p\n",(void *)p,(void *)q);
+  printf("Addresses: p=%p q=%p\n",(void *)p,(void *)q); /* printf_va_1 */
   tmp = memcmp((void const *)(& p),(void const *)(& q),sizeof(p));
   if (tmp == 0) {
     *p = 11;
-    printf_va_2("y[0]=%d *p=%d *q=%d\n",y[0],*p,*q);
+    printf("y[0]=%d *p=%d *q=%d\n",y[0],*p,*q); /* printf_va_2 */
   }
   __retres = 0;
   return __retres;

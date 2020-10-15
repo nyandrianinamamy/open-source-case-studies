@@ -632,12 +632,12 @@ int main(int argc, char **argv)
   spng_ctx *ctx = (spng_ctx *)0;
   unsigned char *out = (unsigned char *)0;
   if (argc < 2) {
-    printf_va_1("no input file\n");
+    printf("no input file\n"); /* printf_va_1 */
     goto err;
   }
   png = fopen((char const *)*(argv + 1),"rb");
   if (png == (FILE *)0) {
-    printf_va_2("error opening input file %s\n",*(argv + 1));
+    printf("error opening input file %s\n",*(argv + 1)); /* printf_va_2 */
     goto err;
   }
   fseek(png,(long)0,2);
@@ -646,38 +646,38 @@ int main(int argc, char **argv)
   if (siz_pngbuf < (long)1) goto err;
   pngbuf = (char *)malloc((unsigned int)siz_pngbuf);
   if (pngbuf == (char *)0) {
-    printf_va_3("malloc() failed\n");
+    printf("malloc() failed\n"); /* printf_va_3 */
     goto err;
   }
   tmp_0 = fread((void *)pngbuf,(unsigned int)siz_pngbuf,(unsigned int)1,png);
   if (tmp_0 != (size_t)1) {
-    printf_va_4("fread() failed\n");
+    printf("fread() failed\n"); /* printf_va_4 */
     goto err;
   }
   ctx = spng_ctx_new(0);
   if (ctx == (spng_ctx *)0) {
-    printf_va_5("spng_ctx_new() failed\n");
+    printf("spng_ctx_new() failed\n"); /* printf_va_5 */
     goto err;
   }
   r = spng_set_crc_action(ctx,SPNG_CRC_USE,SPNG_CRC_USE);
   if (r) {
     char const *tmp_1;
     tmp_1 = spng_strerror(r);
-    printf_va_6("spng_set_crc_action() error: %s\n",(char *)tmp_1);
+    printf("spng_set_crc_action() error: %s\n",(char *)tmp_1); /* printf_va_6 */
     goto err;
   }
   r = spng_set_png_buffer(ctx,(void const *)pngbuf,(unsigned int)siz_pngbuf);
   if (r) {
     char const *tmp_2;
     tmp_2 = spng_strerror(r);
-    printf_va_7("spng_set_png_buffer() error: %s\n",(char *)tmp_2);
+    printf("spng_set_png_buffer() error: %s\n",(char *)tmp_2); /* printf_va_7 */
     goto err;
   }
   r = spng_get_ihdr(ctx,& ihdr);
   if (r) {
     char const *tmp_3;
     tmp_3 = spng_strerror(r);
-    printf_va_8("spng_get_ihdr() error: %s\n",(char *)tmp_3);
+    printf("spng_get_ihdr() error: %s\n",(char *)tmp_3); /* printf_va_8 */
     goto err;
   }
   if ((int)ihdr.color_type == SPNG_COLOR_TYPE_GRAYSCALE) clr_type_str = (char *)"grayscale";
@@ -689,12 +689,12 @@ int main(int argc, char **argv)
         if ((int)ihdr.color_type == SPNG_COLOR_TYPE_GRAYSCALE_ALPHA) 
           clr_type_str = (char *)"grayscale with alpha";
         else clr_type_str = (char *)"truecolor with alpha";
-  printf_va_9("width: %u\nheight: %u\nbit depth: %hhu\ncolor type: %hhu - %s\n",
-              ihdr.width,ihdr.height,(int)ihdr.bit_depth,
-              (int)ihdr.color_type,clr_type_str);
-  printf_va_10("compression method: %hhu\nfilter method: %hhu\ninterlace method: %hhu\n",
-               (int)ihdr.compression_method,(int)ihdr.filter_method,
-               (int)ihdr.interlace_method);
+  printf("width: %u\nheight: %u\nbit depth: %hhu\ncolor type: %hhu - %s\n",
+         ihdr.width,ihdr.height,(int)ihdr.bit_depth,(int)ihdr.color_type,
+         clr_type_str); /* printf_va_9 */
+  printf("compression method: %hhu\nfilter method: %hhu\ninterlace method: %hhu\n",
+         (int)ihdr.compression_method,(int)ihdr.filter_method,
+         (int)ihdr.interlace_method); /* printf_va_10 */
   r = spng_decoded_image_size(ctx,SPNG_FMT_RGBA8,& out_size);
   if (r) goto err;
   out = (unsigned char *)malloc(out_size);
@@ -703,7 +703,7 @@ int main(int argc, char **argv)
   if (r) {
     char const *tmp_4;
     tmp_4 = spng_strerror(r);
-    printf_va_11("spng_decode_image() error: %s\n",(char *)tmp_4);
+    printf("spng_decode_image() error: %s\n",(char *)tmp_4); /* printf_va_11 */
     goto err;
   }
   err: spng_ctx_free(ctx);

@@ -45,7 +45,7 @@ int main(void)
   if (b) tmp = "true"; else tmp = "false";
   ;
   ;
-  printf_va_1("x=%i *r=%i (r==p)=%s\n",x,*r,(char *)tmp);
+  printf("x=%i *r=%i (r==p)=%s\n",x,*r,(char *)tmp); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

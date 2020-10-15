@@ -484,7 +484,7 @@ int main(void)
   ;
   r = jsmn_parse(& p,JSON_STRING,tmp,t,sizeof(t) / sizeof(t[0]));
   if (r < 0) {
-    printf_va_1("Failed to parse JSON: %d\n",r);
+    printf("Failed to parse JSON: %d\n",r); /* printf_va_1 */
     __retres = 1;
     goto return_label;
   }
@@ -493,7 +493,7 @@ int main(void)
     if (t[0].type != (unsigned int)JSMN_OBJECT) {
       _LOR:
       {
-        printf_va_2("Object expected\n");
+        printf("Object expected\n"); /* printf_va_2 */
         __retres = 1;
         goto return_label;
       }
@@ -504,24 +504,24 @@ int main(void)
       int tmp_3;
       tmp_3 = jsoneq(JSON_STRING,& t[i],"user");
       if (tmp_3 == 0) {
-        printf_va_3("- User: %.*s\n",t[i + 1].end - t[i + 1].start,
-                    (char *)(JSON_STRING + t[i + 1].start));
+        printf("- User: %.*s\n",t[i + 1].end - t[i + 1].start,
+               (char *)(JSON_STRING + t[i + 1].start)); /* printf_va_3 */
         i ++;
       }
       else {
         int tmp_2;
         tmp_2 = jsoneq(JSON_STRING,& t[i],"admin");
         if (tmp_2 == 0) {
-          printf_va_4("- Admin: %.*s\n",t[i + 1].end - t[i + 1].start,
-                      (char *)(JSON_STRING + t[i + 1].start));
+          printf("- Admin: %.*s\n",t[i + 1].end - t[i + 1].start,
+                 (char *)(JSON_STRING + t[i + 1].start)); /* printf_va_4 */
           i ++;
         }
         else {
           int tmp_1;
           tmp_1 = jsoneq(JSON_STRING,& t[i],"uid");
           if (tmp_1 == 0) {
-            printf_va_5("- UID: %.*s\n",t[i + 1].end - t[i + 1].start,
-                        (char *)(JSON_STRING + t[i + 1].start));
+            printf("- UID: %.*s\n",t[i + 1].end - t[i + 1].start,
+                   (char *)(JSON_STRING + t[i + 1].start)); /* printf_va_5 */
             i ++;
           }
           else {
@@ -529,21 +529,21 @@ int main(void)
             tmp_0 = jsoneq(JSON_STRING,& t[i],"groups");
             if (tmp_0 == 0) {
               int j;
-              printf_va_6("- Groups:\n");
+              printf("- Groups:\n"); /* printf_va_6 */
               if (t[i + 1].type != (unsigned int)JSMN_ARRAY) goto __Cont;
               j = 0;
               while (j < t[i + 1].size) {
                 {
                   jsmntok_t *g = & t[(i + j) + 2];
-                  printf_va_7("  * %.*s\n",g->end - g->start,
-                              (char *)(JSON_STRING + g->start));
+                  printf("  * %.*s\n",g->end - g->start,
+                         (char *)(JSON_STRING + g->start)); /* printf_va_7 */
                 }
                 j ++;
               }
               i += t[i + 1].size + 1;
             }
-            else printf_va_8("Unexpected key: %.*s\n",t[i].end - t[i].start,
-                             (char *)(JSON_STRING + t[i].start));
+            else printf("Unexpected key: %.*s\n",t[i].end - t[i].start,
+                        (char *)(JSON_STRING + t[i].start)); /* printf_va_8 */
           }
         }
       }

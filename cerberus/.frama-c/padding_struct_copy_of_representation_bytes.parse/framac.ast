@@ -35,7 +35,7 @@ int main(void)
   memcpy((void *)(& s2.c),(void const *)(& s1.c),sizeof(char));
   memset((void *)(& s2.c + sizeof(char)),'X',(4U - 0U) - sizeof(char));
   memcpy((void *)(& s2.f),(void const *)(& s1.f),sizeof(float));
-  printf_va_1("s2.c=%c s2.f=%f\n",(int)s2.c,(double)s2.f);
+  printf("s2.c=%c s2.f=%f\n",(int)s2.c,(double)s2.f); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

@@ -1557,8 +1557,8 @@ void redisProcessCallbacks(redisAsyncContext *ac)
         int tmp_0;
         if (((redisReply *)reply)->type == 6) {
           c->err = 2;
-          snprintf_va_1(c->errstr,sizeof(c->errstr),"%s",
-                        ((redisReply *)reply)->str);
+          snprintf(c->errstr,sizeof(c->errstr),"%s",
+                   ((redisReply *)reply)->str); /* snprintf_va_1 */
           (*(((c->reader)->fn)->freeObject))(reply);
           __redisAsyncDisconnect(ac);
           goto return_label;
@@ -2972,7 +2972,7 @@ int redisvFormatCommand(char **target, char const *format, va_list ap)
   totlen = (int)((uint32_t)totlen + (((uint32_t)1 + tmp_20) + (uint32_t)2));
   cmd = (char *)malloc((unsigned int)(totlen + 1));
   if (cmd == (char *)0) goto memory_err;
-  pos = sprintf_va_1(cmd,"*%d\r\n",argc);
+  pos = sprintf(cmd,"*%d\r\n",argc); /* sprintf_va_1 */
   j = 0;
   while (j < argc) {
     {
@@ -2984,7 +2984,7 @@ int redisvFormatCommand(char **target, char const *format, va_list ap)
       int tmp_26;
       tmp_21 = sdslen_0(*(curargv + j));
       ;
-      tmp_22 = sprintf_va_2(cmd + pos,"$%zu\r\n",tmp_21);
+      tmp_22 = sprintf(cmd + pos,"$%zu\r\n",tmp_21); /* sprintf_va_2 */
       pos += tmp_22;
       tmp_23 = sdslen_0(*(curargv + j));
       ;
@@ -3157,7 +3157,7 @@ int redisFormatCommandArgv(char **target, int argc, char const **argv,
     __retres = -1;
     goto return_label;
   }
-  pos = sprintf_va_3(cmd,"*%d\r\n",argc);
+  pos = sprintf(cmd,"*%d\r\n",argc); /* sprintf_va_3 */
   j = 0;
   while (j < argc) {
     {
@@ -3165,7 +3165,7 @@ int redisFormatCommandArgv(char **target, int argc, char const **argv,
       int tmp_4;
       int tmp_5;
       if (argvlen) len = *(argvlen + j); else len = strlen(*(argv + j));
-      tmp_3 = sprintf_va_4(cmd + pos,"$%zu\r\n",len);
+      tmp_3 = sprintf(cmd + pos,"$%zu\r\n",len); /* sprintf_va_4 */
       pos += tmp_3;
       memcpy((void *)(cmd + pos),(void const *)*(argv + j),len);
       pos = (int)((size_t)pos + len);
@@ -4080,7 +4080,7 @@ static void __redisSetErrorFromErrno(redisContext *c, int type,
   size_t len = (unsigned int)0;
   if (prefix != (char const *)0) {
     int tmp;
-    tmp = snprintf_va_2(buf,sizeof(buf),"%s: ",(char *)prefix);
+    tmp = snprintf(buf,sizeof(buf),"%s: ",(char *)prefix); /* snprintf_va_2 */
     len = (unsigned int)tmp;
   }
   strerror_r(errorno,& buf[len],sizeof(buf) - len);
@@ -4132,7 +4132,7 @@ static int redisSetBlocking(redisContext *c, int blocking)
   int __retres;
   int flags;
   int tmp;
-  flags = __va_fcntl_void(c->fd,3);
+  flags = fcntl(c->fd,3); /* __va_fcntl_void */
   if (flags == -1) {
     __redisSetErrorFromErrno(c,1,"fcntl(F_GETFL)");
     redisNetClose(c);
@@ -4140,7 +4140,7 @@ static int redisSetBlocking(redisContext *c, int blocking)
     goto return_label;
   }
   if (blocking) flags &= ~ 0x800; else flags |= 0x800;
-  tmp = __va_fcntl_int(c->fd,4,flags);
+  tmp = fcntl(c->fd,4,flags); /* __va_fcntl_int */
   if (tmp == -1) {
     __redisSetErrorFromErrno(c,1,"fcntl(F_SETFL)");
     redisNetClose(c);
@@ -4433,7 +4433,7 @@ static int _redisContextConnectTcp(redisContext *c, char const *addr,
       free((void *)c->tcp.source_addr);
       c->tcp.source_addr = hi_strdup(source_addr);
     }
-  snprintf_va_3(_port,(unsigned int)6,"%d",port);
+  snprintf(_port,(unsigned int)6,"%d",port); /* snprintf_va_3 */
   memset((void *)(& hints),0,sizeof(hints));
   hints.ai_family = 2;
   hints.ai_socktype = 1;
@@ -4471,7 +4471,7 @@ static int _redisContextConnectTcp(redisContext *c, char const *addr,
           char buf[128];
           char const *tmp_2;
           tmp_2 = gai_strerror(rv);
-          snprintf_va_4(buf,sizeof(buf),"Can\'t get addr: %s",(char *)tmp_2);
+          snprintf(buf,sizeof(buf),"Can\'t get addr: %s",(char *)tmp_2); /* snprintf_va_4 */
           __redisSetError(c,2,(char const *)(buf));
           goto error;
         }
@@ -4501,7 +4501,7 @@ static int _redisContextConnectTcp(redisContext *c, char const *addr,
           char buf_0[128];
           char *tmp_5;
           tmp_5 = strerror(__fc_errno);
-          snprintf_va_5(buf_0,sizeof(buf_0),"Can\'t bind socket: %s",tmp_5);
+          snprintf(buf_0,sizeof(buf_0),"Can\'t bind socket: %s",tmp_5); /* snprintf_va_5 */
           __redisSetError(c,2,(char const *)(buf_0));
           goto error;
         }
@@ -4558,7 +4558,7 @@ static int _redisContextConnectTcp(redisContext *c, char const *addr,
     char buf_1[128];
     char *tmp_10;
     tmp_10 = strerror(__fc_errno);
-    snprintf_va_6(buf_1,sizeof(buf_1),"Can\'t create socket: %s",tmp_10);
+    snprintf(buf_1,sizeof(buf_1),"Can\'t create socket: %s",tmp_10); /* snprintf_va_6 */
     __redisSetError(c,2,(char const *)(buf_1));
     goto error;
   }
@@ -4965,50 +4965,50 @@ static size_t chrtos(char *buf, size_t size, char byte)
     int tmp_7;
     case '\\': case '\"':
     { /* sequence */
-      tmp = snprintf_va_7(buf,size,"\"\\%c\"",(int)byte);
+      tmp = snprintf(buf,size,"\"\\%c\"",(int)byte); /* snprintf_va_7 */
       len = (unsigned int)tmp;
     }
     break;
     case '\n':
     { /* sequence */
-      tmp_0 = snprintf_va_8(buf,size,"\"\\n\"");
+      tmp_0 = snprintf(buf,size,"\"\\n\""); /* snprintf_va_8 */
       len = (unsigned int)tmp_0;
     }
     break;
     case '\r':
     { /* sequence */
-      tmp_1 = snprintf_va_9(buf,size,"\"\\r\"");
+      tmp_1 = snprintf(buf,size,"\"\\r\""); /* snprintf_va_9 */
       len = (unsigned int)tmp_1;
     }
     break;
     case '\t':
     { /* sequence */
-      tmp_2 = snprintf_va_10(buf,size,"\"\\t\"");
+      tmp_2 = snprintf(buf,size,"\"\\t\""); /* snprintf_va_10 */
       len = (unsigned int)tmp_2;
     }
     break;
     case '\a':
     { /* sequence */
-      tmp_3 = snprintf_va_11(buf,size,"\"\\a\"");
+      tmp_3 = snprintf(buf,size,"\"\\a\""); /* snprintf_va_11 */
       len = (unsigned int)tmp_3;
     }
     break;
     case '\b':
     { /* sequence */
-      tmp_4 = snprintf_va_12(buf,size,"\"\\b\"");
+      tmp_4 = snprintf(buf,size,"\"\\b\""); /* snprintf_va_12 */
       len = (unsigned int)tmp_4;
     }
     break;
     default: tmp_7 = isprint((int)byte);
     if (tmp_7) {
       int tmp_5;
-      tmp_5 = snprintf_va_13(buf,size,"\"%c\"",(int)byte);
+      tmp_5 = snprintf(buf,size,"\"%c\"",(int)byte); /* snprintf_va_13 */
       len = (unsigned int)tmp_5;
     }
     else {
       int tmp_6;
-      tmp_6 = snprintf_va_14(buf,size,"\"\\x%02x\"",
-                             (unsigned int)((int)((unsigned char)byte)));
+      tmp_6 = snprintf(buf,size,"\"\\x%02x\"",
+                       (unsigned int)((int)((unsigned char)byte))); /* snprintf_va_14 */
       len = (unsigned int)tmp_6;
     }
     break;
@@ -5036,8 +5036,8 @@ static void __redisReaderSetErrorProtocolByte(redisReader *r, char byte)
   char cbuf[8];
   char sbuf[128];
   chrtos(cbuf,sizeof(cbuf),byte);
-  snprintf_va_15(sbuf,sizeof(sbuf),
-                 "Protocol error, got %s as reply type byte",cbuf);
+  snprintf(sbuf,sizeof(sbuf),"Protocol error, got %s as reply type byte",
+           cbuf); /* snprintf_va_15 */
   __redisReaderSetError(r,4,(char const *)(sbuf));
   return;
 }
@@ -7360,7 +7360,7 @@ static redisContext *select_database(redisContext *c)
   else {
     _LAND:
     {
-      printf_va_1("Database #9 is not empty, test can not continue\n");
+      printf("Database #9 is not empty, test can not continue\n"); /* printf_va_1 */
       exit(1);
     }
   }
@@ -7457,18 +7457,18 @@ static redisContext *do_connect(struct config config)
           redisContext *dummy_ctx = redisConnectUnix(config.unix_sock.path);
           if (dummy_ctx) {
             int fd = disconnect(dummy_ctx,1);
-            printf_va_2("Connecting to inherited fd %d\n",fd);
+            printf("Connecting to inherited fd %d\n",fd); /* printf_va_2 */
             c = redisConnectFd(fd);
           }
         }
         else __FC_assert((void *)0 != (void *)0,"test.c",148,"NULL");
   if (c == (redisContext *)0) {
-    printf_va_3("Connection error: can\'t allocate redis context\n");
+    printf("Connection error: can\'t allocate redis context\n"); /* printf_va_3 */
     exit(1);
   }
   else 
     if (c->err) {
-      printf_va_4("Connection error: %s\n",c->errstr);
+      printf("Connection error: %s\n",c->errstr); /* printf_va_4 */
       redisFree(c);
       exit(1);
     }
@@ -8678,8 +8678,8 @@ static void test_format_commands(void)
   int tmp_20;
   int tmp_21;
   tests ++;
-  printf_va_5("#%02d ",tests);
-  printf_va_6("Format command without interpolation: ");
+  printf("#%02d ",tests); /* printf_va_5 */
+  printf("Format command without interpolation: "); /* printf_va_6 */
   {
     void *__va_args[1] = {(void *)0};
     len = redisFormatCommand(& cmd,"SET foo bar",(void * const *)(__va_args));
@@ -8689,19 +8689,20 @@ static void test_format_commands(void)
                 (unsigned int)len);
   if (tmp == 0) {
     if (len == (((((4 + 4) + (3 + 2)) + 4) + (3 + 2)) + 4) + (3 + 2)) 
-      printf_va_7("\033[0;32mPASSED\033[0;0m\n");
+      printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_7 */
     else goto _LAND;
   }
   else {
-    _LAND: {
-             printf_va_8("\033[0;31mFAILED\033[0;0m\n");
-             fails ++;
-           }
+    _LAND:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_8 */
+      fails ++;
+    }
   }
   free((void *)cmd);
   tests ++;
-  printf_va_9("#%02d ",tests);
-  printf_va_10("Format command with %%s string interpolation: ");
+  printf("#%02d ",tests); /* printf_va_9 */
+  printf("Format command with %%s string interpolation: "); /* printf_va_10 */
   {
     char const *__va_arg0 = "foo";
     char const *__va_arg1 = "bar";
@@ -8714,19 +8715,20 @@ static void test_format_commands(void)
                   (unsigned int)len);
   if (tmp_0 == 0) {
     if (len == (((((4 + 4) + (3 + 2)) + 4) + (3 + 2)) + 4) + (3 + 2)) 
-      printf_va_11("\033[0;32mPASSED\033[0;0m\n");
+      printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_11 */
     else goto _LAND_0;
   }
   else {
-    _LAND_0: {
-               printf_va_12("\033[0;31mFAILED\033[0;0m\n");
-               fails ++;
-             }
+    _LAND_0:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_12 */
+      fails ++;
+    }
   }
   free((void *)cmd);
   tests ++;
-  printf_va_13("#%02d ",tests);
-  printf_va_14("Format command with %%s and an empty string: ");
+  printf("#%02d ",tests); /* printf_va_13 */
+  printf("Format command with %%s and an empty string: "); /* printf_va_14 */
   {
     char const *__va_arg0_48 = "foo";
     char const *__va_arg1_50 = "";
@@ -8739,19 +8741,20 @@ static void test_format_commands(void)
                   (unsigned int)len);
   if (tmp_1 == 0) {
     if (len == (((((4 + 4) + (3 + 2)) + 4) + (3 + 2)) + 4) + (0 + 2)) 
-      printf_va_15("\033[0;32mPASSED\033[0;0m\n");
+      printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_15 */
     else goto _LAND_1;
   }
   else {
-    _LAND_1: {
-               printf_va_16("\033[0;31mFAILED\033[0;0m\n");
-               fails ++;
-             }
+    _LAND_1:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_16 */
+      fails ++;
+    }
   }
   free((void *)cmd);
   tests ++;
-  printf_va_17("#%02d ",tests);
-  printf_va_18("Format command with an empty string in between proper interpolations: ");
+  printf("#%02d ",tests); /* printf_va_17 */
+  printf("Format command with an empty string in between proper interpolations: "); /* printf_va_18 */
   {
     char const *__va_arg0_54 = "";
     char const *__va_arg1_56 = "foo";
@@ -8764,19 +8767,20 @@ static void test_format_commands(void)
                   (unsigned int)len);
   if (tmp_2 == 0) {
     if (len == (((((4 + 4) + (3 + 2)) + 4) + (0 + 2)) + 4) + (3 + 2)) 
-      printf_va_19("\033[0;32mPASSED\033[0;0m\n");
+      printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_19 */
     else goto _LAND_2;
   }
   else {
-    _LAND_2: {
-               printf_va_20("\033[0;31mFAILED\033[0;0m\n");
-               fails ++;
-             }
+    _LAND_2:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_20 */
+      fails ++;
+    }
   }
   free((void *)cmd);
   tests ++;
-  printf_va_21("#%02d ",tests);
-  printf_va_22("Format command with %%b string interpolation: ");
+  printf("#%02d ",tests); /* printf_va_21 */
+  printf("Format command with %%b string interpolation: "); /* printf_va_22 */
   {
     char const *__va_arg0_60 = "foo";
     unsigned int __va_arg1_62 = (unsigned int)3;
@@ -8792,19 +8796,20 @@ static void test_format_commands(void)
                   (unsigned int)len);
   if (tmp_3 == 0) {
     if (len == (((((4 + 4) + (3 + 2)) + 4) + (3 + 2)) + 4) + (3 + 2)) 
-      printf_va_23("\033[0;32mPASSED\033[0;0m\n");
+      printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_23 */
     else goto _LAND_3;
   }
   else {
-    _LAND_3: {
-               printf_va_24("\033[0;31mFAILED\033[0;0m\n");
-               fails ++;
-             }
+    _LAND_3:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_24 */
+      fails ++;
+    }
   }
   free((void *)cmd);
   tests ++;
-  printf_va_25("#%02d ",tests);
-  printf_va_26("Format command with %%b and an empty string: ");
+  printf("#%02d ",tests); /* printf_va_25 */
+  printf("Format command with %%b and an empty string: "); /* printf_va_26 */
   {
     char const *__va_arg0_68 = "foo";
     unsigned int __va_arg1_70 = (unsigned int)3;
@@ -8820,19 +8825,20 @@ static void test_format_commands(void)
                   (unsigned int)len);
   if (tmp_4 == 0) {
     if (len == (((((4 + 4) + (3 + 2)) + 4) + (3 + 2)) + 4) + (0 + 2)) 
-      printf_va_27("\033[0;32mPASSED\033[0;0m\n");
+      printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_27 */
     else goto _LAND_4;
   }
   else {
-    _LAND_4: {
-               printf_va_28("\033[0;31mFAILED\033[0;0m\n");
-               fails ++;
-             }
+    _LAND_4:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_28 */
+      fails ++;
+    }
   }
   free((void *)cmd);
   tests ++;
-  printf_va_29("#%02d ",tests);
-  printf_va_30("Format command with literal %%: ");
+  printf("#%02d ",tests); /* printf_va_29 */
+  printf("Format command with literal %%: "); /* printf_va_30 */
   {
     void *__va_args_78[1] = {(void *)0};
     len = redisFormatCommand(& cmd,"SET %% %%",
@@ -8843,22 +8849,23 @@ static void test_format_commands(void)
                   (unsigned int)len);
   if (tmp_5 == 0) {
     if (len == (((((4 + 4) + (3 + 2)) + 4) + (1 + 2)) + 4) + (1 + 2)) 
-      printf_va_31("\033[0;32mPASSED\033[0;0m\n");
+      printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_31 */
     else goto _LAND_5;
   }
   else {
-    _LAND_5: {
-               printf_va_32("\033[0;31mFAILED\033[0;0m\n");
-               fails ++;
-             }
+    _LAND_5:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_32 */
+      fails ++;
+    }
   }
   free((void *)cmd);
   {
     int tmp_6;
     int value = 123;
     tests ++;
-    printf_va_33("#%02d ",tests);
-    printf_va_34("Format command with printf-delegation (int): ");
+    printf("#%02d ",tests); /* printf_va_33 */
+    printf("Format command with printf-delegation (int): "); /* printf_va_34 */
     {
       int __va_arg0_80 = value;
       char const *__va_arg1_82 = "hello";
@@ -8870,14 +8877,15 @@ static void test_format_commands(void)
                     "*2\r\n$12\r\nkey:00000123\r\n$9\r\nstr:hello\r\n",
                     (unsigned int)len);
     if (tmp_6 == 0) {
-      if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf_va_35("\033[0;32mPASSED\033[0;0m\n");
+      if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_35 */
       else goto _LAND_6;
     }
     else {
-      _LAND_6: {
-                 printf_va_36("\033[0;31mFAILED\033[0;0m\n");
-                 fails ++;
-               }
+      _LAND_6:
+      {
+        printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_36 */
+        fails ++;
+      }
     }
     free((void *)cmd);
   }
@@ -8885,8 +8893,8 @@ static void test_format_commands(void)
     int tmp_7;
     char value_0 = (char)123;
     tests ++;
-    printf_va_37("#%02d ",tests);
-    printf_va_38("Format command with printf-delegation (char): ");
+    printf("#%02d ",tests); /* printf_va_37 */
+    printf("Format command with printf-delegation (char): "); /* printf_va_38 */
     {
       int __va_arg0_86 = (int)value_0;
       char const *__va_arg1_88 = "hello";
@@ -8898,14 +8906,15 @@ static void test_format_commands(void)
                     "*2\r\n$12\r\nkey:00000123\r\n$9\r\nstr:hello\r\n",
                     (unsigned int)len);
     if (tmp_7 == 0) {
-      if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf_va_39("\033[0;32mPASSED\033[0;0m\n");
+      if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_39 */
       else goto _LAND_7;
     }
     else {
-      _LAND_7: {
-                 printf_va_40("\033[0;31mFAILED\033[0;0m\n");
-                 fails ++;
-               }
+      _LAND_7:
+      {
+        printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_40 */
+        fails ++;
+      }
     }
     free((void *)cmd);
   }
@@ -8913,8 +8922,8 @@ static void test_format_commands(void)
     int tmp_8;
     short value_1 = (short)123;
     tests ++;
-    printf_va_41("#%02d ",tests);
-    printf_va_42("Format command with printf-delegation (short): ");
+    printf("#%02d ",tests); /* printf_va_41 */
+    printf("Format command with printf-delegation (short): "); /* printf_va_42 */
     {
       int __va_arg0_92 = (int)value_1;
       char const *__va_arg1_94 = "hello";
@@ -8926,14 +8935,15 @@ static void test_format_commands(void)
                     "*2\r\n$12\r\nkey:00000123\r\n$9\r\nstr:hello\r\n",
                     (unsigned int)len);
     if (tmp_8 == 0) {
-      if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf_va_43("\033[0;32mPASSED\033[0;0m\n");
+      if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_43 */
       else goto _LAND_8;
     }
     else {
-      _LAND_8: {
-                 printf_va_44("\033[0;31mFAILED\033[0;0m\n");
-                 fails ++;
-               }
+      _LAND_8:
+      {
+        printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_44 */
+        fails ++;
+      }
     }
     free((void *)cmd);
   }
@@ -8941,8 +8951,8 @@ static void test_format_commands(void)
     int tmp_9;
     long value_2 = (long)123;
     tests ++;
-    printf_va_45("#%02d ",tests);
-    printf_va_46("Format command with printf-delegation (long): ");
+    printf("#%02d ",tests); /* printf_va_45 */
+    printf("Format command with printf-delegation (long): "); /* printf_va_46 */
     {
       long __va_arg0_98 = value_2;
       char const *__va_arg1_100 = "hello";
@@ -8954,14 +8964,15 @@ static void test_format_commands(void)
                     "*2\r\n$12\r\nkey:00000123\r\n$9\r\nstr:hello\r\n",
                     (unsigned int)len);
     if (tmp_9 == 0) {
-      if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf_va_47("\033[0;32mPASSED\033[0;0m\n");
+      if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_47 */
       else goto _LAND_9;
     }
     else {
-      _LAND_9: {
-                 printf_va_48("\033[0;31mFAILED\033[0;0m\n");
-                 fails ++;
-               }
+      _LAND_9:
+      {
+        printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_48 */
+        fails ++;
+      }
     }
     free((void *)cmd);
   }
@@ -8969,8 +8980,8 @@ static void test_format_commands(void)
     int tmp_10;
     long long value_3 = (long long)123;
     tests ++;
-    printf_va_49("#%02d ",tests);
-    printf_va_50("Format command with printf-delegation (long long): ");
+    printf("#%02d ",tests); /* printf_va_49 */
+    printf("Format command with printf-delegation (long long): "); /* printf_va_50 */
     {
       long long __va_arg0_104 = value_3;
       char const *__va_arg1_106 = "hello";
@@ -8982,14 +8993,15 @@ static void test_format_commands(void)
                      "*2\r\n$12\r\nkey:00000123\r\n$9\r\nstr:hello\r\n",
                      (unsigned int)len);
     if (tmp_10 == 0) {
-      if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf_va_51("\033[0;32mPASSED\033[0;0m\n");
+      if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_51 */
       else goto _LAND_10;
     }
     else {
-      _LAND_10: {
-                  printf_va_52("\033[0;31mFAILED\033[0;0m\n");
-                  fails ++;
-                }
+      _LAND_10:
+      {
+        printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_52 */
+        fails ++;
+      }
     }
     free((void *)cmd);
   }
@@ -8997,8 +9009,8 @@ static void test_format_commands(void)
     int tmp_11;
     unsigned int value_4 = (unsigned int)123;
     tests ++;
-    printf_va_53("#%02d ",tests);
-    printf_va_54("Format command with printf-delegation (unsigned int): ");
+    printf("#%02d ",tests); /* printf_va_53 */
+    printf("Format command with printf-delegation (unsigned int): "); /* printf_va_54 */
     {
       unsigned int __va_arg0_110 = value_4;
       char const *__va_arg1_112 = "hello";
@@ -9010,14 +9022,15 @@ static void test_format_commands(void)
                      "*2\r\n$12\r\nkey:00000123\r\n$9\r\nstr:hello\r\n",
                      (unsigned int)len);
     if (tmp_11 == 0) {
-      if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf_va_55("\033[0;32mPASSED\033[0;0m\n");
+      if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_55 */
       else goto _LAND_11;
     }
     else {
-      _LAND_11: {
-                  printf_va_56("\033[0;31mFAILED\033[0;0m\n");
-                  fails ++;
-                }
+      _LAND_11:
+      {
+        printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_56 */
+        fails ++;
+      }
     }
     free((void *)cmd);
   }
@@ -9025,8 +9038,8 @@ static void test_format_commands(void)
     int tmp_12;
     unsigned char value_5 = (unsigned char)123;
     tests ++;
-    printf_va_57("#%02d ",tests);
-    printf_va_58("Format command with printf-delegation (unsigned char): ");
+    printf("#%02d ",tests); /* printf_va_57 */
+    printf("Format command with printf-delegation (unsigned char): "); /* printf_va_58 */
     {
       int __va_arg0_116 = (int)value_5;
       char const *__va_arg1_118 = "hello";
@@ -9038,14 +9051,15 @@ static void test_format_commands(void)
                      "*2\r\n$12\r\nkey:00000123\r\n$9\r\nstr:hello\r\n",
                      (unsigned int)len);
     if (tmp_12 == 0) {
-      if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf_va_59("\033[0;32mPASSED\033[0;0m\n");
+      if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_59 */
       else goto _LAND_12;
     }
     else {
-      _LAND_12: {
-                  printf_va_60("\033[0;31mFAILED\033[0;0m\n");
-                  fails ++;
-                }
+      _LAND_12:
+      {
+        printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_60 */
+        fails ++;
+      }
     }
     free((void *)cmd);
   }
@@ -9053,8 +9067,8 @@ static void test_format_commands(void)
     int tmp_13;
     unsigned short value_6 = (unsigned short)123;
     tests ++;
-    printf_va_61("#%02d ",tests);
-    printf_va_62("Format command with printf-delegation (unsigned short): ");
+    printf("#%02d ",tests); /* printf_va_61 */
+    printf("Format command with printf-delegation (unsigned short): "); /* printf_va_62 */
     {
       int __va_arg0_122 = (int)value_6;
       char const *__va_arg1_124 = "hello";
@@ -9066,14 +9080,15 @@ static void test_format_commands(void)
                      "*2\r\n$12\r\nkey:00000123\r\n$9\r\nstr:hello\r\n",
                      (unsigned int)len);
     if (tmp_13 == 0) {
-      if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf_va_63("\033[0;32mPASSED\033[0;0m\n");
+      if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_63 */
       else goto _LAND_13;
     }
     else {
-      _LAND_13: {
-                  printf_va_64("\033[0;31mFAILED\033[0;0m\n");
-                  fails ++;
-                }
+      _LAND_13:
+      {
+        printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_64 */
+        fails ++;
+      }
     }
     free((void *)cmd);
   }
@@ -9081,8 +9096,8 @@ static void test_format_commands(void)
     int tmp_14;
     unsigned long value_7 = (unsigned long)123;
     tests ++;
-    printf_va_65("#%02d ",tests);
-    printf_va_66("Format command with printf-delegation (unsigned long): ");
+    printf("#%02d ",tests); /* printf_va_65 */
+    printf("Format command with printf-delegation (unsigned long): "); /* printf_va_66 */
     {
       unsigned long __va_arg0_128 = value_7;
       char const *__va_arg1_130 = "hello";
@@ -9094,14 +9109,15 @@ static void test_format_commands(void)
                      "*2\r\n$12\r\nkey:00000123\r\n$9\r\nstr:hello\r\n",
                      (unsigned int)len);
     if (tmp_14 == 0) {
-      if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf_va_67("\033[0;32mPASSED\033[0;0m\n");
+      if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_67 */
       else goto _LAND_14;
     }
     else {
-      _LAND_14: {
-                  printf_va_68("\033[0;31mFAILED\033[0;0m\n");
-                  fails ++;
-                }
+      _LAND_14:
+      {
+        printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_68 */
+        fails ++;
+      }
     }
     free((void *)cmd);
   }
@@ -9109,8 +9125,8 @@ static void test_format_commands(void)
     int tmp_15;
     unsigned long long value_8 = (unsigned long long)123;
     tests ++;
-    printf_va_69("#%02d ",tests);
-    printf_va_70("Format command with printf-delegation (unsigned long long): ");
+    printf("#%02d ",tests); /* printf_va_69 */
+    printf("Format command with printf-delegation (unsigned long long): "); /* printf_va_70 */
     {
       unsigned long long __va_arg0_134 = value_8;
       char const *__va_arg1_136 = "hello";
@@ -9122,14 +9138,15 @@ static void test_format_commands(void)
                      "*2\r\n$12\r\nkey:00000123\r\n$9\r\nstr:hello\r\n",
                      (unsigned int)len);
     if (tmp_15 == 0) {
-      if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf_va_71("\033[0;32mPASSED\033[0;0m\n");
+      if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_71 */
       else goto _LAND_15;
     }
     else {
-      _LAND_15: {
-                  printf_va_72("\033[0;31mFAILED\033[0;0m\n");
-                  fails ++;
-                }
+      _LAND_15:
+      {
+        printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_72 */
+        fails ++;
+      }
     }
     free((void *)cmd);
   }
@@ -9137,8 +9154,8 @@ static void test_format_commands(void)
     int tmp_16;
     float value_9 = (float)123.0;
     tests ++;
-    printf_va_73("#%02d ",tests);
-    printf_va_74("Format command with printf-delegation (float): ");
+    printf("#%02d ",tests); /* printf_va_73 */
+    printf("Format command with printf-delegation (float): "); /* printf_va_74 */
     {
       double __va_arg0_140 = (double)value_9;
       char const *__va_arg1_142 = "hello";
@@ -9150,14 +9167,15 @@ static void test_format_commands(void)
                      "*2\r\n$12\r\nkey:0123.000\r\n$9\r\nstr:hello\r\n",
                      (unsigned int)len);
     if (tmp_16 == 0) {
-      if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf_va_75("\033[0;32mPASSED\033[0;0m\n");
+      if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_75 */
       else goto _LAND_16;
     }
     else {
-      _LAND_16: {
-                  printf_va_76("\033[0;31mFAILED\033[0;0m\n");
-                  fails ++;
-                }
+      _LAND_16:
+      {
+        printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_76 */
+        fails ++;
+      }
     }
     free((void *)cmd);
   }
@@ -9165,8 +9183,8 @@ static void test_format_commands(void)
     int tmp_17;
     double value_10 = 123.0;
     tests ++;
-    printf_va_77("#%02d ",tests);
-    printf_va_78("Format command with printf-delegation (double): ");
+    printf("#%02d ",tests); /* printf_va_77 */
+    printf("Format command with printf-delegation (double): "); /* printf_va_78 */
     {
       double __va_arg0_146 = value_10;
       char const *__va_arg1_148 = "hello";
@@ -9178,20 +9196,21 @@ static void test_format_commands(void)
                      "*2\r\n$12\r\nkey:0123.000\r\n$9\r\nstr:hello\r\n",
                      (unsigned int)len);
     if (tmp_17 == 0) {
-      if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf_va_79("\033[0;32mPASSED\033[0;0m\n");
+      if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_79 */
       else goto _LAND_17;
     }
     else {
-      _LAND_17: {
-                  printf_va_80("\033[0;31mFAILED\033[0;0m\n");
-                  fails ++;
-                }
+      _LAND_17:
+      {
+        printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_80 */
+        fails ++;
+      }
     }
     free((void *)cmd);
   }
   tests ++;
-  printf_va_81("#%02d ",tests);
-  printf_va_82("Format command with invalid printf format: ");
+  printf("#%02d ",tests); /* printf_va_81 */
+  printf("Format command with invalid printf format: "); /* printf_va_82 */
   {
     void *__va_arg0_152 = (void *)1234;
     char const *__va_arg1_154 = "foo";
@@ -9201,9 +9220,9 @@ static void test_format_commands(void)
     len = redisFormatCommand(& cmd,"key:%08p %b",
                              (void * const *)(__va_args_158));
   }
-  if (len == -1) printf_va_83("\033[0;32mPASSED\033[0;0m\n");
+  if (len == -1) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_83 */
   else {
-    printf_va_84("\033[0;31mFAILED\033[0;0m\n");
+    printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_84 */
     fails ++;
   }
   argv[0] = "SET";
@@ -9212,81 +9231,85 @@ static void test_format_commands(void)
   size_t lens[3] = {(unsigned int)3, (unsigned int)7, (unsigned int)3};
   int argc = 3;
   tests ++;
-  printf_va_85("#%02d ",tests);
-  printf_va_86("Format command by passing argc/argv without lengths: ");
+  printf("#%02d ",tests); /* printf_va_85 */
+  printf("Format command by passing argc/argv without lengths: "); /* printf_va_86 */
   len = redisFormatCommandArgv(& cmd,argc,argv,(size_t const *)0);
   tmp_18 = strncmp((char const *)cmd,
                    "*3\r\n$3\r\nSET\r\n$3\r\nfoo\r\n$3\r\nbar\r\n",
                    (unsigned int)len);
   if (tmp_18 == 0) {
     if (len == (((((4 + 4) + (3 + 2)) + 4) + (3 + 2)) + 4) + (3 + 2)) 
-      printf_va_87("\033[0;32mPASSED\033[0;0m\n");
+      printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_87 */
     else goto _LAND_18;
   }
   else {
-    _LAND_18: {
-                printf_va_88("\033[0;31mFAILED\033[0;0m\n");
-                fails ++;
-              }
+    _LAND_18:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_88 */
+      fails ++;
+    }
   }
   free((void *)cmd);
   tests ++;
-  printf_va_89("#%02d ",tests);
-  printf_va_90("Format command by passing argc/argv with lengths: ");
+  printf("#%02d ",tests); /* printf_va_89 */
+  printf("Format command by passing argc/argv with lengths: "); /* printf_va_90 */
   len = redisFormatCommandArgv(& cmd,argc,argv,(size_t const *)(lens));
   tmp_19 = strncmp((char const *)cmd,
                    "*3\r\n$3\r\nSET\r\n$7\r\nfoo\000xxx\r\n$3\r\nbar\r\n",
                    (unsigned int)len);
   if (tmp_19 == 0) {
     if (len == (((((4 + 4) + (3 + 2)) + 4) + (7 + 2)) + 4) + (3 + 2)) 
-      printf_va_91("\033[0;32mPASSED\033[0;0m\n");
+      printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_91 */
     else goto _LAND_19;
   }
   else {
-    _LAND_19: {
-                printf_va_92("\033[0;31mFAILED\033[0;0m\n");
-                fails ++;
-              }
+    _LAND_19:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_92 */
+      fails ++;
+    }
   }
   free((void *)cmd);
   sds_cmd = (char *)0;
   tests ++;
-  printf_va_93("#%02d ",tests);
-  printf_va_94("Format command into sds by passing argc/argv without lengths: ");
+  printf("#%02d ",tests); /* printf_va_93 */
+  printf("Format command into sds by passing argc/argv without lengths: "); /* printf_va_94 */
   len = redisFormatSdsCommandArgv(& sds_cmd,argc,argv,(size_t const *)0);
   tmp_20 = strncmp((char const *)sds_cmd,
                    "*3\r\n$3\r\nSET\r\n$3\r\nfoo\r\n$3\r\nbar\r\n",
                    (unsigned int)len);
   if (tmp_20 == 0) {
     if (len == (((((4 + 4) + (3 + 2)) + 4) + (3 + 2)) + 4) + (3 + 2)) 
-      printf_va_95("\033[0;32mPASSED\033[0;0m\n");
+      printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_95 */
     else goto _LAND_20;
   }
   else {
-    _LAND_20: {
-                printf_va_96("\033[0;31mFAILED\033[0;0m\n");
-                fails ++;
-              }
+    _LAND_20:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_96 */
+      fails ++;
+    }
   }
   sdsfree(sds_cmd);
   sds_cmd = (char *)0;
   tests ++;
-  printf_va_97("#%02d ",tests);
-  printf_va_98("Format command into sds by passing argc/argv with lengths: ");
+  printf("#%02d ",tests); /* printf_va_97 */
+  printf("Format command into sds by passing argc/argv with lengths: "); /* printf_va_98 */
   len = redisFormatSdsCommandArgv(& sds_cmd,argc,argv,(size_t const *)(lens));
   tmp_21 = strncmp((char const *)sds_cmd,
                    "*3\r\n$3\r\nSET\r\n$7\r\nfoo\000xxx\r\n$3\r\nbar\r\n",
                    (unsigned int)len);
   if (tmp_21 == 0) {
     if (len == (((((4 + 4) + (3 + 2)) + 4) + (7 + 2)) + 4) + (3 + 2)) 
-      printf_va_99("\033[0;32mPASSED\033[0;0m\n");
+      printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_99 */
     else goto _LAND_21;
   }
   else {
-    _LAND_21: {
-                printf_va_100("\033[0;31mFAILED\033[0;0m\n");
-                fails ++;
-              }
+    _LAND_21:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_100 */
+      fails ++;
+    }
   }
   sdsfree(sds_cmd);
   return;
@@ -9351,16 +9374,16 @@ static void test_append_formatted_commands(struct config config)
   int tmp_0;
   c = do_connect(config);
   tests ++;
-  printf_va_101("#%02d ",tests);
-  printf_va_102("Append format command: ");
+  printf("#%02d ",tests); /* printf_va_101 */
+  printf("Append format command: "); /* printf_va_102 */
   {
     void *__va_args[1] = {(void *)0};
     len = redisFormatCommand(& cmd,"SET foo bar",(void * const *)(__va_args));
   }
   tmp = redisAppendFormattedCommand(c,(char const *)cmd,(unsigned int)len);
-  if (tmp == 0) printf_va_103("\033[0;32mPASSED\033[0;0m\n");
+  if (tmp == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_103 */
   else {
-    printf_va_104("\033[0;31mFAILED\033[0;0m\n");
+    printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_104 */
     fails ++;
   }
   tmp_0 = redisGetReply(c,(void **)(& reply));
@@ -10115,8 +10138,8 @@ static void test_reply_reader(void)
   int i;
   int tmp_8;
   tests ++;
-  printf_va_105("#%02d ",tests);
-  printf_va_106("Error handling in reply parser: ");
+  printf("#%02d ",tests); /* printf_va_105 */
+  printf("Error handling in reply parser: "); /* printf_va_106 */
   reader = redisReaderCreate();
   redisReaderFeed(reader,"@foo\r\n",(unsigned int)6);
   ret = redisReaderGetReply(reader,(void **)0);
@@ -10124,19 +10147,20 @@ static void test_reply_reader(void)
     int tmp;
     tmp = strcasecmp((char const *)(reader->errstr),
                      "Protocol error, got \"@\" as reply type byte");
-    if (tmp == 0) printf_va_107("\033[0;32mPASSED\033[0;0m\n");
+    if (tmp == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_107 */
     else goto _LAND;
   }
   else {
-    _LAND: {
-             printf_va_108("\033[0;31mFAILED\033[0;0m\n");
-             fails ++;
-           }
+    _LAND:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_108 */
+      fails ++;
+    }
   }
   redisReaderFree(reader);
   tests ++;
-  printf_va_109("#%02d ",tests);
-  printf_va_110("Memory cleanup in reply parser: ");
+  printf("#%02d ",tests); /* printf_va_109 */
+  printf("Memory cleanup in reply parser: "); /* printf_va_110 */
   reader = redisReaderCreate();
   redisReaderFeed(reader,"*2\r\n",(unsigned int)4);
   redisReaderFeed(reader,"$5\r\nhello\r\n",(unsigned int)11);
@@ -10146,19 +10170,20 @@ static void test_reply_reader(void)
     int tmp_0;
     tmp_0 = strcasecmp((char const *)(reader->errstr),
                        "Protocol error, got \"@\" as reply type byte");
-    if (tmp_0 == 0) printf_va_111("\033[0;32mPASSED\033[0;0m\n");
+    if (tmp_0 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_111 */
     else goto _LAND_0;
   }
   else {
-    _LAND_0: {
-               printf_va_112("\033[0;31mFAILED\033[0;0m\n");
-               fails ++;
-             }
+    _LAND_0:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_112 */
+      fails ++;
+    }
   }
   redisReaderFree(reader);
   tests ++;
-  printf_va_113("#%02d ",tests);
-  printf_va_114("Set error on nested multi bulks with depth > 7: ");
+  printf("#%02d ",tests); /* printf_va_113 */
+  printf("Set error on nested multi bulks with depth > 7: "); /* printf_va_114 */
   reader = redisReaderCreate();
   i = 0;
   while (i < 9) {
@@ -10170,103 +10195,108 @@ static void test_reply_reader(void)
     int tmp_1;
     tmp_1 = strncasecmp((char const *)(reader->errstr),"No support for",
                         (unsigned int)14);
-    if (tmp_1 == 0) printf_va_115("\033[0;32mPASSED\033[0;0m\n");
+    if (tmp_1 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_115 */
     else goto _LAND_1;
   }
   else {
-    _LAND_1: {
-               printf_va_116("\033[0;31mFAILED\033[0;0m\n");
-               fails ++;
-             }
+    _LAND_1:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_116 */
+      fails ++;
+    }
   }
   redisReaderFree(reader);
   tests ++;
-  printf_va_117("#%02d ",tests);
-  printf_va_118("Correctly parses LLONG_MAX: ");
+  printf("#%02d ",tests); /* printf_va_117 */
+  printf("Correctly parses LLONG_MAX: "); /* printf_va_118 */
   reader = redisReaderCreate();
   redisReaderFeed(reader,":9223372036854775807\r\n",(unsigned int)22);
   ret = redisReaderGetReply(reader,& reply);
   if (ret == 0) {
     if (((redisReply *)reply)->type == 3) {
-      if (((redisReply *)reply)->integer == 9223372036854775807LL) printf_va_119
-                                                                   ("\033[0;32mPASSED\033[0;0m\n");
+      if (((redisReply *)reply)->integer == 9223372036854775807LL) printf
+                                                                   ("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_119 */
       else goto _LAND_3;
     }
     else goto _LAND_3;
   }
   else {
-    _LAND_3: {
-               printf_va_120("\033[0;31mFAILED\033[0;0m\n");
-               fails ++;
-             }
+    _LAND_3:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_120 */
+      fails ++;
+    }
   }
   freeReplyObject(reply);
   redisReaderFree(reader);
   tests ++;
-  printf_va_121("#%02d ",tests);
-  printf_va_122("Set error when > LLONG_MAX: ");
+  printf("#%02d ",tests); /* printf_va_121 */
+  printf("Set error when > LLONG_MAX: "); /* printf_va_122 */
   reader = redisReaderCreate();
   redisReaderFeed(reader,":9223372036854775808\r\n",(unsigned int)22);
   ret = redisReaderGetReply(reader,& reply);
   if (ret == -1) {
     int tmp_2;
     tmp_2 = strcasecmp((char const *)(reader->errstr),"Bad integer value");
-    if (tmp_2 == 0) printf_va_123("\033[0;32mPASSED\033[0;0m\n");
+    if (tmp_2 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_123 */
     else goto _LAND_4;
   }
   else {
-    _LAND_4: {
-               printf_va_124("\033[0;31mFAILED\033[0;0m\n");
-               fails ++;
-             }
+    _LAND_4:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_124 */
+      fails ++;
+    }
   }
   freeReplyObject(reply);
   redisReaderFree(reader);
   tests ++;
-  printf_va_125("#%02d ",tests);
-  printf_va_126("Correctly parses LLONG_MIN: ");
+  printf("#%02d ",tests); /* printf_va_125 */
+  printf("Correctly parses LLONG_MIN: "); /* printf_va_126 */
   reader = redisReaderCreate();
   redisReaderFeed(reader,":-9223372036854775808\r\n",(unsigned int)23);
   ret = redisReaderGetReply(reader,& reply);
   if (ret == 0) {
     if (((redisReply *)reply)->type == 3) {
       if (((redisReply *)reply)->integer == -9223372036854775807LL - 1LL) 
-        printf_va_127("\033[0;32mPASSED\033[0;0m\n");
+        printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_127 */
       else goto _LAND_6;
     }
     else goto _LAND_6;
   }
   else {
-    _LAND_6: {
-               printf_va_128("\033[0;31mFAILED\033[0;0m\n");
-               fails ++;
-             }
+    _LAND_6:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_128 */
+      fails ++;
+    }
   }
   freeReplyObject(reply);
   redisReaderFree(reader);
   tests ++;
-  printf_va_129("#%02d ",tests);
-  printf_va_130("Set error when < LLONG_MIN: ");
+  printf("#%02d ",tests); /* printf_va_129 */
+  printf("Set error when < LLONG_MIN: "); /* printf_va_130 */
   reader = redisReaderCreate();
   redisReaderFeed(reader,":-9223372036854775809\r\n",(unsigned int)23);
   ret = redisReaderGetReply(reader,& reply);
   if (ret == -1) {
     int tmp_3;
     tmp_3 = strcasecmp((char const *)(reader->errstr),"Bad integer value");
-    if (tmp_3 == 0) printf_va_131("\033[0;32mPASSED\033[0;0m\n");
+    if (tmp_3 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_131 */
     else goto _LAND_7;
   }
   else {
-    _LAND_7: {
-               printf_va_132("\033[0;31mFAILED\033[0;0m\n");
-               fails ++;
-             }
+    _LAND_7:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_132 */
+      fails ++;
+    }
   }
   freeReplyObject(reply);
   redisReaderFree(reader);
   tests ++;
-  printf_va_133("#%02d ",tests);
-  printf_va_134("Set error when array < -1: ");
+  printf("#%02d ",tests); /* printf_va_133 */
+  printf("Set error when array < -1: "); /* printf_va_134 */
   reader = redisReaderCreate();
   redisReaderFeed(reader,"*-2\r\n+asdf\r\n",(unsigned int)12);
   ret = redisReaderGetReply(reader,& reply);
@@ -10274,20 +10304,21 @@ static void test_reply_reader(void)
     int tmp_4;
     tmp_4 = strcasecmp((char const *)(reader->errstr),
                        "Multi-bulk length out of range");
-    if (tmp_4 == 0) printf_va_135("\033[0;32mPASSED\033[0;0m\n");
+    if (tmp_4 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_135 */
     else goto _LAND_8;
   }
   else {
-    _LAND_8: {
-               printf_va_136("\033[0;31mFAILED\033[0;0m\n");
-               fails ++;
-             }
+    _LAND_8:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_136 */
+      fails ++;
+    }
   }
   freeReplyObject(reply);
   redisReaderFree(reader);
   tests ++;
-  printf_va_137("#%02d ",tests);
-  printf_va_138("Set error when bulk < -1: ");
+  printf("#%02d ",tests); /* printf_va_137 */
+  printf("Set error when bulk < -1: "); /* printf_va_138 */
   reader = redisReaderCreate();
   redisReaderFeed(reader,"$-2\r\nasdf\r\n",(unsigned int)11);
   ret = redisReaderGetReply(reader,& reply);
@@ -10295,20 +10326,21 @@ static void test_reply_reader(void)
     int tmp_5;
     tmp_5 = strcasecmp((char const *)(reader->errstr),
                        "Bulk string length out of range");
-    if (tmp_5 == 0) printf_va_139("\033[0;32mPASSED\033[0;0m\n");
+    if (tmp_5 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_139 */
     else goto _LAND_9;
   }
   else {
-    _LAND_9: {
-               printf_va_140("\033[0;31mFAILED\033[0;0m\n");
-               fails ++;
-             }
+    _LAND_9:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_140 */
+      fails ++;
+    }
   }
   freeReplyObject(reply);
   redisReaderFree(reader);
   tests ++;
-  printf_va_141("#%02d ",tests);
-  printf_va_142("Set error when array > SIZE_MAX: ");
+  printf("#%02d ",tests); /* printf_va_141 */
+  printf("Set error when array > SIZE_MAX: "); /* printf_va_142 */
   reader = redisReaderCreate();
   redisReaderFeed(reader,"*9223372036854775807\r\n+asdf\r\n",
                   (unsigned int)29);
@@ -10317,20 +10349,21 @@ static void test_reply_reader(void)
     int tmp_6;
     tmp_6 = strcasecmp((char const *)(reader->errstr),
                        "Multi-bulk length out of range");
-    if (tmp_6 == 0) printf_va_143("\033[0;32mPASSED\033[0;0m\n");
+    if (tmp_6 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_143 */
     else goto _LAND_10;
   }
   else {
-    _LAND_10: {
-                printf_va_144("\033[0;31mFAILED\033[0;0m\n");
-                fails ++;
-              }
+    _LAND_10:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_144 */
+      fails ++;
+    }
   }
   freeReplyObject(reply);
   redisReaderFree(reader);
   tests ++;
-  printf_va_145("#%02d ",tests);
-  printf_va_146("Set error when bulk > SIZE_MAX: ");
+  printf("#%02d ",tests); /* printf_va_145 */
+  printf("Set error when bulk > SIZE_MAX: "); /* printf_va_146 */
   reader = redisReaderCreate();
   redisReaderFeed(reader,"$9223372036854775807\r\nasdf\r\n",(unsigned int)28);
   ret = redisReaderGetReply(reader,& reply);
@@ -10338,38 +10371,40 @@ static void test_reply_reader(void)
     int tmp_7;
     tmp_7 = strcasecmp((char const *)(reader->errstr),
                        "Bulk string length out of range");
-    if (tmp_7 == 0) printf_va_147("\033[0;32mPASSED\033[0;0m\n");
+    if (tmp_7 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_147 */
     else goto _LAND_11;
   }
   else {
-    _LAND_11: {
-                printf_va_148("\033[0;31mFAILED\033[0;0m\n");
-                fails ++;
-              }
+    _LAND_11:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_148 */
+      fails ++;
+    }
   }
   freeReplyObject(reply);
   redisReaderFree(reader);
   tests ++;
-  printf_va_149("#%02d ",tests);
-  printf_va_150("Works with NULL functions for reply: ");
+  printf("#%02d ",tests); /* printf_va_149 */
+  printf("Works with NULL functions for reply: "); /* printf_va_150 */
   reader = redisReaderCreate();
   reader->fn = (redisReplyObjectFunctions *)0;
   redisReaderFeed(reader,"+OK\r\n",(unsigned int)5);
   ret = redisReaderGetReply(reader,& reply);
   if (ret == 0) {
-    if (reply == (void *)5) printf_va_151("\033[0;32mPASSED\033[0;0m\n");
+    if (reply == (void *)5) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_151 */
     else goto _LAND_12;
   }
   else {
-    _LAND_12: {
-                printf_va_152("\033[0;31mFAILED\033[0;0m\n");
-                fails ++;
-              }
+    _LAND_12:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_152 */
+      fails ++;
+    }
   }
   redisReaderFree(reader);
   tests ++;
-  printf_va_153("#%02d ",tests);
-  printf_va_154("Works when a single newline (\\r\\n) covers two calls to feed: ");
+  printf("#%02d ",tests); /* printf_va_153 */
+  printf("Works when a single newline (\\r\\n) covers two calls to feed: "); /* printf_va_154 */
   reader = redisReaderCreate();
   reader->fn = (redisReplyObjectFunctions *)0;
   redisReaderFeed(reader,"+OK\r",(unsigned int)4);
@@ -10381,19 +10416,20 @@ static void test_reply_reader(void)
   redisReaderFeed(reader,"\n",(unsigned int)1);
   ret = redisReaderGetReply(reader,& reply);
   if (ret == 0) {
-    if (reply == (void *)5) printf_va_155("\033[0;32mPASSED\033[0;0m\n");
+    if (reply == (void *)5) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_155 */
     else goto _LAND_13;
   }
   else {
-    _LAND_13: {
-                printf_va_156("\033[0;31mFAILED\033[0;0m\n");
-                fails ++;
-              }
+    _LAND_13:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_156 */
+      fails ++;
+    }
   }
   redisReaderFree(reader);
   tests ++;
-  printf_va_157("#%02d ",tests);
-  printf_va_158("Don\'t reset state after protocol error: ");
+  printf("#%02d ",tests); /* printf_va_157 */
+  printf("Don\'t reset state after protocol error: "); /* printf_va_158 */
   reader = redisReaderCreate();
   reader->fn = (redisReplyObjectFunctions *)0;
   redisReaderFeed(reader,"x",(unsigned int)1);
@@ -10401,35 +10437,36 @@ static void test_reply_reader(void)
   __FC_assert((ret == -1) != 0,"test.c",455,"ret == REDIS_ERR");
   ret = redisReaderGetReply(reader,& reply);
   if (ret == -1) {
-    if (reply == (void *)0) printf_va_159("\033[0;32mPASSED\033[0;0m\n");
+    if (reply == (void *)0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_159 */
     else goto _LAND_14;
   }
   else {
-    _LAND_14: {
-                printf_va_160("\033[0;31mFAILED\033[0;0m\n");
-                fails ++;
-              }
+    _LAND_14:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_160 */
+      fails ++;
+    }
   }
   redisReaderFree(reader);
   tests ++;
-  printf_va_161("#%02d ",tests);
-  printf_va_162("Don\'t do empty allocation for empty multi bulk: ");
+  printf("#%02d ",tests); /* printf_va_161 */
+  printf("Don\'t do empty allocation for empty multi bulk: "); /* printf_va_162 */
   reader = redisReaderCreate();
   redisReaderFeed(reader,"*0\r\n",(unsigned int)4);
   ret = redisReaderGetReply(reader,& reply);
   if (ret == 0) {
     if (((redisReply *)reply)->type == 2) {
-      if (((redisReply *)reply)->elements == (size_t)0) printf_va_163
-                                                        ("\033[0;32mPASSED\033[0;0m\n");
+      if (((redisReply *)reply)->elements == (size_t)0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_163 */
       else goto _LAND_16;
     }
     else goto _LAND_16;
   }
   else {
-    _LAND_16: {
-                printf_va_164("\033[0;31mFAILED\033[0;0m\n");
-                fails ++;
-              }
+    _LAND_16:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_164 */
+      fails ++;
+    }
   }
   freeReplyObject(reply);
   redisReaderFree(reader);
@@ -10539,21 +10576,21 @@ static void test_free_null(void)
   void *redisCtx = (void *)0;
   void *reply = (void *)0;
   tests ++;
-  printf_va_165("#%02d ",tests);
-  printf_va_166("Don\'t fail when redisFree is passed a NULL value: ");
+  printf("#%02d ",tests); /* printf_va_165 */
+  printf("Don\'t fail when redisFree is passed a NULL value: "); /* printf_va_166 */
   redisFree((redisContext *)redisCtx);
-  if (redisCtx == (void *)0) printf_va_167("\033[0;32mPASSED\033[0;0m\n");
+  if (redisCtx == (void *)0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_167 */
   else {
-    printf_va_168("\033[0;31mFAILED\033[0;0m\n");
+    printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_168 */
     fails ++;
   }
   tests ++;
-  printf_va_169("#%02d ",tests);
-  printf_va_170("Don\'t fail when freeReplyObject is passed a NULL value: ");
+  printf("#%02d ",tests); /* printf_va_169 */
+  printf("Don\'t fail when freeReplyObject is passed a NULL value: "); /* printf_va_170 */
   freeReplyObject(reply);
-  if (reply == (void *)0) printf_va_171("\033[0;32mPASSED\033[0;0m\n");
+  if (reply == (void *)0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_171 */
   else {
-    printf_va_172("\033[0;31mFAILED\033[0;0m\n");
+    printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_172 */
     fails ++;
   }
   return;
@@ -10832,52 +10869,52 @@ static void test_blocking_connection_errors(void)
                 (struct addrinfo const *)(& hints),& ai_tmp);
   if (rv != 0) {
     tests ++;
-    printf_va_173("#%02d ",tests);
-    printf_va_174("Returns error when host cannot be resolved: ");
+    printf("#%02d ",tests); /* printf_va_173 */
+    printf("Returns error when host cannot be resolved: "); /* printf_va_174 */
     c = redisConnect("idontexist-noreally.com",6379);
     if (c->err == 2) {
       int tmp_0;
       tmp_0 = strcmp((char const *)(c->errstr),"Name or service not known");
-      if (tmp_0 == 0) printf_va_175("\033[0;32mPASSED\033[0;0m\n");
+      if (tmp_0 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_175 */
       else {
         int tmp_1;
         tmp_1 = strcmp((char const *)(c->errstr),
                        "Can\'t resolve: idontexist-noreally.com");
-        if (tmp_1 == 0) printf_va_176("\033[0;32mPASSED\033[0;0m\n");
+        if (tmp_1 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_176 */
         else {
           int tmp_2;
           tmp_2 = strcmp((char const *)(c->errstr),"Name does not resolve");
-          if (tmp_2 == 0) printf_va_177("\033[0;32mPASSED\033[0;0m\n");
+          if (tmp_2 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_177 */
           else {
             int tmp_3;
             tmp_3 = strcmp((char const *)(c->errstr),
                            "nodename nor servname provided, or not known");
-            if (tmp_3 == 0) printf_va_178("\033[0;32mPASSED\033[0;0m\n");
+            if (tmp_3 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_178 */
             else {
               int tmp_4;
               tmp_4 = strcmp((char const *)(c->errstr),
                              "No address associated with hostname");
-              if (tmp_4 == 0) printf_va_179("\033[0;32mPASSED\033[0;0m\n");
+              if (tmp_4 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_179 */
               else {
                 int tmp_5;
                 tmp_5 = strcmp((char const *)(c->errstr),
                                "Temporary failure in name resolution");
-                if (tmp_5 == 0) printf_va_180("\033[0;32mPASSED\033[0;0m\n");
+                if (tmp_5 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_180 */
                 else {
                   int tmp_6;
                   tmp_6 = strcmp((char const *)(c->errstr),
                                  "hostname nor servname provided, or not known");
-                  if (tmp_6 == 0) printf_va_181("\033[0;32mPASSED\033[0;0m\n");
+                  if (tmp_6 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_181 */
                   else {
                     int tmp_7;
                     tmp_7 = strcmp((char const *)(c->errstr),
                                    "no address associated with name");
-                    if (tmp_7 == 0) printf_va_182("\033[0;32mPASSED\033[0;0m\n");
+                    if (tmp_7 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_182 */
                     else {
                       int tmp_8;
                       tmp_8 = strcmp((char const *)(c->errstr),
                                      "No such host is known. ");
-                      if (tmp_8 == 0) printf_va_183("\033[0;32mPASSED\033[0;0m\n");
+                      if (tmp_8 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_183 */
                       else goto _LAND;
                     }
                   }
@@ -10889,41 +10926,43 @@ static void test_blocking_connection_errors(void)
       }
     }
     else {
-      _LAND: {
-               printf_va_184("\033[0;31mFAILED\033[0;0m\n");
-               fails ++;
-             }
+      _LAND:
+      {
+        printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_184 */
+        fails ++;
+      }
     }
     redisFree(c);
   }
   else {
-    printf_va_185("Skipping NXDOMAIN test. Found evil ISP!\n");
+    printf("Skipping NXDOMAIN test. Found evil ISP!\n"); /* printf_va_185 */
     freeaddrinfo(ai_tmp);
   }
   tests ++;
-  printf_va_186("#%02d ",tests);
-  printf_va_187("Returns error when the port is not open: ");
+  printf("#%02d ",tests); /* printf_va_186 */
+  printf("Returns error when the port is not open: "); /* printf_va_187 */
   c = redisConnect("localhost",1);
   if (c->err == 1) {
     int tmp_9;
     tmp_9 = strcmp((char const *)(c->errstr),"Connection refused");
-    if (tmp_9 == 0) printf_va_188("\033[0;32mPASSED\033[0;0m\n");
+    if (tmp_9 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_188 */
     else goto _LAND_0;
   }
   else {
-    _LAND_0: {
-               printf_va_189("\033[0;31mFAILED\033[0;0m\n");
-               fails ++;
-             }
+    _LAND_0:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_189 */
+      fails ++;
+    }
   }
   redisFree(c);
   tests ++;
-  printf_va_190("#%02d ",tests);
-  printf_va_191("Returns error when the unix_sock socket path doesn\'t accept connections: ");
+  printf("#%02d ",tests); /* printf_va_190 */
+  printf("Returns error when the unix_sock socket path doesn\'t accept connections: "); /* printf_va_191 */
   c = redisConnectUnix("/tmp/idontexist.sock");
-  if (c->err == 1) printf_va_192("\033[0;32mPASSED\033[0;0m\n");
+  if (c->err == 1) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_192 */
   else {
-    printf_va_193("\033[0;31mFAILED\033[0;0m\n");
+    printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_193 */
     fails ++;
   }
   redisFree(c);
@@ -11433,8 +11472,8 @@ static void test_blocking_connection(struct config config)
   int tmp_14;
   c = do_connect(config);
   tests ++;
-  printf_va_194("#%02d ",tests);
-  printf_va_195("Is able to deliver commands: ");
+  printf("#%02d ",tests); /* printf_va_194 */
+  printf("Is able to deliver commands: "); /* printf_va_195 */
   {
     void *__va_args[1] = {(void *)0};
     reply = (redisReply *)redisCommand(c,"PING",(void * const *)(__va_args));
@@ -11442,19 +11481,20 @@ static void test_blocking_connection(struct config config)
   if (reply->type == 5) {
     int tmp;
     tmp = strcasecmp((char const *)reply->str,"pong");
-    if (tmp == 0) printf_va_196("\033[0;32mPASSED\033[0;0m\n");
+    if (tmp == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_196 */
     else goto _LAND;
   }
   else {
-    _LAND: {
-             printf_va_197("\033[0;31mFAILED\033[0;0m\n");
-             fails ++;
-           }
+    _LAND:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_197 */
+      fails ++;
+    }
   }
   freeReplyObject((void *)reply);
   tests ++;
-  printf_va_198("#%02d ",tests);
-  printf_va_199("Is a able to send commands verbatim: ");
+  printf("#%02d ",tests); /* printf_va_198 */
+  printf("Is a able to send commands verbatim: "); /* printf_va_199 */
   {
     void *__va_args_22[1] = {(void *)0};
     reply = (redisReply *)redisCommand(c,"SET foo bar",
@@ -11463,19 +11503,20 @@ static void test_blocking_connection(struct config config)
   if (reply->type == 5) {
     int tmp_0;
     tmp_0 = strcasecmp((char const *)reply->str,"ok");
-    if (tmp_0 == 0) printf_va_200("\033[0;32mPASSED\033[0;0m\n");
+    if (tmp_0 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_200 */
     else goto _LAND_0;
   }
   else {
-    _LAND_0: {
-               printf_va_201("\033[0;31mFAILED\033[0;0m\n");
-               fails ++;
-             }
+    _LAND_0:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_201 */
+      fails ++;
+    }
   }
   freeReplyObject((void *)reply);
   tests ++;
-  printf_va_202("#%02d ",tests);
-  printf_va_203("%%s String interpolation works: ");
+  printf("#%02d ",tests); /* printf_va_202 */
+  printf("%%s String interpolation works: "); /* printf_va_203 */
   {
     char const *__va_arg0 = "foo";
     char const *__va_arg1 = "hello world";
@@ -11492,19 +11533,20 @@ static void test_blocking_connection(struct config config)
   if (reply->type == 1) {
     int tmp_1;
     tmp_1 = strcmp((char const *)reply->str,"hello world");
-    if (tmp_1 == 0) printf_va_204("\033[0;32mPASSED\033[0;0m\n");
+    if (tmp_1 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_204 */
     else goto _LAND_1;
   }
   else {
-    _LAND_1: {
-               printf_va_205("\033[0;31mFAILED\033[0;0m\n");
-               fails ++;
-             }
+    _LAND_1:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_205 */
+      fails ++;
+    }
   }
   freeReplyObject((void *)reply);
   tests ++;
-  printf_va_206("#%02d ",tests);
-  printf_va_207("%%b String interpolation works: ");
+  printf("#%02d ",tests); /* printf_va_206 */
+  printf("%%b String interpolation works: "); /* printf_va_207 */
   {
     char const *__va_arg0_30 = "foo";
     unsigned int __va_arg1_32 = (unsigned int)3;
@@ -11525,60 +11567,62 @@ static void test_blocking_connection(struct config config)
     int tmp_2;
     tmp_2 = memcmp((void const *)reply->str,(void const *)"hello\000world",
                    (unsigned int)11);
-    if (tmp_2 == 0) printf_va_208("\033[0;32mPASSED\033[0;0m\n");
+    if (tmp_2 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_208 */
     else goto _LAND_2;
   }
   else {
-    _LAND_2: {
-               printf_va_209("\033[0;31mFAILED\033[0;0m\n");
-               fails ++;
-             }
+    _LAND_2:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_209 */
+      fails ++;
+    }
   }
   tests ++;
-  printf_va_210("#%02d ",tests);
-  printf_va_211("Binary reply length is correct: ");
-  if (reply->len == (size_t)11) printf_va_212("\033[0;32mPASSED\033[0;0m\n");
+  printf("#%02d ",tests); /* printf_va_210 */
+  printf("Binary reply length is correct: "); /* printf_va_211 */
+  if (reply->len == (size_t)11) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_212 */
   else {
-    printf_va_213("\033[0;31mFAILED\033[0;0m\n");
+    printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_213 */
     fails ++;
   }
   freeReplyObject((void *)reply);
   tests ++;
-  printf_va_214("#%02d ",tests);
-  printf_va_215("Can parse nil replies: ");
+  printf("#%02d ",tests); /* printf_va_214 */
+  printf("Can parse nil replies: "); /* printf_va_215 */
   {
     void *__va_args_40[1] = {(void *)0};
     reply = (redisReply *)redisCommand(c,"GET nokey",
                                        (void * const *)(__va_args_40));
   }
-  if (reply->type == 4) printf_va_216("\033[0;32mPASSED\033[0;0m\n");
+  if (reply->type == 4) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_216 */
   else {
-    printf_va_217("\033[0;31mFAILED\033[0;0m\n");
+    printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_217 */
     fails ++;
   }
   freeReplyObject((void *)reply);
   tests ++;
-  printf_va_218("#%02d ",tests);
-  printf_va_219("Can parse integer replies: ");
+  printf("#%02d ",tests); /* printf_va_218 */
+  printf("Can parse integer replies: "); /* printf_va_219 */
   {
     void *__va_args_42[1] = {(void *)0};
     reply = (redisReply *)redisCommand(c,"INCR mycounter",
                                        (void * const *)(__va_args_42));
   }
   if (reply->type == 3) {
-    if (reply->integer == (long long)1) printf_va_220("\033[0;32mPASSED\033[0;0m\n");
+    if (reply->integer == (long long)1) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_220 */
     else goto _LAND_3;
   }
   else {
-    _LAND_3: {
-               printf_va_221("\033[0;31mFAILED\033[0;0m\n");
-               fails ++;
-             }
+    _LAND_3:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_221 */
+      fails ++;
+    }
   }
   freeReplyObject((void *)reply);
   tests ++;
-  printf_va_222("#%02d ",tests);
-  printf_va_223("Can parse multi bulk replies: ");
+  printf("#%02d ",tests); /* printf_va_222 */
+  printf("Can parse multi bulk replies: "); /* printf_va_223 */
   {
     void *__va_args_44[1] = {(void *)0};
     tmp_3 = redisCommand(c,"LPUSH mylist foo",(void * const *)(__va_args_44));
@@ -11605,21 +11649,22 @@ static void test_blocking_connection(struct config config)
         tmp_6 = memcmp((void const *)(*(reply->element + 1))->str,
                        (void const *)"foo",(unsigned int)3);
         if (tmp_6) goto _LAND_6;
-        else printf_va_224("\033[0;32mPASSED\033[0;0m\n");
+        else printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_224 */
       }
     }
     else goto _LAND_6;
   }
   else {
-    _LAND_6: {
-               printf_va_225("\033[0;31mFAILED\033[0;0m\n");
-               fails ++;
-             }
+    _LAND_6:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_225 */
+      fails ++;
+    }
   }
   freeReplyObject((void *)reply);
   tests ++;
-  printf_va_226("#%02d ",tests);
-  printf_va_227("Can handle nested multi bulk replies: ");
+  printf("#%02d ",tests); /* printf_va_226 */
+  printf("Can handle nested multi bulk replies: "); /* printf_va_227 */
   {
     void *__va_args_50[1] = {(void *)0};
     tmp_7 = redisCommand(c,"MULTI",(void * const *)(__va_args_50));
@@ -11659,7 +11704,7 @@ static void test_blocking_connection(struct config config)
                 int tmp_12;
                 tmp_12 = strcasecmp((char const *)(*(reply->element + 1))->str,
                                     "pong");
-                if (tmp_12 == 0) printf_va_228("\033[0;32mPASSED\033[0;0m\n");
+                if (tmp_12 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_228 */
                 else goto _LAND_13;
               }
               else goto _LAND_13;
@@ -11672,15 +11717,16 @@ static void test_blocking_connection(struct config config)
     else goto _LAND_13;
   }
   else {
-    _LAND_13: {
-                printf_va_229("\033[0;31mFAILED\033[0;0m\n");
-                fails ++;
-              }
+    _LAND_13:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_229 */
+      fails ++;
+    }
   }
   freeReplyObject((void *)reply);
   tests ++;
-  printf_va_230("#%02d ",tests);
-  printf_va_231("Can pass NULL to redisGetReply: ");
+  printf("#%02d ",tests); /* printf_va_230 */
+  printf("Can pass NULL to redisGetReply: "); /* printf_va_231 */
   {
     void *__va_args_58[1] = {(void *)0};
     tmp_13 = redisAppendCommand(c,"PING",(void * const *)(__va_args_58));
@@ -11688,9 +11734,9 @@ static void test_blocking_connection(struct config config)
   __FC_assert((tmp_13 == 0) != 0,"test.c",605,
               "redisAppendCommand(c, \"PING\") == REDIS_OK");
   tmp_14 = redisGetReply(c,(void **)0);
-  if (tmp_14 == 0) printf_va_232("\033[0;32mPASSED\033[0;0m\n");
+  if (tmp_14 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_232 */
   else {
-    printf_va_233("\033[0;31mFAILED\033[0;0m\n");
+    printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_233 */
     fails ++;
   }
   disconnect(c,0);
@@ -11725,9 +11771,9 @@ static int detect_debug_sleep(redisContext *c)
         char const *tmp_0;
         if (c->err) tmp_0 = (char const *)(c->errstr); else tmp_0 = "(none)";
         char const *cause = tmp_0;
-        fprintf_va_1(__fc_stderr,
-                     "Error testing for DEBUG SLEEP (Redis error: %s), exiting\n",
-                     (char *)cause);
+        fprintf(__fc_stderr,
+                "Error testing for DEBUG SLEEP (Redis error: %s), exiting\n",
+                (char *)cause); /* fprintf_va_1 */
         exit(-1);
       }
     }
@@ -11954,8 +12000,8 @@ static void test_blocking_connection_timeouts(struct config config)
   char const *sleep_cmd = "DEBUG SLEEP 3\r\n";
   c = do_connect(config);
   tests ++;
-  printf_va_234("#%02d ",tests);
-  printf_va_235("Successfully completes a command when the timeout is not exceeded: ");
+  printf("#%02d ",tests); /* printf_va_234 */
+  printf("Successfully completes a command when the timeout is not exceeded: "); /* printf_va_235 */
   {
     void *__va_args[1] = {(void *)0};
     reply = (redisReply *)redisCommand(c,"SET foo fast",
@@ -11975,23 +12021,24 @@ static void test_blocking_connection_timeouts(struct config config)
       int tmp;
       tmp = memcmp((void const *)reply->str,(void const *)"fast",
                    (unsigned int)4);
-      if (tmp == 0) printf_va_236("\033[0;32mPASSED\033[0;0m\n");
+      if (tmp == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_236 */
       else goto _LAND_0;
     }
     else goto _LAND_0;
   }
   else {
-    _LAND_0: {
-               printf_va_237("\033[0;31mFAILED\033[0;0m\n");
-               fails ++;
-             }
+    _LAND_0:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_237 */
+      fails ++;
+    }
   }
   freeReplyObject((void *)reply);
   disconnect(c,0);
   c = do_connect(config);
   tests ++;
-  printf_va_238("#%02d ",tests);
-  printf_va_239("Does not return a reply when the command times out: ");
+  printf("#%02d ",tests); /* printf_va_238 */
+  printf("Does not return a reply when the command times out: "); /* printf_va_239 */
   tmp_2 = detect_debug_sleep(c);
   if (tmp_2) {
     size_t tmp_0;
@@ -12014,7 +12061,7 @@ static void test_blocking_connection_timeouts(struct config config)
           int tmp_1;
           tmp_1 = strcmp((char const *)(c->errstr),
                          "Resource temporarily unavailable");
-          if (tmp_1 == 0) printf_va_240("\033[0;32mPASSED\033[0;0m\n");
+          if (tmp_1 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_240 */
           else goto _LAND_3;
         }
         else goto _LAND_3;
@@ -12022,20 +12069,21 @@ static void test_blocking_connection_timeouts(struct config config)
       else goto _LAND_3;
     }
     else {
-      _LAND_3: {
-                 printf_va_241("\033[0;31mFAILED\033[0;0m\n");
-                 fails ++;
-               }
+      _LAND_3:
+      {
+        printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_241 */
+        fails ++;
+      }
     }
     freeReplyObject((void *)reply);
   }
   else {
-    printf_va_242("\033[01;33mSKIPPED\033[0;0m\n");
+    printf("\033[01;33mSKIPPED\033[0;0m\n"); /* printf_va_242 */
     skips ++;
   }
   tests ++;
-  printf_va_243("#%02d ",tests);
-  printf_va_244("Reconnect properly reconnects after a timeout: ");
+  printf("#%02d ",tests); /* printf_va_243 */
+  printf("Reconnect properly reconnects after a timeout: "); /* printf_va_244 */
   do_reconnect(c,config);
   {
     void *__va_args_19[1] = {(void *)0};
@@ -12046,21 +12094,22 @@ static void test_blocking_connection_timeouts(struct config config)
     if (reply->type == 5) {
       int tmp_3;
       tmp_3 = strcmp((char const *)reply->str,"PONG");
-      if (tmp_3 == 0) printf_va_245("\033[0;32mPASSED\033[0;0m\n");
+      if (tmp_3 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_245 */
       else goto _LAND_5;
     }
     else goto _LAND_5;
   }
   else {
-    _LAND_5: {
-               printf_va_246("\033[0;31mFAILED\033[0;0m\n");
-               fails ++;
-             }
+    _LAND_5:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_246 */
+      fails ++;
+    }
   }
   freeReplyObject((void *)reply);
   tests ++;
-  printf_va_247("#%02d ",tests);
-  printf_va_248("Reconnect properly uses owned parameters: ");
+  printf("#%02d ",tests); /* printf_va_247 */
+  printf("Reconnect properly uses owned parameters: "); /* printf_va_248 */
   config.tcp.host = "foo";
   config.unix_sock.path = "foo";
   do_reconnect(c,config);
@@ -12073,16 +12122,17 @@ static void test_blocking_connection_timeouts(struct config config)
     if (reply->type == 5) {
       int tmp_4;
       tmp_4 = strcmp((char const *)reply->str,"PONG");
-      if (tmp_4 == 0) printf_va_249("\033[0;32mPASSED\033[0;0m\n");
+      if (tmp_4 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_249 */
       else goto _LAND_7;
     }
     else goto _LAND_7;
   }
   else {
-    _LAND_7: {
-               printf_va_250("\033[0;31mFAILED\033[0;0m\n");
-               fails ++;
-             }
+    _LAND_7:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_250 */
+      fails ++;
+    }
   }
   freeReplyObject((void *)reply);
   disconnect(c,0);
@@ -12240,8 +12290,8 @@ static void test_blocking_io_errors(struct config config)
     freeReplyObject((void *)reply);
   }
   tests ++;
-  printf_va_251("#%02d ",tests);
-  printf_va_252("Returns I/O error when the connection is lost: ");
+  printf("#%02d ",tests); /* printf_va_251 */
+  printf("Returns I/O error when the connection is lost: "); /* printf_va_252 */
   {
     void *__va_args_21[1] = {(void *)0};
     reply = (redisReply *)redisCommand(c,"QUIT",
@@ -12258,13 +12308,13 @@ static void test_blocking_io_errors(struct config config)
           if (tmp_0 == 0) {
             int tmp_1;
             tmp_1 = redisGetReply(c,& _reply);
-            if (tmp_1 == -1) printf_va_253("\033[0;32mPASSED\033[0;0m\n");
+            if (tmp_1 == -1) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_253 */
             else goto _LAND;
           }
           else {
             _LAND:
             {
-              printf_va_254("\033[0;31mFAILED\033[0;0m\n");
+              printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_254 */
               fails ++;
             }
           }
@@ -12275,9 +12325,9 @@ static void test_blocking_io_errors(struct config config)
     }
     else 
       _LAND_0:
-      if (reply == (redisReply *)0) printf_va_255("\033[0;32mPASSED\033[0;0m\n");
+      if (reply == (redisReply *)0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_255 */
       else {
-        printf_va_256("\033[0;31mFAILED\033[0;0m\n");
+        printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_256 */
         fails ++;
       }
   if (c->err == 3) {
@@ -12291,8 +12341,8 @@ static void test_blocking_io_errors(struct config config)
   redisFree(c);
   c = do_connect(config);
   tests ++;
-  printf_va_257("#%02d ",tests);
-  printf_va_258("Returns I/O error on socket timeout: ");
+  printf("#%02d ",tests); /* printf_va_257 */
+  printf("Returns I/O error on socket timeout: "); /* printf_va_258 */
   struct timeval tv = {.tv_sec = (long)0, .tv_usec = 1000};
   tmp_4 = redisSetTimeout(c,tv);
   __FC_assert((tmp_4 == 0) != 0,"test.c",732,
@@ -12300,16 +12350,17 @@ static void test_blocking_io_errors(struct config config)
   int respcode = redisGetReply(c,& _reply);
   if (respcode == -1) {
     if (c->err == 1) {
-      if (__fc_errno == 11) printf_va_259("\033[0;32mPASSED\033[0;0m\n");
+      if (__fc_errno == 11) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_259 */
       else goto _LAND_2;
     }
     else goto _LAND_2;
   }
   else {
-    _LAND_2: {
-               printf_va_260("\033[0;31mFAILED\033[0;0m\n");
-               fails ++;
-             }
+    _LAND_2:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_260 */
+      fails ++;
+    }
   }
   redisFree(c);
   return;
@@ -12417,8 +12468,8 @@ static void test_invalid_timeout_errors(struct config config)
 {
   redisContext *c;
   tests ++;
-  printf_va_261("#%02d ",tests);
-  printf_va_262("Set error when an invalid timeout usec value is given to redisConnectWithTimeout: ");
+  printf("#%02d ",tests); /* printf_va_261 */
+  printf("Set error when an invalid timeout usec value is given to redisConnectWithTimeout: "); /* printf_va_262 */
   config.tcp.timeout.tv_sec = (long)0;
   config.tcp.timeout.tv_usec = 10000001;
   c = redisConnectWithTimeout(config.tcp.host,config.tcp.port,
@@ -12426,19 +12477,20 @@ static void test_invalid_timeout_errors(struct config config)
   if (c->err == 1) {
     int tmp;
     tmp = strcmp((char const *)(c->errstr),"Invalid timeout specified");
-    if (tmp == 0) printf_va_263("\033[0;32mPASSED\033[0;0m\n");
+    if (tmp == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_263 */
     else goto _LAND;
   }
   else {
-    _LAND: {
-             printf_va_264("\033[0;31mFAILED\033[0;0m\n");
-             fails ++;
-           }
+    _LAND:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_264 */
+      fails ++;
+    }
   }
   redisFree(c);
   tests ++;
-  printf_va_265("#%02d ",tests);
-  printf_va_266("Set error when an invalid timeout sec value is given to redisConnectWithTimeout: ");
+  printf("#%02d ",tests); /* printf_va_265 */
+  printf("Set error when an invalid timeout sec value is given to redisConnectWithTimeout: "); /* printf_va_266 */
   config.tcp.timeout.tv_sec = (2147483647L - (long)999) / (long)1000 + (long)1;
   config.tcp.timeout.tv_usec = 0;
   c = redisConnectWithTimeout(config.tcp.host,config.tcp.port,
@@ -12446,14 +12498,15 @@ static void test_invalid_timeout_errors(struct config config)
   if (c->err == 1) {
     int tmp_0;
     tmp_0 = strcmp((char const *)(c->errstr),"Invalid timeout specified");
-    if (tmp_0 == 0) printf_va_267("\033[0;32mPASSED\033[0;0m\n");
+    if (tmp_0 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_267 */
     else goto _LAND_0;
   }
   else {
-    _LAND_0: {
-               printf_va_268("\033[0;31mFAILED\033[0;0m\n");
-               fails ++;
-             }
+    _LAND_0:
+    {
+      printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_268 */
+      fails ++;
+    }
   }
   redisFree(c);
   return;
@@ -12577,8 +12630,8 @@ static void test_throughput(struct config config)
   long long t2;
   redisContext *c = do_connect(config);
   tests ++;
-  printf_va_269("#%02d ",tests);
-  printf_va_270("Throughput:\n");
+  printf("#%02d ",tests); /* printf_va_269 */
+  printf("Throughput:\n"); /* printf_va_270 */
   i = 0;
   while (i < 500) {
     void *tmp_0;
@@ -12616,7 +12669,7 @@ static void test_throughput(struct config config)
     i ++;
   }
   free((void *)replies);
-  printf_va_271("\t(%dx PING: %.3fs)\n",num,(double)(t2 - t1) / 1000000.0);
+  printf("\t(%dx PING: %.3fs)\n",num,(double)(t2 - t1) / 1000000.0); /* printf_va_271 */
   replies = (redisReply **)malloc(sizeof(redisReply *) * (unsigned int)num);
   t1 = usec();
   i = 0;
@@ -12650,8 +12703,8 @@ static void test_throughput(struct config config)
     i ++;
   }
   free((void *)replies);
-  printf_va_272("\t(%dx LRANGE with 500 elements: %.3fs)\n",num,
-                (double)(t2 - t1) / 1000000.0);
+  printf("\t(%dx LRANGE with 500 elements: %.3fs)\n",num,
+         (double)(t2 - t1) / 1000000.0); /* printf_va_272 */
   replies = (redisReply **)malloc(sizeof(redisReply *) * (unsigned int)num);
   t1 = usec();
   i = 0;
@@ -12679,7 +12732,7 @@ static void test_throughput(struct config config)
     i ++;
   }
   free((void *)replies);
-  printf_va_273("\t(%dx INCRBY: %.3fs)\n",num,(double)(t2 - t1) / 1000000.0);
+  printf("\t(%dx INCRBY: %.3fs)\n",num,(double)(t2 - t1) / 1000000.0); /* printf_va_273 */
   num = 10000;
   replies = (redisReply **)malloc(sizeof(redisReply *) * (unsigned int)num);
   i = 0;
@@ -12714,8 +12767,8 @@ static void test_throughput(struct config config)
     i ++;
   }
   free((void *)replies);
-  printf_va_274("\t(%dx PING (pipelined): %.3fs)\n",num,
-                (double)(t2 - t1) / 1000000.0);
+  printf("\t(%dx PING (pipelined): %.3fs)\n",num,
+         (double)(t2 - t1) / 1000000.0); /* printf_va_274 */
   replies = (redisReply **)malloc(sizeof(redisReply *) * (unsigned int)num);
   i = 0;
   while (i < num) {
@@ -12757,8 +12810,8 @@ static void test_throughput(struct config config)
     i ++;
   }
   free((void *)replies);
-  printf_va_275("\t(%dx LRANGE with 500 elements (pipelined): %.3fs)\n",num,
-                (double)(t2 - t1) / 1000000.0);
+  printf("\t(%dx LRANGE with 500 elements (pipelined): %.3fs)\n",num,
+         (double)(t2 - t1) / 1000000.0); /* printf_va_275 */
   replies = (redisReply **)malloc(sizeof(redisReply *) * (unsigned int)num);
   i = 0;
   while (i < num) {
@@ -12794,8 +12847,8 @@ static void test_throughput(struct config config)
     i ++;
   }
   free((void *)replies);
-  printf_va_276("\t(%dx INCRBY (pipelined): %.3fs)\n",num,
-                (double)(t2 - t1) / 1000000.0);
+  printf("\t(%dx INCRBY (pipelined): %.3fs)\n",num,
+         (double)(t2 - t1) / 1000000.0); /* printf_va_276 */
   disconnect(c,0);
   return;
 }
@@ -12933,8 +12986,7 @@ int main(int argc, char **argv)
               else {
                 _LAND:
                 {
-                  fprintf_va_2(__fc_stderr,"Invalid argument: %s\n",
-                               *(argv + 0));
+                  fprintf(__fc_stderr,"Invalid argument: %s\n",*(argv + 0)); /* fprintf_va_2 */
                   exit(1);
                 }
               }
@@ -12956,13 +13008,13 @@ int main(int argc, char **argv)
       if (skips) {
         _LOR:
         {
-          printf_va_277("*** %d TESTS FAILED ***\n",fails);
-          if (skips) printf_va_278("*** %d TESTS SKIPPED ***\n",skips);
+          printf("*** %d TESTS FAILED ***\n",fails); /* printf_va_277 */
+          if (skips) printf("*** %d TESTS SKIPPED ***\n",skips); /* printf_va_278 */
           __retres = 1;
           goto return_label;
         }
       }
-  printf_va_279("ALL TESTS PASSED (%d skipped)\n",skips);
+  printf("ALL TESTS PASSED (%d skipped)\n",skips); /* printf_va_279 */
   __retres = 0;
   return_label: return __retres;
 }

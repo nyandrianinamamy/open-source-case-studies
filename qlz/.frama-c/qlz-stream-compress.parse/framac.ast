@@ -76,7 +76,7 @@ int main(int argc, char **argv)
               (unsigned int)(tmp_2 % 10000 + 1),ifile);
     if (! (d != (size_t)0)) break;
     c = qlz_compress((void const *)file_data,compressed,d,state_compress);
-    printf_va_1("%u bytes compressed into %u\n",d,c);
+    printf("%u bytes compressed into %u\n",d,c); /* printf_va_1 */
     fwrite((void const *)compressed,c,(unsigned int)1,ofile);
   }
   fclose(ifile);

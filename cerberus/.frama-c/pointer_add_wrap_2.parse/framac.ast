@@ -61,10 +61,10 @@ int main(void)
   unsigned char *q1 = p + h;
   unsigned char *q2 = q1 + h;
   *q2 = (unsigned char)1;
-  printf_va_1("Addresses: p =%p  q1=%p\n",(void *)p,(void *)q1);
-  printf_va_2("Addresses: q2=%p  h =0x%llx\n",(void *)q2,h);
-  printf_va_3("x=0x%x  *p=0x%x  *q2=0x%x\n",(unsigned int)((int)x),
-              (unsigned int)((int)*p),(unsigned int)((int)*q2));
+  printf("Addresses: p =%p  q1=%p\n",(void *)p,(void *)q1); /* printf_va_1 */
+  printf("Addresses: q2=%p  h =0x%llx\n",(void *)q2,h); /* printf_va_2 */
+  printf("x=0x%x  *p=0x%x  *q2=0x%x\n",(unsigned int)((int)x),
+         (unsigned int)((int)*p),(unsigned int)((int)*q2)); /* printf_va_3 */
   __retres = 0;
   return __retres;
 }

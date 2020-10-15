@@ -517,7 +517,7 @@ int main(int argc, char **argv)
   uLong cmp_len = mz_compressBound(src_len);
   uLong uncomp_len = src_len;
   uint total_succeeded = (unsigned int)0;
-  printf_va_1("miniz.c version: %s\n",(char *)"10.1.0");
+  printf("miniz.c version: %s\n",(char *)"10.1.0"); /* printf_va_1 */
   while (1) {
     pCmp = (uint8 *)malloc(cmp_len);
     pUncomp = (uint8 *)malloc(src_len);
@@ -526,7 +526,7 @@ int main(int argc, char **argv)
       if (! pUncomp) {
         _LOR:
         {
-          printf_va_2("Out of memory!\n");
+          printf("Out of memory!\n"); /* printf_va_2 */
           __retres = 1;
           goto return_label;
         }
@@ -534,14 +534,14 @@ int main(int argc, char **argv)
     cmp_status = (int)mz_compress(pCmp,& cmp_len,
                                   (unsigned char const *)s_pStr,src_len);
     if (cmp_status != MZ_OK) {
-      printf_va_3("compress() failed!\n");
+      printf("compress() failed!\n"); /* printf_va_3 */
       free((void *)pCmp);
       free((void *)pUncomp);
       __retres = 1;
       goto return_label;
     }
-    printf_va_4("Compressed from %u to %u bytes\n",(unsigned int)src_len,
-                (unsigned int)cmp_len);
+    printf("Compressed from %u to %u bytes\n",(unsigned int)src_len,
+           (unsigned int)cmp_len); /* printf_va_4 */
     if (step) {
       int tmp_3;
       tmp_3 = rand();
@@ -565,18 +565,18 @@ int main(int argc, char **argv)
     cmp_status = (int)mz_uncompress(pUncomp,& uncomp_len,
                                     (unsigned char const *)pCmp,cmp_len);
     total_succeeded += (uint)(cmp_status == MZ_OK);
-    if (step) printf_va_5("Simple fuzzy test: step %u total_succeeded: %u\n",
-                          step,total_succeeded);
+    if (step) printf("Simple fuzzy test: step %u total_succeeded: %u\n",step,
+                     total_succeeded); /* printf_va_5 */
     else {
       if (cmp_status != MZ_OK) {
-        printf_va_6("uncompress failed!\n");
+        printf("uncompress failed!\n"); /* printf_va_6 */
         free((void *)pCmp);
         free((void *)pUncomp);
         __retres = 1;
         goto return_label;
       }
-      printf_va_7("Decompressed from %u to %u bytes\n",(unsigned int)cmp_len,
-                  (unsigned int)uncomp_len);
+      printf("Decompressed from %u to %u bytes\n",(unsigned int)cmp_len,
+             (unsigned int)uncomp_len); /* printf_va_7 */
       if (uncomp_len != src_len) goto _LOR_0;
       else {
         int tmp_7;
@@ -584,7 +584,7 @@ int main(int argc, char **argv)
         if (tmp_7) {
           _LOR_0:
           {
-            printf_va_8("Decompression failed!\n");
+            printf("Decompression failed!\n"); /* printf_va_8 */
             free((void *)pCmp);
             free((void *)pUncomp);
             __retres = 1;
@@ -598,7 +598,7 @@ int main(int argc, char **argv)
     step ++;
     if (! (argc >= 2)) break;
   }
-  printf_va_9("Success.\n");
+  printf("Success.\n"); /* printf_va_9 */
   __retres = 0;
   return_label: return __retres;
 }

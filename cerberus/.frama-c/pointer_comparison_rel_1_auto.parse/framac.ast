@@ -49,10 +49,10 @@ int main(void)
   int *q = & y;
   _Bool b1 = (_Bool)(p < q);
   _Bool b2 = (_Bool)(p > q);
-  printf_va_1("Addresses: p=%p  q=%p\n",(void *)p,(void *)q);
+  printf("Addresses: p=%p  q=%p\n",(void *)p,(void *)q); /* printf_va_1 */
   if (b2) tmp = "true"; else tmp = "false";
   if (b1) tmp_0 = "true"; else tmp_0 = "false";
-  printf_va_2("(p<q) = %s  (p>q) = %s\n",(char *)tmp_0,(char *)tmp);
+  printf("(p<q) = %s  (p>q) = %s\n",(char *)tmp_0,(char *)tmp); /* printf_va_2 */
   __retres = 0;
   return __retres;
 }

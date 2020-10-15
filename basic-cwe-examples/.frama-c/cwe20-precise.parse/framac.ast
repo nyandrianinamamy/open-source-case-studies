@@ -109,16 +109,16 @@ int main(void)
   int n;
   int error;
   board_square_t *board;
-  printf_va_1("Please specify the board height: \n");
-  error = scanf_va_1("%d",& m);
+  printf("Please specify the board height: \n"); /* printf_va_1 */
+  error = scanf("%d",& m); /* scanf_va_1 */
   if (-1 == error) {
-    fprintf_va_1(__fc_stderr,"No integer passed: Die evil hacker!\n");
+    fprintf(__fc_stderr,"No integer passed: Die evil hacker!\n"); /* fprintf_va_1 */
     exit(1);
   }
-  printf_va_2("Please specify the board width: \n");
-  error = scanf_va_2("%d",& n);
+  printf("Please specify the board width: \n"); /* printf_va_2 */
+  error = scanf("%d",& n); /* scanf_va_2 */
   if (-1 == error) {
-    fprintf_va_2(__fc_stderr,"No integer passed: Die evil hacker!\n");
+    fprintf(__fc_stderr,"No integer passed: Die evil hacker!\n"); /* fprintf_va_2 */
     exit(1);
   }
   if (m > 100) goto _LOR;
@@ -126,7 +126,7 @@ int main(void)
     if (n > 100) {
       _LOR:
       {
-        fprintf_va_3(__fc_stderr,"Value too large: Die evil hacker!\n");
+        fprintf(__fc_stderr,"Value too large: Die evil hacker!\n"); /* fprintf_va_3 */
         exit(1);
       }
     }

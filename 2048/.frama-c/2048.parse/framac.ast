@@ -143,8 +143,8 @@ void getColor(uint8_t value, char *color, size_t length)
         foreground += 2;
       }
     }
-  snprintf_va_1(color,length,"\033[38;5;%d;48;5;%dm",(int)*foreground,
-                (int)*background);
+  snprintf(color,length,"\033[38;5;%d;48;5;%dm",(int)*foreground,
+           (int)*background); /* snprintf_va_1 */
   return;
 }
 
@@ -405,52 +405,52 @@ void drawBoard(uint8_t (* /*[4]*/ board)[4])
   char c;
   char color[40];
   char reset[4] = {(char)'\033', (char)'[', (char)'m', (char)'\000'};
-  printf_va_1("\033[H");
-  printf_va_2("2048.c %17d pts\n\n",(int)score);
+  printf("\033[H"); /* printf_va_1 */
+  printf("2048.c %17d pts\n\n",(int)score); /* printf_va_2 */
   y = (unsigned char)0;
   while ((int)y < 4) {
     x = (unsigned char)0;
     while ((int)x < 4) {
       getColor((*(board + x))[y],color,(unsigned int)40);
-      printf_va_3("%s",color);
-      printf_va_4("       ");
-      printf_va_5("%s",reset);
+      printf("%s",color); /* printf_va_3 */
+      printf("       "); /* printf_va_4 */
+      printf("%s",reset); /* printf_va_5 */
       x = (uint8_t)((int)x + 1);
     }
-    printf_va_6("\n");
+    printf("\n"); /* printf_va_6 */
     x = (unsigned char)0;
     while ((int)x < 4) {
       getColor((*(board + x))[y],color,(unsigned int)40);
-      printf_va_7("%s",color);
+      printf("%s",color); /* printf_va_7 */
       if ((int)(*(board + x))[y] != 0) {
         char s[8];
         size_t tmp;
-        snprintf_va_2(s,(unsigned int)8,"%u",
-                      (unsigned int)1 << (int)(*(board + x))[y]);
+        snprintf(s,(unsigned int)8,"%u",
+                 (unsigned int)1 << (int)(*(board + x))[y]); /* snprintf_va_2 */
         tmp = strlen((char const *)(s));
         uint8_t t = (unsigned char)((size_t)7 - tmp);
-        printf_va_8("%*s%s%*s",(int)t - (int)t / 2,(char *)"",s,(int)t / 2,
-                    (char *)"");
+        printf("%*s%s%*s",(int)t - (int)t / 2,(char *)"",s,(int)t / 2,
+               (char *)""); /* printf_va_8 */
       }
-      else printf_va_9("   \302\267   ");
-      printf_va_10("%s",reset);
+      else printf("   \302\267   "); /* printf_va_9 */
+      printf("%s",reset); /* printf_va_10 */
       x = (uint8_t)((int)x + 1);
     }
-    printf_va_11("\n");
+    printf("\n"); /* printf_va_11 */
     x = (unsigned char)0;
     while ((int)x < 4) {
       getColor((*(board + x))[y],color,(unsigned int)40);
-      printf_va_12("%s",color);
-      printf_va_13("       ");
-      printf_va_14("%s",reset);
+      printf("%s",color); /* printf_va_12 */
+      printf("       "); /* printf_va_13 */
+      printf("%s",reset); /* printf_va_14 */
       x = (uint8_t)((int)x + 1);
     }
-    printf_va_15("\n");
+    printf("\n"); /* printf_va_15 */
     y = (uint8_t)((int)y + 1);
   }
-  printf_va_16("\n");
-  printf_va_17("        \342\206\220,\342\206\221,\342\206\222,\342\206\223 or q        \n");
-  printf_va_18("\033[A");
+  printf("\n"); /* printf_va_16 */
+  printf("        \342\206\220,\342\206\221,\342\206\222,\342\206\223 or q        \n"); /* printf_va_17 */
+  printf("\033[A"); /* printf_va_18 */
   return;
 }
 
@@ -993,34 +993,33 @@ int test(void)
     if ((int)success == 0) {
       i = (unsigned char)0;
       while ((int)i < 4) {
-        printf_va_19("%d ",(int)*(in + i));
+        printf("%d ",(int)*(in + i)); /* printf_va_19 */
         i = (uint8_t)((int)i + 1);
       }
-      printf_va_20("=> ");
+      printf("=> "); /* printf_va_20 */
       i = (unsigned char)0;
       while ((int)i < 4) {
-        printf_va_21("%d ",(int)array[i]);
+        printf("%d ",(int)array[i]); /* printf_va_21 */
         i = (uint8_t)((int)i + 1);
       }
-      printf_va_22("expected ");
+      printf("expected "); /* printf_va_22 */
       i = (unsigned char)0;
       while ((int)i < 4) {
-        printf_va_23("%d ",(int)*(in + i));
+        printf("%d ",(int)*(in + i)); /* printf_va_23 */
         i = (uint8_t)((int)i + 1);
       }
-      printf_va_24("=> ");
+      printf("=> "); /* printf_va_24 */
       i = (unsigned char)0;
       while ((int)i < 4) {
-        printf_va_25("%d ",(int)*(out + i));
+        printf("%d ",(int)*(out + i)); /* printf_va_25 */
         i = (uint8_t)((int)i + 1);
       }
-      printf_va_26("\n");
+      printf("\n"); /* printf_va_26 */
       break;
     }
     t = (uint8_t)((int)t + 1);
   }
-  if (success) printf_va_27("All %hhu tests executed successfully\n",
-                            (int)tests);
+  if (success) printf("All %hhu tests executed successfully\n",(int)tests); /* printf_va_27 */
   __retres = ! success;
   return __retres;
 }
@@ -1051,9 +1050,9 @@ int printf_va_29(char const * __restrict format);
 
 void signal_callback_handler(int signum)
 {
-  printf_va_28("         TERMINATED         \n");
+  printf("         TERMINATED         \n"); /* printf_va_28 */
   setBufferedInput((_Bool)1);
-  printf_va_29("\033[?25h\033[m");
+  printf("\033[?25h\033[m"); /* printf_va_29 */
   exit(signum);
   return;
 }
@@ -1124,7 +1123,7 @@ int main(int argc, char **argv)
   uint8_t board[4][4];
   char c;
   _Bool success;
-  printf_va_30("\033[?25l\033[2J");
+  printf("\033[?25l\033[2J"); /* printf_va_30 */
   signal(2,& signal_callback_handler);
   initBoard(board);
   setBufferedInput((_Bool)0);
@@ -1152,13 +1151,13 @@ int main(int argc, char **argv)
         drawBoard(board);
         tmp_0 = gameEnded(board);
         if (tmp_0) {
-          printf_va_31("         GAME OVER          \n");
+          printf("         GAME OVER          \n"); /* printf_va_31 */
           break;
         }
       }
       if ((int)c == 'q') {
         int tmp_1;
-        printf_va_32("        QUIT? (y/n)         \n");
+        printf("        QUIT? (y/n)         \n"); /* printf_va_32 */
         tmp_1 = getchar();
         c = (char)tmp_1;
         if ((int)c == 'y') break;
@@ -1166,7 +1165,7 @@ int main(int argc, char **argv)
       }
       if ((int)c == 'r') {
         int tmp_2;
-        printf_va_33("       RESTART? (y/n)       \n");
+        printf("       RESTART? (y/n)       \n"); /* printf_va_33 */
         tmp_2 = getchar();
         c = (char)tmp_2;
         if ((int)c == 'y') initBoard(board);
@@ -1175,7 +1174,7 @@ int main(int argc, char **argv)
     }
   }
   setBufferedInput((_Bool)1);
-  printf_va_34("\033[?25h\033[m");
+  printf("\033[?25h\033[m"); /* printf_va_34 */
   __retres = 0;
   return __retres;
 }

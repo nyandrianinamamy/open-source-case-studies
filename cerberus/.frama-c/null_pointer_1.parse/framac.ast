@@ -38,7 +38,7 @@ int main(void)
   _Bool b2 = (_Bool)(p == & y);
   if (b2) tmp = "true"; else tmp = "false";
   if (b1) tmp_0 = "true"; else tmp_0 = "false";
-  printf_va_1("(p==NULL)=%s  (p==&y)=%s\n",(char *)tmp_0,(char *)tmp);
+  printf("(p==NULL)=%s  (p==&y)=%s\n",(char *)tmp_0,(char *)tmp); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

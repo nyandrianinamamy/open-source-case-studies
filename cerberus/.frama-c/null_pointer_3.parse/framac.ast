@@ -33,7 +33,7 @@ int main(void)
   tmp_0 = memcmp((void const *)(& p),(void const *)q,sizeof(p));
   _Bool b = (_Bool)(tmp_0 == 0);
   if (b) tmp_1 = "zero"; else tmp_1 = "nonzero";
-  printf_va_1("%s\n",(char *)tmp_1);
+  printf("%s\n",(char *)tmp_1); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

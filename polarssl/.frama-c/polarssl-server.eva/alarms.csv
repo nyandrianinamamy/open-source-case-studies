@@ -45,7 +45,7 @@ FRAMAC_SHARE/libc	unistd.h	1005	read	precondition	Unknown	buf_has_room: \valid((
 FRAMAC_SHARE/libc	unistd.h	1132	write	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
 FRAMAC_SHARE/libc	unistd.h	1133	write	precondition	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))
 FRAMAC_SHARE/libc/sys	socket.h	301	accept	precondition	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
-FRAMAC_SHARE/libc/sys	socket.h	501	shutdown	precondition	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
+FRAMAC_SHARE/libc/sys	socket.h	536	shutdown	precondition	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
 library	ctr_drbg.c	154	block_cipher_df	mem_access	Unknown	\valid_read(p + i)
 library	des.c	384	des_setkey	postcondition	Unknown	\initialized(\old(SK) + (0 .. 31))
 library	dhm.c	210	dhm_read_public	signed_overflow	Unknown	-2147483648 ≤ (int)(-0x3200) + ret

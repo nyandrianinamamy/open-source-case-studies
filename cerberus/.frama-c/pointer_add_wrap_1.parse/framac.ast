@@ -45,8 +45,8 @@ int main(void)
   unsigned long long h = 1ull << 63;
   unsigned char *q1 = p + h;
   unsigned char *q2 = q1 + h;
-  printf_va_1("Addresses: p =%p  q1=%p\n",(void *)p,(void *)q1);
-  printf_va_2("Addresses: q2=%p  h =0x%llx\n",(void *)q2,h);
+  printf("Addresses: p =%p  q1=%p\n",(void *)p,(void *)q1); /* printf_va_1 */
+  printf("Addresses: q2=%p  h =0x%llx\n",(void *)q2,h); /* printf_va_2 */
   __retres = 0;
   return __retres;
 }

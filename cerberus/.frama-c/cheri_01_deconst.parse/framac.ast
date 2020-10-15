@@ -30,7 +30,7 @@ int main(void)
   int const *p = (int const *)(& x);
   int *q = (int *)p;
   *q = 1;
-  printf_va_1("x=%i  *p=%i  *q=%i\n",x,*p,*q);
+  printf("x=%i  *p=%i  *q=%i\n",x,*p,*q); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

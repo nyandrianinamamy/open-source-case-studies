@@ -6201,7 +6201,7 @@ u16 purge(ComPortHandle comPortHandle)
   int tmp;
   tmp = tcflush(comPortHandle,2);
   if (tmp == -1) {
-    printf_va_1("flush failed\n");
+    printf("flush failed\n"); /* printf_va_1 */
     __retres = (unsigned short)1;
     goto return_label;
   }
@@ -6283,11 +6283,10 @@ u16 mip_sdk_port_open(void **port_handle, char const *portstr, int baudrate)
   u16 tmp_0;
   char port_name[100] = {(char)0};
   strcat(port_name,portstr);
-  mip_sdk_port_open_local_port_handle = __va_open_void((char const *)(port_name),
-                                                       2 | 0x100);
+  mip_sdk_port_open_local_port_handle = open((char const *)(port_name),
+                                             2 | 0x100); /* __va_open_void */
   if (mip_sdk_port_open_local_port_handle == -1) {
-    printf_va_2("Unable to open com Port %s\n Errno = %i\n",port_name,
-                __fc_errno);
+    printf("Unable to open com Port %s\n Errno = %i\n",port_name,__fc_errno); /* printf_va_2 */
     __retres = (unsigned short)1;
     goto return_label;
   }
@@ -6350,7 +6349,7 @@ u16 mip_sdk_port_open(void **port_handle, char const *portstr, int baudrate)
     break;
     case 4000000: hardware_bit_baud = 0010017;
     break;
-    default: printf_va_3("Unsupported baud specified\n");
+    default: printf("Unsupported baud specified\n"); /* printf_va_3 */
     __retres = (unsigned short)1;
     goto return_label;
   }
@@ -6369,19 +6368,19 @@ u16 mip_sdk_port_open(void **port_handle, char const *portstr, int baudrate)
   options.c_cflag |= (unsigned int)(0004000 | 0000200);
   tmp = purge(mip_sdk_port_open_local_port_handle);
   if ((int)tmp != 0) {
-    printf_va_4("Flushing old serial buffer data failed\n");
+    printf("Flushing old serial buffer data failed\n"); /* printf_va_4 */
     __retres = (unsigned short)1;
     goto return_label;
   }
   status = tcsetattr(mip_sdk_port_open_local_port_handle,0,& options);
   if (status != 0) {
-    printf_va_5("Configuring comport failed\n");
+    printf("Configuring comport failed\n"); /* printf_va_5 */
     __retres = (unsigned short)1;
     goto return_label;
   }
   tmp_0 = purge(mip_sdk_port_open_local_port_handle);
   if ((int)tmp_0 != 0) {
-    printf_va_6("Post configuration serial buffer flush failed\n");
+    printf("Post configuration serial buffer flush failed\n"); /* printf_va_6 */
     __retres = (unsigned short)1;
     goto return_label;
   }
@@ -6449,7 +6448,7 @@ u32 mip_sdk_port_read_count(void *port_handle)
   u32 __retres;
   int bytes_available;
   int local_port_handle = *((int *)port_handle);
-  __va_ioctl_ptr(local_port_handle,0x541B,(void *)(& bytes_available));
+  ioctl(local_port_handle,0x541B,(void *)(& bytes_available)); /* __va_ioctl_ptr */
   __retres = (unsigned int)bytes_available;
   return __retres;
 }
@@ -13210,9 +13209,9 @@ int main(int argc, char **argv)
     goto return_label;
   }
   com_mode = (unsigned char)0x02;
-  printf_va_7("----------------------------------------------------------------------\n");
-  printf_va_8("Attempting to set communications mode to IMU Direct mode\n");
-  printf_va_9("----------------------------------------------------------------------\n\n");
+  printf("----------------------------------------------------------------------\n"); /* printf_va_7 */
+  printf("Attempting to set communications mode to IMU Direct mode\n"); /* printf_va_8 */
+  printf("----------------------------------------------------------------------\n\n"); /* printf_va_9 */
   while (1) {
     u16 tmp_1;
     tmp_1 = mip_system_com_mode(& device_interface,(unsigned char)0x01,
@@ -13236,63 +13235,63 @@ int main(int argc, char **argv)
     char const *tmp_22;
     int tmp_32;
     int tmp_38;
-    printf_va_10("Communications mode IMU Direct.\n");
-    printf_va_11("\n\n");
+    printf("Communications mode IMU Direct.\n"); /* printf_va_10 */
+    printf("\n\n"); /* printf_va_11 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_12("----------------------------------------------------------------------\n");
-    printf_va_13("Idling Device\n");
-    printf_va_14("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_12 */
+    printf("Idling Device\n"); /* printf_va_13 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_14 */
     while (1) {
       u16 tmp_3;
       tmp_3 = mip_base_cmd_idle(& device_interface);
       if (! ((int)tmp_3 != 0)) break;
     }
-    printf_va_15("\n\n");
+    printf("\n\n"); /* printf_va_15 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_16("----------------------------------------------------------------------\n");
-    printf_va_17("Pinging Device\n");
-    printf_va_18("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_16 */
+    printf("Pinging Device\n"); /* printf_va_17 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_18 */
     while (1) {
       u16 tmp_4;
       tmp_4 = mip_base_cmd_ping(& device_interface);
       if (! ((int)tmp_4 != 0)) break;
     }
-    printf_va_19("\n\n");
+    printf("\n\n"); /* printf_va_19 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_20("----------------------------------------------------------------------\n");
-    printf_va_21("Getting Device Information\n");
-    printf_va_22("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_20 */
+    printf("Getting Device Information\n"); /* printf_va_21 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_22 */
     while (1) {
       u16 tmp_5;
       tmp_5 = mip_base_cmd_get_device_info(& device_interface,& device_info);
       if (! ((int)tmp_5 != 0)) break;
     }
-    printf_va_23("\n\nDevice Info:\n");
-    printf_va_24("---------------------------------------------\n");
+    printf("\n\nDevice Info:\n"); /* printf_va_23 */
+    printf("---------------------------------------------\n"); /* printf_va_24 */
     memcpy((void *)(temp_string),(void const *)(device_info.model_name),
            (unsigned int)(8 * 2));
-    printf_va_25("Model Name       => %s\n",(char *)(temp_string));
+    printf("Model Name       => %s\n",(char *)(temp_string)); /* printf_va_25 */
     memcpy((void *)(temp_string),(void const *)(device_info.model_number),
            (unsigned int)(8 * 2));
-    printf_va_26("Model Number     => %s\n",(char *)(temp_string));
+    printf("Model Number     => %s\n",(char *)(temp_string)); /* printf_va_26 */
     memcpy((void *)(temp_string),(void const *)(device_info.serial_number),
            (unsigned int)(8 * 2));
-    printf_va_27("Serial Number    => %s\n",(char *)(temp_string));
+    printf("Serial Number    => %s\n",(char *)(temp_string)); /* printf_va_27 */
     memcpy((void *)(temp_string),(void const *)(device_info.lotnumber),
            (unsigned int)(8 * 2));
-    printf_va_28("Lot Number       => %s\n",(char *)(temp_string));
+    printf("Lot Number       => %s\n",(char *)(temp_string)); /* printf_va_28 */
     memcpy((void *)(temp_string),(void const *)(device_info.device_options),
            (unsigned int)(8 * 2));
-    printf_va_29("Options          => %s\n",(char *)(temp_string));
-    printf_va_30("Firmware Version => %d.%d.%.2d\n\n",
-                 (int)device_info.firmware_version / 1000,
-                 ((int)device_info.firmware_version % 1000) / 100,
-                 (int)device_info.firmware_version % 100);
-    printf_va_31("\n\n");
+    printf("Options          => %s\n",(char *)(temp_string)); /* printf_va_29 */
+    printf("Firmware Version => %d.%d.%.2d\n\n",
+           (int)device_info.firmware_version / 1000,
+           ((int)device_info.firmware_version % 1000) / 100,
+           (int)device_info.firmware_version % 100); /* printf_va_30 */
+    printf("\n\n"); /* printf_va_31 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_32("----------------------------------------------------------------------\n");
-    printf_va_33("Getting Supported descriptors\n");
-    printf_va_34("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_32 */
+    printf("Getting Supported descriptors\n"); /* printf_va_33 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_34 */
     while (1) {
       u16 tmp_6;
       tmp_6 = mip_base_cmd_get_device_supported_descriptors(& device_interface,
@@ -13300,43 +13299,42 @@ int main(int argc, char **argv)
                                                             & device_descriptors_size);
       if (! ((int)tmp_6 != 0)) break;
     }
-    printf_va_35("\n\nSupported descriptors:\n\n");
+    printf("\n\nSupported descriptors:\n\n"); /* printf_va_35 */
     i = (short)0;
     while ((int)i < (int)device_descriptors_size / 2) {
-      printf_va_36("Descriptor Set: %02x, Descriptor: %02x\n",
-                   (unsigned int)((int)device_descriptors[i] >> 8),
-                   (unsigned int)((int)device_descriptors[i] & 0xFF));
+      printf("Descriptor Set: %02x, Descriptor: %02x\n",
+             (unsigned int)((int)device_descriptors[i] >> 8),
+             (unsigned int)((int)device_descriptors[i] & 0xFF)); /* printf_va_36 */
       usleep((unsigned int)((double)100 * 1000.0));
       i = (s16)((int)i + 1);
     }
-    printf_va_37("\n\n");
+    printf("\n\n"); /* printf_va_37 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_38("----------------------------------------------------------------------\n");
-    printf_va_39("Running Built In Test\n");
-    printf_va_40("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_38 */
+    printf("Running Built In Test\n"); /* printf_va_39 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_40 */
     while (1) {
       u16 tmp_7;
       tmp_7 = mip_base_cmd_built_in_test(& device_interface,& bit_result);
       if (! ((int)tmp_7 != 0)) break;
     }
-    printf_va_41("\nBIT Result (should be 0x00000000) => 0x%08x\n\n",
-                 bit_result);
-    printf_va_42("\n\n");
+    printf("\nBIT Result (should be 0x00000000) => 0x%08x\n\n",bit_result); /* printf_va_41 */
+    printf("\n\n"); /* printf_va_42 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_43("----------------------------------------------------------------------\n");
-    printf_va_44("Getting the AHRS datastream base rate\n");
-    printf_va_45("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_43 */
+    printf("Getting the AHRS datastream base rate\n"); /* printf_va_44 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_45 */
     while (1) {
       u16 tmp_8;
       tmp_8 = mip_3dm_cmd_get_ahrs_base_rate(& device_interface,& base_rate);
       if (! ((int)tmp_8 != 0)) break;
     }
-    printf_va_46("\nAHRS Base Rate => %d Hz\n\n",(int)base_rate);
-    printf_va_47("\n\n");
+    printf("\nAHRS Base Rate => %d Hz\n\n",(int)base_rate); /* printf_va_46 */
+    printf("\n\n"); /* printf_va_47 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_48("----------------------------------------------------------------------\n");
-    printf_va_49("Requesting BASIC Status Report:\n");
-    printf_va_50("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_48 */
+    printf("Requesting BASIC Status Report:\n"); /* printf_va_49 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_50 */
     while (1) {
       u16 tmp_9;
       tmp_9 = mip_3dm_cmd_hw_specific_imu_device_status(& device_interface,
@@ -13345,16 +13343,15 @@ int main(int argc, char **argv)
                                                         (u8 *)(& imu_basic_field));
       if (! ((int)tmp_9 != 0)) break;
     }
-    printf_va_51("Model Number: \t\t\t\t\t%04u\n",
-                 (unsigned int)((int)imu_basic_field.device_model));
+    printf("Model Number: \t\t\t\t\t%04u\n",
+           (unsigned int)((int)imu_basic_field.device_model)); /* printf_va_51 */
     if ((int)imu_basic_field.status_selector == 1) tmp_10 = "Basic Status Report";
     else tmp_10 = "Diagnostic Status Report";
-    printf_va_52("Status Selector: \t\t\t\t%s\n",(char *)tmp_10);
-    printf_va_53("Status Flags: \t\t\t\t\t0x%08x\n",
-                 imu_basic_field.status_flags);
-    printf_va_54("System Millisecond Timer Count: \t\t%llu ms\n\n",
-                 (unsigned long long)imu_basic_field.system_timer_ms);
-    printf_va_55("Requesting DIAGNOSTIC Status Report:\n");
+    printf("Status Selector: \t\t\t\t%s\n",(char *)tmp_10); /* printf_va_52 */
+    printf("Status Flags: \t\t\t\t\t0x%08x\n",imu_basic_field.status_flags); /* printf_va_53 */
+    printf("System Millisecond Timer Count: \t\t%llu ms\n\n",
+           (unsigned long long)imu_basic_field.system_timer_ms); /* printf_va_54 */
+    printf("Requesting DIAGNOSTIC Status Report:\n"); /* printf_va_55 */
     while (1) {
       u16 tmp_11;
       tmp_11 = mip_3dm_cmd_hw_specific_imu_device_status(& device_interface,
@@ -13363,58 +13360,58 @@ int main(int argc, char **argv)
                                                          (u8 *)(& imu_diagnostic_field));
       if (! ((int)tmp_11 != 0)) break;
     }
-    printf_va_56("Model Number: \t\t\t\t\t%04u\n",
-                 (unsigned int)((int)imu_diagnostic_field.device_model));
+    printf("Model Number: \t\t\t\t\t%04u\n",
+           (unsigned int)((int)imu_diagnostic_field.device_model)); /* printf_va_56 */
     if ((int)imu_diagnostic_field.status_selector == 1) tmp_12 = "Basic Status Report";
     else tmp_12 = "Diagnostic Status Report";
-    printf_va_57("Status Selector: \t\t\t\t%s\n",(char *)tmp_12);
-    printf_va_58("Status Flags: \t\t\t\t\t0x%08x\n",
-                 imu_diagnostic_field.status_flags);
-    printf_va_59("System Millisecond Timer Count: \t\t%llu ms\n",
-                 (unsigned long long)imu_diagnostic_field.system_timer_ms);
+    printf("Status Selector: \t\t\t\t%s\n",(char *)tmp_12); /* printf_va_57 */
+    printf("Status Flags: \t\t\t\t\t0x%08x\n",
+           imu_diagnostic_field.status_flags); /* printf_va_58 */
+    printf("System Millisecond Timer Count: \t\t%llu ms\n",
+           (unsigned long long)imu_diagnostic_field.system_timer_ms); /* printf_va_59 */
     if ((int)imu_diagnostic_field.has_mag == 1) tmp_13 = "DETECTED";
     else tmp_13 = "NOT-DETECTED";
-    printf_va_60("Magnetometer: \t\t\t\t\t%s\n",(char *)tmp_13);
+    printf("Magnetometer: \t\t\t\t\t%s\n",(char *)tmp_13); /* printf_va_60 */
     if ((int)imu_diagnostic_field.has_pressure == 1) tmp_14 = "DETECTED";
     else tmp_14 = "NOT-DETECTED";
-    printf_va_61("Pressure Sensor: \t\t\t\t%s\n",(char *)tmp_14);
-    printf_va_62("Gyro Range Reported: \t\t\t\t%u deg/s\n",
-                 (unsigned int)((int)imu_diagnostic_field.gyro_range));
-    printf_va_63("Accel Range Reported: \t\t\t\t%u G\n",
-                 (unsigned int)((int)imu_diagnostic_field.accel_range));
-    printf_va_64("Magnetometer Range Reported: \t\t\t%f Gs\n",
-                 (double)imu_diagnostic_field.mag_range);
-    printf_va_65("Pressure Range Reported: \t\t\t%f hPa\n",
-                 (double)imu_diagnostic_field.pressure_range);
-    printf_va_66("Measured Internal Temperature: \t\t\t%f degrees C\n",
-                 (double)imu_diagnostic_field.temp_degc);
-    printf_va_67("Last Temperature Measured: \t\t\t%u ms\n",
-                 imu_diagnostic_field.last_temp_read_ms);
+    printf("Pressure Sensor: \t\t\t\t%s\n",(char *)tmp_14); /* printf_va_61 */
+    printf("Gyro Range Reported: \t\t\t\t%u deg/s\n",
+           (unsigned int)((int)imu_diagnostic_field.gyro_range)); /* printf_va_62 */
+    printf("Accel Range Reported: \t\t\t\t%u G\n",
+           (unsigned int)((int)imu_diagnostic_field.accel_range)); /* printf_va_63 */
+    printf("Magnetometer Range Reported: \t\t\t%f Gs\n",
+           (double)imu_diagnostic_field.mag_range); /* printf_va_64 */
+    printf("Pressure Range Reported: \t\t\t%f hPa\n",
+           (double)imu_diagnostic_field.pressure_range); /* printf_va_65 */
+    printf("Measured Internal Temperature: \t\t\t%f degrees C\n",
+           (double)imu_diagnostic_field.temp_degc); /* printf_va_66 */
+    printf("Last Temperature Measured: \t\t\t%u ms\n",
+           imu_diagnostic_field.last_temp_read_ms); /* printf_va_67 */
     if ((int)imu_diagnostic_field.temp_sensor_error == 1) tmp_15 = "TRUE";
     else tmp_15 = "FALSE";
-    printf_va_68("Bad Temperature Sensor Detected: \t\t%s\n",(char *)tmp_15);
-    printf_va_69("Number Received GPS Pulse-Per-Second Pulses: \t%u Pulses\n",
-                 imu_diagnostic_field.num_gps_pps_triggers);
-    printf_va_70("Time of Last GPS Pulse-Per-Second Pulse: \t%u ms\n",
-                 imu_diagnostic_field.last_gps_pps_trigger_ms);
+    printf("Bad Temperature Sensor Detected: \t\t%s\n",(char *)tmp_15); /* printf_va_68 */
+    printf("Number Received GPS Pulse-Per-Second Pulses: \t%u Pulses\n",
+           imu_diagnostic_field.num_gps_pps_triggers); /* printf_va_69 */
+    printf("Time of Last GPS Pulse-Per-Second Pulse: \t%u ms\n",
+           imu_diagnostic_field.last_gps_pps_trigger_ms); /* printf_va_70 */
     if ((int)imu_diagnostic_field.stream_enabled == 1) tmp_16 = "TRUE";
     else tmp_16 = "FALSE";
-    printf_va_71("Data Streaming Enabled: \t\t\t%s\n",(char *)tmp_16);
-    printf_va_72("Number of Dropped Communication Packets: \t%u packets\n",
-                 imu_diagnostic_field.dropped_packets);
-    printf_va_73("Communications Port Bytes Written: \t\t%u Bytes\n",
-                 imu_diagnostic_field.com_port_bytes_written);
-    printf_va_74("Communications Port Bytes Read: \t\t%u Bytes\n",
-                 imu_diagnostic_field.com_port_bytes_read);
-    printf_va_75("Communications Port Write Overruns: \t\t%u Bytes\n",
-                 imu_diagnostic_field.com_port_write_overruns);
-    printf_va_76("Communications Port Read Overruns: \t\t%u Bytes\n",
-                 imu_diagnostic_field.com_port_read_overruns);
-    printf_va_77("\n\n");
+    printf("Data Streaming Enabled: \t\t\t%s\n",(char *)tmp_16); /* printf_va_71 */
+    printf("Number of Dropped Communication Packets: \t%u packets\n",
+           imu_diagnostic_field.dropped_packets); /* printf_va_72 */
+    printf("Communications Port Bytes Written: \t\t%u Bytes\n",
+           imu_diagnostic_field.com_port_bytes_written); /* printf_va_73 */
+    printf("Communications Port Bytes Read: \t\t%u Bytes\n",
+           imu_diagnostic_field.com_port_bytes_read); /* printf_va_74 */
+    printf("Communications Port Write Overruns: \t\t%u Bytes\n",
+           imu_diagnostic_field.com_port_write_overruns); /* printf_va_75 */
+    printf("Communications Port Read Overruns: \t\t%u Bytes\n",
+           imu_diagnostic_field.com_port_read_overruns); /* printf_va_76 */
+    printf("\n\n"); /* printf_va_77 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_78("----------------------------------------------------------------------\n");
-    printf_va_79("Disabling Coning and Sculling compensation\n");
-    printf_va_80("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_78 */
+    printf("Disabling Coning and Sculling compensation\n"); /* printf_va_79 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_80 */
     enable = (unsigned char)0x00;
     while (1) {
       u16 tmp_17;
@@ -13423,7 +13420,7 @@ int main(int argc, char **argv)
                                                         & enable);
       if (! ((int)tmp_17 != 0)) break;
     }
-    printf_va_81("Reading Coning and Sculling compensation enabled state:\n");
+    printf("Reading Coning and Sculling compensation enabled state:\n"); /* printf_va_81 */
     while (1) {
       u16 tmp_18;
       tmp_18 = mip_3dm_cmd_coning_sculling_compensation(& device_interface,
@@ -13432,8 +13429,8 @@ int main(int argc, char **argv)
       if (! ((int)tmp_18 != 0)) break;
     }
     if ((int)enable == 0x00) tmp_19 = "DISABLED"; else tmp_19 = "ENABLED";
-    printf_va_82("%s\n\n",(char *)tmp_19);
-    printf_va_83("Enabling Coning and Sculling compensation.\n");
+    printf("%s\n\n",(char *)tmp_19); /* printf_va_82 */
+    printf("Enabling Coning and Sculling compensation.\n"); /* printf_va_83 */
     enable = (unsigned char)0x01;
     while (1) {
       u16 tmp_20;
@@ -13442,7 +13439,7 @@ int main(int argc, char **argv)
                                                         & enable);
       if (! ((int)tmp_20 != 0)) break;
     }
-    printf_va_84("Reading Coning and Sculling compensation enabled state:\n");
+    printf("Reading Coning and Sculling compensation enabled state:\n"); /* printf_va_84 */
     while (1) {
       u16 tmp_21;
       tmp_21 = mip_3dm_cmd_coning_sculling_compensation(& device_interface,
@@ -13451,19 +13448,19 @@ int main(int argc, char **argv)
       if (! ((int)tmp_21 != 0)) break;
     }
     if ((int)enable == 0x00) tmp_22 = "DISABLED"; else tmp_22 = "ENABLED";
-    printf_va_85("%s\n\n",(char *)tmp_22);
-    printf_va_86("\n\n");
+    printf("%s\n\n",(char *)tmp_22); /* printf_va_85 */
+    printf("\n\n"); /* printf_va_86 */
     usleep((unsigned int)((double)1500 * 1000.0));
     bias_vector[0] = 1.0f;
     bias_vector[1] = 2.0f;
     bias_vector[2] = 3.0f;
-    printf_va_87("----------------------------------------------------------------------\n");
-    printf_va_88("Accel Bias Vector\n");
-    printf_va_89("----------------------------------------------------------------------\n\n");
-    printf_va_90("Setting Accel Bias Vector:\n");
-    printf_va_91("bias_vector[0] = %f\nbias_vector[1] = %f\nbias_vector[2] = %f\n\n",
-                 (double)bias_vector[0],(double)bias_vector[1],
-                 (double)bias_vector[2]);
+    printf("----------------------------------------------------------------------\n"); /* printf_va_87 */
+    printf("Accel Bias Vector\n"); /* printf_va_88 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_89 */
+    printf("Setting Accel Bias Vector:\n"); /* printf_va_90 */
+    printf("bias_vector[0] = %f\nbias_vector[1] = %f\nbias_vector[2] = %f\n\n",
+           (double)bias_vector[0],(double)bias_vector[1],
+           (double)bias_vector[2]); /* printf_va_91 */
     while (1) {
       u16 tmp_23;
       tmp_23 = mip_3dm_cmd_accel_bias(& device_interface,(unsigned char)0x01,
@@ -13471,35 +13468,35 @@ int main(int argc, char **argv)
       if (! ((int)tmp_23 != 0)) break;
     }
     memset((void *)(bias_vector),0,(unsigned int)3 * sizeof(float));
-    printf_va_92("Reading current Accel Bias Vector:\n");
+    printf("Reading current Accel Bias Vector:\n"); /* printf_va_92 */
     while (1) {
       u16 tmp_24;
       tmp_24 = mip_3dm_cmd_accel_bias(& device_interface,(unsigned char)0x02,
                                       bias_vector);
       if (! ((int)tmp_24 != 0)) break;
     }
-    printf_va_93("bias_vector[0] = %f\nbias_vector[1] = %f\nbias_vector[2] = %f\n\n",
-                 (double)bias_vector[0],(double)bias_vector[1],
-                 (double)bias_vector[2]);
-    printf_va_94("Resetting Accel Bias to default state.\n\n");
+    printf("bias_vector[0] = %f\nbias_vector[1] = %f\nbias_vector[2] = %f\n\n",
+           (double)bias_vector[0],(double)bias_vector[1],
+           (double)bias_vector[2]); /* printf_va_93 */
+    printf("Resetting Accel Bias to default state.\n\n"); /* printf_va_94 */
     while (1) {
       u16 tmp_25;
       tmp_25 = mip_3dm_cmd_accel_bias(& device_interface,(unsigned char)0x05,
                                       (float *)0);
       if (! ((int)tmp_25 != 0)) break;
     }
-    printf_va_95("\n\n");
+    printf("\n\n"); /* printf_va_95 */
     usleep((unsigned int)((double)1500 * 1000.0));
     bias_vector[0] = 4.0f;
     bias_vector[1] = 5.0f;
     bias_vector[2] = 6.0f;
-    printf_va_96("----------------------------------------------------------------------\n");
-    printf_va_97("Gyro Bias Vector\n");
-    printf_va_98("----------------------------------------------------------------------\n\n");
-    printf_va_99("Setting Gyro Bias Vector:\n");
-    printf_va_100("bias_vector[0] = %f\nbias_vector[1] = %f\nbias_vector[2] = %f\n\n",
-                  (double)bias_vector[0],(double)bias_vector[1],
-                  (double)bias_vector[2]);
+    printf("----------------------------------------------------------------------\n"); /* printf_va_96 */
+    printf("Gyro Bias Vector\n"); /* printf_va_97 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_98 */
+    printf("Setting Gyro Bias Vector:\n"); /* printf_va_99 */
+    printf("bias_vector[0] = %f\nbias_vector[1] = %f\nbias_vector[2] = %f\n\n",
+           (double)bias_vector[0],(double)bias_vector[1],
+           (double)bias_vector[2]); /* printf_va_100 */
     while (1) {
       u16 tmp_26;
       tmp_26 = mip_3dm_cmd_gyro_bias(& device_interface,(unsigned char)0x01,
@@ -13507,28 +13504,28 @@ int main(int argc, char **argv)
       if (! ((int)tmp_26 != 0)) break;
     }
     memset((void *)(bias_vector),0,(unsigned int)3 * sizeof(float));
-    printf_va_101("Reading current Gyro Bias Vector:\n");
+    printf("Reading current Gyro Bias Vector:\n"); /* printf_va_101 */
     while (1) {
       u16 tmp_27;
       tmp_27 = mip_3dm_cmd_gyro_bias(& device_interface,(unsigned char)0x02,
                                      bias_vector);
       if (! ((int)tmp_27 != 0)) break;
     }
-    printf_va_102("bias_vector[0] = %f\nbias_vector[1] = %f\nbias_vector[2] = %f\n\n",
-                  (double)bias_vector[0],(double)bias_vector[1],
-                  (double)bias_vector[2]);
-    printf_va_103("Resetting Gyro Bias to default state.\n\n");
+    printf("bias_vector[0] = %f\nbias_vector[1] = %f\nbias_vector[2] = %f\n\n",
+           (double)bias_vector[0],(double)bias_vector[1],
+           (double)bias_vector[2]); /* printf_va_102 */
+    printf("Resetting Gyro Bias to default state.\n\n"); /* printf_va_103 */
     while (1) {
       u16 tmp_28;
       tmp_28 = mip_3dm_cmd_gyro_bias(& device_interface,(unsigned char)0x05,
                                      (float *)0);
       if (! ((int)tmp_28 != 0)) break;
     }
-    printf_va_104("\n\n");
+    printf("\n\n"); /* printf_va_104 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_105("----------------------------------------------------------------------\n");
-    printf_va_106("Performing Gyro Bias capture.\nPlease keep device stationary during the 5 second gyro bias capture interval\n");
-    printf_va_107("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_105 */
+    printf("Performing Gyro Bias capture.\nPlease keep device stationary during the 5 second gyro bias capture interval\n"); /* printf_va_106 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_107 */
     duration = (unsigned short)5000;
     while (1) {
       u16 tmp_29;
@@ -13536,14 +13533,14 @@ int main(int argc, char **argv)
                                              bias_vector);
       if (! ((int)tmp_29 != 0)) break;
     }
-    printf_va_108("Gyro Bias Captured:\nbias_vector[0] = %f\nbias_vector[1] = %f\nbias_vector[2] = %f\n\n",
-                  (double)bias_vector[0],(double)bias_vector[1],
-                  (double)bias_vector[2]);
-    printf_va_109("\n\n");
+    printf("Gyro Bias Captured:\nbias_vector[0] = %f\nbias_vector[1] = %f\nbias_vector[2] = %f\n\n",
+           (double)bias_vector[0],(double)bias_vector[1],
+           (double)bias_vector[2]); /* printf_va_108 */
+    printf("\n\n"); /* printf_va_109 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_110("----------------------------------------------------------------------\n");
-    printf_va_111("Setting the hard iron offset values\n");
-    printf_va_112("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_110 */
+    printf("Setting the hard iron offset values\n"); /* printf_va_111 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_112 */
     hard_iron[0] = (float)1.0;
     hard_iron[1] = (float)2.0;
     hard_iron[2] = (float)3.0;
@@ -13566,7 +13563,7 @@ int main(int argc, char **argv)
       if ((double)tmp_33 < 0.001) {
         int tmp_34;
         tmp_34 = abs((int)(hard_iron_readback[2] - hard_iron[2]));
-        if ((double)tmp_34 < 0.001) printf_va_113("Hard iron offset values successfully set.\n");
+        if ((double)tmp_34 < 0.001) printf("Hard iron offset values successfully set.\n"); /* printf_va_113 */
         else goto _LAND_0;
       }
       else goto _LAND_0;
@@ -13574,28 +13571,26 @@ int main(int argc, char **argv)
     else {
       _LAND_0:
       {
-        printf_va_114("ERROR: Failed to set hard iron offset values!!!\n");
-        printf_va_115("Sent values:     %f X %f Y %f Z\n",
-                      (double)hard_iron[0],(double)hard_iron[1],
-                      (double)hard_iron[2]);
-        printf_va_116("Returned values: %f X %f Y %f Z\n",
-                      (double)hard_iron_readback[0],
-                      (double)hard_iron_readback[1],
-                      (double)hard_iron_readback[2]);
+        printf("ERROR: Failed to set hard iron offset values!!!\n"); /* printf_va_114 */
+        printf("Sent values:     %f X %f Y %f Z\n",(double)hard_iron[0],
+               (double)hard_iron[1],(double)hard_iron[2]); /* printf_va_115 */
+        printf("Returned values: %f X %f Y %f Z\n",
+               (double)hard_iron_readback[0],(double)hard_iron_readback[1],
+               (double)hard_iron_readback[2]); /* printf_va_116 */
       }
     }
-    printf_va_117("\n\nLoading the default hard iron offset values.\n\n");
+    printf("\n\nLoading the default hard iron offset values.\n\n"); /* printf_va_117 */
     while (1) {
       u16 tmp_35;
       tmp_35 = mip_3dm_cmd_hard_iron(& device_interface,(unsigned char)0x05,
                                      (float *)0);
       if (! ((int)tmp_35 != 0)) break;
     }
-    printf_va_118("\n\n");
+    printf("\n\n"); /* printf_va_118 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_119("----------------------------------------------------------------------\n");
-    printf_va_120("Setting the soft iron matrix values\n");
-    printf_va_121("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_119 */
+    printf("Setting the soft iron matrix values\n"); /* printf_va_120 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_121 */
     i = (short)0;
     while ((int)i < 9) {
       soft_iron[i] = (float)i;
@@ -13638,7 +13633,7 @@ int main(int argc, char **argv)
                   if ((double)tmp_45 < 0.001) {
                     int tmp_46;
                     tmp_46 = abs((int)(soft_iron_readback[8] - soft_iron[8]));
-                    if ((double)tmp_46 < 0.001) printf_va_122("Soft iron matrix values successfully set.\n");
+                    if ((double)tmp_46 < 0.001) printf("Soft iron matrix values successfully set.\n"); /* printf_va_122 */
                     else goto _LAND_8;
                   }
                   else goto _LAND_8;
@@ -13658,37 +13653,33 @@ int main(int argc, char **argv)
     else {
       _LAND_8:
       {
-        printf_va_123("ERROR: Failed to set hard iron values!!!\n");
-        printf_va_124("Sent values:     [%f  %f  %f][%f  %f  %f][%f  %f  %f]\n",
-                      (double)soft_iron[0],(double)soft_iron[1],
-                      (double)soft_iron[2],(double)soft_iron[3],
-                      (double)soft_iron[4],(double)soft_iron[5],
-                      (double)soft_iron[6],(double)soft_iron[7],
-                      (double)soft_iron[8]);
-        printf_va_125("Returned values: [%f  %f  %f][%f  %f  %f][%f  %f  %f]\n",
-                      (double)soft_iron_readback[0],
-                      (double)soft_iron_readback[1],
-                      (double)soft_iron_readback[2],
-                      (double)soft_iron_readback[3],
-                      (double)soft_iron_readback[4],
-                      (double)soft_iron_readback[5],
-                      (double)soft_iron_readback[6],
-                      (double)soft_iron_readback[7],
-                      (double)soft_iron_readback[8]);
+        printf("ERROR: Failed to set hard iron values!!!\n"); /* printf_va_123 */
+        printf("Sent values:     [%f  %f  %f][%f  %f  %f][%f  %f  %f]\n",
+               (double)soft_iron[0],(double)soft_iron[1],
+               (double)soft_iron[2],(double)soft_iron[3],
+               (double)soft_iron[4],(double)soft_iron[5],
+               (double)soft_iron[6],(double)soft_iron[7],
+               (double)soft_iron[8]); /* printf_va_124 */
+        printf("Returned values: [%f  %f  %f][%f  %f  %f][%f  %f  %f]\n",
+               (double)soft_iron_readback[0],(double)soft_iron_readback[1],
+               (double)soft_iron_readback[2],(double)soft_iron_readback[3],
+               (double)soft_iron_readback[4],(double)soft_iron_readback[5],
+               (double)soft_iron_readback[6],(double)soft_iron_readback[7],
+               (double)soft_iron_readback[8]); /* printf_va_125 */
       }
     }
-    printf_va_126("\n\nLoading the default soft iron matrix values.\n\n");
+    printf("\n\nLoading the default soft iron matrix values.\n\n"); /* printf_va_126 */
     while (1) {
       u16 tmp_47;
       tmp_47 = mip_3dm_cmd_soft_iron(& device_interface,(unsigned char)0x05,
                                      (float *)0);
       if (! ((int)tmp_47 != 0)) break;
     }
-    printf_va_127("\n\n");
+    printf("\n\n"); /* printf_va_127 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_128("----------------------------------------------------------------------\n");
-    printf_va_129("Setting the AHRS message format\n");
-    printf_va_130("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_128 */
+    printf("Setting the AHRS message format\n"); /* printf_va_129 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_130 */
     data_stream_format_descriptors[0] = (unsigned char)0x04;
     data_stream_format_descriptors[1] = (unsigned char)0x05;
     data_stream_format_decimation[0] = (unsigned short)0x64;
@@ -13703,11 +13694,11 @@ int main(int argc, char **argv)
                                                data_stream_format_decimation);
       if (! ((int)tmp_48 != 0)) break;
     }
-    printf_va_131("\n\n");
+    printf("\n\n"); /* printf_va_131 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_132("----------------------------------------------------------------------\n");
-    printf_va_133("Polling AHRS Data.\n");
-    printf_va_134("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_132 */
+    printf("Polling AHRS Data.\n"); /* printf_va_133 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_134 */
     while (1) {
       u16 tmp_49;
       tmp_49 = mip_3dm_cmd_poll_ahrs(& device_interface,(unsigned char)0x00,
@@ -13716,14 +13707,14 @@ int main(int argc, char **argv)
       if (! ((int)tmp_49 != 0)) break;
     }
   }
-  else printf_va_135("ERROR: IMU_Direct mode not established\n\n");
-  printf_va_136("\n\n");
+  else printf("ERROR: IMU_Direct mode not established\n\n"); /* printf_va_135 */
+  printf("\n\n"); /* printf_va_136 */
   usleep((unsigned int)((double)1500 * 1000.0));
   device_descriptors_size = (unsigned short)(128 * 2);
   com_mode = (unsigned char)0x01;
-  printf_va_137("----------------------------------------------------------------------\n");
-  printf_va_138("Putting Device Into Standard Mode\n");
-  printf_va_139("----------------------------------------------------------------------\n\n");
+  printf("----------------------------------------------------------------------\n"); /* printf_va_137 */
+  printf("Putting Device Into Standard Mode\n"); /* printf_va_138 */
+  printf("----------------------------------------------------------------------\n\n"); /* printf_va_139 */
   while (1) {
     u16 tmp_50;
     tmp_50 = mip_system_com_mode(& device_interface,(unsigned char)0x01,
@@ -13736,7 +13727,7 @@ int main(int argc, char **argv)
                                  & com_mode);
     if (! ((int)tmp_51 != 0)) break;
   }
-  printf_va_140("\n\n");
+  printf("\n\n"); /* printf_va_140 */
   usleep((unsigned int)((double)1500 * 1000.0));
   if ((int)com_mode == 0x01) {
     char const *tmp_62;
@@ -13759,60 +13750,60 @@ int main(int argc, char **argv)
     u16 tmp_224;
     u16 tmp_225;
     u16 tmp_226;
-    printf_va_141("----------------------------------------------------------------------\n");
-    printf_va_142("Idling Device\n");
-    printf_va_143("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_141 */
+    printf("Idling Device\n"); /* printf_va_142 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_143 */
     while (1) {
       u16 tmp_52;
       tmp_52 = mip_base_cmd_idle(& device_interface);
       if (! ((int)tmp_52 != 0)) break;
     }
-    printf_va_144("\n\n");
+    printf("\n\n"); /* printf_va_144 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_145("----------------------------------------------------------------------\n");
-    printf_va_146("Pinging Device\n");
-    printf_va_147("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_145 */
+    printf("Pinging Device\n"); /* printf_va_146 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_147 */
     while (1) {
       u16 tmp_53;
       tmp_53 = mip_base_cmd_ping(& device_interface);
       if (! ((int)tmp_53 != 0)) break;
     }
-    printf_va_148("\n\n");
+    printf("\n\n"); /* printf_va_148 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_149("----------------------------------------------------------------------\n");
-    printf_va_150("Getting Device Information\n");
-    printf_va_151("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_149 */
+    printf("Getting Device Information\n"); /* printf_va_150 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_151 */
     while (1) {
       u16 tmp_54;
       tmp_54 = mip_base_cmd_get_device_info(& device_interface,& device_info);
       if (! ((int)tmp_54 != 0)) break;
     }
-    printf_va_152("Device Info:\n");
-    printf_va_153("---------------------------------------------\n");
+    printf("Device Info:\n"); /* printf_va_152 */
+    printf("---------------------------------------------\n"); /* printf_va_153 */
     memcpy((void *)(temp_string),(void const *)(device_info.model_name),
            (unsigned int)(8 * 2));
-    printf_va_154("Model Name       => %s\n",(char *)(temp_string));
+    printf("Model Name       => %s\n",(char *)(temp_string)); /* printf_va_154 */
     memcpy((void *)(temp_string),(void const *)(device_info.model_number),
            (unsigned int)(8 * 2));
-    printf_va_155("Model Number     => %s\n",(char *)(temp_string));
+    printf("Model Number     => %s\n",(char *)(temp_string)); /* printf_va_155 */
     memcpy((void *)(temp_string),(void const *)(device_info.serial_number),
            (unsigned int)(8 * 2));
-    printf_va_156("Serial Number    => %s\n",(char *)(temp_string));
+    printf("Serial Number    => %s\n",(char *)(temp_string)); /* printf_va_156 */
     memcpy((void *)(temp_string),(void const *)(device_info.lotnumber),
            (unsigned int)(8 * 2));
-    printf_va_157("Lot Number       => %s\n",(char *)(temp_string));
+    printf("Lot Number       => %s\n",(char *)(temp_string)); /* printf_va_157 */
     memcpy((void *)(temp_string),(void const *)(device_info.device_options),
            (unsigned int)(8 * 2));
-    printf_va_158("Options          => %s\n",(char *)(temp_string));
-    printf_va_159("Firmware Version => %d.%d.%.2d\n\n",
-                  (int)device_info.firmware_version / 1000,
-                  ((int)device_info.firmware_version % 1000) / 100,
-                  (int)device_info.firmware_version % 100);
-    printf_va_160("\n\n");
+    printf("Options          => %s\n",(char *)(temp_string)); /* printf_va_158 */
+    printf("Firmware Version => %d.%d.%.2d\n\n",
+           (int)device_info.firmware_version / 1000,
+           ((int)device_info.firmware_version % 1000) / 100,
+           (int)device_info.firmware_version % 100); /* printf_va_159 */
+    printf("\n\n"); /* printf_va_160 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_161("----------------------------------------------------------------------\n");
-    printf_va_162("Getting Supported descriptors\n");
-    printf_va_163("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_161 */
+    printf("Getting Supported descriptors\n"); /* printf_va_162 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_163 */
     while (1) {
       u16 tmp_55;
       tmp_55 = mip_base_cmd_get_device_supported_descriptors(& device_interface,
@@ -13820,66 +13811,65 @@ int main(int argc, char **argv)
                                                              & device_descriptors_size);
       if (! ((int)tmp_55 != 0)) break;
     }
-    printf_va_164("\n\nSupported descriptors:\n\n");
+    printf("\n\nSupported descriptors:\n\n"); /* printf_va_164 */
     i = (short)0;
     while ((int)i < (int)device_descriptors_size / 2) {
-      printf_va_165("Descriptor Set: %02x, Descriptor: %02x\n",
-                    (unsigned int)((int)device_descriptors[i] >> 8),
-                    (unsigned int)((int)device_descriptors[i] & 0xFF));
+      printf("Descriptor Set: %02x, Descriptor: %02x\n",
+             (unsigned int)((int)device_descriptors[i] >> 8),
+             (unsigned int)((int)device_descriptors[i] & 0xFF)); /* printf_va_165 */
       usleep((unsigned int)((double)100 * 1000.0));
       i = (s16)((int)i + 1);
     }
-    printf_va_166("\n\n");
+    printf("\n\n"); /* printf_va_166 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_167("----------------------------------------------------------------------\n");
-    printf_va_168("Running Built In Test\n");
-    printf_va_169("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_167 */
+    printf("Running Built In Test\n"); /* printf_va_168 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_169 */
     while (1) {
       u16 tmp_56;
       tmp_56 = mip_base_cmd_built_in_test(& device_interface,& bit_result);
       if (! ((int)tmp_56 != 0)) break;
     }
-    printf_va_170("\nBIT Result (should be 0x00000000) => 0x%08x\n\n",
-                  bit_result);
-    printf_va_171("\n\n");
+    printf("\nBIT Result (should be 0x00000000) => 0x%08x\n\n",bit_result); /* printf_va_170 */
+    printf("\n\n"); /* printf_va_171 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_172("----------------------------------------------------------------------\n");
-    printf_va_173("Getting the AHRS datastream base rate\n");
-    printf_va_174("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_172 */
+    printf("Getting the AHRS datastream base rate\n"); /* printf_va_173 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_174 */
     while (1) {
       u16 tmp_57;
       tmp_57 = mip_3dm_cmd_get_ahrs_base_rate(& device_interface,& base_rate);
       if (! ((int)tmp_57 != 0)) break;
     }
-    printf_va_175("\nAHRS Base Rate => %d Hz\n",(int)base_rate);
-    printf_va_176("\n\n");
+    printf("\nAHRS Base Rate => %d Hz\n",(int)base_rate); /* printf_va_175 */
+    printf("\n\n"); /* printf_va_176 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_177("----------------------------------------------------------------------\n");
-    printf_va_178("Getting the GPS datastream base rate\n");
-    printf_va_179("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_177 */
+    printf("Getting the GPS datastream base rate\n"); /* printf_va_178 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_179 */
     while (1) {
       u16 tmp_58;
       tmp_58 = mip_3dm_cmd_get_gps_base_rate(& device_interface,& base_rate);
       if (! ((int)tmp_58 != 0)) break;
     }
-    printf_va_180("\nGPS Base Rate => %d Hz\n",(int)base_rate);
-    printf_va_181("\n\n");
+    printf("\nGPS Base Rate => %d Hz\n",(int)base_rate); /* printf_va_180 */
+    printf("\n\n"); /* printf_va_181 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_182("----------------------------------------------------------------------\n");
-    printf_va_183("Getting the Estimation Filter datastream base rate\n");
-    printf_va_184("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_182 */
+    printf("Getting the Estimation Filter datastream base rate\n"); /* printf_va_183 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_184 */
     while (1) {
       u16 tmp_59;
       tmp_59 = mip_3dm_cmd_get_filter_base_rate(& device_interface,
                                                 & base_rate);
       if (! ((int)tmp_59 != 0)) break;
     }
-    printf_va_185("\nFILTER Base Rate => %d Hz\n",(int)base_rate);
-    printf_va_186("\n\n");
+    printf("\nFILTER Base Rate => %d Hz\n",(int)base_rate); /* printf_va_185 */
+    printf("\n\n"); /* printf_va_186 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_187("----------------------------------------------------------------------\n");
-    printf_va_188("Toggling Coning and Sculling compensation\n");
-    printf_va_189("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_187 */
+    printf("Toggling Coning and Sculling compensation\n"); /* printf_va_188 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_189 */
     enable = (unsigned char)0x00;
     while (1) {
       u16 tmp_60;
@@ -13888,7 +13878,7 @@ int main(int argc, char **argv)
                                                         & enable);
       if (! ((int)tmp_60 != 0)) break;
     }
-    printf_va_190("Reading Coning and Sculling compensation enabled state:\n");
+    printf("Reading Coning and Sculling compensation enabled state:\n"); /* printf_va_190 */
     while (1) {
       u16 tmp_61;
       tmp_61 = mip_3dm_cmd_coning_sculling_compensation(& device_interface,
@@ -13897,8 +13887,8 @@ int main(int argc, char **argv)
       if (! ((int)tmp_61 != 0)) break;
     }
     if ((int)enable == 0x00) tmp_62 = "DISABLED"; else tmp_62 = "ENABLED";
-    printf_va_191("%s\n\n",(char *)tmp_62);
-    printf_va_192("Enabling Coning and Sculling compensation.\n");
+    printf("%s\n\n",(char *)tmp_62); /* printf_va_191 */
+    printf("Enabling Coning and Sculling compensation.\n"); /* printf_va_192 */
     enable = (unsigned char)0x01;
     while (1) {
       u16 tmp_63;
@@ -13907,7 +13897,7 @@ int main(int argc, char **argv)
                                                         & enable);
       if (! ((int)tmp_63 != 0)) break;
     }
-    printf_va_193("Reading Coning and Sculling compensation enabled state:\n");
+    printf("Reading Coning and Sculling compensation enabled state:\n"); /* printf_va_193 */
     while (1) {
       u16 tmp_64;
       tmp_64 = mip_3dm_cmd_coning_sculling_compensation(& device_interface,
@@ -13916,19 +13906,19 @@ int main(int argc, char **argv)
       if (! ((int)tmp_64 != 0)) break;
     }
     if ((int)enable == 0x00) tmp_65 = "DISABLED"; else tmp_65 = "ENABLED";
-    printf_va_194("%s\n\n",(char *)tmp_65);
-    printf_va_195("\n\n");
+    printf("%s\n\n",(char *)tmp_65); /* printf_va_194 */
+    printf("\n\n"); /* printf_va_195 */
     usleep((unsigned int)((double)1500 * 1000.0));
     bias_vector[0] = 1.0f;
     bias_vector[1] = 2.0f;
     bias_vector[2] = 3.0f;
-    printf_va_196("----------------------------------------------------------------------\n");
-    printf_va_197("Accel Bias Vector\n");
-    printf_va_198("----------------------------------------------------------------------\n\n");
-    printf_va_199("Setting Accel Bias Vector:\n");
-    printf_va_200("bias_vector[0] = %f\nbias_vector[1] = %f\nbias_vector[2] = %f\n\n",
-                  (double)bias_vector[0],(double)bias_vector[1],
-                  (double)bias_vector[2]);
+    printf("----------------------------------------------------------------------\n"); /* printf_va_196 */
+    printf("Accel Bias Vector\n"); /* printf_va_197 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_198 */
+    printf("Setting Accel Bias Vector:\n"); /* printf_va_199 */
+    printf("bias_vector[0] = %f\nbias_vector[1] = %f\nbias_vector[2] = %f\n\n",
+           (double)bias_vector[0],(double)bias_vector[1],
+           (double)bias_vector[2]); /* printf_va_200 */
     while (1) {
       u16 tmp_66;
       tmp_66 = mip_3dm_cmd_accel_bias(& device_interface,(unsigned char)0x01,
@@ -13936,35 +13926,35 @@ int main(int argc, char **argv)
       if (! ((int)tmp_66 != 0)) break;
     }
     memset((void *)(bias_vector),0,(unsigned int)3 * sizeof(float));
-    printf_va_201("Reading current Accel Bias Vector:\n");
+    printf("Reading current Accel Bias Vector:\n"); /* printf_va_201 */
     while (1) {
       u16 tmp_67;
       tmp_67 = mip_3dm_cmd_accel_bias(& device_interface,(unsigned char)0x02,
                                       bias_vector);
       if (! ((int)tmp_67 != 0)) break;
     }
-    printf_va_202("bias_vector[0] = %f\nbias_vector[1] = %f\nbias_vector[2] = %f\n\n",
-                  (double)bias_vector[0],(double)bias_vector[1],
-                  (double)bias_vector[2]);
-    printf_va_203("Resetting Accel Bias to default state.\n\n");
+    printf("bias_vector[0] = %f\nbias_vector[1] = %f\nbias_vector[2] = %f\n\n",
+           (double)bias_vector[0],(double)bias_vector[1],
+           (double)bias_vector[2]); /* printf_va_202 */
+    printf("Resetting Accel Bias to default state.\n\n"); /* printf_va_203 */
     while (1) {
       u16 tmp_68;
       tmp_68 = mip_3dm_cmd_accel_bias(& device_interface,(unsigned char)0x05,
                                       (float *)0);
       if (! ((int)tmp_68 != 0)) break;
     }
-    printf_va_204("\n\n");
+    printf("\n\n"); /* printf_va_204 */
     usleep((unsigned int)((double)1500 * 1000.0));
     bias_vector[0] = 4.0f;
     bias_vector[1] = 5.0f;
     bias_vector[2] = 6.0f;
-    printf_va_205("----------------------------------------------------------------------\n");
-    printf_va_206("Gyro Bias Vector\n");
-    printf_va_207("----------------------------------------------------------------------\n\n");
-    printf_va_208("Setting Gyro Bias Vector:\n");
-    printf_va_209("bias_vector[0] = %f\nbias_vector[1] = %f\nbias_vector[2] = %f\n\n",
-                  (double)bias_vector[0],(double)bias_vector[1],
-                  (double)bias_vector[2]);
+    printf("----------------------------------------------------------------------\n"); /* printf_va_205 */
+    printf("Gyro Bias Vector\n"); /* printf_va_206 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_207 */
+    printf("Setting Gyro Bias Vector:\n"); /* printf_va_208 */
+    printf("bias_vector[0] = %f\nbias_vector[1] = %f\nbias_vector[2] = %f\n\n",
+           (double)bias_vector[0],(double)bias_vector[1],
+           (double)bias_vector[2]); /* printf_va_209 */
     while (1) {
       u16 tmp_69;
       tmp_69 = mip_3dm_cmd_gyro_bias(& device_interface,(unsigned char)0x01,
@@ -13972,28 +13962,28 @@ int main(int argc, char **argv)
       if (! ((int)tmp_69 != 0)) break;
     }
     memset((void *)(bias_vector),0,(unsigned int)3 * sizeof(float));
-    printf_va_210("Reading current Gyro Bias Vector:\n");
+    printf("Reading current Gyro Bias Vector:\n"); /* printf_va_210 */
     while (1) {
       u16 tmp_70;
       tmp_70 = mip_3dm_cmd_gyro_bias(& device_interface,(unsigned char)0x02,
                                      bias_vector);
       if (! ((int)tmp_70 != 0)) break;
     }
-    printf_va_211("bias_vector[0] = %f\nbias_vector[1] = %f\nbias_vector[2] = %f\n\n",
-                  (double)bias_vector[0],(double)bias_vector[1],
-                  (double)bias_vector[2]);
-    printf_va_212("Resetting Gyro Bias to default state.\n\n");
+    printf("bias_vector[0] = %f\nbias_vector[1] = %f\nbias_vector[2] = %f\n\n",
+           (double)bias_vector[0],(double)bias_vector[1],
+           (double)bias_vector[2]); /* printf_va_211 */
+    printf("Resetting Gyro Bias to default state.\n\n"); /* printf_va_212 */
     while (1) {
       u16 tmp_71;
       tmp_71 = mip_3dm_cmd_gyro_bias(& device_interface,(unsigned char)0x05,
                                      (float *)0);
       if (! ((int)tmp_71 != 0)) break;
     }
-    printf_va_213("\n\n");
+    printf("\n\n"); /* printf_va_213 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_214("----------------------------------------------------------------------\n");
-    printf_va_215("Performing Gyro Bias capture.\nPlease keep device stationary during the 5 second gyro bias capture interval\n");
-    printf_va_216("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_214 */
+    printf("Performing Gyro Bias capture.\nPlease keep device stationary during the 5 second gyro bias capture interval\n"); /* printf_va_215 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_216 */
     duration = (unsigned short)5000;
     while (1) {
       u16 tmp_72;
@@ -14001,14 +13991,14 @@ int main(int argc, char **argv)
                                              bias_vector);
       if (! ((int)tmp_72 != 0)) break;
     }
-    printf_va_217("Gyro Bias Captured:\nbias_vector[0] = %f\nbias_vector[1] = %f\nbias_vector[2] = %f\n\n",
-                  (double)bias_vector[0],(double)bias_vector[1],
-                  (double)bias_vector[2]);
-    printf_va_218("\n\n");
+    printf("Gyro Bias Captured:\nbias_vector[0] = %f\nbias_vector[1] = %f\nbias_vector[2] = %f\n\n",
+           (double)bias_vector[0],(double)bias_vector[1],
+           (double)bias_vector[2]); /* printf_va_217 */
+    printf("\n\n"); /* printf_va_218 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_219("----------------------------------------------------------------------\n");
-    printf_va_220("Setting the hard iron offset values\n");
-    printf_va_221("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_219 */
+    printf("Setting the hard iron offset values\n"); /* printf_va_220 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_221 */
     hard_iron[0] = (float)1.0;
     hard_iron[1] = (float)2.0;
     hard_iron[2] = (float)3.0;
@@ -14031,7 +14021,7 @@ int main(int argc, char **argv)
       if ((double)tmp_76 < 0.001) {
         int tmp_77;
         tmp_77 = abs((int)(hard_iron_readback[2] - hard_iron[2]));
-        if ((double)tmp_77 < 0.001) printf_va_222("Hard iron offset values successfully set.\n");
+        if ((double)tmp_77 < 0.001) printf("Hard iron offset values successfully set.\n"); /* printf_va_222 */
         else goto _LAND_10;
       }
       else goto _LAND_10;
@@ -14039,28 +14029,26 @@ int main(int argc, char **argv)
     else {
       _LAND_10:
       {
-        printf_va_223("ERROR: Failed to set hard iron offset values!!!\n");
-        printf_va_224("Sent values:     %f X %f Y %f Z\n",
-                      (double)hard_iron[0],(double)hard_iron[1],
-                      (double)hard_iron[2]);
-        printf_va_225("Returned values: %f X %f Y %f Z\n",
-                      (double)hard_iron_readback[0],
-                      (double)hard_iron_readback[1],
-                      (double)hard_iron_readback[2]);
+        printf("ERROR: Failed to set hard iron offset values!!!\n"); /* printf_va_223 */
+        printf("Sent values:     %f X %f Y %f Z\n",(double)hard_iron[0],
+               (double)hard_iron[1],(double)hard_iron[2]); /* printf_va_224 */
+        printf("Returned values: %f X %f Y %f Z\n",
+               (double)hard_iron_readback[0],(double)hard_iron_readback[1],
+               (double)hard_iron_readback[2]); /* printf_va_225 */
       }
     }
-    printf_va_226("\n\nLoading the default hard iron offset values.\n\n");
+    printf("\n\nLoading the default hard iron offset values.\n\n"); /* printf_va_226 */
     while (1) {
       u16 tmp_78;
       tmp_78 = mip_3dm_cmd_hard_iron(& device_interface,(unsigned char)0x05,
                                      (float *)0);
       if (! ((int)tmp_78 != 0)) break;
     }
-    printf_va_227("\n\n");
+    printf("\n\n"); /* printf_va_227 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_228("----------------------------------------------------------------------\n");
-    printf_va_229("Setting the soft iron matrix values\n");
-    printf_va_230("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_228 */
+    printf("Setting the soft iron matrix values\n"); /* printf_va_229 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_230 */
     i = (short)0;
     while ((int)i < 9) {
       soft_iron[i] = (float)i;
@@ -14103,7 +14091,7 @@ int main(int argc, char **argv)
                   if ((double)tmp_88 < 0.001) {
                     int tmp_89;
                     tmp_89 = abs((int)(soft_iron_readback[8] - soft_iron[8]));
-                    if ((double)tmp_89 < 0.001) printf_va_231("Soft iron matrix values successfully set.\n");
+                    if ((double)tmp_89 < 0.001) printf("Soft iron matrix values successfully set.\n"); /* printf_va_231 */
                     else goto _LAND_18;
                   }
                   else goto _LAND_18;
@@ -14123,37 +14111,33 @@ int main(int argc, char **argv)
     else {
       _LAND_18:
       {
-        printf_va_232("ERROR: Failed to set hard iron values!!!\n");
-        printf_va_233("Sent values:     [%f  %f  %f][%f  %f  %f][%f  %f  %f]\n",
-                      (double)soft_iron[0],(double)soft_iron[1],
-                      (double)soft_iron[2],(double)soft_iron[3],
-                      (double)soft_iron[4],(double)soft_iron[5],
-                      (double)soft_iron[6],(double)soft_iron[7],
-                      (double)soft_iron[8]);
-        printf_va_234("Returned values: [%f  %f  %f][%f  %f  %f][%f  %f  %f]\n",
-                      (double)soft_iron_readback[0],
-                      (double)soft_iron_readback[1],
-                      (double)soft_iron_readback[2],
-                      (double)soft_iron_readback[3],
-                      (double)soft_iron_readback[4],
-                      (double)soft_iron_readback[5],
-                      (double)soft_iron_readback[6],
-                      (double)soft_iron_readback[7],
-                      (double)soft_iron_readback[8]);
+        printf("ERROR: Failed to set hard iron values!!!\n"); /* printf_va_232 */
+        printf("Sent values:     [%f  %f  %f][%f  %f  %f][%f  %f  %f]\n",
+               (double)soft_iron[0],(double)soft_iron[1],
+               (double)soft_iron[2],(double)soft_iron[3],
+               (double)soft_iron[4],(double)soft_iron[5],
+               (double)soft_iron[6],(double)soft_iron[7],
+               (double)soft_iron[8]); /* printf_va_233 */
+        printf("Returned values: [%f  %f  %f][%f  %f  %f][%f  %f  %f]\n",
+               (double)soft_iron_readback[0],(double)soft_iron_readback[1],
+               (double)soft_iron_readback[2],(double)soft_iron_readback[3],
+               (double)soft_iron_readback[4],(double)soft_iron_readback[5],
+               (double)soft_iron_readback[6],(double)soft_iron_readback[7],
+               (double)soft_iron_readback[8]); /* printf_va_234 */
       }
     }
-    printf_va_235("\n\nLoading the default soft iron matrix values.\n\n");
+    printf("\n\nLoading the default soft iron matrix values.\n\n"); /* printf_va_235 */
     while (1) {
       u16 tmp_90;
       tmp_90 = mip_3dm_cmd_soft_iron(& device_interface,(unsigned char)0x05,
                                      (float *)0);
       if (! ((int)tmp_90 != 0)) break;
     }
-    printf_va_236("\n\n");
+    printf("\n\n"); /* printf_va_236 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_237("----------------------------------------------------------------------\n");
-    printf_va_238("Setting the complementary filter values\n");
-    printf_va_239("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_237 */
+    printf("Setting the complementary filter values\n"); /* printf_va_238 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_239 */
     comp_filter_command.north_compensation_enable = (unsigned char)0;
     comp_filter_command.up_compensation_enable = (unsigned char)0;
     comp_filter_command.north_compensation_time_constant = (float)30;
@@ -14179,7 +14163,7 @@ int main(int argc, char **argv)
         if ((double)tmp_93 < 0.001) {
           int tmp_94;
           tmp_94 = abs((int)(comp_filter_command.up_compensation_time_constant - comp_filter_readback.up_compensation_time_constant));
-          if ((double)tmp_94 < 0.001) printf_va_240("Complementary filter values successfully set.\n");
+          if ((double)tmp_94 < 0.001) printf("Complementary filter values successfully set.\n"); /* printf_va_240 */
           else goto _LAND_21;
         }
         else goto _LAND_21;
@@ -14189,20 +14173,20 @@ int main(int argc, char **argv)
     else {
       _LAND_21:
       {
-        printf_va_241("ERROR: Failed to set complementary filter values!!!\n");
-        printf_va_242("Sent values:     Up Enable: %d North Enable: %d Up Time Constant: %f North Time Constant: %f \n",
-                      (int)comp_filter_command.up_compensation_enable,
-                      (int)comp_filter_command.north_compensation_enable,
-                      (double)comp_filter_command.up_compensation_time_constant,
-                      (double)comp_filter_command.north_compensation_time_constant);
-        printf_va_243("Returned values: Up Enable: %d North Enable: %d Up Time Constant: %f North Time Constant: %f \n",
-                      (int)comp_filter_readback.up_compensation_enable,
-                      (int)comp_filter_readback.north_compensation_enable,
-                      (double)comp_filter_readback.up_compensation_time_constant,
-                      (double)comp_filter_readback.north_compensation_time_constant);
+        printf("ERROR: Failed to set complementary filter values!!!\n"); /* printf_va_241 */
+        printf("Sent values:     Up Enable: %d North Enable: %d Up Time Constant: %f North Time Constant: %f \n",
+               (int)comp_filter_command.up_compensation_enable,
+               (int)comp_filter_command.north_compensation_enable,
+               (double)comp_filter_command.up_compensation_time_constant,
+               (double)comp_filter_command.north_compensation_time_constant); /* printf_va_242 */
+        printf("Returned values: Up Enable: %d North Enable: %d Up Time Constant: %f North Time Constant: %f \n",
+               (int)comp_filter_readback.up_compensation_enable,
+               (int)comp_filter_readback.north_compensation_enable,
+               (double)comp_filter_readback.up_compensation_time_constant,
+               (double)comp_filter_readback.north_compensation_time_constant); /* printf_va_243 */
       }
     }
-    printf_va_244("\n\nLoading the default complementary filter values.\n\n");
+    printf("\n\nLoading the default complementary filter values.\n\n"); /* printf_va_244 */
     while (1) {
       u16 tmp_95;
       tmp_95 = mip_3dm_cmd_complementary_filter_settings(& device_interface,
@@ -14210,11 +14194,11 @@ int main(int argc, char **argv)
                                                          (mip_complementary_filter_settings *)0);
       if (! ((int)tmp_95 != 0)) break;
     }
-    printf_va_245("\n\n");
+    printf("\n\n"); /* printf_va_245 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_246("----------------------------------------------------------------------\n");
-    printf_va_247("Requesting BASIC Status Report\n");
-    printf_va_248("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_246 */
+    printf("Requesting BASIC Status Report\n"); /* printf_va_247 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_248 */
     while (1) {
       u16 tmp_96;
       tmp_96 = mip_3dm_cmd_hw_specific_device_status(& device_interface,
@@ -14223,13 +14207,12 @@ int main(int argc, char **argv)
                                                      (u8 *)(& basic_field));
       if (! ((int)tmp_96 != 0)) break;
     }
-    printf_va_249("Model Number: \t\t\t\t\t%04u\n",
-                  (unsigned int)((int)basic_field.device_model));
+    printf("Model Number: \t\t\t\t\t%04u\n",
+           (unsigned int)((int)basic_field.device_model)); /* printf_va_249 */
     if ((int)basic_field.status_selector == 1) tmp_97 = "Basic Status Report";
     else tmp_97 = "Diagnostic Status Report";
-    printf_va_250("Status Selector: \t\t\t\t%s\n",(char *)tmp_97);
-    printf_va_251("Status Flags: \t\t\t\t\t0x%08x\n",
-                  basic_field.status_flags);
+    printf("Status Selector: \t\t\t\t%s\n",(char *)tmp_97); /* printf_va_250 */
+    printf("Status Flags: \t\t\t\t\t0x%08x\n",basic_field.status_flags); /* printf_va_251 */
     if ((int)basic_field.system_state == 0x01) strcpy((char *)(temp_string),
                                                       "System Initialization");
     else 
@@ -14238,10 +14221,10 @@ int main(int argc, char **argv)
       else 
         if ((int)basic_field.system_state == 0x03) strcpy((char *)(temp_string),
                                                           "System Running");
-    printf_va_252("System State: \t\t\t\t\t%s\n",(char *)(temp_string));
-    printf_va_253("System Microsecond Timer Count: \t\t%llu ms\n\n",
-                  (unsigned long long)basic_field.system_timer_ms);
-    printf_va_254("Requesting DIAGNOSTIC Status Report:\n");
+    printf("System State: \t\t\t\t\t%s\n",(char *)(temp_string)); /* printf_va_252 */
+    printf("System Microsecond Timer Count: \t\t%llu ms\n\n",
+           (unsigned long long)basic_field.system_timer_ms); /* printf_va_253 */
+    printf("Requesting DIAGNOSTIC Status Report:\n"); /* printf_va_254 */
     while (1) {
       u16 tmp_98;
       tmp_98 = mip_3dm_cmd_hw_specific_device_status(& device_interface,
@@ -14250,69 +14233,68 @@ int main(int argc, char **argv)
                                                      (u8 *)(& diagnostic_field));
       if (! ((int)tmp_98 != 0)) break;
     }
-    printf_va_255("Model Number: \t\t\t\t\t%04u\n",
-                  (unsigned int)((int)diagnostic_field.device_model));
+    printf("Model Number: \t\t\t\t\t%04u\n",
+           (unsigned int)((int)diagnostic_field.device_model)); /* printf_va_255 */
     if ((int)diagnostic_field.status_selector == 1) tmp_99 = "Basic Status Report";
     else tmp_99 = "Diagnostic Status Report";
-    printf_va_256("Status Selector: \t\t\t\t%s\n",(char *)tmp_99);
-    printf_va_257("Status Flags: \t\t\t\t\t0x%08x\n",
-                  diagnostic_field.status_flags);
-    printf_va_258("System Millisecond Timer Count: \t\t%llu ms\n",
-                  (unsigned long long)diagnostic_field.system_timer_ms);
-    printf_va_259("Number Received GPS Pulse-Per-Second Pulses: \t%u Pulses\n",
-                  diagnostic_field.num_gps_pps_triggers);
-    printf_va_260("Time of Last GPS Pulse-Per-Second Pulse: \t%u ms\n",
-                  diagnostic_field.last_gps_pps_trigger_ms);
+    printf("Status Selector: \t\t\t\t%s\n",(char *)tmp_99); /* printf_va_256 */
+    printf("Status Flags: \t\t\t\t\t0x%08x\n",diagnostic_field.status_flags); /* printf_va_257 */
+    printf("System Millisecond Timer Count: \t\t%llu ms\n",
+           (unsigned long long)diagnostic_field.system_timer_ms); /* printf_va_258 */
+    printf("Number Received GPS Pulse-Per-Second Pulses: \t%u Pulses\n",
+           diagnostic_field.num_gps_pps_triggers); /* printf_va_259 */
+    printf("Time of Last GPS Pulse-Per-Second Pulse: \t%u ms\n",
+           diagnostic_field.last_gps_pps_trigger_ms); /* printf_va_260 */
     if ((int)diagnostic_field.imu_stream_enabled == 1) tmp_100 = "TRUE";
     else tmp_100 = "FALSE";
-    printf_va_261("IMU Streaming Enabled: \t\t\t\t%s\n",(char *)tmp_100);
+    printf("IMU Streaming Enabled: \t\t\t\t%s\n",(char *)tmp_100); /* printf_va_261 */
     if ((int)diagnostic_field.gps_stream_enabled == 1) tmp_101 = "TRUE";
     else tmp_101 = "FALSE";
-    printf_va_262("GPS Streaming Enabled: \t\t\t\t%s\n",(char *)tmp_101);
+    printf("GPS Streaming Enabled: \t\t\t\t%s\n",(char *)tmp_101); /* printf_va_262 */
     if ((int)diagnostic_field.filter_stream_enabled == 1) tmp_102 = "TRUE";
     else tmp_102 = "FALSE";
-    printf_va_263("FILTER Streaming Enabled: \t\t\t\t%s\n",(char *)tmp_102);
-    printf_va_264("Number of Dropped IMU Packets: \t\t\t%u packets\n",
-                  diagnostic_field.imu_dropped_packets);
-    printf_va_265("Number of Dropped GPS Packets: \t\t\t%u packets\n",
-                  diagnostic_field.gps_dropped_packets);
-    printf_va_266("Number of Dropped FILTER Packets: \t\t\t%u packets\n",
-                  diagnostic_field.filter_dropped_packets);
-    printf_va_267("Communications Port Bytes Written: \t\t%u Bytes\n",
-                  diagnostic_field.com1_port_bytes_written);
-    printf_va_268("Communications Port Bytes Read: \t\t%u Bytes\n",
-                  diagnostic_field.com1_port_bytes_read);
-    printf_va_269("Communications Port Write Overruns: \t\t%u Bytes\n",
-                  diagnostic_field.com1_port_write_overruns);
-    printf_va_270("Communications Port Read Overruns: \t\t%u Bytes\n",
-                  diagnostic_field.com1_port_read_overruns);
-    printf_va_271("IMU Parser Errors: \t\t\t\t%u Errors\n",
-                  diagnostic_field.imu_parser_errors);
-    printf_va_272("IMU Message Count: \t\t\t\t%u Messages\n",
-                  diagnostic_field.imu_message_count);
-    printf_va_273("IMU Last Message Received: \t\t\t%u ms\n",
-                  diagnostic_field.imu_last_message_ms);
-    printf_va_274("GPS Parser Errors: \t\t\t\t%u Errors\n",
-                  diagnostic_field.gps_parser_errors);
-    printf_va_275("GPS Message Count: \t\t\t\t%u Messages\n",
-                  diagnostic_field.gps_message_count);
-    printf_va_276("GPS Last Message Received: \t\t\t%u ms\n",
-                  diagnostic_field.gps_last_message_ms);
-    printf_va_277("\n\n");
+    printf("FILTER Streaming Enabled: \t\t\t\t%s\n",(char *)tmp_102); /* printf_va_263 */
+    printf("Number of Dropped IMU Packets: \t\t\t%u packets\n",
+           diagnostic_field.imu_dropped_packets); /* printf_va_264 */
+    printf("Number of Dropped GPS Packets: \t\t\t%u packets\n",
+           diagnostic_field.gps_dropped_packets); /* printf_va_265 */
+    printf("Number of Dropped FILTER Packets: \t\t\t%u packets\n",
+           diagnostic_field.filter_dropped_packets); /* printf_va_266 */
+    printf("Communications Port Bytes Written: \t\t%u Bytes\n",
+           diagnostic_field.com1_port_bytes_written); /* printf_va_267 */
+    printf("Communications Port Bytes Read: \t\t%u Bytes\n",
+           diagnostic_field.com1_port_bytes_read); /* printf_va_268 */
+    printf("Communications Port Write Overruns: \t\t%u Bytes\n",
+           diagnostic_field.com1_port_write_overruns); /* printf_va_269 */
+    printf("Communications Port Read Overruns: \t\t%u Bytes\n",
+           diagnostic_field.com1_port_read_overruns); /* printf_va_270 */
+    printf("IMU Parser Errors: \t\t\t\t%u Errors\n",
+           diagnostic_field.imu_parser_errors); /* printf_va_271 */
+    printf("IMU Message Count: \t\t\t\t%u Messages\n",
+           diagnostic_field.imu_message_count); /* printf_va_272 */
+    printf("IMU Last Message Received: \t\t\t%u ms\n",
+           diagnostic_field.imu_last_message_ms); /* printf_va_273 */
+    printf("GPS Parser Errors: \t\t\t\t%u Errors\n",
+           diagnostic_field.gps_parser_errors); /* printf_va_274 */
+    printf("GPS Message Count: \t\t\t\t%u Messages\n",
+           diagnostic_field.gps_message_count); /* printf_va_275 */
+    printf("GPS Last Message Received: \t\t\t%u ms\n",
+           diagnostic_field.gps_last_message_ms); /* printf_va_276 */
+    printf("\n\n"); /* printf_va_277 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_278("----------------------------------------------------------------------\n");
-    printf_va_279("Resetting the Filter\n");
-    printf_va_280("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_278 */
+    printf("Resetting the Filter\n"); /* printf_va_279 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_280 */
     while (1) {
       u16 tmp_103;
       tmp_103 = mip_filter_reset_filter(& device_interface);
       if (! ((int)tmp_103 != 0)) break;
     }
-    printf_va_281("\n\n");
+    printf("\n\n"); /* printf_va_281 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_282("----------------------------------------------------------------------\n");
-    printf_va_283("Initializing the Filter with Euler angles\n");
-    printf_va_284("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_282 */
+    printf("Initializing the Filter with Euler angles\n"); /* printf_va_283 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_284 */
     angles[2] = (float)0;
     angles[1] = angles[2];
     angles[0] = angles[1];
@@ -14321,41 +14303,41 @@ int main(int argc, char **argv)
       tmp_104 = mip_filter_set_init_attitude(& device_interface,angles);
       if (! ((int)tmp_104 != 0)) break;
     }
-    printf_va_285("\n\n");
+    printf("\n\n"); /* printf_va_285 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_286("----------------------------------------------------------------------\n");
-    printf_va_287("Resetting the Filter\n");
-    printf_va_288("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_286 */
+    printf("Resetting the Filter\n"); /* printf_va_287 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_288 */
     while (1) {
       u16 tmp_105;
       tmp_105 = mip_filter_reset_filter(& device_interface);
       if (! ((int)tmp_105 != 0)) break;
     }
-    printf_va_289("\n\n");
+    printf("\n\n"); /* printf_va_289 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_290("----------------------------------------------------------------------\n");
-    printf_va_291("Initializing the Filter with a heading angle\n");
-    printf_va_292("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_290 */
+    printf("Initializing the Filter with a heading angle\n"); /* printf_va_291 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_292 */
     while (1) {
       u16 tmp_106;
       tmp_106 = mip_filter_set_init_heading(& device_interface,angles[0]);
       if (! ((int)tmp_106 != 0)) break;
     }
-    printf_va_293("\n\n");
+    printf("\n\n"); /* printf_va_293 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_294("----------------------------------------------------------------------\n");
-    printf_va_295("Resetting the Filter\n");
-    printf_va_296("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_294 */
+    printf("Resetting the Filter\n"); /* printf_va_295 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_296 */
     while (1) {
       u16 tmp_107;
       tmp_107 = mip_filter_reset_filter(& device_interface);
       if (! ((int)tmp_107 != 0)) break;
     }
-    printf_va_297("\n\n");
+    printf("\n\n"); /* printf_va_297 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_298("----------------------------------------------------------------------\n");
-    printf_va_299("Cycle through available Vehicle Dynamics Modes\n");
-    printf_va_300("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_298 */
+    printf("Cycle through available Vehicle Dynamics Modes\n"); /* printf_va_299 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_300 */
     i = (short)3;
     while ((int)i >= 1) {
       dynamics_mode = (unsigned char)i;
@@ -14374,25 +14356,24 @@ int main(int argc, char **argv)
                                                    & readback_dynamics_mode);
         if (! ((int)tmp_109 != 0)) break;
       }
-      if ((int)dynamics_mode == (int)readback_dynamics_mode) printf_va_301
-                                                             ("Vehicle dynamics mode successfully set to %d\n",
-                                                              (int)dynamics_mode);
-      else printf_va_302("ERROR: Failed to set vehicle dynamics mode to %d!!!\n",
-                         (int)dynamics_mode);
+      if ((int)dynamics_mode == (int)readback_dynamics_mode) printf("Vehicle dynamics mode successfully set to %d\n",
+                                                                    (int)dynamics_mode); /* printf_va_301 */
+      else printf("ERROR: Failed to set vehicle dynamics mode to %d!!!\n",
+                  (int)dynamics_mode); /* printf_va_302 */
       i = (s16)((int)i - 1);
     }
-    printf_va_303("\nLoading the default vehicle dynamics mode\n\n");
+    printf("\nLoading the default vehicle dynamics mode\n\n"); /* printf_va_303 */
     while (1) {
       u16 tmp_110;
       tmp_110 = mip_filter_vehicle_dynamics_mode(& device_interface,
                                                  (unsigned char)0x05,(u8 *)0);
       if (! ((int)tmp_110 != 0)) break;
     }
-    printf_va_304("\n\n");
+    printf("\n\n"); /* printf_va_304 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_305("----------------------------------------------------------------------\n");
-    printf_va_306("Setting the sensor to vehicle frame transformation\n");
-    printf_va_307("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_305 */
+    printf("Setting the sensor to vehicle frame transformation\n"); /* printf_va_306 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_307 */
     angles[0] = (float)(3.14 / 4.0);
     angles[1] = (float)(3.14 / 8.0);
     angles[2] = (float)(3.14 / 12.0);
@@ -14417,7 +14398,7 @@ int main(int argc, char **argv)
       if ((double)tmp_114 < 0.001) {
         int tmp_115;
         tmp_115 = abs((int)(readback_angles[2] - angles[2]));
-        if ((double)tmp_115 < 0.001) printf_va_308("Transformation successfully set.\n");
+        if ((double)tmp_115 < 0.001) printf("Transformation successfully set.\n"); /* printf_va_308 */
         else goto _LAND_23;
       }
       else goto _LAND_23;
@@ -14425,15 +14406,15 @@ int main(int argc, char **argv)
     else {
       _LAND_23:
       {
-        printf_va_309("ERROR: Failed to set transformation!!!\n");
-        printf_va_310("Sent angles:     %f roll %f pitch %f yaw\n",
-                      (double)angles[0],(double)angles[1],(double)angles[2]);
-        printf_va_311("Returned angles: %f roll %f pitch %f yaw\n",
-                      (double)readback_angles[0],(double)readback_angles[1],
-                      (double)readback_angles[2]);
+        printf("ERROR: Failed to set transformation!!!\n"); /* printf_va_309 */
+        printf("Sent angles:     %f roll %f pitch %f yaw\n",
+               (double)angles[0],(double)angles[1],(double)angles[2]); /* printf_va_310 */
+        printf("Returned angles: %f roll %f pitch %f yaw\n",
+               (double)readback_angles[0],(double)readback_angles[1],
+               (double)readback_angles[2]); /* printf_va_311 */
       }
     }
-    printf_va_312("\n\nLoading the default sensor to vehicle transformation.\n\n");
+    printf("\n\nLoading the default sensor to vehicle transformation.\n\n"); /* printf_va_312 */
     while (1) {
       u16 tmp_116;
       tmp_116 = mip_filter_sensor2vehicle_tranformation(& device_interface,
@@ -14441,11 +14422,11 @@ int main(int argc, char **argv)
                                                         (float *)0);
       if (! ((int)tmp_116 != 0)) break;
     }
-    printf_va_313("\n\n");
+    printf("\n\n"); /* printf_va_313 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_314("----------------------------------------------------------------------\n");
-    printf_va_315("Setting the sensor to vehicle frame offset\n");
-    printf_va_316("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_314 */
+    printf("Setting the sensor to vehicle frame offset\n"); /* printf_va_315 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_316 */
     offset[0] = (float)1.0;
     offset[1] = (float)2.0;
     offset[2] = (float)3.0;
@@ -14469,7 +14450,7 @@ int main(int argc, char **argv)
       if ((double)tmp_120 < 0.001) {
         int tmp_121;
         tmp_121 = abs((int)(readback_offset[2] - offset[2]));
-        if ((double)tmp_121 < 0.001) printf_va_317("Offset successfully set.\n");
+        if ((double)tmp_121 < 0.001) printf("Offset successfully set.\n"); /* printf_va_317 */
         else goto _LAND_25;
       }
       else goto _LAND_25;
@@ -14477,15 +14458,15 @@ int main(int argc, char **argv)
     else {
       _LAND_25:
       {
-        printf_va_318("ERROR: Failed to set offset!!!\n");
-        printf_va_319("Sent offset:     %f X %f Y %f Z\n",(double)offset[0],
-                      (double)offset[1],(double)offset[2]);
-        printf_va_320("Returned offset: %f X %f Y %f Z\n",
-                      (double)readback_offset[0],(double)readback_offset[1],
-                      (double)readback_offset[2]);
+        printf("ERROR: Failed to set offset!!!\n"); /* printf_va_318 */
+        printf("Sent offset:     %f X %f Y %f Z\n",(double)offset[0],
+               (double)offset[1],(double)offset[2]); /* printf_va_319 */
+        printf("Returned offset: %f X %f Y %f Z\n",
+               (double)readback_offset[0],(double)readback_offset[1],
+               (double)readback_offset[2]); /* printf_va_320 */
       }
     }
-    printf_va_321("\n\nLoading the default sensor to vehicle offset.\n\n");
+    printf("\n\nLoading the default sensor to vehicle offset.\n\n"); /* printf_va_321 */
     while (1) {
       u16 tmp_122;
       tmp_122 = mip_filter_sensor2vehicle_offset(& device_interface,
@@ -14493,11 +14474,11 @@ int main(int argc, char **argv)
                                                  (float *)0);
       if (! ((int)tmp_122 != 0)) break;
     }
-    printf_va_322("\n\n");
+    printf("\n\n"); /* printf_va_322 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_323("----------------------------------------------------------------------\n");
-    printf_va_324("Setting the GPS antenna offset\n");
-    printf_va_325("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_323 */
+    printf("Setting the GPS antenna offset\n"); /* printf_va_324 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_325 */
     offset[0] = (float)1.0;
     offset[1] = (float)2.0;
     offset[2] = (float)3.0;
@@ -14521,7 +14502,7 @@ int main(int argc, char **argv)
       if ((double)tmp_126 < 0.001) {
         int tmp_127;
         tmp_127 = abs((int)(readback_offset[2] - offset[2]));
-        if ((double)tmp_127 < 0.001) printf_va_326("Offset successfully set.\n");
+        if ((double)tmp_127 < 0.001) printf("Offset successfully set.\n"); /* printf_va_326 */
         else goto _LAND_27;
       }
       else goto _LAND_27;
@@ -14529,26 +14510,26 @@ int main(int argc, char **argv)
     else {
       _LAND_27:
       {
-        printf_va_327("ERROR: Failed to set offset!!!\n");
-        printf_va_328("Sent offset:     %f X %f Y %f Z\n",(double)offset[0],
-                      (double)offset[1],(double)offset[2]);
-        printf_va_329("Returned offset: %f X %f Y %f Z\n",
-                      (double)readback_offset[0],(double)readback_offset[1],
-                      (double)readback_offset[2]);
+        printf("ERROR: Failed to set offset!!!\n"); /* printf_va_327 */
+        printf("Sent offset:     %f X %f Y %f Z\n",(double)offset[0],
+               (double)offset[1],(double)offset[2]); /* printf_va_328 */
+        printf("Returned offset: %f X %f Y %f Z\n",
+               (double)readback_offset[0],(double)readback_offset[1],
+               (double)readback_offset[2]); /* printf_va_329 */
       }
     }
-    printf_va_330("\n\nLoading the default antenna offset.\n\n");
+    printf("\n\nLoading the default antenna offset.\n\n"); /* printf_va_330 */
     while (1) {
       u16 tmp_128;
       tmp_128 = mip_filter_antenna_offset(& device_interface,
                                           (unsigned char)0x05,(float *)0);
       if (! ((int)tmp_128 != 0)) break;
     }
-    printf_va_331("\n\n");
+    printf("\n\n"); /* printf_va_331 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_332("----------------------------------------------------------------------\n");
-    printf_va_333("Cycling through Estimation Control Flags\n");
-    printf_va_334("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_332 */
+    printf("Cycling through Estimation Control Flags\n"); /* printf_va_333 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_334 */
     j = (unsigned short)0;
     while ((int)j < 0x0020) {
       estimation_control = (unsigned short)(0xFFFF & ~ ((int)j));
@@ -14567,21 +14548,21 @@ int main(int argc, char **argv)
         if (! ((int)tmp_130 != 0)) break;
       }
       if ((int)estimation_control != (int)estimation_control_readback) {
-        printf_va_335("ERROR:\n");
+        printf("ERROR:\n"); /* printf_va_335 */
         if (((int)estimation_control_readback & 0x0001) != 0) 
-          if (((int)estimation_control & 0x0001) == 0) printf_va_336("Gyroscope Bias Estimation NOT DISABLED\n");
+          if (((int)estimation_control & 0x0001) == 0) printf("Gyroscope Bias Estimation NOT DISABLED\n"); /* printf_va_336 */
         if (((int)estimation_control_readback & 0x0002) != 0) 
-          if (((int)estimation_control & 0x0002) == 0) printf_va_337("Accelerometer Bias Estimation NOT DISABLED\n");
+          if (((int)estimation_control & 0x0002) == 0) printf("Accelerometer Bias Estimation NOT DISABLED\n"); /* printf_va_337 */
         if (((int)estimation_control_readback & 0x0004) != 0) 
-          if (((int)estimation_control & 0x0004) == 0) printf_va_338("Gyroscope Scale Factor Estimation NOT DISABLED\n");
+          if (((int)estimation_control & 0x0004) == 0) printf("Gyroscope Scale Factor Estimation NOT DISABLED\n"); /* printf_va_338 */
         if (((int)estimation_control_readback & 0x0008) != 0) 
-          if (((int)estimation_control & 0x0008) == 0) printf_va_339("Accelerometer Scale Factor Estimation NOT DISABLED\n");
+          if (((int)estimation_control & 0x0008) == 0) printf("Accelerometer Scale Factor Estimation NOT DISABLED\n"); /* printf_va_339 */
         if (((int)estimation_control_readback & 0x0010) != 0) 
-          if (((int)estimation_control & 0x0010) == 0) printf_va_340("GPS Antenna Offset Estimation NOT DISABLED\n");
+          if (((int)estimation_control & 0x0010) == 0) printf("GPS Antenna Offset Estimation NOT DISABLED\n"); /* printf_va_340 */
       }
       j = (u16)((int)j + 1);
     }
-    printf_va_341("\n\nResetting Estimation Control Flags to default state.\n\n");
+    printf("\n\nResetting Estimation Control Flags to default state.\n\n"); /* printf_va_341 */
     while (1) {
       u16 tmp_131;
       tmp_131 = mip_filter_estimation_control(& device_interface,
@@ -14589,11 +14570,11 @@ int main(int argc, char **argv)
                                               & estimation_control);
       if (! ((int)tmp_131 != 0)) break;
     }
-    printf_va_342("\n\n");
+    printf("\n\n"); /* printf_va_342 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_343("----------------------------------------------------------------------\n");
-    printf_va_344("Cycle through available GPS sources\n");
-    printf_va_345("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_343 */
+    printf("Cycle through available GPS sources\n"); /* printf_va_344 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_345 */
     i = (short)2;
     while ((int)i >= 1) {
       gps_source = (unsigned char)i;
@@ -14609,23 +14590,23 @@ int main(int argc, char **argv)
                                         (unsigned char)0x02,& gps_source);
         if (! ((int)tmp_133 != 0)) break;
       }
-      if ((int)gps_source == (int)i) printf_va_346("GPS source successfully set to %d\n",
-                                                   (int)i);
-      else printf_va_347("ERROR: Failed to set GPS source to %d!!!\n",(int)i);
+      if ((int)gps_source == (int)i) printf("GPS source successfully set to %d\n",
+                                            (int)i); /* printf_va_346 */
+      else printf("ERROR: Failed to set GPS source to %d!!!\n",(int)i); /* printf_va_347 */
       i = (s16)((int)i - 1);
     }
-    printf_va_348("\n\nLoading the default gps source.\n\n");
+    printf("\n\nLoading the default gps source.\n\n"); /* printf_va_348 */
     while (1) {
       u16 tmp_134;
       tmp_134 = mip_filter_gps_source(& device_interface,(unsigned char)0x05,
                                       (u8 *)0);
       if (! ((int)tmp_134 != 0)) break;
     }
-    printf_va_349("\n\n");
+    printf("\n\n"); /* printf_va_349 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_350("----------------------------------------------------------------------\n");
-    printf_va_351("Performing External GPS Update with externally supplied GPS information\n");
-    printf_va_352("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_350 */
+    printf("Performing External GPS Update with externally supplied GPS information\n"); /* printf_va_351 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_352 */
     gps_source = (unsigned char)0x2;
     while (1) {
       u16 tmp_135;
@@ -14660,11 +14641,11 @@ int main(int argc, char **argv)
                                       & gps_source);
       if (! ((int)tmp_137 != 0)) break;
     }
-    printf_va_353("\n\n");
+    printf("\n\n"); /* printf_va_353 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_354("----------------------------------------------------------------------\n");
-    printf_va_355("Performing External Heading Update with externally supplied heading information\n");
-    printf_va_356("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_354 */
+    printf("Performing External Heading Update with externally supplied heading information\n"); /* printf_va_355 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_356 */
     heading_source = (unsigned char)0x3;
     while (1) {
       u16 tmp_138;
@@ -14689,11 +14670,11 @@ int main(int argc, char **argv)
                                           & heading_source);
       if (! ((int)tmp_140 != 0)) break;
     }
-    printf_va_357("\n\n");
+    printf("\n\n"); /* printf_va_357 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_358("----------------------------------------------------------------------\n");
-    printf_va_359("Cycle through available Heading sources\n");
-    printf_va_360("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_358 */
+    printf("Cycle through available Heading sources\n"); /* printf_va_359 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_360 */
     i = (short)3;
     while ((int)i >= 0) {
       heading_source = (unsigned char)i;
@@ -14706,24 +14687,23 @@ int main(int argc, char **argv)
                                             & heading_source);
         if (! ((int)tmp_141 != 0)) break;
       }
-      if ((int)heading_source == (int)i) printf_va_361("Heading source successfully set to %d\n",
-                                                       (int)i);
-      else printf_va_362("ERROR: Failed to set heading source to %d!!!\n",
-                         (int)i);
+      if ((int)heading_source == (int)i) printf("Heading source successfully set to %d\n",
+                                                (int)i); /* printf_va_361 */
+      else printf("ERROR: Failed to set heading source to %d!!!\n",(int)i); /* printf_va_362 */
       i = (s16)((int)i - 1);
     }
-    printf_va_363("\n\nLoading the default heading source.\n\n");
+    printf("\n\nLoading the default heading source.\n\n"); /* printf_va_363 */
     while (1) {
       u16 tmp_142;
       tmp_142 = mip_filter_heading_source(& device_interface,
                                           (unsigned char)0x05,(u8 *)0);
       if (! ((int)tmp_142 != 0)) break;
     }
-    printf_va_364("\n\n");
+    printf("\n\n"); /* printf_va_364 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_365("----------------------------------------------------------------------\n");
-    printf_va_366("Cycle through available auto-init values\n");
-    printf_va_367("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_365 */
+    printf("Cycle through available auto-init values\n"); /* printf_va_366 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_367 */
     i = (short)1;
     while ((int)i >= 0) {
       auto_init = (unsigned char)i;
@@ -14741,23 +14721,23 @@ int main(int argc, char **argv)
                                                  & auto_init);
         if (! ((int)tmp_144 != 0)) break;
       }
-      if ((int)auto_init == (int)i) printf_va_368("Auto-init successfully set to %d\n",
-                                                  (int)i);
-      else printf_va_369("ERROR: Failed to set auto-init to %d!!!\n",(int)i);
+      if ((int)auto_init == (int)i) printf("Auto-init successfully set to %d\n",
+                                           (int)i); /* printf_va_368 */
+      else printf("ERROR: Failed to set auto-init to %d!!!\n",(int)i); /* printf_va_369 */
       i = (s16)((int)i - 1);
     }
-    printf_va_370("\n\nLoading the default auto-init value.\n\n");
+    printf("\n\nLoading the default auto-init value.\n\n"); /* printf_va_370 */
     while (1) {
       u16 tmp_145;
       tmp_145 = mip_filter_auto_initialization(& device_interface,
                                                (unsigned char)0x05,(u8 *)0);
       if (! ((int)tmp_145 != 0)) break;
     }
-    printf_va_371("\n\n");
+    printf("\n\n"); /* printf_va_371 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_372("----------------------------------------------------------------------\n");
-    printf_va_373("Setting the accel noise values\n");
-    printf_va_374("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_372 */
+    printf("Setting the accel noise values\n"); /* printf_va_373 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_374 */
     noise[0] = (float)0.1;
     noise[1] = (float)0.2;
     noise[2] = (float)0.3;
@@ -14780,7 +14760,7 @@ int main(int argc, char **argv)
       if ((double)tmp_149 < 0.001) {
         int tmp_150;
         tmp_150 = abs((int)(readback_noise[2] - noise[2]));
-        if ((double)tmp_150 < 0.001) printf_va_375("Accel noise values successfully set.\n");
+        if ((double)tmp_150 < 0.001) printf("Accel noise values successfully set.\n"); /* printf_va_375 */
         else goto _LAND_29;
       }
       else goto _LAND_29;
@@ -14788,26 +14768,25 @@ int main(int argc, char **argv)
     else {
       _LAND_29:
       {
-        printf_va_376("ERROR: Failed to set accel noise values!!!\n");
-        printf_va_377("Sent values:     %f X %f Y %f Z\n",(double)noise[0],
-                      (double)noise[1],(double)noise[2]);
-        printf_va_378("Returned values: %f X %f Y %f Z\n",
-                      (double)readback_noise[0],(double)readback_noise[1],
-                      (double)readback_noise[2]);
+        printf("ERROR: Failed to set accel noise values!!!\n"); /* printf_va_376 */
+        printf("Sent values:     %f X %f Y %f Z\n",(double)noise[0],
+               (double)noise[1],(double)noise[2]); /* printf_va_377 */
+        printf("Returned values: %f X %f Y %f Z\n",(double)readback_noise[0],
+               (double)readback_noise[1],(double)readback_noise[2]); /* printf_va_378 */
       }
     }
-    printf_va_379("\n\nLoading the default accel noise values.\n\n");
+    printf("\n\nLoading the default accel noise values.\n\n"); /* printf_va_379 */
     while (1) {
       u16 tmp_151;
       tmp_151 = mip_filter_accel_noise(& device_interface,
                                        (unsigned char)0x05,(float *)0);
       if (! ((int)tmp_151 != 0)) break;
     }
-    printf_va_380("\n\n");
+    printf("\n\n"); /* printf_va_380 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_381("----------------------------------------------------------------------\n");
-    printf_va_382("Setting the gyro noise values\n");
-    printf_va_383("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_381 */
+    printf("Setting the gyro noise values\n"); /* printf_va_382 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_383 */
     noise[0] = (float)0.1;
     noise[1] = (float)0.2;
     noise[2] = (float)0.3;
@@ -14830,7 +14809,7 @@ int main(int argc, char **argv)
       if ((double)tmp_155 < 0.001) {
         int tmp_156;
         tmp_156 = abs((int)(readback_noise[2] - noise[2]));
-        if ((double)tmp_156 < 0.001) printf_va_384("Gyro noise values successfully set.\n");
+        if ((double)tmp_156 < 0.001) printf("Gyro noise values successfully set.\n"); /* printf_va_384 */
         else goto _LAND_31;
       }
       else goto _LAND_31;
@@ -14838,26 +14817,25 @@ int main(int argc, char **argv)
     else {
       _LAND_31:
       {
-        printf_va_385("ERROR: Failed to set gyro noise values!!!\n");
-        printf_va_386("Sent values:     %f X %f Y %f Z\n",(double)noise[0],
-                      (double)noise[1],(double)noise[2]);
-        printf_va_387("Returned values: %f X %f Y %f Z\n",
-                      (double)readback_noise[0],(double)readback_noise[1],
-                      (double)readback_noise[2]);
+        printf("ERROR: Failed to set gyro noise values!!!\n"); /* printf_va_385 */
+        printf("Sent values:     %f X %f Y %f Z\n",(double)noise[0],
+               (double)noise[1],(double)noise[2]); /* printf_va_386 */
+        printf("Returned values: %f X %f Y %f Z\n",(double)readback_noise[0],
+               (double)readback_noise[1],(double)readback_noise[2]); /* printf_va_387 */
       }
     }
-    printf_va_388("\n\nLoading the default gyro noise values.\n\n");
+    printf("\n\nLoading the default gyro noise values.\n\n"); /* printf_va_388 */
     while (1) {
       u16 tmp_157;
       tmp_157 = mip_filter_gyro_noise(& device_interface,(unsigned char)0x05,
                                       (float *)0);
       if (! ((int)tmp_157 != 0)) break;
     }
-    printf_va_389("\n\n");
+    printf("\n\n"); /* printf_va_389 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_390("----------------------------------------------------------------------\n");
-    printf_va_391("Setting the mag noise values\n");
-    printf_va_392("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_390 */
+    printf("Setting the mag noise values\n"); /* printf_va_391 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_392 */
     noise[0] = (float)0.1;
     noise[1] = (float)0.2;
     noise[2] = (float)0.3;
@@ -14880,7 +14858,7 @@ int main(int argc, char **argv)
       if ((double)tmp_161 < 0.001) {
         int tmp_162;
         tmp_162 = abs((int)(readback_noise[2] - noise[2]));
-        if ((double)tmp_162 < 0.001) printf_va_393("Mag noise values successfully set.\n");
+        if ((double)tmp_162 < 0.001) printf("Mag noise values successfully set.\n"); /* printf_va_393 */
         else goto _LAND_33;
       }
       else goto _LAND_33;
@@ -14888,26 +14866,25 @@ int main(int argc, char **argv)
     else {
       _LAND_33:
       {
-        printf_va_394("ERROR: Failed to set mag noise values!!!\n");
-        printf_va_395("Sent values:     %f X %f Y %f Z\n",(double)noise[0],
-                      (double)noise[1],(double)noise[2]);
-        printf_va_396("Returned values: %f X %f Y %f Z\n",
-                      (double)readback_noise[0],(double)readback_noise[1],
-                      (double)readback_noise[2]);
+        printf("ERROR: Failed to set mag noise values!!!\n"); /* printf_va_394 */
+        printf("Sent values:     %f X %f Y %f Z\n",(double)noise[0],
+               (double)noise[1],(double)noise[2]); /* printf_va_395 */
+        printf("Returned values: %f X %f Y %f Z\n",(double)readback_noise[0],
+               (double)readback_noise[1],(double)readback_noise[2]); /* printf_va_396 */
       }
     }
-    printf_va_397("\n\nLoading the default mag noise values.\n\n");
+    printf("\n\nLoading the default mag noise values.\n\n"); /* printf_va_397 */
     while (1) {
       u16 tmp_163;
       tmp_163 = mip_filter_mag_noise(& device_interface,(unsigned char)0x05,
                                      (float *)0);
       if (! ((int)tmp_163 != 0)) break;
     }
-    printf_va_398("\n\n");
+    printf("\n\n"); /* printf_va_398 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_399("----------------------------------------------------------------------\n");
-    printf_va_400("Setting the accel bias model values\n");
-    printf_va_401("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_399 */
+    printf("Setting the accel bias model values\n"); /* printf_va_400 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_401 */
     noise[0] = (float)0.1;
     noise[1] = (float)0.2;
     noise[2] = (float)0.3;
@@ -14943,7 +14920,7 @@ int main(int argc, char **argv)
             if ((double)tmp_170 < 0.001) {
               int tmp_171;
               tmp_171 = abs((int)(readback_beta[2] - beta[2]));
-              if ((double)tmp_171 < 0.001) printf_va_402("Accel bias model values successfully set.\n");
+              if ((double)tmp_171 < 0.001) printf("Accel bias model values successfully set.\n"); /* printf_va_402 */
               else goto _LAND_38;
             }
             else goto _LAND_38;
@@ -14957,17 +14934,17 @@ int main(int argc, char **argv)
     else {
       _LAND_38:
       {
-        printf_va_403("ERROR: Failed to set accel bias model values!!!\n");
-        printf_va_404("Sent values:     Beta: %f X %f Y %f Z, White Noise: %f X %f Y %f Z\n",
-                      (double)beta[0],(double)beta[1],(double)beta[2],
-                      (double)noise[0],(double)noise[1],(double)noise[2]);
-        printf_va_405("Returned values:  Beta: %f X %f Y %f Z, White Noise: %f X %f Y %f Z\n",
-                      (double)readback_beta[0],(double)readback_beta[1],
-                      (double)readback_beta[2],(double)readback_noise[0],
-                      (double)readback_noise[1],(double)readback_noise[2]);
+        printf("ERROR: Failed to set accel bias model values!!!\n"); /* printf_va_403 */
+        printf("Sent values:     Beta: %f X %f Y %f Z, White Noise: %f X %f Y %f Z\n",
+               (double)beta[0],(double)beta[1],(double)beta[2],
+               (double)noise[0],(double)noise[1],(double)noise[2]); /* printf_va_404 */
+        printf("Returned values:  Beta: %f X %f Y %f Z, White Noise: %f X %f Y %f Z\n",
+               (double)readback_beta[0],(double)readback_beta[1],
+               (double)readback_beta[2],(double)readback_noise[0],
+               (double)readback_noise[1],(double)readback_noise[2]); /* printf_va_405 */
       }
     }
-    printf_va_406("\n\nLoading the default accel bias model values.\n\n");
+    printf("\n\nLoading the default accel bias model values.\n\n"); /* printf_va_406 */
     while (1) {
       u16 tmp_172;
       tmp_172 = mip_filter_accel_bias_model(& device_interface,
@@ -14975,11 +14952,11 @@ int main(int argc, char **argv)
                                             (float *)0);
       if (! ((int)tmp_172 != 0)) break;
     }
-    printf_va_407("\n\n");
+    printf("\n\n"); /* printf_va_407 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_408("----------------------------------------------------------------------\n");
-    printf_va_409("Setting the gyro bias model values\n");
-    printf_va_410("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_408 */
+    printf("Setting the gyro bias model values\n"); /* printf_va_409 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_410 */
     noise[0] = (float)0.1;
     noise[1] = (float)0.2;
     noise[2] = (float)0.3;
@@ -15015,7 +14992,7 @@ int main(int argc, char **argv)
             if ((double)tmp_179 < 0.001) {
               int tmp_180;
               tmp_180 = abs((int)(readback_beta[2] - beta[2]));
-              if ((double)tmp_180 < 0.001) printf_va_411("Gyro bias model values successfully set.\n");
+              if ((double)tmp_180 < 0.001) printf("Gyro bias model values successfully set.\n"); /* printf_va_411 */
               else goto _LAND_43;
             }
             else goto _LAND_43;
@@ -15029,17 +15006,17 @@ int main(int argc, char **argv)
     else {
       _LAND_43:
       {
-        printf_va_412("ERROR: Failed to set gyro bias model values!!!\n");
-        printf_va_413("Sent values:     Beta: %f X %f Y %f Z, White Noise: %f X %f Y %f Z\n",
-                      (double)beta[0],(double)beta[1],(double)beta[2],
-                      (double)noise[0],(double)noise[1],(double)noise[2]);
-        printf_va_414("Returned values:  Beta: %f X %f Y %f Z, White Noise: %f X %f Y %f Z\n",
-                      (double)readback_beta[0],(double)readback_beta[1],
-                      (double)readback_beta[2],(double)readback_noise[0],
-                      (double)readback_noise[1],(double)readback_noise[2]);
+        printf("ERROR: Failed to set gyro bias model values!!!\n"); /* printf_va_412 */
+        printf("Sent values:     Beta: %f X %f Y %f Z, White Noise: %f X %f Y %f Z\n",
+               (double)beta[0],(double)beta[1],(double)beta[2],
+               (double)noise[0],(double)noise[1],(double)noise[2]); /* printf_va_413 */
+        printf("Returned values:  Beta: %f X %f Y %f Z, White Noise: %f X %f Y %f Z\n",
+               (double)readback_beta[0],(double)readback_beta[1],
+               (double)readback_beta[2],(double)readback_noise[0],
+               (double)readback_noise[1],(double)readback_noise[2]); /* printf_va_414 */
       }
     }
-    printf_va_415("\n\nLoading the default gyro bias model values.\n\n");
+    printf("\n\nLoading the default gyro bias model values.\n\n"); /* printf_va_415 */
     while (1) {
       u16 tmp_181;
       tmp_181 = mip_filter_gyro_bias_model(& device_interface,
@@ -15047,11 +15024,11 @@ int main(int argc, char **argv)
                                            (float *)0);
       if (! ((int)tmp_181 != 0)) break;
     }
-    printf_va_416("\n\n");
+    printf("\n\n"); /* printf_va_416 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_417("----------------------------------------------------------------------\n");
-    printf_va_418("Setting Zero Velocity-Update threshold\n");
-    printf_va_419("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_417 */
+    printf("Setting Zero Velocity-Update threshold\n"); /* printf_va_418 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_419 */
     zero_update_control.threshold = (float)0.1;
     zero_update_control.enable = (unsigned char)1;
     while (1) {
@@ -15069,11 +15046,11 @@ int main(int argc, char **argv)
       if (! ((int)tmp_183 != 0)) break;
     }
     if ((int)zero_update_control.enable != (int)zero_update_readback.enable) 
-      printf_va_420("ERROR configuring Zero Velocity Update.\n");
+      printf("ERROR configuring Zero Velocity Update.\n"); /* printf_va_420 */
     else 
       if (zero_update_control.threshold != zero_update_readback.threshold) 
-        printf_va_421("ERROR configuring Zero Velocity Update.\n");
-    printf_va_422("\n\nResetting Zero Velocity Update Control to default parameters.\n\n");
+        printf("ERROR configuring Zero Velocity Update.\n"); /* printf_va_421 */
+    printf("\n\nResetting Zero Velocity Update Control to default parameters.\n\n"); /* printf_va_422 */
     while (1) {
       u16 tmp_184;
       tmp_184 = mip_filter_zero_velocity_update_control(& device_interface,
@@ -15081,11 +15058,11 @@ int main(int argc, char **argv)
                                                         (mip_filter_zero_update_command *)0);
       if (! ((int)tmp_184 != 0)) break;
     }
-    printf_va_423("\n\n");
+    printf("\n\n"); /* printf_va_423 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_424("----------------------------------------------------------------------\n");
-    printf_va_425("Applying External Heading Update with Timestamp\n");
-    printf_va_426("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_424 */
+    printf("Applying External Heading Update with Timestamp\n"); /* printf_va_425 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_426 */
     heading_source = (unsigned char)0x3;
     while (1) {
       u16 tmp_185;
@@ -15105,18 +15082,18 @@ int main(int argc, char **argv)
                                                              & external_heading_with_time);
       if (! ((int)tmp_186 != 0)) break;
     }
-    printf_va_427("\n\nResetting default heading update.\n\n");
+    printf("\n\nResetting default heading update.\n\n"); /* printf_va_427 */
     while (1) {
       u16 tmp_187;
       tmp_187 = mip_filter_heading_source(& device_interface,
                                           (unsigned char)0x05,(u8 *)0);
       if (! ((int)tmp_187 != 0)) break;
     }
-    printf_va_428("\n\n");
+    printf("\n\n"); /* printf_va_428 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_429("----------------------------------------------------------------------\n");
-    printf_va_430("Setting Zero Angular-Rate-Update threshold\n");
-    printf_va_431("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_429 */
+    printf("Setting Zero Angular-Rate-Update threshold\n"); /* printf_va_430 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_431 */
     zero_update_control.threshold = (float)0.05;
     zero_update_control.enable = (unsigned char)1;
     while (1) {
@@ -15134,11 +15111,11 @@ int main(int argc, char **argv)
       if (! ((int)tmp_189 != 0)) break;
     }
     if ((int)zero_update_control.enable != (int)zero_update_readback.enable) 
-      printf_va_432("ERROR configuring Zero Angular Rate Update.\n");
+      printf("ERROR configuring Zero Angular Rate Update.\n"); /* printf_va_432 */
     else 
       if (zero_update_control.threshold != zero_update_readback.threshold) 
-        printf_va_433("ERROR configuring Zero Angular Rate Update.\n");
-    printf_va_434("\n\nResetting Zero Angular Rate Update Control to default parameters.\n\n");
+        printf("ERROR configuring Zero Angular Rate Update.\n"); /* printf_va_433 */
+    printf("\n\nResetting Zero Angular Rate Update Control to default parameters.\n\n"); /* printf_va_434 */
     while (1) {
       u16 tmp_190;
       tmp_190 = mip_filter_zero_angular_rate_update_control(& device_interface,
@@ -15146,13 +15123,13 @@ int main(int argc, char **argv)
                                                             (mip_filter_zero_update_command *)0);
       if (! ((int)tmp_190 != 0)) break;
     }
-    printf_va_435("\n\n");
+    printf("\n\n"); /* printf_va_435 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_436("----------------------------------------------------------------------\n");
-    printf_va_437("Performing Tare Orientation Command\n");
-    printf_va_438("(This will only pass if the internal GPS solution is valid)\n");
-    printf_va_439("----------------------------------------------------------------------\n\n");
-    printf_va_440("Re-initializing filter (required for tare)\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_436 */
+    printf("Performing Tare Orientation Command\n"); /* printf_va_437 */
+    printf("(This will only pass if the internal GPS solution is valid)\n"); /* printf_va_438 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_439 */
+    printf("Re-initializing filter (required for tare)\n\n"); /* printf_va_440 */
     angles[2] = (float)0;
     angles[1] = angles[2];
     angles[0] = angles[1];
@@ -15170,24 +15147,24 @@ int main(int argc, char **argv)
                                               (unsigned char)0x01,
                                               (unsigned char)i);
         if ((int)tmp_192 != 0) {
-          printf_va_441("ERROR: Failed Axis - ");
-          if ((int)i & 0x01) printf_va_442(" Roll Axis ");
-          if ((int)i & 0x02) printf_va_443(" Pitch Axis ");
-          if ((int)i & 0x04) printf_va_444(" Yaw Axis ");
+          printf("ERROR: Failed Axis - "); /* printf_va_441 */
+          if ((int)i & 0x01) printf(" Roll Axis "); /* printf_va_442 */
+          if ((int)i & 0x02) printf(" Pitch Axis "); /* printf_va_443 */
+          if ((int)i & 0x04) printf(" Yaw Axis "); /* printf_va_444 */
         }
         else {
-          printf_va_445("Tare Configuration = %d\n",(int)i);
-          printf_va_446("Tared -");
-          if ((int)i & 0x01) printf_va_447(" Roll Axis ");
-          if ((int)i & 0x02) printf_va_448(" Pitch Axis ");
-          if ((int)i & 0x04) printf_va_449(" Yaw Axis ");
-          printf_va_450("\n\n");
+          printf("Tare Configuration = %d\n",(int)i); /* printf_va_445 */
+          printf("Tared -"); /* printf_va_446 */
+          if ((int)i & 0x01) printf(" Roll Axis "); /* printf_va_447 */
+          if ((int)i & 0x02) printf(" Pitch Axis "); /* printf_va_448 */
+          if ((int)i & 0x04) printf(" Yaw Axis "); /* printf_va_449 */
+          printf("\n\n"); /* printf_va_450 */
         }
         usleep((unsigned int)((double)1000 * 1000.0));
       }
       i = (s16)((int)i + 1);
     }
-    printf_va_451("\n\nRestoring Orientation to default value.\n\n");
+    printf("\n\nRestoring Orientation to default value.\n\n"); /* printf_va_451 */
     while (1) {
       u16 tmp_193;
       tmp_193 = mip_filter_tare_orientation(& device_interface,
@@ -15195,31 +15172,31 @@ int main(int argc, char **argv)
                                             (unsigned char)0);
       if (! ((int)tmp_193 != 0)) break;
     }
-    printf_va_452("\n\n");
+    printf("\n\n"); /* printf_va_452 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_453("----------------------------------------------------------------------\n");
-    printf_va_454("Performing Commanded Zero-Velocity Update\n");
-    printf_va_455("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_453 */
+    printf("Performing Commanded Zero-Velocity Update\n"); /* printf_va_454 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_455 */
     while (1) {
       u16 tmp_194;
       tmp_194 = mip_filter_commanded_zero_velocity_update(& device_interface);
       if (! ((int)tmp_194 != 0)) break;
     }
-    printf_va_456("\n\n");
+    printf("\n\n"); /* printf_va_456 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_457("----------------------------------------------------------------------\n");
-    printf_va_458("Performing Commanded Zero-Angular-Rate Update\n");
-    printf_va_459("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_457 */
+    printf("Performing Commanded Zero-Angular-Rate Update\n"); /* printf_va_458 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_459 */
     while (1) {
       u16 tmp_195;
       tmp_195 = mip_filter_commanded_zero_angular_rate_update(& device_interface);
       if (! ((int)tmp_195 != 0)) break;
     }
-    printf_va_460("\n\n");
+    printf("\n\n"); /* printf_va_460 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_461("----------------------------------------------------------------------\n");
-    printf_va_462("Cycle through available declination sources\n");
-    printf_va_463("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_461 */
+    printf("Cycle through available declination sources\n"); /* printf_va_462 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_463 */
     i = (short)3;
     while ((int)i >= 1) {
       declination_source_command = (unsigned char)i;
@@ -15238,23 +15215,23 @@ int main(int argc, char **argv)
         if (! ((int)tmp_197 != 0)) break;
       }
       if ((int)declination_source_command == (int)declination_source_readback) 
-        printf_va_464("Declination source successfully set to %d\n",(int)i);
-      else printf_va_465("ERROR: Failed to set the declination source to %d!!!\n",
-                         (int)i);
+        printf("Declination source successfully set to %d\n",(int)i); /* printf_va_464 */
+      else printf("ERROR: Failed to set the declination source to %d!!!\n",
+                  (int)i); /* printf_va_465 */
       i = (s16)((int)i - 1);
     }
-    printf_va_466("\n\nLoading the default declination source.\n\n");
+    printf("\n\nLoading the default declination source.\n\n"); /* printf_va_466 */
     while (1) {
       u16 tmp_198;
       tmp_198 = mip_filter_declination_source(& device_interface,
                                               (unsigned char)0x05,(u8 *)0);
       if (! ((int)tmp_198 != 0)) break;
     }
-    printf_va_467("\n\n");
+    printf("\n\n"); /* printf_va_467 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_468("----------------------------------------------------------------------\n");
-    printf_va_469("Setting the accel magnitude error adaptive measurement values\n");
-    printf_va_470("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_468 */
+    printf("Setting the accel magnitude error adaptive measurement values\n"); /* printf_va_469 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_470 */
     accel_magnitude_error_command.enable = (unsigned char)0;
     accel_magnitude_error_command.low_pass_cutoff = (float)10;
     accel_magnitude_error_command.min_1sigma = (float)2.0;
@@ -15294,7 +15271,7 @@ int main(int argc, char **argv)
               if ((double)tmp_205 < 0.001) {
                 int tmp_206;
                 tmp_206 = abs((int)(accel_magnitude_error_command.high_limit_1sigma - accel_magnitude_error_readback.high_limit_1sigma));
-                if ((double)tmp_206 < 0.001) printf_va_471("accel magnitude error adaptive measurement values successfully set.\n");
+                if ((double)tmp_206 < 0.001) printf("accel magnitude error adaptive measurement values successfully set.\n"); /* printf_va_471 */
                 else goto _LAND_49;
               }
               else goto _LAND_49;
@@ -15310,26 +15287,26 @@ int main(int argc, char **argv)
     else {
       _LAND_49:
       {
-        printf_va_472("ERROR: Failed to set accel magnitude error adaptive measurement values!!!\n");
-        printf_va_473("Sent values:     Enable: %i, Parameters: %f %f %f %f %f %f\n",
-                      (int)accel_magnitude_error_command.enable,
-                      (double)accel_magnitude_error_command.low_pass_cutoff,
-                      (double)accel_magnitude_error_command.min_1sigma,
-                      (double)accel_magnitude_error_command.low_limit,
-                      (double)accel_magnitude_error_command.high_limit,
-                      (double)accel_magnitude_error_command.low_limit_1sigma,
-                      (double)accel_magnitude_error_command.high_limit_1sigma);
-        printf_va_474("Returned values: Enable: %i, Parameters: %f %f %f %f %f %f\n",
-                      (int)accel_magnitude_error_readback.enable,
-                      (double)accel_magnitude_error_readback.low_pass_cutoff,
-                      (double)accel_magnitude_error_readback.min_1sigma,
-                      (double)accel_magnitude_error_readback.low_limit,
-                      (double)accel_magnitude_error_readback.high_limit,
-                      (double)accel_magnitude_error_readback.low_limit_1sigma,
-                      (double)accel_magnitude_error_readback.high_limit_1sigma);
+        printf("ERROR: Failed to set accel magnitude error adaptive measurement values!!!\n"); /* printf_va_472 */
+        printf("Sent values:     Enable: %i, Parameters: %f %f %f %f %f %f\n",
+               (int)accel_magnitude_error_command.enable,
+               (double)accel_magnitude_error_command.low_pass_cutoff,
+               (double)accel_magnitude_error_command.min_1sigma,
+               (double)accel_magnitude_error_command.low_limit,
+               (double)accel_magnitude_error_command.high_limit,
+               (double)accel_magnitude_error_command.low_limit_1sigma,
+               (double)accel_magnitude_error_command.high_limit_1sigma); /* printf_va_473 */
+        printf("Returned values: Enable: %i, Parameters: %f %f %f %f %f %f\n",
+               (int)accel_magnitude_error_readback.enable,
+               (double)accel_magnitude_error_readback.low_pass_cutoff,
+               (double)accel_magnitude_error_readback.min_1sigma,
+               (double)accel_magnitude_error_readback.low_limit,
+               (double)accel_magnitude_error_readback.high_limit,
+               (double)accel_magnitude_error_readback.low_limit_1sigma,
+               (double)accel_magnitude_error_readback.high_limit_1sigma); /* printf_va_474 */
       }
     }
-    printf_va_475("\n\nLoading the default accel magnitude error adaptive measurement values.\n\n");
+    printf("\n\nLoading the default accel magnitude error adaptive measurement values.\n\n"); /* printf_va_475 */
     while (1) {
       u16 tmp_207;
       tmp_207 = mip_filter_accel_magnitude_error_adaptive_measurement
@@ -15337,11 +15314,11 @@ int main(int argc, char **argv)
        (mip_filter_accel_magnitude_error_adaptive_measurement_command *)0);
       if (! ((int)tmp_207 != 0)) break;
     }
-    printf_va_476("\n\n");
+    printf("\n\n"); /* printf_va_476 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_477("----------------------------------------------------------------------\n");
-    printf_va_478("Setting the mag magnitude error adaptive measurement values\n");
-    printf_va_479("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_477 */
+    printf("Setting the mag magnitude error adaptive measurement values\n"); /* printf_va_478 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_479 */
     mag_magnitude_error_command.enable = (unsigned char)0;
     mag_magnitude_error_command.low_pass_cutoff = (float)10;
     mag_magnitude_error_command.min_1sigma = (float)0.1;
@@ -15381,7 +15358,7 @@ int main(int argc, char **argv)
               if ((double)tmp_214 < 0.001) {
                 int tmp_215;
                 tmp_215 = abs((int)(mag_magnitude_error_command.high_limit_1sigma - mag_magnitude_error_readback.high_limit_1sigma));
-                if ((double)tmp_215 < 0.001) printf_va_480("mag magnitude error adaptive measurement values successfully set.\n");
+                if ((double)tmp_215 < 0.001) printf("mag magnitude error adaptive measurement values successfully set.\n"); /* printf_va_480 */
                 else goto _LAND_55;
               }
               else goto _LAND_55;
@@ -15397,26 +15374,26 @@ int main(int argc, char **argv)
     else {
       _LAND_55:
       {
-        printf_va_481("ERROR: Failed to set mag magnitude error adaptive measurement values!!!\n");
-        printf_va_482("Sent values:     Enable: %i, Parameters: %f %f %f %f %f %f\n",
-                      (int)mag_magnitude_error_command.enable,
-                      (double)mag_magnitude_error_command.low_pass_cutoff,
-                      (double)mag_magnitude_error_command.min_1sigma,
-                      (double)mag_magnitude_error_command.low_limit,
-                      (double)mag_magnitude_error_command.high_limit,
-                      (double)mag_magnitude_error_command.low_limit_1sigma,
-                      (double)mag_magnitude_error_command.high_limit_1sigma);
-        printf_va_483("Returned values: Enable: %i, Parameters: %f %f %f %f %f %f\n",
-                      (int)mag_magnitude_error_readback.enable,
-                      (double)mag_magnitude_error_readback.low_pass_cutoff,
-                      (double)mag_magnitude_error_readback.min_1sigma,
-                      (double)mag_magnitude_error_readback.low_limit,
-                      (double)mag_magnitude_error_readback.high_limit,
-                      (double)mag_magnitude_error_readback.low_limit_1sigma,
-                      (double)mag_magnitude_error_readback.high_limit_1sigma);
+        printf("ERROR: Failed to set mag magnitude error adaptive measurement values!!!\n"); /* printf_va_481 */
+        printf("Sent values:     Enable: %i, Parameters: %f %f %f %f %f %f\n",
+               (int)mag_magnitude_error_command.enable,
+               (double)mag_magnitude_error_command.low_pass_cutoff,
+               (double)mag_magnitude_error_command.min_1sigma,
+               (double)mag_magnitude_error_command.low_limit,
+               (double)mag_magnitude_error_command.high_limit,
+               (double)mag_magnitude_error_command.low_limit_1sigma,
+               (double)mag_magnitude_error_command.high_limit_1sigma); /* printf_va_482 */
+        printf("Returned values: Enable: %i, Parameters: %f %f %f %f %f %f\n",
+               (int)mag_magnitude_error_readback.enable,
+               (double)mag_magnitude_error_readback.low_pass_cutoff,
+               (double)mag_magnitude_error_readback.min_1sigma,
+               (double)mag_magnitude_error_readback.low_limit,
+               (double)mag_magnitude_error_readback.high_limit,
+               (double)mag_magnitude_error_readback.low_limit_1sigma,
+               (double)mag_magnitude_error_readback.high_limit_1sigma); /* printf_va_483 */
       }
     }
-    printf_va_484("\n\nLoading the default mag magnitude error adaptive measurement values.\n\n");
+    printf("\n\nLoading the default mag magnitude error adaptive measurement values.\n\n"); /* printf_va_484 */
     while (1) {
       u16 tmp_216;
       tmp_216 = mip_filter_mag_magnitude_error_adaptive_measurement(& device_interface,
@@ -15424,11 +15401,11 @@ int main(int argc, char **argv)
                                                                     (mip_filter_magnetometer_magnitude_error_adaptive_measurement_command *)0);
       if (! ((int)tmp_216 != 0)) break;
     }
-    printf_va_485("\n\n");
+    printf("\n\n"); /* printf_va_485 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_486("----------------------------------------------------------------------\n");
-    printf_va_487("Setting the mag dip angle error adaptive measurement values\n");
-    printf_va_488("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_486 */
+    printf("Setting the mag dip angle error adaptive measurement values\n"); /* printf_va_487 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_488 */
     mag_dip_angle_error_command.enable = (unsigned char)0;
     mag_dip_angle_error_command.low_pass_cutoff = (float)10;
     mag_dip_angle_error_command.min_1sigma = (float)0.1;
@@ -15460,7 +15437,7 @@ int main(int argc, char **argv)
           if ((double)tmp_221 < 0.001) {
             int tmp_222;
             tmp_222 = abs((int)(mag_dip_angle_error_command.high_limit_1sigma - mag_dip_angle_error_readback.high_limit_1sigma));
-            if ((double)tmp_222 < 0.001) printf_va_489("mag dip angle error adaptive measurement values successfully set.\n");
+            if ((double)tmp_222 < 0.001) printf("mag dip angle error adaptive measurement values successfully set.\n"); /* printf_va_489 */
             else goto _LAND_59;
           }
           else goto _LAND_59;
@@ -15472,22 +15449,22 @@ int main(int argc, char **argv)
     else {
       _LAND_59:
       {
-        printf_va_490("ERROR: Failed to set mag dip angle error adaptive measurement values!!!\n");
-        printf_va_491("Sent values:     Enable: %i, Parameters: %f %f %f %f\n",
-                      (int)mag_dip_angle_error_command.enable,
-                      (double)mag_dip_angle_error_command.low_pass_cutoff,
-                      (double)mag_dip_angle_error_command.min_1sigma,
-                      (double)mag_dip_angle_error_command.high_limit,
-                      (double)mag_dip_angle_error_command.high_limit_1sigma);
-        printf_va_492("Returned values: Enable: %i, Parameters: %f %f %f %f\n",
-                      (int)mag_dip_angle_error_readback.enable,
-                      (double)mag_dip_angle_error_readback.low_pass_cutoff,
-                      (double)mag_dip_angle_error_readback.min_1sigma,
-                      (double)mag_dip_angle_error_readback.high_limit,
-                      (double)mag_dip_angle_error_readback.high_limit_1sigma);
+        printf("ERROR: Failed to set mag dip angle error adaptive measurement values!!!\n"); /* printf_va_490 */
+        printf("Sent values:     Enable: %i, Parameters: %f %f %f %f\n",
+               (int)mag_dip_angle_error_command.enable,
+               (double)mag_dip_angle_error_command.low_pass_cutoff,
+               (double)mag_dip_angle_error_command.min_1sigma,
+               (double)mag_dip_angle_error_command.high_limit,
+               (double)mag_dip_angle_error_command.high_limit_1sigma); /* printf_va_491 */
+        printf("Returned values: Enable: %i, Parameters: %f %f %f %f\n",
+               (int)mag_dip_angle_error_readback.enable,
+               (double)mag_dip_angle_error_readback.low_pass_cutoff,
+               (double)mag_dip_angle_error_readback.min_1sigma,
+               (double)mag_dip_angle_error_readback.high_limit,
+               (double)mag_dip_angle_error_readback.high_limit_1sigma); /* printf_va_492 */
       }
     }
-    printf_va_493("\n\nLoading the default mag magnitude error adaptive measurement values.\n\n");
+    printf("\n\nLoading the default mag magnitude error adaptive measurement values.\n\n"); /* printf_va_493 */
     while (1) {
       u16 tmp_223;
       tmp_223 = mip_filter_mag_dip_angle_error_adaptive_measurement(& device_interface,
@@ -15495,7 +15472,7 @@ int main(int argc, char **argv)
                                                                     (mip_filter_magnetometer_dip_angle_error_adaptive_measurement_command *)0);
       if (! ((int)tmp_223 != 0)) break;
     }
-    printf_va_494("\n\n");
+    printf("\n\n"); /* printf_va_494 */
     usleep((unsigned int)((double)1500 * 1000.0));
     tmp_224 = mip_interface_add_descriptor_set_callback(& device_interface,
                                                         (unsigned char)0x82,
@@ -15522,9 +15499,9 @@ int main(int argc, char **argv)
       goto return_label;
     }
     enable_data_stats_output = (unsigned char)1;
-    printf_va_495("----------------------------------------------------------------------\n");
-    printf_va_496("Setting the AHRS message format\n");
-    printf_va_497("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_495 */
+    printf("Setting the AHRS message format\n"); /* printf_va_496 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_497 */
     data_stream_format_descriptors[0] = (unsigned char)0x04;
     data_stream_format_descriptors[1] = (unsigned char)0x05;
     data_stream_format_decimation[0] = (unsigned short)0x32;
@@ -15539,11 +15516,11 @@ int main(int argc, char **argv)
                                                 data_stream_format_decimation);
       if (! ((int)tmp_227 != 0)) break;
     }
-    printf_va_498("\n\n");
+    printf("\n\n"); /* printf_va_498 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_499("----------------------------------------------------------------------\n");
-    printf_va_500("Polling AHRS Data.\n");
-    printf_va_501("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_499 */
+    printf("Polling AHRS Data.\n"); /* printf_va_500 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_501 */
     while (1) {
       u16 tmp_228;
       tmp_228 = mip_3dm_cmd_poll_ahrs(& device_interface,(unsigned char)0x00,
@@ -15551,11 +15528,11 @@ int main(int argc, char **argv)
                                       data_stream_format_descriptors);
       if (! ((int)tmp_228 != 0)) break;
     }
-    printf_va_502("\n\n");
+    printf("\n\n"); /* printf_va_502 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_503("----------------------------------------------------------------------\n");
-    printf_va_504("Setting the GPS datastream format\n");
-    printf_va_505("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_503 */
+    printf("Setting the GPS datastream format\n"); /* printf_va_504 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_505 */
     data_stream_format_descriptors[0] = (unsigned char)0x03;
     data_stream_format_descriptors[1] = (unsigned char)0x05;
     data_stream_format_descriptors[2] = (unsigned char)0x09;
@@ -15572,11 +15549,11 @@ int main(int argc, char **argv)
                                                data_stream_format_decimation);
       if (! ((int)tmp_229 != 0)) break;
     }
-    printf_va_506("\n\n");
+    printf("\n\n"); /* printf_va_506 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_507("----------------------------------------------------------------------\n");
-    printf_va_508("Polling GPS Data.\n");
-    printf_va_509("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_507 */
+    printf("Polling GPS Data.\n"); /* printf_va_508 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_509 */
     while (1) {
       u16 tmp_230;
       tmp_230 = mip_3dm_cmd_poll_gps(& device_interface,(unsigned char)0x00,
@@ -15584,11 +15561,11 @@ int main(int argc, char **argv)
                                      data_stream_format_descriptors);
       if (! ((int)tmp_230 != 0)) break;
     }
-    printf_va_510("\n\n");
+    printf("\n\n"); /* printf_va_510 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_511("----------------------------------------------------------------------\n");
-    printf_va_512("Setting the Estimation Filter datastream format\n");
-    printf_va_513("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_511 */
+    printf("Setting the Estimation Filter datastream format\n"); /* printf_va_512 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_513 */
     data_stream_format_descriptors[0] = (unsigned char)0x01;
     data_stream_format_descriptors[1] = (unsigned char)0x02;
     data_stream_format_descriptors[2] = (unsigned char)0x05;
@@ -15605,11 +15582,11 @@ int main(int argc, char **argv)
                                                   data_stream_format_decimation);
       if (! ((int)tmp_231 != 0)) break;
     }
-    printf_va_514("\n\n");
+    printf("\n\n"); /* printf_va_514 */
     usleep((unsigned int)((double)1500 * 1000.0));
-    printf_va_515("----------------------------------------------------------------------\n");
-    printf_va_516("Polling Estimation Filter Data.\n");
-    printf_va_517("----------------------------------------------------------------------\n\n");
+    printf("----------------------------------------------------------------------\n"); /* printf_va_515 */
+    printf("Polling Estimation Filter Data.\n"); /* printf_va_516 */
+    printf("----------------------------------------------------------------------\n\n"); /* printf_va_517 */
     while (1) {
       u16 tmp_232;
       tmp_232 = mip_3dm_cmd_poll_filter(& device_interface,
@@ -15618,14 +15595,14 @@ int main(int argc, char **argv)
                                         data_stream_format_descriptors);
       if (! ((int)tmp_232 != 0)) break;
     }
-    printf_va_518("\n\n");
+    printf("\n\n"); /* printf_va_518 */
     usleep((unsigned int)((double)1500 * 1000.0));
   }
-  else printf_va_519("ERROR: Standard mode not established\n\n");
+  else printf("ERROR: Standard mode not established\n\n"); /* printf_va_519 */
   enable_data_stats_output = (unsigned char)0;
-  printf_va_520("\n----------------------------------------------------------------------\n");
-  printf_va_521("Enable the AHRS datastream\n");
-  printf_va_522("----------------------------------------------------------------------\n\n");
+  printf("\n----------------------------------------------------------------------\n"); /* printf_va_520 */
+  printf("Enable the AHRS datastream\n"); /* printf_va_521 */
+  printf("----------------------------------------------------------------------\n\n"); /* printf_va_522 */
   enable = (unsigned char)0x01;
   while (1) {
     u16 tmp_233;
@@ -15635,11 +15612,11 @@ int main(int argc, char **argv)
                                                  & enable);
     if (! ((int)tmp_233 != 0)) break;
   }
-  printf_va_523("\n\n");
+  printf("\n\n"); /* printf_va_523 */
   usleep((unsigned int)((double)1500 * 1000.0));
-  printf_va_524("----------------------------------------------------------------------\n");
-  printf_va_525("Enable the FILTER datastream\n");
-  printf_va_526("----------------------------------------------------------------------\n\n");
+  printf("----------------------------------------------------------------------\n"); /* printf_va_524 */
+  printf("Enable the FILTER datastream\n"); /* printf_va_525 */
+  printf("----------------------------------------------------------------------\n\n"); /* printf_va_526 */
   enable = (unsigned char)0x01;
   while (1) {
     u16 tmp_234;
@@ -15649,11 +15626,11 @@ int main(int argc, char **argv)
                                                  & enable);
     if (! ((int)tmp_234 != 0)) break;
   }
-  printf_va_527("\n\n");
+  printf("\n\n"); /* printf_va_527 */
   usleep((unsigned int)((double)1500 * 1000.0));
-  printf_va_528("----------------------------------------------------------------------\n");
-  printf_va_529("Enable the GPS datastream\n");
-  printf_va_530("----------------------------------------------------------------------\n");
+  printf("----------------------------------------------------------------------\n"); /* printf_va_528 */
+  printf("Enable the GPS datastream\n"); /* printf_va_529 */
+  printf("----------------------------------------------------------------------\n"); /* printf_va_530 */
   enable = (unsigned char)0x01;
   while (1) {
     u16 tmp_235;
@@ -15663,11 +15640,11 @@ int main(int argc, char **argv)
                                                  & enable);
     if (! ((int)tmp_235 != 0)) break;
   }
-  printf_va_531("\n\n");
+  printf("\n\n"); /* printf_va_531 */
   usleep((unsigned int)((double)1500 * 1000.0));
-  printf_va_532("----------------------------------------------------------------------\n");
-  printf_va_533("Processing incoming packets\n");
-  printf_va_534("----------------------------------------------------------------------\n\n\n");
+  printf("----------------------------------------------------------------------\n"); /* printf_va_532 */
+  printf("Processing incoming packets\n"); /* printf_va_533 */
+  printf("----------------------------------------------------------------------\n\n\n"); /* printf_va_534 */
   enable_data_stats_output = (unsigned char)1;
   while (1) {
     mip_interface_update(& device_interface);
@@ -15966,17 +15943,17 @@ int printf_va_545(char const * __restrict format);
 
 void print_command_line_usage(void)
 {
-  printf_va_535("\n\n");
-  printf_va_536("Usage:\n");
-  printf_va_537("-----------------------------------------------------------------------\n\n");
-  printf_va_538("   GX4-45_Test [com_port_num] [baudrate]\n");
-  printf_va_539("\n\n");
-  printf_va_540("   Example: \"GX4-45_Test 1 115200\", Opens a connection to the \n");
-  printf_va_541("             GX4-45 on COM1, with a baudrate of 115200.\n");
-  printf_va_542("\n\n");
-  printf_va_543("   [ ] - required command input.\n");
-  printf_va_544("\n-----------------------------------------------------------------------\n");
-  printf_va_545("\n\n");
+  printf("\n\n"); /* printf_va_535 */
+  printf("Usage:\n"); /* printf_va_536 */
+  printf("-----------------------------------------------------------------------\n\n"); /* printf_va_537 */
+  printf("   GX4-45_Test [com_port_num] [baudrate]\n"); /* printf_va_538 */
+  printf("\n\n"); /* printf_va_539 */
+  printf("   Example: \"GX4-45_Test 1 115200\", Opens a connection to the \n"); /* printf_va_540 */
+  printf("             GX4-45 on COM1, with a baudrate of 115200.\n"); /* printf_va_541 */
+  printf("\n\n"); /* printf_va_542 */
+  printf("   [ ] - required command input.\n"); /* printf_va_543 */
+  printf("\n-----------------------------------------------------------------------\n"); /* printf_va_544 */
+  printf("\n\n"); /* printf_va_545 */
   return;
 }
 
@@ -16018,9 +15995,9 @@ int printf_va_548(char const * __restrict format);
 
 void print_header(void)
 {
-  printf_va_546("\n");
-  printf_va_547("GX4-45 Test Program\n");
-  printf_va_548("Copyright 2013. LORD Microstrain\n\n");
+  printf("\n"); /* printf_va_546 */
+  printf("GX4-45 Test Program\n"); /* printf_va_547 */
+  printf("Copyright 2013. LORD Microstrain\n\n"); /* printf_va_548 */
   return;
 }
 
@@ -16044,13 +16021,13 @@ int printf_va_549(char const * __restrict format, unsigned int param0,
 
 void print_packet_stats(void)
 {
-  if (enable_data_stats_output) printf_va_549("\r%u FILTER (%u errors)    %u AHRS (%u errors)    %u GPS (%u errors) Packets",
-                                              filter_valid_packet_count,
-                                              filter_timeout_packet_count + filter_checksum_error_packet_count,
-                                              ahrs_valid_packet_count,
-                                              ahrs_timeout_packet_count + ahrs_checksum_error_packet_count,
-                                              gps_valid_packet_count,
-                                              gps_timeout_packet_count + gps_checksum_error_packet_count);
+  if (enable_data_stats_output) printf("\r%u FILTER (%u errors)    %u AHRS (%u errors)    %u GPS (%u errors) Packets",
+                                       filter_valid_packet_count,
+                                       filter_timeout_packet_count + filter_checksum_error_packet_count,
+                                       ahrs_valid_packet_count,
+                                       ahrs_timeout_packet_count + ahrs_checksum_error_packet_count,
+                                       gps_valid_packet_count,
+                                       gps_timeout_packet_count + gps_checksum_error_packet_count); /* printf_va_549 */
   return;
 }
 

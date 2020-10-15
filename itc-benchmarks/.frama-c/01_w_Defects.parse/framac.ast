@@ -582,8 +582,8 @@ int main(int argc, char **argv)
     vflag_file = (int)tmp;
     tmp_0 = floor((double)(vflag_copy % 1000));
     vflag = (int)tmp_0;
-    printf_va_1("vflag_file = %d vflag_func = %d vflag_copy =%d \n",
-                vflag_file,vflag,vflag_copy);
+    printf("vflag_file = %d vflag_func = %d vflag_copy =%d \n",vflag_file,
+           vflag,vflag_copy); /* printf_va_1 */
     if (vflag_file == 1) goto _LOR;
     else 
       if (vflag_file == 888) _LOR: bit_shift_main();
@@ -662,13 +662,13 @@ int main(int argc, char **argv)
     if (vflag_file == 51) goto _LOR_24;
     else 
       if (vflag_file == 888) _LOR_24: zero_division_main();
-    printf_va_2("Printed from main function ");
+    printf("Printed from main function "); /* printf_va_2 */
   }
   else {
-    printf_va_3("Enter File XXX and Function XXX \n");
-    printf_va_4("Example: To Execute 2nd File 3rd Function , Enter 002003 \n");
-    printf_va_5("Example: To Execute All Files ,Enter 888888 \n");
-    printf_va_6("Example: To Execute All functions in a File :Sample - To execute all functions in 3rd file,Enter 003888 \n");
+    printf("Enter File XXX and Function XXX \n"); /* printf_va_3 */
+    printf("Example: To Execute 2nd File 3rd Function , Enter 002003 \n"); /* printf_va_4 */
+    printf("Example: To Execute All Files ,Enter 888888 \n"); /* printf_va_5 */
+    printf("Example: To Execute All functions in a File :Sample - To execute all functions in 3rd file,Enter 003888 \n"); /* printf_va_6 */
   }
   __retres = 0;
   return __retres;
@@ -962,7 +962,7 @@ void dynamic_buffer_overrun_003(void)
     }
     ret = *(buf + 5);
     free((void *)buf);
-    printf_va_7("%d",ret);
+    printf("%d",ret); /* printf_va_7 */
   }
   return;
 }
@@ -1513,7 +1513,7 @@ void dynamic_buffer_underrun_001(void)
 {
   int i;
   char *buf = calloc((unsigned int)5,sizeof(char));
-  printf_va_8("print bufferundr");
+  printf("print bufferundr"); /* printf_va_8 */
   if (buf != (char *)0) {
     i = 4;
     while (i >= -1) {
@@ -1539,7 +1539,7 @@ int printf_va_9(char const * __restrict format);
 
 void dynamic_buffer_underrun_002(void)
 {
-  printf_va_9("underrun2");
+  printf("underrun2"); /* printf_va_9 */
   short *buf = calloc((unsigned int)5,sizeof(short));
   if (buf != (short *)0) {
     *(buf - 5) = (short)1;
@@ -1574,7 +1574,7 @@ void dynamic_buffer_underrun_003(void)
     }
     ret = *(buf + -1);
     free((void *)buf);
-    printf_va_10("%d",ret);
+    printf("%d",ret); /* printf_va_10 */
   }
   return;
 }
@@ -3663,7 +3663,7 @@ void invalid_memory_access_002(void)
   }
   else _LAND: free((void *)dptr);
   if (! (invalid_memory_access_002_staticflag == 10)) a_0 = *(dptr + 1);
-  printf_va_11("%lf",a_0);
+  printf("%lf",a_0); /* printf_va_11 */
   return;
 }
 
@@ -3711,7 +3711,7 @@ void invalid_memory_access_004(void)
       free((void *)buf);
     }
   }
-  if (staticflag1) printf_va_12("String= %s",buf);
+  if (staticflag1) printf("String= %s",buf); /* printf_va_12 */
   return;
 }
 
@@ -3918,7 +3918,7 @@ void invalid_memory_access_012(void)
 {
   int ret;
   ret = invalid_memory_access_012_func_001(1);
-  printf_va_13("%d",ret);
+  printf("%d",ret); /* printf_va_13 */
   return;
 }
 
@@ -3994,7 +3994,7 @@ void invalid_memory_access_013(void)
   invalid_memory_access_013_func_001(1);
   ret = invalid_memory_access_013_func_002(1);
   invalid_memory_access_013_func_003(0);
-  printf_va_14("%d",ret);
+  printf("%d",ret); /* printf_va_14 */
   return;
 }
 
@@ -4284,7 +4284,7 @@ void littlemem_st_001(void)
   }
   p = (littlemem_st_001_s_001 *)(buf);
   ret = p->c;
-  printf_va_15("%d \n",p->c);
+  printf("%d \n",p->c); /* printf_va_15 */
   return;
 }
 
@@ -4779,8 +4779,8 @@ char *memory_allocation_failure_008_func_001(char const *msg)
     break;
     i ++;
   }
-  if (buffer != (char *)0) snprintf_va_1(buffer,max_buffer * sizeof(char),
-                                         "Error: %s",(char *)error_log);
+  if (buffer != (char *)0) snprintf(buffer,max_buffer * sizeof(char),
+                                    "Error: %s",(char *)error_log); /* snprintf_va_1 */
   return buffer;
 }
 
@@ -4822,7 +4822,7 @@ void memory_allocation_failure_009_func_002(void *vptr_0)
   char *buf = (char *)0;
   memory_allocation_failure_009_func_001(buf);
   buf = *cptr;
-  printf_va_16("%s",buf);
+  printf("%s",buf); /* printf_va_16 */
   return;
 }
 
@@ -4944,7 +4944,7 @@ void memory_allocation_failure_012_func_002(int **pbuf)
   *(pbuf + 3) = buf4;
   *(pbuf + 4) = buf5;
   ret = *(*(pbuf + 1) + 1);
-  printf_va_17("%d",ret);
+  printf("%d",ret); /* printf_va_17 */
   return;
 }
 
@@ -5033,7 +5033,7 @@ void memory_allocation_failure_013(void)
     free((void *)dptr);
     dptr = (char **)0;
   }
-  printf_va_18("%d",(int)a_0);
+  printf("%d",(int)a_0); /* printf_va_18 */
   sink = (int)b;
   return;
 }
@@ -5127,9 +5127,8 @@ void memory_allocation_failure_014(void)
     free((void *)dptr);
     free((void *)ptr1);
   }
-  if (memory_allocation_failure_014_staticflag == 10) printf_va_19("%d %lf",
-                                                                   (int)a_0,
-                                                                   b);
+  if (memory_allocation_failure_014_staticflag == 10) printf("%d %lf",
+                                                             (int)a_0,b); /* printf_va_19 */
   return;
 }
 
@@ -5185,7 +5184,7 @@ void memory_allocation_failure_015(void)
 {
   int flag;
   flag = memory_allocation_failure_015_func_003(1);
-  printf_va_20("%d",flag);
+  printf("%d",flag); /* printf_va_20 */
   return;
 }
 
@@ -7614,7 +7613,7 @@ void uninit_memory_access_001(void)
   unsigned long a_0;
   unsigned long *ret;
   ret = & a_0;
-  printf_va_21("%lu ",*ret);
+  printf("%lu ",*ret); /* printf_va_21 */
   return;
 }
 
@@ -7635,7 +7634,7 @@ void uninit_memory_access_002(void)
 {
   double *a_0 = malloc((unsigned int)3 * sizeof(double));
   if (a_0 != (double *)0) {
-    printf_va_22("%lf ",*(a_0 + 1));
+    printf("%lf ",*(a_0 + 1)); /* printf_va_22 */
     free((void *)a_0);
   }
   return;
@@ -7663,7 +7662,7 @@ void uninit_memory_access_003(void)
   char *str1 = calloc((unsigned int)25,sizeof(char));
   if (str1 != (char *)0) {
     strcpy(str1,(char const *)str2);
-    printf_va_23("%s %s\n",str1,str2);
+    printf("%s %s\n",str1,str2); /* printf_va_23 */
     free((void *)str1);
   }
   return;
@@ -7689,7 +7688,7 @@ void uninit_memory_access_004(void)
   short *p2 = (short *)0;
   if (p1 != (short *)0) p2 = p1;
   ptr = & p2;
-  printf_va_24("%d \n",(int)*(*ptr));
+  printf("%d \n",(int)*(*ptr)); /* printf_va_24 */
   free((void *)p1);
   return;
 }
@@ -7735,7 +7734,7 @@ int printf_va_25(char const * __restrict format);
 void uninit_memory_access_006_func_001(char *dst, char const *src)
 {
   if (src == (char const *)0) {
-    printf_va_25("Null Assignment:\n");
+    printf("Null Assignment:\n"); /* printf_va_25 */
     goto return_label;
   }
   else {
@@ -7768,7 +7767,7 @@ void uninit_memory_access_006(void)
   char *str2;
   char *str1 = calloc((unsigned int)25,sizeof(char));
   uninit_memory_access_006_func_001(str1,(char const *)str2);
-  printf_va_26("%s\n",str1);
+  printf("%s\n",str1); /* printf_va_26 */
   return;
 }
 
@@ -7945,8 +7944,8 @@ void uninit_memory_access_011_func_001(char const *msg)
 {
   char buffer[max_buffer_0];
   char const *error_log = msg;
-  snprintf_va_2(buffer,sizeof(buffer),"Error: %s",(char *)error_log);
-  printf_va_27(" test %s\n",buffer);
+  snprintf(buffer,sizeof(buffer),"Error: %s",(char *)error_log); /* snprintf_va_2 */
+  printf(" test %s\n",buffer); /* printf_va_27 */
   return;
 }
 

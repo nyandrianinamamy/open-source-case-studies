@@ -79,7 +79,7 @@ int main(void)
   int __retres;
   union a_union u;
   int i;
-  printf_va_1("sizeof(long double)=%ld\n",(long)sizeof(long double));
+  printf("sizeof(long double)=%ld\n",(long)sizeof(long double)); /* printf_va_1 */
   i = 0;
   while (i < 10) {
     u.cs[i] = snan[9 - i];
@@ -87,13 +87,13 @@ int main(void)
   }
   i = 0;
   while (i < 10) {
-    printf_va_2("0x%x ",(unsigned int)((int)u.cs[9 - i]));
+    printf("0x%x ",(unsigned int)((int)u.cs[9 - i])); /* printf_va_2 */
     i ++;
   }
-  printf_va_3("\n");
+  printf("\n"); /* printf_va_3 */
   long double ld = u.ld;
   ld += (long double)1.0;
-  printf_va_4("ld=%Lf\n",ld);
+  printf("ld=%Lf\n",ld); /* printf_va_4 */
   __retres = 0;
   return __retres;
 }

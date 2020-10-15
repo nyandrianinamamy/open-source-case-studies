@@ -94,12 +94,12 @@ int main(void)
   int *p = & x;
   uintptr_t i = (unsigned int)p;
   FILE *f = fopen("provenance_via_io_uintptr_t_global.tmp","w+b");
-  printf_va_1("Addresses: i=%u \n",i);
-  fprintf_va_1(f,"%u\n",i);
+  printf("Addresses: i=%u \n",i); /* printf_va_1 */
+  fprintf(f,"%u\n",i); /* fprintf_va_1 */
   rewind(f);
   int n = fscanf_va_1(f,"%u\n",(unsigned int *)(& k));
   if (n != 1) exit(1);
-  printf_va_2("Addresses: k=%u\n",k);
+  printf("Addresses: k=%u\n",k); /* printf_va_2 */
   int *r = (int *)k;
   *r = 12;
   _Bool b1 = (_Bool)(r == p);
@@ -109,7 +109,7 @@ int main(void)
   if (b1) tmp_3 = "true"; else tmp_3 = "false";
   ;
   ;
-  printf_va_3("x=%i *r=%i b1=%s b2=%s\n",x,*r,(char *)tmp_3,(char *)tmp_2);
+  printf("x=%i *r=%i b1=%s b2=%s\n",x,*r,(char *)tmp_3,(char *)tmp_2); /* printf_va_3 */
   __retres = 0;
   return __retres;
 }

@@ -65,10 +65,10 @@ int main(void)
   int __retres;
   int i;
   int *p = & i;
-  printf_va_1("i=0x%x\n",(unsigned int)i);
-  printf_va_2("i=0x%x\n",(unsigned int)i);
-  printf_va_3("i=0x%x\n",(unsigned int)i);
-  printf_va_4("i=0x%x\n",(unsigned int)i);
+  printf("i=0x%x\n",(unsigned int)i); /* printf_va_1 */
+  printf("i=0x%x\n",(unsigned int)i); /* printf_va_2 */
+  printf("i=0x%x\n",(unsigned int)i); /* printf_va_3 */
+  printf("i=0x%x\n",(unsigned int)i); /* printf_va_4 */
   __retres = 0;
   return __retres;
 }

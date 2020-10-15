@@ -31,7 +31,7 @@ int main(void)
   int *q = & x;
   _Bool b = (_Bool)(p == q);
   if (b) tmp = "true"; else tmp = "false";
-  printf_va_1("(p==q)=%s\n",(char *)tmp);
+  printf("(p==q)=%s\n",(char *)tmp); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

@@ -48,11 +48,11 @@ int main(void)
   *yp = 2;
   int *p = xp + 8;
   int *q = yp;
-  printf_va_1("Addresses: xp=%p p=%p q=%p\n",(void *)xp,(void *)p,(void *)q);
+  printf("Addresses: xp=%p p=%p q=%p\n",(void *)xp,(void *)p,(void *)q); /* printf_va_1 */
   tmp_1 = memcmp((void const *)(& p),(void const *)(& q),sizeof(p));
   if (tmp_1 == 0) {
     *p = 11;
-    printf_va_2("*xp=%d *yp=%d *p=%d *q=%d\n",*xp,*yp,*p,*q);
+    printf("*xp=%d *yp=%d *p=%d *q=%d\n",*xp,*yp,*p,*q); /* printf_va_2 */
   }
   __retres = 0;
   return __retres;

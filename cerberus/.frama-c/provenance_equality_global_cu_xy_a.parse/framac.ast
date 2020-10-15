@@ -36,7 +36,7 @@ int main(void)
   int __retres;
   int *p = & x + 1;
   int *q = & y;
-  printf_va_1("Addresses: p=%p q=%p\n",(void *)p,(void *)q);
+  printf("Addresses: p=%p q=%p\n",(void *)p,(void *)q); /* printf_va_1 */
   f(p,q);
   __retres = 0;
   return __retres;

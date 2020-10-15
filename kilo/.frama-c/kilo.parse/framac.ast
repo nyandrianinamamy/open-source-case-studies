@@ -296,7 +296,7 @@ int getCursorPosition(int ifd, int ofd, int *rows, int *cols)
       __retres = -1;
       goto return_label;
     }
-  tmp_1 = sscanf_va_1((char const *)(& buf[2]),"%d;%d",rows,cols);
+  tmp_1 = sscanf((char const *)(& buf[2]),"%d;%d",rows,cols); /* sscanf_va_1 */
   if (tmp_1 != 2) {
     __retres = -1;
     goto return_label;
@@ -324,7 +324,7 @@ int getWindowSize(int ifd, int ofd, int *rows, int *cols)
   int __retres;
   struct winsize ws;
   int tmp_2;
-  tmp_2 = __va_ioctl_ptr(1,0x5413,(void *)(& ws));
+  tmp_2 = ioctl(1,0x5413,(void *)(& ws)); /* __va_ioctl_ptr */
   if (tmp_2 == -1) goto _LOR;
   else 
     if ((int)ws.ws_col == 0) {
@@ -343,7 +343,7 @@ int getWindowSize(int ifd, int ofd, int *rows, int *cols)
         if (tmp != 12) goto failed;
         retval = getCursorPosition(ifd,ofd,rows,cols);
         if (retval == -1) goto failed;
-        snprintf_va_1(seq,(unsigned int)32,"\033[%d;%dH",orig_row,orig_col);
+        snprintf(seq,(unsigned int)32,"\033[%d;%dH",orig_row,orig_col); /* snprintf_va_1 */
         tmp_0 = strlen((char const *)(seq));
         ;
         tmp_1 = write(ofd,(void const *)(seq),tmp_0);
@@ -1162,8 +1162,8 @@ void editorRefreshScreen(void)
   if (E.dirty) tmp_3 = "(modified)"; else tmp_3 = "";
   ;
   ;
-  tmp_4 = snprintf_va_4(status,sizeof(status),"%.20s - %d lines %s",
-                        E.filename,E.numrows,(char *)tmp_3);
+  tmp_4 = snprintf(status,sizeof(status),"%.20s - %d lines %s",E.filename,
+                   E.numrows,(char *)tmp_3); /* snprintf_va_4 */
   int len_0 = tmp_4;
   int rlen =
     snprintf_va_5(rstatus,sizeof(rstatus),"%d/%d",(E.rowoff + E.cy) + 1,
@@ -1208,7 +1208,7 @@ void editorRefreshScreen(void)
       j_0 ++;
     }
   }
-  snprintf_va_6(buf,sizeof(buf),"\033[%d;%dH",E.cy + 1,cx);
+  snprintf(buf,sizeof(buf),"\033[%d;%dH",E.cy + 1,cx); /* snprintf_va_6 */
   tmp_10 = strlen((char const *)(buf));
   abAppend(& ab,(char const *)(buf),(int)tmp_10);
   abAppend(& ab,"\033[?25h",6);
@@ -1534,7 +1534,7 @@ int main(int argc, char **argv)
 {
   int __retres;
   if (argc != 2) {
-    fprintf_va_1(__fc_stderr,"Usage: kilo <filename>\n");
+    fprintf(__fc_stderr,"Usage: kilo <filename>\n"); /* fprintf_va_1 */
     exit(1);
   }
   initEditor();

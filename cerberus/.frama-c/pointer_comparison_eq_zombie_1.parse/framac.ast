@@ -45,10 +45,10 @@ int main(void)
   int *pj = malloc(sizeof(int));
   *pj = 1;
   if (& i == pj) tmp_0 = "true"; else tmp_0 = "false";
-  printf_va_1("(&i==pj)=%s\n",(char *)tmp_0);
+  printf("(&i==pj)=%s\n",(char *)tmp_0); /* printf_va_1 */
   free((void *)pj);
   if (& i == pj) tmp_1 = "true"; else tmp_1 = "false";
-  printf_va_2("(&i==pj)=%s\n",(char *)tmp_1);
+  printf("(&i==pj)=%s\n",(char *)tmp_1); /* printf_va_2 */
   __retres = 0;
   return __retres;
 }

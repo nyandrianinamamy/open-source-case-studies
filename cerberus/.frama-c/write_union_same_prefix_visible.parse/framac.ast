@@ -44,7 +44,7 @@ int main(void)
   int __retres;
   un u = {.m1 = {.i1 = 1, .f1 = (float)1.0, .c1 = (char)'a'}};
   u.m2.i2 = 2;
-  printf_va_1("u.m1.i1=%i  u.m2.i2=%i\n",u.m1.i1,u.m2.i2);
+  printf("u.m1.i1=%i  u.m2.i2=%i\n",u.m1.i1,u.m2.i2); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

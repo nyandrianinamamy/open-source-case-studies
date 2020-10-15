@@ -42,7 +42,7 @@ int main(void)
   st1 s1 = {.i1 = 1, .f1 = (float)1.0, .c1 = (char)'a', .d1 = 1.0};
   st2 *p2 = (st2 *)(& s1);
   p2->f2 = (float)2.0;
-  printf_va_1("s1.f1=%f  p2->f2=%f\n",(double)s1.f1,(double)p2->f2);
+  printf("s1.f1=%f  p2->f2=%f\n",(double)s1.f1,(double)p2->f2); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

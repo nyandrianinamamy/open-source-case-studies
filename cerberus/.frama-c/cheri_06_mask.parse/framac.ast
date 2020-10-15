@@ -45,7 +45,7 @@ int main(void)
   ;
   if (b) tmp = "true"; else tmp = "false";
   ;
-  printf_va_1("y=%i (r==p)=%s z=%i\n",y,(char *)tmp,z);
+  printf("y=%i (r==p)=%s z=%i\n",y,(char *)tmp,z); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

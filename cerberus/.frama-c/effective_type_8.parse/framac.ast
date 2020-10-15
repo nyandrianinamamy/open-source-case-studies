@@ -44,7 +44,7 @@ int main(void)
   __FC_assert((p != (void *)0) != 0,"effective_type_8.c",7,"p != NULL");
   ((st1 *)p)->c1 = (char)'A';
   ((st2 *)p)->f2 = (float)1.0;
-  printf_va_1("((st2 *)p)->f2=%f\n",(double)((st2 *)p)->f2);
+  printf("((st2 *)p)->f2=%f\n",(double)((st2 *)p)->f2); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

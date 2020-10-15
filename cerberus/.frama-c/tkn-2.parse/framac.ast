@@ -60,9 +60,9 @@ int main(void)
   a[0] = (unsigned long)(& a[1]);
   a[1] = (unsigned long)(& a[2]);
   a[2] = (unsigned long)0;
-  printf_va_1("a[0]=%lu a[1]=%lu a[2]=%lu\n",a[0],a[1],a[2]);
+  printf("a[0]=%lu a[1]=%lu a[2]=%lu\n",a[0],a[1],a[2]); /* printf_va_1 */
   b = reverse(a);
-  printf_va_2("a[0]=%lu a[1]=%lu a[2]=%lu b=%lu\n",a[0],a[1],a[2],b);
+  printf("a[0]=%lu a[1]=%lu a[2]=%lu b=%lu\n",a[0],a[1],a[2],b); /* printf_va_2 */
   __retres = 0;
   return __retres;
 }

@@ -41,7 +41,7 @@ int main(void)
   int *p = & x;
   user_memcpy((unsigned char *)(& q),(unsigned char *)(& p),sizeof(p));
   *q = 11;
-  printf_va_1("*p=%d  *q=%d\n",*p,*q);
+  printf("*p=%d  *q=%d\n",*p,*q); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

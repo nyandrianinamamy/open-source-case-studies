@@ -154,10 +154,10 @@ void hexdump(char *data, int len)
   i = 0;
   /*@ loop unroll 105; */
   while (i < len) {
-    printf_va_1("%02X",(unsigned int)((int)((unsigned char)*(data + i))));
+    printf("%02X",(unsigned int)((int)((unsigned char)*(data + i)))); /* printf_va_1 */
     i ++;
   }
-  printf_va_2("\n");
+  printf("\n"); /* printf_va_2 */
   return;
 }
 
@@ -304,17 +304,17 @@ int main(void)
   char *message =
     (char *)"This is a cross-platform test of crypto_box/crypto_box_open in TweetNaCl.";
   randombytes(nonce,(unsigned long long)24);
-  printf_va_3("Nonce: \n");
+  printf("Nonce: \n"); /* printf_va_3 */
   hexdump((char *)(nonce),24);
   crypto_box_curve25519xsalsa20poly1305_tweet_keypair(pk,sk);
   crypto_box_curve25519xsalsa20poly1305_tweet_keypair(pk2,sk2);
-  printf_va_4("Public key: \n");
+  printf("Public key: \n"); /* printf_va_4 */
   hexdump((char *)(pk),32);
-  printf_va_5("\nSecret key: \n");
+  printf("\nSecret key: \n"); /* printf_va_5 */
   hexdump((char *)(sk),32);
-  printf_va_6("Public key2: \n");
+  printf("Public key2: \n"); /* printf_va_6 */
   hexdump((char *)(pk2),32);
-  printf_va_7("\nSecret key2: \n");
+  printf("\nSecret key2: \n"); /* printf_va_7 */
   hexdump((char *)(sk2),32);
   tmp = strlen((char const *)message);
   padded_mlen = (int)(tmp + (size_t)32);
@@ -333,9 +333,9 @@ int main(void)
                                                       (unsigned char const *)(nonce),
                                                       (unsigned char const *)(pk2),
                                                       (unsigned char const *)(sk));
-  printf_va_8("crypto_box returned: %d\n",tmp_4);
+  printf("crypto_box returned: %d\n",tmp_4); /* printf_va_8 */
   free((void *)padded_message);
-  printf_va_9("\nCipher text: \n");
+  printf("\nCipher text: \n"); /* printf_va_9 */
   hexdump((char *)ciphertext,padded_mlen);
   tmp_5 = crypto_box_curve25519xsalsa20poly1305_tweet_open((u8 *)decryptedmessage,
                                                            (unsigned char const *)ciphertext,
@@ -343,11 +343,11 @@ int main(void)
                                                            (unsigned char const *)(nonce),
                                                            (unsigned char const *)(pk),
                                                            (unsigned char const *)(sk2));
-  printf_va_10("crypto_box_open returned: %d\n",tmp_5);
+  printf("crypto_box_open returned: %d\n",tmp_5); /* printf_va_10 */
   free((void *)ciphertext);
-  printf_va_11("\nDecrypted text: \n");
+  printf("\nDecrypted text: \n"); /* printf_va_11 */
   hexdump(decryptedmessage,padded_mlen);
-  printf_va_12("%s\n",decryptedmessage + 32);
+  printf("%s\n",decryptedmessage + 32); /* printf_va_12 */
   free((void *)decryptedmessage);
   __retres = 0;
   return __retres;
@@ -2190,8 +2190,8 @@ void randombytes(unsigned char *ptr, unsigned long long length)
   }
   else failed = (char)1;
   if (failed) {
-    fprintf_va_1(__fc_stderr,
-                 "Generating random data failed. Please report this to https://github.com/ultramancool\n");
+    fprintf(__fc_stderr,
+            "Generating random data failed. Please report this to https://github.com/ultramancool\n"); /* fprintf_va_1 */
     exit(1);
   }
   return;

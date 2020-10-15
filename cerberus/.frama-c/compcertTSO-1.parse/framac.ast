@@ -48,7 +48,7 @@ int main(void)
   tmp_0 = g();
   _Bool b = (_Bool)(tmp == tmp_0);
   if (b) tmp_1 = "true"; else tmp_1 = "false";
-  printf_va_1("(f()==g())=%s\n",(char *)tmp_1);
+  printf("(f()==g())=%s\n",(char *)tmp_1); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

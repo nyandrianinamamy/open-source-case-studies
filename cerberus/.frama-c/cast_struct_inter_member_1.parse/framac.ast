@@ -37,7 +37,7 @@ int main(void)
   unsigned char *pcf = (pci - 4U) + 0U;
   float *pf = (float *)pcf;
   *pf = (float)2.0;
-  printf_va_1("s.f=%f *pf=%f  s.i=%i\n",(double)s.f,(double)*pf,s.i);
+  printf("s.f=%f *pf=%f  s.i=%i\n",(double)s.f,(double)*pf,s.i); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

@@ -54,9 +54,9 @@ int main(void)
   int *p = & s.i2;
   int *q = & s.s2.i1;
   _Bool b = (_Bool)(p < q);
-  printf_va_1("Addresses: p=%p  q=%p\n",(void *)p,(void *)q);
+  printf("Addresses: p=%p  q=%p\n",(void *)p,(void *)q); /* printf_va_1 */
   if (b) tmp = "true"; else tmp = "false";
-  printf_va_2("(p<q) = %s\n",(char *)tmp);
+  printf("(p<q) = %s\n",(char *)tmp); /* printf_va_2 */
   __retres = 0;
   return __retres;
 }

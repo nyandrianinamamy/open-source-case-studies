@@ -27,7 +27,7 @@ void main(int *p, int *q)
   char const *tmp;
   _Bool b = (_Bool)(p == q);
   if (b) tmp = "true"; else tmp = "false";
-  printf_va_1("(p==q) = %s\n",(char *)tmp);
+  printf("(p==q) = %s\n",(char *)tmp); /* printf_va_1 */
   return;
 }
 

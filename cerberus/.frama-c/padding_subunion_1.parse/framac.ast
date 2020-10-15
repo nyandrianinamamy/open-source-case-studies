@@ -39,7 +39,7 @@ int main(void)
   int __retres;
   un *u = malloc(sizeof(st1));
   u->s1.c1 = (char)'a';
-  printf_va_1("u->s1.c1=0x%x\n",(unsigned int)((int)u->s1.c1));
+  printf("u->s1.c1=0x%x\n",(unsigned int)((int)u->s1.c1)); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

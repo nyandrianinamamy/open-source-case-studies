@@ -75,7 +75,7 @@ int main(int argc, char **argv)
     fread((void *)(file_data + 9),(unsigned int)1,c - (size_t)9,ifile);
     d = qlz_decompress((char const *)file_data,(void *)decompressed,
                        state_decompress);
-    printf_va_1("%u bytes decompressed into %u.\n",c,d);
+    printf("%u bytes decompressed into %u.\n",c,d); /* printf_va_1 */
     fwrite((void const *)decompressed,d,(unsigned int)1,ofile);
   }
   fclose(ifile);

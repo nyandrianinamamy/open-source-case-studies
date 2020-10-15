@@ -42,7 +42,7 @@ int main(void)
   st s2;
   f(& s1.c,& s1.f);
   s2 = s1;
-  printf_va_1("s2.c=0x%x  s2.f=%f\n",(unsigned int)((int)s2.c),(double)s2.f);
+  printf("s2.c=0x%x  s2.f=%f\n",(unsigned int)((int)s2.c),(double)s2.f); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

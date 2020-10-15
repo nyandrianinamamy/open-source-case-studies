@@ -43,8 +43,8 @@ int main(void)
   int __retres;
   int i;
   unsigned char c = *((unsigned char *)(& i));
-  printf_va_1("i=0x%x  c=0x%x\n",(unsigned int)i,(unsigned int)((int)c));
-  printf_va_2("i=0x%x  c=0x%x\n",(unsigned int)i,(unsigned int)((int)c));
+  printf("i=0x%x  c=0x%x\n",(unsigned int)i,(unsigned int)((int)c)); /* printf_va_1 */
+  printf("i=0x%x  c=0x%x\n",(unsigned int)i,(unsigned int)((int)c)); /* printf_va_2 */
   __retres = 0;
   return __retres;
 }

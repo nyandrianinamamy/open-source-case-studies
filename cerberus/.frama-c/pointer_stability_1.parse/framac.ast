@@ -31,7 +31,7 @@ int main(void)
   uintptr_t j = (unsigned int)(& x);
   _Bool b = (_Bool)(i == j);
   if (b) tmp = "true"; else tmp = "false";
-  printf_va_1("(i==j)=%s\n",(char *)tmp);
+  printf("(i==j)=%s\n",(char *)tmp); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

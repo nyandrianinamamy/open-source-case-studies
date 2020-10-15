@@ -44,12 +44,12 @@ int main(void)
   int tmp;
   uintptr_t b = (unsigned int)(& x);
   uintptr_t a = (unsigned int)0x60102C;
-  printf_va_1("Addresses: b=0x%X a=0x%X\n",b,a);
+  printf("Addresses: b=0x%X a=0x%X\n",b,a); /* printf_va_1 */
   tmp = memcmp((void const *)(& b),(void const *)(& a),sizeof(b));
   if (tmp == 0) {
     int *q = (int *)a;
     *q = 123;
-    printf_va_2("*((int*)b=%d  *q=%d\n",*((int *)b),*q);
+    printf("*((int*)b=%d  *q=%d\n",*((int *)b),*q); /* printf_va_2 */
   }
   __retres = 0;
   return __retres;

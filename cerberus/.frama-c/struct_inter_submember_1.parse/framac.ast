@@ -38,7 +38,7 @@ int main(void)
   d = & s.b[2] - & s.a[0];
   p = & s.a[0] + d;
   *p = 11;
-  printf_va_1("d=%td  s.b[2]=%d  *p=%d\n",d,s.b[2],*p);
+  printf("d=%td  s.b[2]=%d  *p=%d\n",d,s.b[2],*p); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

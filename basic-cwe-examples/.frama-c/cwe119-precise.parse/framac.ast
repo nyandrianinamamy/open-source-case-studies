@@ -34,7 +34,7 @@ static void validate_addr_form(char *v)
                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-0123456789.");
   tmp_0 = strlen((char const *)v);
   if (tmp < tmp_0) {
-    fprintf_va_1(__fc_stderr,"hostname contains invalid characters");
+    fprintf(__fc_stderr,"hostname contains invalid characters"); /* fprintf_va_1 */
     exit(1);
   }
   return;

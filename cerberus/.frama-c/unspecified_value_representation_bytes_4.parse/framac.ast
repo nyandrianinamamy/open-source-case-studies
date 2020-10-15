@@ -64,12 +64,12 @@ int main(void)
 {
   int __retres;
   int i;
-  printf_va_1("i=0x%x\n",(unsigned int)i);
-  printf_va_2("i=0x%x\n",(unsigned int)i);
+  printf("i=0x%x\n",(unsigned int)i); /* printf_va_1 */
+  printf("i=0x%x\n",(unsigned int)i); /* printf_va_2 */
   unsigned char *cp = (unsigned char *)(& i);
   *(cp + 1) = (unsigned char)0x22;
-  printf_va_3("*cp=0x%x\n",(unsigned int)((int)*cp));
-  printf_va_4("*cp=0x%x\n",(unsigned int)((int)*cp));
+  printf("*cp=0x%x\n",(unsigned int)((int)*cp)); /* printf_va_3 */
+  printf("*cp=0x%x\n",(unsigned int)((int)*cp)); /* printf_va_4 */
   __retres = 0;
   return __retres;
 }

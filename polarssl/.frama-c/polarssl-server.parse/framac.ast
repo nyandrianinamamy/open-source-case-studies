@@ -2994,7 +2994,7 @@ int aes_self_test(int verbose)
       char const *tmp;
       if (v == 0) tmp = "dec"; else tmp = "enc";
       ;
-      printf_va_1("  AES-ECB-%3d (%s): ",128 + u * 64,(char *)tmp);
+      printf("  AES-ECB-%3d (%s): ",128 + u * 64,(char *)tmp); /* printf_va_1 */
     }
     memset((void *)(buf),0,(unsigned int)16);
     if (v == 0) {
@@ -3009,7 +3009,7 @@ int aes_self_test(int verbose)
       tmp_0 = memcmp((void const *)(buf),(void const *)(aes_test_ecb_dec[u]),
                      (unsigned int)16);
       if (tmp_0 != 0) {
-        if (verbose != 0) printf_va_2("failed\n");
+        if (verbose != 0) printf("failed\n"); /* printf_va_2 */
         __retres = 1;
         goto return_label;
       }
@@ -3026,15 +3026,15 @@ int aes_self_test(int verbose)
       tmp_1 = memcmp((void const *)(buf),(void const *)(aes_test_ecb_enc[u]),
                      (unsigned int)16);
       if (tmp_1 != 0) {
-        if (verbose != 0) printf_va_3("failed\n");
+        if (verbose != 0) printf("failed\n"); /* printf_va_3 */
         __retres = 1;
         goto return_label;
       }
     }
-    if (verbose != 0) printf_va_4("passed\n");
+    if (verbose != 0) printf("passed\n"); /* printf_va_4 */
     i ++;
   }
-  if (verbose != 0) printf_va_5("\n");
+  if (verbose != 0) printf("\n"); /* printf_va_5 */
   i = 0;
   while (i < 6) {
     u = i >> 1;
@@ -3043,7 +3043,7 @@ int aes_self_test(int verbose)
       char const *tmp_2;
       if (v == 0) tmp_2 = "dec"; else tmp_2 = "enc";
       ;
-      printf_va_6("  AES-CBC-%3d (%s): ",128 + u * 64,(char *)tmp_2);
+      printf("  AES-CBC-%3d (%s): ",128 + u * 64,(char *)tmp_2); /* printf_va_6 */
     }
     memset((void *)(iv),0,(unsigned int)16);
     memset((void *)(prv_0),0,(unsigned int)16);
@@ -3061,7 +3061,7 @@ int aes_self_test(int verbose)
       tmp_3 = memcmp((void const *)(buf),(void const *)(aes_test_cbc_dec[u]),
                      (unsigned int)16);
       if (tmp_3 != 0) {
-        if (verbose != 0) printf_va_7("failed\n");
+        if (verbose != 0) printf("failed\n"); /* printf_va_7 */
         __retres = 1;
         goto return_label;
       }
@@ -3085,15 +3085,15 @@ int aes_self_test(int verbose)
       tmp_5 = memcmp((void const *)(prv_0),
                      (void const *)(aes_test_cbc_enc[u]),(unsigned int)16);
       if (tmp_5 != 0) {
-        if (verbose != 0) printf_va_8("failed\n");
+        if (verbose != 0) printf("failed\n"); /* printf_va_8 */
         __retres = 1;
         goto return_label;
       }
     }
-    if (verbose != 0) printf_va_9("passed\n");
+    if (verbose != 0) printf("passed\n"); /* printf_va_9 */
     i ++;
   }
-  if (verbose != 0) printf_va_10("\n");
+  if (verbose != 0) printf("\n"); /* printf_va_10 */
   i = 0;
   while (i < 6) {
     u = i >> 1;
@@ -3102,7 +3102,7 @@ int aes_self_test(int verbose)
       char const *tmp_6;
       if (v == 0) tmp_6 = "dec"; else tmp_6 = "enc";
       ;
-      printf_va_11("  AES-CFB128-%3d (%s): ",128 + u * 64,(char *)tmp_6);
+      printf("  AES-CFB128-%3d (%s): ",128 + u * 64,(char *)tmp_6); /* printf_va_11 */
     }
     memcpy((void *)(iv),(void const *)(aes_test_cfb128_iv),(unsigned int)16);
     memcpy((void *)(key),(void const *)(aes_test_cfb128_key[u]),
@@ -3119,7 +3119,7 @@ int aes_self_test(int verbose)
       tmp_7 = memcmp((void const *)(buf),(void const *)(aes_test_cfb128_pt),
                      (unsigned int)64);
       if (tmp_7 != 0) {
-        if (verbose != 0) printf_va_12("failed\n");
+        if (verbose != 0) printf("failed\n"); /* printf_va_12 */
         __retres = 1;
         goto return_label;
       }
@@ -3133,15 +3133,15 @@ int aes_self_test(int verbose)
       tmp_8 = memcmp((void const *)(buf),
                      (void const *)(aes_test_cfb128_ct[u]),(unsigned int)64);
       if (tmp_8 != 0) {
-        if (verbose != 0) printf_va_13("failed\n");
+        if (verbose != 0) printf("failed\n"); /* printf_va_13 */
         __retres = 1;
         goto return_label;
       }
     }
-    if (verbose != 0) printf_va_14("passed\n");
+    if (verbose != 0) printf("passed\n"); /* printf_va_14 */
     i ++;
   }
-  if (verbose != 0) printf_va_15("\n");
+  if (verbose != 0) printf("\n"); /* printf_va_15 */
   i = 0;
   while (i < 6) {
     u = i >> 1;
@@ -3149,7 +3149,7 @@ int aes_self_test(int verbose)
     if (verbose != 0) {
       char const *tmp_9;
       if (v == 0) tmp_9 = "dec"; else tmp_9 = "enc";
-      printf_va_16("  AES-CTR-128 (%s): ",(char *)tmp_9);
+      printf("  AES-CTR-128 (%s): ",(char *)tmp_9); /* printf_va_16 */
     }
     memcpy((void *)(nonce_counter),
            (void const *)(aes_test_ctr_nonce_counter[u]),(unsigned int)16);
@@ -3167,7 +3167,7 @@ int aes_self_test(int verbose)
       tmp_10 = memcmp((void const *)(buf),(void const *)(aes_test_ctr_pt[u]),
                       (unsigned int)len);
       if (tmp_10 != 0) {
-        if (verbose != 0) printf_va_17("failed\n");
+        if (verbose != 0) printf("failed\n"); /* printf_va_17 */
         __retres = 1;
         goto return_label;
       }
@@ -3182,15 +3182,15 @@ int aes_self_test(int verbose)
       tmp_11 = memcmp((void const *)(buf),(void const *)(aes_test_ctr_ct[u]),
                       (unsigned int)len);
       if (tmp_11 != 0) {
-        if (verbose != 0) printf_va_18("failed\n");
+        if (verbose != 0) printf("failed\n"); /* printf_va_18 */
         __retres = 1;
         goto return_label;
       }
     }
-    if (verbose != 0) printf_va_19("passed\n");
+    if (verbose != 0) printf("passed\n"); /* printf_va_19 */
     i ++;
   }
-  if (verbose != 0) printf_va_20("\n");
+  if (verbose != 0) printf("\n"); /* printf_va_20 */
   __retres = 0;
   return_label: return __retres;
 }
@@ -3402,22 +3402,22 @@ int arc4_self_test(int verbose)
   while (i < 3) {
     {
       int tmp;
-      if (verbose != 0) printf_va_21("  ARC4 test #%d: ",i + 1);
+      if (verbose != 0) printf("  ARC4 test #%d: ",i + 1); /* printf_va_21 */
       memcpy((void *)(ibuf),(void const *)(arc4_test_pt[i]),(unsigned int)8);
       arc4_setup(& ctx,arc4_test_key[i],(unsigned int)8);
       arc4_crypt(& ctx,(unsigned int)8,(unsigned char const *)(ibuf),obuf);
       tmp = memcmp((void const *)(obuf),(void const *)(arc4_test_ct[i]),
                    (unsigned int)8);
       if (tmp != 0) {
-        if (verbose != 0) printf_va_22("failed\n");
+        if (verbose != 0) printf("failed\n"); /* printf_va_22 */
         __retres = 1;
         goto return_label;
       }
-      if (verbose != 0) printf_va_23("passed\n");
+      if (verbose != 0) printf("passed\n"); /* printf_va_23 */
     }
     i ++;
   }
-  if (verbose != 0) printf_va_24("\n");
+  if (verbose != 0) printf("\n"); /* printf_va_24 */
   __retres = 0;
   return_label: return __retres;
 }
@@ -4267,7 +4267,7 @@ int base64_self_test(int verbose)
   unsigned char buffer[128];
   int tmp;
   int tmp_1;
-  if (verbose != 0) printf_va_25("  Base64 encoding test: ");
+  if (verbose != 0) printf("  Base64 encoding test: "); /* printf_va_25 */
   len = sizeof(buffer);
   src = (unsigned char *)(base64_test_dec);
   tmp = base64_encode(buffer,& len,(unsigned char const *)src,
@@ -4280,13 +4280,13 @@ int base64_self_test(int verbose)
     if (tmp_0 != 0) {
       _LOR:
       {
-        if (verbose != 0) printf_va_26("failed\n");
+        if (verbose != 0) printf("failed\n"); /* printf_va_26 */
         __retres = 1;
         goto return_label;
       }
     }
   }
-  if (verbose != 0) printf_va_27("passed\n  Base64 decoding test: ");
+  if (verbose != 0) printf("passed\n  Base64 decoding test: "); /* printf_va_27 */
   len = sizeof(buffer);
   src = (unsigned char *)(base64_test_enc);
   tmp_1 = base64_decode(buffer,& len,(unsigned char const *)src,
@@ -4299,13 +4299,13 @@ int base64_self_test(int verbose)
     if (tmp_2 != 0) {
       _LOR_0:
       {
-        if (verbose != 0) printf_va_28("failed\n");
+        if (verbose != 0) printf("failed\n"); /* printf_va_28 */
         __retres = 1;
         goto return_label;
       }
     }
   }
-  if (verbose != 0) printf_va_29("passed\n\n");
+  if (verbose != 0) printf("passed\n\n"); /* printf_va_29 */
   __retres = 0;
   return_label: return __retres;
 }
@@ -4713,7 +4713,7 @@ int mpi_write_string(mpi const *X, int radix, char *s, size_t *slen)
           if (c == 0) 
             if (k == (size_t)0) 
               if ((i + j) + (size_t)3 != (size_t)0) goto __Cont;
-          tmp_0 = sprintf_va_1(p,"%02X",(unsigned int)c);
+          tmp_0 = sprintf(p,"%02X",(unsigned int)c); /* sprintf_va_1 */
           p += tmp_0;
           k = (unsigned int)1;
         }
@@ -4837,7 +4837,7 @@ int mpi_write_file(char const *p, mpi const *X, int radix, FILE *fout)
       }
     }
   }
-  else printf_va_30("%s%s",(char *)p,s);
+  else printf("%s%s",(char *)p,s); /* printf_va_30 */
   cleanup: ;
   __retres = ret;
   return_label: return __retres;
@@ -6937,14 +6937,14 @@ int mpi_self_test(int verbose)
   ret = mpi_read_string(& U,16,
                         "602AB7ECA597A3D6B56FF9829A5E8B859E857EA95A03512E2BAE7391688D264AA5663B0341DB9CCFD2C4C5F421FEC8148001B72E848A38CAE1C65F78E56ABDEFE12D3C039B8A02D6BE593F0BBBDA56F1ECF677152EF804370C1A305CAF3B5BF130879B56C61DE584A0F53A2447A51E");
   if (ret != 0) goto cleanup;
-  if (verbose != 0) printf_va_31("  MPI test #1 (mul_mpi): ");
+  if (verbose != 0) printf("  MPI test #1 (mul_mpi): "); /* printf_va_31 */
   tmp = mpi_cmp_mpi((mpi const *)(& X),(mpi const *)(& U));
   if (tmp != 0) {
-    if (verbose != 0) printf_va_32("failed\n");
+    if (verbose != 0) printf("failed\n"); /* printf_va_32 */
     __retres = 1;
     goto return_label;
   }
-  if (verbose != 0) printf_va_33("passed\n");
+  if (verbose != 0) printf("passed\n"); /* printf_va_33 */
   ret = mpi_div_mpi(& X,& Y,(mpi const *)(& A),(mpi const *)(& N));
   if (ret != 0) goto cleanup;
   ret = mpi_read_string(& U,16,"256567336059E52CAE22925474705F39A94");
@@ -6952,7 +6952,7 @@ int mpi_self_test(int verbose)
   ret = mpi_read_string(& V,16,
                         "6613F26162223DF488E9CD48CC132C7A0AC93C701B001B092E4E5B9F73BCD27B9EE50D0657C77F374E903CDFA4C642");
   if (ret != 0) goto cleanup;
-  if (verbose != 0) printf_va_34("  MPI test #2 (div_mpi): ");
+  if (verbose != 0) printf("  MPI test #2 (div_mpi): "); /* printf_va_34 */
   tmp_0 = mpi_cmp_mpi((mpi const *)(& X),(mpi const *)(& U));
   if (tmp_0 != 0) goto _LOR;
   else {
@@ -6961,41 +6961,41 @@ int mpi_self_test(int verbose)
     if (tmp_1 != 0) {
       _LOR:
       {
-        if (verbose != 0) printf_va_35("failed\n");
+        if (verbose != 0) printf("failed\n"); /* printf_va_35 */
         __retres = 1;
         goto return_label;
       }
     }
   }
-  if (verbose != 0) printf_va_36("passed\n");
+  if (verbose != 0) printf("passed\n"); /* printf_va_36 */
   ret = mpi_exp_mod(& X,(mpi const *)(& A),(mpi const *)(& E),
                     (mpi const *)(& N),(mpi *)0);
   if (ret != 0) goto cleanup;
   ret = mpi_read_string(& U,16,
                         "36E139AEA55215609D2816998ED020BBBD96C37890F65171D948E9BC7CBAA4D9325D24D6A3C12710F10A09FA08AB87");
   if (ret != 0) goto cleanup;
-  if (verbose != 0) printf_va_37("  MPI test #3 (exp_mod): ");
+  if (verbose != 0) printf("  MPI test #3 (exp_mod): "); /* printf_va_37 */
   tmp_2 = mpi_cmp_mpi((mpi const *)(& X),(mpi const *)(& U));
   if (tmp_2 != 0) {
-    if (verbose != 0) printf_va_38("failed\n");
+    if (verbose != 0) printf("failed\n"); /* printf_va_38 */
     __retres = 1;
     goto return_label;
   }
-  if (verbose != 0) printf_va_39("passed\n");
+  if (verbose != 0) printf("passed\n"); /* printf_va_39 */
   ret = mpi_inv_mod(& X,(mpi const *)(& A),(mpi const *)(& N));
   if (ret != 0) goto cleanup;
   ret = mpi_read_string(& U,16,
                         "003A0AAEDD7E784FC07D8F9EC6E3BFD5C3DBA76456363A10869622EAC2DD84ECC5B8A74DAC4D09E03B5E0BE779F2DF61");
   if (ret != 0) goto cleanup;
-  if (verbose != 0) printf_va_40("  MPI test #4 (inv_mod): ");
+  if (verbose != 0) printf("  MPI test #4 (inv_mod): "); /* printf_va_40 */
   tmp_3 = mpi_cmp_mpi((mpi const *)(& X),(mpi const *)(& U));
   if (tmp_3 != 0) {
-    if (verbose != 0) printf_va_41("failed\n");
+    if (verbose != 0) printf("failed\n"); /* printf_va_41 */
     __retres = 1;
     goto return_label;
   }
-  if (verbose != 0) printf_va_42("passed\n");
-  if (verbose != 0) printf_va_43("  MPI test #5 (simple gcd): ");
+  if (verbose != 0) printf("passed\n"); /* printf_va_42 */
+  if (verbose != 0) printf("  MPI test #5 (simple gcd): "); /* printf_va_43 */
   i = 0;
   while (i < 3) {
     {
@@ -7008,18 +7008,18 @@ int mpi_self_test(int verbose)
       if (ret != 0) goto cleanup;
       tmp_4 = mpi_cmp_int((mpi const *)(& A),(long)gcd_pairs[i][2]);
       if (tmp_4 != 0) {
-        if (verbose != 0) printf_va_44("failed at %d\n",i);
+        if (verbose != 0) printf("failed at %d\n",i); /* printf_va_44 */
         __retres = 1;
         goto return_label;
       }
     }
     i ++;
   }
-  if (verbose != 0) printf_va_45("passed\n");
+  if (verbose != 0) printf("passed\n"); /* printf_va_45 */
   cleanup: ;
   if (ret != 0) 
-    if (verbose != 0) printf_va_46("Unexpected error, return code = %08X\n",
-                                   (unsigned int)ret);
+    if (verbose != 0) printf("Unexpected error, return code = %08X\n",
+                             (unsigned int)ret); /* printf_va_46 */
   mpi_free(& A);
   mpi_free(& E);
   mpi_free(& N);
@@ -7027,7 +7027,7 @@ int mpi_self_test(int verbose)
   mpi_free(& Y);
   mpi_free(& U);
   mpi_free(& V);
-  if (verbose != 0) printf_va_47("\n");
+  if (verbose != 0) printf("\n"); /* printf_va_47 */
   __retres = ret;
   return_label: return __retres;
 }
@@ -9952,7 +9952,7 @@ int camellia_self_test(int verbose)
       char const *tmp;
       if (v == 0) tmp = "dec"; else tmp = "enc";
       ;
-      printf_va_48("  CAMELLIA-ECB-%3d (%s): ",128 + u * 64,(char *)tmp);
+      printf("  CAMELLIA-ECB-%3d (%s): ",128 + u * 64,(char *)tmp); /* printf_va_48 */
     }
     i = 0;
     while (i < 2) {
@@ -9982,17 +9982,17 @@ int camellia_self_test(int verbose)
         tmp_0 = memcmp((void const *)(buf),(void const *)(dst),
                        (unsigned int)16);
         if (tmp_0 != 0) {
-          if (verbose != 0) printf_va_49("failed\n");
+          if (verbose != 0) printf("failed\n"); /* printf_va_49 */
           __retres = 1;
           goto return_label;
         }
       }
       i ++;
     }
-    if (verbose != 0) printf_va_50("passed\n");
+    if (verbose != 0) printf("passed\n"); /* printf_va_50 */
     j ++;
   }
-  if (verbose != 0) printf_va_51("\n");
+  if (verbose != 0) printf("\n"); /* printf_va_51 */
   j = 0;
   while (j < 6) {
     u = j >> 1;
@@ -10001,7 +10001,7 @@ int camellia_self_test(int verbose)
       char const *tmp_1;
       if (v == 0) tmp_1 = "dec"; else tmp_1 = "enc";
       ;
-      printf_va_52("  CAMELLIA-CBC-%3d (%s): ",128 + u * 64,(char *)tmp_1);
+      printf("  CAMELLIA-CBC-%3d (%s): ",128 + u * 64,(char *)tmp_1); /* printf_va_52 */
     }
     memcpy((void *)(src),(void const *)(camellia_test_cbc_iv),
            (unsigned int)16);
@@ -10038,17 +10038,17 @@ int camellia_self_test(int verbose)
         tmp_2 = memcmp((void const *)(buf),(void const *)(dst),
                        (unsigned int)16);
         if (tmp_2 != 0) {
-          if (verbose != 0) printf_va_53("failed\n");
+          if (verbose != 0) printf("failed\n"); /* printf_va_53 */
           __retres = 1;
           goto return_label;
         }
       }
       i ++;
     }
-    if (verbose != 0) printf_va_54("passed\n");
+    if (verbose != 0) printf("passed\n"); /* printf_va_54 */
     j ++;
   }
-  if (verbose != 0) printf_va_55("\n");
+  if (verbose != 0) printf("\n"); /* printf_va_55 */
   i = 0;
   while (i < 6) {
     u = i >> 1;
@@ -10056,7 +10056,7 @@ int camellia_self_test(int verbose)
     if (verbose != 0) {
       char const *tmp_3;
       if (v == 0) tmp_3 = "dec"; else tmp_3 = "enc";
-      printf_va_56("  CAMELLIA-CTR-128 (%s): ",(char *)tmp_3);
+      printf("  CAMELLIA-CTR-128 (%s): ",(char *)tmp_3); /* printf_va_56 */
     }
     memcpy((void *)(nonce_counter),
            (void const *)(camellia_test_ctr_nonce_counter[u]),
@@ -10074,7 +10074,7 @@ int camellia_self_test(int verbose)
       tmp_4 = memcmp((void const *)(buf),
                      (void const *)(camellia_test_ctr_pt[u]),len);
       if (tmp_4 != 0) {
-        if (verbose != 0) printf_va_57("failed\n");
+        if (verbose != 0) printf("failed\n"); /* printf_va_57 */
         __retres = 1;
         goto return_label;
       }
@@ -10088,15 +10088,15 @@ int camellia_self_test(int verbose)
       tmp_5 = memcmp((void const *)(buf),
                      (void const *)(camellia_test_ctr_ct[u]),len);
       if (tmp_5 != 0) {
-        if (verbose != 0) printf_va_58("failed\n");
+        if (verbose != 0) printf("failed\n"); /* printf_va_58 */
         __retres = 1;
         goto return_label;
       }
     }
-    if (verbose != 0) printf_va_59("passed\n");
+    if (verbose != 0) printf("passed\n"); /* printf_va_59 */
     i ++;
   }
-  if (verbose != 0) printf_va_60("\n");
+  if (verbose != 0) printf("\n"); /* printf_va_60 */
   __retres = 0;
   return_label: return __retres;
 }
@@ -21459,76 +21459,76 @@ int ctr_drbg_self_test(int verbose)
   int tmp_5;
   int tmp_6;
   int tmp_7;
-  if (verbose != 0) printf_va_61("  CTR_DRBG (PR = TRUE) : ");
+  if (verbose != 0) printf("  CTR_DRBG (PR = TRUE) : "); /* printf_va_61 */
   test_offset = 0;
   tmp = ctr_drbg_init_entropy_len(& ctx,& ctr_drbg_self_test_entropy,
                                   (void *)(entropy_source_pr),
                                   (unsigned char const *)(nonce_pers_pr),
                                   (unsigned int)16,(unsigned int)32);
   if (tmp != 0) {
-    if (verbose != 0) printf_va_62("failed\n");
+    if (verbose != 0) printf("failed\n"); /* printf_va_62 */
     __retres = 1;
     goto return_label;
   }
   ctr_drbg_set_prediction_resistance(& ctx,1);
   tmp_0 = ctr_drbg_random((void *)(& ctx),buf,(unsigned int)16);
   if (tmp_0 != 0) {
-    if (verbose != 0) printf_va_63("failed\n");
+    if (verbose != 0) printf("failed\n"); /* printf_va_63 */
     __retres = 1;
     goto return_label;
   }
   tmp_1 = ctr_drbg_random((void *)(& ctx),buf,(unsigned int)16);
   if (tmp_1 != 0) {
-    if (verbose != 0) printf_va_64("failed\n");
+    if (verbose != 0) printf("failed\n"); /* printf_va_64 */
     __retres = 1;
     goto return_label;
   }
   tmp_2 = memcmp((void const *)(buf),(void const *)(result_pr),
                  (unsigned int)16);
   if (tmp_2 != 0) {
-    if (verbose != 0) printf_va_65("failed\n");
+    if (verbose != 0) printf("failed\n"); /* printf_va_65 */
     __retres = 1;
     goto return_label;
   }
-  if (verbose != 0) printf_va_66("passed\n");
-  if (verbose != 0) printf_va_67("  CTR_DRBG (PR = FALSE): ");
+  if (verbose != 0) printf("passed\n"); /* printf_va_66 */
+  if (verbose != 0) printf("  CTR_DRBG (PR = FALSE): "); /* printf_va_67 */
   test_offset = 0;
   tmp_3 = ctr_drbg_init_entropy_len(& ctx,& ctr_drbg_self_test_entropy,
                                     (void *)(entropy_source_nopr),
                                     (unsigned char const *)(nonce_pers_nopr),
                                     (unsigned int)16,(unsigned int)32);
   if (tmp_3 != 0) {
-    if (verbose != 0) printf_va_68("failed\n");
+    if (verbose != 0) printf("failed\n"); /* printf_va_68 */
     __retres = 1;
     goto return_label;
   }
   tmp_4 = ctr_drbg_random((void *)(& ctx),buf,(unsigned int)16);
   if (tmp_4 != 0) {
-    if (verbose != 0) printf_va_69("failed\n");
+    if (verbose != 0) printf("failed\n"); /* printf_va_69 */
     __retres = 1;
     goto return_label;
   }
   tmp_5 = ctr_drbg_reseed(& ctx,(unsigned char const *)0,(unsigned int)0);
   if (tmp_5 != 0) {
-    if (verbose != 0) printf_va_70("failed\n");
+    if (verbose != 0) printf("failed\n"); /* printf_va_70 */
     __retres = 1;
     goto return_label;
   }
   tmp_6 = ctr_drbg_random((void *)(& ctx),buf,(unsigned int)16);
   if (tmp_6 != 0) {
-    if (verbose != 0) printf_va_71("failed\n");
+    if (verbose != 0) printf("failed\n"); /* printf_va_71 */
     __retres = 1;
     goto return_label;
   }
   tmp_7 = memcmp((void const *)(buf),(void const *)(result_nopr),
                  (unsigned int)16);
   if (tmp_7 != 0) {
-    if (verbose != 0) printf_va_72("failed\n");
+    if (verbose != 0) printf("failed\n"); /* printf_va_72 */
     __retres = 1;
     goto return_label;
   }
-  if (verbose != 0) printf_va_73("passed\n");
-  if (verbose != 0) printf_va_74("\n");
+  if (verbose != 0) printf("passed\n"); /* printf_va_73 */
+  if (verbose != 0) printf("\n"); /* printf_va_74 */
   __retres = 0;
   return_label: return __retres;
 }
@@ -21596,8 +21596,8 @@ void debug_print_msg(ssl_context const *ssl, int level, char const *file,
   char str[512];
   int maxlen = (int)(sizeof(str) - (unsigned int)1);
   if (ssl->f_dbg == (void (*)(void *, int , char const *))0) goto return_label;
-  snprintf_va_1(str,(unsigned int)maxlen,"%s(%04d): %s\n",(char *)file,line,
-                (char *)text);
+  snprintf(str,(unsigned int)maxlen,"%s(%04d): %s\n",(char *)file,line,
+           (char *)text); /* snprintf_va_1 */
   str[maxlen] = (char)'\000';
   (*(ssl->f_dbg))(ssl->p_dbg,level,(char const *)(str));
   return_label: return;
@@ -21629,9 +21629,8 @@ void debug_print_ret(ssl_context const *ssl, int level, char const *file,
   char str[512];
   int maxlen = (int)(sizeof(str) - (unsigned int)1);
   if (ssl->f_dbg == (void (*)(void *, int , char const *))0) goto return_label;
-  snprintf_va_2(str,(unsigned int)maxlen,
-                "%s(%04d): %s() returned %d (0x%x)\n",(char *)file,line,
-                (char *)text,ret,(unsigned int)ret);
+  snprintf(str,(unsigned int)maxlen,"%s(%04d): %s() returned %d (0x%x)\n",
+           (char *)file,line,(char *)text,ret,(unsigned int)ret); /* snprintf_va_2 */
   str[maxlen] = (char)'\000';
   (*(ssl->f_dbg))(ssl->p_dbg,level,(char const *)(str));
   return_label: return;
@@ -21695,8 +21694,8 @@ void debug_print_buf(ssl_context const *ssl, int level, char const *file,
   size_t i;
   size_t maxlen = sizeof(str) - (unsigned int)1;
   if (ssl->f_dbg == (void (*)(void *, int , char const *))0) goto return_label;
-  snprintf_va_3(str,maxlen,"%s(%04d): dumping \'%s\' (%d bytes)\n",
-                (char *)file,line,(char *)text,(int)len);
+  snprintf(str,maxlen,"%s(%04d): dumping \'%s\' (%d bytes)\n",(char *)file,
+           line,(char *)text,(int)len); /* snprintf_va_3 */
   str[maxlen] = (char)'\000';
   (*(ssl->f_dbg))(ssl->p_dbg,level,(char const *)(str));
   i = (unsigned int)0;
@@ -21704,11 +21703,11 @@ void debug_print_buf(ssl_context const *ssl, int level, char const *file,
     if (i >= (size_t)4096) break;
     if (i % (unsigned int)16 == (unsigned int)0) {
       if (i > (size_t)0) (*(ssl->f_dbg))(ssl->p_dbg,level,"\n");
-      snprintf_va_4(str,maxlen,"%s(%04d): %04x: ",(char *)file,line,i);
+      snprintf(str,maxlen,"%s(%04d): %04x: ",(char *)file,line,i); /* snprintf_va_4 */
       str[maxlen] = (char)'\000';
       (*(ssl->f_dbg))(ssl->p_dbg,level,(char const *)(str));
     }
-    snprintf_va_5(str,maxlen," %02x",(unsigned int)*(buf + i));
+    snprintf(str,maxlen," %02x",(unsigned int)*(buf + i)); /* snprintf_va_5 */
     str[maxlen] = (char)'\000';
     (*(ssl->f_dbg))(ssl->p_dbg,level,(char const *)(str));
     i += (size_t)1;
@@ -21805,10 +21804,10 @@ void debug_print_mpi(ssl_context const *ssl, int level, char const *file,
       break;
     j --;
   }
-  snprintf_va_6(str,(unsigned int)maxlen,
-                "%s(%04d): value of \'%s\' (%lu bits) is:\n",(char *)file,
-                line,(char *)text,
-                (unsigned long)((n * (sizeof(t_uint) << 3) + (size_t)j) + (size_t)1));
+  snprintf(str,(unsigned int)maxlen,
+           "%s(%04d): value of \'%s\' (%lu bits) is:\n",(char *)file,line,
+           (char *)text,
+           (unsigned long)((n * (sizeof(t_uint) << 3) + (size_t)j) + (size_t)1)); /* snprintf_va_6 */
   str[maxlen] = (char)'\000';
   (*(ssl->f_dbg))(ssl->p_dbg,level,(char const *)(str));
   i = n + (size_t)1;
@@ -21826,13 +21825,12 @@ void debug_print_mpi(ssl_context const *ssl, int level, char const *file,
       else zeros = 0;
       if (j % 16 == 0) {
         if (j > 0) (*(ssl->f_dbg))(ssl->p_dbg,level,"\n");
-        snprintf_va_7(str,(unsigned int)maxlen,"%s(%04d): ",(char *)file,
-                      line);
+        snprintf(str,(unsigned int)maxlen,"%s(%04d): ",(char *)file,line); /* snprintf_va_7 */
         str[maxlen] = (char)'\000';
         (*(ssl->f_dbg))(ssl->p_dbg,level,(char const *)(str));
       }
-      snprintf_va_8(str,(unsigned int)maxlen," %02x",
-                    (unsigned int)(*(X->p + (i - (size_t)1)) >> (k << 3)) & (unsigned int)0xFF);
+      snprintf(str,(unsigned int)maxlen," %02x",
+               (unsigned int)(*(X->p + (i - (size_t)1)) >> (k << 3)) & (unsigned int)0xFF); /* snprintf_va_8 */
       str[maxlen] = (char)'\000';
       (*(ssl->f_dbg))(ssl->p_dbg,level,(char const *)(str));
       j ++;
@@ -21841,7 +21839,7 @@ void debug_print_mpi(ssl_context const *ssl, int level, char const *file,
     __Cont: i -= (size_t)1;
   }
   if (zeros == 1) {
-    snprintf_va_9(str,(unsigned int)maxlen,"%s(%04d): ",(char *)file,line);
+    snprintf(str,(unsigned int)maxlen,"%s(%04d): ",(char *)file,line); /* snprintf_va_9 */
     str[maxlen] = (char)'\000';
     (*(ssl->f_dbg))(ssl->p_dbg,level,(char const *)(str));
     (*(ssl->f_dbg))(ssl->p_dbg,level," 00");
@@ -21898,7 +21896,7 @@ void debug_print_crt(ssl_context const *ssl, int level, char const *file,
   if (ssl->f_dbg == (void (*)(void *, int , char const *))0) goto return_label;
   else 
     if (crt == (x509_cert const *)0) goto return_label;
-  snprintf_va_10(prefix,(unsigned int)maxlen,"%s(%04d): ",(char *)file,line);
+  snprintf(prefix,(unsigned int)maxlen,"%s(%04d): ",(char *)file,line); /* snprintf_va_10 */
   prefix[maxlen] = (char)'\000';
   maxlen = (int)(sizeof(str) - (unsigned int)1);
   while (crt != (x509_cert const *)0) {
@@ -21910,8 +21908,8 @@ void debug_print_crt(ssl_context const *ssl, int level, char const *file,
     ;
     ;
     ;
-    snprintf_va_11(str,(unsigned int)maxlen,"%s(%04d): %s #%d:\n%s",
-                   (char *)file,line,(char *)text,i,buf);
+    snprintf(str,(unsigned int)maxlen,"%s(%04d): %s #%d:\n%s",(char *)file,
+             line,(char *)text,i,buf); /* snprintf_va_11 */
     str[maxlen] = (char)'\000';
     (*(ssl->f_dbg))(ssl->p_dbg,level,(char const *)(str));
     debug_print_mpi(ssl,level,file,line,"crt->rsa.N",& crt->rsa.N);
@@ -23645,7 +23643,7 @@ int des_self_test(int verbose)
       if (v == 0) tmp = "dec"; else tmp = "enc";
       ;
       if (u == 0) tmp_0 = ' '; else tmp_0 = '3';
-      printf_va_75("  DES%c-ECB-%3d (%s): ",tmp_0,56 + u * 56,(char *)tmp);
+      printf("  DES%c-ECB-%3d (%s): ",tmp_0,56 + u * 56,(char *)tmp); /* printf_va_75 */
     }
     memcpy((void *)(buf),(void const *)(des3_test_buf),(unsigned int)8);
     switch (i) {
@@ -23685,17 +23683,17 @@ int des_self_test(int verbose)
         if (tmp_2 != 0) {
           _LOR:
           {
-            if (verbose != 0) printf_va_76("failed\n");
+            if (verbose != 0) printf("failed\n"); /* printf_va_76 */
             __retres = 1;
             goto return_label;
           }
         }
       }
     }
-    if (verbose != 0) printf_va_77("passed\n");
+    if (verbose != 0) printf("passed\n"); /* printf_va_77 */
     i ++;
   }
-  if (verbose != 0) printf_va_78("\n");
+  if (verbose != 0) printf("\n"); /* printf_va_78 */
   i = 0;
   while (i < 6) {
     u = i >> 1;
@@ -23706,7 +23704,7 @@ int des_self_test(int verbose)
       if (v == 0) tmp_3 = "dec"; else tmp_3 = "enc";
       ;
       if (u == 0) tmp_4 = ' '; else tmp_4 = '3';
-      printf_va_79("  DES%c-CBC-%3d (%s): ",tmp_4,56 + u * 56,(char *)tmp_3);
+      printf("  DES%c-CBC-%3d (%s): ",tmp_4,56 + u * 56,(char *)tmp_3); /* printf_va_79 */
     }
     memcpy((void *)(iv),(void const *)(des3_test_iv),(unsigned int)8);
     memcpy((void *)(prv_0),(void const *)(des3_test_iv),(unsigned int)8);
@@ -23769,17 +23767,17 @@ int des_self_test(int verbose)
         if (tmp_7 != 0) {
           _LOR_0:
           {
-            if (verbose != 0) printf_va_80("failed\n");
+            if (verbose != 0) printf("failed\n"); /* printf_va_80 */
             __retres = 1;
             goto return_label;
           }
         }
       }
     }
-    if (verbose != 0) printf_va_81("passed\n");
+    if (verbose != 0) printf("passed\n"); /* printf_va_81 */
     i ++;
   }
-  if (verbose != 0) printf_va_82("\n");
+  if (verbose != 0) printf("\n"); /* printf_va_82 */
   __retres = 0;
   return_label: return __retres;
 }
@@ -26412,26 +26410,26 @@ int md5_self_test(int verbose)
   while (i < 7) {
     {
       int tmp;
-      if (verbose != 0) printf_va_83("  MD5 test #%d: ",i + 1);
+      if (verbose != 0) printf("  MD5 test #%d: ",i + 1); /* printf_va_83 */
       md5((unsigned char const *)(md5_test_buf[i]),
           (unsigned int)md5_test_buflen[i],md5sum);
       tmp = memcmp((void const *)(md5sum),(void const *)(md5_test_sum[i]),
                    (unsigned int)16);
       if (tmp != 0) {
-        if (verbose != 0) printf_va_84("failed\n");
+        if (verbose != 0) printf("failed\n"); /* printf_va_84 */
         __retres = 1;
         goto return_label;
       }
-      if (verbose != 0) printf_va_85("passed\n");
+      if (verbose != 0) printf("passed\n"); /* printf_va_85 */
     }
     i ++;
   }
-  if (verbose != 0) printf_va_86("\n");
+  if (verbose != 0) printf("\n"); /* printf_va_86 */
   i = 0;
   while (i < 7) {
     {
       int tmp_0;
-      if (verbose != 0) printf_va_87("  HMAC-MD5 test #%d: ",i + 1);
+      if (verbose != 0) printf("  HMAC-MD5 test #%d: ",i + 1); /* printf_va_87 */
       if (i == 5) goto _LOR;
       else 
         if (i == 6) {
@@ -26454,15 +26452,15 @@ int md5_self_test(int verbose)
                      (void const *)(md5_hmac_test_sum[i]),
                      (unsigned int)buflen);
       if (tmp_0 != 0) {
-        if (verbose != 0) printf_va_88("failed\n");
+        if (verbose != 0) printf("failed\n"); /* printf_va_88 */
         __retres = 1;
         goto return_label;
       }
-      if (verbose != 0) printf_va_89("passed\n");
+      if (verbose != 0) printf("passed\n"); /* printf_va_89 */
     }
     i ++;
   }
-  if (verbose != 0) printf_va_90("\n");
+  if (verbose != 0) printf("\n"); /* printf_va_90 */
   __retres = 0;
   return_label: return __retres;
 }
@@ -27121,7 +27119,7 @@ int net_bind(int *fd, char const *bind_ip, int port)
                                           ((int)((unsigned short)port) & 0xFF00) >> 8));
   if (bind_ip != (char const *)0) {
     memset((void *)(c),0,sizeof(c));
-    sscanf_va_1(bind_ip,"%d.%d.%d.%d",c,& c[1],& c[2],& c[3]);
+    sscanf(bind_ip,"%d.%d.%d.%d",c,& c[1],& c[2],& c[3]); /* sscanf_va_1 */
     n = 0;
     /*@ loop unroll 4; */
     while (n < 4) {
@@ -27199,9 +27197,9 @@ int net_set_block(int fd)
 {
   int tmp_0;
   int tmp;
-  tmp = __va_fcntl_void(fd,3);
+  tmp = fcntl(fd,3); /* __va_fcntl_void */
   ;
-  tmp_0 = __va_fcntl_int(fd,4,tmp & ~ 0x800);
+  tmp_0 = fcntl(fd,4,tmp & ~ 0x800); /* __va_fcntl_int */
   return tmp_0;
 }
 
@@ -27209,9 +27207,9 @@ int net_set_nonblock(int fd)
 {
   int tmp_0;
   int tmp;
-  tmp = __va_fcntl_void(fd,3);
+  tmp = fcntl(fd,3); /* __va_fcntl_void */
   ;
-  tmp_0 = __va_fcntl_int(fd,4,tmp | 0x800);
+  tmp_0 = fcntl(fd,4,tmp | 0x800); /* __va_fcntl_int */
   return tmp_0;
 }
 
@@ -29337,7 +29335,7 @@ int rsa_self_test(int verbose)
                   "4959CBF6F8FEF750AEE6977C155579C7D8AAEA56749EA28623272E4F7D0592AF7C1F1313CAC9471B5C523BFE592F517B407A1BD76C164B93DA2D32A383E58357");
   mpi_read_string(& rsa.QP,16,
                   "9AE7FBC99546432DF71896FC239EADAEF38D18D2B2F0E2DD275AA977E2BF4411F5A3B2A5D33605AEBBCCBA7FEB9F2D2FA74206CEC169D74BF5A8C50D6F48EA08");
-  if (verbose != 0) printf_va_91("  RSA key validation: ");
+  if (verbose != 0) printf("  RSA key validation: "); /* printf_va_91 */
   tmp = rsa_check_pubkey((rsa_context const *)(& rsa));
   if (tmp != 0) goto _LOR;
   else {
@@ -29346,13 +29344,13 @@ int rsa_self_test(int verbose)
     if (tmp_0 != 0) {
       _LOR:
       {
-        if (verbose != 0) printf_va_92("failed\n");
+        if (verbose != 0) printf("failed\n"); /* printf_va_92 */
         __retres = 1;
         goto return_label;
       }
     }
   }
-  if (verbose != 0) printf_va_93("passed\n  PKCS#1 encryption : ");
+  if (verbose != 0) printf("passed\n  PKCS#1 encryption : "); /* printf_va_93 */
   memcpy((void *)(rsa_plaintext),
          (void const *)"\252\273\314\003\002\001\000\377\377\377\377\377\021\"3\n\v\f\314\335\335\335\335\335",
          (unsigned int)24);
@@ -29360,45 +29358,45 @@ int rsa_self_test(int verbose)
                             (unsigned char const *)(rsa_plaintext),
                             rsa_ciphertext);
   if (tmp_1 != 0) {
-    if (verbose != 0) printf_va_94("failed\n");
+    if (verbose != 0) printf("failed\n"); /* printf_va_94 */
     __retres = 1;
     goto return_label;
   }
-  if (verbose != 0) printf_va_95("passed\n  PKCS#1 decryption : ");
+  if (verbose != 0) printf("passed\n  PKCS#1 decryption : "); /* printf_va_95 */
   tmp_2 = rsa_pkcs1_decrypt(& rsa,1,& len,
                             (unsigned char const *)(rsa_ciphertext),
                             rsa_decrypted,sizeof(rsa_decrypted));
   if (tmp_2 != 0) {
-    if (verbose != 0) printf_va_96("failed\n");
+    if (verbose != 0) printf("failed\n"); /* printf_va_96 */
     __retres = 1;
     goto return_label;
   }
   tmp_3 = memcmp((void const *)(rsa_decrypted),(void const *)(rsa_plaintext),
                  len);
   if (tmp_3 != 0) {
-    if (verbose != 0) printf_va_97("failed\n");
+    if (verbose != 0) printf("failed\n"); /* printf_va_97 */
     __retres = 1;
     goto return_label;
   }
-  if (verbose != 0) printf_va_98("passed\n  PKCS#1 data sign  : ");
+  if (verbose != 0) printf("passed\n  PKCS#1 data sign  : "); /* printf_va_98 */
   sha1((unsigned char const *)(rsa_plaintext),(unsigned int)24,sha1sum);
   tmp_4 = rsa_pkcs1_sign(& rsa,(int (*)(void *, unsigned char *, size_t ))0,
                          (void *)0,1,5,(unsigned int)20,
                          (unsigned char const *)(sha1sum),rsa_ciphertext);
   if (tmp_4 != 0) {
-    if (verbose != 0) printf_va_99("failed\n");
+    if (verbose != 0) printf("failed\n"); /* printf_va_99 */
     __retres = 1;
     goto return_label;
   }
-  if (verbose != 0) printf_va_100("passed\n  PKCS#1 sig. verify: ");
+  if (verbose != 0) printf("passed\n  PKCS#1 sig. verify: "); /* printf_va_100 */
   tmp_5 = rsa_pkcs1_verify(& rsa,0,5,(unsigned int)20,
                            (unsigned char const *)(sha1sum),rsa_ciphertext);
   if (tmp_5 != 0) {
-    if (verbose != 0) printf_va_101("failed\n");
+    if (verbose != 0) printf("failed\n"); /* printf_va_101 */
     __retres = 1;
     goto return_label;
   }
-  if (verbose != 0) printf_va_102("passed\n\n");
+  if (verbose != 0) printf("passed\n\n"); /* printf_va_102 */
   rsa_free(& rsa);
   __retres = 0;
   return_label: return __retres;
@@ -31021,7 +31019,7 @@ int sha1_self_test(int verbose)
   while (i < 3) {
     {
       int tmp;
-      if (verbose != 0) printf_va_103("  SHA-1 test #%d: ",i + 1);
+      if (verbose != 0) printf("  SHA-1 test #%d: ",i + 1); /* printf_va_103 */
       sha1_starts(& ctx);
       if (i == 2) {
         buflen = 1000;
@@ -31039,20 +31037,20 @@ int sha1_self_test(int verbose)
       tmp = memcmp((void const *)(sha1sum),(void const *)(sha1_test_sum[i]),
                    (unsigned int)20);
       if (tmp != 0) {
-        if (verbose != 0) printf_va_104("failed\n");
+        if (verbose != 0) printf("failed\n"); /* printf_va_104 */
         __retres = 1;
         goto return_label;
       }
-      if (verbose != 0) printf_va_105("passed\n");
+      if (verbose != 0) printf("passed\n"); /* printf_va_105 */
     }
     i ++;
   }
-  if (verbose != 0) printf_va_106("\n");
+  if (verbose != 0) printf("\n"); /* printf_va_106 */
   i = 0;
   while (i < 7) {
     {
       int tmp_0;
-      if (verbose != 0) printf_va_107("  HMAC-SHA-1 test #%d: ",i + 1);
+      if (verbose != 0) printf("  HMAC-SHA-1 test #%d: ",i + 1); /* printf_va_107 */
       if (i == 5) goto _LOR;
       else 
         if (i == 6) {
@@ -31075,15 +31073,15 @@ int sha1_self_test(int verbose)
                      (void const *)(sha1_hmac_test_sum[i]),
                      (unsigned int)buflen);
       if (tmp_0 != 0) {
-        if (verbose != 0) printf_va_108("failed\n");
+        if (verbose != 0) printf("failed\n"); /* printf_va_108 */
         __retres = 1;
         goto return_label;
       }
-      if (verbose != 0) printf_va_109("passed\n");
+      if (verbose != 0) printf("passed\n"); /* printf_va_109 */
     }
     i ++;
   }
-  if (verbose != 0) printf_va_110("\n");
+  if (verbose != 0) printf("\n"); /* printf_va_110 */
   __retres = 0;
   return_label: return __retres;
 }
@@ -33816,8 +33814,7 @@ int sha2_self_test(int verbose)
       int tmp;
       j = i % 3;
       k = i < 3;
-      if (verbose != 0) printf_va_111("  SHA-%d test #%d: ",256 - k * 32,
-                                      j + 1);
+      if (verbose != 0) printf("  SHA-%d test #%d: ",256 - k * 32,j + 1); /* printf_va_111 */
       sha2_starts(& ctx,k);
       if (j == 2) {
         buflen = 1000;
@@ -33835,23 +33832,22 @@ int sha2_self_test(int verbose)
       tmp = memcmp((void const *)(sha2sum),(void const *)(sha2_test_sum[i]),
                    (unsigned int)(32 - k * 4));
       if (tmp != 0) {
-        if (verbose != 0) printf_va_112("failed\n");
+        if (verbose != 0) printf("failed\n"); /* printf_va_112 */
         __retres = 1;
         goto return_label;
       }
-      if (verbose != 0) printf_va_113("passed\n");
+      if (verbose != 0) printf("passed\n"); /* printf_va_113 */
     }
     i ++;
   }
-  if (verbose != 0) printf_va_114("\n");
+  if (verbose != 0) printf("\n"); /* printf_va_114 */
   i = 0;
   while (i < 14) {
     {
       int tmp_0;
       j = i % 7;
       k = i < 7;
-      if (verbose != 0) printf_va_115("  HMAC-SHA-%d test #%d: ",
-                                      256 - k * 32,j + 1);
+      if (verbose != 0) printf("  HMAC-SHA-%d test #%d: ",256 - k * 32,j + 1); /* printf_va_115 */
       if (j == 5) goto _LOR;
       else 
         if (j == 6) {
@@ -33874,15 +33870,15 @@ int sha2_self_test(int verbose)
                      (void const *)(sha2_hmac_test_sum[i]),
                      (unsigned int)buflen);
       if (tmp_0 != 0) {
-        if (verbose != 0) printf_va_116("failed\n");
+        if (verbose != 0) printf("failed\n"); /* printf_va_116 */
         __retres = 1;
         goto return_label;
       }
-      if (verbose != 0) printf_va_117("passed\n");
+      if (verbose != 0) printf("passed\n"); /* printf_va_117 */
     }
     i ++;
   }
-  if (verbose != 0) printf_va_118("\n");
+  if (verbose != 0) printf("\n"); /* printf_va_118 */
   __retres = 0;
   return_label: return __retres;
 }
@@ -36259,8 +36255,7 @@ int sha4_self_test(int verbose)
       int tmp;
       j = i % 3;
       k = i < 3;
-      if (verbose != 0) printf_va_119("  SHA-%d test #%d: ",512 - k * 128,
-                                      j + 1);
+      if (verbose != 0) printf("  SHA-%d test #%d: ",512 - k * 128,j + 1); /* printf_va_119 */
       sha4_starts(& ctx,k);
       if (j == 2) {
         buflen = 1000;
@@ -36278,23 +36273,23 @@ int sha4_self_test(int verbose)
       tmp = memcmp((void const *)(sha4sum),(void const *)(sha4_test_sum[i]),
                    (unsigned int)(64 - k * 16));
       if (tmp != 0) {
-        if (verbose != 0) printf_va_120("failed\n");
+        if (verbose != 0) printf("failed\n"); /* printf_va_120 */
         __retres = 1;
         goto return_label;
       }
-      if (verbose != 0) printf_va_121("passed\n");
+      if (verbose != 0) printf("passed\n"); /* printf_va_121 */
     }
     i ++;
   }
-  if (verbose != 0) printf_va_122("\n");
+  if (verbose != 0) printf("\n"); /* printf_va_122 */
   i = 0;
   while (i < 14) {
     {
       int tmp_0;
       j = i % 7;
       k = i < 7;
-      if (verbose != 0) printf_va_123("  HMAC-SHA-%d test #%d: ",
-                                      512 - k * 128,j + 1);
+      if (verbose != 0) printf("  HMAC-SHA-%d test #%d: ",512 - k * 128,
+                               j + 1); /* printf_va_123 */
       if (j == 5) goto _LOR;
       else 
         if (j == 6) {
@@ -36317,15 +36312,15 @@ int sha4_self_test(int verbose)
                      (void const *)(sha4_hmac_test_sum[i]),
                      (unsigned int)buflen);
       if (tmp_0 != 0) {
-        if (verbose != 0) printf_va_124("failed\n");
+        if (verbose != 0) printf("failed\n"); /* printf_va_124 */
         __retres = 1;
         goto return_label;
       }
-      if (verbose != 0) printf_va_125("passed\n");
+      if (verbose != 0) printf("passed\n"); /* printf_va_125 */
     }
     i ++;
   }
-  if (verbose != 0) printf_va_126("\n");
+  if (verbose != 0) printf("\n"); /* printf_va_126 */
   __retres = 0;
   return_label: return __retres;
 }
@@ -39695,9 +39690,9 @@ static int x509_get_time(unsigned char **p, unsigned char const *end,
     else tmp = sizeof(date) - (unsigned int)1;
     ;
     memcpy((void *)(date),(void const *)*p,tmp);
-    tmp_0 = sscanf_va_2((char const *)(date),"%2d%2d%2d%2d%2d%2d",
-                        & time_0->year,& time_0->mon,& time_0->day,
-                        & time_0->hour,& time_0->min,& time_0->sec);
+    tmp_0 = sscanf((char const *)(date),"%2d%2d%2d%2d%2d%2d",& time_0->year,
+                   & time_0->mon,& time_0->day,& time_0->hour,& time_0->min,
+                   & time_0->sec); /* sscanf_va_2 */
     if (tmp_0 < 5) {
       __retres = -0x2400;
       goto return_label;
@@ -39723,9 +39718,9 @@ static int x509_get_time(unsigned char **p, unsigned char const *end,
       else tmp_1 = sizeof(date) - (unsigned int)1;
       ;
       memcpy((void *)(date),(void const *)*p,tmp_1);
-      tmp_2 = sscanf_va_3((char const *)(date),"%4d%2d%2d%2d%2d%2d",
-                          & time_0->year,& time_0->mon,& time_0->day,
-                          & time_0->hour,& time_0->min,& time_0->sec);
+      tmp_2 = sscanf((char const *)(date),"%4d%2d%2d%2d%2d%2d",
+                     & time_0->year,& time_0->mon,& time_0->day,
+                     & time_0->hour,& time_0->min,& time_0->sec); /* sscanf_va_3 */
       if (tmp_2 < 5) {
         __retres = -0x2400;
         goto return_label;
@@ -41542,7 +41537,7 @@ int x509parse_dn_gets(char *buf, size_t size, x509_name const *dn)
   n = size;
   while (name != (x509_name const *)0) {
     if (name != dn) {
-      ret = snprintf_va_12(p,n,", ");
+      ret = snprintf(p,n,", "); /* snprintf_va_12 */
       if (ret == -1) {
         __retres = -1;
         goto return_label;
@@ -41561,21 +41556,21 @@ int x509parse_dn_gets(char *buf, size_t size, x509_name const *dn)
                      (unsigned int)2);
       if (tmp_0 == 0) {
         switch ((int)*(name->oid.p + 2)) {
-          case 3: ret = snprintf_va_13(p,n,"CN=");
+          case 3: ret = snprintf(p,n,"CN="); /* snprintf_va_13 */
           break;
-          case 6: ret = snprintf_va_14(p,n,"C=");
+          case 6: ret = snprintf(p,n,"C="); /* snprintf_va_14 */
           break;
-          case 7: ret = snprintf_va_15(p,n,"L=");
+          case 7: ret = snprintf(p,n,"L="); /* snprintf_va_15 */
           break;
-          case 8: ret = snprintf_va_16(p,n,"ST=");
+          case 8: ret = snprintf(p,n,"ST="); /* snprintf_va_16 */
           break;
-          case 10: ret = snprintf_va_17(p,n,"O=");
+          case 10: ret = snprintf(p,n,"O="); /* snprintf_va_17 */
           break;
-          case 11: ret = snprintf_va_18(p,n,"OU=");
+          case 11: ret = snprintf(p,n,"OU="); /* snprintf_va_18 */
           break;
           default:
-          ret = snprintf_va_19(p,n,"0x%02X=",
-                               (unsigned int)((int)*(name->oid.p + 2)));
+          ret = snprintf(p,n,"0x%02X=",
+                         (unsigned int)((int)*(name->oid.p + 2))); /* snprintf_va_19 */
           break;
         }
         if (ret == -1) {
@@ -41600,11 +41595,11 @@ int x509parse_dn_gets(char *buf, size_t size, x509_name const *dn)
                      (void const *)"*\206H\206\367\r\001\t",(unsigned int)8);
         if (tmp == 0) {
           switch ((int)*(name->oid.p + 8)) {
-            case 1: ret = snprintf_va_20(p,n,"emailAddress=");
+            case 1: ret = snprintf(p,n,"emailAddress="); /* snprintf_va_20 */
             break;
             default:
-            ret = snprintf_va_21(p,n,"0x%02X=",
-                                 (unsigned int)((int)*(name->oid.p + 8)));
+            ret = snprintf(p,n,"0x%02X=",
+                           (unsigned int)((int)*(name->oid.p + 8))); /* snprintf_va_21 */
             break;
           }
           if (ret == -1) {
@@ -41624,7 +41619,7 @@ int x509parse_dn_gets(char *buf, size_t size, x509_name const *dn)
       else {
         _LAND:
         {
-          ret = snprintf_va_22(p,n,"?\?=");
+          ret = snprintf(p,n,"?\?="); /* snprintf_va_22 */
           if (ret == -1) {
             __retres = -1;
             goto return_label;
@@ -41653,7 +41648,7 @@ int x509parse_dn_gets(char *buf, size_t size, x509_name const *dn)
       i += (size_t)1;
     }
     s[i] = (char)'\000';
-    ret = snprintf_va_23(p,n,"%s",s);
+    ret = snprintf(p,n,"%s",s); /* snprintf_va_23 */
     if (ret == -1) {
       __retres = -1;
       goto return_label;
@@ -41723,8 +41718,8 @@ int x509parse_serial_gets(char *buf, size_t size, x509_buf const *serial)
       ;
       ;
       ;
-      ret = snprintf_va_24(p,n,"%02X%s",
-                           (unsigned int)((int)*(serial->p + i)),(char *)tmp);
+      ret = snprintf(p,n,"%02X%s",(unsigned int)((int)*(serial->p + i)),
+                     (char *)tmp); /* snprintf_va_24 */
       if (ret == -1) {
         __retres = -1;
         goto return_label;
@@ -41740,7 +41735,7 @@ int x509parse_serial_gets(char *buf, size_t size, x509_buf const *serial)
     __Cont: i += (size_t)1;
   }
   if (nr != serial->len) {
-    ret = snprintf_va_25(p,n,"....");
+    ret = snprintf(p,n,"...."); /* snprintf_va_25 */
     if (ret == -1) {
       __retres = -1;
       goto return_label;
@@ -42004,8 +41999,7 @@ int x509parse_cert_info(char *buf, size_t size, char const *prefix,
   char *p;
   p = buf;
   n = size;
-  ret = snprintf_va_26(p,n,"%scert. version : %d\n",(char *)prefix,
-                       crt->version);
+  ret = snprintf(p,n,"%scert. version : %d\n",(char *)prefix,crt->version); /* snprintf_va_26 */
   if (ret == -1) {
     __retres = -1;
     goto return_label;
@@ -42017,7 +42011,7 @@ int x509parse_cert_info(char *buf, size_t size, char const *prefix,
   }
   n -= (unsigned int)ret;
   p += (unsigned int)ret;
-  ret = snprintf_va_27(p,n,"%sserial number : ",(char *)prefix);
+  ret = snprintf(p,n,"%sserial number : ",(char *)prefix); /* snprintf_va_27 */
   if (ret == -1) {
     __retres = -1;
     goto return_label;
@@ -42041,7 +42035,7 @@ int x509parse_cert_info(char *buf, size_t size, char const *prefix,
   }
   n -= (unsigned int)ret;
   p += (unsigned int)ret;
-  ret = snprintf_va_28(p,n,"\n%sissuer name   : ",(char *)prefix);
+  ret = snprintf(p,n,"\n%sissuer name   : ",(char *)prefix); /* snprintf_va_28 */
   if (ret == -1) {
     __retres = -1;
     goto return_label;
@@ -42065,7 +42059,7 @@ int x509parse_cert_info(char *buf, size_t size, char const *prefix,
   }
   n -= (unsigned int)ret;
   p += (unsigned int)ret;
-  ret = snprintf_va_29(p,n,"\n%ssubject name  : ",(char *)prefix);
+  ret = snprintf(p,n,"\n%ssubject name  : ",(char *)prefix); /* snprintf_va_29 */
   if (ret == -1) {
     __retres = -1;
     goto return_label;
@@ -42089,12 +42083,10 @@ int x509parse_cert_info(char *buf, size_t size, char const *prefix,
   }
   n -= (unsigned int)ret;
   p += (unsigned int)ret;
-  ret = snprintf_va_30(p,n,
-                       "\n%sissued  on    : %04d-%02d-%02d %02d:%02d:%02d",
-                       (char *)prefix,crt->valid_from.year,
-                       crt->valid_from.mon,crt->valid_from.day,
-                       crt->valid_from.hour,crt->valid_from.min,
-                       crt->valid_from.sec);
+  ret = snprintf(p,n,"\n%sissued  on    : %04d-%02d-%02d %02d:%02d:%02d",
+                 (char *)prefix,crt->valid_from.year,crt->valid_from.mon,
+                 crt->valid_from.day,crt->valid_from.hour,
+                 crt->valid_from.min,crt->valid_from.sec); /* snprintf_va_30 */
   if (ret == -1) {
     __retres = -1;
     goto return_label;
@@ -42106,11 +42098,10 @@ int x509parse_cert_info(char *buf, size_t size, char const *prefix,
   }
   n -= (unsigned int)ret;
   p += (unsigned int)ret;
-  ret = snprintf_va_31(p,n,
-                       "\n%sexpires on    : %04d-%02d-%02d %02d:%02d:%02d",
-                       (char *)prefix,crt->valid_to.year,crt->valid_to.mon,
-                       crt->valid_to.day,crt->valid_to.hour,
-                       crt->valid_to.min,crt->valid_to.sec);
+  ret = snprintf(p,n,"\n%sexpires on    : %04d-%02d-%02d %02d:%02d:%02d",
+                 (char *)prefix,crt->valid_to.year,crt->valid_to.mon,
+                 crt->valid_to.day,crt->valid_to.hour,crt->valid_to.min,
+                 crt->valid_to.sec); /* snprintf_va_31 */
   if (ret == -1) {
     __retres = -1;
     goto return_label;
@@ -42122,7 +42113,7 @@ int x509parse_cert_info(char *buf, size_t size, char const *prefix,
   }
   n -= (unsigned int)ret;
   p += (unsigned int)ret;
-  ret = snprintf_va_32(p,n,"\n%ssigned using  : RSA+",(char *)prefix);
+  ret = snprintf(p,n,"\n%ssigned using  : RSA+",(char *)prefix); /* snprintf_va_32 */
   if (ret == -1) {
     __retres = -1;
     goto return_label;
@@ -42135,23 +42126,23 @@ int x509parse_cert_info(char *buf, size_t size, char const *prefix,
   n -= (unsigned int)ret;
   p += (unsigned int)ret;
   switch (crt->sig_alg) {
-    case 2: ret = snprintf_va_33(p,n,"MD2");
+    case 2: ret = snprintf(p,n,"MD2"); /* snprintf_va_33 */
     break;
-    case 3: ret = snprintf_va_34(p,n,"MD4");
+    case 3: ret = snprintf(p,n,"MD4"); /* snprintf_va_34 */
     break;
-    case 4: ret = snprintf_va_35(p,n,"MD5");
+    case 4: ret = snprintf(p,n,"MD5"); /* snprintf_va_35 */
     break;
-    case 5: ret = snprintf_va_36(p,n,"SHA1");
+    case 5: ret = snprintf(p,n,"SHA1"); /* snprintf_va_36 */
     break;
-    case 14: ret = snprintf_va_37(p,n,"SHA224");
+    case 14: ret = snprintf(p,n,"SHA224"); /* snprintf_va_37 */
     break;
-    case 11: ret = snprintf_va_38(p,n,"SHA256");
+    case 11: ret = snprintf(p,n,"SHA256"); /* snprintf_va_38 */
     break;
-    case 12: ret = snprintf_va_39(p,n,"SHA384");
+    case 12: ret = snprintf(p,n,"SHA384"); /* snprintf_va_39 */
     break;
-    case 13: ret = snprintf_va_40(p,n,"SHA512");
+    case 13: ret = snprintf(p,n,"SHA512"); /* snprintf_va_40 */
     break;
-    default: ret = snprintf_va_41(p,n,"?\?\?");
+    default: ret = snprintf(p,n,"?\?\?"); /* snprintf_va_41 */
     break;
   }
   if (ret == -1) {
@@ -42165,8 +42156,8 @@ int x509parse_cert_info(char *buf, size_t size, char const *prefix,
   }
   n -= (unsigned int)ret;
   p += (unsigned int)ret;
-  ret = snprintf_va_42(p,n,"\n%sRSA key size  : %d bits\n",(char *)prefix,
-                       ((int)crt->rsa.N.n * (int)sizeof(unsigned long)) * 8);
+  ret = snprintf(p,n,"\n%sRSA key size  : %d bits\n",(char *)prefix,
+                 ((int)crt->rsa.N.n * (int)sizeof(unsigned long)) * 8); /* snprintf_va_42 */
   if (ret == -1) {
     __retres = -1;
     goto return_label;
@@ -42306,8 +42297,8 @@ int x509_oid_get_numeric_string(char *buf, size_t size, x509_buf *oid)
   p = buf;
   n = size;
   if (oid->len > (size_t)0) {
-    ret = snprintf_va_43(p,n,"%d.%d",(int)*(oid->p + 0) / 40,
-                         (int)*(oid->p + 0) % 40);
+    ret = snprintf(p,n,"%d.%d",(int)*(oid->p + 0) / 40,
+                   (int)*(oid->p + 0) % 40); /* snprintf_va_43 */
     if (ret == -1) {
       __retres = -1;
       goto return_label;
@@ -42326,7 +42317,7 @@ int x509_oid_get_numeric_string(char *buf, size_t size, x509_buf *oid)
     value <<= 7;
     value += (unsigned int)((int)*(oid->p + i) & 0x7F);
     if (! ((int)*(oid->p + i) & 0x80)) {
-      ret = snprintf_va_44(p,n,".%d",(int)value);
+      ret = snprintf(p,n,".%d",(int)value); /* snprintf_va_44 */
       if (ret == -1) {
         __retres = -1;
         goto return_label;
@@ -42607,8 +42598,7 @@ int x509parse_crl_info(char *buf, size_t size, char const *prefix,
   x509_crl_entry const *entry;
   p = buf;
   n = size;
-  ret = snprintf_va_45(p,n,"%sCRL version   : %d",(char *)prefix,
-                       crl->version);
+  ret = snprintf(p,n,"%sCRL version   : %d",(char *)prefix,crl->version); /* snprintf_va_45 */
   if (ret == -1) {
     __retres = -1;
     goto return_label;
@@ -42620,7 +42610,7 @@ int x509parse_crl_info(char *buf, size_t size, char const *prefix,
   }
   n -= (unsigned int)ret;
   p += (unsigned int)ret;
-  ret = snprintf_va_46(p,n,"\n%sissuer name   : ",(char *)prefix);
+  ret = snprintf(p,n,"\n%sissuer name   : ",(char *)prefix); /* snprintf_va_46 */
   if (ret == -1) {
     __retres = -1;
     goto return_label;
@@ -42644,12 +42634,10 @@ int x509parse_crl_info(char *buf, size_t size, char const *prefix,
   }
   n -= (unsigned int)ret;
   p += (unsigned int)ret;
-  ret = snprintf_va_47(p,n,
-                       "\n%sthis update   : %04d-%02d-%02d %02d:%02d:%02d",
-                       (char *)prefix,crl->this_update.year,
-                       crl->this_update.mon,crl->this_update.day,
-                       crl->this_update.hour,crl->this_update.min,
-                       crl->this_update.sec);
+  ret = snprintf(p,n,"\n%sthis update   : %04d-%02d-%02d %02d:%02d:%02d",
+                 (char *)prefix,crl->this_update.year,crl->this_update.mon,
+                 crl->this_update.day,crl->this_update.hour,
+                 crl->this_update.min,crl->this_update.sec); /* snprintf_va_47 */
   if (ret == -1) {
     __retres = -1;
     goto return_label;
@@ -42661,12 +42649,10 @@ int x509parse_crl_info(char *buf, size_t size, char const *prefix,
   }
   n -= (unsigned int)ret;
   p += (unsigned int)ret;
-  ret = snprintf_va_48(p,n,
-                       "\n%snext update   : %04d-%02d-%02d %02d:%02d:%02d",
-                       (char *)prefix,crl->next_update.year,
-                       crl->next_update.mon,crl->next_update.day,
-                       crl->next_update.hour,crl->next_update.min,
-                       crl->next_update.sec);
+  ret = snprintf(p,n,"\n%snext update   : %04d-%02d-%02d %02d:%02d:%02d",
+                 (char *)prefix,crl->next_update.year,crl->next_update.mon,
+                 crl->next_update.day,crl->next_update.hour,
+                 crl->next_update.min,crl->next_update.sec); /* snprintf_va_48 */
   if (ret == -1) {
     __retres = -1;
     goto return_label;
@@ -42679,7 +42665,7 @@ int x509parse_crl_info(char *buf, size_t size, char const *prefix,
   n -= (unsigned int)ret;
   p += (unsigned int)ret;
   entry = & crl->entry;
-  ret = snprintf_va_49(p,n,"\n%sRevoked certificates:",(char *)prefix);
+  ret = snprintf(p,n,"\n%sRevoked certificates:",(char *)prefix); /* snprintf_va_49 */
   if (ret == -1) {
     __retres = -1;
     goto return_label;
@@ -42696,7 +42682,7 @@ int x509parse_crl_info(char *buf, size_t size, char const *prefix,
       if (! (entry->raw.len != (size_t)0)) break;
     }
     else break;
-    ret = snprintf_va_50(p,n,"\n%sserial number: ",(char *)prefix);
+    ret = snprintf(p,n,"\n%sserial number: ",(char *)prefix); /* snprintf_va_50 */
     if (ret == -1) {
       __retres = -1;
       goto return_label;
@@ -42720,14 +42706,10 @@ int x509parse_crl_info(char *buf, size_t size, char const *prefix,
     }
     n -= (unsigned int)ret;
     p += (unsigned int)ret;
-    ret = snprintf_va_51(p,n,
-                         " revocation date: %04d-%02d-%02d %02d:%02d:%02d",
-                         entry->revocation_date.year,
-                         entry->revocation_date.mon,
-                         entry->revocation_date.day,
-                         entry->revocation_date.hour,
-                         entry->revocation_date.min,
-                         entry->revocation_date.sec);
+    ret = snprintf(p,n," revocation date: %04d-%02d-%02d %02d:%02d:%02d",
+                   entry->revocation_date.year,entry->revocation_date.mon,
+                   entry->revocation_date.day,entry->revocation_date.hour,
+                   entry->revocation_date.min,entry->revocation_date.sec); /* snprintf_va_51 */
     if (ret == -1) {
       __retres = -1;
       goto return_label;
@@ -42741,7 +42723,7 @@ int x509parse_crl_info(char *buf, size_t size, char const *prefix,
     p += (unsigned int)ret;
     entry = (x509_crl_entry const *)entry->next;
   }
-  ret = snprintf_va_52(p,n,"\n%ssigned using  : RSA+",(char *)prefix);
+  ret = snprintf(p,n,"\n%ssigned using  : RSA+",(char *)prefix); /* snprintf_va_52 */
   if (ret == -1) {
     __retres = -1;
     goto return_label;
@@ -42754,23 +42736,23 @@ int x509parse_crl_info(char *buf, size_t size, char const *prefix,
   n -= (unsigned int)ret;
   p += (unsigned int)ret;
   switch (crl->sig_alg) {
-    case 2: ret = snprintf_va_53(p,n,"MD2");
+    case 2: ret = snprintf(p,n,"MD2"); /* snprintf_va_53 */
     break;
-    case 3: ret = snprintf_va_54(p,n,"MD4");
+    case 3: ret = snprintf(p,n,"MD4"); /* snprintf_va_54 */
     break;
-    case 4: ret = snprintf_va_55(p,n,"MD5");
+    case 4: ret = snprintf(p,n,"MD5"); /* snprintf_va_55 */
     break;
-    case 5: ret = snprintf_va_56(p,n,"SHA1");
+    case 5: ret = snprintf(p,n,"SHA1"); /* snprintf_va_56 */
     break;
-    case 14: ret = snprintf_va_57(p,n,"SHA224");
+    case 14: ret = snprintf(p,n,"SHA224"); /* snprintf_va_57 */
     break;
-    case 11: ret = snprintf_va_58(p,n,"SHA256");
+    case 11: ret = snprintf(p,n,"SHA256"); /* snprintf_va_58 */
     break;
-    case 12: ret = snprintf_va_59(p,n,"SHA384");
+    case 12: ret = snprintf(p,n,"SHA384"); /* snprintf_va_59 */
     break;
-    case 13: ret = snprintf_va_60(p,n,"SHA512");
+    case 13: ret = snprintf(p,n,"SHA512"); /* snprintf_va_60 */
     break;
-    default: ret = snprintf_va_61(p,n,"?\?\?");
+    default: ret = snprintf(p,n,"?\?\?"); /* snprintf_va_61 */
     break;
   }
   if (ret == -1) {
@@ -42784,7 +42766,7 @@ int x509parse_crl_info(char *buf, size_t size, char const *prefix,
   }
   n -= (unsigned int)ret;
   p += (unsigned int)ret;
-  ret = snprintf_va_62(p,n,"\n");
+  ret = snprintf(p,n,"\n"); /* snprintf_va_62 */
   if (ret == -1) {
     __retres = -1;
     goto return_label;
@@ -43349,12 +43331,12 @@ int x509_self_test(int verbose)
   dhm_context dhm;
   size_t tmp;
   size_t tmp_0;
-  if (verbose != 0) printf_va_127("  X.509 certificate load: ");
+  if (verbose != 0) printf("  X.509 certificate load: "); /* printf_va_127 */
   memset((void *)(& clicert),0,sizeof(x509_cert));
   tmp = strlen(test_cli_crt);
   ret = x509parse_crt(& clicert,(unsigned char const *)(test_cli_crt),tmp);
   if (ret != 0) {
-    if (verbose != 0) printf_va_128("failed\n");
+    if (verbose != 0) printf("failed\n"); /* printf_va_128 */
     __retres = ret;
     goto return_label;
   }
@@ -43362,42 +43344,42 @@ int x509_self_test(int verbose)
   tmp_0 = strlen(test_ca_crt);
   ret = x509parse_crt(& cacert,(unsigned char const *)(test_ca_crt),tmp_0);
   if (ret != 0) {
-    if (verbose != 0) printf_va_129("failed\n");
+    if (verbose != 0) printf("failed\n"); /* printf_va_129 */
     __retres = ret;
     goto return_label;
   }
-  if (verbose != 0) printf_va_130("passed\n  X.509 private key load: ");
+  if (verbose != 0) printf("passed\n  X.509 private key load: "); /* printf_va_130 */
   i = strlen(test_ca_key);
   j = strlen(test_ca_pwd);
   rsa_init(& rsa,0,0);
   ret = x509parse_key(& rsa,(unsigned char const *)(test_ca_key),i,
                       (unsigned char const *)(test_ca_pwd),j);
   if (ret != 0) {
-    if (verbose != 0) printf_va_131("failed\n");
+    if (verbose != 0) printf("failed\n"); /* printf_va_131 */
     __retres = ret;
     goto return_label;
   }
-  if (verbose != 0) printf_va_132("passed\n  X.509 signature verify: ");
+  if (verbose != 0) printf("passed\n  X.509 signature verify: "); /* printf_va_132 */
   ret = x509parse_verify(& clicert,& cacert,(x509_crl *)0,
                          "PolarSSL Client 2",& flags,
                          (int (*)(void *, x509_cert *, int , int ))0,
                          (void *)0);
   if (ret != 0) {
-    printf_va_133("%02x",(unsigned int)flags);
-    if (verbose != 0) printf_va_134("failed\n");
+    printf("%02x",(unsigned int)flags); /* printf_va_133 */
+    if (verbose != 0) printf("failed\n"); /* printf_va_134 */
     __retres = ret;
     goto return_label;
   }
-  if (verbose != 0) printf_va_135("passed\n  X.509 DHM parameter load: ");
+  if (verbose != 0) printf("passed\n  X.509 DHM parameter load: "); /* printf_va_135 */
   i = strlen(test_dhm_params);
   j = strlen(test_ca_pwd);
   ret = x509parse_dhm(& dhm,(unsigned char const *)(test_dhm_params),i);
   if (ret != 0) {
-    if (verbose != 0) printf_va_136("failed\n");
+    if (verbose != 0) printf("failed\n"); /* printf_va_136 */
     __retres = ret;
     goto return_label;
   }
-  if (verbose != 0) printf_va_137("passed\n\n");
+  if (verbose != 0) printf("passed\n\n"); /* printf_va_137 */
   x509_free(& cacert);
   x509_free(& clicert);
   rsa_free(& rsa);
@@ -43771,22 +43753,22 @@ int xtea_self_test(int verbose)
   while (i < 6) {
     {
       int tmp;
-      if (verbose != 0) printf_va_138("  XTEA test #%d: ",i + 1);
+      if (verbose != 0) printf("  XTEA test #%d: ",i + 1); /* printf_va_138 */
       memcpy((void *)(buf),(void const *)(xtea_test_pt[i]),(unsigned int)8);
       xtea_setup(& ctx,(unsigned char *)(xtea_test_key[i]));
       xtea_crypt_ecb(& ctx,1,buf,buf);
       tmp = memcmp((void const *)(buf),(void const *)(xtea_test_ct[i]),
                    (unsigned int)8);
       if (tmp != 0) {
-        if (verbose != 0) printf_va_139("failed\n");
+        if (verbose != 0) printf("failed\n"); /* printf_va_139 */
         __retres = 1;
         goto return_label;
       }
-      if (verbose != 0) printf_va_140("passed\n");
+      if (verbose != 0) printf("passed\n"); /* printf_va_140 */
     }
     i ++;
   }
-  if (verbose != 0) printf_va_141("\n");
+  if (verbose != 0) printf("\n"); /* printf_va_141 */
   __retres = 0;
   return_label: return __retres;
 }
@@ -43829,7 +43811,7 @@ int fprintf_va_1(FILE * __restrict stream, char const * __restrict format,
 void my_debug(void *ctx, int level, char const *str)
 {
   if (level < 0) {
-    fprintf_va_1((FILE *)ctx,"%s",(char *)str);
+    fprintf((FILE *)ctx,"%s",(char *)str); /* fprintf_va_1 */
     fflush((FILE *)ctx);
   }
   return;

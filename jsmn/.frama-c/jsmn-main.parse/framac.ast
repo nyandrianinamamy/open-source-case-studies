@@ -57,7 +57,7 @@ static void test(int (*func)(void), char const *name)
   if (r == 0) test_passed ++;
   else {
     test_failed ++;
-    printf_va_1("FAILED: %s (at line %d)\n",(char *)name,r);
+    printf("FAILED: %s (at line %d)\n",(char *)name,r); /* printf_va_1 */
   }
   return;
 }
@@ -486,28 +486,26 @@ static int vtokeq(char const *s, jsmntok_t *t, int numtok, va_list ap)
           value = (char *)0;
         }
       if ((t + i)->type != (unsigned int)type) {
-        printf_va_2("token %d type is %d, not %d\n",i,(int)(t + i)->type,
-                    type);
+        printf("token %d type is %d, not %d\n",i,(int)(t + i)->type,type); /* printf_va_2 */
         __retres = 0;
         goto return_label;
       }
       if (start != -1) 
         if (end != -1) {
           if ((t + i)->start != start) {
-            printf_va_3("token %d start is %d, not %d\n",i,(t + i)->start,
-                        start);
+            printf("token %d start is %d, not %d\n",i,(t + i)->start,start); /* printf_va_3 */
             __retres = 0;
             goto return_label;
           }
           if ((t + i)->end != end) {
-            printf_va_4("token %d end is %d, not %d\n",i,(t + i)->end,end);
+            printf("token %d end is %d, not %d\n",i,(t + i)->end,end); /* printf_va_4 */
             __retres = 0;
             goto return_label;
           }
         }
       if (size != -1) 
         if ((t + i)->size != size) {
-          printf_va_5("token %d size is %d, not %d\n",i,(t + i)->size,size);
+          printf("token %d size is %d, not %d\n",i,(t + i)->size,size); /* printf_va_5 */
           __retres = 0;
           goto return_label;
         }
@@ -525,9 +523,9 @@ static int vtokeq(char const *s, jsmntok_t *t, int numtok, va_list ap)
             if (tmp_0 != 0) {
               _LOR:
               {
-                printf_va_6("token %d value is %.*s, not %s\n",i,
-                            (t + i)->end - (t + i)->start,
-                            (char *)(s + (t + i)->start),value);
+                printf("token %d value is %.*s, not %s\n",i,
+                       (t + i)->end - (t + i)->start,
+                       (char *)(s + (t + i)->start),value); /* printf_va_6 */
                 __retres = 0;
                 goto return_label;
               }
@@ -582,7 +580,7 @@ static int parse(char const *s, int status, int numtok,
   ;
   r = jsmn_parse(& p,s,tmp_0,t,(unsigned int)numtok);
   if (r != status) {
-    printf_va_7("status is %d, not %d\n",r,status);
+    printf("status is %d, not %d\n",r,status); /* printf_va_7 */
     __retres = 0;
     goto return_label;
   }
@@ -2013,7 +2011,7 @@ int main(void)
   test(& test_count,"test tokens count estimation");
   test(& test_nonstrict,"test for non-strict mode");
   test(& test_unmatched_brackets,"test for unmatched brackets");
-  printf_va_8("\nPASSED: %d\nFAILED: %d\n",test_passed,test_failed);
+  printf("\nPASSED: %d\nFAILED: %d\n",test_passed,test_failed); /* printf_va_8 */
   __retres = test_failed > 0;
   return __retres;
 }

@@ -39,8 +39,8 @@ int main(void)
   int __retres;
   int i;
   *((unsigned char *)(& i) + 1) = (unsigned char)0x22;
-  printf_va_1("i=0x%x\n",(unsigned int)i);
-  printf_va_2("i=0x%x\n",(unsigned int)i);
+  printf("i=0x%x\n",(unsigned int)i); /* printf_va_1 */
+  printf("i=0x%x\n",(unsigned int)i); /* printf_va_2 */
   __retres = 0;
   return __retres;
 }

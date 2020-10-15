@@ -45,9 +45,9 @@ int main(void)
   int __retres;
   s.y = 41;
   *((int *)(& s) + 1) = 42;
-  printf_va_1("s.y=%i ",s.y);
+  printf("s.y=%i ",s.y); /* printf_va_1 */
   *((int *)((char *)(& s) + sizeof(int))) = 43;
-  printf_va_2("s.y=%i\n",s.y);
+  printf("s.y=%i\n",s.y); /* printf_va_2 */
   __retres = 0;
   return __retres;
 }

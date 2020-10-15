@@ -31,7 +31,7 @@ int main(void)
   int j = i - i;
   _Bool b = (_Bool)(j == j);
   if (b) tmp = "true"; else tmp = "false";
-  printf_va_1("b=%s\n",(char *)tmp);
+  printf("b=%s\n",(char *)tmp); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

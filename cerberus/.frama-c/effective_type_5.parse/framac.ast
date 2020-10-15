@@ -35,7 +35,7 @@ int main(void)
   *((st1 *)p) = s1;
   float *pf = & ((st1 *)p)->f1;
   float f = *pf;
-  printf_va_1("f=%f\n",(double)f);
+  printf("f=%f\n",(double)f); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }

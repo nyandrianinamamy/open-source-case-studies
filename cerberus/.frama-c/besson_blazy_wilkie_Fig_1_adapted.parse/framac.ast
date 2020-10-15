@@ -57,13 +57,13 @@ int main(void)
   int tmp;
   char const *tmp_0;
   int tmp_1;
-  printf_va_1("status=0x%x\n",(unsigned int)status);
+  printf("status=0x%x\n",(unsigned int)status); /* printf_va_1 */
   status = set(status,0);
   tmp = isset(status,0);
   _Bool b = (_Bool)(tmp != 0);
   if (b) tmp_0 = "true"; else tmp_0 = "false";
   ;
-  printf_va_2("status=0x%x  b=%s\n",(unsigned int)status,(char *)tmp_0);
+  printf("status=0x%x  b=%s\n",(unsigned int)status,(char *)tmp_0); /* printf_va_2 */
   tmp_1 = isset(status,0);
   return tmp_1;
 }

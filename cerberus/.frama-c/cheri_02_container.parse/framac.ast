@@ -38,8 +38,7 @@ int main(void)
   char *pcst = pcj - (8U - 0U);
   st *ps = (st *)pcst;
   ps->f = (float)22.0;
-  printf_va_1("s.i=%i s.f=%f s.j=%i ps->f=%f\n",s.i,(double)s.f,s.j,
-              (double)ps->f);
+  printf("s.i=%i s.f=%f s.j=%i ps->f=%f\n",s.i,(double)s.f,s.j,(double)ps->f); /* printf_va_1 */
   __retres = 0;
   return __retres;
 }
