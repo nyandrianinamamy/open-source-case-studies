@@ -16,3 +16,7 @@ flamegraph.txt
 
 benchs-value.csv
 bench_clone
+
+# .sarif reports are produced as CI artifacts, but we do not want to version
+# them, due to their size and the redundancy w.r.t. Eva logs.
+*.sarif
