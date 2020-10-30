@@ -1,0 +1,13 @@
+default:
+  image: framac/frama-c:dev
+
+build:
+  tags:
+    - docker
+  script:
+    - make -B all >/dev/null
+    - git diff --exit-code
+    - make sarif
+  artifacts:
+    paths:
+    - "*/.frama-c/*.sarif"

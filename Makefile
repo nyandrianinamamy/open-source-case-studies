@@ -111,6 +111,11 @@ parse: $(addsuffix .parse,$(TARGETS))
 
 stats: $(addsuffix .stats,$(TARGETS))
 
+%.sarif:
+	$(MAKE) -C $*/.frama-c sarif
+
+sarif: $(addsuffix .sarif,$(TARGETS))
+
 display-targets:
 	@echo $(foreach target,$(TARGETS),\
 	        $(addprefix $(target)/,\
