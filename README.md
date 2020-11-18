@@ -1,3 +1,5 @@
+![Pipeline status badge](https://git.frama-c.com/pub/open-source-case-studies/badges/master/pipeline.svg)
+
 Open source case studies for Frama-C
 ====================================
 
