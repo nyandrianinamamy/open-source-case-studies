@@ -4,7 +4,7 @@
 ### Prologue. Do not modify this block. #######################################
 -include path.mk
 FRAMAC ?= frama-c
-include $(shell $(FRAMAC)-config -scripts)/prologue.mk
+include $(shell $(FRAMAC)-config -print-share-path)/analysis-scripts/prologue.mk
 ###############################################################################
 
 # Edit below as needed. MACHDEP is mandatory. Suggested flags are optional.
@@ -48,7 +48,7 @@ microstrain_gx4_45_test.parse: \
   ../MIPSDK/C/Examples/Linux/GX4-45/GX4_45_Test/GX4-45_Test.c \
 
 ### Epilogue. Do not modify this block. #######################################
-include $(shell $(FRAMAC)-config -scripts)/epilogue.mk
+include $(shell $(FRAMAC)-config -print-share-path)/analysis-scripts/epilogue.mk
 ###############################################################################
 
 # optional, for OSCS

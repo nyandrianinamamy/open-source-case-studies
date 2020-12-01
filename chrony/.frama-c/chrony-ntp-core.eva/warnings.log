@@ -5091,7 +5091,7 @@ stack: UTI_NormaliseTimespec :: ntp_core.c:1080 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-util.c:763:[eva:garbled-mix] warning: The specification of function htonl has generated a garbled mix for assigns clause assigns clause \result.
+util.c:763:[eva:garbled-mix] warning: The specification of function htonl has generated a garbled mix for assigns clause \result.
 util.c:764:[eva:alarm] warning: non-finite double value.
 assert \is_finite(\mul_double((double)4.294967296, (double)nsec));
 stack: UTI_TimespecToNtp64 :: ntp_core.c:1081 <-
@@ -5110,7 +5110,7 @@ stack: UTI_TimespecToNtp64 :: ntp_core.c:1081 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-util.c:764:[eva:garbled-mix] warning: The specification of function htonl has generated a garbled mix for assigns clause assigns clause \result.
+util.c:764:[eva:garbled-mix] warning: The specification of function htonl has generated a garbled mix for assigns clause \result.
 md5.c:157:[kernel] warning: all target addresses were invalid. This path is assumed to be dead.
 stack: MD5Update :: hash_intmd5.c:56 <-
        HSH_Hash :: keys.c:364 <-
@@ -8344,7 +8344,7 @@ stack: stat :: reference.c:370 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-reference.c:371:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&buf.st_gid);
+reference.c:371:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&buf.st_uid);
 stack: update_drift_file :: reference.c:1083 <-
        REF_SetReference :: sources.c:1094 <-
        SRC_SelectSource :: ntp_core.c:1507 <-
@@ -8355,7 +8355,7 @@ stack: update_drift_file :: reference.c:1083 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-reference.c:371:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&buf.st_uid);
+reference.c:371:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&buf.st_gid);
 stack: update_drift_file :: reference.c:1083 <-
        REF_SetReference :: sources.c:1094 <-
        SRC_SelectSource :: ntp_core.c:1507 <-
