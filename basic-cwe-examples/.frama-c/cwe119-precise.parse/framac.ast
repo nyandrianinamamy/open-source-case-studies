@@ -59,7 +59,7 @@ static int my_strcmp(char const *s1, char const *s2)
 {
   int __retres;
   size_t i;
-  i = (unsigned int)0;
+  i = (unsigned long)0;
   while ((int)*(s1 + i) == (int)*(s2 + i)) {
     if ((int)*(s1 + i) == 0) {
       __retres = 0;
@@ -107,7 +107,8 @@ void host_lookup(char *user_supplied_addr)
   char hostname[64];
   validate_addr_form(user_supplied_addr);
   addr = my_inet_addr((char const *)user_supplied_addr);
-  hp = my_gethostbyaddr((void const *)(& addr),sizeof(struct in_addr),2);
+  hp = my_gethostbyaddr((void const *)(& addr),
+                        (unsigned int)sizeof(struct in_addr),2);
   strcpy(hostname,(char const *)hp->h_name);
   return;
 }

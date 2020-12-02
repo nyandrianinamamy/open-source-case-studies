@@ -130,7 +130,7 @@ int main(void)
         exit(1);
       }
     }
-  board = (board_square_t *)malloc((unsigned int)(m * n) * sizeof(board_square_t));
+  board = (board_square_t *)malloc((unsigned long)(m * n) * sizeof(board_square_t));
   free((void *)board);
   __retres = 0;
   return __retres;

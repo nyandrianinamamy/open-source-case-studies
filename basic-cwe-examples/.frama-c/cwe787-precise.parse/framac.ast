@@ -8,7 +8,7 @@ char *copy_input(char *user_supplied_string)
   int dst_index;
   size_t tmp_0;
   char *dst_buf =
-    malloc(((unsigned int)4 * sizeof(char)) * (unsigned int)16);
+    malloc(((unsigned long)4 * sizeof(char)) * (unsigned long)16);
   if (! dst_buf) exit(1);
   tmp_0 = strlen((char const *)user_supplied_string);
   if ((size_t)16 <= tmp_0) exit(1);
