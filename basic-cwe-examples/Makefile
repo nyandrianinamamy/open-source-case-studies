@@ -1,4 +1,4 @@
-TARGETS=cwe20 cwe119 cwe190 cwe416 cwe787
+TARGETS=cwe20 cwe20-2 cwe119 cwe190 cwe416 cwe787
 
 all: $(TARGETS)
 
