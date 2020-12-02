@@ -45,10 +45,10 @@ cwe416-precise.parse: ../cwe416.c
 cwe787-precise.parse: ../cwe787.c
 
 cwe20-precise.eva:  EVAFLAGS +=
-cwe119-precise.eva: EVAFLAGS += -eva-precision 1
-cwe190-precise.eva: EVAFLAGS += -warn-unsigned-overflow -eva-no-alloc-returns-null
-cwe416-precise.eva: EVAFLAGS += -eva-precision 1
-cwe787-precise.eva: EVAFLAGS += -eva-precision 2 -eva-no-alloc-returns-null
+cwe119-precise.eva: EVAFLAGS +=
+cwe190-precise.eva: EVAFLAGS += -warn-unsigned-overflow
+cwe416-precise.eva: EVAFLAGS +=
+cwe787-precise.eva: EVAFLAGS += -eva-precision 2
 
 ### Epilogue. Do not modify this block. #######################################
 include $(shell $(FRAMAC)-config -print-share-path)/analysis-scripts/epilogue.mk

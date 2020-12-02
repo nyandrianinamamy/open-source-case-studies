@@ -1,15 +1,18 @@
 // Based on MITRE's CWE-119, demonstrative example 1
 // https://cwe.mitre.org/data/definitions/119.html
 
-// Run with "-eva-precision 1" to obtain a "Red Alarm".
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <netdb.h>
 
-// To use Frama-C's "Frama_C_interval" to generate a nondeterministic value
-#include "__fc_builtin.h"
+volatile uint32_t _rand;
+// returns a random non-zero uint32_t
+uint32_t nonzero_uint32_t(void) {
+  uint32_t r = _rand;
+  if (!r) return 1U;
+  else return r;
+}
 
 static void validate_addr_form(char *v) {
   // naive, simplistic validation
@@ -33,7 +36,7 @@ static in_addr_t my_inet_addr(const char *cp) {
   if (my_strcmp(cp, "127.0.0.1") == 0) {
     return 0;
   } else {
-    return Frama_C_nondet(1,UINT_MAX);
+    return nonzero_uint32_t();
   }
 }
 
@@ -52,13 +55,13 @@ static struct hostent *my_gethostbyaddr(const void *addr,
 
 void host_lookup(char *user_supplied_addr){
   struct hostent *hp;
-  in_addr_t *addr;
+  in_addr_t addr;
   char hostname[64];
 
   /* routine that ensures user_supplied_addr is in the right format for conversion */
   validate_addr_form(user_supplied_addr);
   addr = my_inet_addr(user_supplied_addr);
-  hp = my_gethostbyaddr(addr, sizeof(struct in_addr), AF_INET);
+  hp = my_gethostbyaddr(&addr, sizeof(struct in_addr), AF_INET);
   strcpy(hostname, hp->h_name);
 }
 

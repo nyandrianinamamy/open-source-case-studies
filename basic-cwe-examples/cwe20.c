@@ -33,5 +33,6 @@ int main() {
   }
   board = (board_square_t*) malloc( m * n * sizeof(board_square_t));
 
+  free(board);
   return 0;
 }

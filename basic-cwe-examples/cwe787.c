@@ -4,10 +4,6 @@
 // Option "-eva-precision 1" reduces the number of "Unknown" alarms.
 // Run with "-eva-precision 2" to obtain a "Red Alarm".
 
-// Also, adding option "-eva-no-alloc-returns-null" allows focusing on this
-// issue while ignoring the the fact that malloc() may fail (which would
-// require an extra check).
-
 #include <stdlib.h>
 #include <string.h>
 
@@ -16,6 +12,7 @@
 char * copy_input(char *user_supplied_string) {
   int i, dst_index;
   char *dst_buf = (char*)malloc(4*sizeof(char) * MAX_SIZE);
+  if (!dst_buf) exit(1);
   if ( MAX_SIZE <= strlen(user_supplied_string) ){
     exit(1);
   }
@@ -40,8 +37,8 @@ char * copy_input(char *user_supplied_string) {
 
 int main() {
   char *benevolent_string = "<a href='ab&c'>";
-  copy_input(benevolent_string);
+  free(copy_input(benevolent_string));
   char *malicious_string  = "&&&&&&&&&&&&&&&";
-  copy_input(malicious_string);
+  free(copy_input(malicious_string));
   return 0;
 }

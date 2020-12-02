@@ -16,10 +16,14 @@ int main(int argc, char **argv) {
   char *buf2R2;
   char *buf3R2;
   buf1R1 = (char *) malloc(BUFSIZER1);
+  if (!buf1R1) exit(1);
   buf2R1 = (char *) malloc(BUFSIZER1);
+  if (!buf2R1) exit(1);
   free(buf2R1);
   buf2R2 = (char *) malloc(BUFSIZER2);
+  if (!buf2R2) exit(1);
   buf3R2 = (char *) malloc(BUFSIZER2);
+  if (!buf3R2) exit(1);
   strncpy(buf2R1, argv[1], BUFSIZER1-1);
   free(buf1R1);
   free(buf2R2);

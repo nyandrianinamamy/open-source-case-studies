@@ -6,18 +6,21 @@
 // write to the (under-allocated) buffer.
 // Adding option "-warn-unsigned-overflow" ensures Eva reports the
 // overflow as soon as it happens.
-// Also, adding option "-eva-no-alloc-returns-null" allows focusing on this
-// issue while ignoring the the fact that malloc() may fail (which would
-// require an extra check).
 
 #include <stdlib.h>
 
+volatile int _rand;
+// returns a random int
+int random_int(void) {
+  return _rand;
+}
+
 int packet_get_int_ok() {
-  return 123456;
+  return random_int() ? 0 : 123456; // ok size
 }
 
 int packet_get_int_problem() {
-  return 1073741824;
+  return random_int() ? 1073741824 : 0; // too large (>= INT_MAX/4)
 }
 
 char *packet_get_string(const char *s) {
@@ -29,15 +32,17 @@ int main() {
   int nresp = packet_get_int_ok();
   if (nresp > 0) {
     response = malloc(nresp*sizeof(char*));
+    if (!response) exit(1);
     for (int i = 0; i < nresp; i++) response[i] = packet_get_string(NULL);
+    free(response);
   }
-  free(response);
 
   nresp = packet_get_int_problem();
   if (nresp > 0) {
     response = malloc(nresp*sizeof(char*));
+    if (!response) exit(1);
     for (int i = 0; i < nresp; i++) response[i] = packet_get_string(NULL);
+    free(response);
   }
-  free(response);
   return 0;
 }
