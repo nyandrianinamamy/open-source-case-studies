@@ -131,6 +131,8 @@ when available. We also summarize the license of each directory below.
 - `gzip124`: GPL
 - `hiredis`: Redis license (BSD-style), see `COPYING`
 - `icpc`: Unlicense
+- `ioccc`: Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0),
+           see `COPYING`
 - `itc-benchmarks`: BSD 2-clause, see `COPYING`
 - `jsmn`: MIT
 - `kgflags`: MIT, see `LICENSE`
