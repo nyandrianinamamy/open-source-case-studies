@@ -3641,28 +3641,28 @@ void ct_init(ush *attr, int *methodp)
     tmp_2 = n;
     n ++;
     static_ltree[tmp_2].dl.len = (unsigned short)8;
-    bl_count[8] = (ush)((int)bl_count[8] + 1);
+    bl_count[8] = (unsigned short)((int)bl_count[8] + 1);
   }
   while (n <= 255) {
     int tmp_3;
     tmp_3 = n;
     n ++;
     static_ltree[tmp_3].dl.len = (unsigned short)9;
-    bl_count[9] = (ush)((int)bl_count[9] + 1);
+    bl_count[9] = (unsigned short)((int)bl_count[9] + 1);
   }
   while (n <= 279) {
     int tmp_4;
     tmp_4 = n;
     n ++;
     static_ltree[tmp_4].dl.len = (unsigned short)7;
-    bl_count[7] = (ush)((int)bl_count[7] + 1);
+    bl_count[7] = (unsigned short)((int)bl_count[7] + 1);
   }
   while (n <= 287) {
     int tmp_5;
     tmp_5 = n;
     n ++;
     static_ltree[tmp_5].dl.len = (unsigned short)8;
-    bl_count[8] = (ush)((int)bl_count[8] + 1);
+    bl_count[8] = (unsigned short)((int)bl_count[8] + 1);
   }
   gen_codes(static_ltree,((256 + 1) + 29) + 1);
   n = 0;
@@ -3765,7 +3765,7 @@ static void gen_bitlen(tree_desc *desc)
     }
     (tree + n)->dl.len = (unsigned short)bits;
     if (n > max_code) goto __Cont;
-    bl_count[bits] = (ush)((int)bl_count[bits] + 1);
+    bl_count[bits] = (unsigned short)((int)bl_count[bits] + 1);
     xbits = 0;
     if (n >= base) xbits = *(extra + (n - base));
     f = (tree + n)->fc.freq;
@@ -3778,9 +3778,9 @@ static void gen_bitlen(tree_desc *desc)
   while (1) {
     bits = max_length - 1;
     while ((int)bl_count[bits] == 0) bits --;
-    bl_count[bits] = (ush)((int)bl_count[bits] - 1);
+    bl_count[bits] = (unsigned short)((int)bl_count[bits] - 1);
     bl_count[bits + 1] = (unsigned short)((int)bl_count[bits + 1] + 2);
-    bl_count[max_length] = (ush)((int)bl_count[max_length] - 1);
+    bl_count[max_length] = (unsigned short)((int)bl_count[max_length] - 1);
     overflow -= 2;
     if (! (overflow > 0)) break;
   }
@@ -3825,7 +3825,7 @@ static void gen_codes(ct_data *tree, int max_code)
       if (len == 0) goto __Cont;
       ;
       tmp = next_code[len];
-      next_code[len] = (ush)((int)next_code[len] + 1);
+      next_code[len] = (unsigned short)((int)next_code[len] + 1);
       ;
       tmp_0 = bi_reverse((unsigned int)tmp,len);
       (tree + n)->fc.code = (unsigned short)tmp_0;
@@ -3949,12 +3949,13 @@ static void scan_tree(ct_data *tree, int max_code)
                              (int)bl_tree[curlen].fc.freq + count);
       else 
         if (curlen != 0) {
-          if (curlen != prevlen) bl_tree[curlen].fc.freq = (ush)((int)bl_tree[curlen].fc.freq + 1);
-          bl_tree[16].fc.freq = (ush)((int)bl_tree[16].fc.freq + 1);
+          if (curlen != prevlen) bl_tree[curlen].fc.freq = (unsigned short)(
+                                 (int)bl_tree[curlen].fc.freq + 1);
+          bl_tree[16].fc.freq = (unsigned short)((int)bl_tree[16].fc.freq + 1);
         }
         else 
-          if (count <= 10) bl_tree[17].fc.freq = (ush)((int)bl_tree[17].fc.freq + 1);
-          else bl_tree[18].fc.freq = (ush)((int)bl_tree[18].fc.freq + 1);
+          if (count <= 10) bl_tree[17].fc.freq = (unsigned short)((int)bl_tree[17].fc.freq + 1);
+          else bl_tree[18].fc.freq = (unsigned short)((int)bl_tree[18].fc.freq + 1);
     }
     count = 0;
     prevlen = curlen;
@@ -4147,16 +4148,16 @@ int ct_tally(int dist, int lc)
   tmp = last_lit;
   last_lit ++;
   inbuf[tmp] = (unsigned char)lc;
-  if (dist == 0) dyn_ltree[lc].fc.freq = (ush)((int)dyn_ltree[lc].fc.freq + 1);
+  if (dist == 0) dyn_ltree[lc].fc.freq = (unsigned short)((int)dyn_ltree[lc].fc.freq + 1);
   else {
     int tmp_0;
     unsigned int tmp_1;
     dist --;
-    dyn_ltree[((int)length_code[lc] + 256) + 1].fc.freq = (ush)((int)dyn_ltree[
-                                                                ((int)length_code[lc] + 256) + 1].fc.freq + 1);
+    dyn_ltree[((int)length_code[lc] + 256) + 1].fc.freq = (unsigned short)(
+    (int)dyn_ltree[((int)length_code[lc] + 256) + 1].fc.freq + 1);
     if (dist < 256) tmp_0 = (int)dist_code[dist];
     else tmp_0 = (int)dist_code[256 + (dist >> 7)];
-    dyn_dtree[tmp_0].fc.freq = (ush)((int)dyn_dtree[tmp_0].fc.freq + 1);
+    dyn_dtree[tmp_0].fc.freq = (unsigned short)((int)dyn_dtree[tmp_0].fc.freq + 1);
     tmp_1 = last_dist;
     last_dist ++;
     d_buf[tmp_1] = (unsigned short)dist;
@@ -7166,7 +7167,7 @@ static void make_table(int nchar, uch *bitlen, int tablebits, ush *table)
   }
   i = (unsigned int)0;
   while (i < (unsigned int)nchar) {
-    count[*(bitlen + i)] = (ush)((int)count[*(bitlen + i)] + 1);
+    count[*(bitlen + i)] = (unsigned short)((int)count[*(bitlen + i)] + 1);
     i ++;
   }
   start[1] = (unsigned short)0;

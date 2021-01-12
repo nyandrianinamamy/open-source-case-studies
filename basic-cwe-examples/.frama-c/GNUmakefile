@@ -16,7 +16,7 @@ CPPFLAGS    += \
 
 ## General flags
 FCFLAGS     += \
-  -add-symbolic-path=.:.. \
+  -add-symbolic-path=..:. \
   -kernel-warn-key annot:missing-spec=abort \
   -kernel-warn-key typing:implicit-function-declaration=abort \
 

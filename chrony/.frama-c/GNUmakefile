@@ -21,7 +21,7 @@ CPPFLAGS    += \
 FCFLAGS     += \
   -cpp-command "cpp -E -C -I.." \
   -cpp-frama-c-compliant \
-  -add-symbolic-path=.:.. \
+  -add-symbolic-path=..:. \
   -kernel-warn-key typing:implicit-function-declaration=abort \
   -warn-special-float none \
 
@@ -42,7 +42,6 @@ EVAFLAGS    += \
 
 ## GUI-only flags
 FCGUIFLAGS += \
-  -add-symbolic-path=.:.. \
 
 TEST_COMMON_SRCS = \
   ../test/unit/test.c \

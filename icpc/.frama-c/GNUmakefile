@@ -16,7 +16,7 @@ CPPFLAGS    += \
 
 ## General flags
 FCFLAGS     += \
-  -add-symbolic-path=.:.. \
+  -add-symbolic-path=..:. \
   -warn-special-float none \
 
 ## Eva-specific flags
@@ -26,7 +26,6 @@ EVAFLAGS    += \
 
 ## GUI-only flags
 FCGUIFLAGS += \
-  -add-symbolic-path=.:.. \
 
 ## Analysis targets (suffixed with .eva)
 TARGETS = icpc.eva

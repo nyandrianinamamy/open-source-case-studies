@@ -5047,7 +5047,7 @@ static mz_bool tdefl_compress_fast(tdefl_compressor *d)
                     pLZ_code_buf ++;
                     *tmp_11 = (unsigned char)first_trigram;
                     *pLZ_flags = (unsigned char)((int)*pLZ_flags >> 1);
-                    d->m_huff_count[0][(unsigned char)first_trigram] = (mz_uint16)(
+                    d->m_huff_count[0][(unsigned char)first_trigram] = (unsigned short)(
                     (int)d->m_huff_count[0][(unsigned char)first_trigram] + 1);
                   }
                 }
@@ -5082,8 +5082,8 @@ static mz_bool tdefl_compress_fast(tdefl_compressor *d)
                   s1 = (unsigned int)s_tdefl_large_dist_sym[cur_match_dist >> 8];
                   if (cur_match_dist < (mz_uint)512) tmp_13 = s0;
                   else tmp_13 = s1;
-                  d->m_huff_count[1][tmp_13] = (mz_uint16)((int)d->m_huff_count[1][tmp_13] + 1);
-                  d->m_huff_count[0][s_tdefl_len_sym[cur_match_len - (mz_uint)TDEFL_MIN_MATCH_LEN]] = (mz_uint16)(
+                  d->m_huff_count[1][tmp_13] = (unsigned short)((int)d->m_huff_count[1][tmp_13] + 1);
+                  d->m_huff_count[0][s_tdefl_len_sym[cur_match_len - (mz_uint)TDEFL_MIN_MATCH_LEN]] = (unsigned short)(
                   (int)d->m_huff_count[0][s_tdefl_len_sym[cur_match_len - (mz_uint)TDEFL_MIN_MATCH_LEN]] + 1);
                 }
               }
@@ -5098,7 +5098,7 @@ static mz_bool tdefl_compress_fast(tdefl_compressor *d)
             pLZ_code_buf ++;
             *tmp_14 = (unsigned char)first_trigram;
             *pLZ_flags = (unsigned char)((int)*pLZ_flags >> 1);
-            d->m_huff_count[0][(unsigned char)first_trigram] = (mz_uint16)(
+            d->m_huff_count[0][(unsigned char)first_trigram] = (unsigned short)(
             (int)d->m_huff_count[0][(unsigned char)first_trigram] + 1);
           }
         }
@@ -5157,7 +5157,7 @@ static mz_bool tdefl_compress_fast(tdefl_compressor *d)
           pLZ_code_buf ++;
           pLZ_flags = tmp_19;
         }
-        d->m_huff_count[0][lit] = (mz_uint16)((int)d->m_huff_count[0][lit] + 1);
+        d->m_huff_count[0][lit] = (unsigned short)((int)d->m_huff_count[0][lit] + 1);
         lookahead_pos ++;
         if (dict_size + (mz_uint)1 < (unsigned int)TDEFL_LZ_DICT_SIZE) 
           dict_size += (mz_uint)1;
@@ -5216,7 +5216,7 @@ __inline static void ( __attribute__((__always_inline__)) tdefl_record_literal)
     (d->m_pLZ_code_buf) ++;
     d->m_pLZ_flags = tmp_0;
   }
-  d->m_huff_count[0][lit] = (mz_uint16)((int)d->m_huff_count[0][lit] + 1);
+  d->m_huff_count[0][lit] = (unsigned short)((int)d->m_huff_count[0][lit] + 1);
   return;
 }
 
@@ -5252,9 +5252,9 @@ __inline static void ( __attribute__((__always_inline__)) tdefl_record_match)
   s0 = (unsigned int)s_tdefl_small_dist_sym[match_dist & (unsigned int)511];
   s1 = (unsigned int)s_tdefl_large_dist_sym[(match_dist >> 8) & (unsigned int)127];
   if (match_dist < (mz_uint)512) tmp_1 = s0; else tmp_1 = s1;
-  d->m_huff_count[1][tmp_1] = (mz_uint16)((int)d->m_huff_count[1][tmp_1] + 1);
+  d->m_huff_count[1][tmp_1] = (unsigned short)((int)d->m_huff_count[1][tmp_1] + 1);
   if (match_len >= (mz_uint)TDEFL_MIN_MATCH_LEN) d->m_huff_count[0][s_tdefl_len_sym[
-                                                 match_len - (mz_uint)TDEFL_MIN_MATCH_LEN]] = (mz_uint16)(
+                                                 match_len - (mz_uint)TDEFL_MIN_MATCH_LEN]] = (unsigned short)(
                                                  (int)d->m_huff_count[0][s_tdefl_len_sym[
                                                  match_len - (mz_uint)TDEFL_MIN_MATCH_LEN]] + 1);
   return;

@@ -1424,7 +1424,7 @@ void CalculateChecksum(uint_least8_t checksum_count_0)
       tmp = Get_Code_Byte(i);
       code_checksum = (unsigned char)((int)code_checksum ^ (int)tmp);
     }
-    i = (code_address_t)((int)i + 1);
+    i = (unsigned short)((int)i + 1);
   }
   if (checksum_count_0 == (uint_least8_t)0) 
     if ((int)code_checksum != (int)reference_checksum) 
@@ -1944,7 +1944,7 @@ void CopyProgramCode(void)
   while ((int)i < 0x8000) {
     code_byte = Get_Code_Byte(i);
     Set_Data_Byte(i,code_byte);
-    i = (code_address_t)((int)i + 1);
+    i = (unsigned short)((int)i + 1);
   }
   return;
 }
@@ -3382,7 +3382,7 @@ void IncrementCounters(sensor_index_t sensor_unit,
 {
   unsigned char counter;
   unsigned char new_checksum;
-  if ((int)telemetry_data.SU_hits[sensor_unit] < 0xFFFF) telemetry_data.SU_hits[sensor_unit] = (uint16_t)(
+  if ((int)telemetry_data.SU_hits[sensor_unit] < 0xFFFF) telemetry_data.SU_hits[sensor_unit] = (unsigned short)(
                                                          (int)telemetry_data.SU_hits[sensor_unit] + 1);
   if ((int)science_data.event_counter[sensor_unit][classification] < 0xFF) {
     counter = science_data.event_counter[sensor_unit][classification];

@@ -17,7 +17,7 @@ CPPFLAGS    += \
 
 ## General flags
 FCFLAGS     += \
-  -add-symbolic-path=.:.. \
+  -add-symbolic-path=..:. \
   -kernel-warn-key typing:implicit-function-declaration=abort \
 
 ## Eva-specific flags
@@ -29,7 +29,6 @@ EVAFLAGS    += \
 
 ## GUI-only flags
 FCGUIFLAGS += \
-  -add-symbolic-path=.:.. \
 
 ## Analysis targets (suffixed with .eva)
 TARGETS = kilo.eva

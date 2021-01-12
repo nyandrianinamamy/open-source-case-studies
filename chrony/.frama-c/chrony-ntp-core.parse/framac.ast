@@ -2160,7 +2160,7 @@ static void update_record(struct timespec *now, uint32_t *last_hit,
   else interval2 = -4 * (4 + 1);
   if ((int)*rate == -128) *rate = (signed char)(- interval2);
   else 
-    if ((int)*rate < - interval2) *rate = (int8_t)((int)*rate + 1);
+    if ((int)*rate < - interval2) *rate = (signed char)((int)*rate + 1);
     else 
       if ((int)*rate > - interval2) 
         if ((int)*rate > (4 * 5) / 2 - interval2) *rate = (signed char)(
@@ -2284,7 +2284,7 @@ int CLG_LimitNTPResponseRate(int index_0)
     goto return_label;
   }
   record->flags = (unsigned char)((int)record->flags | 0x1);
-  record->ntp_drops = (uint16_t)((int)record->ntp_drops + 1);
+  record->ntp_drops = (unsigned short)((int)record->ntp_drops + 1);
   total_ntp_drops += (uint32_t)1;
   __retres = 1;
   return_label: return __retres;
@@ -2311,7 +2311,7 @@ int CLG_LimitCommandResponseRate(int index_0)
     __retres = 0;
     goto return_label;
   }
-  record->cmd_drops = (uint16_t)((int)record->cmd_drops + 1);
+  record->cmd_drops = (unsigned short)((int)record->cmd_drops + 1);
   total_cmd_drops += (uint32_t)1;
   __retres = 1;
   return_label: return __retres;
@@ -18693,8 +18693,8 @@ static void send_response(int interleaved, int authenticated,
         case (long)2:
         { /* sequence */
           tmp_18 = random();
-          res->auth_data[tmp_18 % (long)auth_len] = (uint8_t)((int)res->auth_data[
-                                                              tmp_18 % (long)auth_len] + 1);
+          res->auth_data[tmp_18 % (long)auth_len] = (unsigned char)((int)res->auth_data[
+                                                                    tmp_18 % (long)auth_len] + 1);
         }
         break;
         case (long)3:

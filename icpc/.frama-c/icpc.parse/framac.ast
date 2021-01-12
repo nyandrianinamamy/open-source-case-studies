@@ -92,7 +92,7 @@ real64 Interpolate_from_curve(Curve_t *curve, real64 x)
                                  curve->y[(int)i + 1] - curve->y[i]);
           break;
         }
-        i = (sint16)((int)i - 1);
+        i = (short)((int)i - 1);
       }
     }
   return result;

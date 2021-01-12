@@ -18,7 +18,7 @@ CPPFLAGS    += \
 
 ## General flags
 FCFLAGS     += \
-  -add-symbolic-path=.:.. \
+  -add-symbolic-path=..:. \
   -kernel-warn-key annot:missing-spec=abort \
   -kernel-warn-key typing:implicit-function-declaration=abort \
   -warn-signed-downcast \
@@ -38,7 +38,6 @@ EVAFLAGS    += \
 
 ## GUI-only flags
 FCGUIFLAGS += \
-  -add-symbolic-path=.:.. \
 
 ## Analysis targets (suffixed with .eva)
 TARGETS = 01_w_Defects.eva 02_wo_Defects.eva

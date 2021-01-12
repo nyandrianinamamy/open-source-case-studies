@@ -21,7 +21,7 @@ CPPFLAGS    += \
 ## General flags
 FCFLAGS     += \
   -json-compilation-database .. \
-  -add-symbolic-path=.:.. \
+  -add-symbolic-path=..:. \
   -kernel-warn-key annot:missing-spec=abort \
   -kernel-warn-key typing:implicit-function-declaration=abort \
 
@@ -79,7 +79,6 @@ USE_SPEC  += \
 
 ## GUI-only flags
 FCGUIFLAGS += \
-  -add-symbolic-path=.:.. \
 
 ## Analysis targets (suffixed with .eva)
 TARGETS = polarssl-server.eva

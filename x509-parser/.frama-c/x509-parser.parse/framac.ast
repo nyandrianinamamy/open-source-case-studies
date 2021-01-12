@@ -124,7 +124,7 @@ static int bufs_differ(u8 const *b1, u8 const *b2, u16 n)
       ret = 1;
       break;
     }
-    i = (u16)((int)i + 1);
+    i = (unsigned short)((int)i + 1);
   }
   return ret;
 }
@@ -181,7 +181,7 @@ static int _extract_complex_tag(u8 const *buf, u16 len, u32 *tag_num,
       /*@ assert t ≤ 0xfffffff; */ ;
       if (((int)*(buf + rbytes) & 0x80) == 0) break;
     }
-    rbytes = (u16)((int)rbytes + 1);
+    rbytes = (unsigned short)((int)rbytes + 1);
   }
   if ((int)rbytes == (int)len) {
     /*@ assert (*(buf + (len - 1)) & 0x80) ≢ 0; */ ;
@@ -527,7 +527,7 @@ static int _parse_arc(u8 const *buf, u16 len, u32 *arc_val, u16 *eaten)
       /*@ assert av ≤ 0xfffffff; */ ;
       if (((int)*(buf + rbytes) & 0x80) == 0) break;
     }
-    rbytes = (u16)((int)rbytes + 1);
+    rbytes = (unsigned short)((int)rbytes + 1);
   }
   if ((int)rbytes >= (int)len) {
     /*@ assert (*(buf + (len - 1)) & 0x80) ≢ 0; */ ;
@@ -2853,7 +2853,7 @@ static _curve const *find_curve_by_oid(u8 const *buf, u16 len)
         break;
       }
     }
-    __Cont: k = (u8)((int)k + 1);
+    __Cont: k = (unsigned char)((int)k + 1);
   }
   out: ;
   return found;
@@ -3157,7 +3157,7 @@ static _alg_id const *find_alg_by_oid(u8 const *buf, u16 len)
         break;
       }
     }
-    __Cont: k = (u8)((int)k + 1);
+    __Cont: k = (unsigned char)((int)k + 1);
   }
   out: ;
   return found;
@@ -3512,7 +3512,7 @@ static int check_printable_string(u8 const *buf, u16 len)
     }
     ret = -2679;
     goto out;
-    __Cont: rbytes = (u16)((int)rbytes + 1);
+    __Cont: rbytes = (unsigned short)((int)rbytes + 1);
   }
   ret = 0;
   out: ;
@@ -3772,7 +3772,7 @@ static int check_ia5_string(u8 const *buf, u16 len)
       ret = -3039;
       goto out;
     }
-    i = (u16)((int)i + 1);
+    i = (unsigned short)((int)i + 1);
   }
   ret = 0;
   out: ;
@@ -4086,7 +4086,7 @@ static int parse_rdn_val_dc(u8 const *buf, u16 len)
         goto out;
       }
     }
-    i = (u16)((int)i + 1);
+    i = (unsigned short)((int)i + 1);
   }
   ret = 0;
   out: ;
@@ -4201,7 +4201,7 @@ static _name_oid const *find_dn_by_oid(u8 const *buf, u16 len)
         break;
       }
     }
-    __Cont: k = (u8)((int)k + 1);
+    __Cont: k = (unsigned char)((int)k + 1);
   }
   out: ;
   return found;
@@ -4446,7 +4446,7 @@ static int parse_UTCTime(u8 const *buf, u16 len, u16 *eaten, u16 *year,
       goto out;
     }
     /*@ assert 0 ≤ *(buf + i) - c_zero ≤ 9; */ ;
-    i = (u8)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   if ((int)*(buf + 12) != 'Z') {
     ret = -3920;
@@ -4571,7 +4571,7 @@ static int parse_generalizedTime(u8 const *buf, u16 len, u16 *eaten,
       ret = -4079;
       goto out;
     }
-    i = (u8)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   if ((int)*(buf + 14) != 'Z') {
     ret = -4085;
@@ -5332,7 +5332,7 @@ static int parse_nine_bit_named_bit_list(u8 const *buf, u16 len, u16 *val)
         non_signif = k;
         break;
       }
-      k = (u8)((int)k + 1);
+      k = (unsigned char)((int)k + 1);
     }
     if ((int)*(buf + 0) != (int)non_signif) {
       ret = -5397;
@@ -5347,7 +5347,7 @@ static int parse_nine_bit_named_bit_list(u8 const *buf, u16 len, u16 *val)
     while ((int)k < 8) {
       *val = (unsigned short)((int)*val | ((((int)*(buf + 1) >> (int)k) & 0x1) << (
                                            7 - (int)k)));
-      k = (u8)((int)k + 1);
+      k = (unsigned char)((int)k + 1);
     }
     break;
     case 3: ;
@@ -5368,7 +5368,7 @@ static int parse_nine_bit_named_bit_list(u8 const *buf, u16 len, u16 *val)
     while ((int)k < 8) {
       *val = (unsigned short)((int)*val | ((((int)*(buf + 1) >> (int)k) & 0x1) << (
                                            7 - (int)k)));
-      k = (u8)((int)k + 1);
+      k = (unsigned char)((int)k + 1);
     }
     *val = (unsigned short)((int)*val | ((int)*(buf + 2) >> 7));
     break;
@@ -6499,7 +6499,7 @@ static _kp_oid const *find_kp_by_oid(u8 const *buf, u16 len)
         break;
       }
     }
-    __Cont: k = (u8)((int)k + 1);
+    __Cont: k = (unsigned char)((int)k + 1);
   }
   out: ;
   return found;
@@ -7253,7 +7253,7 @@ static _ext_oid const *find_ext_by_oid(u8 const *buf, u16 len)
         break;
       }
     }
-    __Cont: k = (u8)((int)k + 1);
+    __Cont: k = (unsigned char)((int)k + 1);
   }
   out: ;
   return found;
@@ -7477,7 +7477,7 @@ static int parse_x509_Extensions(u8 const *buf, u16 len, u16 *eaten,
   */
   while ((unsigned long)i < sizeof(known_ext_oids) / sizeof(known_ext_oids[0])) {
     parsed_oid_list[i] = (_ext_oid const *)0;
-    i = (u16)((int)i + 1);
+    i = (unsigned short)((int)i + 1);
   }
   /*@
   assert

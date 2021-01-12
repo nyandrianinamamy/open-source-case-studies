@@ -23,7 +23,7 @@ CPPFLAGS    += \
 
 ## General flags
 FCFLAGS  += \
-  -add-symbolic-path=.:.. \
+  -add-symbolic-path=..:. \
   -nonterm-ignore do_exit \
   -main eva_main \
 
@@ -37,7 +37,6 @@ EVAFLAGS += \
 
 ## GUI-only flags
 FCGUIFLAGS += \
-
 ## Analysis targets (suffixed with .eva)
 TARGETS = gzip124.eva
 

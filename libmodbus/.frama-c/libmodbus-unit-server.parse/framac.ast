@@ -1045,7 +1045,7 @@ static uint16_t crc16(uint8_t *buffer, uint16_t buffer_length)
   while (1) {
     uint16_t tmp_0;
     tmp_0 = buffer_length;
-    buffer_length = (uint16_t)((int)buffer_length - 1);
+    buffer_length = (unsigned short)((int)buffer_length - 1);
     ;
     if (! tmp_0) break;
     {
@@ -1846,7 +1846,7 @@ static int _modbus_tcp_build_request_basis(modbus_t *ctx, int function,
 {
   int __retres;
   modbus_tcp_t *ctx_tcp = (modbus_tcp_t *)ctx->backend_data;
-  if ((int)ctx_tcp->t_id < 65535) ctx_tcp->t_id = (uint16_t)((int)ctx_tcp->t_id + 1);
+  if ((int)ctx_tcp->t_id < 65535) ctx_tcp->t_id = (unsigned short)((int)ctx_tcp->t_id + 1);
   else ctx_tcp->t_id = (unsigned short)0;
   *(req + 0) = (unsigned char)((int)ctx_tcp->t_id >> 8);
   *(req + 1) = (unsigned char)((int)ctx_tcp->t_id & 0x00ff);

@@ -21,7 +21,7 @@ CPPFLAGS    += \
 
 ## General flags
 FCFLAGS     += \
-  -add-symbolic-path=.:.. \
+  -add-symbolic-path=..:. \
   -main eva_main \
   -warn-special-float none \
 
@@ -31,7 +31,6 @@ EVAFLAGS    += \
 
 ## GUI-only flags
 FCGUIFLAGS += \
-  -add-symbolic-path=.:.. \
 
 TEST_SRCS := \
   $(sort $(wildcard ../*.c)) \

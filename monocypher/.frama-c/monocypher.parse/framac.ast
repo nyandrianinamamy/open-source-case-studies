@@ -437451,7 +437451,7 @@ static int p_aead(void)
         tmp_0 = memcmp((void const *)(plaintext),(void const *)(out),
                        (unsigned long)8);
         status |= tmp_0;
-        box[0] = (u8)((int)box[0] + 1);
+        box[0] = (unsigned char)((int)box[0] + 1);
         tmp_1 = crypto_unlock_aead(out,(uint8_t const *)(key),
                                    (uint8_t const *)(nonce),
                                    (uint8_t const *)(box),
@@ -437471,14 +437471,14 @@ static int p_aead(void)
         tmp_4 = memcmp((void const *)(plaintext),(void const *)(out),
                        (unsigned long)8);
         status |= tmp_4;
-        box[0] = (u8)((int)box[0] + 1);
+        box[0] = (unsigned char)((int)box[0] + 1);
         tmp_5 = crypto_unlock(out,(uint8_t const *)(key),
                               (uint8_t const *)(nonce),
                               (uint8_t const *)(box),
                               (uint8_t const *)(& box[16]),(unsigned long)8);
         if (tmp_5) tmp_6 = 0; else tmp_6 = 1;
         status |= tmp_6;
-        box[0] = (u8)((int)box[0] - 1);
+        box[0] = (unsigned char)((int)box[0] - 1);
         crypto_lock_aead(box2,& box2[16],(uint8_t const *)(key),
                          (uint8_t const *)(nonce),(uint8_t const *)0,
                          (unsigned long)0,(uint8_t const *)(plaintext),
@@ -437616,7 +437616,7 @@ static int p_lock_incremental(void)
         if (text_size > (size_t)0) {
           int tmp_14;
           int tmp_13;
-          cipher2[0] = (u8)((int)cipher2[0] + 1);
+          cipher2[0] = (unsigned char)((int)cipher2[0] + 1);
           crypto_lock_init(& ctx,(uint8_t const *)(key),
                            (uint8_t const *)(nonce));
           crypto_lock_auth_ad(& ctx,(uint8_t const *)(ad),ad_size);

@@ -135,7 +135,7 @@ void getColor(uint8_t value, char *color, size_t length)
     while (1) {
       uint8_t tmp;
       tmp = value;
-      value = (uint8_t)((int)value - 1);
+      value = (unsigned char)((int)value - 1);
       ;
       if (! tmp) break;
       if (background + 2 < schemes[scheme] + sizeof(original)) {
@@ -415,7 +415,7 @@ void drawBoard(uint8_t (* /*[4]*/ board)[4])
       printf("%s",color); /* printf_va_3 */
       printf("       "); /* printf_va_4 */
       printf("%s",reset); /* printf_va_5 */
-      x = (uint8_t)((int)x + 1);
+      x = (unsigned char)((int)x + 1);
     }
     printf("\n"); /* printf_va_6 */
     x = (unsigned char)0;
@@ -434,7 +434,7 @@ void drawBoard(uint8_t (* /*[4]*/ board)[4])
       }
       else printf("   \302\267   "); /* printf_va_9 */
       printf("%s",reset); /* printf_va_10 */
-      x = (uint8_t)((int)x + 1);
+      x = (unsigned char)((int)x + 1);
     }
     printf("\n"); /* printf_va_11 */
     x = (unsigned char)0;
@@ -443,10 +443,10 @@ void drawBoard(uint8_t (* /*[4]*/ board)[4])
       printf("%s",color); /* printf_va_12 */
       printf("       "); /* printf_va_13 */
       printf("%s",reset); /* printf_va_14 */
-      x = (uint8_t)((int)x + 1);
+      x = (unsigned char)((int)x + 1);
     }
     printf("\n"); /* printf_va_15 */
-    y = (uint8_t)((int)y + 1);
+    y = (unsigned char)((int)y + 1);
   }
   printf("\n"); /* printf_va_16 */
   printf("        \342\206\220,\342\206\221,\342\206\222,\342\206\223 or q        \n"); /* printf_va_17 */
@@ -477,7 +477,7 @@ uint8_t findTarget(uint8_t * /*[4]*/ array, uint8_t x, uint8_t stop)
         __retres = t;
         goto return_label;
       }
-    t = (uint8_t)((int)t - 1);
+    t = (unsigned char)((int)t - 1);
   }
   __retres = x;
   return_label: return __retres;
@@ -497,7 +497,7 @@ _Bool slideArray(uint8_t * /*[4]*/ array)
         if ((int)*(array + t) == 0) *(array + t) = *(array + x);
         else 
           if ((int)*(array + t) == (int)*(array + x)) {
-            *(array + t) = (uint8_t)((int)*(array + t) + 1);
+            *(array + t) = (unsigned char)((int)*(array + t) + 1);
             score += (unsigned int)1 << (int)*(array + t);
             stop = (unsigned char)((int)t + 1);
           }
@@ -505,7 +505,7 @@ _Bool slideArray(uint8_t * /*[4]*/ array)
         success = (_Bool)1;
       }
     }
-    x = (uint8_t)((int)x + 1);
+    x = (unsigned char)((int)x + 1);
   }
   return success;
 }
@@ -527,9 +527,9 @@ void rotateBoard(uint8_t (* /*[4]*/ board)[4])
       (*(board + (((int)n - (int)i) - 1)))[((int)n - (int)j) - 1] = (*(
       board + (((int)n - (int)j) - 1)))[i];
       (*(board + (((int)n - (int)j) - 1)))[i] = tmp;
-      j = (uint8_t)((int)j + 1);
+      j = (unsigned char)((int)j + 1);
     }
-    i = (uint8_t)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   return;
 }
@@ -545,7 +545,7 @@ _Bool moveUp(uint8_t (* /*[4]*/ board)[4])
       tmp = slideArray(*(board + x));
       success = (_Bool)(((int)success | (int)tmp) != 0);
     }
-    x = (uint8_t)((int)x + 1);
+    x = (unsigned char)((int)x + 1);
   }
   return success;
 }
@@ -597,9 +597,9 @@ _Bool findPairDown(uint8_t (* /*[4]*/ board)[4])
         __retres = (_Bool)1;
         goto return_label;
       }
-      y = (uint8_t)((int)y + 1);
+      y = (unsigned char)((int)y + 1);
     }
-    x = (uint8_t)((int)x + 1);
+    x = (unsigned char)((int)x + 1);
   }
   __retres = success;
   return_label: return __retres;
@@ -614,10 +614,10 @@ uint8_t countEmpty(uint8_t (* /*[4]*/ board)[4])
   while ((int)x < 4) {
     y = (unsigned char)0;
     while ((int)y < 4) {
-      if ((int)(*(board + x))[y] == 0) count = (uint8_t)((int)count + 1);
-      y = (uint8_t)((int)y + 1);
+      if ((int)(*(board + x))[y] == 0) count = (unsigned char)((int)count + 1);
+      y = (unsigned char)((int)y + 1);
     }
-    x = (uint8_t)((int)x + 1);
+    x = (unsigned char)((int)x + 1);
   }
   return count;
 }
@@ -675,11 +675,11 @@ void addRandom(uint8_t (* /*[4]*/ board)[4])
       if ((int)(*(board + x))[y] == 0) {
         list[len][0] = x;
         list[len][1] = y;
-        len = (uint8_t)((int)len + 1);
+        len = (unsigned char)((int)len + 1);
       }
-      y = (uint8_t)((int)y + 1);
+      y = (unsigned char)((int)y + 1);
     }
-    x = (uint8_t)((int)x + 1);
+    x = (unsigned char)((int)x + 1);
   }
   if ((int)len > 0) {
     int tmp_0;
@@ -706,9 +706,9 @@ void initBoard(uint8_t (* /*[4]*/ board)[4])
     /*@ loop unroll 4; */
     while ((int)y < 4) {
       (*(board + x))[y] = (unsigned char)0;
-      y = (uint8_t)((int)y + 1);
+      y = (unsigned char)((int)y + 1);
     }
-    x = (uint8_t)((int)x + 1);
+    x = (unsigned char)((int)x + 1);
   }
   addRandom(board);
   addRandom(board);
@@ -981,43 +981,43 @@ int test(void)
     i = (unsigned char)0;
     while ((int)i < 4) {
       array[i] = *(in + i);
-      i = (uint8_t)((int)i + 1);
+      i = (unsigned char)((int)i + 1);
     }
     slideArray(array);
     i = (unsigned char)0;
     /*@ loop unroll 4; */
     while ((int)i < 4) {
       if ((int)array[i] != (int)*(out + i)) success = (_Bool)0;
-      i = (uint8_t)((int)i + 1);
+      i = (unsigned char)((int)i + 1);
     }
     if ((int)success == 0) {
       i = (unsigned char)0;
       while ((int)i < 4) {
         printf("%d ",(int)*(in + i)); /* printf_va_19 */
-        i = (uint8_t)((int)i + 1);
+        i = (unsigned char)((int)i + 1);
       }
       printf("=> "); /* printf_va_20 */
       i = (unsigned char)0;
       while ((int)i < 4) {
         printf("%d ",(int)array[i]); /* printf_va_21 */
-        i = (uint8_t)((int)i + 1);
+        i = (unsigned char)((int)i + 1);
       }
       printf("expected "); /* printf_va_22 */
       i = (unsigned char)0;
       while ((int)i < 4) {
         printf("%d ",(int)*(in + i)); /* printf_va_23 */
-        i = (uint8_t)((int)i + 1);
+        i = (unsigned char)((int)i + 1);
       }
       printf("=> "); /* printf_va_24 */
       i = (unsigned char)0;
       while ((int)i < 4) {
         printf("%d ",(int)*(out + i)); /* printf_va_25 */
-        i = (uint8_t)((int)i + 1);
+        i = (unsigned char)((int)i + 1);
       }
       printf("\n"); /* printf_va_26 */
       break;
     }
-    t = (uint8_t)((int)t + 1);
+    t = (unsigned char)((int)t + 1);
   }
   if (success) printf("All %hhu tests executed successfully\n",(int)tests); /* printf_va_27 */
   __retres = ! success;

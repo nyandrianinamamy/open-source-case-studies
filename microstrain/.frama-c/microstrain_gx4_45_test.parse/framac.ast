@@ -1024,7 +1024,7 @@ u16 mip_calculate_checksum(u8 *mip_buffer)
   while ((int)i < (int)checksum_range_size) {
     checksum_byte1 = (unsigned char)((int)checksum_byte1 + (int)*(mip_buffer + i));
     checksum_byte2 = (unsigned char)((int)checksum_byte2 + (int)checksum_byte1);
-    i = (u16)((int)i + 1);
+    i = (unsigned short)((int)i + 1);
   }
   checksum = (unsigned short)(((int)((unsigned short)checksum_byte1) << 8) + (int)((unsigned short)checksum_byte2));
   __retres = checksum;
@@ -1355,7 +1355,7 @@ u16 mip_3dm_cmd_poll_ahrs(mip_interface *device_interface_0,
     command_data[2 + (int)i * 3] = *(descriptor_list + i);
     command_data[3 + (int)i * 3] = (unsigned char)0;
     command_data[4 + (int)i * 3] = (unsigned char)0;
-    i = (u8)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   if ((int)option_selector == 0x00) wait_for_response = (unsigned char)1;
   tmp = mip_interface_send_command(device_interface_0,(unsigned char)0x0C,
@@ -1387,7 +1387,7 @@ u16 mip_3dm_cmd_poll_gps(mip_interface *device_interface_0,
     command_data[2 + (int)i * 3] = *(descriptor_list + i);
     command_data[3 + (int)i * 3] = (unsigned char)0;
     command_data[4 + (int)i * 3] = (unsigned char)0;
-    i = (u8)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   if ((int)option_selector == 0x00) wait_for_response = (unsigned char)1;
   tmp = mip_interface_send_command(device_interface_0,(unsigned char)0x0C,
@@ -1419,7 +1419,7 @@ u16 mip_3dm_cmd_poll_filter(mip_interface *device_interface_0,
     command_data[2 + (int)i * 3] = *(descriptor_list + i);
     command_data[3 + (int)i * 3] = (unsigned char)0;
     command_data[4 + (int)i * 3] = (unsigned char)0;
-    i = (u8)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   if ((int)option_selector == 0x00) wait_for_response = (unsigned char)1;
   tmp = mip_interface_send_command(device_interface_0,(unsigned char)0x0C,
@@ -1547,7 +1547,7 @@ u16 mip_3dm_cmd_ahrs_message_format(mip_interface *device_interface_0,
       *short_ptr = *(decimation + i);
       byteswap_inplace((void *)short_ptr,(unsigned short)sizeof(u16));
       command_data_size = (unsigned short)((int)command_data_size + 3);
-      i = (u8)((int)i + 1);
+      i = (unsigned char)((int)i + 1);
     }
   }
   return_code = mip_interface_send_command_with_response(device_interface_0,
@@ -1578,7 +1578,7 @@ u16 mip_3dm_cmd_ahrs_message_format(mip_interface *device_interface_0,
             *(decimation + i) = *short_ptr;
             byteswap_inplace((void *)(decimation + i),
                              (unsigned short)sizeof(u16));
-            i = (u8)((int)i + 1);
+            i = (unsigned char)((int)i + 1);
           }
         }
         else return_code = (unsigned short)1;
@@ -1614,7 +1614,7 @@ u16 mip_3dm_cmd_gps_message_format(mip_interface *device_interface_0,
       *short_ptr = *(decimation + i);
       byteswap_inplace((void *)short_ptr,(unsigned short)sizeof(u16));
       command_data_size = (unsigned short)((int)command_data_size + 3);
-      i = (u8)((int)i + 1);
+      i = (unsigned char)((int)i + 1);
     }
   }
   return_code = mip_interface_send_command_with_response(device_interface_0,
@@ -1645,7 +1645,7 @@ u16 mip_3dm_cmd_gps_message_format(mip_interface *device_interface_0,
             *(decimation + i) = *short_ptr;
             byteswap_inplace((void *)(decimation + i),
                              (unsigned short)sizeof(u16));
-            i = (u8)((int)i + 1);
+            i = (unsigned char)((int)i + 1);
           }
         }
         else return_code = (unsigned short)1;
@@ -1681,7 +1681,7 @@ u16 mip_3dm_cmd_filter_message_format(mip_interface *device_interface_0,
       *short_ptr = *(decimation + i);
       byteswap_inplace((void *)short_ptr,(unsigned short)sizeof(u16));
       command_data_size = (unsigned short)((int)command_data_size + 3);
-      i = (u8)((int)i + 1);
+      i = (unsigned char)((int)i + 1);
     }
   }
   return_code = mip_interface_send_command_with_response(device_interface_0,
@@ -1712,7 +1712,7 @@ u16 mip_3dm_cmd_filter_message_format(mip_interface *device_interface_0,
             *(decimation + i) = *short_ptr;
             byteswap_inplace((void *)(decimation + i),
                              (unsigned short)sizeof(u16));
-            i = (u8)((int)i + 1);
+            i = (unsigned char)((int)i + 1);
           }
         }
         else return_code = (unsigned short)1;
@@ -2128,7 +2128,7 @@ u16 mip_3dm_cmd_accel_bias(mip_interface *device_interface_0,
     while ((int)i < 3) {
       byteswap_inplace((void *)(bias_element_pointer + i),
                        (unsigned short)sizeof(float));
-      i = (u8)((int)i + 1);
+      i = (unsigned char)((int)i + 1);
     }
   }
   return_code = mip_interface_send_command_with_response(device_interface_0,
@@ -2154,7 +2154,7 @@ u16 mip_3dm_cmd_accel_bias(mip_interface *device_interface_0,
           while ((int)i < 3) {
             byteswap_inplace((void *)(bias_vector + i),
                              (unsigned short)sizeof(float));
-            i = (u8)((int)i + 1);
+            i = (unsigned char)((int)i + 1);
           }
         }
         else return_code = (unsigned short)1;
@@ -2183,7 +2183,7 @@ u16 mip_3dm_cmd_gyro_bias(mip_interface *device_interface_0,
     while ((int)i < 3) {
       byteswap_inplace((void *)(bias_element_pointer + i),
                        (unsigned short)sizeof(float));
-      i = (u8)((int)i + 1);
+      i = (unsigned char)((int)i + 1);
     }
   }
   return_code = mip_interface_send_command_with_response(device_interface_0,
@@ -2209,7 +2209,7 @@ u16 mip_3dm_cmd_gyro_bias(mip_interface *device_interface_0,
           while ((int)i < 3) {
             byteswap_inplace((void *)(bias_vector + i),
                              (unsigned short)sizeof(float));
-            i = (u8)((int)i + 1);
+            i = (unsigned char)((int)i + 1);
           }
         }
         else return_code = (unsigned short)1;
@@ -2281,7 +2281,7 @@ u16 mip_3dm_cmd_capture_gyro_bias(mip_interface *device_interface_0,
           while ((int)i < 3) {
             byteswap_inplace((void *)(bias_vector + i),
                              (unsigned short)sizeof(float));
-            i = (u8)((int)i + 1);
+            i = (unsigned char)((int)i + 1);
           }
         }
         else return_code = (unsigned short)1;
@@ -2310,7 +2310,7 @@ u16 mip_3dm_cmd_hard_iron(mip_interface *device_interface_0,
     while ((int)i < 3) {
       byteswap_inplace((void *)(vector_pointer + i),
                        (unsigned short)sizeof(float));
-      i = (u8)((int)i + 1);
+      i = (unsigned char)((int)i + 1);
     }
   }
   return_code = mip_interface_send_command_with_response(device_interface_0,
@@ -2336,7 +2336,7 @@ u16 mip_3dm_cmd_hard_iron(mip_interface *device_interface_0,
           while ((int)i < 3) {
             byteswap_inplace((void *)(vector + i),
                              (unsigned short)sizeof(float));
-            i = (u8)((int)i + 1);
+            i = (unsigned char)((int)i + 1);
           }
         }
         else return_code = (unsigned short)1;
@@ -2365,7 +2365,7 @@ u16 mip_3dm_cmd_soft_iron(mip_interface *device_interface_0,
     while ((int)i < 9) {
       byteswap_inplace((void *)(matrix_pointer + i),
                        (unsigned short)sizeof(float));
-      i = (u8)((int)i + 1);
+      i = (unsigned char)((int)i + 1);
     }
   }
   return_code = mip_interface_send_command_with_response(device_interface_0,
@@ -2391,7 +2391,7 @@ u16 mip_3dm_cmd_soft_iron(mip_interface *device_interface_0,
           while ((int)i < 9) {
             byteswap_inplace((void *)(matrix + i),
                              (unsigned short)sizeof(float));
-            i = (u8)((int)i + 1);
+            i = (unsigned char)((int)i + 1);
           }
         }
         else return_code = (unsigned short)1;
@@ -2421,7 +2421,7 @@ u16 mip_3dm_sensor2vehicle_tranformation(mip_interface *device_interface_0,
     while ((int)i < 3) {
       byteswap_inplace((void *)(angle_pointer + i),
                        (unsigned short)sizeof(float));
-      i = (u8)((int)i + 1);
+      i = (unsigned char)((int)i + 1);
     }
   }
   return_code = mip_interface_send_command_with_response(device_interface_0,
@@ -2447,7 +2447,7 @@ u16 mip_3dm_sensor2vehicle_tranformation(mip_interface *device_interface_0,
           while ((int)i < 3) {
             byteswap_inplace((void *)(euler_angles + i),
                              (unsigned short)sizeof(float));
-            i = (u8)((int)i + 1);
+            i = (unsigned char)((int)i + 1);
           }
         }
         else return_code = (unsigned short)1;
@@ -2536,7 +2536,7 @@ void mip_ahrs_raw_accel_byteswap(mip_ahrs_raw_accel *raw_accel)
   while ((int)i < 3) {
     byteswap_inplace((void *)(& raw_accel->raw_accel[i]),
                      (unsigned short)sizeof(float));
-    i = (u8)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   return;
 }
@@ -2548,7 +2548,7 @@ void mip_ahrs_raw_gyro_byteswap(mip_ahrs_raw_gyro *raw_gyro)
   while ((int)i < 3) {
     byteswap_inplace((void *)(& raw_gyro->raw_gyro[i]),
                      (unsigned short)sizeof(float));
-    i = (u8)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   return;
 }
@@ -2560,7 +2560,7 @@ void mip_ahrs_raw_mag_byteswap(mip_ahrs_raw_mag *raw_mag)
   while ((int)i < 3) {
     byteswap_inplace((void *)(& raw_mag->raw_mag[i]),
                      (unsigned short)sizeof(float));
-    i = (u8)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   return;
 }
@@ -2572,7 +2572,7 @@ void mip_ahrs_scaled_accel_byteswap(mip_ahrs_scaled_accel *scaled_accel)
   while ((int)i < 3) {
     byteswap_inplace((void *)(& scaled_accel->scaled_accel[i]),
                      (unsigned short)sizeof(float));
-    i = (u8)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   return;
 }
@@ -2584,7 +2584,7 @@ void mip_ahrs_scaled_gyro_byteswap(mip_ahrs_scaled_gyro *scaled_gyro)
   while ((int)i < 3) {
     byteswap_inplace((void *)(& scaled_gyro->scaled_gyro[i]),
                      (unsigned short)sizeof(float));
-    i = (u8)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   return;
 }
@@ -2596,7 +2596,7 @@ void mip_ahrs_scaled_mag_byteswap(mip_ahrs_scaled_mag *scaled_mag)
   while ((int)i < 3) {
     byteswap_inplace((void *)(& scaled_mag->scaled_mag[i]),
                      (unsigned short)sizeof(float));
-    i = (u8)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   return;
 }
@@ -2608,7 +2608,7 @@ void mip_ahrs_delta_theta_byteswap(mip_ahrs_delta_theta *delta_theta)
   while ((int)i < 3) {
     byteswap_inplace((void *)(& delta_theta->delta_theta[i]),
                      (unsigned short)sizeof(float));
-    i = (u8)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   return;
 }
@@ -2620,7 +2620,7 @@ void mip_ahrs_delta_velocity_byteswap(mip_ahrs_delta_velocity *delta_velocity)
   while ((int)i < 3) {
     byteswap_inplace((void *)(& delta_velocity->delta_velocity[i]),
                      (unsigned short)sizeof(float));
-    i = (u8)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   return;
 }
@@ -2635,9 +2635,9 @@ void mip_ahrs_orientation_matrix_byteswap(mip_ahrs_orientation_matrix *orientati
     while ((int)j < 3) {
       byteswap_inplace((void *)(& orientation_matrix->m[i][j]),
                        (unsigned short)sizeof(float));
-      j = (u8)((int)j + 1);
+      j = (unsigned char)((int)j + 1);
     }
-    i = (u8)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   return;
 }
@@ -2649,7 +2649,7 @@ void mip_ahrs_quaternion_byteswap(mip_ahrs_quaternion *quaternion)
   while ((int)i < 4) {
     byteswap_inplace((void *)(& quaternion->q[i]),
                      (unsigned short)sizeof(float));
-    i = (u8)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   return;
 }
@@ -2675,9 +2675,9 @@ void mip_ahrs_orientation_update_matrix_byteswap(mip_ahrs_orientation_update_mat
     while ((int)j < 3) {
       byteswap_inplace((void *)(& orientation_update_matrix->m[i][j]),
                        (unsigned short)sizeof(float));
-      j = (u8)((int)j + 1);
+      j = (unsigned char)((int)j + 1);
     }
-    i = (u8)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   return;
 }
@@ -2689,7 +2689,7 @@ void mip_ahrs_raw_temp_byteswap(mip_ahrs_raw_temp *raw_temp)
   while ((int)i < 4) {
     byteswap_inplace((void *)(& raw_temp->raw_temp),
                      (unsigned short)sizeof(u16));
-    i = (u8)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   return;
 }
@@ -2727,7 +2727,7 @@ void mip_ahrs_up_vector_byteswap(mip_ahrs_up_vector *up_vector)
   i = (unsigned char)0;
   while ((int)i < 3) {
     byteswap_inplace((void *)(& up_vector->up),(unsigned short)sizeof(float));
-    i = (u8)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   return;
 }
@@ -2739,7 +2739,7 @@ void mip_ahrs_north_vector_byteswap(mip_ahrs_north_vector *north_vector)
   while ((int)i < 3) {
     byteswap_inplace((void *)(& north_vector->north),
                      (unsigned short)sizeof(float));
-    i = (u8)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   return;
 }
@@ -2862,7 +2862,7 @@ u16 mip_base_cmd_get_device_supported_descriptors(mip_interface *device_interfac
         while ((int)i < (int)*response_size / 2) {
           byteswap_inplace((void *)(short_ptr + i),
                            (unsigned short)sizeof(u16));
-          i = (u16)((int)i + 1);
+          i = (unsigned short)((int)i + 1);
         }
       }
       else {
@@ -3134,7 +3134,7 @@ void mip_filter_attitude_quaternion_byteswap(mip_filter_attitude_quaternion *att
   while ((int)i < 4) {
     byteswap_inplace((void *)(& attitude_quaternion->q[i]),
                      (unsigned short)sizeof(float));
-    i = (u8)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   byteswap_inplace((void *)(& attitude_quaternion->valid_flags),
                    (unsigned short)sizeof(u16));
@@ -3151,9 +3151,9 @@ void mip_filter_attitude_dcm_byteswap(mip_filter_attitude_dcm *attitude_dcm)
     while ((int)j < 3) {
       byteswap_inplace((void *)(& attitude_dcm->dcm[i][j]),
                        (unsigned short)sizeof(float));
-      j = (u8)((int)j + 1);
+      j = (unsigned char)((int)j + 1);
     }
-    i = (u8)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   byteswap_inplace((void *)(& attitude_dcm->valid_flags),
                    (unsigned short)sizeof(u16));
@@ -3560,7 +3560,7 @@ u16 mip_filter_set_init_attitude(mip_interface *device_interface_0,
   while ((int)i < 3) {
     byteswap_inplace((void *)(& local_angles[i]),
                      (unsigned short)sizeof(float));
-    i = (u8)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   tmp = mip_interface_send_command(device_interface_0,(unsigned char)0x0D,
                                    (unsigned char)0x02,(u8 *)(local_angles),
@@ -3653,7 +3653,7 @@ u16 mip_filter_sensor2vehicle_tranformation(mip_interface *device_interface_0,
     i = (unsigned char)0;
     while ((int)i < 3) {
       byteswap_inplace((void *)(float_ptr + i),(unsigned short)sizeof(float));
-      i = (u8)((int)i + 1);
+      i = (unsigned char)((int)i + 1);
     }
   }
   return_code = mip_interface_send_command_with_response(device_interface_0,
@@ -3679,7 +3679,7 @@ u16 mip_filter_sensor2vehicle_tranformation(mip_interface *device_interface_0,
           while ((int)i < 3) {
             byteswap_inplace((void *)(euler_angles + i),
                              (unsigned short)sizeof(float));
-            i = (u8)((int)i + 1);
+            i = (unsigned char)((int)i + 1);
           }
         }
         else return_code = (unsigned short)1;
@@ -3708,7 +3708,7 @@ u16 mip_filter_sensor2vehicle_offset(mip_interface *device_interface_0,
     i = (unsigned char)0;
     while ((int)i < 3) {
       byteswap_inplace((void *)(float_ptr + i),(unsigned short)sizeof(float));
-      i = (u8)((int)i + 1);
+      i = (unsigned char)((int)i + 1);
     }
   }
   return_code = mip_interface_send_command_with_response(device_interface_0,
@@ -3734,7 +3734,7 @@ u16 mip_filter_sensor2vehicle_offset(mip_interface *device_interface_0,
           while ((int)i < 3) {
             byteswap_inplace((void *)(offset + i),
                              (unsigned short)sizeof(float));
-            i = (u8)((int)i + 1);
+            i = (unsigned char)((int)i + 1);
           }
         }
         else return_code = (unsigned short)1;
@@ -3762,7 +3762,7 @@ u16 mip_filter_antenna_offset(mip_interface *device_interface_0,
     i = (unsigned char)0;
     while ((int)i < 3) {
       byteswap_inplace((void *)(float_ptr + i),(unsigned short)sizeof(float));
-      i = (u8)((int)i + 1);
+      i = (unsigned char)((int)i + 1);
     }
   }
   return_code = mip_interface_send_command_with_response(device_interface_0,
@@ -3788,7 +3788,7 @@ u16 mip_filter_antenna_offset(mip_interface *device_interface_0,
           while ((int)i < 3) {
             byteswap_inplace((void *)(offset + i),
                              (unsigned short)sizeof(float));
-            i = (u8)((int)i + 1);
+            i = (unsigned char)((int)i + 1);
           }
         }
         else return_code = (unsigned short)1;
@@ -3851,7 +3851,7 @@ u16 mip_filter_external_gps_update(mip_interface *device_interface_0,
                      (unsigned short)sizeof(float));
     byteswap_inplace((void *)(& local_command.vel_1sigma[i]),
                      (unsigned short)sizeof(float));
-    i = (u8)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   tmp = mip_interface_send_command(device_interface_0,(unsigned char)0x0D,
                                    (unsigned char)0x16,
@@ -3963,7 +3963,7 @@ u16 mip_filter_accel_noise(mip_interface *device_interface_0,
     i = (unsigned char)0;
     while ((int)i < 3) {
       byteswap_inplace((void *)(float_ptr + i),(unsigned short)sizeof(float));
-      i = (u8)((int)i + 1);
+      i = (unsigned char)((int)i + 1);
     }
   }
   return_code = mip_interface_send_command_with_response(device_interface_0,
@@ -3989,7 +3989,7 @@ u16 mip_filter_accel_noise(mip_interface *device_interface_0,
           while ((int)i < 3) {
             byteswap_inplace((void *)(noise_1sigma + i),
                              (unsigned short)sizeof(float));
-            i = (u8)((int)i + 1);
+            i = (unsigned char)((int)i + 1);
           }
         }
         else return_code = (unsigned short)1;
@@ -4017,7 +4017,7 @@ u16 mip_filter_gyro_noise(mip_interface *device_interface_0,
     i = (unsigned char)0;
     while ((int)i < 3) {
       byteswap_inplace((void *)(float_ptr + i),(unsigned short)sizeof(float));
-      i = (u8)((int)i + 1);
+      i = (unsigned char)((int)i + 1);
     }
   }
   return_code = mip_interface_send_command_with_response(device_interface_0,
@@ -4043,7 +4043,7 @@ u16 mip_filter_gyro_noise(mip_interface *device_interface_0,
           while ((int)i < 3) {
             byteswap_inplace((void *)(noise_1sigma + i),
                              (unsigned short)sizeof(float));
-            i = (u8)((int)i + 1);
+            i = (unsigned char)((int)i + 1);
           }
         }
         else return_code = (unsigned short)1;
@@ -4075,7 +4075,7 @@ u16 mip_filter_gyro_bias_model(mip_interface *device_interface_0,
     i = (unsigned char)0;
     while ((int)i < 6) {
       byteswap_inplace((void *)(float_ptr + i),(unsigned short)sizeof(float));
-      i = (u8)((int)i + 1);
+      i = (unsigned char)((int)i + 1);
     }
   }
   return_code = mip_interface_send_command_with_response(device_interface_0,
@@ -4105,7 +4105,7 @@ u16 mip_filter_gyro_bias_model(mip_interface *device_interface_0,
                              (unsigned short)sizeof(float));
             byteswap_inplace((void *)(bias_noise_1sigma + i),
                              (unsigned short)sizeof(float));
-            i = (u8)((int)i + 1);
+            i = (unsigned char)((int)i + 1);
           }
         }
         else return_code = (unsigned short)1;
@@ -4137,7 +4137,7 @@ u16 mip_filter_accel_bias_model(mip_interface *device_interface_0,
     i = (unsigned char)0;
     while ((int)i < 6) {
       byteswap_inplace((void *)(float_ptr + i),(unsigned short)sizeof(float));
-      i = (u8)((int)i + 1);
+      i = (unsigned char)((int)i + 1);
     }
   }
   return_code = mip_interface_send_command_with_response(device_interface_0,
@@ -4167,7 +4167,7 @@ u16 mip_filter_accel_bias_model(mip_interface *device_interface_0,
                              (unsigned short)sizeof(float));
             byteswap_inplace((void *)(bias_noise_1sigma + i),
                              (unsigned short)sizeof(float));
-            i = (u8)((int)i + 1);
+            i = (unsigned char)((int)i + 1);
           }
         }
         else return_code = (unsigned short)1;
@@ -4346,7 +4346,7 @@ u16 mip_filter_mag_noise(mip_interface *device_interface_0,
     i = (unsigned char)0;
     while ((int)i < 3) {
       byteswap_inplace((void *)(float_ptr + i),(unsigned short)sizeof(float));
-      i = (u8)((int)i + 1);
+      i = (unsigned char)((int)i + 1);
     }
   }
   return_code = mip_interface_send_command_with_response(device_interface_0,
@@ -4372,7 +4372,7 @@ u16 mip_filter_mag_noise(mip_interface *device_interface_0,
           while ((int)i < 3) {
             byteswap_inplace((void *)(noise_1sigma + i),
                              (unsigned short)sizeof(float));
-            i = (u8)((int)i + 1);
+            i = (unsigned char)((int)i + 1);
           }
         }
         else return_code = (unsigned short)1;
@@ -4403,7 +4403,7 @@ u16 mip_filter_reference_position(mip_interface *device_interface_0,
     while ((int)i < 3) {
       byteswap_inplace((void *)(double_ptr + i),
                        (unsigned short)sizeof(double));
-      i = (u8)((int)i + 1);
+      i = (unsigned char)((int)i + 1);
     }
   }
   return_code = mip_interface_send_command_with_response(device_interface_0,
@@ -4432,7 +4432,7 @@ u16 mip_filter_reference_position(mip_interface *device_interface_0,
           while ((int)i < 3) {
             byteswap_inplace((void *)(reference_position + i),
                              (unsigned short)sizeof(double));
-            i = (u8)((int)i + 1);
+            i = (unsigned char)((int)i + 1);
           }
         }
         else return_code = (unsigned short)1;
@@ -4577,7 +4577,7 @@ u16 mip_filter_accel_magnitude_error_adaptive_measurement(mip_interface *device_
     i = (unsigned char)0;
     while ((int)i < 6) {
       byteswap_inplace((void *)(float_ptr + i),(unsigned short)sizeof(float));
-      i = (u8)((int)i + 1);
+      i = (unsigned char)((int)i + 1);
     }
   }
   return_code = mip_interface_send_command_with_response(device_interface_0,
@@ -4638,7 +4638,7 @@ u16 mip_filter_mag_magnitude_error_adaptive_measurement(mip_interface *device_in
     i = (unsigned char)0;
     while ((int)i < 6) {
       byteswap_inplace((void *)(float_ptr + i),(unsigned short)sizeof(float));
-      i = (u8)((int)i + 1);
+      i = (unsigned char)((int)i + 1);
     }
   }
   return_code = mip_interface_send_command_with_response(device_interface_0,
@@ -4699,7 +4699,7 @@ u16 mip_filter_mag_dip_angle_error_adaptive_measurement(mip_interface *device_in
     i = (unsigned char)0;
     while ((int)i < 4) {
       byteswap_inplace((void *)(float_ptr + i),(unsigned short)sizeof(float));
-      i = (u8)((int)i + 1);
+      i = (unsigned char)((int)i + 1);
     }
   }
   return_code = mip_interface_send_command_with_response(device_interface_0,
@@ -4761,7 +4761,7 @@ void mip_gps_ecef_pos_byteswap(mip_gps_ecef_pos *ecef_pos)
   while ((int)i < 3) {
     byteswap_inplace((void *)(& ecef_pos->x[i]),
                      (unsigned short)sizeof(double));
-    i = (u8)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   byteswap_inplace((void *)(& ecef_pos->x_accuracy),
                    (unsigned short)sizeof(float));
@@ -4776,7 +4776,7 @@ void mip_gps_ned_vel_byteswap(mip_gps_ned_vel *ned_vel)
   i = (unsigned char)0;
   while ((int)i < 3) {
     byteswap_inplace((void *)(& ned_vel->v[i]),(unsigned short)sizeof(float));
-    i = (u8)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   byteswap_inplace((void *)(& ned_vel->speed),(unsigned short)sizeof(float));
   byteswap_inplace((void *)(& ned_vel->ground_speed),
@@ -4799,7 +4799,7 @@ void mip_gps_ecef_vel_byteswap(mip_gps_ecef_vel *ecef_vel)
   while ((int)i < 3) {
     byteswap_inplace((void *)(& ecef_vel->v[i]),
                      (unsigned short)sizeof(float));
-    i = (u8)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   byteswap_inplace((void *)(& ecef_vel->v_accuracy),
                    (unsigned short)sizeof(float));
@@ -4947,7 +4947,7 @@ u16 mip_interface_init(char const *portstr, u32 baudrate,
     device_interface_0->callback_function_list[i] = (void (*)(void *, u8 *,
                                                               u16 , u8 ))0;
     device_interface_0->callback_user_ptr_list[i] = (void *)0;
-    i = (u16)((int)i + 1);
+    i = (unsigned short)((int)i + 1);
   }
   device_interface_0->command_response_received = (unsigned char)0;
   device_interface_0->command_acknack_response = (unsigned char)0;
@@ -5024,7 +5024,7 @@ u16 mip_interface_add_descriptor_set_callback(mip_interface *device_interface_0,
           __retres = (unsigned short)0;
           goto return_label;
         }
-    i = (u16)((int)i + 1);
+    i = (unsigned short)((int)i + 1);
   }
   __retres = (unsigned short)1;
   return_label: return __retres;
@@ -5045,7 +5045,7 @@ u16 mip_interface_delete_descriptor_set_callback(mip_interface *device_interface
       device_interface_0->callback_user_ptr_list[i] = (void *)0;
       found = (unsigned short)1;
     }
-    i = (u16)((int)i + 1);
+    i = (unsigned short)((int)i + 1);
   }
   if (! found) {
     __retres = (unsigned short)1;
@@ -5165,7 +5165,7 @@ u16 __mip_interface_parse_input_buffer(mip_interface *device_interface_0)
                                      (unsigned int)i,
                                      & device_interface_0->mip_packet[
                                      (int)i + 1],(unsigned int)1);
-          i = (u16)((int)i + 1);
+          i = (unsigned short)((int)i + 1);
         }
         if ((int)header_ptr->sync2 == 0x65) {
           if (((unsigned int)header_ptr->payload_size + sizeof(mip_header)) + (unsigned int)2 <= 
@@ -5206,7 +5206,7 @@ u16 __mip_interface_parse_input_buffer(mip_interface *device_interface_0)
                                    (sizeof(mip_header) - (unsigned int)1) + (unsigned int)i,
                                    & device_interface_0->mip_packet[sizeof(mip_header) + (unsigned int)i],
                                    (unsigned int)1);
-        i = (u16)((int)i + 1);
+        i = (unsigned short)((int)i + 1);
       }
       tmp_4 = mip_is_checksum_valid(device_interface_0->mip_packet);
       if ((int)tmp_4 == 0) {
@@ -5285,7 +5285,7 @@ u16 __mip_interface_find_callback(mip_interface *device_interface_0,
         __retres = (unsigned short)0;
         goto return_label;
       }
-    i = (u16)((int)i + 1);
+    i = (unsigned short)((int)i + 1);
   }
   __retres = (unsigned short)1;
   return_label: return __retres;
@@ -6163,7 +6163,7 @@ void byteswap(void *in, void *out, u16 size)
   i = (unsigned short)0;
   while ((int)i < (int)size) {
     *(byte_ptr_out + i) = *(byte_ptr_in + (((int)size - (int)i) - 1));
-    i = (u16)((int)i + 1);
+    i = (unsigned short)((int)i + 1);
   }
   return_label: return;
 }
@@ -13306,7 +13306,7 @@ int main(int argc, char **argv)
              (unsigned int)((int)device_descriptors[i] >> 8),
              (unsigned int)((int)device_descriptors[i] & 0xFF)); /* printf_va_36 */
       usleep((unsigned int)((double)100 * 1000.0));
-      i = (s16)((int)i + 1);
+      i = (short)((int)i + 1);
     }
     printf("\n\n"); /* printf_va_37 */
     usleep((unsigned int)((double)1500 * 1000.0));
@@ -13594,7 +13594,7 @@ int main(int argc, char **argv)
     i = (short)0;
     while ((int)i < 9) {
       soft_iron[i] = (float)i;
-      i = (s16)((int)i + 1);
+      i = (short)((int)i + 1);
     }
     while (1) {
       u16 tmp_36;
@@ -13818,7 +13818,7 @@ int main(int argc, char **argv)
              (unsigned int)((int)device_descriptors[i] >> 8),
              (unsigned int)((int)device_descriptors[i] & 0xFF)); /* printf_va_165 */
       usleep((unsigned int)((double)100 * 1000.0));
-      i = (s16)((int)i + 1);
+      i = (short)((int)i + 1);
     }
     printf("\n\n"); /* printf_va_166 */
     usleep((unsigned int)((double)1500 * 1000.0));
@@ -14052,7 +14052,7 @@ int main(int argc, char **argv)
     i = (short)0;
     while ((int)i < 9) {
       soft_iron[i] = (float)i;
-      i = (s16)((int)i + 1);
+      i = (short)((int)i + 1);
     }
     while (1) {
       u16 tmp_79;
@@ -14360,7 +14360,7 @@ int main(int argc, char **argv)
                                                                     (int)dynamics_mode); /* printf_va_301 */
       else printf("ERROR: Failed to set vehicle dynamics mode to %d!!!\n",
                   (int)dynamics_mode); /* printf_va_302 */
-      i = (s16)((int)i - 1);
+      i = (short)((int)i - 1);
     }
     printf("\nLoading the default vehicle dynamics mode\n\n"); /* printf_va_303 */
     while (1) {
@@ -14560,7 +14560,7 @@ int main(int argc, char **argv)
         if (((int)estimation_control_readback & 0x0010) != 0) 
           if (((int)estimation_control & 0x0010) == 0) printf("GPS Antenna Offset Estimation NOT DISABLED\n"); /* printf_va_340 */
       }
-      j = (u16)((int)j + 1);
+      j = (unsigned short)((int)j + 1);
     }
     printf("\n\nResetting Estimation Control Flags to default state.\n\n"); /* printf_va_341 */
     while (1) {
@@ -14593,7 +14593,7 @@ int main(int argc, char **argv)
       if ((int)gps_source == (int)i) printf("GPS source successfully set to %d\n",
                                             (int)i); /* printf_va_346 */
       else printf("ERROR: Failed to set GPS source to %d!!!\n",(int)i); /* printf_va_347 */
-      i = (s16)((int)i - 1);
+      i = (short)((int)i - 1);
     }
     printf("\n\nLoading the default gps source.\n\n"); /* printf_va_348 */
     while (1) {
@@ -14690,7 +14690,7 @@ int main(int argc, char **argv)
       if ((int)heading_source == (int)i) printf("Heading source successfully set to %d\n",
                                                 (int)i); /* printf_va_361 */
       else printf("ERROR: Failed to set heading source to %d!!!\n",(int)i); /* printf_va_362 */
-      i = (s16)((int)i - 1);
+      i = (short)((int)i - 1);
     }
     printf("\n\nLoading the default heading source.\n\n"); /* printf_va_363 */
     while (1) {
@@ -14724,7 +14724,7 @@ int main(int argc, char **argv)
       if ((int)auto_init == (int)i) printf("Auto-init successfully set to %d\n",
                                            (int)i); /* printf_va_368 */
       else printf("ERROR: Failed to set auto-init to %d!!!\n",(int)i); /* printf_va_369 */
-      i = (s16)((int)i - 1);
+      i = (short)((int)i - 1);
     }
     printf("\n\nLoading the default auto-init value.\n\n"); /* printf_va_370 */
     while (1) {
@@ -15162,7 +15162,7 @@ int main(int argc, char **argv)
         }
         usleep((unsigned int)((double)1000 * 1000.0));
       }
-      i = (s16)((int)i + 1);
+      i = (short)((int)i + 1);
     }
     printf("\n\nRestoring Orientation to default value.\n\n"); /* printf_va_451 */
     while (1) {
@@ -15218,7 +15218,7 @@ int main(int argc, char **argv)
         printf("Declination source successfully set to %d\n",(int)i); /* printf_va_464 */
       else printf("ERROR: Failed to set the declination source to %d!!!\n",
                   (int)i); /* printf_va_465 */
-      i = (s16)((int)i - 1);
+      i = (short)((int)i - 1);
     }
     printf("\n\nLoading the default declination source.\n\n"); /* printf_va_466 */
     while (1) {

@@ -103,7 +103,7 @@ void ad7714_on_spi_it(void)
         ad7714_sample = (unsigned short)((int)ad7714_sample + (int)spi_read);
         ad7714_sample_read = (unsigned char)(! 0);
       }
-  idx = (uint8_t)((int)idx + 1);
+  idx = (unsigned char)((int)idx + 1);
   if ((int)idx < (int)msg->len) *((uint8_t volatile *)(0x0F + 0x20)) = *(
                                 msg->data + idx);
   else {
@@ -128,7 +128,7 @@ void ad7714_on_it(void)
   else 
     if ((int)ad7714_status == 1) ad7714_start_transmitting(& ad7714_select_channel);
     else ad7714_start_transmitting(& ad7714_read);
-  ad7714_status = (uint8_t)((int)ad7714_status + 1);
+  ad7714_status = (unsigned char)((int)ad7714_status + 1);
   return;
 }
 
@@ -189,7 +189,7 @@ void adc_init(void)
   i = (unsigned char)0;
   while ((int)i < 8) {
     buffers[i] = (struct adc_buf *)0;
-    i = (uint8_t)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   return;
 }
@@ -212,7 +212,7 @@ void __vector_21(void)
     buf->sum = (unsigned short)((int)buf->sum + (int)adc_value);
     buf->head = new_head;
   }
-  adc_input = (uint8_t)((int)adc_input + 1);
+  adc_input = (unsigned char)((int)adc_input + 1);
   if ((int)adc_input >= 8) adc_input = (unsigned char)0;
   *((uint8_t volatile *)(0x07 + 0x20)) = (unsigned char)((int)adc_input | (
                                                          1 << 6));
@@ -569,52 +569,52 @@ static void parse_ubx(uint8_t c)
     ck_b_0 = (unsigned char)((int)ck_b_0 + (int)ck_a_0);
   }
   if ((int)ubx_status == 0) {
-    if ((int)c == 0xB5) ubx_status = (uint8_t volatile)((int)ubx_status + 1);
+    if ((int)c == 0xB5) ubx_status = (unsigned char)((int)ubx_status + 1);
   }
   else 
     if ((int)ubx_status == 1) {
       if ((int)c != 0x62) goto error;
       ck_a_0 = (unsigned char)0;
       ck_b_0 = (unsigned char)0;
-      ubx_status = (uint8_t volatile)((int)ubx_status + 1);
+      ubx_status = (unsigned char)((int)ubx_status + 1);
     }
     else 
       if ((int)ubx_status == 2) {
         if (gps_msg_received) {
-          gps_nb_ovrn = (uint8_t)((int)gps_nb_ovrn + 1);
+          gps_nb_ovrn = (unsigned char)((int)gps_nb_ovrn + 1);
           goto error;
         }
         ubx_class = c;
-        ubx_status = (uint8_t volatile)((int)ubx_status + 1);
+        ubx_status = (unsigned char)((int)ubx_status + 1);
       }
       else 
         if ((int)ubx_status == 3) {
           ubx_id = c;
-          ubx_status = (uint8_t volatile)((int)ubx_status + 1);
+          ubx_status = (unsigned char)((int)ubx_status + 1);
         }
         else 
           if ((int)ubx_status == 4) {
             ubx_len = (unsigned short)c;
-            ubx_status = (uint8_t volatile)((int)ubx_status + 1);
+            ubx_status = (unsigned char)((int)ubx_status + 1);
           }
           else 
             if ((int)ubx_status == 5) {
               ubx_len = (unsigned short)((int)ubx_len | ((int)c << 8));
               if ((int)ubx_len > 255) goto error;
               ubx_msg_idx = (unsigned char)0;
-              ubx_status = (uint8_t volatile)((int)ubx_status + 1);
+              ubx_status = (unsigned char)((int)ubx_status + 1);
             }
             else 
               if ((int)ubx_status == 6) {
                 ubx_msg_buf[ubx_msg_idx] = c;
-                ubx_msg_idx = (uint8_t)((int)ubx_msg_idx + 1);
-                if ((int)ubx_msg_idx >= (int)ubx_len) ubx_status = (uint8_t volatile)(
+                ubx_msg_idx = (unsigned char)((int)ubx_msg_idx + 1);
+                if ((int)ubx_msg_idx >= (int)ubx_len) ubx_status = (unsigned char)(
                                                       (int)ubx_status + 1);
               }
               else 
                 if ((int)ubx_status == 7) {
                   if ((int)c != (int)ck_a_0) goto error;
-                  ubx_status = (uint8_t volatile)((int)ubx_status + 1);
+                  ubx_status = (unsigned char)((int)ubx_status + 1);
                 }
                 else 
                   if ((int)ubx_status == 8) {
@@ -814,7 +814,7 @@ void link_fbw_init(void)
 void link_fbw_send(void)
 {
   if ((int)spi_cur_slave != 0) {
-    spi_nb_ovrn = (uint8_t)((int)spi_nb_ovrn + 1);
+    spi_nb_ovrn = (unsigned char)((int)spi_nb_ovrn + 1);
     goto return_label;
   }
   {
@@ -862,14 +862,14 @@ void __vector_12(void)
   *((uint8_t volatile *)(0x37 + 0x20)) = (unsigned char)((int)*((uint8_t volatile *)(
                                                          0x37 + 0x20)) & ~ (
                                                          1 << 4));
-  idx_buf = (uint8_t)((int)idx_buf + 1);
+  idx_buf = (unsigned char)((int)idx_buf + 1);
   if ((unsigned int)idx_buf == sizeof(struct inter_mcu_msg) + (unsigned int)1) {
     tmp = *((uint8_t volatile *)(0x0F + 0x20));
     if ((int)tmp == (int)xor_in) {
       link_fbw_receive_valid = (unsigned char)(! 0);
       link_fbw_fbw_nb_err = from_fbw.nb_err;
     }
-    else link_fbw_nb_err = (uint8_t volatile)((int)link_fbw_nb_err + 1);
+    else link_fbw_nb_err = (unsigned char)((int)link_fbw_nb_err + 1);
     link_fbw_receive_complete = (unsigned char)(! 0);
     spi_cur_slave = (unsigned char)0;
     *((uint8_t volatile *)(0x18 + 0x20)) = (unsigned char)((int)*((uint8_t volatile *)(
@@ -981,23 +981,23 @@ __inline static void ground_calibrate__fc_inline(void)
           else tmp = 4 < (int)tx_tail - (int)tx_head;
           if (tmp) {
             tx_buf[tx_head] = (unsigned char)0x05;
-            tx_head = (uint8_t)((int)tx_head + 1);
+            tx_head = (unsigned char)((int)tx_head + 1);
             if ((int)tx_head >= 255) tx_head = (unsigned char)0;
             tx_buf[tx_head] = (unsigned char)2;
-            tx_head = (uint8_t)((int)tx_head + 1);
+            tx_head = (unsigned char)((int)tx_head + 1);
             if ((int)tx_head >= 255) tx_head = (unsigned char)0;
             ck_a = (unsigned char)2;
             ck_b = (unsigned char)2;
             tx_buf[tx_head] = ck_a;
-            tx_head = (uint8_t)((int)tx_head + 1);
+            tx_head = (unsigned char)((int)tx_head + 1);
             if ((int)tx_head >= 255) tx_head = (unsigned char)0;
             tx_buf[tx_head] = ck_b;
-            tx_head = (uint8_t)((int)tx_head + 1);
+            tx_head = (unsigned char)((int)tx_head + 1);
             if ((int)tx_head >= 255) tx_head = (unsigned char)0;
             if (! ((int)*((uint8_t volatile *)(0x39 + 0x20)) & (1 << 4))) {
               tx_byte = tx_buf[tx_tail];
               tx_byte_idx = (unsigned char)0;
-              tx_tail = (uint8_t volatile)((int)tx_tail + 1);
+              tx_tail = (unsigned char)((int)tx_tail + 1);
               if ((int)tx_tail >= 255) tx_tail = (unsigned char)0;
               *((uint8_t volatile *)(0x38 + 0x20)) = (unsigned char)(
               (int)*((uint8_t volatile *)(0x38 + 0x20)) | (1 << 0));
@@ -1005,7 +1005,7 @@ __inline static void ground_calibrate__fc_inline(void)
               (int)*((uint8_t volatile *)(0x39 + 0x20)) | (1 << 4));
             }
           }
-          else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
+          else modem_nb_ovrn = (unsigned char)((int)modem_nb_ovrn + 1);
         }
       }
   }
@@ -1024,103 +1024,103 @@ __inline static void ground_calibrate__fc_inline(void)
               else tmp_0 = 20 < (int)tx_tail - (int)tx_head;
               if (tmp_0) {
                 tx_buf[tx_head] = (unsigned char)0x05;
-                tx_head = (uint8_t)((int)tx_head + 1);
+                tx_head = (unsigned char)((int)tx_head + 1);
                 if ((int)tx_head >= 255) tx_head = (unsigned char)0;
                 tx_buf[tx_head] = (unsigned char)5;
-                tx_head = (uint8_t)((int)tx_head + 1);
+                tx_head = (unsigned char)((int)tx_head + 1);
                 if ((int)tx_head >= 255) tx_head = (unsigned char)0;
                 ck_a = (unsigned char)5;
                 ck_b = (unsigned char)5;
                 tx_buf[tx_head] = *((uint8_t *)(& estimator_ir));
                 ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_ir)));
                 ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-                tx_head = (uint8_t)((int)tx_head + 1);
+                tx_head = (unsigned char)((int)tx_head + 1);
                 if ((int)tx_head >= 255) tx_head = (unsigned char)0;
                 tx_buf[tx_head] = *((uint8_t *)(& estimator_ir) + 1);
                 ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_ir) + 1));
                 ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-                tx_head = (uint8_t)((int)tx_head + 1);
+                tx_head = (unsigned char)((int)tx_head + 1);
                 if ((int)tx_head >= 255) tx_head = (unsigned char)0;
                 tx_buf[tx_head] = *((uint8_t *)(& estimator_ir) + 2);
                 ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_ir) + 2));
                 ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-                tx_head = (uint8_t)((int)tx_head + 1);
+                tx_head = (unsigned char)((int)tx_head + 1);
                 if ((int)tx_head >= 255) tx_head = (unsigned char)0;
                 tx_buf[tx_head] = *((uint8_t *)(& estimator_ir) + 3);
                 ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_ir) + 3));
                 ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-                tx_head = (uint8_t)((int)tx_head + 1);
+                tx_head = (unsigned char)((int)tx_head + 1);
                 if ((int)tx_head >= 255) tx_head = (unsigned char)0;
                 tx_buf[tx_head] = *((uint8_t *)(& estimator_rad));
                 ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_rad)));
                 ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-                tx_head = (uint8_t)((int)tx_head + 1);
+                tx_head = (unsigned char)((int)tx_head + 1);
                 if ((int)tx_head >= 255) tx_head = (unsigned char)0;
                 tx_buf[tx_head] = *((uint8_t *)(& estimator_rad) + 1);
                 ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_rad) + 1));
                 ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-                tx_head = (uint8_t)((int)tx_head + 1);
+                tx_head = (unsigned char)((int)tx_head + 1);
                 if ((int)tx_head >= 255) tx_head = (unsigned char)0;
                 tx_buf[tx_head] = *((uint8_t *)(& estimator_rad) + 2);
                 ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_rad) + 2));
                 ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-                tx_head = (uint8_t)((int)tx_head + 1);
+                tx_head = (unsigned char)((int)tx_head + 1);
                 if ((int)tx_head >= 255) tx_head = (unsigned char)0;
                 tx_buf[tx_head] = *((uint8_t *)(& estimator_rad) + 3);
                 ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_rad) + 3));
                 ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-                tx_head = (uint8_t)((int)tx_head + 1);
+                tx_head = (unsigned char)((int)tx_head + 1);
                 if ((int)tx_head >= 255) tx_head = (unsigned char)0;
                 tx_buf[tx_head] = *((uint8_t *)(& estimator_rad_of_ir));
                 ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_rad_of_ir)));
                 ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-                tx_head = (uint8_t)((int)tx_head + 1);
+                tx_head = (unsigned char)((int)tx_head + 1);
                 if ((int)tx_head >= 255) tx_head = (unsigned char)0;
                 tx_buf[tx_head] = *((uint8_t *)(& estimator_rad_of_ir) + 1);
                 ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_rad_of_ir) + 1));
                 ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-                tx_head = (uint8_t)((int)tx_head + 1);
+                tx_head = (unsigned char)((int)tx_head + 1);
                 if ((int)tx_head >= 255) tx_head = (unsigned char)0;
                 tx_buf[tx_head] = *((uint8_t *)(& estimator_rad_of_ir) + 2);
                 ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_rad_of_ir) + 2));
                 ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-                tx_head = (uint8_t)((int)tx_head + 1);
+                tx_head = (unsigned char)((int)tx_head + 1);
                 if ((int)tx_head >= 255) tx_head = (unsigned char)0;
                 tx_buf[tx_head] = *((uint8_t *)(& estimator_rad_of_ir) + 3);
                 ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_rad_of_ir) + 3));
                 ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-                tx_head = (uint8_t)((int)tx_head + 1);
+                tx_head = (unsigned char)((int)tx_head + 1);
                 if ((int)tx_head >= 255) tx_head = (unsigned char)0;
                 tx_buf[tx_head] = *((uint8_t *)(& ir_roll_neutral));
                 ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& ir_roll_neutral)));
                 ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-                tx_head = (uint8_t)((int)tx_head + 1);
+                tx_head = (unsigned char)((int)tx_head + 1);
                 if ((int)tx_head >= 255) tx_head = (unsigned char)0;
                 tx_buf[tx_head] = *((uint8_t *)(& ir_roll_neutral) + 1);
                 ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& ir_roll_neutral) + 1));
                 ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-                tx_head = (uint8_t)((int)tx_head + 1);
+                tx_head = (unsigned char)((int)tx_head + 1);
                 if ((int)tx_head >= 255) tx_head = (unsigned char)0;
                 tx_buf[tx_head] = *((uint8_t *)(& ir_pitch_neutral));
                 ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& ir_pitch_neutral)));
                 ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-                tx_head = (uint8_t)((int)tx_head + 1);
+                tx_head = (unsigned char)((int)tx_head + 1);
                 if ((int)tx_head >= 255) tx_head = (unsigned char)0;
                 tx_buf[tx_head] = *((uint8_t *)(& ir_pitch_neutral) + 1);
                 ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& ir_pitch_neutral) + 1));
                 ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-                tx_head = (uint8_t)((int)tx_head + 1);
+                tx_head = (unsigned char)((int)tx_head + 1);
                 if ((int)tx_head >= 255) tx_head = (unsigned char)0;
                 tx_buf[tx_head] = ck_a;
-                tx_head = (uint8_t)((int)tx_head + 1);
+                tx_head = (unsigned char)((int)tx_head + 1);
                 if ((int)tx_head >= 255) tx_head = (unsigned char)0;
                 tx_buf[tx_head] = ck_b;
-                tx_head = (uint8_t)((int)tx_head + 1);
+                tx_head = (unsigned char)((int)tx_head + 1);
                 if ((int)tx_head >= 255) tx_head = (unsigned char)0;
                 if (! ((int)*((uint8_t volatile *)(0x39 + 0x20)) & (1 << 4))) {
                   tx_byte = tx_buf[tx_tail];
                   tx_byte_idx = (unsigned char)0;
-                  tx_tail = (uint8_t volatile)((int)tx_tail + 1);
+                  tx_tail = (unsigned char)((int)tx_tail + 1);
                   if ((int)tx_tail >= 255) tx_tail = (unsigned char)0;
                   *((uint8_t volatile *)(0x38 + 0x20)) = (unsigned char)(
                   (int)*((uint8_t volatile *)(0x38 + 0x20)) | (1 << 0));
@@ -1128,7 +1128,7 @@ __inline static void ground_calibrate__fc_inline(void)
                   (int)*((uint8_t volatile *)(0x39 + 0x20)) | (1 << 4));
                 }
               }
-              else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
+              else modem_nb_ovrn = (unsigned char)((int)modem_nb_ovrn + 1);
             }
             ground_calibrate_calib_status = (unsigned char)2;
             {
@@ -1137,33 +1137,33 @@ __inline static void ground_calibrate__fc_inline(void)
               else tmp_1 = 6 < (int)tx_tail - (int)tx_head;
               if (tmp_1) {
                 tx_buf[tx_head] = (unsigned char)0x05;
-                tx_head = (uint8_t)((int)tx_head + 1);
+                tx_head = (unsigned char)((int)tx_head + 1);
                 if ((int)tx_head >= 255) tx_head = (unsigned char)0;
                 tx_buf[tx_head] = (unsigned char)3;
-                tx_head = (uint8_t)((int)tx_head + 1);
+                tx_head = (unsigned char)((int)tx_head + 1);
                 if ((int)tx_head >= 255) tx_head = (unsigned char)0;
                 ck_a = (unsigned char)3;
                 ck_b = (unsigned char)3;
                 tx_buf[tx_head] = *((uint8_t *)(& ir_contrast));
                 ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& ir_contrast)));
                 ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-                tx_head = (uint8_t)((int)tx_head + 1);
+                tx_head = (unsigned char)((int)tx_head + 1);
                 if ((int)tx_head >= 255) tx_head = (unsigned char)0;
                 tx_buf[tx_head] = *((uint8_t *)(& ir_contrast) + 1);
                 ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& ir_contrast) + 1));
                 ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-                tx_head = (uint8_t)((int)tx_head + 1);
+                tx_head = (unsigned char)((int)tx_head + 1);
                 if ((int)tx_head >= 255) tx_head = (unsigned char)0;
                 tx_buf[tx_head] = ck_a;
-                tx_head = (uint8_t)((int)tx_head + 1);
+                tx_head = (unsigned char)((int)tx_head + 1);
                 if ((int)tx_head >= 255) tx_head = (unsigned char)0;
                 tx_buf[tx_head] = ck_b;
-                tx_head = (uint8_t)((int)tx_head + 1);
+                tx_head = (unsigned char)((int)tx_head + 1);
                 if ((int)tx_head >= 255) tx_head = (unsigned char)0;
                 if (! ((int)*((uint8_t volatile *)(0x39 + 0x20)) & (1 << 4))) {
                   tx_byte = tx_buf[tx_tail];
                   tx_byte_idx = (unsigned char)0;
-                  tx_tail = (uint8_t volatile)((int)tx_tail + 1);
+                  tx_tail = (unsigned char)((int)tx_tail + 1);
                   if ((int)tx_tail >= 255) tx_tail = (unsigned char)0;
                   *((uint8_t volatile *)(0x38 + 0x20)) = (unsigned char)(
                   (int)*((uint8_t volatile *)(0x38 + 0x20)) | (1 << 0));
@@ -1171,7 +1171,7 @@ __inline static void ground_calibrate__fc_inline(void)
                   (int)*((uint8_t volatile *)(0x39 + 0x20)) | (1 << 4));
                 }
               }
-              else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
+              else modem_nb_ovrn = (unsigned char)((int)modem_nb_ovrn + 1);
             }
           }
         }
@@ -1260,7 +1260,7 @@ __inline static void events_update(void)
   if ((int)inflight_calib_mode == 0) {
     if ((int)from_fbw.channels[5] > (int)(0.75 * (double)(600 * 16))) {
       if ((int)events_update_event1_cpt < 20) {
-        events_update_event1_cpt = (uint16_t)((int)events_update_event1_cpt + 1);
+        events_update_event1_cpt = (unsigned short)((int)events_update_event1_cpt + 1);
         if ((int)events_update_event1_cpt == 20) rc_event_1 = (unsigned char)(! 0);
       }
     }
@@ -1276,7 +1276,7 @@ __inline static void events_update(void)
   if ((int)inflight_calib_mode == 0) {
     if ((int)from_fbw.channels[5] < (int)(- 0.75 * (double)(600 * 16))) {
       if ((int)events_update_event2_cpt < 20) {
-        events_update_event2_cpt = (uint16_t)((int)events_update_event2_cpt + 1);
+        events_update_event2_cpt = (unsigned short)((int)events_update_event2_cpt + 1);
         if ((int)events_update_event2_cpt == 20) rc_event_2 = (unsigned char)(! 0);
       }
     }
@@ -1308,33 +1308,33 @@ void send_boot(void)
       else tmp = 6 < (int)tx_tail - (int)tx_head;
       if (tmp) {
         tx_buf[tx_head] = (unsigned char)0x05;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = (unsigned char)1;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         ck_a = (unsigned char)1;
         ck_b = (unsigned char)1;
         tx_buf[tx_head] = *((uint8_t *)(& version));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& version)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& version) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& version) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = ck_a;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = ck_b;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         if (! ((int)*((uint8_t volatile *)(0x39 + 0x20)) & (1 << 4))) {
           tx_byte = tx_buf[tx_tail];
           tx_byte_idx = (unsigned char)0;
-          tx_tail = (uint8_t volatile)((int)tx_tail + 1);
+          tx_tail = (unsigned char)((int)tx_tail + 1);
           if ((int)tx_tail >= 255) tx_tail = (unsigned char)0;
           *((uint8_t volatile *)(0x38 + 0x20)) = (unsigned char)((int)*((uint8_t volatile *)(
                                                                  0x38 + 0x20)) | (
@@ -1344,7 +1344,7 @@ void send_boot(void)
                                                                  1 << 4));
         }
       }
-      else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
+      else modem_nb_ovrn = (unsigned char)((int)modem_nb_ovrn + 1);
     }
     {
       int tmp_0;
@@ -1352,103 +1352,103 @@ void send_boot(void)
       else tmp_0 = 20 < (int)tx_tail - (int)tx_head;
       if (tmp_0) {
         tx_buf[tx_head] = (unsigned char)0x05;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = (unsigned char)5;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         ck_a = (unsigned char)5;
         ck_b = (unsigned char)5;
         tx_buf[tx_head] = *((uint8_t *)(& estimator_ir));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_ir)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& estimator_ir) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_ir) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& estimator_ir) + 2);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_ir) + 2));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& estimator_ir) + 3);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_ir) + 3));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& estimator_rad));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_rad)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& estimator_rad) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_rad) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& estimator_rad) + 2);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_rad) + 2));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& estimator_rad) + 3);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_rad) + 3));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& estimator_rad_of_ir));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_rad_of_ir)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& estimator_rad_of_ir) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_rad_of_ir) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& estimator_rad_of_ir) + 2);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_rad_of_ir) + 2));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& estimator_rad_of_ir) + 3);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_rad_of_ir) + 3));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& ir_roll_neutral));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& ir_roll_neutral)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& ir_roll_neutral) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& ir_roll_neutral) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& ir_pitch_neutral));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& ir_pitch_neutral)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& ir_pitch_neutral) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& ir_pitch_neutral) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = ck_a;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = ck_b;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         if (! ((int)*((uint8_t volatile *)(0x39 + 0x20)) & (1 << 4))) {
           tx_byte = tx_buf[tx_tail];
           tx_byte_idx = (unsigned char)0;
-          tx_tail = (uint8_t volatile)((int)tx_tail + 1);
+          tx_tail = (unsigned char)((int)tx_tail + 1);
           if ((int)tx_tail >= 255) tx_tail = (unsigned char)0;
           *((uint8_t volatile *)(0x38 + 0x20)) = (unsigned char)((int)*((uint8_t volatile *)(
                                                                  0x38 + 0x20)) | (
@@ -1458,7 +1458,7 @@ void send_boot(void)
                                                                  1 << 4));
         }
       }
-      else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
+      else modem_nb_ovrn = (unsigned char)((int)modem_nb_ovrn + 1);
     }
     boot = (unsigned char)0;
   }
@@ -1468,7 +1468,7 @@ void send_boot(void)
 void send_attitude(void)
 {
   if (! boot) {
-    count = (uint8_t)((int)count + 1);
+    count = (unsigned char)((int)count + 1);
     if ((int)count == 250) count = (unsigned char)0;
     if ((int)count % 5 == 0) {
       int tmp;
@@ -1476,83 +1476,83 @@ void send_attitude(void)
       else tmp = 16 < (int)tx_tail - (int)tx_head;
       if (tmp) {
         tx_buf[tx_head] = (unsigned char)0x05;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = (unsigned char)6;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         ck_a = (unsigned char)6;
         ck_b = (unsigned char)6;
         tx_buf[tx_head] = *((uint8_t *)(& estimator_phi));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_phi)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& estimator_phi) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_phi) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& estimator_phi) + 2);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_phi) + 2));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& estimator_phi) + 3);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_phi) + 3));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& estimator_psi));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_psi)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& estimator_psi) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_psi) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& estimator_psi) + 2);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_psi) + 2));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& estimator_psi) + 3);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_psi) + 3));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& estimator_theta));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_theta)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& estimator_theta) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_theta) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& estimator_theta) + 2);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_theta) + 2));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& estimator_theta) + 3);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_theta) + 3));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = ck_a;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = ck_b;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         if (! ((int)*((uint8_t volatile *)(0x39 + 0x20)) & (1 << 4))) {
           tx_byte = tx_buf[tx_tail];
           tx_byte_idx = (unsigned char)0;
-          tx_tail = (uint8_t volatile)((int)tx_tail + 1);
+          tx_tail = (unsigned char)((int)tx_tail + 1);
           if ((int)tx_tail >= 255) tx_tail = (unsigned char)0;
           *((uint8_t volatile *)(0x38 + 0x20)) = (unsigned char)((int)*((uint8_t volatile *)(
                                                                  0x38 + 0x20)) | (
@@ -1562,7 +1562,7 @@ void send_attitude(void)
                                                                  1 << 4));
         }
       }
-      else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
+      else modem_nb_ovrn = (unsigned char)((int)modem_nb_ovrn + 1);
     }
   }
   return;
@@ -1577,43 +1577,43 @@ void send_adc(void)
       else tmp = 8 < (int)tx_tail - (int)tx_head;
       if (tmp) {
         tx_buf[tx_head] = (unsigned char)0x05;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = (unsigned char)7;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         ck_a = (unsigned char)7;
         ck_b = (unsigned char)7;
         tx_buf[tx_head] = *((uint8_t *)(& ir_roll));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& ir_roll)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& ir_roll) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& ir_roll) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& ir_pitch));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& ir_pitch)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& ir_pitch) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& ir_pitch) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = ck_a;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = ck_b;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         if (! ((int)*((uint8_t volatile *)(0x39 + 0x20)) & (1 << 4))) {
           tx_byte = tx_buf[tx_tail];
           tx_byte_idx = (unsigned char)0;
-          tx_tail = (uint8_t volatile)((int)tx_tail + 1);
+          tx_tail = (unsigned char)((int)tx_tail + 1);
           if ((int)tx_tail >= 255) tx_tail = (unsigned char)0;
           *((uint8_t volatile *)(0x38 + 0x20)) = (unsigned char)((int)*((uint8_t volatile *)(
                                                                  0x38 + 0x20)) | (
@@ -1623,7 +1623,7 @@ void send_adc(void)
                                                                  1 << 4));
         }
       }
-      else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
+      else modem_nb_ovrn = (unsigned char)((int)modem_nb_ovrn + 1);
     }
   return;
 }
@@ -1638,68 +1638,68 @@ void send_settings(void)
         else tmp = 13 < (int)tx_tail - (int)tx_head;
         if (tmp) {
           tx_buf[tx_head] = (unsigned char)0x05;
-          tx_head = (uint8_t)((int)tx_head + 1);
+          tx_head = (unsigned char)((int)tx_head + 1);
           if ((int)tx_head >= 255) tx_head = (unsigned char)0;
           tx_buf[tx_head] = (unsigned char)17;
-          tx_head = (uint8_t)((int)tx_head + 1);
+          tx_head = (unsigned char)((int)tx_head + 1);
           if ((int)tx_head >= 255) tx_head = (unsigned char)0;
           ck_a = (unsigned char)17;
           ck_b = (unsigned char)17;
           tx_buf[tx_head] = inflight_calib_mode;
           ck_a = (unsigned char)((int)ck_a + (int)inflight_calib_mode);
           ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-          tx_head = (uint8_t)((int)tx_head + 1);
+          tx_head = (unsigned char)((int)tx_head + 1);
           if ((int)tx_head >= 255) tx_head = (unsigned char)0;
           tx_buf[tx_head] = *((uint8_t *)(& slider_1_val));
           ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& slider_1_val)));
           ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-          tx_head = (uint8_t)((int)tx_head + 1);
+          tx_head = (unsigned char)((int)tx_head + 1);
           if ((int)tx_head >= 255) tx_head = (unsigned char)0;
           tx_buf[tx_head] = *((uint8_t *)(& slider_1_val) + 1);
           ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& slider_1_val) + 1));
           ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-          tx_head = (uint8_t)((int)tx_head + 1);
+          tx_head = (unsigned char)((int)tx_head + 1);
           if ((int)tx_head >= 255) tx_head = (unsigned char)0;
           tx_buf[tx_head] = *((uint8_t *)(& slider_1_val) + 2);
           ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& slider_1_val) + 2));
           ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-          tx_head = (uint8_t)((int)tx_head + 1);
+          tx_head = (unsigned char)((int)tx_head + 1);
           if ((int)tx_head >= 255) tx_head = (unsigned char)0;
           tx_buf[tx_head] = *((uint8_t *)(& slider_1_val) + 3);
           ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& slider_1_val) + 3));
           ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-          tx_head = (uint8_t)((int)tx_head + 1);
+          tx_head = (unsigned char)((int)tx_head + 1);
           if ((int)tx_head >= 255) tx_head = (unsigned char)0;
           tx_buf[tx_head] = *((uint8_t *)(& slider_2_val));
           ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& slider_2_val)));
           ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-          tx_head = (uint8_t)((int)tx_head + 1);
+          tx_head = (unsigned char)((int)tx_head + 1);
           if ((int)tx_head >= 255) tx_head = (unsigned char)0;
           tx_buf[tx_head] = *((uint8_t *)(& slider_2_val) + 1);
           ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& slider_2_val) + 1));
           ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-          tx_head = (uint8_t)((int)tx_head + 1);
+          tx_head = (unsigned char)((int)tx_head + 1);
           if ((int)tx_head >= 255) tx_head = (unsigned char)0;
           tx_buf[tx_head] = *((uint8_t *)(& slider_2_val) + 2);
           ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& slider_2_val) + 2));
           ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-          tx_head = (uint8_t)((int)tx_head + 1);
+          tx_head = (unsigned char)((int)tx_head + 1);
           if ((int)tx_head >= 255) tx_head = (unsigned char)0;
           tx_buf[tx_head] = *((uint8_t *)(& slider_2_val) + 3);
           ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& slider_2_val) + 3));
           ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-          tx_head = (uint8_t)((int)tx_head + 1);
+          tx_head = (unsigned char)((int)tx_head + 1);
           if ((int)tx_head >= 255) tx_head = (unsigned char)0;
           tx_buf[tx_head] = ck_a;
-          tx_head = (uint8_t)((int)tx_head + 1);
+          tx_head = (unsigned char)((int)tx_head + 1);
           if ((int)tx_head >= 255) tx_head = (unsigned char)0;
           tx_buf[tx_head] = ck_b;
-          tx_head = (uint8_t)((int)tx_head + 1);
+          tx_head = (unsigned char)((int)tx_head + 1);
           if ((int)tx_head >= 255) tx_head = (unsigned char)0;
           if (! ((int)*((uint8_t volatile *)(0x39 + 0x20)) & (1 << 4))) {
             tx_byte = tx_buf[tx_tail];
             tx_byte_idx = (unsigned char)0;
-            tx_tail = (uint8_t volatile)((int)tx_tail + 1);
+            tx_tail = (unsigned char)((int)tx_tail + 1);
             if ((int)tx_tail >= 255) tx_tail = (unsigned char)0;
             *((uint8_t volatile *)(0x38 + 0x20)) = (unsigned char)((int)*((uint8_t volatile *)(
                                                                    0x38 + 0x20)) | (
@@ -1709,7 +1709,7 @@ void send_settings(void)
                                                                    1 << 4));
           }
         }
-        else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
+        else modem_nb_ovrn = (unsigned char)((int)modem_nb_ovrn + 1);
       }
   return;
 }
@@ -1723,123 +1723,123 @@ void send_desired(void)
       else tmp = 24 < (int)tx_tail - (int)tx_head;
       if (tmp) {
         tx_buf[tx_head] = (unsigned char)0x05;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = (unsigned char)18;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         ck_a = (unsigned char)18;
         ck_b = (unsigned char)18;
         tx_buf[tx_head] = *((uint8_t *)(& desired_roll));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_roll)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& desired_roll) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_roll) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& desired_roll) + 2);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_roll) + 2));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& desired_roll) + 3);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_roll) + 3));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& desired_pitch));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_pitch)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& desired_pitch) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_pitch) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& desired_pitch) + 2);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_pitch) + 2));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& desired_pitch) + 3);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_pitch) + 3));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& desired_x));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_x)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& desired_x) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_x) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& desired_x) + 2);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_x) + 2));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& desired_x) + 3);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_x) + 3));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& desired_y));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_y)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& desired_y) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_y) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& desired_y) + 2);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_y) + 2));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& desired_y) + 3);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_y) + 3));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& desired_altitude));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_altitude)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& desired_altitude) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_altitude) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& desired_altitude) + 2);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_altitude) + 2));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& desired_altitude) + 3);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_altitude) + 3));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = ck_a;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = ck_b;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         if (! ((int)*((uint8_t volatile *)(0x39 + 0x20)) & (1 << 4))) {
           tx_byte = tx_buf[tx_tail];
           tx_byte_idx = (unsigned char)0;
-          tx_tail = (uint8_t volatile)((int)tx_tail + 1);
+          tx_tail = (unsigned char)((int)tx_tail + 1);
           if ((int)tx_tail >= 255) tx_tail = (unsigned char)0;
           *((uint8_t volatile *)(0x38 + 0x20)) = (unsigned char)((int)*((uint8_t volatile *)(
                                                                  0x38 + 0x20)) | (
@@ -1849,7 +1849,7 @@ void send_desired(void)
                                                                  1 << 4));
         }
       }
-      else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
+      else modem_nb_ovrn = (unsigned char)((int)modem_nb_ovrn + 1);
     }
   return;
 }
@@ -1863,63 +1863,63 @@ void send_bat(void)
       else tmp = 12 < (int)tx_tail - (int)tx_head;
       if (tmp) {
         tx_buf[tx_head] = (unsigned char)0x05;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = (unsigned char)12;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         ck_a = (unsigned char)12;
         ck_b = (unsigned char)12;
         tx_buf[tx_head] = vsupply;
         ck_a = (unsigned char)((int)ck_a + (int)vsupply);
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& estimator_flight_time));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_flight_time)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& estimator_flight_time) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_flight_time) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = low_battery;
         ck_a = (unsigned char)((int)ck_a + (int)low_battery);
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& block_time));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& block_time)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& block_time) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& block_time) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& stage_time));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& stage_time)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& stage_time) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& stage_time) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = ck_a;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = ck_b;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         if (! ((int)*((uint8_t volatile *)(0x39 + 0x20)) & (1 << 4))) {
           tx_byte = tx_buf[tx_tail];
           tx_byte_idx = (unsigned char)0;
-          tx_tail = (uint8_t volatile)((int)tx_tail + 1);
+          tx_tail = (unsigned char)((int)tx_tail + 1);
           if ((int)tx_tail >= 255) tx_tail = (unsigned char)0;
           *((uint8_t volatile *)(0x38 + 0x20)) = (unsigned char)((int)*((uint8_t volatile *)(
                                                                  0x38 + 0x20)) | (
@@ -1929,7 +1929,7 @@ void send_bat(void)
                                                                  1 << 4));
         }
       }
-      else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
+      else modem_nb_ovrn = (unsigned char)((int)modem_nb_ovrn + 1);
     }
   return;
 }
@@ -1943,93 +1943,93 @@ void send_climb(void)
       else tmp = 18 < (int)tx_tail - (int)tx_head;
       if (tmp) {
         tx_buf[tx_head] = (unsigned char)0x05;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = (unsigned char)14;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         ck_a = (unsigned char)14;
         ck_b = (unsigned char)14;
         tx_buf[tx_head] = *((uint8_t *)(& desired_gaz));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_gaz)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& desired_gaz) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_gaz) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& desired_climb));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_climb)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& desired_climb) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_climb) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& desired_climb) + 2);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_climb) + 2));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& desired_climb) + 3);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_climb) + 3));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& climb_sum_err));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& climb_sum_err)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& climb_sum_err) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& climb_sum_err) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& climb_sum_err) + 2);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& climb_sum_err) + 2));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& climb_sum_err) + 3);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& climb_sum_err) + 3));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& climb_pgain));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& climb_pgain)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& climb_pgain) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& climb_pgain) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& climb_pgain) + 2);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& climb_pgain) + 2));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& climb_pgain) + 3);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& climb_pgain) + 3));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = ck_a;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = ck_b;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         if (! ((int)*((uint8_t volatile *)(0x39 + 0x20)) & (1 << 4))) {
           tx_byte = tx_buf[tx_tail];
           tx_byte_idx = (unsigned char)0;
-          tx_tail = (uint8_t volatile)((int)tx_tail + 1);
+          tx_tail = (unsigned char)((int)tx_tail + 1);
           if ((int)tx_tail >= 255) tx_tail = (unsigned char)0;
           *((uint8_t volatile *)(0x38 + 0x20)) = (unsigned char)((int)*((uint8_t volatile *)(
                                                                  0x38 + 0x20)) | (
@@ -2039,7 +2039,7 @@ void send_climb(void)
                                                                  1 << 4));
         }
       }
-      else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
+      else modem_nb_ovrn = (unsigned char)((int)modem_nb_ovrn + 1);
     }
   return;
 }
@@ -2053,48 +2053,48 @@ void send_mode(void)
       else tmp = 9 < (int)tx_tail - (int)tx_head;
       if (tmp) {
         tx_buf[tx_head] = (unsigned char)0x05;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = (unsigned char)11;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         ck_a = (unsigned char)11;
         ck_b = (unsigned char)11;
         tx_buf[tx_head] = pprz_mode;
         ck_a = (unsigned char)((int)ck_a + (int)pprz_mode);
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = vertical_mode;
         ck_a = (unsigned char)((int)ck_a + (int)vertical_mode);
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = inflight_calib_mode;
         ck_a = (unsigned char)((int)ck_a + (int)inflight_calib_mode);
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = mcu1_status;
         ck_a = (unsigned char)((int)ck_a + (int)mcu1_status);
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = ir_estim_mode;
         ck_a = (unsigned char)((int)ck_a + (int)ir_estim_mode);
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = ck_a;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = ck_b;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         if (! ((int)*((uint8_t volatile *)(0x39 + 0x20)) & (1 << 4))) {
           tx_byte = tx_buf[tx_tail];
           tx_byte_idx = (unsigned char)0;
-          tx_tail = (uint8_t volatile)((int)tx_tail + 1);
+          tx_tail = (unsigned char)((int)tx_tail + 1);
           if ((int)tx_tail >= 255) tx_tail = (unsigned char)0;
           *((uint8_t volatile *)(0x38 + 0x20)) = (unsigned char)((int)*((uint8_t volatile *)(
                                                                  0x38 + 0x20)) | (
@@ -2104,7 +2104,7 @@ void send_mode(void)
                                                                  1 << 4));
         }
       }
-      else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
+      else modem_nb_ovrn = (unsigned char)((int)modem_nb_ovrn + 1);
     }
   return;
 }
@@ -2118,48 +2118,48 @@ void send_debug(void)
       else tmp = 9 < (int)tx_tail - (int)tx_head;
       if (tmp) {
         tx_buf[tx_head] = (unsigned char)0x05;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = (unsigned char)13;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         ck_a = (unsigned char)13;
         ck_b = (unsigned char)13;
         tx_buf[tx_head] = *((uint8_t *)(& link_fbw_nb_err));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& link_fbw_nb_err)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = link_fbw_fbw_nb_err;
         ck_a = (unsigned char)((int)ck_a + (int)link_fbw_fbw_nb_err);
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = modem_nb_ovrn;
         ck_a = (unsigned char)((int)ck_a + (int)modem_nb_ovrn);
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = gps_nb_ovrn;
         ck_a = (unsigned char)((int)ck_a + (int)gps_nb_ovrn);
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = mcu1_ppm_cpt;
         ck_a = (unsigned char)((int)ck_a + (int)mcu1_ppm_cpt);
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = ck_a;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = ck_b;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         if (! ((int)*((uint8_t volatile *)(0x39 + 0x20)) & (1 << 4))) {
           tx_byte = tx_buf[tx_tail];
           tx_byte_idx = (unsigned char)0;
-          tx_tail = (uint8_t volatile)((int)tx_tail + 1);
+          tx_tail = (unsigned char)((int)tx_tail + 1);
           if ((int)tx_tail >= 255) tx_tail = (unsigned char)0;
           *((uint8_t volatile *)(0x38 + 0x20)) = (unsigned char)((int)*((uint8_t volatile *)(
                                                                  0x38 + 0x20)) | (
@@ -2169,7 +2169,7 @@ void send_debug(void)
                                                                  1 << 4));
         }
       }
-      else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
+      else modem_nb_ovrn = (unsigned char)((int)modem_nb_ovrn + 1);
     }
   return;
 }
@@ -2183,63 +2183,63 @@ void send_nav_ref(void)
       else tmp = 12 < (int)tx_tail - (int)tx_head;
       if (tmp) {
         tx_buf[tx_head] = (unsigned char)0x05;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = (unsigned char)9;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         ck_a = (unsigned char)9;
         ck_b = (unsigned char)9;
         tx_buf[tx_head] = *((uint8_t *)(& utm_east0));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& utm_east0)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& utm_east0) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& utm_east0) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& utm_east0) + 2);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& utm_east0) + 2));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& utm_east0) + 3);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& utm_east0) + 3));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& utm_north0));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& utm_north0)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& utm_north0) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& utm_north0) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& utm_north0) + 2);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& utm_north0) + 2));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& utm_north0) + 3);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& utm_north0) + 3));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = ck_a;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = ck_b;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         if (! ((int)*((uint8_t volatile *)(0x39 + 0x20)) & (1 << 4))) {
           tx_byte = tx_buf[tx_tail];
           tx_byte_idx = (unsigned char)0;
-          tx_tail = (uint8_t volatile)((int)tx_tail + 1);
+          tx_tail = (unsigned char)((int)tx_tail + 1);
           if ((int)tx_tail >= 255) tx_tail = (unsigned char)0;
           *((uint8_t volatile *)(0x38 + 0x20)) = (unsigned char)((int)*((uint8_t volatile *)(
                                                                  0x38 + 0x20)) | (
@@ -2249,7 +2249,7 @@ void send_nav_ref(void)
                                                                  1 << 4));
         }
       }
-      else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
+      else modem_nb_ovrn = (unsigned char)((int)modem_nb_ovrn + 1);
     }
   return;
 }
@@ -2321,48 +2321,48 @@ void radio_control_task(void)
       else tmp_3 = 9 < (int)tx_tail - (int)tx_head;
       if (tmp_3) {
         tx_buf[tx_head] = (unsigned char)0x05;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = (unsigned char)11;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         ck_a = (unsigned char)11;
         ck_b = (unsigned char)11;
         tx_buf[tx_head] = pprz_mode;
         ck_a = (unsigned char)((int)ck_a + (int)pprz_mode);
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = vertical_mode;
         ck_a = (unsigned char)((int)ck_a + (int)vertical_mode);
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = inflight_calib_mode;
         ck_a = (unsigned char)((int)ck_a + (int)inflight_calib_mode);
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = mcu1_status;
         ck_a = (unsigned char)((int)ck_a + (int)mcu1_status);
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = ir_estim_mode;
         ck_a = (unsigned char)((int)ck_a + (int)ir_estim_mode);
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = ck_a;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = ck_b;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         if (! ((int)*((uint8_t volatile *)(0x39 + 0x20)) & (1 << 4))) {
           tx_byte = tx_buf[tx_tail];
           tx_byte_idx = (unsigned char)0;
-          tx_tail = (uint8_t volatile)((int)tx_tail + 1);
+          tx_tail = (unsigned char)((int)tx_tail + 1);
           if ((int)tx_tail >= 255) tx_tail = (unsigned char)0;
           *((uint8_t volatile *)(0x38 + 0x20)) = (unsigned char)((int)*((uint8_t volatile *)(
                                                                  0x38 + 0x20)) | (
@@ -2372,7 +2372,7 @@ void radio_control_task(void)
                                                                  1 << 4));
         }
       }
-      else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
+      else modem_nb_ovrn = (unsigned char)((int)modem_nb_ovrn + 1);
     }
     if ((int)pprz_mode == 1) {
       desired_roll = (float)((double)((float)from_fbw.channels[1] / (float)(
@@ -2411,153 +2411,153 @@ void send_nav_values(void)
     else tmp = 30 < (int)tx_tail - (int)tx_head;
     if (tmp) {
       tx_buf[tx_head] = (unsigned char)0x05;
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = (unsigned char)10;
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       ck_a = (unsigned char)10;
       ck_b = (unsigned char)10;
       tx_buf[tx_head] = nav_block;
       ck_a = (unsigned char)((int)ck_a + (int)nav_block);
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = nav_stage;
       ck_a = (unsigned char)((int)ck_a + (int)nav_stage);
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& estimator_x));
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_x)));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& estimator_x) + 1);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_x) + 1));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& estimator_x) + 2);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_x) + 2));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& estimator_x) + 3);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_x) + 3));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& estimator_y));
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_y)));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& estimator_y) + 1);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_y) + 1));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& estimator_y) + 2);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_y) + 2));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& estimator_y) + 3);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_y) + 3));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& desired_course));
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_course)));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& desired_course) + 1);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_course) + 1));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& desired_course) + 2);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_course) + 2));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& desired_course) + 3);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& desired_course) + 3));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& dist2_to_wp));
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& dist2_to_wp)));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& dist2_to_wp) + 1);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& dist2_to_wp) + 1));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& dist2_to_wp) + 2);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& dist2_to_wp) + 2));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& dist2_to_wp) + 3);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& dist2_to_wp) + 3));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& course_pgain));
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& course_pgain)));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& course_pgain) + 1);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& course_pgain) + 1));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& course_pgain) + 2);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& course_pgain) + 2));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& course_pgain) + 3);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& course_pgain) + 3));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& dist2_to_home));
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& dist2_to_home)));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& dist2_to_home) + 1);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& dist2_to_home) + 1));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& dist2_to_home) + 2);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& dist2_to_home) + 2));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& dist2_to_home) + 3);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& dist2_to_home) + 3));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = ck_a;
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = ck_b;
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       if (! ((int)*((uint8_t volatile *)(0x39 + 0x20)) & (1 << 4))) {
         tx_byte = tx_buf[tx_tail];
         tx_byte_idx = (unsigned char)0;
-        tx_tail = (uint8_t volatile)((int)tx_tail + 1);
+        tx_tail = (unsigned char)((int)tx_tail + 1);
         if ((int)tx_tail >= 255) tx_tail = (unsigned char)0;
         *((uint8_t volatile *)(0x38 + 0x20)) = (unsigned char)((int)*((uint8_t volatile *)(
                                                                0x38 + 0x20)) | (
@@ -2567,7 +2567,7 @@ void send_nav_values(void)
                                                                1 << 4));
       }
     }
-    else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
+    else modem_nb_ovrn = (unsigned char)((int)modem_nb_ovrn + 1);
   }
   return;
 }
@@ -2622,22 +2622,23 @@ static uint8_t periodic_task_odd;
 void periodic_task(void)
 {
   estimator_t = (float)((double)estimator_t + ((256. * 1024.) / (double)16) / 1000000.);
-  _20Hz = (uint8_t)((int)_20Hz + 1);
+  _20Hz = (unsigned char)((int)_20Hz + 1);
   if ((int)_20Hz >= 3) _20Hz = (unsigned char)0;
-  periodic_task__10Hz = (uint8_t)((int)periodic_task__10Hz + 1);
+  periodic_task__10Hz = (unsigned char)((int)periodic_task__10Hz + 1);
   if ((int)periodic_task__10Hz >= 6) periodic_task__10Hz = (unsigned char)0;
-  periodic_task__4Hz = (uint8_t)((int)periodic_task__4Hz + 1);
+  periodic_task__4Hz = (unsigned char)((int)periodic_task__4Hz + 1);
   if ((int)periodic_task__4Hz >= 15) periodic_task__4Hz = (unsigned char)0;
-  _1Hz = (uint8_t)((int)_1Hz + 1);
+  _1Hz = (unsigned char)((int)_1Hz + 1);
   if ((int)_1Hz >= 61) _1Hz = (unsigned char)0;
   if (! periodic_task__10Hz) stage_time_ds = (float)((double)stage_time_ds + .1);
   if (! _1Hz) {
-    if (estimator_flight_time) estimator_flight_time = (uint16_t)((int)estimator_flight_time + 1);
-    cputime = (uint16_t)((int)cputime + 1);
+    if (estimator_flight_time) estimator_flight_time = (unsigned short)(
+                               (int)estimator_flight_time + 1);
+    cputime = (unsigned short)((int)cputime + 1);
     stage_time_ds = (float)((short)((double)stage_time_ds + .5));
-    stage_time = (uint16_t)((int)stage_time + 1);
-    block_time = (uint16_t)((int)block_time + 1);
-    if ((int)vsupply < 93) periodic_task_t = (uint8_t)((int)periodic_task_t + 1);
+    stage_time = (unsigned short)((int)stage_time + 1);
+    block_time = (unsigned short)((int)block_time + 1);
+    if ((int)vsupply < 93) periodic_task_t = (unsigned char)((int)periodic_task_t + 1);
     else periodic_task_t = (unsigned char)0;
     low_battery = (unsigned char)((int)low_battery | ((int)periodic_task_t >= 5));
   }
@@ -2651,7 +2652,7 @@ void periodic_task(void)
   }
   if (! ((int)_20Hz == 0)) 
     if ((int)_20Hz == 1) {
-      periodic_task_odd = (uint8_t)((int)periodic_task_odd + 1);
+      periodic_task_odd = (unsigned char)((int)periodic_task_odd + 1);
       if ((int)periodic_task_odd & 0x01) {
         send_boot();
         send_attitude();
@@ -2670,7 +2671,7 @@ void periodic_task(void)
         stabilisation_task();
         link_fbw_send();
       }
-      else fatal_error_nb = (uint8_t)((int)fatal_error_nb + 1);
+      else fatal_error_nb = (unsigned char)((int)fatal_error_nb + 1);
   return;
 }
 
@@ -2704,168 +2705,168 @@ void send_gps_pos(void)
       else tmp = 33 < (int)tx_tail - (int)tx_head;
       if (tmp) {
         tx_buf[tx_head] = (unsigned char)0x05;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = (unsigned char)8;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         ck_a = (unsigned char)8;
         ck_b = (unsigned char)8;
         tx_buf[tx_head] = *((uint8_t *)(& gps_mode));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_mode)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& gps_utm_east));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_utm_east)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& gps_utm_east) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_utm_east) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& gps_utm_east) + 2);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_utm_east) + 2));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& gps_utm_east) + 3);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_utm_east) + 3));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& gps_utm_north));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_utm_north)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& gps_utm_north) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_utm_north) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& gps_utm_north) + 2);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_utm_north) + 2));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& gps_utm_north) + 3);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_utm_north) + 3));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& gps_fcourse));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_fcourse)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& gps_fcourse) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_fcourse) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& gps_fcourse) + 2);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_fcourse) + 2));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& gps_fcourse) + 3);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_fcourse) + 3));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& gps_falt));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_falt)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& gps_falt) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_falt) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& gps_falt) + 2);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_falt) + 2));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& gps_falt) + 3);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_falt) + 3));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& gps_fspeed));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_fspeed)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& gps_fspeed) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_fspeed) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& gps_fspeed) + 2);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_fspeed) + 2));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& gps_fspeed) + 3);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_fspeed) + 3));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& gps_fclimb));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_fclimb)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& gps_fclimb) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_fclimb) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& gps_fclimb) + 2);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_fclimb) + 2));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& gps_fclimb) + 3);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_fclimb) + 3));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& gps_ftow));
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_ftow)));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& gps_ftow) + 1);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_ftow) + 1));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& gps_ftow) + 2);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_ftow) + 2));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = *((uint8_t *)(& gps_ftow) + 3);
         ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& gps_ftow) + 3));
         ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = ck_a;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         tx_buf[tx_head] = ck_b;
-        tx_head = (uint8_t)((int)tx_head + 1);
+        tx_head = (unsigned char)((int)tx_head + 1);
         if ((int)tx_head >= 255) tx_head = (unsigned char)0;
         if (! ((int)*((uint8_t volatile *)(0x39 + 0x20)) & (1 << 4))) {
           tx_byte = tx_buf[tx_tail];
           tx_byte_idx = (unsigned char)0;
-          tx_tail = (uint8_t volatile)((int)tx_tail + 1);
+          tx_tail = (unsigned char)((int)tx_tail + 1);
           if ((int)tx_tail >= 255) tx_tail = (unsigned char)0;
           *((uint8_t volatile *)(0x38 + 0x20)) = (unsigned char)((int)*((uint8_t volatile *)(
                                                                  0x38 + 0x20)) | (
@@ -2875,7 +2876,7 @@ void send_gps_pos(void)
                                                                  1 << 4));
         }
       }
-      else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
+      else modem_nb_ovrn = (unsigned char)((int)modem_nb_ovrn + 1);
     }
     estimator_update_state_gps();
   }
@@ -2890,103 +2891,103 @@ void send_radIR(void)
     else tmp = 20 < (int)tx_tail - (int)tx_head;
     if (tmp) {
       tx_buf[tx_head] = (unsigned char)0x05;
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = (unsigned char)5;
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       ck_a = (unsigned char)5;
       ck_b = (unsigned char)5;
       tx_buf[tx_head] = *((uint8_t *)(& estimator_ir));
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_ir)));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& estimator_ir) + 1);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_ir) + 1));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& estimator_ir) + 2);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_ir) + 2));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& estimator_ir) + 3);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_ir) + 3));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& estimator_rad));
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_rad)));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& estimator_rad) + 1);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_rad) + 1));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& estimator_rad) + 2);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_rad) + 2));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& estimator_rad) + 3);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_rad) + 3));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& estimator_rad_of_ir));
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_rad_of_ir)));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& estimator_rad_of_ir) + 1);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_rad_of_ir) + 1));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& estimator_rad_of_ir) + 2);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_rad_of_ir) + 2));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& estimator_rad_of_ir) + 3);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& estimator_rad_of_ir) + 3));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& ir_roll_neutral));
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& ir_roll_neutral)));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& ir_roll_neutral) + 1);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& ir_roll_neutral) + 1));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& ir_pitch_neutral));
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& ir_pitch_neutral)));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = *((uint8_t *)(& ir_pitch_neutral) + 1);
       ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& ir_pitch_neutral) + 1));
       ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = ck_a;
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       tx_buf[tx_head] = ck_b;
-      tx_head = (uint8_t)((int)tx_head + 1);
+      tx_head = (unsigned char)((int)tx_head + 1);
       if ((int)tx_head >= 255) tx_head = (unsigned char)0;
       if (! ((int)*((uint8_t volatile *)(0x39 + 0x20)) & (1 << 4))) {
         tx_byte = tx_buf[tx_tail];
         tx_byte_idx = (unsigned char)0;
-        tx_tail = (uint8_t volatile)((int)tx_tail + 1);
+        tx_tail = (unsigned char)((int)tx_tail + 1);
         if ((int)tx_tail >= 255) tx_tail = (unsigned char)0;
         *((uint8_t volatile *)(0x38 + 0x20)) = (unsigned char)((int)*((uint8_t volatile *)(
                                                                0x38 + 0x20)) | (
@@ -2996,7 +2997,7 @@ void send_radIR(void)
                                                                1 << 4));
       }
     }
-    else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
+    else modem_nb_ovrn = (unsigned char)((int)modem_nb_ovrn + 1);
   }
   return;
 }
@@ -3014,33 +3015,33 @@ void send_takeOff(void)
           else tmp = 6 < (int)tx_tail - (int)tx_head;
           if (tmp) {
             tx_buf[tx_head] = (unsigned char)0x05;
-            tx_head = (uint8_t)((int)tx_head + 1);
+            tx_head = (unsigned char)((int)tx_head + 1);
             if ((int)tx_head >= 255) tx_head = (unsigned char)0;
             tx_buf[tx_head] = (unsigned char)4;
-            tx_head = (uint8_t)((int)tx_head + 1);
+            tx_head = (unsigned char)((int)tx_head + 1);
             if ((int)tx_head >= 255) tx_head = (unsigned char)0;
             ck_a = (unsigned char)4;
             ck_b = (unsigned char)4;
             tx_buf[tx_head] = *((uint8_t *)(& cputime));
             ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& cputime)));
             ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-            tx_head = (uint8_t)((int)tx_head + 1);
+            tx_head = (unsigned char)((int)tx_head + 1);
             if ((int)tx_head >= 255) tx_head = (unsigned char)0;
             tx_buf[tx_head] = *((uint8_t *)(& cputime) + 1);
             ck_a = (unsigned char)((int)ck_a + (int)*((uint8_t *)(& cputime) + 1));
             ck_b = (unsigned char)((int)ck_b + (int)ck_a);
-            tx_head = (uint8_t)((int)tx_head + 1);
+            tx_head = (unsigned char)((int)tx_head + 1);
             if ((int)tx_head >= 255) tx_head = (unsigned char)0;
             tx_buf[tx_head] = ck_a;
-            tx_head = (uint8_t)((int)tx_head + 1);
+            tx_head = (unsigned char)((int)tx_head + 1);
             if ((int)tx_head >= 255) tx_head = (unsigned char)0;
             tx_buf[tx_head] = ck_b;
-            tx_head = (uint8_t)((int)tx_head + 1);
+            tx_head = (unsigned char)((int)tx_head + 1);
             if ((int)tx_head >= 255) tx_head = (unsigned char)0;
             if (! ((int)*((uint8_t volatile *)(0x39 + 0x20)) & (1 << 4))) {
               tx_byte = tx_buf[tx_tail];
               tx_byte_idx = (unsigned char)0;
-              tx_tail = (uint8_t volatile)((int)tx_tail + 1);
+              tx_tail = (unsigned char)((int)tx_tail + 1);
               if ((int)tx_tail >= 255) tx_tail = (unsigned char)0;
               *((uint8_t volatile *)(0x38 + 0x20)) = (unsigned char)(
               (int)*((uint8_t volatile *)(0x38 + 0x20)) | (1 << 0));
@@ -3048,7 +3049,7 @@ void send_takeOff(void)
               (int)*((uint8_t volatile *)(0x39 + 0x20)) | (1 << 4));
             }
           }
-          else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
+          else modem_nb_ovrn = (unsigned char)((int)modem_nb_ovrn + 1);
         }
       }
     gps_pos_available = (unsigned char)0;
@@ -3113,7 +3114,7 @@ int main(void)
   while (init_cpt) {
     bool_t tmp;
     tmp = timer_periodic_0();
-    if (tmp) init_cpt = (uint8_t)((int)init_cpt - 1);
+    if (tmp) init_cpt = (unsigned char)((int)init_cpt - 1);
   }
   while (1) {
     {
@@ -3195,7 +3196,7 @@ void __vector_5(void)
     else *((uint8_t volatile *)(0x12 + 0x20)) = (unsigned char)((int)*((uint8_t volatile *)(
                                                                 0x12 + 0x20)) | (
                                                                 1 << 6));
-  tx_byte_idx = (uint8_t)((int)tx_byte_idx + 1);
+  tx_byte_idx = (unsigned char)((int)tx_byte_idx + 1);
   if ((int)tx_byte_idx >= 10) 
     if ((int)tx_head == (int)tx_tail) *((uint8_t volatile *)(0x39 + 0x20)) = (unsigned char)(
                                       (int)*((uint8_t volatile *)(0x39 + 0x20)) & ~ (
@@ -3203,7 +3204,7 @@ void __vector_5(void)
     else {
       tx_byte = tx_buf[tx_tail];
       tx_byte_idx = (unsigned char)0;
-      tx_tail = (uint8_t volatile)((int)tx_tail + 1);
+      tx_tail = (unsigned char)((int)tx_tail + 1);
       if ((int)tx_tail >= 255) tx_tail = (unsigned char)0;
     }
   return;
@@ -3250,7 +3251,7 @@ __inline static void auto_nav(void)
       label_while_1: nav_stage = (unsigned char)0;
       if (! (! estimator_flight_time)) goto label_endwhile_2;
       else {
-        nav_stage = (uint8_t)((int)nav_stage + 1);
+        nav_stage = (unsigned char)((int)nav_stage + 1);
         last_x = estimator_x;
         last_y = estimator_y;
         stage_time = (unsigned short)0;
@@ -3264,7 +3265,7 @@ __inline static void auto_nav(void)
         if ((int)nav_stage == 2) {
           label_endwhile_2: nav_stage = (unsigned char)2;
           if ((int)estimator_flight_time > 8) {
-            nav_stage = (uint8_t)((int)nav_stage + 1);
+            nav_stage = (unsigned char)((int)nav_stage + 1);
             last_x = estimator_x;
             last_y = estimator_y;
             stage_time = (unsigned short)0;
@@ -3291,7 +3292,7 @@ __inline static void auto_nav(void)
           if ((int)nav_stage == 3) {
             nav_stage = (unsigned char)3;
             if ((double)estimator_z > 150.) {
-              nav_stage = (uint8_t)((int)nav_stage + 1);
+              nav_stage = (unsigned char)((int)nav_stage + 1);
               last_x = estimator_x;
               last_y = estimator_y;
               stage_time = (unsigned short)0;
@@ -3309,7 +3310,7 @@ __inline static void auto_nav(void)
           }
           else 
             if ((int)nav_stage == 4) {
-              nav_block = (uint8_t)((int)nav_block + 1);
+              nav_block = (unsigned char)((int)nav_block + 1);
               nav_stage = (unsigned char)0;
               block_time = (unsigned short)0;
               last_x = estimator_x;
@@ -3342,7 +3343,7 @@ __inline static void auto_nav(void)
         label_while_3:
         if (! (! 0)) goto label_endwhile_4;
         else {
-          nav_stage = (uint8_t)((int)nav_stage + 1);
+          nav_stage = (unsigned char)((int)nav_stage + 1);
           last_x = estimator_x;
           last_y = estimator_y;
           stage_time = (unsigned short)0;
@@ -3357,7 +3358,7 @@ __inline static void auto_nav(void)
           tmp_1 = approaching((unsigned char)1);
           if (tmp_1) {
             last_wp = (unsigned char)1;
-            nav_stage = (uint8_t)((int)nav_stage + 1);
+            nav_stage = (unsigned char)((int)nav_stage + 1);
             last_x = estimator_x;
             last_y = estimator_y;
             stage_time = (unsigned short)0;
@@ -3381,7 +3382,7 @@ __inline static void auto_nav(void)
             tmp_2 = approaching((unsigned char)4);
             if (tmp_2) {
               last_wp = (unsigned char)4;
-              nav_stage = (uint8_t)((int)nav_stage + 1);
+              nav_stage = (unsigned char)((int)nav_stage + 1);
               last_x = estimator_x;
               last_y = estimator_y;
               stage_time = (unsigned short)0;
@@ -3406,7 +3407,7 @@ __inline static void auto_nav(void)
             else 
               if ((int)nav_stage == 4) {
                 label_endwhile_4: nav_stage = (unsigned char)4;
-                nav_block = (uint8_t)((int)nav_block + 1);
+                nav_block = (unsigned char)((int)nav_block + 1);
                 nav_stage = (unsigned char)0;
                 block_time = (unsigned short)0;
                 last_x = estimator_x;
@@ -3439,7 +3440,7 @@ __inline static void auto_nav(void)
           label_while_5: nav_stage = (unsigned char)0;
           if (! (! 0)) goto label_endwhile_6;
           else {
-            nav_stage = (uint8_t)((int)nav_stage + 1);
+            nav_stage = (unsigned char)((int)nav_stage + 1);
             last_x = estimator_x;
             last_y = estimator_y;
             stage_time = (unsigned short)0;
@@ -3454,7 +3455,7 @@ __inline static void auto_nav(void)
             tmp_4 = approaching((unsigned char)6);
             if (tmp_4) {
               last_wp = (unsigned char)6;
-              nav_stage = (uint8_t)((int)nav_stage + 1);
+              nav_stage = (unsigned char)((int)nav_stage + 1);
               last_x = estimator_x;
               last_y = estimator_y;
               stage_time = (unsigned short)0;
@@ -3478,7 +3479,7 @@ __inline static void auto_nav(void)
               tmp_5 = approaching((unsigned char)1);
               if (tmp_5) {
                 last_wp = (unsigned char)1;
-                nav_stage = (uint8_t)((int)nav_stage + 1);
+                nav_stage = (unsigned char)((int)nav_stage + 1);
                 last_x = estimator_x;
                 last_y = estimator_y;
                 stage_time = (unsigned short)0;
@@ -3502,7 +3503,7 @@ __inline static void auto_nav(void)
                 tmp_6 = approaching((unsigned char)2);
                 if (tmp_6) {
                   last_wp = (unsigned char)2;
-                  nav_stage = (uint8_t)((int)nav_stage + 1);
+                  nav_stage = (unsigned char)((int)nav_stage + 1);
                   last_x = estimator_x;
                   last_y = estimator_y;
                   stage_time = (unsigned short)0;
@@ -3526,7 +3527,7 @@ __inline static void auto_nav(void)
                   tmp_7 = approaching((unsigned char)3);
                   if (tmp_7) {
                     last_wp = (unsigned char)3;
-                    nav_stage = (uint8_t)((int)nav_stage + 1);
+                    nav_stage = (unsigned char)((int)nav_stage + 1);
                     last_x = estimator_x;
                     last_y = estimator_y;
                     stage_time = (unsigned short)0;
@@ -3550,7 +3551,7 @@ __inline static void auto_nav(void)
                     tmp_8 = approaching((unsigned char)4);
                     if (tmp_8) {
                       last_wp = (unsigned char)4;
-                      nav_stage = (uint8_t)((int)nav_stage + 1);
+                      nav_stage = (unsigned char)((int)nav_stage + 1);
                       last_x = estimator_x;
                       last_y = estimator_y;
                       stage_time = (unsigned short)0;
@@ -3574,7 +3575,7 @@ __inline static void auto_nav(void)
                       tmp_9 = approaching((unsigned char)5);
                       if (tmp_9) {
                         last_wp = (unsigned char)5;
-                        nav_stage = (uint8_t)((int)nav_stage + 1);
+                        nav_stage = (unsigned char)((int)nav_stage + 1);
                         last_x = estimator_x;
                         last_y = estimator_y;
                         stage_time = (unsigned short)0;
@@ -3599,7 +3600,7 @@ __inline static void auto_nav(void)
                       else 
                         if ((int)nav_stage == 8) {
                           label_endwhile_6: nav_stage = (unsigned char)8;
-                          nav_block = (uint8_t)((int)nav_block + 1);
+                          nav_block = (unsigned char)((int)nav_block + 1);
                           nav_stage = (unsigned char)0;
                           block_time = (unsigned short)0;
                           last_x = estimator_x;
@@ -3720,7 +3721,7 @@ __inline static void auto_nav(void)
           else 
             if ((int)nav_stage == 1) {
               nav_stage = (unsigned char)1;
-              nav_block = (uint8_t)((int)nav_block + 1);
+              nav_block = (unsigned char)((int)nav_block + 1);
               nav_stage = (unsigned char)0;
               block_time = (unsigned short)0;
               last_x = estimator_x;
@@ -3791,7 +3792,7 @@ __inline static void auto_nav(void)
             else 
               if ((int)nav_stage == 1) {
                 nav_stage = (unsigned char)1;
-                nav_block = (uint8_t)((int)nav_block + 1);
+                nav_block = (unsigned char)((int)nav_block + 1);
                 nav_stage = (unsigned char)0;
                 block_time = (unsigned short)0;
                 last_x = estimator_x;
@@ -3824,7 +3825,7 @@ __inline static void auto_nav(void)
                 label_while_7: nav_stage = (unsigned char)0;
                 if (! (! 0)) goto label_endwhile_8;
                 else {
-                  nav_stage = (uint8_t)((int)nav_stage + 1);
+                  nav_stage = (unsigned char)((int)nav_stage + 1);
                   last_x = estimator_x;
                   last_y = estimator_y;
                   stage_time = (unsigned short)0;
@@ -3875,7 +3876,7 @@ __inline static void auto_nav(void)
                   ;
                   if ((float)tmp_34 < qdr) 
                     if (qdr < (float)(0 + 10)) {
-                      nav_stage = (uint8_t)((int)nav_stage + 1);
+                      nav_stage = (unsigned char)((int)nav_stage + 1);
                       last_x = estimator_x;
                       last_y = estimator_y;
                       stage_time = (unsigned short)0;
@@ -3927,7 +3928,7 @@ __inline static void auto_nav(void)
                     ;
                     if ((float)tmp_42 < qdr) 
                       if (qdr < (float)(180 + 10)) {
-                        nav_stage = (uint8_t)((int)nav_stage + 1);
+                        nav_stage = (unsigned char)((int)nav_stage + 1);
                         last_x = estimator_x;
                         last_y = estimator_y;
                         stage_time = (unsigned short)0;
@@ -3944,7 +3945,7 @@ __inline static void auto_nav(void)
                     else 
                       if ((int)nav_stage == 4) {
                         label_endwhile_8: nav_stage = (unsigned char)4;
-                        nav_block = (uint8_t)((int)nav_block + 1);
+                        nav_block = (unsigned char)((int)nav_block + 1);
                         nav_stage = (unsigned char)0;
                         block_time = (unsigned short)0;
                         last_x = estimator_x;
@@ -4236,7 +4237,7 @@ void __vector_17(void) __attribute__((__signal__));
 void __vector_17(void)
 {
   if ((int)spi_cur_slave == 1) link_fbw_on_spi_it();
-  else fatal_error_nb = (uint8_t)((int)fatal_error_nb + 1);
+  else fatal_error_nb = (unsigned char)((int)fatal_error_nb + 1);
   return;
 }
 
@@ -4257,7 +4258,7 @@ void uart0_transmit(unsigned char data)
   if ((int)*((uint8_t volatile *)(0x0A + 0x20)) & (1 << 6)) {
     if ((int)tx_tail0 == (int)tx_head0 + 1) goto return_label;
     tx_buf0[tx_head0] = data;
-    tx_head0 = (uint8_t)((int)tx_head0 + 1);
+    tx_head0 = (unsigned char)((int)tx_head0 + 1);
   }
   else {
     *((uint8_t volatile *)(0x0C + 0x20)) = data;
@@ -4273,7 +4274,7 @@ void uart1_transmit(unsigned char data)
   if ((int)*((uint8_t volatile *)0x9A) & (1 << 6)) {
     if ((int)tx_tail1 == (int)tx_head1 + 1) goto return_label;
     tx_buf1[tx_head1] = data;
-    tx_head1 = (uint8_t)((int)tx_head1 + 1);
+    tx_head1 = (unsigned char)((int)tx_head1 + 1);
   }
   else {
     *((uint8_t volatile *)0x9C) = data;
@@ -4288,7 +4289,7 @@ void uart0_print_string(uint8_t const *s)
   uint8_t i = (unsigned char)0;
   while (*(s + i)) {
     uart0_transmit(*(s + i));
-    i = (uint8_t)((int)i + 1);
+    i = (unsigned char)((int)i + 1);
   }
   return;
 }
@@ -4329,7 +4330,7 @@ void __vector_20(void)
                                       1 << 6));
   else {
     *((uint8_t volatile *)(0x0C + 0x20)) = tx_buf0[tx_tail0];
-    tx_tail0 = (uint8_t volatile)((int)tx_tail0 + 1);
+    tx_tail0 = (unsigned char)((int)tx_tail0 + 1);
   }
   return;
 }
@@ -4344,7 +4345,7 @@ void __vector_32(void)
                                       1 << 6));
   else {
     *((uint8_t volatile *)0x9C) = tx_buf1[tx_tail1];
-    tx_tail1 = (uint8_t volatile)((int)tx_tail1 + 1);
+    tx_tail1 = (unsigned char)((int)tx_tail1 + 1);
   }
   return;
 }
