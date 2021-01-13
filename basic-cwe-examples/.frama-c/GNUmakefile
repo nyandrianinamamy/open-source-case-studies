@@ -7,7 +7,7 @@ FRAMAC ?= frama-c
 include $(shell $(FRAMAC)-config -print-share-path)/analysis-scripts/prologue.mk
 ###############################################################################
 
-# Edit below as needed. MACHDEP is mandatory. Suggested flags are optional.
+# Edit below as needed. Suggested flags are optional.
 
 MACHDEP = x86_64
 
@@ -20,7 +20,7 @@ FCFLAGS     += \
   -kernel-warn-key annot:missing-spec=abort \
   -kernel-warn-key typing:implicit-function-declaration=abort \
 
-# (Optional) Eva-specific flags
+## Eva-specific flags
 EVAFLAGS    += \
   -eva-warn-key builtins:missing-spec=abort \
 

@@ -7,7 +7,7 @@ FRAMAC ?= frama-c
 include $(shell $(FRAMAC)-config -print-share-path)/analysis-scripts/prologue.mk
 ###############################################################################
 
-# Edit below as needed. MACHDEP is mandatory. Suggested flags are optional.
+# Edit below as needed. Suggested flags are optional.
 
 MACHDEP = gcc_x86_32
 
