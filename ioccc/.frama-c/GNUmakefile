@@ -23,6 +23,9 @@ FCFLAGS     += \
 ## Eva-specific flags
 EVAFLAGS    += \
   -eva-warn-key builtins:missing-spec=abort \
+  -eva-ignore-recursive-calls \
+
+# we unsoundly ignore recursive calls to obtain more tests where Eva terminates
 
 ## GUI-only flags
 FCGUIFLAGS += \
@@ -33,13 +36,24 @@ TARGETS = \
 2020_giles_prog.eva \
 2020_kurdyukov1_prog.eva \
 2020_kurdyukov1_prog_extra.eva \
-2020_kurdyukov1_prog_orig.eva \
 2020_kurdyukov2_prog_ppm.eva \
 2020_kurdyukov3_prog.eva \
 2020_kurdyukov3_prog_extra.eva \
-2020_kurdyukov3_prog_orig.eva \
 2020_kurdyukov4_prog.eva \
 2020_otterness_prog.eva \
+\
+2019_adamovsky_iocccsize_2018.eva \
+2019_adamovsky_prog.eva \
+2019_adamovsky_progSpoiler.eva \
+2019_burton_prog_clean.eva \
+2019_diels-grabsch1_prog.eva \
+2019_diels-grabsch2_prog.eva \
+2019_duble_prog.eva \
+2019_endoh_prog.eva \
+2019_iocccsize.eva \
+2019_lynn_prog.eva \
+2019_yang_prog.eva \
+2019_yang_violet.eva \
 
 #### The folowing cases are not currently handled by Frama-C;
 #### See comments in .parse lines
@@ -47,7 +61,6 @@ TARGETS = \
 NOT_HANDLED=\
 2020_carlini_prog.eva \
 2020_endoh1_prog.eva \
-2020_endoh1_prog_orig.eva \
 2020_endoh2_prog.eva \
 2020_endoh3_clock.eva \
 2020_endoh3_prog.eva \
@@ -65,6 +78,14 @@ NOT_HANDLED=\
 2020_kurdyukov4_rand.eva \
 2020_tsoj_prog.eva \
 2020_yang_prog.eva \
+2019_burton_prog.eva \
+2019_ciura_prog.eva \
+2019_dogon_apholife.eva \
+2019_dogon_prog.eva \
+2019_giles_prog.eva \
+2019_karns_prog.eva \
+2019_mills_prog.eva \
+2019_poikola_prog.eva \
 
 ### Each target <t>.eva needs a rule <t>.parse with source files as prerequisites
 
@@ -75,8 +96,6 @@ NOT_HANDLED=\
 #2020_carlini_prog.parse: FCFLAGS += -json-compilation-database ../2020/carlini \
 
 #2020_endoh1_prog.parse: ../2020/endoh1/prog.c # requires <ncurses.h>
-
-#2020_endoh1_prog_orig.parse: ../2020/endoh1/prog_orig.c # requires <ncurses.h>
 
 #2020_endoh2_prog.parse: ../2020/endoh2/prog.c # requires <complex.h>
 
@@ -108,8 +127,6 @@ NOT_HANDLED=\
 
 2020_kurdyukov1_prog_extra.parse: ../2020/kurdyukov1/prog.extra.c
 
-2020_kurdyukov1_prog_orig.parse: ../2020/kurdyukov1/prog.orig.c
-
 2020_kurdyukov2_prog_ppm.parse: ../2020/kurdyukov2/prog.ppm.c
 
 #2020_kurdyukov2_prog.parse: ../2020/kurdyukov2/prog.c # requires <jpeglib.h>
@@ -120,8 +137,6 @@ NOT_HANDLED=\
 
 2020_kurdyukov3_prog_extra.parse: ../2020/kurdyukov3/prog.extra.c
 
-2020_kurdyukov3_prog_orig.parse: ../2020/kurdyukov3/prog.orig.c
-
 2020_kurdyukov4_prog.parse: ../2020/kurdyukov4/prog.c
 
 #2020_kurdyukov4_rand.parse: ../2020/kurdyukov4/rand.c # missing spec for stdlib.h's memmem
@@ -131,6 +146,51 @@ NOT_HANDLED=\
 #2020_tsoj_prog.parse: ../2020/tsoj/prog.c # missing macro TIOCGWINSZ (ioctl)
 
 #2020_yang_prog.parse: ../2020/yang/prog.c # missing spec for printf with non-static format argument
+
+2019_adamovsky_iocccsize_2018.parse: ../2019/adamovsky/iocccsize_2018.c
+
+2019_adamovsky_prog.parse: ../2019/adamovsky/prog.c
+2019_adamovsky_prog.parse: CPPFLAGS += -trigraphs
+
+2019_adamovsky_progSpoiler.parse: ../2019/adamovsky/progSpoiler.c
+
+2019_burton_prog_clean.parse: ../2019/burton/prog.clean.c
+2019_burton_prog_clean.parse: FCFLAGS += -json-compilation-database ../2019/burton
+
+#2019_burton_prog.parse: ../2019/burton/prog.c # invalid in C99: implicit int variables
+#2019_burton_prog.parse: FCFLAGS += -json-compilation-database ../2019/burton
+
+#2019_ciura_prog.parse: ../2019/ciura/prog.c # missing spec for wchar.h's getwchar
+
+2019_diels-grabsch1_prog.parse: ../2019/diels-grabsch1/prog.c
+
+2019_diels-grabsch2_prog.parse: ../2019/diels-grabsch2/prog.c
+
+#2019_dogon_apholife.parse: ../2019/dogon/apholife.c # requires <X11/Xlib.h>
+
+#2019_dogon_prog.parse: ../2019/dogon/prog.c # requires <X11/Xlib.h>
+
+2019_duble_prog.parse: ../2019/duble/prog.c
+2019_duble_prog.parse: FCFLAGS += -kernel-warn-key pp=error -json-compilation-database ../2019/duble
+
+2019_endoh_prog.parse: ../2019/endoh/prog.c
+
+#2019_giles_prog.parse: ../2019/giles/prog.c # missing spec for printf with non-static format argument
+
+2019_iocccsize.parse: ../2019/iocccsize.c
+
+#2019_karns_prog.parse: ../2019/karns/prog.c # missing spec for printf with non-static format argument
+
+2019_lynn_prog.parse: ../2019/lynn/prog.c
+
+#2019_mills_prog.parse: ../2019/mills/prog.c # missing spec for tanh
+#2019_mills_prog.parse: FCFLAGS += -json-compilation-database ../2019/mills
+
+#2019_poikola_prog.parse: ../2019/poikola/prog.c # missing spec for fstat
+
+2019_yang_prog.parse: ../2019/yang/prog.c
+
+2019_yang_violet.parse: ../2019/yang/violet.c
 
 ### Epilogue. Do not modify this block. #######################################
 include $(shell $(FRAMAC)-config -print-share-path)/analysis-scripts/epilogue.mk
