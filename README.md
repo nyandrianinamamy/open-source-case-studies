@@ -137,6 +137,7 @@ when available. We also summarize the license of each directory below.
           (see https://github.com/antirez/kilo/blob/master/LICENSE)
 - `libmodbus`: LGPL
 - `libspng`: BSD 2-clause, see `LICENSE`
+- `libyaml`: MIT, see `License`
 - `mibench`: several (see `LICENSE` file inside each subdirectory)
 - `mini-gmp`:  LGPL or GPL
 - `miniz`:  MIT
