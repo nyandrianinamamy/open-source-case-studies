@@ -1994,6 +1994,8 @@ static int _modbus_tcp_set_ipv4_options(int s)
     __retres = -1;
     goto return_label;
   }
+  option = 1;
+  ioctl(s,0x5421,(void *)(& option)); /* __va_ioctl_ptr */
   option = 0x10;
   rc = setsockopt(s,IPPROTO_IP,1,(void const *)(& option),
                   (unsigned int)sizeof(int));

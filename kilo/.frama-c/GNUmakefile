@@ -13,7 +13,7 @@ MACHDEP = x86_32
 
 ## Preprocessing flags (for -cpp-extra-args)
 CPPFLAGS    += \
-  -includefc_stubs.h -D__FRAMAC__EVA \
+  -D__FRAMAC__EVA \
 
 ## General flags
 FCFLAGS     += \
