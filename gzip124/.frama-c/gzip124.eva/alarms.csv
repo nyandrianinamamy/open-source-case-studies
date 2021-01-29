@@ -2,20 +2,10 @@ directory	file	line	function	property kind	status	property
 .	bits.c	133	send_bits	shift	Unknown	0 ≤ value
 .	bits.c	133	send_bits	signed_overflow	Unknown	value << bi_valid ≤ 2147483647
 .	bits.c	133	send_bits	shift	Unknown	0 ≤ bi_valid < 32
-.	bits.c	134	send_bits	index_bound	Unknown	tmp_1 < (int)(16384 + 2048)
-.	bits.c	134	send_bits	index_bound	Unknown	tmp_2 < (int)(16384 + 2048)
 .	bits.c	135	send_bits	shift	Unknown	0 ≤ (unsigned int)((unsigned int)((unsigned int)((int)(8 * 2)) * sizeof(char)) - (unsigned int)bi_valid) < 32
 .	bits.c	138	send_bits	shift	Unknown	0 ≤ value
 .	bits.c	138	send_bits	signed_overflow	Unknown	value << bi_valid ≤ 2147483647
 .	bits.c	138	send_bits	shift	Unknown	0 ≤ bi_valid < 32
-.	bits.c	166	bi_windup	index_bound	Unknown	tmp_1 < (int)(16384 + 2048)
-.	bits.c	166	bi_windup	index_bound	Unknown	tmp_2 < (int)(16384 + 2048)
-.	bits.c	168	bi_windup	index_bound	Unknown	tmp_3 < (int)(16384 + 2048)
-.	bits.c	189	copy_block	index_bound	Unknown	tmp_1 < (int)(16384 + 2048)
-.	bits.c	189	copy_block	index_bound	Unknown	tmp_2 < (int)(16384 + 2048)
-.	bits.c	190	copy_block	index_bound	Unknown	tmp_5 < (int)(16384 + 2048)
-.	bits.c	190	copy_block	index_bound	Unknown	tmp_6 < (int)(16384 + 2048)
-.	bits.c	203	copy_block	index_bound	Unknown	tmp_7 < (int)(16384 + 2048)
 .	bits.c	203	copy_block	mem_access	Unknown	\valid_read(tmp_8)
 .	deflate.c	324	lm_init	function_pointer	Unknown	\valid_function(read_buf)
 .	deflate.c	386	longest_match	mem_access	Unknown	\valid_read(scan + (int)(best_len - 1))
@@ -447,11 +437,8 @@ directory	file	line	function	property kind	status	property
 .	trees.c	376	ct_init	signed_overflow	Unknown	dist + 1 ≤ 2147483647
 .	trees.c	459	pqdownheap	mem_access	Unknown	\valid_read(&(tree + heap[(int)(j_0 + 1)])->fc.freq)
 .	trees.c	459	pqdownheap	mem_access	Unknown	\valid_read(&(tree + heap[j_0])->fc.freq)
-.	trees.c	459	pqdownheap	index_bound	Unknown	heap[(int)(j_0 + 1)] < (int)((int)(2 * (int)((int)(256 + 1) + 29)) + 1)
-.	trees.c	459	pqdownheap	index_bound	Unknown	heap[j_0] < (int)((int)(2 * (int)((int)(256 + 1) + 29)) + 1)
 .	trees.c	462	pqdownheap	mem_access	Unknown	\valid_read(&(tree + heap[j_0])->fc.freq)
 .	trees.c	462	pqdownheap	mem_access	Unknown	\valid_read(&(tree + v)->fc.freq)
-.	trees.c	462	pqdownheap	index_bound	Unknown	heap[j_0] < (int)((int)(2 * (int)((int)(256 + 1) + 29)) + 1)
 .	trees.c	504	gen_bitlen	mem_access	Unknown	\valid(&(tree + heap[heap_max])->dl.len)
 .	trees.c	508	gen_bitlen	mem_access	Unknown	\valid_read(&(tree + (tree + n)->dl.dad)->dl.len)
 .	trees.c	508	gen_bitlen	mem_access	Unknown	\valid_read(&(tree + n)->dl.dad)
@@ -657,14 +644,6 @@ directory	file	line	function	property kind	status	property
 .	util.c	385	display_ratio	precondition of putc	Unknown	valid_stream: \valid(stream)
 .	util.c	388	display_ratio	precondition of putc	Unknown	valid_stream: \valid(stream)
 .	zip.c	70	zip	mem_access	Unknown	\valid_read(p)
-.	zip.c	89	zip	index_bound	Unknown	tmp_18 < (int)(16384 + 2048)
-.	zip.c	89	zip	index_bound	Unknown	tmp_19 < (int)(16384 + 2048)
-.	zip.c	89	zip	index_bound	Unknown	tmp_22 < (int)(16384 + 2048)
-.	zip.c	89	zip	index_bound	Unknown	tmp_23 < (int)(16384 + 2048)
-.	zip.c	90	zip	index_bound	Unknown	tmp_26 < (int)(16384 + 2048)
-.	zip.c	90	zip	index_bound	Unknown	tmp_27 < (int)(16384 + 2048)
-.	zip.c	90	zip	index_bound	Unknown	tmp_30 < (int)(16384 + 2048)
-.	zip.c	90	zip	index_bound	Unknown	tmp_31 < (int)(16384 + 2048)
 .	zip.c	111	file_read	precondition of read	Unknown	buf_has_room: \valid((char *)buf + (0 .. count - 1))
 .	zip.c	111	file_read	precondition of read	Unknown	valid_fd: 0 ≤ fd < 1024
 FRAMAC_SHARE/libc	ctype.h	174	isupper	precondition	Unknown	c_uchar_or_eof: (0 ≤ c ≤ 255) ∨ c ≡ -1
