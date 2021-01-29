@@ -65,6 +65,7 @@ TARGETS=\
   kilo \
   libmodbus \
   libspng \
+  libyaml \
   microstrain \
   mini-gmp \
   miniz \
