@@ -61,6 +61,7 @@ TARGETS=\
   icpc \
   itc-benchmarks \
   jsmn \
+  kgflags \
   khash \
   kilo \
   libmodbus \

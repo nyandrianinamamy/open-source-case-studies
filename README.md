@@ -132,6 +132,7 @@ when available. We also summarize the license of each directory below.
 - `icpc`: Unlicense
 - `itc-benchmarks`: BSD 2-clause, see `COPYING`
 - `jsmn`: MIT
+- `kgflags`: MIT, see `LICENSE`
 - `khash`: MIT
 - `kilo`: BSD 2-clause "Simplified"
           (see https://github.com/antirez/kilo/blob/master/LICENSE)
