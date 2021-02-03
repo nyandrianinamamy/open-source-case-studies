@@ -56,6 +56,7 @@ TARGETS=\
   cerberus \
   chrony \
   debie1 \
+  genann \
   gzip124 \
   hiredis \
   icpc \

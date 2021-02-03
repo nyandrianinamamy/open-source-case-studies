@@ -127,6 +127,7 @@ when available. We also summarize the license of each directory below.
 - `debie1`: distribution and use authorized by Patria Aviation Oy,
             Space Systems Finland Ltd. and Tidorum Ltd, see `README.txt`
             and `terms_of_use-2014-05.pdf`
+- `genann`: Zlib, see `LICENSE`
 - `gzip124`: GPL
 - `hiredis`: Redis license (BSD-style), see `COPYING`
 - `icpc`: Unlicense
