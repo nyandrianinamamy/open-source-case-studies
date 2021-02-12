@@ -7,21 +7,21 @@
 // Adding option "-warn-unsigned-overflow" ensures Eva reports the
 // overflow as soon as it happens.
 
-#include <limits.h>
+#include <stdint.h>
 #include <stdlib.h>
 
-volatile long _rand;
-// returns a random long
-long random_long(void) {
+volatile size_t _rand;
+// returns a random size_t
+size_t random_size_t(void) {
   return _rand;
 }
 
-long packet_get_long_ok() {
-  return random_long() ? 0 : 123456; // ok size
+size_t packet_get_size_t_ok() {
+  return random_size_t() ? 0 : 123456; // ok size
 }
 
-long packet_get_long_problem() {
-  return random_long() ? LONG_MAX/2 : 0; // too large
+size_t packet_get_size_t_problem() {
+  return random_size_t() ? (SIZE_MAX/2+1) : 0; // too large
 }
 
 char *packet_get_string(const char *s) {
@@ -30,19 +30,19 @@ char *packet_get_string(const char *s) {
 
 int main() {
   char **response;
-  long nresp = packet_get_long_ok();
+  size_t nresp = packet_get_size_t_ok();
   if (nresp > 0) {
     response = malloc(nresp*sizeof(char*));
     if (!response) exit(1);
-    for (long i = 0; i < nresp; i++) response[i] = packet_get_string(NULL);
+    for (size_t i = 0; i < nresp; i++) response[i] = packet_get_string(NULL);
     free(response);
   }
 
-  nresp = packet_get_long_problem();
+  nresp = packet_get_size_t_problem();
   if (nresp > 0) {
     response = malloc(nresp*sizeof(char*));
     if (!response) exit(1);
-    for (long i = 0; i < nresp; i++) response[i] = packet_get_string(NULL);
+    for (size_t i = 0; i < nresp; i++) response[i] = packet_get_string(NULL);
     free(response);
   }
   return 0;
