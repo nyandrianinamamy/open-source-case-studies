@@ -1,12 +1,6 @@
 // Based on MITRE's CWE-190, demonstrative example 2
 // https://cwe.mitre.org/data/definitions/190.html
 
-// By default, Frama-C/Eva does not report unsigned overflows as alarms;
-// nevertheless, in the code below, Eva reports an alarm when trying to
-// write to the (under-allocated) buffer.
-// Adding option "-warn-unsigned-overflow" ensures Eva reports the
-// overflow as soon as it happens.
-
 #include <stdint.h>
 #include <stdlib.h>
 

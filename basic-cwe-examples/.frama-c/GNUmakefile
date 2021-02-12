@@ -29,7 +29,9 @@ IMPRECISE_TARGETS = cwe20.eva cwe20-2.eva cwe119.eva cwe190.eva cwe416.eva cwe78
 
 PRECISE_TARGETS = $(subst .eva,-precise.eva,$(IMPRECISE_TARGETS))
 
-TARGETS = $(IMPRECISE_TARGETS) $(PRECISE_TARGETS)
+OTHER_TARGETS = cwe190-unsigned.parse
+
+TARGETS = $(IMPRECISE_TARGETS) $(PRECISE_TARGETS) $(OTHER_TARGETS)
 
 ### Each target <t>.eva needs a rule <t>.parse with source files as prerequisites
 cwe20.parse:  ../cwe20.c
@@ -46,12 +48,15 @@ cwe190-precise.parse: ../cwe190.c
 cwe416-precise.parse: ../cwe416.c
 cwe787-precise.parse: ../cwe787.c
 
+cwe190-unsigned.parse: ../cwe190-unsigned.c
+
 cwe20-precise.eva:   EVAFLAGS +=
 cwe20-2-precise.eva: EVAFLAGS += -eva-precision 5
 cwe119-precise.eva:  EVAFLAGS +=
-cwe190-precise.eva:  EVAFLAGS += -warn-unsigned-overflow
+cwe190-precise.eva:  EVAFLAGS +=
 cwe416-precise.eva:  EVAFLAGS +=
 cwe787-precise.eva:  EVAFLAGS += -eva-precision 2
+cwe190-unsigned.eva:  EVAFLAGS += -warn-unsigned-overflow
 
 ### Epilogue. Do not modify this block. #######################################
 include $(shell $(FRAMAC)-config -print-share-path)/analysis-scripts/epilogue.mk
