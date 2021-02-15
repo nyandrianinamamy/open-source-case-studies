@@ -60,6 +60,7 @@ TARGETS=\
   gzip124 \
   hiredis \
   icpc \
+  ioccc \
   itc-benchmarks \
   jsmn \
   kgflags \
