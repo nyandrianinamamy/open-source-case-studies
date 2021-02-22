@@ -53,6 +53,7 @@ TARGETS=\
   2048 \
   basic-cwe-examples \
   bench-moerman2018 \
+  c-testsuite \
   cerberus \
   chrony \
   debie1 \
