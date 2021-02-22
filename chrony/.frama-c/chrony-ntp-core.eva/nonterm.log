@@ -1,5 +1,5 @@
-test/unit/test.c:33:[nonterm] warning: unreachable implicit return
-addrfilt.c:347:[nonterm] warning: non-terminating function call
+test/unit/test.c:33:[nonterm:unreachable] warning: unreachable implicit return
+addrfilt.c:347:[nonterm:stmt] warning: non-terminating function call
 stack 1: check_ip_in_node :: addrfilt.c:365 <-
          ADF_IsAllowed :: ntp_core.c:2105 <-
          NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
@@ -115,9 +115,9 @@ stack 14: check_ip_in_node :: addrfilt.c:365 <-
           test_unit :: test/unit/test.c:70 <-
           main :: fc_stubs.c:37 <-
           eva_main
-conf.c:273:[nonterm] warning: unreachable implicit return
-conf.c:283:[nonterm] warning: unreachable implicit return
-md5.c:155:[nonterm] warning: non-terminating loop
+conf.c:273:[nonterm:unreachable] warning: unreachable implicit return
+conf.c:283:[nonterm:unreachable] warning: unreachable implicit return
+md5.c:155:[nonterm:stmt] warning: non-terminating loop
 stack 1: MD5Update :: hash_intmd5.c:56 <-
          HSH_Hash :: keys.c:364 <-
          generate_ntp_auth :: keys.c:395 <-
@@ -176,7 +176,7 @@ stack 6: MD5Update :: hash_intmd5.c:56 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-md5.c:157:[nonterm] warning: non-terminating statement
+md5.c:157:[nonterm:stmt] warning: non-terminating statement
 stack 1: MD5Update :: hash_intmd5.c:56 <-
          HSH_Hash :: keys.c:364 <-
          generate_ntp_auth :: keys.c:395 <-
@@ -235,8 +235,8 @@ stack 6: MD5Update :: hash_intmd5.c:56 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-keys.c:364:[nonterm] warning: unreachable return
-sched.c:476:[nonterm] warning: non-terminating function call
+keys.c:364:[nonterm:unreachable] warning: unreachable return
+sched.c:476:[nonterm:stmt] warning: non-terminating function call
 stack 1: SCH_RemoveTimeout :: reference.c:409 <-
          update_fb_drifts :: reference.c:1090 <-
          REF_SetReference :: sources.c:1094 <-
@@ -260,12 +260,12 @@ stack 2: SCH_RemoveTimeout :: reference.c:747 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-test/unit/ntp_core.c:179:[nonterm] warning: non-terminating function call
+test/unit/ntp_core.c:179:[nonterm:stmt] warning: non-terminating function call
 stack: send_response :: test/unit/ntp_core.c:379 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-test/unit/ntp_core.c:192:[nonterm] warning: non-terminating function call
+test/unit/ntp_core.c:192:[nonterm:stmt] warning: non-terminating function call
 stack: send_response :: test/unit/ntp_core.c:379 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
