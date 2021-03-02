@@ -1,4 +1,4 @@
-FRAMAC_BIN=/home/andr/git/frama-c-9-all-plugins/bin
+FRAMAC_BIN=../../frama-c/build/bin
 ifeq ($(wildcard $(FRAMAC_BIN)),)
 # Frama-C not installed locally; using the version in the PATH
 else

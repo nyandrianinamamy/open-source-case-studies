@@ -31,6 +31,10 @@ int partition(int left, int right)
   return index;
 }
 
+/*@ assigns array[0 .. 15];
+    assigns array[0 .. 15]
+      \from array[0 .. 15], (indirect: left), (indirect: right);
+ */
 void quicksort(int left, int right)
 {
   if (left >= right) goto return_label;

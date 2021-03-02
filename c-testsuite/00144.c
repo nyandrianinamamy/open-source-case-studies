@@ -1,7 +1,12 @@
+// Frama-C/Eva does not allow reading from uninitialized variables, so we
+// moved the `int i;` declaration inside main to a global scope, and
+// added 'volatile' to retain non-deterministic behavior.
+volatile int i;
+
 int
 main(void)
 {
-	int i, *q;
+	int *q;
 	void *p;
 
 	i = i ? 0 : 0l;

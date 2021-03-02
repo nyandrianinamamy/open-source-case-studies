@@ -12,18 +12,21 @@ chk(int x, int y)
         for (r=i=0; i<8; i++) {
                 r = r + t[x + 8*i];
                 r = r + t[i + 8*y];
-                if (x+i < 8 & y+i < 8)
+                if (x+i < 8 && y+i < 8)
                         r = r + t[x+i + 8*(y+i)];
-                if (x+i < 8 & y-i >= 0)
+                if (x+i < 8 && y-i >= 0)
                         r = r + t[x+i + 8*(y-i)];
-                if (x-i >= 0 & y+i < 8)
+                if (x-i >= 0 && y+i < 8)
                         r = r + t[x-i + 8*(y+i)];
-                if (x-i >= 0 & y-i >= 0)
+                if (x-i >= 0 && y-i >= 0)
                         r = r + t[x-i + 8*(y-i)];
         }
         return r;
 }
 
+/*@
+  assigns t[0 ..  63] \from t[0 .. 63], indirect:n, indirect:x, indirect:y;
+ */
 int
 go(int n, int x, int y)
 {

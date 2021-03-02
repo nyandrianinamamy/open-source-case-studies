@@ -73,6 +73,9 @@ int Move(int *source, int *dest)
    while (i<N && (source[i])==0) i++;
    while (j<N && (dest[j])==0) j++;
 
+   // Frama-C/Eva: the assertions below cannot (yet) be proved by Eva
+   //@ assert j > 0;
+   //@ assert i < N;
    dest[j-1] = source[i];
    source[i] = 0;
    PrintAll();       /* Print configuration after each move. */
@@ -83,6 +86,10 @@ int Move(int *source, int *dest)
 /* Moves first n nonzero numbers from source to dest using the rules of Hanoi.
    Calls itself recursively.
    */
+/*@
+  assigns source[0 .. N-1], dest[0 .. N-1], spare[0 .. N-1] \from
+          source[0 .. N-1], dest[0 .. N-1], spare[0 .. N-1], indirect:n;
+*/
 void Hanoi(int n,int *source, int *dest, int *spare)
 {
    int i;

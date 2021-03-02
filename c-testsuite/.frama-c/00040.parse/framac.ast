@@ -11,15 +11,23 @@ int chk(int x, int y)
   while (i < 8) {
     r += *(t + (x + 8 * i));
     r += *(t + (i + 8 * y));
-    if ((x + i < 8) & (y + i < 8)) r += *(t + ((x + i) + 8 * (y + i)));
-    if ((x + i < 8) & (y - i >= 0)) r += *(t + ((x + i) + 8 * (y - i)));
-    if ((x - i >= 0) & (y + i < 8)) r += *(t + ((x - i) + 8 * (y + i)));
-    if ((x - i >= 0) & (y - i >= 0)) r += *(t + ((x - i) + 8 * (y - i)));
+    if (x + i < 8) 
+      if (y + i < 8) r += *(t + ((x + i) + 8 * (y + i)));
+    if (x + i < 8) 
+      if (y - i >= 0) r += *(t + ((x + i) + 8 * (y - i)));
+    if (x - i >= 0) 
+      if (y + i < 8) r += *(t + ((x - i) + 8 * (y + i)));
+    if (x - i >= 0) 
+      if (y - i >= 0) r += *(t + ((x - i) + 8 * (y - i)));
     i ++;
   }
   return r;
 }
 
+/*@ assigns *(t + (0 .. 63));
+    assigns *(t + (0 .. 63))
+      \from *(t + (0 .. 63)), (indirect: n), (indirect: x), (indirect: y);
+ */
 int go(int n, int x, int y)
 {
   int __retres;

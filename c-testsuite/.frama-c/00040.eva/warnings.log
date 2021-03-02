@@ -1,2 +1,3 @@
-00040.c:38:[eva] warning: recursive call during value analysis of go (go <- go :: 00040.c:50 <- main).
-Assuming the call has no effect. The analysis will be unsound.
+00040.c:41:[eva] warning: Using specification of function go for recursive calls.
+Analysis of function go is thus incomplete and its soundness
+relies on the written specification.

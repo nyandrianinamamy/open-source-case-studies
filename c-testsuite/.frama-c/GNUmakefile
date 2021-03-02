@@ -4,7 +4,8 @@
 ### Prologue. Do not modify this block. #######################################
 -include path.mk
 FRAMAC ?= frama-c
-include $(shell $(FRAMAC)-config -print-share-path)/analysis-scripts/prologue.mk
+FRAMAC_SHARE=$(shell $(FRAMAC)-config -print-share-path)
+include $(FRAMAC_SHARE)/analysis-scripts/prologue.mk
 ###############################################################################
 
 # Edit below as needed. Suggested flags are optional.
@@ -22,7 +23,6 @@ FCFLAGS     += \
 ## Eva-specific flags
 EVAFLAGS    += \
   -eva-precision 3 \
-  -eva-ignore-recursive-calls \
 
 # Note: -eva-precision >3 (including 11) does not change anything
 
@@ -31,7 +31,7 @@ FCGUIFLAGS += \
 
 ###############################################################################
 # Filtered test cases:
-# 00162.c - Frama-C does not yet parse 'void fooc(int [const 5]);'
+# 00162.c - Frama-C does not yet parse 'void foo(int [const 5]);'
 # 00209.c - Frama-C does not yet parse 'int f1 (int (), int);'
 # 00213.c - Clang reports: "C99 forbids conditional expressions with only one
 #           void side"; also uses GNU statement expressions
@@ -46,6 +46,18 @@ SRCS=$(filter-out \
   ../00219.c \
   ,$(wildcard ../*.c))
 
+###############################################################################
+# Test cases with warnings not currently avoidable by Frama-C:
+# ../00040.c : recursive call leads to loss of precision
+# ../00041.c : full loop unrolling requires > 3 minutes
+# ../00176.c : recursive call's specification cannot be verified
+# ../00181.c : recursive call leads to small loss of precision
+# ../00186.c : uses sprintf's result; needs a valid string flag
+# ../00187.c : requires emulation of reading/writing into files
+# ../00189.c : call to variadic function without specification
+#              via function pointer
+
+
 ## Analysis targets (suffixed with .eva)
 TARGETS=$(addsuffix .eva,$(notdir $(basename $(SRCS))))
 
@@ -55,6 +67,14 @@ define generate-parse-rule =
 endef
 
 $(foreach s,$(SRCS),$(eval $(call generate-parse-rule,$(s))))
+
+# File-specific flags for improved precision
+
+00141.parse: FCFLAGS+= -no-warn-signed-overflow
+
+# Use string.c functions (e.g. strcpy, strncpy, ...)
+00179.parse: CPPFLAGS+= -include $(FRAMAC_SHARE)/libc/string.c
+00180.parse: CPPFLAGS+= -include $(FRAMAC_SHARE)/libc/string.c
 
 define print-stats =
 $(shell grep alarms $(1)/stats.txt) $(shell grep warnings $(1)/stats.txt)

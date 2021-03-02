@@ -34,6 +34,9 @@ int partition(int left, int right)
 }
 
 //Quicksort the array
+/*@
+  assigns array[0..15] \from array[0..15], indirect:left, indirect:right;
+ */
 void quicksort(int left, int right)
 {
    if(left >= right)

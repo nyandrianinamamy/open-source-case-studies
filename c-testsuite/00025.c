@@ -1,4 +1,5 @@
-int strlen(char *);
+/*@ assigns \result \from s[0 .. ]; */
+int strlen(char *s);
 
 int
 main()

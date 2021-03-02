@@ -179,6 +179,8 @@ int Move(int *source, int *dest)
     else break;
     j ++;
   }
+  /*@ assert j > 0; */ ;
+  /*@ assert i < 4; */ ;
   *(dest + (j - 1)) = *(source + i);
   *(source + i) = 0;
   PrintAll();
@@ -186,6 +188,18 @@ int Move(int *source, int *dest)
   return __retres;
 }
 
+/*@ assigns *(source + (0 .. 4 - 1)), *(dest + (0 .. 4 - 1)),
+            *(spare + (0 .. 4 - 1));
+    assigns *(source + (0 .. 4 - 1))
+      \from *(source + (0 .. 4 - 1)), *(dest + (0 .. 4 - 1)),
+            *(spare + (0 .. 4 - 1)), (indirect: n);
+    assigns *(dest + (0 .. 4 - 1))
+      \from *(source + (0 .. 4 - 1)), *(dest + (0 .. 4 - 1)),
+            *(spare + (0 .. 4 - 1)), (indirect: n);
+    assigns *(spare + (0 .. 4 - 1))
+      \from *(source + (0 .. 4 - 1)), *(dest + (0 .. 4 - 1)),
+            *(spare + (0 .. 4 - 1)), (indirect: n);
+ */
 void Hanoi(int n, int *source, int *dest, int *spare)
 {
   int i;

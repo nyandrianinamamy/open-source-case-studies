@@ -46,7 +46,10 @@ int main (int argc, char **argv)
 {
   debug = argc > 1;
   TEST4(1);
-  TEST4(-1);
+  // Frama-C: The line below evaluates (among others) to
+  // -1 << 1, which is UB (left shift of negative values),
+  // and has been commented out.
+  //TEST4(-1);
   printf ("%d test(s) failed\n", nfailed);
   return nfailed != 0;
 }
