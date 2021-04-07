@@ -156,5 +156,6 @@ when available. We also summarize the license of each directory below.
 - `safestringlib`: MIT
 - `semver`: MIT
 - `solitaire`: public domain, see `solitaire.c`
+- `tsvc`: MIT, see `license.txt`
 - `tweetnacl-usable`: public domain, see `LICENSE.txt`
 - `x509-parser` : GPLv2 / BSD, see `LICENSE`

@@ -79,6 +79,7 @@ TARGETS=\
   safestringlib \
   semver \
   solitaire \
+  tsvc \
   tweetnacl-usable \
   x509-parser \
 
