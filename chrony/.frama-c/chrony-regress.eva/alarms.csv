@@ -10,10 +10,6 @@ directory	file	line	function	property kind	status	property
 .	regress.c	91	RGR_WeightedRegression	initialization	Unknown	\initialized(x + i)
 .	regress.c	91	RGR_WeightedRegression	initialization	Unknown	\initialized(y + i)
 .	regress.c	92	RGR_WeightedRegression	initialization	Unknown	\initialized(w + i)
-.	regress.c	97	RGR_WeightedRegression	precondition of sqrt	Unknown	arg_positive: x ≥ -0.
-.	regress.c	97	RGR_WeightedRegression	precondition of sqrt	Unknown	finite_arg: \is_finite(x)
-.	regress.c	99	RGR_WeightedRegression	precondition of sqrt	Unknown	arg_positive: x ≥ -0.
-.	regress.c	99	RGR_WeightedRegression	precondition of sqrt	Unknown	finite_arg: \is_finite(x)
 .	regress.c	183	n_runs_from_residuals	initialization	Unknown	\initialized(resid + (int)(i - 1))
 .	regress.c	183	n_runs_from_residuals	mem_access	Unknown	\valid_read(resid + (int)(i - 1))
 .	regress.c	183	n_runs_from_residuals	initialization	Unknown	\initialized(resid + i)
@@ -41,10 +37,6 @@ directory	file	line	function	property kind	status	property
 .	regress.c	304	RGR_FindBestRegression	initialization	Unknown	\initialized(&resid[(int)(i - resid_start)])
 .	regress.c	304	RGR_FindBestRegression	initialization	Unknown	\initialized(w + i)
 .	regress.c	304	RGR_FindBestRegression	index_bound	Unknown	0 ≤ (int)(i - resid_start)
-.	regress.c	309	RGR_FindBestRegression	precondition of sqrt	Unknown	arg_positive: x ≥ -0.
-.	regress.c	309	RGR_FindBestRegression	precondition of sqrt	Unknown	finite_arg: \is_finite(x)
-.	regress.c	311	RGR_FindBestRegression	precondition of sqrt	Unknown	arg_positive: x ≥ -0.
-.	regress.c	311	RGR_FindBestRegression	precondition of sqrt	Unknown	finite_arg: \is_finite(x)
 .	regress.c	350	find_ordered_entry_with_flags	precondition of __FC_assert	Unknown	nonnull_c: c ≢ 0
 .	regress.c	353	find_ordered_entry_with_flags	initialization	Unknown	\initialized(flags + index_0)
 .	regress.c	354	find_ordered_entry_with_flags	initialization	Unknown	\initialized(x + index_0)
@@ -82,8 +74,6 @@ directory	file	line	function	property kind	status	property
 .	regress.c	564	RGR_FindBestRobustRegression	initialization	Unknown	\initialized(x + i)
 .	regress.c	574	RGR_FindBestRobustRegression	initialization	Unknown	\initialized(x + i)
 .	regress.c	574	RGR_FindBestRobustRegression	initialization	Unknown	\initialized(y + i)
-.	regress.c	581	RGR_FindBestRobustRegression	precondition of sqrt	Unknown	arg_positive: x ≥ -0.
-.	regress.c	581	RGR_FindBestRobustRegression	precondition of sqrt	Unknown	finite_arg: \is_finite(x)
 .	regress.c	616	RGR_FindBestRobustRegression	precondition of __FC_assert	Invalid or unreachable	nonnull_c: c ≢ 0
 .	regress.c	630	RGR_FindBestRobustRegression	initialization	Unknown	\initialized(x + i)
 .	regress.c	630	RGR_FindBestRobustRegression	initialization	Unknown	\initialized(y + i)
@@ -91,22 +81,10 @@ directory	file	line	function	property kind	status	property
 .	regress.c	678	RGR_MultipleRegress	initialization	Unknown	\initialized(x1 + i)
 .	regress.c	679	RGR_MultipleRegress	initialization	Unknown	\initialized(x2 + i)
 .	regress.c	683	RGR_MultipleRegress	initialization	Unknown	\initialized(y + i)
-.	regress.c	698	RGR_MultipleRegress	precondition of fabs	Unknown	finite_arg: \is_finite(x)
-.	regress.c	698	RGR_MultipleRegress	precondition of fabs	Unknown	finite_arg: \is_finite(x)
 FRAMAC_SHARE/libc	assert.h	31	__FC_assert	precondition	Invalid or unreachable	nonnull_c: c ≢ 0
-FRAMAC_SHARE/libc	math.h	449	fabs	precondition	Unknown	finite_arg: \is_finite(x)
-FRAMAC_SHARE/libc	math.h	493	sqrt	precondition	Unknown	finite_arg: \is_finite(x)
-FRAMAC_SHARE/libc	math.h	494	sqrt	precondition	Unknown	arg_positive: x ≥ -0.
 FRAMAC_SHARE/libc	string.h	115	memset	precondition	Unknown	valid_s: valid_or_empty(s, n)
 test/unit	regress.c	45	test_unit	initialization	Unknown	\initialized(&x[j])
-test/unit	regress.c	52	test_unit	precondition of fabs	Unknown	finite_arg: \is_finite(x)
-test/unit	regress.c	53	test_unit	precondition of fabs	Unknown	finite_arg: \is_finite(x)
-test/unit	regress.c	60	test_unit	precondition of fabs	Unknown	finite_arg: \is_finite(x)
-test/unit	regress.c	61	test_unit	precondition of fabs	Unknown	finite_arg: \is_finite(x)
 test/unit	regress.c	66	test_unit	initialization	Unknown	\initialized(&b2)
-test/unit	regress.c	66	test_unit	precondition of fabs	Unknown	finite_arg: \is_finite(x)
 test/unit	regress.c	70	test_unit	initialization	Unknown	\initialized(&y[(long)(tmp_11 % (long)n)])
-test/unit	regress.c	75	test_unit	precondition of fabs	Unknown	finite_arg: \is_finite(x)
-test/unit	regress.c	76	test_unit	precondition of fabs	Unknown	finite_arg: \is_finite(x)
 test/unit	regress.c	85	test_unit	initialization	Unknown	\initialized(&x[j])
 test/unit	regress.c	102	test_unit	initialization	Unknown	\initialized(&x[(int)(j - 1)])

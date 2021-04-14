@@ -501,7 +501,6 @@ src	x509-parser.c	7188	find_kp_by_oid	precondition	Unknown	len > 0 ∧ buf ≢ (
 src	x509-parser.c	7189	find_kp_by_oid	postcondition	Unknown	\result ≢ (_kp_oid const *)0 ⇒ (∃ ℤ i; 0 ≤ i < sizeof(known_kp_oids) / sizeof(known_kp_oids[0]) ∧ \result ≡ &known_kp_oids[i])
 src	x509-parser.c	7190	find_kp_by_oid	postcondition	Unknown	\old(len) ≡ 0 ⇒ \result ≡ (_kp_oid const *)0
 src	x509-parser.c	7200	find_kp_by_oid	ptr_comparison	Unknown	\pointer_comparable((void *)buf, (void *)0)
-src	x509-parser.c	7215	find_kp_by_oid	user assertion	Unknown	cur ≡ &known_kp_oids[k]
 src	x509-parser.c	7220	find_kp_by_oid	user assertion	Unknown	\valid_read(buf + (0 .. len - 1))
 src	x509-parser.c	7244	parse_ext_EKU	precondition	Unknown	len > 0 ∧ buf ≢ \null ⇒ \valid_read(buf + (0 .. len - 1))
 src	x509-parser.c	7248	parse_ext_EKU	postcondition	Unknown	\old(len) ≡ 0 ⇒ \result < 0

@@ -399,8 +399,6 @@ directory	file	line	function	property kind	status	property
 .	ntp_core.c	751	adjust_poll	signed_overflow	Unknown	-2147483648 ≤ inst->local_poll + (int)\sub_double(inst->poll_score, (double)1.0)
 .	ntp_core.c	751	adjust_poll	float_to_int	Unknown	-2147483649 < inst->poll_score - 1.0
 .	ntp_core.c	751	adjust_poll	is_nan_or_infinite	Unknown	\is_finite(\sub_double(inst->poll_score, (double)1.0))
-.	ntp_core.c	784	get_poll_adj	precondition of log	Unknown	arg_positive: x > 0
-.	ntp_core.c	784	get_poll_adj	precondition of log	Unknown	finite_arg: \is_finite(x)
 .	ntp_core.c	859	get_transmit_delay	signed_overflow	Unknown	inst->remote_stratum - tmp ≤ 2147483647
 .	ntp_core.c	1037	transmit_packet	mem_access	Unknown	\valid_read(remote_ntp_rx)
 .	ntp_core.c	1078	transmit_packet	signed_overflow	Unknown	-9223372036854775808 ≤ local_transmit.tv_nsec + (long)tmp_10
@@ -414,17 +412,14 @@ directory	file	line	function	property kind	status	property
 .	ntp_core.c	1447	check_delay_dev_ratio	initialization	Unknown	\initialized(&std_dev)
 .	ntp_core.c	1449	check_delay_dev_ratio	initialization	Unknown	\initialized(&min_delay)
 .	ntp_core.c	1454	check_delay_dev_ratio	initialization	Unknown	\initialized(&predicted_offset)
-.	ntp_core.c	1459	check_delay_dev_ratio	precondition of fabs	Unknown	finite_arg: \is_finite(x)
 .	ntp_core.c	1489	process_sample	signed_overflow	Unknown	(int)(8 / 2) * filtered_samples ≤ 2147483647
 .	ntp_core.c	1489	process_sample	signed_overflow	Unknown	-2147483648 ≤ (int)(8 / 2) * filtered_samples
 .	ntp_core.c	1504	process_sample	initialization	Unknown	\initialized(&sample->offset)
-.	ntp_core.c	1504	process_sample	precondition of fabs	Unknown	finite_arg: \is_finite(x)
 .	ntp_core.c	1509	process_sample	initialization	Unknown	\initialized(&sample->peer_delay)
 .	ntp_core.c	1509	process_sample	initialization	Unknown	\initialized(&sample->peer_dispersion)
 .	ntp_core.c	1883	receive_packet	precondition of __FC_assert	Unknown	nonnull_c: c ≢ 0
 .	ntp_io.c	161	prepare_socket	initialization	Unknown	\initialized(&bind_address.addr.in4)
 .	reference.c	202	REF_Initialise	precondition of fopen	Unknown	valid_filename: valid_read_string(filename)
-.	reference.c	232	REF_Initialise	precondition of fabs	Unknown	finite_arg: \is_finite(x)
 .	reference.c	265	REF_Initialise	signed_overflow	Unknown	-2147483648 ≤ fb_drift_max_0 - fb_drift_min_0
 .	reference.c	266	REF_Initialise	precondition of memset	Unknown	valid_s: valid_or_empty(s, n)
 .	reference.c	341	update_drift_file	precondition of strlen	Unknown	valid_string_s: valid_read_string(s)
@@ -451,7 +446,6 @@ directory	file	line	function	property kind	status	property
 .	reference.c	422	update_fb_drifts	mem_access	Unknown	\valid(&(fb_drifts + i)->secs)
 .	reference.c	427	update_fb_drifts	initialization	Unknown	\initialized(&(fb_drifts + i)->freq)
 .	reference.c	427	update_fb_drifts	mem_access	Unknown	\valid(&(fb_drifts + i)->freq)
-.	reference.c	427	update_fb_drifts	precondition of exp	Unknown	finite_domain: x ≤ 0x1.62e42fefa39efp+9
 .	reference.c	466	schedule_fb_drift	signed_overflow	Unknown	1 << i ≤ 2147483647
 .	reference.c	466	schedule_fb_drift	shift	Unknown	0 ≤ i < 32
 .	reference.c	468	schedule_fb_drift	initialization	Unknown	\initialized(&(fb_drifts + (int)(i - fb_drift_min_0))->secs)
@@ -460,7 +454,6 @@ directory	file	line	function	property kind	status	property
 .	reference.c	478	schedule_fb_drift	initialization	Unknown	\initialized(&(fb_drifts + (int)(c - fb_drift_min_0))->freq)
 .	reference.c	478	schedule_fb_drift	mem_access	Unknown	\valid_read(&(fb_drifts + (int)(c - fb_drift_min_0))->freq)
 .	reference.c	478	schedule_fb_drift	signed_overflow	Unknown	c - fb_drift_min_0 ≤ 2147483647
-.	reference.c	516	maybe_log_offset	precondition of fabs	Unknown	finite_arg: \is_finite(x)
 .	reference.c	526	maybe_log_offset	precondition of popen	Unknown	valid_command: valid_read_string(command)
 .	reference.c	533	fprintf_va_3	precondition	Unknown	valid_read_string(param0)
 .	reference.c	533	maybe_log_offset	precondition of fprintf_va_3	Unknown	valid_read_string(param0)
@@ -468,16 +461,10 @@ directory	file	line	function	property kind	status	property
 .	reference.c	534	maybe_log_offset	precondition of fprintf_va_4	Unknown	valid_read_string(param0)
 .	reference.c	541	maybe_log_offset	precondition of fputs	Unknown	valid_string_s: valid_read_string(s)
 .	reference.c	551	maybe_log_offset	precondition of pclose	Unknown	open_pipe: is_open_pipe(stream)
-.	reference.c	570	is_step_limit_reached	precondition of fabs	Unknown	finite_arg: \is_finite(x)
-.	reference.c	586	is_offset_ok	precondition of fabs	Unknown	finite_arg: \is_finite(x)
 .	reference.c	659	get_tz_leap	signed_overflow	Unknown	(long)(t - when) + 10 ≤ 9223372036854775807
 .	reference.c	659	get_tz_leap	signed_overflow	Unknown	-9223372036854775808 ≤ t - when
 .	reference.c	659	get_tz_leap	signed_overflow	Unknown	t - when ≤ 9223372036854775807
 .	reference.c	757	set_leap_timeout	signed_overflow	Unknown	(long)((long)(now / (long)((int)(24 * 3600))) + 1) * (long)((int)(24 * 3600)) ≤ 9223372036854775807
-.	reference.c	835	get_root_dispersion	precondition of fabs	Unknown	finite_arg: \is_finite(x)
-.	reference.c	941	get_clock_estimates	precondition of fabs	Unknown	finite_arg: \is_finite(x)
-.	reference.c	954	get_clock_estimates	precondition of sqrt	Unknown	arg_positive: x ≥ -0.
-.	reference.c	954	get_clock_estimates	precondition of sqrt	Unknown	finite_arg: \is_finite(x)
 .	reference.c	1011	REF_SetReference	signed_overflow	Unknown	stratum + 1 ≤ 2147483647
 .	reference.c	1212	REF_GetReferenceParams	signed_overflow	Unknown	-9223372036854775808 ≤ ref_time->tv_sec - 1
 .	reference.c	1324	REF_IsLeapSecondClose	signed_overflow	Unknown	-now.tv_sec ≤ 9223372036854775807
@@ -519,10 +506,6 @@ directory	file	line	function	property kind	status	property
 .	regress.c	304	RGR_FindBestRegression	initialization	Unknown	\initialized(w + i)
 .	regress.c	304	RGR_FindBestRegression	index_bound	Unknown	(int)(i - resid_start) < (int)(64 * 2)
 .	regress.c	304	RGR_FindBestRegression	index_bound	Unknown	0 ≤ (int)(i - resid_start)
-.	regress.c	309	RGR_FindBestRegression	precondition of sqrt	Unknown	arg_positive: x ≥ -0.
-.	regress.c	309	RGR_FindBestRegression	precondition of sqrt	Unknown	finite_arg: \is_finite(x)
-.	regress.c	311	RGR_FindBestRegression	precondition of sqrt	Unknown	arg_positive: x ≥ -0.
-.	regress.c	311	RGR_FindBestRegression	precondition of sqrt	Unknown	finite_arg: \is_finite(x)
 .	regress.c	353	find_ordered_entry_with_flags	initialization	Unknown	\initialized(flags + index_0)
 .	regress.c	354	find_ordered_entry_with_flags	initialization	Unknown	\initialized(x + index_0)
 .	regress.c	359	find_ordered_entry_with_flags	initialization	Unknown	\initialized(flags + u)
@@ -547,8 +530,6 @@ directory	file	line	function	property kind	status	property
 .	regress.c	678	RGR_MultipleRegress	initialization	Unknown	\initialized(x1 + i)
 .	regress.c	679	RGR_MultipleRegress	initialization	Unknown	\initialized(x2 + i)
 .	regress.c	683	RGR_MultipleRegress	initialization	Unknown	\initialized(y + i)
-.	regress.c	698	RGR_MultipleRegress	precondition of fabs	Unknown	finite_arg: \is_finite(x)
-.	regress.c	698	RGR_MultipleRegress	precondition of fabs	Unknown	finite_arg: \is_finite(x)
 .	samplefilt.h	35	SPF_CreateInstance	assigns clause	Unknown	assigns \nothing;
 .	samplefilt.h	35	SPF_CreateInstance	from clause	Unknown	assigns \result \from min_samples, max_samples, max_dispersion, combine_ratio;
 .	samplefilt.h	37	SPF_DestroyInstance	assigns clause	Unknown	assigns *filter;
@@ -590,15 +571,8 @@ directory	file	line	function	property kind	status	property
 .	sources.c	516	combine_sources	initialization	Unknown	\initialized(&(*(sources + selected_source_index))->sel_info.root_distance)
 .	sources.c	522	combine_sources	initialization	Unknown	\initialized(sel_sources + i)
 .	sources.c	533	combine_sources	initialization	Unknown	\initialized(&(*(sources + index_0))->sel_info.root_distance)
-.	sources.c	534	combine_sources	precondition of fabs	Unknown	finite_arg: \is_finite(x)
 .	sources.c	554	combine_sources	initialization	Unknown	\initialized(&(*(sources + index_0))->sel_info.root_distance)
 .	sources.c	574	combine_sources	precondition of __FC_assert	Unknown	nonnull_c: c ≢ 0
-.	sources.c	576	combine_sources	precondition of sqrt	Unknown	arg_positive: x ≥ -0.
-.	sources.c	576	combine_sources	precondition of sqrt	Unknown	finite_arg: \is_finite(x)
-.	sources.c	578	combine_sources	precondition of sqrt	Unknown	arg_positive: x ≥ -0.
-.	sources.c	578	combine_sources	precondition of sqrt	Unknown	finite_arg: \is_finite(x)
-.	sources.c	579	combine_sources	precondition of sqrt	Unknown	arg_positive: x ≥ -0.
-.	sources.c	579	combine_sources	precondition of sqrt	Unknown	finite_arg: \is_finite(x)
 .	sources.c	634	SRC_SelectSource	dangling_pointer	Unknown	¬\dangling(sources + i)
 .	sources.c	634	SRC_SelectSource	precondition of __FC_assert	Unknown	nonnull_c: c ≢ 0
 .	sources.c	663	SRC_SelectSource	initialization	Unknown	\initialized(&first_sample_ago)
@@ -708,7 +682,6 @@ directory	file	line	function	property kind	status	property
 .	sourcestats.c	479	correct_asymmetry	index_bound	Unknown	i < (int)(64 * 2)
 .	sourcestats.c	479	correct_asymmetry	initialization	Unknown	\initialized(&inst->peer_delays[tmp])
 .	sourcestats.c	479	correct_asymmetry	signed_overflow	Unknown	i - inst->runs_samples ≤ 2147483647
-.	sourcestats.c	482	correct_asymmetry	precondition of fabs	Unknown	finite_arg: \is_finite(x)
 .	sourcestats.c	492	correct_asymmetry	initialization	Unknown	\initialized(&delays[i])
 .	sourcestats.c	492	correct_asymmetry	initialization	Unknown	\initialized(&inst->asymmetry)
 .	sourcestats.c	492	correct_asymmetry	initialization	Unknown	\initialized(offsets + i)
@@ -732,12 +705,7 @@ directory	file	line	function	property kind	status	property
 .	sourcestats.c	578	SST_DoNewRegression	initialization	Unknown	\initialized(&est_intercept)
 .	sourcestats.c	579	SST_DoNewRegression	initialization	Unknown	\initialized(&inst->last_sample)
 .	sourcestats.c	580	SST_DoNewRegression	initialization	Unknown	\initialized(&est_intercept_sd)
-.	sourcestats.c	581	SST_DoNewRegression	precondition of sqrt	Unknown	arg_positive: x ≥ -0.
-.	sourcestats.c	581	SST_DoNewRegression	precondition of sqrt	Unknown	finite_arg: \is_finite(x)
-.	sourcestats.c	581	SST_DoNewRegression	precondition of sqrt	Unknown	arg_positive: x ≥ -0.
-.	sourcestats.c	581	SST_DoNewRegression	precondition of sqrt	Unknown	finite_arg: \is_finite(x)
 .	sourcestats.c	582	SST_DoNewRegression	initialization	Unknown	\initialized(&nruns)
-.	sourcestats.c	585	SST_DoNewRegression	precondition of fabs	Unknown	finite_arg: \is_finite(x)
 .	sourcestats.c	593	SST_DoNewRegression	initialization	Unknown	\initialized(&best_start)
 .	sourcestats.c	593	SST_DoNewRegression	initialization	Unknown	\initialized(&inst->asymmetry)
 .	sourcestats.c	594	SST_DoNewRegression	initialization	Unknown	\initialized(&inst->offset_time.tv_sec)
@@ -840,12 +808,6 @@ directory	file	line	function	property kind	status	property
 .	util.c	1213	UTI_GetRandomBytesUrandom	precondition of fread	Unknown	valid_ptr_block: \valid((char *)ptr + (0 .. nmemb * size - 1))
 FRAMAC_SHARE/libc	__fc_inet.h	358	inet_addr	precondition	Unknown	valid_arg: valid_read_string(arg)
 FRAMAC_SHARE/libc	assert.h	31	__FC_assert	precondition	Invalid or unreachable	nonnull_c: c ≢ 0
-FRAMAC_SHARE/libc	math.h	325	exp	precondition	Unknown	finite_domain: x ≤ 0x1.62e42fefa39efp+9
-FRAMAC_SHARE/libc	math.h	362	log	precondition	Unknown	finite_arg: \is_finite(x)
-FRAMAC_SHARE/libc	math.h	363	log	precondition	Unknown	arg_positive: x > 0
-FRAMAC_SHARE/libc	math.h	449	fabs	precondition	Unknown	finite_arg: \is_finite(x)
-FRAMAC_SHARE/libc	math.h	493	sqrt	precondition	Unknown	finite_arg: \is_finite(x)
-FRAMAC_SHARE/libc	math.h	494	sqrt	precondition	Unknown	arg_positive: x ≥ -0.
 FRAMAC_SHARE/libc	netdb.c	113	gethostbyname	mem_access	Unknown	\valid_read(cp)
 FRAMAC_SHARE/libc	netdb.c	116	gethostbyname	mem_access	Unknown	\valid_read(cp)
 FRAMAC_SHARE/libc	netdb.c	119	gethostbyname	precondition of inet_addr	Unknown	valid_arg: valid_read_string(arg)
