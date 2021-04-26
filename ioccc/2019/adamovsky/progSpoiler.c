@@ -42,15 +42,20 @@ Argument* fW(Argument* f, Argument* x);
 Argument* fCh(Argument* f, Argument* x);
 Argument* rA1(Argument* s, Argument* x);
 Argument* rA2(Argument* s, Argument* x);
+
+/*@ assigns \result, *s, *x \from *s, *x; //unsound */
 Argument* rApply1(Argument* s, Argument* x);
 Argument* rApply2(Argument* s, Argument* x);
 Argument* rS1(Argument* s, Argument* x);
 Argument* rS2(Argument* s, Argument* x);
 Argument* rD(Argument* s, Argument* x);
+
+/*@ assigns \result, *f, *x \from *f, *x; //unsound */
 Argument* rC(Argument* f, Argument* x);
 Argument* rCont(Argument* f, Argument* x);
 Argument* rE(Argument* f, Argument* x);
 
+/*@ assigns f->n, *f \from indirect:f[0..]; //unsound */
 static inline void Dereference(Argument* f) {
 	if(f && !--f[NUMBER_OF_ARGUMENTS-1].n) {
 		if(f[0].call!=fW && f[0].call!=fCh) Dereference(f[1].a);
@@ -74,6 +79,7 @@ void Next(void) {
 	} while(1);
 }
 
+/*@ assigns \result \from \nothing; //unsound */
 Argument* I(void) {
 	if(c==EOF) E();
 	Argument* f = T[c];
@@ -92,6 +98,7 @@ Argument* Create(Argument* f) {
 	return Reference(record);
 }
 
+/*@ assigns \nothing; //unsound */
 void Output(Argument* f);
 
 int main(int argc, const char** argv) {

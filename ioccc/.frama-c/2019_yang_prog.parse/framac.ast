@@ -50,6 +50,7 @@ int y;
 b *U;
 b u;
 FILE *f;
+/*@ assigns \nothing; */
 void m(int p_0, int q_0)
 {
   int d_0 = (p_0 + q_0) / 2;
@@ -178,7 +179,7 @@ void P(int p_0)
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), param1, param0;
  */
-int fprintf_va_1(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_1(FILE * restrict stream, char const * restrict format,
                  int param0, int param1);
 
 void Q(int O)

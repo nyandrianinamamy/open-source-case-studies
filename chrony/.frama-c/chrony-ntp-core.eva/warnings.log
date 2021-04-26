@@ -1383,7 +1383,7 @@ stack: sscanf_va_40 :: conf.c:896 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/netdb.c:113:[eva:alarm] warning: out of bounds read. assert \valid_read(cp);
+FRAMAC_SHARE/libc/netdb.c:115:[eva:alarm] warning: out of bounds read. assert \valid_read(cp);
 stack: gethostbyname :: nameserv.c:121 <-
        DNS_Name2IPAddress :: conf.c:905 <-
        parse_initstepslew :: conf.c:488 <-
@@ -1391,7 +1391,7 @@ stack: gethostbyname :: nameserv.c:121 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/netdb.c:116:[eva:alarm] warning: out of bounds read. assert \valid_read(cp);
+FRAMAC_SHARE/libc/netdb.c:118:[eva:alarm] warning: out of bounds read. assert \valid_read(cp);
 stack: gethostbyname :: nameserv.c:121 <-
        DNS_Name2IPAddress :: conf.c:905 <-
        parse_initstepslew :: conf.c:488 <-
@@ -1399,8 +1399,8 @@ stack: gethostbyname :: nameserv.c:121 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/netdb.c:119:[eva:alarm] warning: function inet_addr: precondition 'valid_arg' got status unknown.
-stack: inet_addr :: FRAMAC_SHARE/libc/netdb.c:119 <-
+FRAMAC_SHARE/libc/netdb.c:121:[eva:alarm] warning: function inet_addr: precondition 'valid_arg' got status unknown.
+stack: inet_addr :: FRAMAC_SHARE/libc/netdb.c:121 <-
        gethostbyname :: nameserv.c:121 <-
        DNS_Name2IPAddress :: conf.c:905 <-
        parse_initstepslew :: conf.c:488 <-
@@ -1409,7 +1409,7 @@ stack: inet_addr :: FRAMAC_SHARE/libc/netdb.c:119 <-
        main :: fc_stubs.c:37 <-
        eva_main
 FRAMAC_SHARE/libc/string.c:217:[eva:alarm] warning: out of bounds read. assert \valid_read(src + i);
-stack: strncpy :: FRAMAC_SHARE/libc/netdb.c:123 <-
+stack: strncpy :: FRAMAC_SHARE/libc/netdb.c:125 <-
        gethostbyname :: nameserv.c:121 <-
        DNS_Name2IPAddress :: conf.c:905 <-
        parse_initstepslew :: conf.c:488 <-
@@ -1418,7 +1418,7 @@ stack: strncpy :: FRAMAC_SHARE/libc/netdb.c:123 <-
        main :: fc_stubs.c:37 <-
        eva_main
 FRAMAC_SHARE/libc/string.c:218:[eva:alarm] warning: out of bounds read. assert \valid_read(src + i);
-stack: strncpy :: FRAMAC_SHARE/libc/netdb.c:123 <-
+stack: strncpy :: FRAMAC_SHARE/libc/netdb.c:125 <-
        gethostbyname :: nameserv.c:121 <-
        DNS_Name2IPAddress :: conf.c:905 <-
        parse_initstepslew :: conf.c:488 <-
@@ -1426,8 +1426,8 @@ stack: strncpy :: FRAMAC_SHARE/libc/netdb.c:123 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/netdb.c:145:[eva:alarm] warning: function inet_addr: precondition 'valid_arg' got status unknown.
-stack: inet_addr :: FRAMAC_SHARE/libc/netdb.c:145 <-
+FRAMAC_SHARE/libc/netdb.c:147:[eva:alarm] warning: function inet_addr: precondition 'valid_arg' got status unknown.
+stack: inet_addr :: FRAMAC_SHARE/libc/netdb.c:147 <-
        gethostbyname :: nameserv.c:121 <-
        DNS_Name2IPAddress :: conf.c:905 <-
        parse_initstepslew :: conf.c:488 <-

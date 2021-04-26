@@ -1104,7 +1104,7 @@ static void _modbus_rtu_ioctl_rts(modbus_t *ctx, int on)
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_1(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_1(FILE * restrict stream, char const * restrict format);
 
 static ssize_t _modbus_rtu_send(modbus_t *ctx, uint8_t const *req,
                                 int req_length)
@@ -1141,7 +1141,7 @@ static ssize_t _modbus_rtu_send(modbus_t *ctx, uint8_t const *req,
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_1(char const * __restrict format);
+int printf_va_1(char const * restrict format);
 
 static int _modbus_rtu_receive(modbus_t *ctx, uint8_t *req)
 {
@@ -1180,7 +1180,7 @@ static int _modbus_rtu_flush(modbus_t *ctx);
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), param1, param0;
  */
-int fprintf_va_2(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_2(FILE * restrict stream, char const * restrict format,
                  int param0, int param1);
 
 static int _modbus_rtu_pre_check_confirmation(modbus_t *ctx,
@@ -1221,7 +1221,7 @@ static int _modbus_rtu_pre_check_confirmation(modbus_t *ctx,
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param1, param0;
  */
-int printf_va_2(char const * __restrict format, int param0, int param1);
+int printf_va_2(char const * restrict format, int param0, int param1);
 
 /*@ requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
@@ -1234,7 +1234,7 @@ int printf_va_2(char const * __restrict format, int param0, int param1);
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), param1, param0;
  */
-int fprintf_va_3(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_3(FILE * restrict stream, char const * restrict format,
                  unsigned int param0, unsigned int param1);
 
 static int _modbus_rtu_check_integrity(modbus_t *ctx, uint8_t *msg,
@@ -1286,7 +1286,7 @@ static int _modbus_rtu_check_integrity(modbus_t *ctx, uint8_t *msg,
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param4, param3, param2, param1, *(param0 + (0 ..));
  */
-int printf_va_3(char const * __restrict format, char *param0, int param1,
+int printf_va_3(char const * restrict format, char *param0, int param1,
                 int param2, int param3, int param4);
 
 /*@ requires valid_read_string(format);
@@ -1303,7 +1303,7 @@ int printf_va_3(char const * __restrict format, char *param0, int param1,
             (indirect: *(format + (0 ..))), *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int fprintf_va_4(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_4(FILE * restrict stream, char const * restrict format,
                  char *param0, char *param1);
 
 /*@ requires valid_read_string(format);
@@ -1318,7 +1318,7 @@ int fprintf_va_4(FILE * __restrict stream, char const * __restrict format,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), *(param1 + (0 ..)), param0;
  */
-int fprintf_va_5(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_5(FILE * restrict stream, char const * restrict format,
                  int param0, char *param1);
 
 static int _modbus_rtu_connect(modbus_t *ctx)
@@ -1468,7 +1468,7 @@ static int _modbus_rtu_connect(modbus_t *ctx)
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_6(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_6(FILE * restrict stream, char const * restrict format);
 
 int modbus_rtu_set_serial_mode(modbus_t *ctx, int mode)
 {
@@ -1500,7 +1500,7 @@ int modbus_rtu_set_serial_mode(modbus_t *ctx, int mode)
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_7(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_7(FILE * restrict stream, char const * restrict format);
 
 int modbus_rtu_get_serial_mode(modbus_t *ctx)
 {
@@ -1680,7 +1680,7 @@ static int _modbus_rtu_flush(modbus_t *ctx)
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_8(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_8(FILE * restrict stream, char const * restrict format);
 
 static int _modbus_rtu_select(modbus_t *ctx, fd_set *rset,
                               struct timeval *tv, int length_to_read)
@@ -1748,7 +1748,7 @@ modbus_backend_t const _modbus_rtu_backend =
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_9(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_9(FILE * restrict stream, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
@@ -1760,7 +1760,7 @@ int fprintf_va_9(FILE * __restrict stream, char const * __restrict format);
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_10(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_10(FILE * restrict stream, char const * restrict format);
 
 modbus_t *modbus_new_rtu(char const *device, int baud, char parity,
                          int data_bit, int stop_bit)
@@ -1930,7 +1930,7 @@ static int _modbus_tcp_check_integrity(modbus_t *ctx, uint8_t *msg,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), param1, param0;
  */
-int fprintf_va_11(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_11(FILE * restrict stream, char const * restrict format,
                   unsigned int param0, unsigned int param1);
 
 /*@ requires valid_read_string(format);
@@ -1943,7 +1943,7 @@ int fprintf_va_11(FILE * __restrict stream, char const * __restrict format,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), param0;
  */
-int fprintf_va_12(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_12(FILE * restrict stream, char const * restrict format,
                   unsigned int param0);
 
 static int _modbus_tcp_pre_check_confirmation(modbus_t *ctx,
@@ -2058,7 +2058,7 @@ static int _connect(int sockfd, struct sockaddr const *addr,
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param1, *(param0 + (0 ..));
  */
-int printf_va_4(char const * __restrict format, char *param0, int param1);
+int printf_va_4(char const * restrict format, char *param0, int param1);
 
 static int _modbus_tcp_connect(modbus_t *ctx)
 {
@@ -2108,7 +2108,7 @@ static int _modbus_tcp_connect(modbus_t *ctx)
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int fprintf_va_13(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_13(FILE * restrict stream, char const * restrict format,
                   char *param0);
 
 /*@ requires valid_read_string(format);
@@ -2125,7 +2125,7 @@ int fprintf_va_13(FILE * __restrict stream, char const * __restrict format,
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param1 + (0 ..)), *(param0 + (0 ..));
  */
-int printf_va_5(char const * __restrict format, char *param0, char *param1);
+int printf_va_5(char const * restrict format, char *param0, char *param1);
 
 static int _modbus_tcp_pi_connect(modbus_t *ctx)
 {
@@ -2278,7 +2278,7 @@ int modbus_tcp_listen(modbus_t *ctx, int nb_connection)
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int fprintf_va_14(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_14(FILE * restrict stream, char const * restrict format,
                   char *param0);
 
 int modbus_tcp_pi_listen(modbus_t *ctx, int nb_connection)
@@ -2383,7 +2383,7 @@ int modbus_tcp_pi_listen(modbus_t *ctx, int nb_connection)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_6(char const * __restrict format, char *param0);
+int printf_va_6(char const * restrict format, char *param0);
 
 int modbus_tcp_accept(modbus_t *ctx, int *s)
 {
@@ -2420,7 +2420,7 @@ int modbus_tcp_accept(modbus_t *ctx, int *s)
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_7(char const * __restrict format);
+int printf_va_7(char const * restrict format);
 
 int modbus_tcp_pi_accept(modbus_t *ctx, int *s)
 {
@@ -2453,7 +2453,7 @@ int modbus_tcp_pi_accept(modbus_t *ctx, int *s)
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_15(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_15(FILE * restrict stream, char const * restrict format);
 
 static int _modbus_tcp_select(modbus_t *ctx, fd_set *rset,
                               struct timeval *tv, int length_to_read)
@@ -2540,7 +2540,7 @@ modbus_backend_t const _modbus_tcp_pi_backend =
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_16(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_16(FILE * restrict stream, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
@@ -2552,7 +2552,7 @@ int fprintf_va_16(FILE * __restrict stream, char const * __restrict format);
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_17(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_17(FILE * restrict stream, char const * restrict format);
 
 modbus_t *modbus_new_tcp(char const *ip, int port)
 {
@@ -2607,7 +2607,7 @@ modbus_t *modbus_new_tcp(char const *ip, int port)
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_18(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_18(FILE * restrict stream, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
@@ -2619,7 +2619,7 @@ int fprintf_va_18(FILE * __restrict stream, char const * __restrict format);
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_19(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_19(FILE * restrict stream, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
@@ -2631,7 +2631,7 @@ int fprintf_va_19(FILE * __restrict stream, char const * __restrict format);
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_20(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_20(FILE * restrict stream, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
@@ -2643,7 +2643,7 @@ int fprintf_va_20(FILE * __restrict stream, char const * __restrict format);
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_21(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_21(FILE * restrict stream, char const * restrict format);
 
 modbus_t *modbus_new_tcp_pi(char const *node, char const *service)
 {
@@ -2771,7 +2771,7 @@ char const *modbus_strerror(int errnum)
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int fprintf_va_22(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_22(FILE * restrict stream, char const * restrict format,
                   char *param0);
 
 /*@ requires valid_read_string(format);
@@ -2785,7 +2785,7 @@ int fprintf_va_22(FILE * __restrict stream, char const * __restrict format,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int fprintf_va_23(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_23(FILE * restrict stream, char const * restrict format,
                   char *param0);
 
 /*@ requires valid_read_string(format);
@@ -2798,7 +2798,7 @@ int fprintf_va_23(FILE * __restrict stream, char const * __restrict format,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_24(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_24(FILE * restrict stream, char const * restrict format);
 
 void _error_print(modbus_t *ctx, char const *context)
 {
@@ -2843,7 +2843,7 @@ static void _sleep_response_timeout(modbus_t *ctx)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_8(char const * __restrict format, int param0);
+int printf_va_8(char const * restrict format, int param0);
 
 int modbus_flush(modbus_t *ctx)
 {
@@ -2904,7 +2904,7 @@ static unsigned int compute_response_length_from_request(modbus_t *ctx,
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_9(char const * __restrict format, unsigned int param0);
+int printf_va_9(char const * restrict format, unsigned int param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -2916,7 +2916,7 @@ int printf_va_9(char const * __restrict format, unsigned int param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_10(char const * __restrict format);
+int printf_va_10(char const * restrict format);
 
 static int send_msg(modbus_t *ctx, uint8_t *msg, int msg_length)
 {
@@ -3078,7 +3078,7 @@ static int compute_data_length_after_meta(modbus_t *ctx, uint8_t *msg,
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_11(char const * __restrict format);
+int printf_va_11(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -3090,7 +3090,7 @@ int printf_va_11(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_12(char const * __restrict format);
+int printf_va_12(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -3103,7 +3103,7 @@ int printf_va_12(char const * __restrict format);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_13(char const * __restrict format, unsigned int param0);
+int printf_va_13(char const * restrict format, unsigned int param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -3115,7 +3115,7 @@ int printf_va_13(char const * __restrict format, unsigned int param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_14(char const * __restrict format);
+int printf_va_14(char const * restrict format);
 
 int _modbus_receive_msg(modbus_t *ctx, uint8_t *msg, msg_type_t msg_type)
 {
@@ -3279,7 +3279,7 @@ int modbus_receive_confirmation(modbus_t *ctx, uint8_t *rsp)
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), param1, param0;
  */
-int fprintf_va_25(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_25(FILE * restrict stream, char const * restrict format,
                   unsigned int param0, unsigned int param1);
 
 /*@ requires valid_read_string(format);
@@ -3293,7 +3293,7 @@ int fprintf_va_25(FILE * __restrict stream, char const * __restrict format,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), param1, param0;
  */
-int fprintf_va_26(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_26(FILE * restrict stream, char const * restrict format,
                   int param0, int param1);
 
 /*@ requires valid_read_string(format);
@@ -3307,7 +3307,7 @@ int fprintf_va_26(FILE * __restrict stream, char const * __restrict format,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), param1, param0;
  */
-int fprintf_va_27(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_27(FILE * restrict stream, char const * restrict format,
                   int param0, int param1);
 
 static int check_confirmation(modbus_t *ctx, uint8_t *req, uint8_t *rsp,
@@ -3503,7 +3503,7 @@ static int response_exception(modbus_t *ctx, sft_t *sft, int exception_code,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_28(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_28(FILE * restrict stream, char const * restrict format);
 
 int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
                  modbus_mapping_t *mb_mapping)
@@ -4176,7 +4176,7 @@ static int read_io_status(modbus_t *ctx, int function, int addr, int nb,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), param1, param0;
  */
-int fprintf_va_29(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_29(FILE * restrict stream, char const * restrict format,
                   int param0, int param1);
 
 int modbus_read_bits(modbus_t *ctx, int addr, int nb, uint8_t *dest)
@@ -4219,7 +4219,7 @@ int modbus_read_bits(modbus_t *ctx, int addr, int nb, uint8_t *dest)
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), param1, param0;
  */
-int fprintf_va_30(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_30(FILE * restrict stream, char const * restrict format,
                   int param0, int param1);
 
 int modbus_read_input_bits(modbus_t *ctx, int addr, int nb, uint8_t *dest)
@@ -4262,7 +4262,7 @@ int modbus_read_input_bits(modbus_t *ctx, int addr, int nb, uint8_t *dest)
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), param1, param0;
  */
-int fprintf_va_31(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_31(FILE * restrict stream, char const * restrict format,
                   int param0, int param1);
 
 static int read_registers(modbus_t *ctx, int function, int addr, int nb,
@@ -4321,7 +4321,7 @@ static int read_registers(modbus_t *ctx, int function, int addr, int nb,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), param1, param0;
  */
-int fprintf_va_32(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_32(FILE * restrict stream, char const * restrict format,
                   int param0, int param1);
 
 int modbus_read_registers(modbus_t *ctx, int addr, int nb, uint16_t *dest)
@@ -4357,7 +4357,7 @@ int modbus_read_registers(modbus_t *ctx, int addr, int nb, uint16_t *dest)
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), param1, param0;
  */
-int fprintf_va_33(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_33(FILE * restrict stream, char const * restrict format,
                   int param0, int param1);
 
 int modbus_read_input_registers(modbus_t *ctx, int addr, int nb,
@@ -4452,7 +4452,7 @@ int modbus_write_register(modbus_t *ctx, int addr, int value)
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), param1, param0;
  */
-int fprintf_va_34(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_34(FILE * restrict stream, char const * restrict format,
                   int param0, int param1);
 
 int modbus_write_bits(modbus_t *ctx, int addr, int nb, uint8_t const *src)
@@ -4541,7 +4541,7 @@ int modbus_write_bits(modbus_t *ctx, int addr, int nb, uint8_t const *src)
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), param1, param0;
  */
-int fprintf_va_35(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_35(FILE * restrict stream, char const * restrict format,
                   int param0, int param1);
 
 int modbus_write_registers(modbus_t *ctx, int addr, int nb,
@@ -4651,7 +4651,7 @@ int modbus_mask_write_register(modbus_t *ctx, int addr, uint16_t and_mask,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), param1, param0;
  */
-int fprintf_va_36(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_36(FILE * restrict stream, char const * restrict format,
                   int param0, int param1);
 
 /*@ requires valid_read_string(format);
@@ -4665,7 +4665,7 @@ int fprintf_va_36(FILE * __restrict stream, char const * __restrict format,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), param1, param0;
  */
-int fprintf_va_37(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_37(FILE * restrict stream, char const * restrict format,
                   int param0, int param1);
 
 int modbus_write_and_read_registers(modbus_t *ctx, int write_addr,
@@ -5163,7 +5163,7 @@ uint32_t const UT_IREAL_CDAB = 0xF1470020;
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_15(char const * __restrict format, char *param0);
+int printf_va_15(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     requires valid_read_string(param0);
@@ -5176,7 +5176,7 @@ int printf_va_15(char const * __restrict format, char *param0);
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int fprintf_va_38(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_38(FILE * restrict stream, char const * restrict format,
                   char *param0);
 
 /*@ requires valid_read_string(format);
@@ -5190,7 +5190,7 @@ int fprintf_va_38(FILE * __restrict stream, char const * __restrict format,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int fprintf_va_39(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_39(FILE * restrict stream, char const * restrict format,
                   char *param0);
 
 /*@ requires valid_read_string(format);
@@ -5203,7 +5203,7 @@ int fprintf_va_39(FILE * __restrict stream, char const * __restrict format,
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_16(char const * __restrict format);
+int printf_va_16(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -5215,7 +5215,7 @@ int printf_va_16(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_17(char const * __restrict format);
+int printf_va_17(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -5227,7 +5227,7 @@ int printf_va_17(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_18(char const * __restrict format);
+int printf_va_18(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -5239,7 +5239,7 @@ int printf_va_18(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_19(char const * __restrict format);
+int printf_va_19(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
@@ -5251,7 +5251,7 @@ int printf_va_19(char const * __restrict format);
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_40(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_40(FILE * restrict stream, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -5264,7 +5264,7 @@ int fprintf_va_40(FILE * __restrict stream, char const * __restrict format);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_20(char const * __restrict format, unsigned int param0);
+int printf_va_20(char const * restrict format, unsigned int param0);
 
 /*@ requires valid_read_string(format);
     requires valid_read_string(param0);
@@ -5278,7 +5278,7 @@ int printf_va_20(char const * __restrict format, unsigned int param0);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_21(char const * __restrict format, char *param0);
+int printf_va_21(char const * restrict format, char *param0);
 
 int main(int argc, char **argv)
 {

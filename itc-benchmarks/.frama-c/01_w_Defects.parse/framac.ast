@@ -508,7 +508,7 @@ int volatile vflag_file;
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param2, param1, param0;
  */
-int printf_va_1(char const * __restrict format, int param0, int param1,
+int printf_va_1(char const * restrict format, int param0, int param1,
                 int param2);
 
 /*@ requires valid_read_string(format);
@@ -521,7 +521,7 @@ int printf_va_1(char const * __restrict format, int param0, int param1,
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_2(char const * __restrict format);
+int printf_va_2(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -533,7 +533,7 @@ int printf_va_2(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_3(char const * __restrict format);
+int printf_va_3(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -545,7 +545,7 @@ int printf_va_3(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_4(char const * __restrict format);
+int printf_va_4(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -557,7 +557,7 @@ int printf_va_4(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_5(char const * __restrict format);
+int printf_va_5(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -569,7 +569,7 @@ int printf_va_5(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_6(char const * __restrict format);
+int printf_va_6(char const * restrict format);
 
 int main(int argc, char **argv)
 {
@@ -947,7 +947,7 @@ void dynamic_buffer_overrun_002(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_7(char const * __restrict format, int param0);
+int printf_va_7(char const * restrict format, int param0);
 
 void dynamic_buffer_overrun_003(void)
 {
@@ -1507,7 +1507,7 @@ void dynamic_buffer_overrun_main(void)
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_8(char const * __restrict format);
+int printf_va_8(char const * restrict format);
 
 void dynamic_buffer_underrun_001(void)
 {
@@ -1535,7 +1535,7 @@ void dynamic_buffer_underrun_001(void)
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_9(char const * __restrict format);
+int printf_va_9(char const * restrict format);
 
 void dynamic_buffer_underrun_002(void)
 {
@@ -1559,7 +1559,7 @@ void dynamic_buffer_underrun_002(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_10(char const * __restrict format, int param0);
+int printf_va_10(char const * restrict format, int param0);
 
 void dynamic_buffer_underrun_003(void)
 {
@@ -3645,7 +3645,7 @@ static int invalid_memory_access_002_staticflag = 100;
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_11(char const * __restrict format, double param0);
+int printf_va_11(char const * restrict format, double param0);
 
 void invalid_memory_access_002(void)
 {
@@ -3698,7 +3698,7 @@ void invalid_memory_access_003(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_12(char const * __restrict format, char *param0);
+int printf_va_12(char const * restrict format, char *param0);
 
 void invalid_memory_access_004(void)
 {
@@ -3912,7 +3912,7 @@ int invalid_memory_access_012_func_001(int flag)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_13(char const * __restrict format, int param0);
+int printf_va_13(char const * restrict format, int param0);
 
 void invalid_memory_access_012(void)
 {
@@ -3986,7 +3986,7 @@ void invalid_memory_access_013_func_003(int flag)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_14(char const * __restrict format, int param0);
+int printf_va_14(char const * restrict format, int param0);
 
 void invalid_memory_access_013(void)
 {
@@ -4269,7 +4269,7 @@ void invalid_memory_access_main(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_15(char const * __restrict format, int param0);
+int printf_va_15(char const * restrict format, int param0);
 
 void littlemem_st_001(void)
 {
@@ -4765,8 +4765,8 @@ void memory_allocation_failure_007(void)
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int snprintf_va_1(char * __restrict s, size_t n,
-                  char const * __restrict format, char *param0);
+int snprintf_va_1(char * restrict s, size_t n, char const * restrict format,
+                  char *param0);
 
 char *memory_allocation_failure_008_func_001(char const *msg)
 {
@@ -4814,7 +4814,7 @@ void memory_allocation_failure_009_func_001(char *buf)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_16(char const * __restrict format, char *param0);
+int printf_va_16(char const * restrict format, char *param0);
 
 void memory_allocation_failure_009_func_002(void *vptr_0)
 {
@@ -4924,7 +4924,7 @@ unsigned int memory_allocation_failure_012_func_001(int flag)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_17(char const * __restrict format, int param0);
+int printf_va_17(char const * restrict format, int param0);
 
 void memory_allocation_failure_012_func_002(int **pbuf)
 {
@@ -4993,7 +4993,7 @@ unsigned int memory_allocation_failure_013_func_001(int flag)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_18(char const * __restrict format, int param0);
+int printf_va_18(char const * restrict format, int param0);
 
 void memory_allocation_failure_013(void)
 {
@@ -5077,7 +5077,7 @@ static int memory_allocation_failure_014_staticflag = 1;
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param1, param0;
  */
-int printf_va_19(char const * __restrict format, int param0, double param1);
+int printf_va_19(char const * restrict format, int param0, double param1);
 
 void memory_allocation_failure_014(void)
 {
@@ -5178,7 +5178,7 @@ int memory_allocation_failure_015_func_003(int flag)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_20(char const * __restrict format, int param0);
+int printf_va_20(char const * restrict format, int param0);
 
 void memory_allocation_failure_015(void)
 {
@@ -7606,7 +7606,7 @@ long **uninit_memory_access_009_doubleptr_gbl;
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_21(char const * __restrict format, unsigned long param0);
+int printf_va_21(char const * restrict format, unsigned long param0);
 
 void uninit_memory_access_001(void)
 {
@@ -7628,7 +7628,7 @@ void uninit_memory_access_001(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_22(char const * __restrict format, double param0);
+int printf_va_22(char const * restrict format, double param0);
 
 void uninit_memory_access_002(void)
 {
@@ -7654,7 +7654,7 @@ void uninit_memory_access_002(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param1 + (0 ..)), *(param0 + (0 ..));
  */
-int printf_va_23(char const * __restrict format, char *param0, char *param1);
+int printf_va_23(char const * restrict format, char *param0, char *param1);
 
 void uninit_memory_access_003(void)
 {
@@ -7679,7 +7679,7 @@ void uninit_memory_access_003(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_24(char const * __restrict format, int param0);
+int printf_va_24(char const * restrict format, int param0);
 
 void uninit_memory_access_004(void)
 {
@@ -7729,7 +7729,7 @@ void uninit_memory_access_005(void)
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_25(char const * __restrict format);
+int printf_va_25(char const * restrict format);
 
 void uninit_memory_access_006_func_001(char *dst, char const *src)
 {
@@ -7760,7 +7760,7 @@ void uninit_memory_access_006_func_001(char *dst, char const *src)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_26(char const * __restrict format, char *param0);
+int printf_va_26(char const * restrict format, char *param0);
 
 void uninit_memory_access_006(void)
 {
@@ -7923,8 +7923,8 @@ void uninit_memory_access_010(void)
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int snprintf_va_2(char * __restrict s, size_t n,
-                  char const * __restrict format, char *param0);
+int snprintf_va_2(char * restrict s, size_t n, char const * restrict format,
+                  char *param0);
 
 /*@ requires valid_read_string(format);
     requires valid_read_string(param0);
@@ -7938,7 +7938,7 @@ int snprintf_va_2(char * __restrict s, size_t n,
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_27(char const * __restrict format, char *param0);
+int printf_va_27(char const * restrict format, char *param0);
 
 void uninit_memory_access_011_func_001(char const *msg)
 {

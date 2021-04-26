@@ -1,4 +1,9 @@
 #include <stdio.h>
+
+// Modified for Frama-C/Eva
+/*@ assigns \result \from x; */
+static unsigned long long l(unsigned long long x);
+
 #define  f(f,g){z e=0;for(;e<f;e++)g;}
 #define  i(f,g)static z f(z a){return g;}
 #define  j(f,g)static void f(z*a,z*b,z*c){g}

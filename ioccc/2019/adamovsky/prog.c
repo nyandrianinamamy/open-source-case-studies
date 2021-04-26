@@ -60,3 +60,9 @@ Ch,fW)m(63,Ch   ,fCh)o(32,1)m(64,C,fR)[96]={{Y}},o(   9,2)m(99,C,fE
 )o(13,6)m(114,NL,fW)m(115,C,fS0)m(118,C,fV)o(12,7)m(124,C,fP)};/*/;
 int main(){printf("```s``." "3`.2. `.d`" "``k.rik" "`d`.y`" "``."//
 "l``c.n.o.gr```s`.n`.e`.c.h```.r`.u```k.td.y. i`.c`.e`.tk\n");}/**/
+
+/*@ assigns \result \from \nothing; //unsound */
+A* I(void);
+
+/*@ assigns \nothing; //unsound */
+void D(A* f);

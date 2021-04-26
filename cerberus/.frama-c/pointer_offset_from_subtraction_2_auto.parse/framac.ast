@@ -20,7 +20,7 @@
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param2, param1, param0;
  */
-int printf_va_1(char const * __restrict format, int param0, int param1,
+int printf_va_1(char const * restrict format, int param0, int param1,
                 int param2);
 
 /*@ requires valid_read_string(format);
@@ -35,7 +35,7 @@ int printf_va_1(char const * __restrict format, int param0, int param1,
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param2, param1, param0;
  */
-int printf_va_2(char const * __restrict format, int param0, int param1,
+int printf_va_2(char const * restrict format, int param0, int param1,
                 int param2);
 
 /*@ requires valid_read_string(format);
@@ -50,7 +50,7 @@ int printf_va_2(char const * __restrict format, int param0, int param1,
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param3, param2, param1, param0;
  */
-int printf_va_3(char const * __restrict format, int param0, int param1,
+int printf_va_3(char const * restrict format, int param0, int param1,
                 int param2, int param3);
 
 int main(void)

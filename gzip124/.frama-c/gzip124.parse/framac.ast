@@ -329,7 +329,7 @@ static void treat_dir(char *dir) __attribute__((__FC_OLDSTYLEPROTO__));
             (indirect: *(format + (0 ..))), *(param2 + (0 ..)),
             *(param1 + (0 ..)), *(param0 + (0 ..));
  */
-int fprintf_va_1(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_1(FILE * restrict stream, char const * restrict format,
                  char *param0, char *param1, char *param2);
 
 static void usage(void)
@@ -374,7 +374,7 @@ static char *help_help_msg[18] =
             (indirect: *(format + (0 ..))), *(param2 + (0 ..)),
             *(param1 + (0 ..)), *(param0 + (0 ..));
  */
-int fprintf_va_2(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_2(FILE * restrict stream, char const * restrict format,
                  char *param0, char *param1, char *param2);
 
 /*@ requires valid_read_string(format);
@@ -388,7 +388,7 @@ int fprintf_va_2(FILE * __restrict stream, char const * __restrict format,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int fprintf_va_3(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_3(FILE * restrict stream, char const * restrict format,
                  char *param0);
 
 static void help(void)
@@ -423,7 +423,7 @@ static void help(void)
             (indirect: *(format + (0 ..))), *(param2 + (0 ..)),
             *(param1 + (0 ..)), *(param0 + (0 ..));
  */
-int fprintf_va_4(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_4(FILE * restrict stream, char const * restrict format,
                  char *param0, char *param1, char *param2);
 
 /*@ requires valid_read_string(format);
@@ -437,7 +437,7 @@ int fprintf_va_4(FILE * __restrict stream, char const * __restrict format,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int fprintf_va_5(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_5(FILE * restrict stream, char const * restrict format,
                  char *param0);
 
 static void license(void)
@@ -471,7 +471,7 @@ static void license(void)
             (indirect: *(format + (0 ..))), *(param2 + (0 ..)),
             *(param1 + (0 ..)), *(param0 + (0 ..));
  */
-int fprintf_va_6(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_6(FILE * restrict stream, char const * restrict format,
                  char *param0, char *param1, char *param2);
 
 /*@ requires valid_read_string(format);
@@ -488,7 +488,7 @@ int fprintf_va_6(FILE * __restrict stream, char const * __restrict format,
             (indirect: *(format + (0 ..))), *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int fprintf_va_7(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_7(FILE * restrict stream, char const * restrict format,
                  char *param0, char *param1);
 
 /*@ requires valid_read_string(format);
@@ -501,7 +501,7 @@ int fprintf_va_7(FILE * __restrict stream, char const * __restrict format,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_8(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_8(FILE * restrict stream, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
@@ -513,7 +513,7 @@ int fprintf_va_8(FILE * __restrict stream, char const * __restrict format);
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_9(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_9(FILE * restrict stream, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
@@ -525,7 +525,7 @@ int fprintf_va_9(FILE * __restrict stream, char const * __restrict format);
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_10(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_10(FILE * restrict stream, char const * restrict format);
 
 static void version(void)
 {
@@ -550,7 +550,7 @@ static void version(void)
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int fprintf_va_11(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_11(FILE * restrict stream, char const * restrict format,
                   char *param0);
 
 /*@ requires valid_read_string(format);
@@ -564,7 +564,7 @@ int fprintf_va_11(FILE * __restrict stream, char const * __restrict format,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int fprintf_va_12(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_12(FILE * restrict stream, char const * restrict format,
                   char *param0);
 
 /*@ requires valid_read_string(format);
@@ -581,7 +581,7 @@ int fprintf_va_12(FILE * __restrict stream, char const * __restrict format,
             (indirect: *(format + (0 ..))), *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int fprintf_va_13(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_13(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1);
 
 int main(int argc, char **argv) __attribute__((__FC_OLDSTYLEPROTO__));
@@ -780,7 +780,7 @@ int main(int argc, char **argv)
             (indirect: *(format + (0 ..))), *(param2 + (0 ..)),
             *(param1 + (0 ..)), *(param0 + (0 ..));
  */
-int fprintf_va_14(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_14(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1, char *param2);
 
 /*@ requires valid_read_string(format);
@@ -794,7 +794,7 @@ int fprintf_va_14(FILE * __restrict stream, char const * __restrict format,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int fprintf_va_15(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_15(FILE * restrict stream, char const * restrict format,
                   char *param0);
 
 /*@ requires valid_read_string(format);
@@ -807,7 +807,7 @@ int fprintf_va_15(FILE * __restrict stream, char const * __restrict format,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_16(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_16(FILE * restrict stream, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
@@ -819,7 +819,7 @@ int fprintf_va_16(FILE * __restrict stream, char const * __restrict format);
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_17(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_17(FILE * restrict stream, char const * restrict format);
 
 static void treat_stdin(void)
 {
@@ -923,7 +923,7 @@ static void treat_stdin(void)
             (indirect: *(format + (0 ..))), *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int fprintf_va_18(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_18(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1);
 
 /*@ requires valid_read_string(format);
@@ -940,7 +940,7 @@ int fprintf_va_18(FILE * __restrict stream, char const * __restrict format,
             (indirect: *(format + (0 ..))), *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int fprintf_va_19(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_19(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1);
 
 /*@ requires valid_read_string(format);
@@ -958,7 +958,7 @@ int fprintf_va_19(FILE * __restrict stream, char const * __restrict format,
             (indirect: *(format + (0 ..))), param3, param2,
             *(param1 + (0 ..)), *(param0 + (0 ..));
  */
-int fprintf_va_20(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_20(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1, int param2, int param3);
 
 /*@ requires valid_read_string(format);
@@ -972,7 +972,7 @@ int fprintf_va_20(FILE * __restrict stream, char const * __restrict format,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int fprintf_va_21(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_21(FILE * restrict stream, char const * restrict format,
                   char *param0);
 
 /*@ requires valid_read_string(format);
@@ -990,7 +990,7 @@ int fprintf_va_21(FILE * __restrict stream, char const * __restrict format,
             (indirect: *(format + (0 ..))), *(param2 + (0 ..)),
             *(param1 + (0 ..)), *(param0 + (0 ..));
  */
-int fprintf_va_22(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_22(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1, char *param2);
 
 /*@ requires valid_read_string(format);
@@ -1007,7 +1007,7 @@ int fprintf_va_22(FILE * __restrict stream, char const * __restrict format,
             (indirect: *(format + (0 ..))), *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int fprintf_va_23(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_23(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1);
 
 /*@ requires valid_read_string(format);
@@ -1020,7 +1020,7 @@ int fprintf_va_23(FILE * __restrict stream, char const * __restrict format,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_24(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_24(FILE * restrict stream, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires valid_read_string(param0);
@@ -1033,7 +1033,7 @@ int fprintf_va_24(FILE * __restrict stream, char const * __restrict format);
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int fprintf_va_25(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_25(FILE * restrict stream, char const * restrict format,
                   char *param0);
 
 /*@ requires valid_read_string(format);
@@ -1046,7 +1046,7 @@ int fprintf_va_25(FILE * __restrict stream, char const * __restrict format,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_26(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_26(FILE * restrict stream, char const * restrict format);
 
 static void treat_file(char *iname) __attribute__((__FC_OLDSTYLEPROTO__));
 static void treat_file(char *iname)
@@ -1215,7 +1215,7 @@ static void treat_file(char *iname)
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int fprintf_va_27(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_27(FILE * restrict stream, char const * restrict format,
                   char *param0);
 
 /*@ requires valid_read_string(format);
@@ -1232,7 +1232,7 @@ int fprintf_va_27(FILE * __restrict stream, char const * __restrict format,
             (indirect: *(format + (0 ..))), *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int fprintf_va_28(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_28(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1);
 
 static int create_outfile(void)
@@ -1445,7 +1445,7 @@ static int get_istat(char *iname, struct stat *sbuf)
             (indirect: *(format + (0 ..))), *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int fprintf_va_29(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_29(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1);
 
 /*@ requires valid_read_string(format);
@@ -1463,7 +1463,7 @@ int fprintf_va_29(FILE * __restrict stream, char const * __restrict format,
             (indirect: *(format + (0 ..))), *(param2 + (0 ..)),
             *(param1 + (0 ..)), *(param0 + (0 ..));
  */
-int fprintf_va_30(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_30(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1, char *param2);
 
 static int make_ofname(void)
@@ -1544,7 +1544,7 @@ static int make_ofname(void)
             (indirect: *(format + (0 ..))), param2, *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int fprintf_va_31(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_31(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1, int param2);
 
 /*@ requires valid_read_string(format);
@@ -1561,7 +1561,7 @@ int fprintf_va_31(FILE * __restrict stream, char const * __restrict format,
             (indirect: *(format + (0 ..))), *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int fprintf_va_32(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_32(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1);
 
 /*@ requires valid_read_string(format);
@@ -1578,7 +1578,7 @@ int fprintf_va_32(FILE * __restrict stream, char const * __restrict format,
             (indirect: *(format + (0 ..))), *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int fprintf_va_33(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_33(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1);
 
 /*@ requires valid_read_string(format);
@@ -1595,7 +1595,7 @@ int fprintf_va_33(FILE * __restrict stream, char const * __restrict format,
             (indirect: *(format + (0 ..))), param2, *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int fprintf_va_34(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_34(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1, unsigned int param2);
 
 /*@ requires valid_read_string(format);
@@ -1612,7 +1612,7 @@ int fprintf_va_34(FILE * __restrict stream, char const * __restrict format,
             (indirect: *(format + (0 ..))), param2, *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int fprintf_va_35(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_35(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1, unsigned int param2);
 
 /*@ requires valid_read_string(format);
@@ -1629,7 +1629,7 @@ int fprintf_va_35(FILE * __restrict stream, char const * __restrict format,
             (indirect: *(format + (0 ..))), param2, *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int fprintf_va_36(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_36(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1, unsigned int param2);
 
 /*@ requires valid_read_string(format);
@@ -1646,7 +1646,7 @@ int fprintf_va_36(FILE * __restrict stream, char const * __restrict format,
             (indirect: *(format + (0 ..))), *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int fprintf_va_37(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_37(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1);
 
 /*@ requires valid_read_string(format);
@@ -1663,7 +1663,7 @@ int fprintf_va_37(FILE * __restrict stream, char const * __restrict format,
             (indirect: *(format + (0 ..))), *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int fprintf_va_38(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_38(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1);
 
 static int get_method(int in) __attribute__((__FC_OLDSTYLEPROTO__));
@@ -2074,7 +2074,7 @@ static char *do_list_methods[9] =
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_1(char const * __restrict format);
+int printf_va_1(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -2086,7 +2086,7 @@ int printf_va_1(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_2(char const * __restrict format);
+int printf_va_2(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -2100,7 +2100,7 @@ int printf_va_2(char const * __restrict format);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param1, param0;
  */
-int printf_va_3(char const * __restrict format, unsigned long param0,
+int printf_va_3(char const * restrict format, unsigned long param0,
                 unsigned long param1);
 
 /*@ requires valid_read_string(format);
@@ -2115,7 +2115,7 @@ int printf_va_3(char const * __restrict format, unsigned long param0,
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param1, param0;
  */
-int printf_va_4(char const * __restrict format, long param0, long param1);
+int printf_va_4(char const * restrict format, long param0, long param1);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -2127,7 +2127,7 @@ int printf_va_4(char const * __restrict format, long param0, long param1);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_5(char const * __restrict format);
+int printf_va_5(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires valid_read_string(param2);
@@ -2143,7 +2143,7 @@ int printf_va_5(char const * __restrict format);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param2 + (0 ..)), param1, *(param0 + (0 ..));
  */
-int printf_va_6(char const * __restrict format, char *param0,
+int printf_va_6(char const * restrict format, char *param0,
                 unsigned long param1, char *param2);
 
 /*@ requires valid_read_string(format);
@@ -2158,7 +2158,7 @@ int printf_va_6(char const * __restrict format, char *param0,
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param1, param0;
  */
-int printf_va_7(char const * __restrict format, long param0, long param1);
+int printf_va_7(char const * restrict format, long param0, long param1);
 
 /*@ requires valid_read_string(format);
     requires valid_read_string(param0);
@@ -2172,7 +2172,7 @@ int printf_va_7(char const * __restrict format, long param0, long param1);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_8(char const * __restrict format, char *param0);
+int printf_va_8(char const * restrict format, char *param0);
 
 static void do_list(int ifd_0, int method_0) __attribute__((__FC_OLDSTYLEPROTO__));
 static void do_list(int ifd_0, int method_0)
@@ -2368,7 +2368,7 @@ static void shorten_name(char *name)
             (indirect: *(format + (0 ..))), *(param2 + (0 ..)),
             *(param1 + (0 ..)), *(param0 + (0 ..));
  */
-int fprintf_va_39(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_39(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1, char *param2);
 
 /*@ requires valid_read_string(format);
@@ -2386,7 +2386,7 @@ int fprintf_va_39(FILE * __restrict stream, char const * __restrict format,
             (indirect: *(format + (0 ..))), *(param2 + (0 ..)),
             *(param1 + (0 ..)), *(param0 + (0 ..));
  */
-int fprintf_va_40(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_40(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1, char *param2);
 
 /*@ requires valid_read_string(format);
@@ -2403,7 +2403,7 @@ int fprintf_va_40(FILE * __restrict stream, char const * __restrict format,
             (indirect: *(format + (0 ..))), *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int fprintf_va_41(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_41(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1);
 
 /*@ requires valid_read_string(format);
@@ -2416,7 +2416,7 @@ int fprintf_va_41(FILE * __restrict stream, char const * __restrict format,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_42(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_42(FILE * restrict stream, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
@@ -2428,7 +2428,7 @@ int fprintf_va_42(FILE * __restrict stream, char const * __restrict format);
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_43(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_43(FILE * restrict stream, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires valid_read_string(param0);
@@ -2441,7 +2441,7 @@ int fprintf_va_43(FILE * __restrict stream, char const * __restrict format);
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int fprintf_va_44(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_44(FILE * restrict stream, char const * restrict format,
                   char *param0);
 
 static int check_ofname(void)
@@ -2543,7 +2543,7 @@ static int check_ofname(void)
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int fprintf_va_45(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_45(FILE * restrict stream, char const * restrict format,
                   char *param0);
 
 /*@ requires valid_read_string(format);
@@ -2557,7 +2557,7 @@ int fprintf_va_45(FILE * __restrict stream, char const * __restrict format,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int fprintf_va_46(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_46(FILE * restrict stream, char const * restrict format,
                   char *param0);
 
 static void copy_stat(struct stat *ifstat) __attribute__((__FC_OLDSTYLEPROTO__));
@@ -2597,7 +2597,7 @@ static void copy_stat(struct stat *ifstat)
             (indirect: *(format + (0 ..))), *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int fprintf_va_47(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_47(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1);
 
 /*@ requires valid_read_string(format);
@@ -2615,7 +2615,7 @@ int fprintf_va_47(FILE * __restrict stream, char const * __restrict format,
             (indirect: *(format + (0 ..))), *(param2 + (0 ..)),
             *(param1 + (0 ..)), *(param0 + (0 ..));
  */
-int fprintf_va_48(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_48(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1, char *param2);
 
 static void treat_dir(char *dir) __attribute__((__FC_OLDSTYLEPROTO__));
@@ -4497,7 +4497,7 @@ int ext_header = 0;
             (indirect: *(format + (0 ..))), *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int fprintf_va_49(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_49(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1);
 
 /*@ requires valid_read_string(format);
@@ -4514,7 +4514,7 @@ int fprintf_va_49(FILE * __restrict stream, char const * __restrict format,
             (indirect: *(format + (0 ..))), *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int fprintf_va_50(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_50(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1);
 
 /*@ requires valid_read_string(format);
@@ -4531,7 +4531,7 @@ int fprintf_va_50(FILE * __restrict stream, char const * __restrict format,
             (indirect: *(format + (0 ..))), *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int fprintf_va_51(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_51(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1);
 
 int check_zipfile(int in) __attribute__((__FC_OLDSTYLEPROTO__));
@@ -4595,7 +4595,7 @@ int check_zipfile(int in)
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), param1, param0;
  */
-int fprintf_va_52(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_52(FILE * restrict stream, char const * restrict format,
                   long param0, long param1);
 
 /*@ requires valid_read_string(format);
@@ -4612,7 +4612,7 @@ int fprintf_va_52(FILE * __restrict stream, char const * __restrict format,
             (indirect: *(format + (0 ..))), *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int fprintf_va_53(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_53(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1);
 
 /*@ requires valid_read_string(format);
@@ -4629,7 +4629,7 @@ int fprintf_va_53(FILE * __restrict stream, char const * __restrict format,
             (indirect: *(format + (0 ..))), *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int fprintf_va_54(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_54(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1);
 
 int unzip(int in, int out) __attribute__((__FC_OLDSTYLEPROTO__));
@@ -5553,7 +5553,7 @@ int inflate_fixed(void)
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_55(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_55(FILE * restrict stream, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
@@ -5565,7 +5565,7 @@ int fprintf_va_55(FILE * __restrict stream, char const * __restrict format);
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_56(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_56(FILE * restrict stream, char const * restrict format);
 
 int inflate_dynamic(void)
 {
@@ -6214,7 +6214,7 @@ char *add_envopt(int *argcp, char ***argvp, char *env_0)
             (indirect: *(format + (0 ..))), *(param2 + (0 ..)),
             *(param1 + (0 ..)), *(param0 + (0 ..));
  */
-int fprintf_va_57(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_57(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1, char *param2);
 
 void error(char *m) __attribute__((__FC_OLDSTYLEPROTO__));
@@ -6242,7 +6242,7 @@ void error(char *m)
             (indirect: *(format + (0 ..))), *(param3 + (0 ..)),
             *(param2 + (0 ..)), *(param1 + (0 ..)), *(param0 + (0 ..));
  */
-int fprintf_va_58(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_58(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1, char *param2, char *param3);
 
 void warn(char *a, char *b) __attribute__((__FC_OLDSTYLEPROTO__));
@@ -6265,7 +6265,7 @@ void warn(char *a, char *b)
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int fprintf_va_59(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_59(FILE * restrict stream, char const * restrict format,
                   char *param0);
 
 /*@ requires valid_read_string(format);
@@ -6279,7 +6279,7 @@ int fprintf_va_59(FILE * __restrict stream, char const * __restrict format,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int fprintf_va_60(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_60(FILE * restrict stream, char const * restrict format,
                   char *param0);
 
 void read_error(void)
@@ -6302,7 +6302,7 @@ void read_error(void)
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int fprintf_va_61(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_61(FILE * restrict stream, char const * restrict format,
                   char *param0);
 
 void write_error(void)
@@ -6324,7 +6324,7 @@ void write_error(void)
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), param1, param0;
  */
-int fprintf_va_62(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_62(FILE * restrict stream, char const * restrict format,
                   long param0, long param1);
 
 void display_ratio(long num, long den, FILE *file) __attribute__((__FC_OLDSTYLEPROTO__));
@@ -6620,7 +6620,7 @@ static int msg_done = 0;
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_63(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_63(FILE * restrict stream, char const * restrict format);
 
 int lzw(int in, int out) __attribute__((__FC_OLDSTYLEPROTO__));
 int lzw(int in, int out)
@@ -6652,7 +6652,7 @@ int block_mode = 0x80;
             (indirect: *(format + (0 ..))), param2, *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int fprintf_va_64(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_64(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1, unsigned int param2);
 
 /*@ requires valid_read_string(format);
@@ -6670,7 +6670,7 @@ int fprintf_va_64(FILE * __restrict stream, char const * __restrict format,
             (indirect: *(format + (0 ..))), param3, param2,
             *(param1 + (0 ..)), *(param0 + (0 ..));
  */
-int fprintf_va_65(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_65(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1, int param2, int param3);
 
 int unlzw(int in, int out) __attribute__((__FC_OLDSTYLEPROTO__));
@@ -7620,7 +7620,7 @@ static void exchange(char **argv)
             (indirect: *(format + (0 ..))), *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int fprintf_va_66(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_66(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1);
 
 /*@ requires valid_read_string(format);
@@ -7637,7 +7637,7 @@ int fprintf_va_66(FILE * __restrict stream, char const * __restrict format,
             (indirect: *(format + (0 ..))), *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int fprintf_va_67(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_67(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1);
 
 /*@ requires valid_read_string(format);
@@ -7654,7 +7654,7 @@ int fprintf_va_67(FILE * __restrict stream, char const * __restrict format,
             (indirect: *(format + (0 ..))), *(param2 + (0 ..)), param1,
             *(param0 + (0 ..));
  */
-int fprintf_va_68(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_68(FILE * restrict stream, char const * restrict format,
                   char *param0, int param1, char *param2);
 
 /*@ requires valid_read_string(format);
@@ -7671,7 +7671,7 @@ int fprintf_va_68(FILE * __restrict stream, char const * __restrict format,
             (indirect: *(format + (0 ..))), *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int fprintf_va_69(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_69(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1);
 
 /*@ requires valid_read_string(format);
@@ -7688,7 +7688,7 @@ int fprintf_va_69(FILE * __restrict stream, char const * __restrict format,
             (indirect: *(format + (0 ..))), *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int fprintf_va_70(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_70(FILE * restrict stream, char const * restrict format,
                   char *param0, char *param1);
 
 /*@ requires valid_read_string(format);
@@ -7705,7 +7705,7 @@ int fprintf_va_70(FILE * __restrict stream, char const * __restrict format,
             (indirect: *(format + (0 ..))), *(param2 + (0 ..)), param1,
             *(param0 + (0 ..));
  */
-int fprintf_va_71(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_71(FILE * restrict stream, char const * restrict format,
                   char *param0, int param1, char *param2);
 
 /*@ requires valid_read_string(format);
@@ -7720,7 +7720,7 @@ int fprintf_va_71(FILE * __restrict stream, char const * __restrict format,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), param1, *(param0 + (0 ..));
  */
-int fprintf_va_72(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_72(FILE * restrict stream, char const * restrict format,
                   char *param0, int param1);
 
 /*@ requires valid_read_string(format);
@@ -7735,7 +7735,7 @@ int fprintf_va_72(FILE * __restrict stream, char const * __restrict format,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), param1, *(param0 + (0 ..));
  */
-int fprintf_va_73(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_73(FILE * restrict stream, char const * restrict format,
                   char *param0, int param1);
 
 int _getopt_internal(int argc, char * const *argv, char const *optstring,

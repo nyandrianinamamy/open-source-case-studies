@@ -1,14 +1,8 @@
-2019/adamovsky/prog.c:42:[eva] warning: recursive call during value analysis
-of I (I <- Y :: 2019/adamovsky/prog.c:22 <-
-           I :: 2019/adamovsky/prog.c:25 <-
-           main).
-Assuming the call has no effect. The analysis will be unsound.
-2019/adamovsky/prog.c:19:[eva] warning: recursive call during value analysis
-of D (D <- D :: 2019/adamovsky/prog.c:28 <- main). Assuming the call has
-no effect. The analysis will be unsound.
-2019/adamovsky/prog.c:19:[eva] warning: recursive call during value analysis
-of D (D <- D :: 2019/adamovsky/prog.c:28 <- main). Assuming the call has
-no effect. The analysis will be unsound.
-2019/adamovsky/prog.c:19:[eva] warning: recursive call during value analysis
-of D (D <- D :: 2019/adamovsky/prog.c:28 <- main). Assuming the call has
-no effect. The analysis will be unsound.
+2019/adamovsky/prog.c:42:[eva] warning: Using specification of function I for recursive calls. Analysis of function I
+is thus incomplete and its soundness relies on the written specification.
+2019/adamovsky/prog.c:19:[eva] warning: Using specification of function D for recursive calls. Analysis of function D
+is thus incomplete and its soundness relies on the written specification.
+2019/adamovsky/prog.c:19:[eva] warning: Using specification of function D for recursive calls. Analysis of function D
+is thus incomplete and its soundness relies on the written specification.
+2019/adamovsky/prog.c:19:[eva] warning: Using specification of function D for recursive calls. Analysis of function D
+is thus incomplete and its soundness relies on the written specification.

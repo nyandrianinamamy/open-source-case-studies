@@ -21,3 +21,6 @@ and()%-~x;C(--O?L:O++)M;S(t=h=0,y=q+1;h<H&&t<O;E){C(t&&L)M;C(!t)S(h=q-p+2;--h;\
 )P(10);S(V=65;h<H*-~t/O;y=U[h++].y)Q(U[h].y-y),Q(x-U[h].x),P(U[h].z),x=U[h].x,v
 T(int,for,if,char,void,goto X,(u=U[x],U[x]=U[y],U[y]=u),((f=fopen(*++Z,d))?0:-(
 perror(*Z),1)),fclose(f))();Q(q-y);P(10);y=q+1;x=!++t;}}}O=0;X:return O;}/*}#*/
+
+//@ assigns \nothing;
+void m(int, int);

@@ -47,7 +47,7 @@ static int test_failed = 0;
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param1, *(param0 + (0 ..));
  */
-int printf_va_1(char const * __restrict format, char *param0, int param1);
+int printf_va_1(char const * restrict format, char *param0, int param1);
 
 static void test(int (*func)(void), char const *name)
 {
@@ -378,7 +378,7 @@ void jsmn_init(jsmn_parser *parser)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param2, param1, param0;
  */
-int printf_va_2(char const * __restrict format, int param0, int param1,
+int printf_va_2(char const * restrict format, int param0, int param1,
                 int param2);
 
 /*@ requires valid_read_string(format);
@@ -393,7 +393,7 @@ int printf_va_2(char const * __restrict format, int param0, int param1,
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param2, param1, param0;
  */
-int printf_va_3(char const * __restrict format, int param0, int param1,
+int printf_va_3(char const * restrict format, int param0, int param1,
                 int param2);
 
 /*@ requires valid_read_string(format);
@@ -408,7 +408,7 @@ int printf_va_3(char const * __restrict format, int param0, int param1,
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param2, param1, param0;
  */
-int printf_va_4(char const * __restrict format, int param0, int param1,
+int printf_va_4(char const * restrict format, int param0, int param1,
                 int param2);
 
 /*@ requires valid_read_string(format);
@@ -423,7 +423,7 @@ int printf_va_4(char const * __restrict format, int param0, int param1,
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param2, param1, param0;
  */
-int printf_va_5(char const * __restrict format, int param0, int param1,
+int printf_va_5(char const * restrict format, int param0, int param1,
                 int param2);
 
 /*@ requires valid_read_string(format);
@@ -441,7 +441,7 @@ int printf_va_5(char const * __restrict format, int param0, int param1,
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param3 + (0 ..)), *(param2 + (0 ..)), param1, param0;
  */
-int printf_va_6(char const * __restrict format, int param0, int param1,
+int printf_va_6(char const * restrict format, int param0, int param1,
                 char *param2, char *param3);
 
 static int vtokeq(char const *s, jsmntok_t *t, int numtok, va_list ap)
@@ -561,7 +561,7 @@ static int tokeq(char const *s, jsmntok_t *tokens, int numtok,
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param1, param0;
  */
-int printf_va_7(char const * __restrict format, int param0, int param1);
+int printf_va_7(char const * restrict format, int param0, int param1);
 
 static int parse(char const *s, int status, int numtok,
                  void * const *__va_params)
@@ -1990,7 +1990,7 @@ int test_unmatched_brackets(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param1, param0;
  */
-int printf_va_8(char const * __restrict format, int param0, int param1);
+int printf_va_8(char const * restrict format, int param0, int param1);
 
 int main(void)
 {

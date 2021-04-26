@@ -71,6 +71,10 @@ Argument *rCont(Argument *f, Argument *x);
 
 Argument *rE(Argument *f, Argument *x);
 
+/*@ assigns f->n, *f;
+    assigns f->n \from (indirect: *(f + (0 ..)));
+    assigns *f \from (indirect: *(f + (0 ..)));
+ */
 __inline static void Dereference(Argument *f)
 {
   if (f) {
@@ -115,6 +119,8 @@ void Next(void)
   return_label: return;
 }
 
+/*@ assigns \result;
+    assigns \result \from \nothing; */
 Argument *I(void)
 {
   Argument *tmp;
@@ -509,6 +515,11 @@ Argument *Apply1(Argument *x)
   return_label: return __retres;
 }
 
+/*@ assigns \result, *s, *x;
+    assigns \result \from *s, *x;
+    assigns *s \from *s, *x;
+    assigns *x \from *s, *x;
+ */
 Argument *rApply1(Argument *s, Argument *x)
 {
   Argument *tmp_1;
@@ -752,6 +763,11 @@ Argument *fP(Argument *f, Argument *x)
   return tmp_1;
 }
 
+/*@ assigns \result, *f, *x;
+    assigns \result \from *f, *x;
+    assigns *f \from *f, *x;
+    assigns *x \from *f, *x;
+ */
 Argument *rC(Argument *f, Argument *x)
 {
   Argument *__retres;
@@ -848,7 +864,7 @@ static Argument T[256][2] =
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_1(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_1(FILE * restrict stream, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
@@ -860,7 +876,7 @@ int fprintf_va_1(FILE * __restrict stream, char const * __restrict format);
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_2(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_2(FILE * restrict stream, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
@@ -872,7 +888,7 @@ int fprintf_va_2(FILE * __restrict stream, char const * __restrict format);
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_3(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_3(FILE * restrict stream, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
@@ -884,7 +900,7 @@ int fprintf_va_3(FILE * __restrict stream, char const * __restrict format);
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_4(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_4(FILE * restrict stream, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
@@ -896,7 +912,7 @@ int fprintf_va_4(FILE * __restrict stream, char const * __restrict format);
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), param0;
  */
-int fprintf_va_5(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_5(FILE * restrict stream, char const * restrict format,
                  long param0);
 
 /*@ requires valid_read_string(format);
@@ -909,8 +925,9 @@ int fprintf_va_5(FILE * __restrict stream, char const * __restrict format,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_6(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_6(FILE * restrict stream, char const * restrict format);
 
+/*@ assigns \nothing; */
 void Output(Argument *f)
 {
   if ((f + 0)->call == & fK0) fputc('k',o);

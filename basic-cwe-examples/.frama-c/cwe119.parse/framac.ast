@@ -39,7 +39,7 @@ uint32_t nonzero_uint32_t(void)
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_1(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_1(FILE * restrict stream, char const * restrict format);
 
 static void validate_addr_form(char *v)
 {

@@ -19,7 +19,7 @@
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_1(char const * __restrict format, unsigned int param0);
+int printf_va_1(char const * restrict format, unsigned int param0);
 
 void f(uint32_t *p1, float *p2)
 {
@@ -41,7 +41,7 @@ void f(uint32_t *p1, float *p2)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param2, param1, param0;
  */
-int printf_va_2(char const * __restrict format, unsigned int param0,
+int printf_va_2(char const * restrict format, unsigned int param0,
                 unsigned int param1, double param2);
 
 int main(void)

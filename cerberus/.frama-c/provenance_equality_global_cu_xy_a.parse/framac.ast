@@ -29,7 +29,7 @@ void f(int *p, int *q);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param1, param0;
  */
-int printf_va_1(char const * __restrict format, void *param0, void *param1);
+int printf_va_1(char const * restrict format, void *param0, void *param1);
 
 int main(void)
 {

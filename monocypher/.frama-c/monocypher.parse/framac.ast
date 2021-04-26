@@ -101,38 +101,34 @@ struct __anonstruct_vector_8 {
    size_t size ;
 };
 typedef struct __anonstruct_vector_8 vector;
-int crypto_verify16(uint8_t const * /*[16]*/ a, uint8_t const * /*[16]*/ b);
+int crypto_verify16(uint8_t const a[16], uint8_t const b[16]);
 
-int crypto_verify32(uint8_t const * /*[32]*/ a, uint8_t const * /*[32]*/ b);
+int crypto_verify32(uint8_t const a[32], uint8_t const b[32]);
 
-int crypto_verify64(uint8_t const * /*[64]*/ a, uint8_t const * /*[64]*/ b);
+int crypto_verify64(uint8_t const a[64], uint8_t const b[64]);
 
 void crypto_wipe(void *secret, size_t size);
 
-void crypto_lock(uint8_t * /*[16]*/ mac, uint8_t *cipher_text,
-                 uint8_t const * /*[32]*/ key,
-                 uint8_t const * /*[24]*/ nonce, uint8_t const *plain_text,
-                 size_t text_size);
+void crypto_lock(uint8_t mac[16], uint8_t *cipher_text,
+                 uint8_t const key[32], uint8_t const nonce[24],
+                 uint8_t const *plain_text, size_t text_size);
 
-int crypto_unlock(uint8_t *plain_text, uint8_t const * /*[32]*/ key,
-                  uint8_t const * /*[24]*/ nonce,
-                  uint8_t const * /*[16]*/ mac, uint8_t const *cipher_text,
-                  size_t text_size);
+int crypto_unlock(uint8_t *plain_text, uint8_t const key[32],
+                  uint8_t const nonce[24], uint8_t const mac[16],
+                  uint8_t const *cipher_text, size_t text_size);
 
-void crypto_lock_aead(uint8_t * /*[16]*/ mac, uint8_t *cipher_text,
-                      uint8_t const * /*[32]*/ key,
-                      uint8_t const * /*[24]*/ nonce, uint8_t const *ad,
-                      size_t ad_size, uint8_t const *plain_text,
-                      size_t text_size);
+void crypto_lock_aead(uint8_t mac[16], uint8_t *cipher_text,
+                      uint8_t const key[32], uint8_t const nonce[24],
+                      uint8_t const *ad, size_t ad_size,
+                      uint8_t const *plain_text, size_t text_size);
 
-int crypto_unlock_aead(uint8_t *plain_text, uint8_t const * /*[32]*/ key,
-                       uint8_t const * /*[24]*/ nonce,
-                       uint8_t const * /*[16]*/ mac, uint8_t const *ad,
-                       size_t ad_size, uint8_t const *cipher_text,
-                       size_t text_size);
+int crypto_unlock_aead(uint8_t *plain_text, uint8_t const key[32],
+                       uint8_t const nonce[24], uint8_t const mac[16],
+                       uint8_t const *ad, size_t ad_size,
+                       uint8_t const *cipher_text, size_t text_size);
 
-void crypto_lock_init(crypto_lock_ctx *ctx, uint8_t const * /*[32]*/ key,
-                      uint8_t const * /*[24]*/ nonce);
+void crypto_lock_init(crypto_lock_ctx *ctx, uint8_t const key[32],
+                      uint8_t const nonce[24]);
 
 void crypto_lock_auth_ad(crypto_lock_ctx *ctx, uint8_t const *msg,
                          size_t msg_size);
@@ -143,14 +139,14 @@ void crypto_lock_auth_message(crypto_lock_ctx *ctx,
 void crypto_lock_update(crypto_lock_ctx *ctx, uint8_t *cipher_text,
                         uint8_t const *plain_text, size_t text_size);
 
-void crypto_lock_final(crypto_lock_ctx *ctx, uint8_t * /*[16]*/ mac);
+void crypto_lock_final(crypto_lock_ctx *ctx, uint8_t mac[16]);
 
 void crypto_unlock_update(crypto_lock_ctx *ctx, uint8_t *plain_text,
                           uint8_t const *cipher_text, size_t text_size);
 
-int crypto_unlock_final(crypto_lock_ctx *ctx, uint8_t const * /*[16]*/ mac);
+int crypto_unlock_final(crypto_lock_ctx *ctx, uint8_t const mac[16]);
 
-void crypto_blake2b(uint8_t * /*[64]*/ hash, uint8_t const *message,
+void crypto_blake2b(uint8_t hash[64], uint8_t const *message,
                     size_t message_size);
 
 void crypto_blake2b_general(uint8_t *hash, size_t hash_size,
@@ -180,52 +176,47 @@ void crypto_argon2i_general(uint8_t *hash, uint32_t hash_size,
                             uint32_t key_size, uint8_t const *ad,
                             uint32_t ad_size);
 
-int crypto_key_exchange(uint8_t * /*[32]*/ shared_key,
-                        uint8_t const * /*[32]*/ your_secret_key,
-                        uint8_t const * /*[32]*/ their_public_key);
+int crypto_key_exchange(uint8_t shared_key[32],
+                        uint8_t const your_secret_key[32],
+                        uint8_t const their_public_key[32]);
 
-void crypto_sign_public_key(uint8_t * /*[32]*/ public_key,
-                            uint8_t const * /*[32]*/ secret_key);
+void crypto_sign_public_key(uint8_t public_key[32],
+                            uint8_t const secret_key[32]);
 
-void crypto_sign(uint8_t * /*[64]*/ signature,
-                 uint8_t const * /*[32]*/ secret_key,
-                 uint8_t const * /*[32]*/ public_key, uint8_t const *message,
+void crypto_sign(uint8_t signature[64], uint8_t const secret_key[32],
+                 uint8_t const public_key[32], uint8_t const *message,
                  size_t message_size);
 
-int crypto_check(uint8_t const * /*[64]*/ signature,
-                 uint8_t const * /*[32]*/ public_key, uint8_t const *message,
-                 size_t message_size);
+int crypto_check(uint8_t const signature[64], uint8_t const public_key[32],
+                 uint8_t const *message, size_t message_size);
 
 void crypto_sign_init_first_pass(crypto_sign_ctx *ctx,
-                                 uint8_t const * /*[32]*/ secret_key,
-                                 uint8_t const * /*[32]*/ public_key);
+                                 uint8_t const secret_key[32],
+                                 uint8_t const public_key[32]);
 
 void crypto_sign_update(crypto_sign_ctx *ctx, uint8_t const *msg,
                         size_t msg_size);
 
 void crypto_sign_init_second_pass(crypto_sign_ctx *ctx);
 
-void crypto_sign_final(crypto_sign_ctx *ctx, uint8_t * /*[64]*/ signature);
+void crypto_sign_final(crypto_sign_ctx *ctx, uint8_t signature[64]);
 
-void crypto_check_init(crypto_check_ctx *ctx,
-                       uint8_t const * /*[64]*/ signature,
-                       uint8_t const * /*[32]*/ public_key);
+void crypto_check_init(crypto_check_ctx *ctx, uint8_t const signature[64],
+                       uint8_t const public_key[32]);
 
 void crypto_check_update(crypto_check_ctx *ctx, uint8_t const *msg,
                          size_t msg_size);
 
 int crypto_check_final(crypto_check_ctx *ctx);
 
-void crypto_chacha20_H(uint8_t * /*[32]*/ out, uint8_t const * /*[32]*/ key,
-                       uint8_t const * /*[16]*/ in);
+void crypto_chacha20_H(uint8_t out[32], uint8_t const key[32],
+                       uint8_t const in[16]);
 
-void crypto_chacha20_init(crypto_chacha_ctx *ctx,
-                          uint8_t const * /*[32]*/ key,
-                          uint8_t const * /*[8]*/ nonce);
+void crypto_chacha20_init(crypto_chacha_ctx *ctx, uint8_t const key[32],
+                          uint8_t const nonce[8]);
 
-void crypto_chacha20_x_init(crypto_chacha_ctx *ctx,
-                            uint8_t const * /*[32]*/ key,
-                            uint8_t const * /*[24]*/ nonce);
+void crypto_chacha20_x_init(crypto_chacha_ctx *ctx, uint8_t const key[32],
+                            uint8_t const nonce[24]);
 
 void crypto_chacha20_set_ctr(crypto_chacha_ctx *ctx, uint64_t ctr);
 
@@ -235,26 +226,25 @@ void crypto_chacha20_encrypt(crypto_chacha_ctx *ctx, uint8_t *cipher_text,
 void crypto_chacha20_stream(crypto_chacha_ctx *ctx, uint8_t *stream,
                             size_t size);
 
-void crypto_poly1305(uint8_t * /*[16]*/ mac, uint8_t const *message,
-                     size_t message_size, uint8_t const * /*[32]*/ key);
+void crypto_poly1305(uint8_t mac[16], uint8_t const *message,
+                     size_t message_size, uint8_t const key[32]);
 
-void crypto_poly1305_init(crypto_poly1305_ctx *ctx,
-                          uint8_t const * /*[32]*/ key);
+void crypto_poly1305_init(crypto_poly1305_ctx *ctx, uint8_t const key[32]);
 
 void crypto_poly1305_update(crypto_poly1305_ctx *ctx, uint8_t const *message,
                             size_t message_size);
 
-void crypto_poly1305_final(crypto_poly1305_ctx *ctx, uint8_t * /*[16]*/ mac);
+void crypto_poly1305_final(crypto_poly1305_ctx *ctx, uint8_t mac[16]);
 
-void crypto_x25519_public_key(uint8_t * /*[32]*/ public_key,
-                              uint8_t const * /*[32]*/ secret_key);
+void crypto_x25519_public_key(uint8_t public_key[32],
+                              uint8_t const secret_key[32]);
 
-int crypto_x25519(uint8_t * /*[32]*/ raw_shared_secret,
-                  uint8_t const * /*[32]*/ your_secret_key,
-                  uint8_t const * /*[32]*/ their_public_key);
+int crypto_x25519(uint8_t raw_shared_secret[32],
+                  uint8_t const your_secret_key[32],
+                  uint8_t const their_public_key[32]);
 
 static u8 const zero[128] = {(unsigned char)0};
-static u32 load24_le(u8 const * /*[3]*/ s)
+static u32 load24_le(u8 const s[3])
 {
   u32 __retres;
   __retres = ((unsigned int)*(s + 0) | ((unsigned int)*(s + 1) << 8)) | (
@@ -262,7 +252,7 @@ static u32 load24_le(u8 const * /*[3]*/ s)
   return __retres;
 }
 
-static u32 load32_le(u8 const * /*[4]*/ s)
+static u32 load32_le(u8 const s[4])
 {
   u32 __retres;
   __retres = (((unsigned int)*(s + 0) | ((unsigned int)*(s + 1) << 8)) | (
@@ -270,7 +260,7 @@ static u32 load32_le(u8 const * /*[4]*/ s)
   return __retres;
 }
 
-static u64 load64_le_0(u8 const * /*[8]*/ s)
+static u64 load64_le_0(u8 const s[8])
 {
   u64 __retres;
   u32 tmp;
@@ -281,7 +271,7 @@ static u64 load64_le_0(u8 const * /*[8]*/ s)
   return __retres;
 }
 
-static void store32_le(u8 * /*[4]*/ out, u32 in)
+static void store32_le(u8 out[4], u32 in)
 {
   *(out + 0) = (unsigned char)(in & (unsigned int)0xff);
   *(out + 1) = (unsigned char)((in >> 8) & (unsigned int)0xff);
@@ -290,7 +280,7 @@ static void store32_le(u8 * /*[4]*/ out, u32 in)
   return;
 }
 
-static void store64_le(u8 * /*[8]*/ out, u64 in)
+static void store64_le(u8 out[8], u64 in)
 {
   store32_le(out,(unsigned int)in);
   store32_le(out + 4,(unsigned int)(in >> 32));
@@ -319,7 +309,7 @@ static int neq0(u64 diff)
   return __retres;
 }
 
-static u64 x16(u8 const * /*[16]*/ a, u8 const * /*[16]*/ b)
+static u64 x16(u8 const a[16], u8 const b[16])
 {
   u64 __retres;
   u64 tmp;
@@ -334,7 +324,7 @@ static u64 x16(u8 const * /*[16]*/ a, u8 const * /*[16]*/ b)
   return __retres;
 }
 
-static u64 x32(u8 const * /*[16]*/ a, u8 const * /*[16]*/ b)
+static u64 x32(u8 const a[16], u8 const b[16])
 {
   u64 __retres;
   u64 tmp;
@@ -345,7 +335,7 @@ static u64 x32(u8 const * /*[16]*/ a, u8 const * /*[16]*/ b)
   return __retres;
 }
 
-static u64 x64(u8 const * /*[64]*/ a, u8 const * /*[64]*/ b)
+static u64 x64(u8 const a[64], u8 const b[64])
 {
   u64 __retres;
   u64 tmp;
@@ -356,7 +346,7 @@ static u64 x64(u8 const * /*[64]*/ a, u8 const * /*[64]*/ b)
   return __retres;
 }
 
-int crypto_verify16(uint8_t const * /*[16]*/ a, uint8_t const * /*[16]*/ b)
+int crypto_verify16(uint8_t const a[16], uint8_t const b[16])
 {
   int tmp_0;
   u64 tmp;
@@ -365,7 +355,7 @@ int crypto_verify16(uint8_t const * /*[16]*/ a, uint8_t const * /*[16]*/ b)
   return tmp_0;
 }
 
-int crypto_verify32(uint8_t const * /*[32]*/ a, uint8_t const * /*[32]*/ b)
+int crypto_verify32(uint8_t const a[32], uint8_t const b[32])
 {
   int tmp_0;
   u64 tmp;
@@ -374,7 +364,7 @@ int crypto_verify32(uint8_t const * /*[32]*/ a, uint8_t const * /*[32]*/ b)
   return tmp_0;
 }
 
-int crypto_verify64(uint8_t const * /*[64]*/ a, uint8_t const * /*[64]*/ b)
+int crypto_verify64(uint8_t const a[64], uint8_t const b[64])
 {
   int tmp_0;
   u64 tmp;
@@ -383,7 +373,7 @@ int crypto_verify64(uint8_t const * /*[64]*/ a, uint8_t const * /*[64]*/ b)
   return tmp_0;
 }
 
-static int zerocmp32(u8 const * /*[32]*/ p)
+static int zerocmp32(u8 const p[32])
 {
   int tmp;
   tmp = crypto_verify32(p,zero);
@@ -403,7 +393,7 @@ void crypto_wipe(void *secret, size_t size)
   return;
 }
 
-static void chacha20_rounds(u32 * /*[16]*/ out, u32 const * /*[16]*/ in)
+static void chacha20_rounds(u32 out[16], u32 const in[16])
 {
   u32 t0 = *(in + 0);
   u32 t1 = *(in + 1);
@@ -510,7 +500,7 @@ static void chacha20_rounds(u32 * /*[16]*/ out, u32 const * /*[16]*/ in)
   return;
 }
 
-static void chacha20_init_key(crypto_chacha_ctx *ctx, u8 const * /*[32]*/ key)
+static void chacha20_init_key(crypto_chacha_ctx *ctx, u8 const key[32])
 {
   ctx->input[0] = load32_le((u8 const *)"expa");
   ctx->input[1] = load32_le((u8 const *)"nd 3");
@@ -551,8 +541,8 @@ static void chacha20_refill_pool(crypto_chacha_ctx *ctx)
   return;
 }
 
-void crypto_chacha20_H(uint8_t * /*[32]*/ out, uint8_t const * /*[32]*/ key,
-                       uint8_t const * /*[16]*/ in)
+void crypto_chacha20_H(uint8_t out[32], uint8_t const key[32],
+                       uint8_t const in[16])
 {
   crypto_chacha_ctx ctx;
   u32 buffer[16];
@@ -601,9 +591,8 @@ static void chacha20_encrypt(crypto_chacha_ctx *ctx, u8 *cipher_text,
   return;
 }
 
-void crypto_chacha20_init(crypto_chacha_ctx *ctx,
-                          uint8_t const * /*[32]*/ key,
-                          uint8_t const * /*[8]*/ nonce)
+void crypto_chacha20_init(crypto_chacha_ctx *ctx, uint8_t const key[32],
+                          uint8_t const nonce[8])
 {
   chacha20_init_key(ctx,key);
   crypto_chacha20_set_ctr(ctx,(unsigned long)0);
@@ -612,9 +601,8 @@ void crypto_chacha20_init(crypto_chacha_ctx *ctx,
   return;
 }
 
-void crypto_chacha20_x_init(crypto_chacha_ctx *ctx,
-                            uint8_t const * /*[32]*/ key,
-                            uint8_t const * /*[24]*/ nonce)
+void crypto_chacha20_x_init(crypto_chacha_ctx *ctx, uint8_t const key[32],
+                            uint8_t const nonce[24])
 {
   u8 derived_key[32];
   crypto_chacha20_H(derived_key,key,nonce);
@@ -767,8 +755,7 @@ static void poly_update(crypto_poly1305_ctx *ctx, u8 const *message,
   return;
 }
 
-void crypto_poly1305_init(crypto_poly1305_ctx *ctx,
-                          uint8_t const * /*[32]*/ key)
+void crypto_poly1305_init(crypto_poly1305_ctx *ctx, uint8_t const key[32])
 {
   {
     size_t i = (unsigned long)0;
@@ -844,7 +831,7 @@ void crypto_poly1305_update(crypto_poly1305_ctx *ctx, uint8_t const *message,
   return;
 }
 
-void crypto_poly1305_final(crypto_poly1305_ctx *ctx, uint8_t * /*[16]*/ mac)
+void crypto_poly1305_final(crypto_poly1305_ctx *ctx, uint8_t mac[16])
 {
   if (ctx->c_idx != (size_t)0) {
     ctx->c[4] = (unsigned int)0;
@@ -868,8 +855,8 @@ void crypto_poly1305_final(crypto_poly1305_ctx *ctx, uint8_t * /*[16]*/ mac)
   return;
 }
 
-void crypto_poly1305(uint8_t * /*[16]*/ mac, uint8_t const *message,
-                     size_t message_size, uint8_t const * /*[32]*/ key)
+void crypto_poly1305(uint8_t mac[16], uint8_t const *message,
+                     size_t message_size, uint8_t const key[32])
 {
   crypto_poly1305_ctx ctx;
   crypto_poly1305_init(& ctx,key);
@@ -2002,7 +1989,7 @@ void crypto_blake2b_general(uint8_t *hash, size_t hash_size,
   return;
 }
 
-void crypto_blake2b(uint8_t * /*[64]*/ hash, uint8_t const *message,
+void crypto_blake2b(uint8_t hash[64], uint8_t const *message,
                     size_t message_size)
 {
   crypto_blake2b_general(hash,(unsigned long)64,(uint8_t const *)0,
@@ -2032,7 +2019,7 @@ static void blake_update_32(crypto_blake2b_ctx *ctx, u32 input)
   return;
 }
 
-static void load_block(block *b, u8 const * /*[1024]*/ bytes)
+static void load_block(block *b, u8 const bytes[1024])
 {
   size_t i = (unsigned long)0;
   while (i < (size_t)128) {
@@ -2042,7 +2029,7 @@ static void load_block(block *b, u8 const * /*[1024]*/ bytes)
   return;
 }
 
-static void store_block(u8 * /*[1024]*/ bytes, block const *b)
+static void store_block(u8 bytes[1024], block const *b)
 {
   size_t i = (unsigned long)0;
   while (i < (size_t)128) {
@@ -2782,7 +2769,7 @@ void crypto_argon2i(uint8_t *hash, uint32_t hash_size, void *work_area,
   return;
 }
 
-static void fe_0(i32 * /*[10]*/ h)
+static void fe_0(i32 h[10])
 {
   size_t i = (unsigned long)0;
   /*@ loop unroll 10; */
@@ -2793,7 +2780,7 @@ static void fe_0(i32 * /*[10]*/ h)
   return;
 }
 
-static void fe_1(i32 * /*[10]*/ h)
+static void fe_1(i32 h[10])
 {
   *(h + 0) = 1;
   {
@@ -2807,7 +2794,7 @@ static void fe_1(i32 * /*[10]*/ h)
   return;
 }
 
-static void fe_copy(i32 * /*[10]*/ h, i32 const * /*[10]*/ f)
+static void fe_copy(i32 h[10], i32 const f[10])
 {
   size_t i = (unsigned long)0;
   /*@ loop unroll 10; */
@@ -2818,7 +2805,7 @@ static void fe_copy(i32 * /*[10]*/ h, i32 const * /*[10]*/ f)
   return;
 }
 
-static void fe_neg(i32 * /*[10]*/ h, i32 const * /*[10]*/ f)
+static void fe_neg(i32 h[10], i32 const f[10])
 {
   size_t i = (unsigned long)0;
   while (i < (size_t)10) {
@@ -2828,8 +2815,7 @@ static void fe_neg(i32 * /*[10]*/ h, i32 const * /*[10]*/ f)
   return;
 }
 
-static void fe_add(i32 * /*[10]*/ h, i32 const * /*[10]*/ f,
-                   i32 const * /*[10]*/ g)
+static void fe_add(i32 h[10], i32 const f[10], i32 const g[10])
 {
   size_t i = (unsigned long)0;
   /*@ loop unroll 10; */
@@ -2840,8 +2826,7 @@ static void fe_add(i32 * /*[10]*/ h, i32 const * /*[10]*/ f,
   return;
 }
 
-static void fe_sub(i32 * /*[10]*/ h, i32 const * /*[10]*/ f,
-                   i32 const * /*[10]*/ g)
+static void fe_sub(i32 h[10], i32 const f[10], i32 const g[10])
 {
   size_t i = (unsigned long)0;
   /*@ loop unroll 10; */
@@ -2852,7 +2837,7 @@ static void fe_sub(i32 * /*[10]*/ h, i32 const * /*[10]*/ f,
   return;
 }
 
-static void fe_cswap(i32 * /*[10]*/ f, i32 * /*[10]*/ g, int b)
+static void fe_cswap(i32 f[10], i32 g[10], int b)
 {
   size_t i = (unsigned long)0;
   /*@ loop unroll 10; */
@@ -2867,7 +2852,7 @@ static void fe_cswap(i32 * /*[10]*/ f, i32 * /*[10]*/ g, int b)
   return;
 }
 
-static void fe_ccopy(i32 * /*[10]*/ f, i32 const * /*[10]*/ g, int b)
+static void fe_ccopy(i32 f[10], i32 const g[10], int b)
 {
   size_t i = (unsigned long)0;
   /*@ loop unroll 10; */
@@ -2881,7 +2866,7 @@ static void fe_ccopy(i32 * /*[10]*/ f, i32 const * /*[10]*/ g, int b)
   return;
 }
 
-static void fe_frombytes(i32 * /*[10]*/ h, u8 const * /*[32]*/ s)
+static void fe_frombytes(i32 h[10], u8 const s[32])
 {
   u32 tmp;
   u32 tmp_0;
@@ -2966,7 +2951,7 @@ static void fe_frombytes(i32 * /*[10]*/ h, u8 const * /*[32]*/ s)
   return;
 }
 
-static void fe_mul_small(i32 * /*[10]*/ h, i32 const * /*[10]*/ f, i32 g)
+static void fe_mul_small(i32 h[10], i32 const f[10], i32 g)
 {
   i64 c0;
   i64 c1;
@@ -3031,14 +3016,13 @@ static void fe_mul_small(i32 * /*[10]*/ h, i32 const * /*[10]*/ f, i32 g)
   return;
 }
 
-static void fe_mul121666(i32 * /*[10]*/ h, i32 const * /*[10]*/ f)
+static void fe_mul121666(i32 h[10], i32 const f[10])
 {
   fe_mul_small(h,f,121666);
   return;
 }
 
-static void fe_mul(i32 * /*[10]*/ h, i32 const * /*[10]*/ f,
-                   i32 const * /*[10]*/ g)
+static void fe_mul(i32 h[10], i32 const f[10], i32 const g[10])
 {
   i64 c0;
   i64 c1;
@@ -3183,7 +3167,7 @@ static void fe_mul(i32 * /*[10]*/ h, i32 const * /*[10]*/ f,
   return;
 }
 
-static void fe_sq(i32 * /*[10]*/ h, i32 const * /*[10]*/ f)
+static void fe_sq(i32 h[10], i32 const f[10])
 {
   i64 c0;
   i64 c1;
@@ -3297,14 +3281,14 @@ static void fe_sq(i32 * /*[10]*/ h, i32 const * /*[10]*/ f)
   return;
 }
 
-static void fe_sq2(i32 * /*[10]*/ h, i32 const * /*[10]*/ f)
+static void fe_sq2(i32 h[10], i32 const f[10])
 {
   fe_sq(h,f);
   fe_mul_small(h,(i32 const *)h,2);
   return;
 }
 
-static void fe_invert(i32 * /*[10]*/ out, i32 const * /*[10]*/ z)
+static void fe_invert(i32 out[10], i32 const z[10])
 {
   fe t0;
   fe t1;
@@ -3396,7 +3380,7 @@ static void fe_invert(i32 * /*[10]*/ out, i32 const * /*[10]*/ z)
   return;
 }
 
-static void fe_pow22523(i32 * /*[10]*/ out, i32 const * /*[10]*/ z)
+static void fe_pow22523(i32 out[10], i32 const z[10])
 {
   fe t0;
   fe t1;
@@ -3494,7 +3478,7 @@ static void fe_pow22523(i32 * /*[10]*/ out, i32 const * /*[10]*/ z)
   return;
 }
 
-static void fe_tobytes(u8 * /*[32]*/ s, i32 const * /*[10]*/ h)
+static void fe_tobytes(u8 s[32], i32 const h[10])
 {
   i32 t[10];
   {
@@ -3559,7 +3543,7 @@ static void fe_tobytes(u8 * /*[32]*/ s, i32 const * /*[10]*/ h)
   return;
 }
 
-static int fe_isnegative(i32 const * /*[10]*/ f)
+static int fe_isnegative(i32 const f[10])
 {
   int __retres;
   u8 s[32];
@@ -3570,7 +3554,7 @@ static int fe_isnegative(i32 const * /*[10]*/ f)
   return __retres;
 }
 
-static int fe_isnonzero(i32 const * /*[10]*/ f)
+static int fe_isnonzero(i32 const f[10])
 {
   int __retres;
   u8 s[32];
@@ -3583,7 +3567,7 @@ static int fe_isnonzero(i32 const * /*[10]*/ f)
   return __retres;
 }
 
-static void trim_scalar(u8 * /*[32]*/ s)
+static void trim_scalar(u8 s[32])
 {
   *(s + 0) = (unsigned char)((int)*(s + 0) & 248);
   *(s + 31) = (unsigned char)((int)*(s + 31) & 127);
@@ -3591,16 +3575,16 @@ static void trim_scalar(u8 * /*[32]*/ s)
   return;
 }
 
-static int scalar_bit(u8 const * /*[32]*/ s, int i)
+static int scalar_bit(u8 const s[32], int i)
 {
   int __retres;
   __retres = ((int)*(s + (i >> 3)) >> (i & 7)) & 1;
   return __retres;
 }
 
-int crypto_x25519(uint8_t * /*[32]*/ raw_shared_secret,
-                  uint8_t const * /*[32]*/ your_secret_key,
-                  uint8_t const * /*[32]*/ their_public_key)
+int crypto_x25519(uint8_t raw_shared_secret[32],
+                  uint8_t const your_secret_key[32],
+                  uint8_t const their_public_key[32])
 {
   int __retres;
   fe x1;
@@ -3676,8 +3660,8 @@ int crypto_x25519(uint8_t * /*[32]*/ raw_shared_secret,
 }
 
 static u8 const crypto_x25519_public_key_base_point[32] = {(unsigned char)9};
-void crypto_x25519_public_key(uint8_t * /*[32]*/ public_key,
-                              uint8_t const * /*[32]*/ secret_key)
+void crypto_x25519_public_key(uint8_t public_key[32],
+                              uint8_t const secret_key[32])
 {
   crypto_x25519(public_key,secret_key,crypto_x25519_public_key_base_point);
   return;
@@ -3716,7 +3700,7 @@ static u64 const L[32] =
    (unsigned long)0x00,
    (unsigned long)0x00,
    (unsigned long)0x10};
-static void modL(u8 *r, i64 * /*[64]*/ x)
+static void modL(u8 *r, i64 x[64])
 {
   {
     unsigned int i = (unsigned int)63;
@@ -3774,7 +3758,7 @@ static void modL(u8 *r, i64 * /*[64]*/ x)
   return;
 }
 
-static void reduce(u8 * /*[64]*/ r)
+static void reduce(u8 r[64])
 {
   i64 x[64];
   {
@@ -3791,8 +3775,7 @@ static void reduce(u8 * /*[64]*/ r)
   return;
 }
 
-static void mul_add(u8 * /*[32]*/ r, u8 const * /*[32]*/ a,
-                    u8 const * /*[32]*/ b, u8 const * /*[32]*/ c)
+static void mul_add(u8 r[32], u8 const a[32], u8 const b[32], u8 const c[32])
 {
   i64 s[64];
   {
@@ -3829,7 +3812,7 @@ static void mul_add(u8 * /*[32]*/ r, u8 const * /*[32]*/ a,
   return;
 }
 
-static int is_above_L(u8 const * /*[32]*/ a)
+static int is_above_L(u8 const a[32])
 {
   int __retres;
   {
@@ -3860,7 +3843,7 @@ static void ge_zero(ge *p)
   return;
 }
 
-static void ge_tobytes(u8 * /*[32]*/ s, ge const *h)
+static void ge_tobytes(u8 s[32], ge const *h)
 {
   fe recip;
   fe x;
@@ -3878,7 +3861,7 @@ static void ge_tobytes(u8 * /*[32]*/ s, ge const *h)
   return;
 }
 
-static int ge_frombytes_neg_vartime(ge *h, u8 const * /*[32]*/ s);
+static int ge_frombytes_neg_vartime(ge *h, u8 const s[32]);
 
 static fe const ge_frombytes_neg_vartime_d =
   {-10913610,
@@ -3902,7 +3885,7 @@ static fe const ge_frombytes_neg_vartime_sqrtm1 =
    -2005654,
    326686,
    11406482};
-static int ge_frombytes_neg_vartime(ge *h, u8 const * /*[32]*/ s)
+static int ge_frombytes_neg_vartime(ge *h, u8 const s[32])
 {
   int __retres;
   fe u;
@@ -4003,9 +3986,8 @@ static void ge_sub(ge *s, ge const *p, ge_cached const *q)
   return;
 }
 
-static void ge_madd(ge *s, ge const *p, i32 const * /*[10]*/ yp,
-                    i32 const * /*[10]*/ ym, i32 const * /*[10]*/ t2,
-                    i32 * /*[10]*/ a, i32 * /*[10]*/ b)
+static void ge_madd(ge *s, ge const *p, i32 const yp[10], i32 const ym[10],
+                    i32 const t2[10], i32 a[10], i32 b[10])
 {
   fe_add(a,p->Y,p->X);
   fe_sub(b,p->Y,p->X);
@@ -4042,7 +4024,7 @@ static void ge_double(ge *s, ge const *p, ge *q)
   return;
 }
 
-static void slide(i8 * /*[258]*/ adds, u8 const * /*[32]*/ scalar)
+static void slide(i8 adds[258], u8 const scalar[32])
 {
   {
     size_t i = (unsigned long)0;
@@ -4096,7 +4078,7 @@ static void slide(i8 * /*[258]*/ adds, u8 const * /*[32]*/ scalar)
   return;
 }
 
-static void ge_precompute(ge_cached * /*[8]*/ lut, ge const *P1)
+static void ge_precompute(ge_cached lut[8], ge const *P1)
 {
   ge P2;
   ge tmp;
@@ -4113,8 +4095,8 @@ static void ge_precompute(ge_cached * /*[8]*/ lut, ge const *P1)
   return;
 }
 
-static void ge_double_scalarmult_vartime(ge *sum, ge const *P,
-                                         u8 * /*[32]*/ p, u8 * /*[32]*/ b);
+static void ge_double_scalarmult_vartime(ge *sum, ge const *P, u8 p[32],
+                                         u8 b[32]);
 
 static fe const ge_double_scalarmult_vartime_X =
   {-14297830,
@@ -4138,8 +4120,8 @@ static fe const ge_double_scalarmult_vartime_Y =
    13421773,
    -26843546,
    -6710886};
-static void ge_double_scalarmult_vartime(ge *sum, ge const *P,
-                                         u8 * /*[32]*/ p, u8 * /*[32]*/ b)
+static void ge_double_scalarmult_vartime(ge *sum, ge const *P, u8 p[32],
+                                         u8 b[32])
 {
   ge B;
   ge_cached cP[8];
@@ -4672,7 +4654,7 @@ static fe const comb_T2[16] =
     -14970947,
     25910190,
     11122681}};
-static void ge_scalarmult_base(ge *p, u8 const * /*[32]*/ scalar);
+static void ge_scalarmult_base(ge *p, u8 const scalar[32]);
 
 static u8 const ge_scalarmult_base_half_mod_L[32] =
   {(unsigned char)0xf7,
@@ -4740,7 +4722,7 @@ static u8 const ge_scalarmult_base_half_ones[32] =
    (unsigned char)0xff,
    (unsigned char)0xff,
    (unsigned char)0x07};
-static void ge_scalarmult_base(ge *p, u8 const * /*[32]*/ scalar)
+static void ge_scalarmult_base(ge *p, u8 const scalar[32])
 {
   u8 s_scalar[32];
   fe yp;
@@ -4809,8 +4791,8 @@ static void ge_scalarmult_base(ge *p, u8 const * /*[32]*/ scalar)
   return;
 }
 
-void crypto_sign_public_key(uint8_t * /*[32]*/ public_key,
-                            uint8_t const * /*[32]*/ secret_key)
+void crypto_sign_public_key(uint8_t public_key[32],
+                            uint8_t const secret_key[32])
 {
   u8 a[64];
   ge A;
@@ -4824,8 +4806,8 @@ void crypto_sign_public_key(uint8_t * /*[32]*/ public_key,
 }
 
 void crypto_sign_init_first_pass(crypto_sign_ctx *ctx,
-                                 uint8_t const * /*[32]*/ secret_key,
-                                 uint8_t const * /*[32]*/ public_key)
+                                 uint8_t const secret_key[32],
+                                 uint8_t const public_key[32])
 {
   u8 *a = ctx->buf;
   u8 *prefix = & ctx->buf[32];
@@ -4871,7 +4853,7 @@ void crypto_sign_init_second_pass(crypto_sign_ctx *ctx)
   return;
 }
 
-void crypto_sign_final(crypto_sign_ctx *ctx, uint8_t * /*[64]*/ signature)
+void crypto_sign_final(crypto_sign_ctx *ctx, uint8_t signature[64])
 {
   u8 h_ram[64];
   u8 *a = ctx->buf;
@@ -4892,9 +4874,8 @@ void crypto_sign_final(crypto_sign_ctx *ctx, uint8_t * /*[64]*/ signature)
   return;
 }
 
-void crypto_sign(uint8_t * /*[64]*/ signature,
-                 uint8_t const * /*[32]*/ secret_key,
-                 uint8_t const * /*[32]*/ public_key, uint8_t const *message,
+void crypto_sign(uint8_t signature[64], uint8_t const secret_key[32],
+                 uint8_t const public_key[32], uint8_t const *message,
                  size_t message_size)
 {
   crypto_sign_ctx ctx;
@@ -4906,9 +4887,8 @@ void crypto_sign(uint8_t * /*[64]*/ signature,
   return;
 }
 
-void crypto_check_init(crypto_check_ctx *ctx,
-                       uint8_t const * /*[64]*/ signature,
-                       uint8_t const * /*[32]*/ public_key)
+void crypto_check_init(crypto_check_ctx *ctx, uint8_t const signature[64],
+                       uint8_t const public_key[32])
 {
   {
     size_t i = (unsigned long)0;
@@ -4971,9 +4951,8 @@ int crypto_check_final(crypto_check_ctx *ctx)
   return_label: return __retres;
 }
 
-int crypto_check(uint8_t const * /*[64]*/ signature,
-                 uint8_t const * /*[32]*/ public_key, uint8_t const *message,
-                 size_t message_size)
+int crypto_check(uint8_t const signature[64], uint8_t const public_key[32],
+                 uint8_t const *message, size_t message_size)
 {
   crypto_check_ctx ctx;
   int tmp;
@@ -4983,9 +4962,9 @@ int crypto_check(uint8_t const * /*[64]*/ signature,
   return tmp;
 }
 
-int crypto_key_exchange(uint8_t * /*[32]*/ shared_key,
-                        uint8_t const * /*[32]*/ your_secret_key,
-                        uint8_t const * /*[32]*/ their_public_key)
+int crypto_key_exchange(uint8_t shared_key[32],
+                        uint8_t const your_secret_key[32],
+                        uint8_t const their_public_key[32])
 {
   u8 raw_shared_secret[32];
   int status =
@@ -5006,8 +4985,8 @@ static void lock_ad_padding(crypto_lock_ctx *ctx)
   return;
 }
 
-void crypto_lock_init(crypto_lock_ctx *ctx, uint8_t const * /*[32]*/ key,
-                      uint8_t const * /*[24]*/ nonce)
+void crypto_lock_init(crypto_lock_ctx *ctx, uint8_t const key[32],
+                      uint8_t const nonce[24])
 {
   u8 auth_key[64];
   ctx->ad_phase = 1;
@@ -5045,7 +5024,7 @@ void crypto_lock_update(crypto_lock_ctx *ctx, uint8_t *cipher_text,
   return;
 }
 
-void crypto_lock_final(crypto_lock_ctx *ctx, uint8_t * /*[16]*/ mac)
+void crypto_lock_final(crypto_lock_ctx *ctx, uint8_t mac[16])
 {
   u8 sizes[16];
   lock_ad_padding(ctx);
@@ -5069,7 +5048,7 @@ void crypto_unlock_update(crypto_lock_ctx *ctx, uint8_t *plain_text,
   return;
 }
 
-int crypto_unlock_final(crypto_lock_ctx *ctx, uint8_t const * /*[16]*/ mac)
+int crypto_unlock_final(crypto_lock_ctx *ctx, uint8_t const mac[16])
 {
   u8 real_mac[16];
   crypto_lock_final(ctx,real_mac);
@@ -5078,11 +5057,10 @@ int crypto_unlock_final(crypto_lock_ctx *ctx, uint8_t const * /*[16]*/ mac)
   return mismatch;
 }
 
-void crypto_lock_aead(uint8_t * /*[16]*/ mac, uint8_t *cipher_text,
-                      uint8_t const * /*[32]*/ key,
-                      uint8_t const * /*[24]*/ nonce, uint8_t const *ad,
-                      size_t ad_size, uint8_t const *plain_text,
-                      size_t text_size)
+void crypto_lock_aead(uint8_t mac[16], uint8_t *cipher_text,
+                      uint8_t const key[32], uint8_t const nonce[24],
+                      uint8_t const *ad, size_t ad_size,
+                      uint8_t const *plain_text, size_t text_size)
 {
   crypto_lock_ctx ctx;
   crypto_lock_init(& ctx,key,nonce);
@@ -5092,11 +5070,10 @@ void crypto_lock_aead(uint8_t * /*[16]*/ mac, uint8_t *cipher_text,
   return;
 }
 
-int crypto_unlock_aead(uint8_t *plain_text, uint8_t const * /*[32]*/ key,
-                       uint8_t const * /*[24]*/ nonce,
-                       uint8_t const * /*[16]*/ mac, uint8_t const *ad,
-                       size_t ad_size, uint8_t const *cipher_text,
-                       size_t text_size)
+int crypto_unlock_aead(uint8_t *plain_text, uint8_t const key[32],
+                       uint8_t const nonce[24], uint8_t const mac[16],
+                       uint8_t const *ad, size_t ad_size,
+                       uint8_t const *cipher_text, size_t text_size)
 {
   int __retres;
   crypto_lock_ctx ctx;
@@ -5117,20 +5094,18 @@ int crypto_unlock_aead(uint8_t *plain_text, uint8_t const * /*[32]*/ key,
   return_label: return __retres;
 }
 
-void crypto_lock(uint8_t * /*[16]*/ mac, uint8_t *cipher_text,
-                 uint8_t const * /*[32]*/ key,
-                 uint8_t const * /*[24]*/ nonce, uint8_t const *plain_text,
-                 size_t text_size)
+void crypto_lock(uint8_t mac[16], uint8_t *cipher_text,
+                 uint8_t const key[32], uint8_t const nonce[24],
+                 uint8_t const *plain_text, size_t text_size)
 {
   crypto_lock_aead(mac,cipher_text,key,nonce,(uint8_t const *)0,
                    (unsigned long)0,plain_text,text_size);
   return;
 }
 
-int crypto_unlock(uint8_t *plain_text, uint8_t const * /*[32]*/ key,
-                  uint8_t const * /*[24]*/ nonce,
-                  uint8_t const * /*[16]*/ mac, uint8_t const *cipher_text,
-                  size_t text_size)
+int crypto_unlock(uint8_t *plain_text, uint8_t const key[32],
+                  uint8_t const nonce[24], uint8_t const mac[16],
+                  uint8_t const *cipher_text, size_t text_size)
 {
   int tmp;
   tmp = crypto_unlock_aead(plain_text,key,nonce,mac,(uint8_t const *)0,
@@ -5143,11 +5118,11 @@ void crypto_sha512_init(crypto_sha512_ctx *ctx);
 void crypto_sha512_update(crypto_sha512_ctx *ctx, uint8_t const *message,
                           size_t message_size);
 
-void crypto_sha512_final(crypto_sha512_ctx *ctx, uint8_t * /*[64]*/ hash);
+void crypto_sha512_final(crypto_sha512_ctx *ctx, uint8_t hash[64]);
 
 void crypto_sha512(uint8_t *hash, uint8_t const *message, size_t message_size);
 
-static u64 load64_be(u8 const * /*[8]*/ s)
+static u64 load64_be(u8 const s[8])
 {
   u64 __retres;
   __retres = ((((((((unsigned long)*(s + 0) << 56) | ((unsigned long)*(
@@ -5159,7 +5134,7 @@ static u64 load64_be(u8 const * /*[8]*/ s)
   return __retres;
 }
 
-static void store64_be(u8 * /*[8]*/ out, u64 in)
+static void store64_be(u8 out[8], u64 in)
 {
   *(out + 0) = (unsigned char)((in >> 56) & (unsigned long)0xff);
   *(out + 1) = (unsigned char)((in >> 48) & (unsigned long)0xff);
@@ -5421,7 +5396,7 @@ static void sha512_set_input(crypto_sha512_ctx *ctx, u8 input)
   return;
 }
 
-static void sha512_incr(u64 * /*[2]*/ x, u64 y)
+static void sha512_incr(u64 x[2], u64 y)
 {
   *(x + 1) += y;
   if (*(x + 1) < y) *(x + 0) += (u64)1;
@@ -5499,7 +5474,7 @@ void crypto_sha512_update(crypto_sha512_ctx *ctx, uint8_t const *message,
   return;
 }
 
-void crypto_sha512_final(crypto_sha512_ctx *ctx, uint8_t * /*[64]*/ hash)
+void crypto_sha512_final(crypto_sha512_ctx *ctx, uint8_t hash[64])
 {
   sha512_incr(ctx->input_size,ctx->input_idx * (size_t)8);
   sha512_set_input(ctx,(unsigned char)128);
@@ -5536,7 +5511,7 @@ void crypto_sha512(uint8_t *hash, uint8_t const *message, size_t message_size)
   return;
 }
 
-static void store64_le_0(u8 * /*[8]*/ out, u64 in)
+static void store64_le_0(u8 out[8], u64 in)
 {
   *(out + 0) = (unsigned char)(in & (unsigned long)0xff);
   *(out + 1) = (unsigned char)((in >> 8) & (unsigned long)0xff);
@@ -5549,7 +5524,7 @@ static void store64_le_0(u8 * /*[8]*/ out, u64 in)
   return;
 }
 
-u64 load64_le(u8 const * /*[8]*/ s)
+u64 load64_le(u8 const s[8])
 {
   u64 __retres;
   __retres = (((((((unsigned long)*(s + 0) | ((unsigned long)*(s + 1) << 8)) | (
@@ -5600,7 +5575,7 @@ void p_random(u8 *stream, size_t size)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param1, param0;
  */
-int printf_va_1(char const * __restrict format, int param0, int param1);
+int printf_va_1(char const * restrict format, int param0, int param1);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -5612,7 +5587,7 @@ int printf_va_1(char const * __restrict format, int param0, int param1);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_2(char const * __restrict format);
+int printf_va_2(char const * restrict format);
 
 void print_vector(u8 *buf, size_t size)
 {
@@ -436061,7 +436036,7 @@ size_t key_exchange_sizes[15] =
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), param0;
  */
-int fprintf_va_1(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_1(FILE * restrict stream, char const * restrict format,
                  size_t param0);
 
 static void *alloc(size_t size)
@@ -436112,7 +436087,7 @@ int zerocmp(u8 const *p, size_t n)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param2 + (0 ..)), param1, *(param0 + (0 ..));
  */
-int printf_va_3(char const * __restrict format, char *param0, int param1,
+int printf_va_3(char const * restrict format, char *param0, int param1,
                 char *param2);
 
 static int test(void (*f)(vector const *, vector *), char const *name,
@@ -436267,7 +436242,7 @@ static void argon2i(vector const *in, vector *out)
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_4(char const * __restrict format);
+int printf_va_4(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -436279,7 +436254,7 @@ int printf_va_4(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_5(char const * __restrict format);
+int printf_va_5(char const * restrict format);
 
 static void x25519(vector const *in, vector *out)
 {
@@ -436321,7 +436296,7 @@ static void key_exchange(vector const *in, vector *out)
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_6(char const * __restrict format);
+int printf_va_6(char const * restrict format);
 
 static void edDSA(vector const *in, vector *out)
 {
@@ -436346,7 +436321,7 @@ static void edDSA_pk(vector const *in, vector *out)
   return;
 }
 
-static void iterate_x25519(u8 * /*[32]*/ k, u8 * /*[32]*/ u)
+static void iterate_x25519(u8 k[32], u8 u[32])
 {
   u8 tmp[32];
   crypto_x25519(tmp,(uint8_t const *)k,(uint8_t const *)u);
@@ -436367,7 +436342,7 @@ static void iterate_x25519(u8 * /*[32]*/ k, u8 * /*[32]*/ u)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_7(char const * __restrict format, char *param0);
+int printf_va_7(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     requires valid_read_string(param0);
@@ -436381,7 +436356,7 @@ int printf_va_7(char const * __restrict format, char *param0);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_8(char const * __restrict format, char *param0);
+int printf_va_8(char const * restrict format, char *param0);
 
 static int test_x25519(void)
 {
@@ -436488,7 +436463,7 @@ static int test_x25519(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param1, *(param0 + (0 ..));
  */
-int printf_va_9(char const * __restrict format, char *param0, size_t param1);
+int printf_va_9(char const * restrict format, char *param0, size_t param1);
 
 static int p_verify(size_t size, int (*compare)(u8 const *, u8 const *))
 {
@@ -436595,7 +436570,7 @@ static int p_verify64(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_10(char const * __restrict format, char *param0);
+int printf_va_10(char const * restrict format, char *param0);
 
 static int p_chacha20(void)
 {
@@ -436661,7 +436636,7 @@ static int p_chacha20(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_11(char const * __restrict format, char *param0);
+int printf_va_11(char const * restrict format, char *param0);
 
 static int p_chacha20_same_ptr(void)
 {
@@ -436702,7 +436677,7 @@ static int p_chacha20_same_ptr(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_12(char const * __restrict format, char *param0);
+int printf_va_12(char const * restrict format, char *param0);
 
 static int p_chacha20_set_ctr(void)
 {
@@ -436761,7 +436736,7 @@ static int p_chacha20_set_ctr(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_13(char const * __restrict format, char *param0);
+int printf_va_13(char const * restrict format, char *param0);
 
 static int p_poly1305(void)
 {
@@ -436810,7 +436785,7 @@ static int p_poly1305(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_14(char const * __restrict format, char *param0);
+int printf_va_14(char const * restrict format, char *param0);
 
 static int p_poly1305_overlap(void)
 {
@@ -436854,7 +436829,7 @@ static int p_poly1305_overlap(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_15(char const * __restrict format, char *param0);
+int printf_va_15(char const * restrict format, char *param0);
 
 static int p_blake2b(void)
 {
@@ -436901,7 +436876,7 @@ static int p_blake2b(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_16(char const * __restrict format, char *param0);
+int printf_va_16(char const * restrict format, char *param0);
 
 static int p_blake2b_overlap(void)
 {
@@ -436943,7 +436918,7 @@ static int p_blake2b_overlap(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_17(char const * __restrict format, char *param0);
+int printf_va_17(char const * restrict format, char *param0);
 
 static int p_sha512(void)
 {
@@ -436990,7 +436965,7 @@ static int p_sha512(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_18(char const * __restrict format, char *param0);
+int printf_va_18(char const * restrict format, char *param0);
 
 static int p_sha512_overlap(void)
 {
@@ -437031,7 +437006,7 @@ static int p_sha512_overlap(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_19(char const * __restrict format, char *param0);
+int printf_va_19(char const * restrict format, char *param0);
 
 static int p_argon2i_easy(void)
 {
@@ -437075,7 +437050,7 @@ static int p_argon2i_easy(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_20(char const * __restrict format, char *param0);
+int printf_va_20(char const * restrict format, char *param0);
 
 static int p_argon2i_overlap(void)
 {
@@ -437178,7 +437153,7 @@ static int p_argon2i_overlap(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_21(char const * __restrict format, char *param0);
+int printf_va_21(char const * restrict format, char *param0);
 
 static int p_eddsa_roundtrip(void)
 {
@@ -437245,7 +437220,7 @@ static int p_eddsa_roundtrip(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_22(char const * __restrict format, char *param0);
+int printf_va_22(char const * restrict format, char *param0);
 
 static int p_eddsa_random(void)
 {
@@ -437287,7 +437262,7 @@ static int p_eddsa_random(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_23(char const * __restrict format, char *param0);
+int printf_va_23(char const * restrict format, char *param0);
 
 static int p_eddsa_overlap(void)
 {
@@ -437333,7 +437308,7 @@ static int p_eddsa_overlap(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_24(char const * __restrict format, char *param0);
+int printf_va_24(char const * restrict format, char *param0);
 
 static int p_eddsa_incremental(void)
 {
@@ -437407,7 +437382,7 @@ static int p_eddsa_incremental(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_25(char const * __restrict format, char *param0);
+int printf_va_25(char const * restrict format, char *param0);
 
 static int p_aead(void)
 {
@@ -437507,7 +437482,7 @@ static int p_aead(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_26(char const * __restrict format, char *param0);
+int printf_va_26(char const * restrict format, char *param0);
 
 static int p_lock_incremental(void)
 {
@@ -437647,7 +437622,7 @@ static int p_lock_incremental(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_27(char const * __restrict format, char *param0);
+int printf_va_27(char const * restrict format, char *param0);
 
 static int p_auth(void)
 {
@@ -437714,7 +437689,7 @@ static int p_auth(void)
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_28(char const * __restrict format);
+int printf_va_28(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -437726,7 +437701,7 @@ int printf_va_28(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_29(char const * __restrict format);
+int printf_va_29(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -437738,7 +437713,7 @@ int printf_va_29(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_30(char const * __restrict format);
+int printf_va_30(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -437750,7 +437725,7 @@ int printf_va_30(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_31(char const * __restrict format);
+int printf_va_31(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires valid_read_string(param0);
@@ -437764,7 +437739,7 @@ int printf_va_31(char const * __restrict format);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_32(char const * __restrict format, char *param0);
+int printf_va_32(char const * restrict format, char *param0);
 
 int main(void)
 {

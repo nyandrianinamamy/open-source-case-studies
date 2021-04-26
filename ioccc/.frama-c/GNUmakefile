@@ -23,7 +23,6 @@ FCFLAGS     += \
 ## Eva-specific flags
 EVAFLAGS    += \
   -eva-warn-key builtins:missing-spec=abort \
-  -eva-ignore-recursive-calls \
 
 # we unsoundly ignore recursive calls to obtain more tests where Eva terminates
 

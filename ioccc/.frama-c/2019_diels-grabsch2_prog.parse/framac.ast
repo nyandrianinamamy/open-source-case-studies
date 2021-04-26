@@ -5,6 +5,8 @@
 #include "stdio.h"
 typedef unsigned char y;
 typedef unsigned long long z;
+static unsigned long long l(unsigned long long b_0);
+
 y *w;
 
 static z b(z a, z b_0)
@@ -165,13 +167,15 @@ static z v(z b_0)
   return a;
 }
 
-static z l(z b_0)
+/*@ assigns \result;
+    assigns \result \from b_0; */
+static unsigned long long l(unsigned long long b_0)
 {
-  z tmp_0;
+  unsigned long long tmp_0;
   if (b_0) {
-    z tmp;
-    tmp = l(b_0 - (z)1);
-    tmp_0 = tmp + (z)1;
+    unsigned long long tmp;
+    tmp = l(b_0 - (unsigned long long)1);
+    tmp_0 = tmp + (unsigned long long)1;
   }
   else tmp_0 = (unsigned long long)2;
   z a = tmp_0;
@@ -191,7 +195,7 @@ static void n(z *a, z *b_0, z *c)
   z tmp;
   z tmp_0;
   z tmp_2;
-  z tmp_1;
+  unsigned long long tmp_1;
   tmp = u(*(a + 4));
   tmp_0 = s(*(a + 4),*(a + 5),*(a + 6));
   tmp_1 = l(*b_0);
@@ -270,7 +274,7 @@ static void k(z *a, z *b_0, z *c)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param1 + (0 ..)), param0;
  */
-int printf_va_1(char const * __restrict format, unsigned long long param0,
+int printf_va_1(char const * restrict format, unsigned long long param0,
                 char *param1);
 
 int main(void)

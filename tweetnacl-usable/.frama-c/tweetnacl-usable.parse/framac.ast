@@ -133,7 +133,7 @@ void randombytes(unsigned char *ptr, unsigned long long length);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_1(char const * __restrict format, unsigned int param0);
+int printf_va_1(char const * restrict format, unsigned int param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -145,7 +145,7 @@ int printf_va_1(char const * __restrict format, unsigned int param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_2(char const * __restrict format);
+int printf_va_2(char const * restrict format);
 
 /*@ requires len ≥ 0; */
 void hexdump(char *data, int len)
@@ -171,7 +171,7 @@ void hexdump(char *data, int len)
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_3(char const * __restrict format);
+int printf_va_3(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -183,7 +183,7 @@ int printf_va_3(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_4(char const * __restrict format);
+int printf_va_4(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -195,7 +195,7 @@ int printf_va_4(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_5(char const * __restrict format);
+int printf_va_5(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -207,7 +207,7 @@ int printf_va_5(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_6(char const * __restrict format);
+int printf_va_6(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -219,7 +219,7 @@ int printf_va_6(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_7(char const * __restrict format);
+int printf_va_7(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -232,7 +232,7 @@ int printf_va_7(char const * __restrict format);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_8(char const * __restrict format, int param0);
+int printf_va_8(char const * restrict format, int param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -244,7 +244,7 @@ int printf_va_8(char const * __restrict format, int param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_9(char const * __restrict format);
+int printf_va_9(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -257,7 +257,7 @@ int printf_va_9(char const * __restrict format);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_10(char const * __restrict format, int param0);
+int printf_va_10(char const * restrict format, int param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -269,7 +269,7 @@ int printf_va_10(char const * __restrict format, int param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_11(char const * __restrict format);
+int printf_va_11(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires valid_read_string(param0);
@@ -283,7 +283,7 @@ int printf_va_11(char const * __restrict format);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_12(char const * __restrict format, char *param0);
+int printf_va_12(char const * restrict format, char *param0);
 
 int main(void)
 {
@@ -1003,7 +1003,7 @@ int crypto_secretbox_xsalsa20poly1305_tweet_open(unsigned char *m,
   return_label: return __retres;
 }
 
-static void set25519(i64 * /*[16]*/ r, i64 const * /*[16]*/ a)
+static void set25519(i64 r[16], i64 const a[16])
 {
   int i;
   i = 0;
@@ -1015,7 +1015,7 @@ static void set25519(i64 * /*[16]*/ r, i64 const * /*[16]*/ a)
   return;
 }
 
-static void car25519(i64 * /*[16]*/ o)
+static void car25519(i64 o[16])
 {
   int i;
   i64 c;
@@ -1032,7 +1032,7 @@ static void car25519(i64 * /*[16]*/ o)
   return;
 }
 
-static void sel25519(i64 * /*[16]*/ p, i64 * /*[16]*/ q, int b)
+static void sel25519(i64 p[16], i64 q[16], int b)
 {
   i64 t;
   i64 i;
@@ -1048,7 +1048,7 @@ static void sel25519(i64 * /*[16]*/ p, i64 * /*[16]*/ q, int b)
   return;
 }
 
-static void pack25519(u8 *o, i64 const * /*[16]*/ n)
+static void pack25519(u8 *o, i64 const n[16])
 {
   int i;
   int j;
@@ -1091,7 +1091,7 @@ static void pack25519(u8 *o, i64 const * /*[16]*/ n)
   return;
 }
 
-static int neq25519(i64 const * /*[16]*/ a, i64 const * /*[16]*/ b)
+static int neq25519(i64 const a[16], i64 const b[16])
 {
   u8 c[32];
   u8 d[32];
@@ -1103,7 +1103,7 @@ static int neq25519(i64 const * /*[16]*/ a, i64 const * /*[16]*/ b)
   return tmp;
 }
 
-static u8 par25519(i64 const * /*[16]*/ a)
+static u8 par25519(i64 const a[16])
 {
   u8 __retres;
   u8 d[32];
@@ -1112,7 +1112,7 @@ static u8 par25519(i64 const * /*[16]*/ a)
   return __retres;
 }
 
-static void unpack25519(i64 * /*[16]*/ o, u8 const *n)
+static void unpack25519(i64 o[16], u8 const *n)
 {
   int i;
   i = 0;
@@ -1125,8 +1125,7 @@ static void unpack25519(i64 * /*[16]*/ o, u8 const *n)
   return;
 }
 
-static void A(i64 * /*[16]*/ o, i64 const * /*[16]*/ a,
-              i64 const * /*[16]*/ b)
+static void A(i64 o[16], i64 const a[16], i64 const b[16])
 {
   int i;
   i = 0;
@@ -1138,8 +1137,7 @@ static void A(i64 * /*[16]*/ o, i64 const * /*[16]*/ a,
   return;
 }
 
-static void Z(i64 * /*[16]*/ o, i64 const * /*[16]*/ a,
-              i64 const * /*[16]*/ b)
+static void Z(i64 o[16], i64 const a[16], i64 const b[16])
 {
   int i;
   i = 0;
@@ -1151,8 +1149,7 @@ static void Z(i64 * /*[16]*/ o, i64 const * /*[16]*/ a,
   return;
 }
 
-static void M(i64 * /*[16]*/ o, i64 const * /*[16]*/ a,
-              i64 const * /*[16]*/ b)
+static void M(i64 o[16], i64 const a[16], i64 const b[16])
 {
   i64 i;
   i64 j;
@@ -1190,13 +1187,13 @@ static void M(i64 * /*[16]*/ o, i64 const * /*[16]*/ a,
   return;
 }
 
-static void S(i64 * /*[16]*/ o, i64 const * /*[16]*/ a)
+static void S(i64 o[16], i64 const a[16])
 {
   M(o,a,a);
   return;
 }
 
-static void inv25519(i64 * /*[16]*/ o, i64 const * /*[16]*/ i)
+static void inv25519(i64 o[16], i64 const i[16])
 {
   gf c;
   int a;
@@ -1222,7 +1219,7 @@ static void inv25519(i64 * /*[16]*/ o, i64 const * /*[16]*/ i)
   return;
 }
 
-static void pow2523(i64 * /*[16]*/ o, i64 const * /*[16]*/ i)
+static void pow2523(i64 o[16], i64 const i[16])
 {
   gf c;
   int a;
@@ -1765,7 +1762,7 @@ int crypto_hash_sha512_tweet(unsigned char *out, unsigned char const *m,
   return __retres;
 }
 
-static void add(gf * /*[4]*/ p, gf * /*[4]*/ q)
+static void add(gf p[4], gf q[4])
 {
   gf a;
   gf b;
@@ -1797,7 +1794,7 @@ static void add(gf * /*[4]*/ p, gf * /*[4]*/ q)
   return;
 }
 
-static void cswap(gf * /*[4]*/ p, gf * /*[4]*/ q, u8 b)
+static void cswap(gf p[4], gf q[4], u8 b)
 {
   int i;
   i = 0;
@@ -1809,7 +1806,7 @@ static void cswap(gf * /*[4]*/ p, gf * /*[4]*/ q, u8 b)
   return;
 }
 
-static void pack(u8 *r, gf * /*[4]*/ p)
+static void pack(u8 *r, gf p[4])
 {
   gf tx;
   gf ty;
@@ -1824,7 +1821,7 @@ static void pack(u8 *r, gf * /*[4]*/ p)
   return;
 }
 
-static void scalarmult(gf * /*[4]*/ p, gf * /*[4]*/ q, u8 const *s)
+static void scalarmult(gf p[4], gf q[4], u8 const *s)
 {
   int i;
   set25519(*(p + 0),gf0);
@@ -1846,7 +1843,7 @@ static void scalarmult(gf * /*[4]*/ p, gf * /*[4]*/ q, u8 const *s)
   return;
 }
 
-static void scalarbase(gf * /*[4]*/ p, u8 const *s)
+static void scalarbase(gf p[4], u8 const *s)
 {
   gf q[4];
   set25519(q[0],X);
@@ -1914,7 +1911,7 @@ static u64 const L[32] =
    (unsigned long long)0,
    (unsigned long long)0,
    (unsigned long long)0x10};
-static void modL(u8 *r, i64 * /*[64]*/ x)
+static void modL(u8 *r, i64 x[64])
 {
   i64 carry;
   i64 i;
@@ -2052,7 +2049,7 @@ int crypto_sign_ed25519_tweet(unsigned char *sm, unsigned long long *smlen,
   return __retres;
 }
 
-static int unpackneg(gf * /*[4]*/ r, u8 const * /*[32]*/ p)
+static int unpackneg(gf r[4], u8 const p[32])
 {
   int __retres;
   gf t;
@@ -2176,7 +2173,7 @@ int crypto_sign_ed25519_tweet_open(unsigned char *m,
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_1(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_1(FILE * restrict stream, char const * restrict format);
 
 void randombytes(unsigned char *ptr, unsigned long long length)
 {

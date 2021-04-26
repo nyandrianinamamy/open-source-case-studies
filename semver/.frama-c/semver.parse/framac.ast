@@ -572,8 +572,7 @@ void semver_free(semver_t *x)
     assigns \result \from (indirect: *(format + (0 ..))), (indirect: param0);
     assigns *(s + (0 ..)) \from (indirect: *(format + (0 ..))), param0;
  */
-int sprintf_va_1(char * __restrict s, char const * __restrict format,
-                 int param0);
+int sprintf_va_1(char * restrict s, char const * restrict format, int param0);
 
 /*@ requires valid_read_string(format);
     requires valid_read_string(param0);
@@ -584,7 +583,7 @@ int sprintf_va_1(char * __restrict s, char const * __restrict format,
     assigns *(s + (0 ..))
       \from (indirect: *(format + (0 ..))), param1, *(param0 + (0 ..));
  */
-int sprintf_va_2(char * __restrict s, char const * __restrict format,
+int sprintf_va_2(char * restrict s, char const * restrict format,
                  char *param0, int param1);
 
 static void concat_num(char *str, int x, char *sep)
@@ -607,7 +606,7 @@ static void concat_num(char *str, int x, char *sep)
       \from (indirect: *(format + (0 ..))), *(param1 + (0 ..)),
             *(param0 + (0 ..));
  */
-int sprintf_va_3(char * __restrict s, char const * __restrict format,
+int sprintf_va_3(char * restrict s, char const * restrict format,
                  char *param0, char *param1);
 
 static void concat_char(char *str, char *x, char *sep)
@@ -812,7 +811,7 @@ static void suite_runner(struct test_case *cases, int len,
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_1(char const * __restrict format, char *param0);
+int printf_va_1(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -824,7 +823,7 @@ int printf_va_1(char const * __restrict format, char *param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_2(char const * __restrict format);
+int printf_va_2(char const * restrict format);
 
 void test_parse_simple(void)
 {
@@ -860,7 +859,7 @@ void test_parse_simple(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_3(char const * __restrict format, char *param0);
+int printf_va_3(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -872,7 +871,7 @@ int printf_va_3(char const * __restrict format, char *param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_4(char const * __restrict format);
+int printf_va_4(char const * restrict format);
 
 void test_parse_major(void)
 {
@@ -906,7 +905,7 @@ void test_parse_major(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_5(char const * __restrict format, char *param0);
+int printf_va_5(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -918,7 +917,7 @@ int printf_va_5(char const * __restrict format, char *param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_6(char const * __restrict format);
+int printf_va_6(char const * restrict format);
 
 void test_parse_minor(void)
 {
@@ -952,7 +951,7 @@ void test_parse_minor(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_7(char const * __restrict format, char *param0);
+int printf_va_7(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -964,7 +963,7 @@ int printf_va_7(char const * __restrict format, char *param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_8(char const * __restrict format);
+int printf_va_8(char const * restrict format);
 
 void test_parse_prerelease(void)
 {
@@ -1024,7 +1023,7 @@ void test_parse_prerelease(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_9(char const * __restrict format, char *param0);
+int printf_va_9(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -1036,7 +1035,7 @@ int printf_va_9(char const * __restrict format, char *param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_10(char const * __restrict format);
+int printf_va_10(char const * restrict format);
 
 void test_parse_metadata(void)
 {
@@ -1096,7 +1095,7 @@ void test_parse_metadata(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_11(char const * __restrict format, char *param0);
+int printf_va_11(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -1108,7 +1107,7 @@ int printf_va_11(char const * __restrict format, char *param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_12(char const * __restrict format);
+int printf_va_12(char const * restrict format);
 
 void test_parse_prerelerease_metadata(void)
 {
@@ -1180,7 +1179,7 @@ void test_parse_prerelerease_metadata(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_13(char const * __restrict format, char *param0);
+int printf_va_13(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -1192,7 +1191,7 @@ int printf_va_13(char const * __restrict format, char *param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_14(char const * __restrict format);
+int printf_va_14(char const * restrict format);
 
 void test_compare(void)
 {
@@ -1228,7 +1227,7 @@ void test_compare(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_15(char const * __restrict format, char *param0);
+int printf_va_15(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -1240,7 +1239,7 @@ int printf_va_15(char const * __restrict format, char *param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_16(char const * __restrict format);
+int printf_va_16(char const * restrict format);
 
 void test_compare_full(void)
 {
@@ -1316,7 +1315,7 @@ void test_compare_full(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_17(char const * __restrict format, char *param0);
+int printf_va_17(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -1328,7 +1327,7 @@ int printf_va_17(char const * __restrict format, char *param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_18(char const * __restrict format);
+int printf_va_18(char const * restrict format);
 
 void test_compare_spec(void)
 {
@@ -1366,7 +1365,7 @@ void test_compare_spec(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_19(char const * __restrict format, char *param0);
+int printf_va_19(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -1378,7 +1377,7 @@ int printf_va_19(char const * __restrict format, char *param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_20(char const * __restrict format);
+int printf_va_20(char const * restrict format);
 
 void test_compare_gt(void)
 {
@@ -1416,7 +1415,7 @@ void test_compare_gt(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_21(char const * __restrict format, char *param0);
+int printf_va_21(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -1428,7 +1427,7 @@ int printf_va_21(char const * __restrict format, char *param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_22(char const * __restrict format);
+int printf_va_22(char const * restrict format);
 
 void test_compare_lt(void)
 {
@@ -1460,7 +1459,7 @@ void test_compare_lt(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_23(char const * __restrict format, char *param0);
+int printf_va_23(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -1472,7 +1471,7 @@ int printf_va_23(char const * __restrict format, char *param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_24(char const * __restrict format);
+int printf_va_24(char const * restrict format);
 
 void test_compare_eq(void)
 {
@@ -1506,7 +1505,7 @@ void test_compare_eq(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_25(char const * __restrict format, char *param0);
+int printf_va_25(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -1518,7 +1517,7 @@ int printf_va_25(char const * __restrict format, char *param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_26(char const * __restrict format);
+int printf_va_26(char const * restrict format);
 
 void test_compare_neq(void)
 {
@@ -1552,7 +1551,7 @@ void test_compare_neq(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_27(char const * __restrict format, char *param0);
+int printf_va_27(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -1564,7 +1563,7 @@ int printf_va_27(char const * __restrict format, char *param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_28(char const * __restrict format);
+int printf_va_28(char const * restrict format);
 
 void test_compare_gte(void)
 {
@@ -1598,7 +1597,7 @@ void test_compare_gte(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_29(char const * __restrict format, char *param0);
+int printf_va_29(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -1610,7 +1609,7 @@ int printf_va_29(char const * __restrict format, char *param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_30(char const * __restrict format);
+int printf_va_30(char const * restrict format);
 
 void test_compare_lte(void)
 {
@@ -1644,7 +1643,7 @@ void test_compare_lte(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_31(char const * __restrict format, char *param0);
+int printf_va_31(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -1656,7 +1655,7 @@ int printf_va_31(char const * __restrict format, char *param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_32(char const * __restrict format);
+int printf_va_32(char const * restrict format);
 
 void test_satisfies(void)
 {
@@ -1970,7 +1969,7 @@ void test_satisfies(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_33(char const * __restrict format, char *param0);
+int printf_va_33(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -1982,7 +1981,7 @@ int printf_va_33(char const * __restrict format, char *param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_34(char const * __restrict format);
+int printf_va_34(char const * restrict format);
 
 void test_render(void)
 {
@@ -2029,7 +2028,7 @@ void test_render(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_35(char const * __restrict format, char *param0);
+int printf_va_35(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -2041,7 +2040,7 @@ int printf_va_35(char const * __restrict format, char *param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_36(char const * __restrict format);
+int printf_va_36(char const * restrict format);
 
 void test_numeric(void)
 {
@@ -2102,7 +2101,7 @@ void test_numeric(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_37(char const * __restrict format, char *param0);
+int printf_va_37(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -2114,7 +2113,7 @@ int printf_va_37(char const * __restrict format, char *param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_38(char const * __restrict format);
+int printf_va_38(char const * restrict format);
 
 void test_bump(void)
 {
@@ -2162,7 +2161,7 @@ void test_bump(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_39(char const * __restrict format, char *param0);
+int printf_va_39(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -2174,7 +2173,7 @@ int printf_va_39(char const * __restrict format, char *param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_40(char const * __restrict format);
+int printf_va_40(char const * restrict format);
 
 void test_bump_minor(void)
 {
@@ -2213,7 +2212,7 @@ void test_bump_minor(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_41(char const * __restrict format, char *param0);
+int printf_va_41(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -2225,7 +2224,7 @@ int printf_va_41(char const * __restrict format, char *param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_42(char const * __restrict format);
+int printf_va_42(char const * restrict format);
 
 void test_bump_patch(void)
 {
@@ -2264,7 +2263,7 @@ void test_bump_patch(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_43(char const * __restrict format, char *param0);
+int printf_va_43(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -2276,7 +2275,7 @@ int printf_va_43(char const * __restrict format, char *param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_44(char const * __restrict format);
+int printf_va_44(char const * restrict format);
 
 void test_free(void)
 {
@@ -2321,7 +2320,7 @@ void test_free(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_45(char const * __restrict format, char *param0);
+int printf_va_45(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -2333,7 +2332,7 @@ int printf_va_45(char const * __restrict format, char *param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_46(char const * __restrict format);
+int printf_va_46(char const * restrict format);
 
 void test_valid_chars(void)
 {
@@ -2365,7 +2364,7 @@ void test_valid_chars(void)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_47(char const * __restrict format, char *param0);
+int printf_va_47(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -2377,7 +2376,7 @@ int printf_va_47(char const * __restrict format, char *param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_48(char const * __restrict format);
+int printf_va_48(char const * restrict format);
 
 void test_clean(void)
 {

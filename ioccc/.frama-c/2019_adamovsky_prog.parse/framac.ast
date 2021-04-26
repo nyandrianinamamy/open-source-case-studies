@@ -57,6 +57,7 @@ A *rT(A *x, A *y);
 
 A *rC(A *x, A *y);
 
+/*@ assigns \nothing; */
 void D(A *f)
 {
   if (f) {
@@ -100,6 +101,8 @@ void U(void)
   return_label: return;
 }
 
+/*@ assigns \result;
+    assigns \result \from \nothing; */
 A *I(void)
 {
   A *tmp;

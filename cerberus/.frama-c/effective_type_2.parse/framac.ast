@@ -27,7 +27,7 @@ typedef struct __anonstruct_st2_2 st2;
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_1(char const * __restrict format, int param0);
+int printf_va_1(char const * restrict format, int param0);
 
 void f(st1 *s1p, st2 *s2p)
 {
@@ -49,7 +49,7 @@ void f(st1 *s1p, st2 *s2p)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param2, param1, param0;
  */
-int printf_va_2(char const * __restrict format, int param0, int param1,
+int printf_va_2(char const * restrict format, int param0, int param1,
                 int param2);
 
 int main(void)

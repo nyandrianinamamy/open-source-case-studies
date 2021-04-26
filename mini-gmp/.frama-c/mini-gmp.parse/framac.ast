@@ -149,313 +149,292 @@ size_t mpn_get_str(unsigned char *sp, int base, mp_ptr up, mp_size_t un);
 
 mp_size_t mpn_set_str(mp_ptr rp, unsigned char const *sp, size_t sn, int base);
 
-void mpz_init(__mpz_struct * /*[1]*/ r);
+void mpz_init(__mpz_struct r[1]);
 
-void mpz_init2(__mpz_struct * /*[1]*/ r, mp_bitcnt_t bits);
+void mpz_init2(__mpz_struct r[1], mp_bitcnt_t bits);
 
-void mpz_clear(__mpz_struct * /*[1]*/ r);
+void mpz_clear(__mpz_struct r[1]);
 
-int mpz_sgn(__mpz_struct const * /*[1]*/ u);
+int mpz_sgn(__mpz_struct const u[1]);
 
-int mpz_cmp_si(__mpz_struct const * /*[1]*/ u, long v);
+int mpz_cmp_si(__mpz_struct const u[1], long v);
 
-int mpz_cmp_ui(__mpz_struct const * /*[1]*/ u, unsigned long v);
+int mpz_cmp_ui(__mpz_struct const u[1], unsigned long v);
 
-int mpz_cmp(__mpz_struct const * /*[1]*/ a, __mpz_struct const * /*[1]*/ b);
+int mpz_cmp(__mpz_struct const a[1], __mpz_struct const b[1]);
 
-int mpz_cmpabs_ui(__mpz_struct const * /*[1]*/ u, unsigned long v);
+int mpz_cmpabs_ui(__mpz_struct const u[1], unsigned long v);
 
-int mpz_cmpabs(__mpz_struct const * /*[1]*/ u, __mpz_struct const * /*[1]*/ v);
+int mpz_cmpabs(__mpz_struct const u[1], __mpz_struct const v[1]);
 
-int mpz_cmp_d(__mpz_struct const * /*[1]*/ x, double d);
+int mpz_cmp_d(__mpz_struct const x[1], double d);
 
-int mpz_cmpabs_d(__mpz_struct const * /*[1]*/ x, double d);
+int mpz_cmpabs_d(__mpz_struct const x[1], double d);
 
-void mpz_abs(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u);
+void mpz_abs(__mpz_struct r[1], __mpz_struct const u[1]);
 
-void mpz_neg(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u);
+void mpz_neg(__mpz_struct r[1], __mpz_struct const u[1]);
 
-void mpz_swap(__mpz_struct * /*[1]*/ u, __mpz_struct * /*[1]*/ v);
+void mpz_swap(__mpz_struct u[1], __mpz_struct v[1]);
 
-void mpz_add_ui(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ a,
-                unsigned long b);
+void mpz_add_ui(__mpz_struct r[1], __mpz_struct const a[1], unsigned long b);
 
-void mpz_add(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ a,
-             __mpz_struct const * /*[1]*/ b);
+void mpz_add(__mpz_struct r[1], __mpz_struct const a[1],
+             __mpz_struct const b[1]);
 
-void mpz_sub_ui(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ a,
-                unsigned long b);
+void mpz_sub_ui(__mpz_struct r[1], __mpz_struct const a[1], unsigned long b);
 
-void mpz_ui_sub(__mpz_struct * /*[1]*/ r, unsigned long a,
-                __mpz_struct const * /*[1]*/ b);
+void mpz_ui_sub(__mpz_struct r[1], unsigned long a, __mpz_struct const b[1]);
 
-void mpz_sub(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ a,
-             __mpz_struct const * /*[1]*/ b);
+void mpz_sub(__mpz_struct r[1], __mpz_struct const a[1],
+             __mpz_struct const b[1]);
 
-void mpz_mul_si(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
-                long v);
+void mpz_mul_si(__mpz_struct r[1], __mpz_struct const u[1], long v);
 
-void mpz_mul_ui(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
-                unsigned long v);
+void mpz_mul_ui(__mpz_struct r[1], __mpz_struct const u[1], unsigned long v);
 
-void mpz_mul(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
-             __mpz_struct const * /*[1]*/ v);
+void mpz_mul(__mpz_struct r[1], __mpz_struct const u[1],
+             __mpz_struct const v[1]);
 
-void mpz_mul_2exp(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
+void mpz_mul_2exp(__mpz_struct r[1], __mpz_struct const u[1],
                   mp_bitcnt_t bits);
 
-void mpz_addmul_ui(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
+void mpz_addmul_ui(__mpz_struct r[1], __mpz_struct const u[1],
                    unsigned long v);
 
-void mpz_addmul(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
-                __mpz_struct const * /*[1]*/ v);
+void mpz_addmul(__mpz_struct r[1], __mpz_struct const u[1],
+                __mpz_struct const v[1]);
 
-void mpz_submul_ui(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
+void mpz_submul_ui(__mpz_struct r[1], __mpz_struct const u[1],
                    unsigned long v);
 
-void mpz_submul(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
-                __mpz_struct const * /*[1]*/ v);
+void mpz_submul(__mpz_struct r[1], __mpz_struct const u[1],
+                __mpz_struct const v[1]);
 
-void mpz_cdiv_qr(__mpz_struct * /*[1]*/ q, __mpz_struct * /*[1]*/ r,
-                 __mpz_struct const * /*[1]*/ n,
-                 __mpz_struct const * /*[1]*/ d);
+void mpz_cdiv_qr(__mpz_struct q[1], __mpz_struct r[1],
+                 __mpz_struct const n[1], __mpz_struct const d[1]);
 
-void mpz_fdiv_qr(__mpz_struct * /*[1]*/ q, __mpz_struct * /*[1]*/ r,
-                 __mpz_struct const * /*[1]*/ n,
-                 __mpz_struct const * /*[1]*/ d);
+void mpz_fdiv_qr(__mpz_struct q[1], __mpz_struct r[1],
+                 __mpz_struct const n[1], __mpz_struct const d[1]);
 
-void mpz_tdiv_qr(__mpz_struct * /*[1]*/ q, __mpz_struct * /*[1]*/ r,
-                 __mpz_struct const * /*[1]*/ n,
-                 __mpz_struct const * /*[1]*/ d);
+void mpz_tdiv_qr(__mpz_struct q[1], __mpz_struct r[1],
+                 __mpz_struct const n[1], __mpz_struct const d[1]);
 
-void mpz_cdiv_q(__mpz_struct * /*[1]*/ q, __mpz_struct const * /*[1]*/ n,
-                __mpz_struct const * /*[1]*/ d);
+void mpz_cdiv_q(__mpz_struct q[1], __mpz_struct const n[1],
+                __mpz_struct const d[1]);
 
-void mpz_fdiv_q(__mpz_struct * /*[1]*/ q, __mpz_struct const * /*[1]*/ n,
-                __mpz_struct const * /*[1]*/ d);
+void mpz_fdiv_q(__mpz_struct q[1], __mpz_struct const n[1],
+                __mpz_struct const d[1]);
 
-void mpz_tdiv_q(__mpz_struct * /*[1]*/ q, __mpz_struct const * /*[1]*/ n,
-                __mpz_struct const * /*[1]*/ d);
+void mpz_tdiv_q(__mpz_struct q[1], __mpz_struct const n[1],
+                __mpz_struct const d[1]);
 
-void mpz_cdiv_r(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ n,
-                __mpz_struct const * /*[1]*/ d);
+void mpz_cdiv_r(__mpz_struct r[1], __mpz_struct const n[1],
+                __mpz_struct const d[1]);
 
-void mpz_fdiv_r(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ n,
-                __mpz_struct const * /*[1]*/ d);
+void mpz_fdiv_r(__mpz_struct r[1], __mpz_struct const n[1],
+                __mpz_struct const d[1]);
 
-void mpz_tdiv_r(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ n,
-                __mpz_struct const * /*[1]*/ d);
+void mpz_tdiv_r(__mpz_struct r[1], __mpz_struct const n[1],
+                __mpz_struct const d[1]);
 
-void mpz_cdiv_q_2exp(__mpz_struct * /*[1]*/ r,
-                     __mpz_struct const * /*[1]*/ u, mp_bitcnt_t cnt);
+void mpz_cdiv_q_2exp(__mpz_struct r[1], __mpz_struct const u[1],
+                     mp_bitcnt_t cnt);
 
-void mpz_fdiv_q_2exp(__mpz_struct * /*[1]*/ r,
-                     __mpz_struct const * /*[1]*/ u, mp_bitcnt_t cnt);
+void mpz_fdiv_q_2exp(__mpz_struct r[1], __mpz_struct const u[1],
+                     mp_bitcnt_t cnt);
 
-void mpz_tdiv_q_2exp(__mpz_struct * /*[1]*/ r,
-                     __mpz_struct const * /*[1]*/ u, mp_bitcnt_t cnt);
+void mpz_tdiv_q_2exp(__mpz_struct r[1], __mpz_struct const u[1],
+                     mp_bitcnt_t cnt);
 
-void mpz_cdiv_r_2exp(__mpz_struct * /*[1]*/ r,
-                     __mpz_struct const * /*[1]*/ u, mp_bitcnt_t cnt);
+void mpz_cdiv_r_2exp(__mpz_struct r[1], __mpz_struct const u[1],
+                     mp_bitcnt_t cnt);
 
-void mpz_fdiv_r_2exp(__mpz_struct * /*[1]*/ r,
-                     __mpz_struct const * /*[1]*/ u, mp_bitcnt_t cnt);
+void mpz_fdiv_r_2exp(__mpz_struct r[1], __mpz_struct const u[1],
+                     mp_bitcnt_t cnt);
 
-void mpz_tdiv_r_2exp(__mpz_struct * /*[1]*/ r,
-                     __mpz_struct const * /*[1]*/ u, mp_bitcnt_t cnt);
+void mpz_tdiv_r_2exp(__mpz_struct r[1], __mpz_struct const u[1],
+                     mp_bitcnt_t cnt);
 
-void mpz_mod(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ n,
-             __mpz_struct const * /*[1]*/ d);
+void mpz_mod(__mpz_struct r[1], __mpz_struct const n[1],
+             __mpz_struct const d[1]);
 
-void mpz_divexact(__mpz_struct * /*[1]*/ q, __mpz_struct const * /*[1]*/ n,
-                  __mpz_struct const * /*[1]*/ d);
+void mpz_divexact(__mpz_struct q[1], __mpz_struct const n[1],
+                  __mpz_struct const d[1]);
 
-int mpz_divisible_p(__mpz_struct const * /*[1]*/ n,
-                    __mpz_struct const * /*[1]*/ d);
+int mpz_divisible_p(__mpz_struct const n[1], __mpz_struct const d[1]);
 
-int mpz_congruent_p(__mpz_struct const * /*[1]*/ a,
-                    __mpz_struct const * /*[1]*/ b,
-                    __mpz_struct const * /*[1]*/ m);
+int mpz_congruent_p(__mpz_struct const a[1], __mpz_struct const b[1],
+                    __mpz_struct const m[1]);
 
-unsigned long mpz_cdiv_qr_ui(__mpz_struct * /*[1]*/ q,
-                             __mpz_struct * /*[1]*/ r,
-                             __mpz_struct const * /*[1]*/ n, unsigned long d);
+unsigned long mpz_cdiv_qr_ui(__mpz_struct q[1], __mpz_struct r[1],
+                             __mpz_struct const n[1], unsigned long d);
 
-unsigned long mpz_fdiv_qr_ui(__mpz_struct * /*[1]*/ q,
-                             __mpz_struct * /*[1]*/ r,
-                             __mpz_struct const * /*[1]*/ n, unsigned long d);
+unsigned long mpz_fdiv_qr_ui(__mpz_struct q[1], __mpz_struct r[1],
+                             __mpz_struct const n[1], unsigned long d);
 
-unsigned long mpz_tdiv_qr_ui(__mpz_struct * /*[1]*/ q,
-                             __mpz_struct * /*[1]*/ r,
-                             __mpz_struct const * /*[1]*/ n, unsigned long d);
+unsigned long mpz_tdiv_qr_ui(__mpz_struct q[1], __mpz_struct r[1],
+                             __mpz_struct const n[1], unsigned long d);
 
-unsigned long mpz_cdiv_q_ui(__mpz_struct * /*[1]*/ q,
-                            __mpz_struct const * /*[1]*/ n, unsigned long d);
+unsigned long mpz_cdiv_q_ui(__mpz_struct q[1], __mpz_struct const n[1],
+                            unsigned long d);
 
-unsigned long mpz_fdiv_q_ui(__mpz_struct * /*[1]*/ q,
-                            __mpz_struct const * /*[1]*/ n, unsigned long d);
+unsigned long mpz_fdiv_q_ui(__mpz_struct q[1], __mpz_struct const n[1],
+                            unsigned long d);
 
-unsigned long mpz_tdiv_q_ui(__mpz_struct * /*[1]*/ q,
-                            __mpz_struct const * /*[1]*/ n, unsigned long d);
+unsigned long mpz_tdiv_q_ui(__mpz_struct q[1], __mpz_struct const n[1],
+                            unsigned long d);
 
-unsigned long mpz_cdiv_r_ui(__mpz_struct * /*[1]*/ r,
-                            __mpz_struct const * /*[1]*/ n, unsigned long d);
+unsigned long mpz_cdiv_r_ui(__mpz_struct r[1], __mpz_struct const n[1],
+                            unsigned long d);
 
-unsigned long mpz_fdiv_r_ui(__mpz_struct * /*[1]*/ r,
-                            __mpz_struct const * /*[1]*/ n, unsigned long d);
+unsigned long mpz_fdiv_r_ui(__mpz_struct r[1], __mpz_struct const n[1],
+                            unsigned long d);
 
-unsigned long mpz_tdiv_r_ui(__mpz_struct * /*[1]*/ r,
-                            __mpz_struct const * /*[1]*/ n, unsigned long d);
+unsigned long mpz_tdiv_r_ui(__mpz_struct r[1], __mpz_struct const n[1],
+                            unsigned long d);
 
-unsigned long mpz_cdiv_ui(__mpz_struct const * /*[1]*/ n, unsigned long d);
+unsigned long mpz_cdiv_ui(__mpz_struct const n[1], unsigned long d);
 
-unsigned long mpz_fdiv_ui(__mpz_struct const * /*[1]*/ n, unsigned long d);
+unsigned long mpz_fdiv_ui(__mpz_struct const n[1], unsigned long d);
 
-unsigned long mpz_tdiv_ui(__mpz_struct const * /*[1]*/ n, unsigned long d);
+unsigned long mpz_tdiv_ui(__mpz_struct const n[1], unsigned long d);
 
-unsigned long mpz_mod_ui(__mpz_struct * /*[1]*/ r,
-                         __mpz_struct const * /*[1]*/ n, unsigned long d);
+unsigned long mpz_mod_ui(__mpz_struct r[1], __mpz_struct const n[1],
+                         unsigned long d);
 
-void mpz_divexact_ui(__mpz_struct * /*[1]*/ q,
-                     __mpz_struct const * /*[1]*/ n, unsigned long d);
+void mpz_divexact_ui(__mpz_struct q[1], __mpz_struct const n[1],
+                     unsigned long d);
 
-int mpz_divisible_ui_p(__mpz_struct const * /*[1]*/ n, unsigned long d);
+int mpz_divisible_ui_p(__mpz_struct const n[1], unsigned long d);
 
-unsigned long mpz_gcd_ui(__mpz_struct * /*[1]*/ g,
-                         __mpz_struct const * /*[1]*/ u, unsigned long v);
+unsigned long mpz_gcd_ui(__mpz_struct g[1], __mpz_struct const u[1],
+                         unsigned long v);
 
-void mpz_gcd(__mpz_struct * /*[1]*/ g, __mpz_struct const * /*[1]*/ u,
-             __mpz_struct const * /*[1]*/ v);
+void mpz_gcd(__mpz_struct g[1], __mpz_struct const u[1],
+             __mpz_struct const v[1]);
 
-void mpz_gcdext(__mpz_struct * /*[1]*/ g, __mpz_struct * /*[1]*/ s,
-                __mpz_struct * /*[1]*/ t, __mpz_struct const * /*[1]*/ u,
-                __mpz_struct const * /*[1]*/ v);
+void mpz_gcdext(__mpz_struct g[1], __mpz_struct s[1], __mpz_struct t[1],
+                __mpz_struct const u[1], __mpz_struct const v[1]);
 
-void mpz_lcm_ui(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
-                unsigned long v);
+void mpz_lcm_ui(__mpz_struct r[1], __mpz_struct const u[1], unsigned long v);
 
-void mpz_lcm(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
-             __mpz_struct const * /*[1]*/ v);
+void mpz_lcm(__mpz_struct r[1], __mpz_struct const u[1],
+             __mpz_struct const v[1]);
 
-int mpz_invert(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
-               __mpz_struct const * /*[1]*/ m);
+int mpz_invert(__mpz_struct r[1], __mpz_struct const u[1],
+               __mpz_struct const m[1]);
 
-void mpz_sqrtrem(__mpz_struct * /*[1]*/ s, __mpz_struct * /*[1]*/ r,
-                 __mpz_struct const * /*[1]*/ u);
+void mpz_sqrtrem(__mpz_struct s[1], __mpz_struct r[1],
+                 __mpz_struct const u[1]);
 
-void mpz_sqrt(__mpz_struct * /*[1]*/ s, __mpz_struct const * /*[1]*/ u);
+void mpz_sqrt(__mpz_struct s[1], __mpz_struct const u[1]);
 
-int mpz_perfect_square_p(__mpz_struct const * /*[1]*/ u);
+int mpz_perfect_square_p(__mpz_struct const u[1]);
 
-void mpz_pow_ui(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ b,
-                unsigned long e);
+void mpz_pow_ui(__mpz_struct r[1], __mpz_struct const b[1], unsigned long e);
 
-void mpz_ui_pow_ui(__mpz_struct * /*[1]*/ r, unsigned long blimb,
-                   unsigned long e);
+void mpz_ui_pow_ui(__mpz_struct r[1], unsigned long blimb, unsigned long e);
 
-void mpz_powm(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ b,
-              __mpz_struct const * /*[1]*/ e, __mpz_struct const * /*[1]*/ m);
+void mpz_powm(__mpz_struct r[1], __mpz_struct const b[1],
+              __mpz_struct const e[1], __mpz_struct const m[1]);
 
-void mpz_powm_ui(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ b,
-                 unsigned long elimb, __mpz_struct const * /*[1]*/ m);
+void mpz_powm_ui(__mpz_struct r[1], __mpz_struct const b[1],
+                 unsigned long elimb, __mpz_struct const m[1]);
 
-void mpz_rootrem(__mpz_struct * /*[1]*/ x, __mpz_struct * /*[1]*/ r,
-                 __mpz_struct const * /*[1]*/ y, unsigned long z);
+void mpz_rootrem(__mpz_struct x[1], __mpz_struct r[1],
+                 __mpz_struct const y[1], unsigned long z);
 
-int mpz_root(__mpz_struct * /*[1]*/ x, __mpz_struct const * /*[1]*/ y,
-             unsigned long z);
+int mpz_root(__mpz_struct x[1], __mpz_struct const y[1], unsigned long z);
 
-void mpz_fac_ui(__mpz_struct * /*[1]*/ x, unsigned long n);
+void mpz_fac_ui(__mpz_struct x[1], unsigned long n);
 
-void mpz_bin_uiui(__mpz_struct * /*[1]*/ r, unsigned long n, unsigned long k);
+void mpz_bin_uiui(__mpz_struct r[1], unsigned long n, unsigned long k);
 
-int mpz_probab_prime_p(__mpz_struct const * /*[1]*/ n, int reps);
+int mpz_probab_prime_p(__mpz_struct const n[1], int reps);
 
-int mpz_tstbit(__mpz_struct const * /*[1]*/ d, mp_bitcnt_t bit_index);
+int mpz_tstbit(__mpz_struct const d[1], mp_bitcnt_t bit_index);
 
-void mpz_setbit(__mpz_struct * /*[1]*/ d, mp_bitcnt_t bit_index);
+void mpz_setbit(__mpz_struct d[1], mp_bitcnt_t bit_index);
 
-void mpz_clrbit(__mpz_struct * /*[1]*/ d, mp_bitcnt_t bit_index);
+void mpz_clrbit(__mpz_struct d[1], mp_bitcnt_t bit_index);
 
-void mpz_combit(__mpz_struct * /*[1]*/ d, mp_bitcnt_t bit_index);
+void mpz_combit(__mpz_struct d[1], mp_bitcnt_t bit_index);
 
-void mpz_com(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u);
+void mpz_com(__mpz_struct r[1], __mpz_struct const u[1]);
 
-void mpz_and(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
-             __mpz_struct const * /*[1]*/ v);
+void mpz_and(__mpz_struct r[1], __mpz_struct const u[1],
+             __mpz_struct const v[1]);
 
-void mpz_ior(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
-             __mpz_struct const * /*[1]*/ v);
+void mpz_ior(__mpz_struct r[1], __mpz_struct const u[1],
+             __mpz_struct const v[1]);
 
-void mpz_xor(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
-             __mpz_struct const * /*[1]*/ v);
+void mpz_xor(__mpz_struct r[1], __mpz_struct const u[1],
+             __mpz_struct const v[1]);
 
-mp_bitcnt_t mpz_popcount(__mpz_struct const * /*[1]*/ u);
+mp_bitcnt_t mpz_popcount(__mpz_struct const u[1]);
 
-mp_bitcnt_t mpz_hamdist(__mpz_struct const * /*[1]*/ u,
-                        __mpz_struct const * /*[1]*/ v);
+mp_bitcnt_t mpz_hamdist(__mpz_struct const u[1], __mpz_struct const v[1]);
 
-mp_bitcnt_t mpz_scan0(__mpz_struct const * /*[1]*/ u,
-                      mp_bitcnt_t starting_bit);
+mp_bitcnt_t mpz_scan0(__mpz_struct const u[1], mp_bitcnt_t starting_bit);
 
-mp_bitcnt_t mpz_scan1(__mpz_struct const * /*[1]*/ u,
-                      mp_bitcnt_t starting_bit);
+mp_bitcnt_t mpz_scan1(__mpz_struct const u[1], mp_bitcnt_t starting_bit);
 
-int mpz_fits_slong_p(__mpz_struct const * /*[1]*/ u);
+int mpz_fits_slong_p(__mpz_struct const u[1]);
 
-int mpz_fits_ulong_p(__mpz_struct const * /*[1]*/ u);
+int mpz_fits_ulong_p(__mpz_struct const u[1]);
 
-long mpz_get_si(__mpz_struct const * /*[1]*/ u);
+long mpz_get_si(__mpz_struct const u[1]);
 
-unsigned long mpz_get_ui(__mpz_struct const * /*[1]*/ u);
+unsigned long mpz_get_ui(__mpz_struct const u[1]);
 
-double mpz_get_d(__mpz_struct const * /*[1]*/ u);
+double mpz_get_d(__mpz_struct const u[1]);
 
-size_t mpz_size(__mpz_struct const * /*[1]*/ u);
+size_t mpz_size(__mpz_struct const u[1]);
 
-mp_limb_t mpz_getlimbn(__mpz_struct const * /*[1]*/ u, mp_size_t n);
+mp_limb_t mpz_getlimbn(__mpz_struct const u[1], mp_size_t n);
 
-void mpz_realloc2(__mpz_struct * /*[1]*/ x, mp_bitcnt_t n);
+void mpz_realloc2(__mpz_struct x[1], mp_bitcnt_t n);
 
 mp_srcptr mpz_limbs_read(mpz_srcptr x);
 
-mp_ptr mpz_limbs_modify(__mpz_struct * /*[1]*/ x, mp_size_t n);
+mp_ptr mpz_limbs_modify(__mpz_struct x[1], mp_size_t n);
 
-mp_ptr mpz_limbs_write(__mpz_struct * /*[1]*/ x, mp_size_t n);
+mp_ptr mpz_limbs_write(__mpz_struct x[1], mp_size_t n);
 
-void mpz_limbs_finish(__mpz_struct * /*[1]*/ x, mp_size_t xs);
+void mpz_limbs_finish(__mpz_struct x[1], mp_size_t xs);
 
-mpz_srcptr mpz_roinit_n(__mpz_struct * /*[1]*/ x, mp_srcptr xp, mp_size_t xs);
+mpz_srcptr mpz_roinit_n(__mpz_struct x[1], mp_srcptr xp, mp_size_t xs);
 
-void mpz_set_si(__mpz_struct * /*[1]*/ r, long x);
+void mpz_set_si(__mpz_struct r[1], long x);
 
-void mpz_set_ui(__mpz_struct * /*[1]*/ r, unsigned long x);
+void mpz_set_ui(__mpz_struct r[1], unsigned long x);
 
-void mpz_set(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ x);
+void mpz_set(__mpz_struct r[1], __mpz_struct const x[1]);
 
-void mpz_set_d(__mpz_struct * /*[1]*/ r, double x);
+void mpz_set_d(__mpz_struct r[1], double x);
 
-void mpz_init_set_si(__mpz_struct * /*[1]*/ r, long x);
+void mpz_init_set_si(__mpz_struct r[1], long x);
 
-void mpz_init_set_ui(__mpz_struct * /*[1]*/ r, unsigned long x);
+void mpz_init_set_ui(__mpz_struct r[1], unsigned long x);
 
-void mpz_init_set(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ x);
+void mpz_init_set(__mpz_struct r[1], __mpz_struct const x[1]);
 
-void mpz_init_set_d(__mpz_struct * /*[1]*/ r, double x);
+void mpz_init_set_d(__mpz_struct r[1], double x);
 
-size_t mpz_sizeinbase(__mpz_struct const * /*[1]*/ u, int base);
+size_t mpz_sizeinbase(__mpz_struct const u[1], int base);
 
-char *mpz_get_str(char *sp, int base, __mpz_struct const * /*[1]*/ u);
+char *mpz_get_str(char *sp, int base, __mpz_struct const u[1]);
 
-int mpz_set_str(__mpz_struct * /*[1]*/ r, char const *sp, int base);
+int mpz_set_str(__mpz_struct r[1], char const *sp, int base);
 
-int mpz_init_set_str(__mpz_struct * /*[1]*/ r, char const *sp, int base);
+int mpz_init_set_str(__mpz_struct r[1], char const *sp, int base);
 
-void mpz_import(__mpz_struct * /*[1]*/ r, size_t count, int order,
-                size_t size, int endian, size_t nails, void const *src);
+void mpz_import(__mpz_struct r[1], size_t count, int order, size_t size,
+                int endian, size_t nails, void const *src);
 
 void *mpz_export(void *r, size_t *countp, int order, size_t size, int endian,
-                 size_t nails, __mpz_struct const * /*[1]*/ u);
+                 size_t nails, __mpz_struct const u[1]);
 
 void hex_random_init(void);
 
@@ -483,36 +462,33 @@ void hex_random_scan_op(enum hex_random_op op, unsigned long maxbits,
 
 void hex_random_str_op(unsigned long maxbits, int base, char **ap, char **rp);
 
-void mini_urandomb(__mpz_struct * /*[1]*/ r, unsigned long bits);
+void mini_urandomb(__mpz_struct r[1], unsigned long bits);
 
-void mini_rrandomb(__mpz_struct * /*[1]*/ r, unsigned long bits);
+void mini_rrandomb(__mpz_struct r[1], unsigned long bits);
 
-void mini_rrandomb_export(__mpz_struct * /*[1]*/ r, void *dst,
-                          size_t *countp, int order, size_t size, int endian,
+void mini_rrandomb_export(__mpz_struct r[1], void *dst, size_t *countp,
+                          int order, size_t size, int endian,
                           unsigned long bits);
 
 void mini_random_op2(enum hex_random_op op, unsigned long maxbits,
-                     __mpz_struct * /*[1]*/ a, __mpz_struct * /*[1]*/ r);
+                     __mpz_struct a[1], __mpz_struct r[1]);
 
 void mini_random_op3(enum hex_random_op op, unsigned long maxbits,
-                     __mpz_struct * /*[1]*/ a, __mpz_struct * /*[1]*/ b,
-                     __mpz_struct * /*[1]*/ r);
+                     __mpz_struct a[1], __mpz_struct b[1], __mpz_struct r[1]);
 
 void mini_random_op4(enum hex_random_op op, unsigned long maxbits,
-                     __mpz_struct * /*[1]*/ a, __mpz_struct * /*[1]*/ b,
-                     __mpz_struct * /*[1]*/ c, __mpz_struct * /*[1]*/ d);
+                     __mpz_struct a[1], __mpz_struct b[1], __mpz_struct c[1],
+                     __mpz_struct d[1]);
 
 void mini_random_scan_op(enum hex_random_op op, unsigned long maxbits,
-                         __mpz_struct * /*[1]*/ a, mp_bitcnt_t *b,
-                         mp_bitcnt_t *r);
+                         __mpz_struct a[1], mp_bitcnt_t *b, mp_bitcnt_t *r);
 
 void mini_random_bit_op(enum hex_random_op op, unsigned long maxbits,
-                        __mpz_struct * /*[1]*/ a, mp_bitcnt_t *b,
-                        __mpz_struct * /*[1]*/ r);
+                        __mpz_struct a[1], mp_bitcnt_t *b, __mpz_struct r[1]);
 
 void testmain(int argc, char **argv);
 
-void dump(char const *label, __mpz_struct const * /*[1]*/ x);
+void dump(char const *label, __mpz_struct const x[1]);
 
 /*@ requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
@@ -524,7 +500,7 @@ void dump(char const *label, __mpz_struct const * /*[1]*/ x);
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_1(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_1(FILE * restrict stream, char const * restrict format);
 
 void testmain(int argc, char **argv)
 {
@@ -574,7 +550,7 @@ int const mp_bits_per_limb = (int)(sizeof(mp_limb_t) * (unsigned int)8);
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int fprintf_va_2(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_2(FILE * restrict stream, char const * restrict format,
                  char *param0);
 
 static void gmp_die(char const *msg)
@@ -2220,7 +2196,7 @@ mp_size_t mpn_set_str(mp_ptr rp, unsigned char const *sp, size_t sn, int base)
   return_label: return __retres;
 }
 
-void mpz_init(__mpz_struct * /*[1]*/ r)
+void mpz_init(__mpz_struct r[1])
 {
   r->_mp_alloc = 1;
   r->_mp_size = 0;
@@ -2228,7 +2204,7 @@ void mpz_init(__mpz_struct * /*[1]*/ r)
   return;
 }
 
-void mpz_init2(__mpz_struct * /*[1]*/ r, mp_bitcnt_t bits)
+void mpz_init2(__mpz_struct r[1], mp_bitcnt_t bits)
 {
   mp_size_t rn;
   bits -= (mp_bitcnt_t)(bits != (mp_bitcnt_t)0);
@@ -2239,13 +2215,13 @@ void mpz_init2(__mpz_struct * /*[1]*/ r, mp_bitcnt_t bits)
   return;
 }
 
-void mpz_clear(__mpz_struct * /*[1]*/ r)
+void mpz_clear(__mpz_struct r[1])
 {
   (*gmp_free_func)((void *)r->_mp_d,(unsigned int)0);
   return;
 }
 
-static mp_ptr mpz_realloc(__mpz_struct * /*[1]*/ r, mp_size_t size)
+static mp_ptr mpz_realloc(__mpz_struct r[1], mp_size_t size)
 {
   mp_ptr __retres;
   int tmp;
@@ -2259,7 +2235,7 @@ static mp_ptr mpz_realloc(__mpz_struct * /*[1]*/ r, mp_size_t size)
   return __retres;
 }
 
-void mpz_set_si(__mpz_struct * /*[1]*/ r, long x)
+void mpz_set_si(__mpz_struct r[1], long x)
 {
   if (x >= (long)0) mpz_set_ui(r,(unsigned long)x);
   else {
@@ -2269,7 +2245,7 @@ void mpz_set_si(__mpz_struct * /*[1]*/ r, long x)
   return;
 }
 
-void mpz_set_ui(__mpz_struct * /*[1]*/ r, unsigned long x)
+void mpz_set_ui(__mpz_struct r[1], unsigned long x)
 {
   if (x > (unsigned long)0) {
     r->_mp_size = 1;
@@ -2279,7 +2255,7 @@ void mpz_set_ui(__mpz_struct * /*[1]*/ r, unsigned long x)
   return;
 }
 
-void mpz_set(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ x)
+void mpz_set(__mpz_struct r[1], __mpz_struct const x[1])
 {
   if ((void *)r != (void *)x) {
     mp_size_t n;
@@ -2294,28 +2270,28 @@ void mpz_set(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ x)
   return;
 }
 
-void mpz_init_set_si(__mpz_struct * /*[1]*/ r, long x)
+void mpz_init_set_si(__mpz_struct r[1], long x)
 {
   mpz_init(r);
   mpz_set_si(r,x);
   return;
 }
 
-void mpz_init_set_ui(__mpz_struct * /*[1]*/ r, unsigned long x)
+void mpz_init_set_ui(__mpz_struct r[1], unsigned long x)
 {
   mpz_init(r);
   mpz_set_ui(r,x);
   return;
 }
 
-void mpz_init_set(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ x)
+void mpz_init_set(__mpz_struct r[1], __mpz_struct const x[1])
 {
   mpz_init(r);
   mpz_set(r,x);
   return;
 }
 
-int mpz_fits_slong_p(__mpz_struct const * /*[1]*/ u)
+int mpz_fits_slong_p(__mpz_struct const u[1])
 {
   int __retres;
   mp_size_t us = (long)u->_mp_size;
@@ -2335,7 +2311,7 @@ int mpz_fits_slong_p(__mpz_struct const * /*[1]*/ u)
   return_label: return __retres;
 }
 
-int mpz_fits_ulong_p(__mpz_struct const * /*[1]*/ u)
+int mpz_fits_ulong_p(__mpz_struct const u[1])
 {
   int __retres;
   mp_size_t us = (long)u->_mp_size;
@@ -2343,7 +2319,7 @@ int mpz_fits_ulong_p(__mpz_struct const * /*[1]*/ u)
   return __retres;
 }
 
-long mpz_get_si(__mpz_struct const * /*[1]*/ u)
+long mpz_get_si(__mpz_struct const u[1])
 {
   long __retres;
   mp_size_t us = (long)u->_mp_size;
@@ -2363,14 +2339,14 @@ long mpz_get_si(__mpz_struct const * /*[1]*/ u)
   return_label: return __retres;
 }
 
-unsigned long mpz_get_ui(__mpz_struct const * /*[1]*/ u)
+unsigned long mpz_get_ui(__mpz_struct const u[1])
 {
   mp_limb_t tmp;
   if (u->_mp_size == 0) tmp = (unsigned long)0; else tmp = *(u->_mp_d + 0);
   return tmp;
 }
 
-size_t mpz_size(__mpz_struct const * /*[1]*/ u)
+size_t mpz_size(__mpz_struct const u[1])
 {
   size_t __retres;
   int tmp;
@@ -2379,7 +2355,7 @@ size_t mpz_size(__mpz_struct const * /*[1]*/ u)
   return __retres;
 }
 
-mp_limb_t mpz_getlimbn(__mpz_struct const * /*[1]*/ u, mp_size_t n)
+mp_limb_t mpz_getlimbn(__mpz_struct const u[1], mp_size_t n)
 {
   mp_limb_t __retres;
   if (n >= (mp_size_t)0) {
@@ -2402,7 +2378,7 @@ mp_limb_t mpz_getlimbn(__mpz_struct const * /*[1]*/ u, mp_size_t n)
   return_label: return __retres;
 }
 
-void mpz_realloc2(__mpz_struct * /*[1]*/ x, mp_bitcnt_t n)
+void mpz_realloc2(__mpz_struct x[1], mp_bitcnt_t n)
 {
   mpz_realloc(x,
               (long)((mp_bitcnt_t)1 + (n - (mp_bitcnt_t)(n != (mp_bitcnt_t)0)) / (mp_bitcnt_t)(
@@ -2418,7 +2394,7 @@ mp_srcptr mpz_limbs_read(mpz_srcptr x)
   return_label: return __retres;
 }
 
-mp_ptr mpz_limbs_modify(__mpz_struct * /*[1]*/ x, mp_size_t n)
+mp_ptr mpz_limbs_modify(__mpz_struct x[1], mp_size_t n)
 {
   mp_ptr tmp_0;
   __FC_assert((n > (mp_size_t)0) != 0,"mini-gmp.c",1542,"n > 0");
@@ -2427,14 +2403,14 @@ mp_ptr mpz_limbs_modify(__mpz_struct * /*[1]*/ x, mp_size_t n)
   return tmp_0;
 }
 
-mp_ptr mpz_limbs_write(__mpz_struct * /*[1]*/ x, mp_size_t n)
+mp_ptr mpz_limbs_write(__mpz_struct x[1], mp_size_t n)
 {
   mp_ptr tmp;
   tmp = mpz_limbs_modify(x,n);
   return tmp;
 }
 
-void mpz_limbs_finish(__mpz_struct * /*[1]*/ x, mp_size_t xs)
+void mpz_limbs_finish(__mpz_struct x[1], mp_size_t xs)
 {
   mp_size_t xn;
   mp_size_t tmp;
@@ -2446,7 +2422,7 @@ void mpz_limbs_finish(__mpz_struct * /*[1]*/ x, mp_size_t xs)
   return;
 }
 
-mpz_srcptr mpz_roinit_n(__mpz_struct * /*[1]*/ x, mp_srcptr xp, mp_size_t xs)
+mpz_srcptr mpz_roinit_n(__mpz_struct x[1], mp_srcptr xp, mp_size_t xs)
 {
   mpz_srcptr __retres;
   x->_mp_alloc = 0;
@@ -2456,7 +2432,7 @@ mpz_srcptr mpz_roinit_n(__mpz_struct * /*[1]*/ x, mp_srcptr xp, mp_size_t xs)
   return __retres;
 }
 
-void mpz_set_d(__mpz_struct * /*[1]*/ r, double x)
+void mpz_set_d(__mpz_struct r[1], double x)
 {
   int sign;
   mp_ptr rp;
@@ -2506,14 +2482,14 @@ void mpz_set_d(__mpz_struct * /*[1]*/ r, double x)
   return_label: return;
 }
 
-void mpz_init_set_d(__mpz_struct * /*[1]*/ r, double x)
+void mpz_init_set_d(__mpz_struct r[1], double x)
 {
   mpz_init(r);
   mpz_set_d(r,x);
   return;
 }
 
-double mpz_get_d(__mpz_struct const * /*[1]*/ u)
+double mpz_get_d(__mpz_struct const u[1])
 {
   double __retres;
   mp_size_t un;
@@ -2537,7 +2513,7 @@ double mpz_get_d(__mpz_struct const * /*[1]*/ u)
   return_label: return __retres;
 }
 
-int mpz_cmpabs_d(__mpz_struct const * /*[1]*/ x, double d)
+int mpz_cmpabs_d(__mpz_struct const x[1], double d)
 {
   int __retres;
   mp_size_t xn;
@@ -2588,7 +2564,7 @@ int mpz_cmpabs_d(__mpz_struct const * /*[1]*/ x, double d)
   return_label: return __retres;
 }
 
-int mpz_cmp_d(__mpz_struct const * /*[1]*/ x, double d)
+int mpz_cmp_d(__mpz_struct const x[1], double d)
 {
   int __retres;
   if (x->_mp_size < 0) 
@@ -2616,7 +2592,7 @@ int mpz_cmp_d(__mpz_struct const * /*[1]*/ x, double d)
   return_label: return __retres;
 }
 
-int mpz_sgn(__mpz_struct const * /*[1]*/ u)
+int mpz_sgn(__mpz_struct const u[1])
 {
   int __retres;
   mp_size_t usize = (long)u->_mp_size;
@@ -2624,7 +2600,7 @@ int mpz_sgn(__mpz_struct const * /*[1]*/ u)
   return __retres;
 }
 
-int mpz_cmp_si(__mpz_struct const * /*[1]*/ u, long v)
+int mpz_cmp_si(__mpz_struct const u[1], long v)
 {
   int __retres;
   mp_size_t usize = (long)u->_mp_size;
@@ -2658,7 +2634,7 @@ int mpz_cmp_si(__mpz_struct const * /*[1]*/ u, long v)
   return_label: return __retres;
 }
 
-int mpz_cmp_ui(__mpz_struct const * /*[1]*/ u, unsigned long v)
+int mpz_cmp_ui(__mpz_struct const u[1], unsigned long v)
 {
   int __retres;
   mp_size_t usize = (long)u->_mp_size;
@@ -2682,7 +2658,7 @@ int mpz_cmp_ui(__mpz_struct const * /*[1]*/ u, unsigned long v)
   return_label: return __retres;
 }
 
-int mpz_cmp(__mpz_struct const * /*[1]*/ a, __mpz_struct const * /*[1]*/ b)
+int mpz_cmp(__mpz_struct const a[1], __mpz_struct const b[1])
 {
   int __retres;
   mp_size_t asize = (long)a->_mp_size;
@@ -2711,7 +2687,7 @@ int mpz_cmp(__mpz_struct const * /*[1]*/ a, __mpz_struct const * /*[1]*/ b)
   return_label: return __retres;
 }
 
-int mpz_cmpabs_ui(__mpz_struct const * /*[1]*/ u, unsigned long v)
+int mpz_cmpabs_ui(__mpz_struct const u[1], unsigned long v)
 {
   int __retres;
   int tmp;
@@ -2727,7 +2703,7 @@ int mpz_cmpabs_ui(__mpz_struct const * /*[1]*/ u, unsigned long v)
   return_label: return __retres;
 }
 
-int mpz_cmpabs(__mpz_struct const * /*[1]*/ u, __mpz_struct const * /*[1]*/ v)
+int mpz_cmpabs(__mpz_struct const u[1], __mpz_struct const v[1])
 {
   int tmp_1;
   int tmp;
@@ -2741,7 +2717,7 @@ int mpz_cmpabs(__mpz_struct const * /*[1]*/ u, __mpz_struct const * /*[1]*/ v)
   return tmp_1;
 }
 
-void mpz_abs(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u)
+void mpz_abs(__mpz_struct r[1], __mpz_struct const u[1])
 {
   mpz_set(r,u);
   if (r->_mp_size >= 0) r->_mp_size = r->_mp_size;
@@ -2749,14 +2725,14 @@ void mpz_abs(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u)
   return;
 }
 
-void mpz_neg(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u)
+void mpz_neg(__mpz_struct r[1], __mpz_struct const u[1])
 {
   mpz_set(r,u);
   r->_mp_size = - r->_mp_size;
   return;
 }
 
-void mpz_swap(__mpz_struct * /*[1]*/ u, __mpz_struct * /*[1]*/ v)
+void mpz_swap(__mpz_struct u[1], __mpz_struct v[1])
 {
   {
     mp_size_t __mp_size_t_swap__tmp = (long)u->_mp_size;
@@ -2776,8 +2752,7 @@ void mpz_swap(__mpz_struct * /*[1]*/ u, __mpz_struct * /*[1]*/ v)
   return;
 }
 
-static mp_size_t mpz_abs_add_ui(__mpz_struct * /*[1]*/ r,
-                                __mpz_struct const * /*[1]*/ a,
+static mp_size_t mpz_abs_add_ui(__mpz_struct r[1], __mpz_struct const a[1],
                                 unsigned long b)
 {
   mp_size_t __retres;
@@ -2801,8 +2776,7 @@ static mp_size_t mpz_abs_add_ui(__mpz_struct * /*[1]*/ r,
   return_label: return __retres;
 }
 
-static mp_size_t mpz_abs_sub_ui(__mpz_struct * /*[1]*/ r,
-                                __mpz_struct const * /*[1]*/ a,
+static mp_size_t mpz_abs_sub_ui(__mpz_struct r[1], __mpz_struct const a[1],
                                 unsigned long b)
 {
   mp_size_t __retres;
@@ -2844,8 +2818,7 @@ static mp_size_t mpz_abs_sub_ui(__mpz_struct * /*[1]*/ r,
   return_label: return __retres;
 }
 
-void mpz_add_ui(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ a,
-                unsigned long b)
+void mpz_add_ui(__mpz_struct r[1], __mpz_struct const a[1], unsigned long b)
 {
   if (a->_mp_size >= 0) r->_mp_size = (int)mpz_abs_add_ui(r,a,b);
   else {
@@ -2856,8 +2829,7 @@ void mpz_add_ui(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ a,
   return;
 }
 
-void mpz_sub_ui(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ a,
-                unsigned long b)
+void mpz_sub_ui(__mpz_struct r[1], __mpz_struct const a[1], unsigned long b)
 {
   if (a->_mp_size < 0) {
     mp_size_t tmp;
@@ -2868,8 +2840,7 @@ void mpz_sub_ui(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ a,
   return;
 }
 
-void mpz_ui_sub(__mpz_struct * /*[1]*/ r, unsigned long a,
-                __mpz_struct const * /*[1]*/ b)
+void mpz_ui_sub(__mpz_struct r[1], unsigned long a, __mpz_struct const b[1])
 {
   if (b->_mp_size < 0) r->_mp_size = (int)mpz_abs_add_ui(r,b,a);
   else {
@@ -2880,9 +2851,8 @@ void mpz_ui_sub(__mpz_struct * /*[1]*/ r, unsigned long a,
   return;
 }
 
-static mp_size_t mpz_abs_add(__mpz_struct * /*[1]*/ r,
-                             __mpz_struct const * /*[1]*/ a,
-                             __mpz_struct const * /*[1]*/ b)
+static mp_size_t mpz_abs_add(__mpz_struct r[1], __mpz_struct const a[1],
+                             __mpz_struct const b[1])
 {
   mp_size_t __retres;
   int tmp;
@@ -2915,9 +2885,8 @@ static mp_size_t mpz_abs_add(__mpz_struct * /*[1]*/ r,
   return __retres;
 }
 
-static mp_size_t mpz_abs_sub(__mpz_struct * /*[1]*/ r,
-                             __mpz_struct const * /*[1]*/ a,
-                             __mpz_struct const * /*[1]*/ b)
+static mp_size_t mpz_abs_sub(__mpz_struct r[1], __mpz_struct const a[1],
+                             __mpz_struct const b[1])
 {
   mp_size_t __retres;
   int tmp;
@@ -2967,8 +2936,8 @@ static mp_size_t mpz_abs_sub(__mpz_struct * /*[1]*/ r,
   return_label: return __retres;
 }
 
-void mpz_add(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ a,
-             __mpz_struct const * /*[1]*/ b)
+void mpz_add(__mpz_struct r[1], __mpz_struct const a[1],
+             __mpz_struct const b[1])
 {
   mp_size_t rn;
   if ((a->_mp_size ^ b->_mp_size) >= 0) rn = mpz_abs_add(r,a,b);
@@ -2978,8 +2947,8 @@ void mpz_add(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ a,
   return;
 }
 
-void mpz_sub(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ a,
-             __mpz_struct const * /*[1]*/ b)
+void mpz_sub(__mpz_struct r[1], __mpz_struct const a[1],
+             __mpz_struct const b[1])
 {
   mp_size_t rn;
   if ((a->_mp_size ^ b->_mp_size) >= 0) rn = mpz_abs_sub(r,a,b);
@@ -2989,8 +2958,7 @@ void mpz_sub(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ a,
   return;
 }
 
-void mpz_mul_si(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
-                long v)
+void mpz_mul_si(__mpz_struct r[1], __mpz_struct const u[1], long v)
 {
   if (v < (long)0) {
     mpz_mul_ui(r,u,- ((unsigned long)(v + (long)1) - (unsigned long)1));
@@ -3000,8 +2968,7 @@ void mpz_mul_si(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
   return;
 }
 
-void mpz_mul_ui(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
-                unsigned long v)
+void mpz_mul_ui(__mpz_struct r[1], __mpz_struct const u[1], unsigned long v)
 {
   mp_size_t un;
   mp_size_t us;
@@ -3028,8 +2995,8 @@ void mpz_mul_ui(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
   return_label: return;
 }
 
-void mpz_mul(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
-             __mpz_struct const * /*[1]*/ v)
+void mpz_mul(__mpz_struct r[1], __mpz_struct const u[1],
+             __mpz_struct const v[1])
 {
   int sign;
   mp_size_t un;
@@ -3065,7 +3032,7 @@ void mpz_mul(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
   return_label: return;
 }
 
-void mpz_mul_2exp(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
+void mpz_mul_2exp(__mpz_struct r[1], __mpz_struct const u[1],
                   mp_bitcnt_t bits)
 {
   mp_size_t un;
@@ -3096,7 +3063,7 @@ void mpz_mul_2exp(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
   return_label: return;
 }
 
-void mpz_addmul_ui(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
+void mpz_addmul_ui(__mpz_struct r[1], __mpz_struct const u[1],
                    unsigned long v)
 {
   mpz_t t;
@@ -3107,7 +3074,7 @@ void mpz_addmul_ui(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
   return;
 }
 
-void mpz_submul_ui(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
+void mpz_submul_ui(__mpz_struct r[1], __mpz_struct const u[1],
                    unsigned long v)
 {
   mpz_t t;
@@ -3118,8 +3085,8 @@ void mpz_submul_ui(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
   return;
 }
 
-void mpz_addmul(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
-                __mpz_struct const * /*[1]*/ v)
+void mpz_addmul(__mpz_struct r[1], __mpz_struct const u[1],
+                __mpz_struct const v[1])
 {
   mpz_t t;
   mpz_init(t);
@@ -3129,8 +3096,8 @@ void mpz_addmul(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
   return;
 }
 
-void mpz_submul(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
-                __mpz_struct const * /*[1]*/ v)
+void mpz_submul(__mpz_struct r[1], __mpz_struct const u[1],
+                __mpz_struct const v[1])
 {
   mpz_t t;
   mpz_init(t);
@@ -3140,9 +3107,8 @@ void mpz_submul(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
   return;
 }
 
-static int mpz_div_qr(__mpz_struct * /*[1]*/ q, __mpz_struct * /*[1]*/ r,
-                      __mpz_struct const * /*[1]*/ n,
-                      __mpz_struct const * /*[1]*/ d,
+static int mpz_div_qr(__mpz_struct q[1], __mpz_struct r[1],
+                      __mpz_struct const n[1], __mpz_struct const d[1],
                       enum mpz_div_round_mode mode)
 {
   int __retres;
@@ -3246,74 +3212,71 @@ static int mpz_div_qr(__mpz_struct * /*[1]*/ q, __mpz_struct * /*[1]*/ r,
   return_label: return __retres;
 }
 
-void mpz_cdiv_qr(__mpz_struct * /*[1]*/ q, __mpz_struct * /*[1]*/ r,
-                 __mpz_struct const * /*[1]*/ n,
-                 __mpz_struct const * /*[1]*/ d)
+void mpz_cdiv_qr(__mpz_struct q[1], __mpz_struct r[1],
+                 __mpz_struct const n[1], __mpz_struct const d[1])
 {
   mpz_div_qr(q,r,n,d,GMP_DIV_CEIL);
   return;
 }
 
-void mpz_fdiv_qr(__mpz_struct * /*[1]*/ q, __mpz_struct * /*[1]*/ r,
-                 __mpz_struct const * /*[1]*/ n,
-                 __mpz_struct const * /*[1]*/ d)
+void mpz_fdiv_qr(__mpz_struct q[1], __mpz_struct r[1],
+                 __mpz_struct const n[1], __mpz_struct const d[1])
 {
   mpz_div_qr(q,r,n,d,GMP_DIV_FLOOR);
   return;
 }
 
-void mpz_tdiv_qr(__mpz_struct * /*[1]*/ q, __mpz_struct * /*[1]*/ r,
-                 __mpz_struct const * /*[1]*/ n,
-                 __mpz_struct const * /*[1]*/ d)
+void mpz_tdiv_qr(__mpz_struct q[1], __mpz_struct r[1],
+                 __mpz_struct const n[1], __mpz_struct const d[1])
 {
   mpz_div_qr(q,r,n,d,GMP_DIV_TRUNC);
   return;
 }
 
-void mpz_cdiv_q(__mpz_struct * /*[1]*/ q, __mpz_struct const * /*[1]*/ n,
-                __mpz_struct const * /*[1]*/ d)
+void mpz_cdiv_q(__mpz_struct q[1], __mpz_struct const n[1],
+                __mpz_struct const d[1])
 {
   mpz_div_qr(q,(__mpz_struct *)0,n,d,GMP_DIV_CEIL);
   return;
 }
 
-void mpz_fdiv_q(__mpz_struct * /*[1]*/ q, __mpz_struct const * /*[1]*/ n,
-                __mpz_struct const * /*[1]*/ d)
+void mpz_fdiv_q(__mpz_struct q[1], __mpz_struct const n[1],
+                __mpz_struct const d[1])
 {
   mpz_div_qr(q,(__mpz_struct *)0,n,d,GMP_DIV_FLOOR);
   return;
 }
 
-void mpz_tdiv_q(__mpz_struct * /*[1]*/ q, __mpz_struct const * /*[1]*/ n,
-                __mpz_struct const * /*[1]*/ d)
+void mpz_tdiv_q(__mpz_struct q[1], __mpz_struct const n[1],
+                __mpz_struct const d[1])
 {
   mpz_div_qr(q,(__mpz_struct *)0,n,d,GMP_DIV_TRUNC);
   return;
 }
 
-void mpz_cdiv_r(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ n,
-                __mpz_struct const * /*[1]*/ d)
+void mpz_cdiv_r(__mpz_struct r[1], __mpz_struct const n[1],
+                __mpz_struct const d[1])
 {
   mpz_div_qr((__mpz_struct *)0,r,n,d,GMP_DIV_CEIL);
   return;
 }
 
-void mpz_fdiv_r(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ n,
-                __mpz_struct const * /*[1]*/ d)
+void mpz_fdiv_r(__mpz_struct r[1], __mpz_struct const n[1],
+                __mpz_struct const d[1])
 {
   mpz_div_qr((__mpz_struct *)0,r,n,d,GMP_DIV_FLOOR);
   return;
 }
 
-void mpz_tdiv_r(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ n,
-                __mpz_struct const * /*[1]*/ d)
+void mpz_tdiv_r(__mpz_struct r[1], __mpz_struct const n[1],
+                __mpz_struct const d[1])
 {
   mpz_div_qr((__mpz_struct *)0,r,n,d,GMP_DIV_TRUNC);
   return;
 }
 
-void mpz_mod(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ n,
-             __mpz_struct const * /*[1]*/ d)
+void mpz_mod(__mpz_struct r[1], __mpz_struct const n[1],
+             __mpz_struct const d[1])
 {
   int tmp;
   if (d->_mp_size >= 0) tmp = GMP_DIV_FLOOR; else tmp = GMP_DIV_CEIL;
@@ -3324,8 +3287,7 @@ void mpz_mod(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ n,
   return;
 }
 
-static void mpz_div_q_2exp(__mpz_struct * /*[1]*/ q,
-                           __mpz_struct const * /*[1]*/ u,
+static void mpz_div_q_2exp(__mpz_struct q[1], __mpz_struct const u[1],
                            mp_bitcnt_t bit_index,
                            enum mpz_div_round_mode mode)
 {
@@ -3379,8 +3341,7 @@ static void mpz_div_q_2exp(__mpz_struct * /*[1]*/ q,
   return_label: return;
 }
 
-static void mpz_div_r_2exp(__mpz_struct * /*[1]*/ r,
-                           __mpz_struct const * /*[1]*/ u,
+static void mpz_div_r_2exp(__mpz_struct r[1], __mpz_struct const u[1],
                            mp_bitcnt_t bit_index,
                            enum mpz_div_round_mode mode)
 {
@@ -3473,50 +3434,50 @@ static void mpz_div_r_2exp(__mpz_struct * /*[1]*/ r,
   return_label: return;
 }
 
-void mpz_cdiv_q_2exp(__mpz_struct * /*[1]*/ r,
-                     __mpz_struct const * /*[1]*/ u, mp_bitcnt_t cnt)
+void mpz_cdiv_q_2exp(__mpz_struct r[1], __mpz_struct const u[1],
+                     mp_bitcnt_t cnt)
 {
   mpz_div_q_2exp(r,u,cnt,GMP_DIV_CEIL);
   return;
 }
 
-void mpz_fdiv_q_2exp(__mpz_struct * /*[1]*/ r,
-                     __mpz_struct const * /*[1]*/ u, mp_bitcnt_t cnt)
+void mpz_fdiv_q_2exp(__mpz_struct r[1], __mpz_struct const u[1],
+                     mp_bitcnt_t cnt)
 {
   mpz_div_q_2exp(r,u,cnt,GMP_DIV_FLOOR);
   return;
 }
 
-void mpz_tdiv_q_2exp(__mpz_struct * /*[1]*/ r,
-                     __mpz_struct const * /*[1]*/ u, mp_bitcnt_t cnt)
+void mpz_tdiv_q_2exp(__mpz_struct r[1], __mpz_struct const u[1],
+                     mp_bitcnt_t cnt)
 {
   mpz_div_q_2exp(r,u,cnt,GMP_DIV_TRUNC);
   return;
 }
 
-void mpz_cdiv_r_2exp(__mpz_struct * /*[1]*/ r,
-                     __mpz_struct const * /*[1]*/ u, mp_bitcnt_t cnt)
+void mpz_cdiv_r_2exp(__mpz_struct r[1], __mpz_struct const u[1],
+                     mp_bitcnt_t cnt)
 {
   mpz_div_r_2exp(r,u,cnt,GMP_DIV_CEIL);
   return;
 }
 
-void mpz_fdiv_r_2exp(__mpz_struct * /*[1]*/ r,
-                     __mpz_struct const * /*[1]*/ u, mp_bitcnt_t cnt)
+void mpz_fdiv_r_2exp(__mpz_struct r[1], __mpz_struct const u[1],
+                     mp_bitcnt_t cnt)
 {
   mpz_div_r_2exp(r,u,cnt,GMP_DIV_FLOOR);
   return;
 }
 
-void mpz_tdiv_r_2exp(__mpz_struct * /*[1]*/ r,
-                     __mpz_struct const * /*[1]*/ u, mp_bitcnt_t cnt)
+void mpz_tdiv_r_2exp(__mpz_struct r[1], __mpz_struct const u[1],
+                     mp_bitcnt_t cnt)
 {
   mpz_div_r_2exp(r,u,cnt,GMP_DIV_TRUNC);
   return;
 }
 
-void mpz_divexact(__mpz_struct * /*[1]*/ q, __mpz_struct const * /*[1]*/ n,
-                  __mpz_struct const * /*[1]*/ d)
+void mpz_divexact(__mpz_struct q[1], __mpz_struct const n[1],
+                  __mpz_struct const d[1])
 {
   int tmp;
   tmp = mpz_div_qr(q,(__mpz_struct *)0,n,d,GMP_DIV_TRUNC);
@@ -3525,8 +3486,7 @@ void mpz_divexact(__mpz_struct * /*[1]*/ q, __mpz_struct const * /*[1]*/ n,
   return;
 }
 
-int mpz_divisible_p(__mpz_struct const * /*[1]*/ n,
-                    __mpz_struct const * /*[1]*/ d)
+int mpz_divisible_p(__mpz_struct const n[1], __mpz_struct const d[1])
 {
   int __retres;
   int tmp;
@@ -3535,9 +3495,8 @@ int mpz_divisible_p(__mpz_struct const * /*[1]*/ n,
   return __retres;
 }
 
-int mpz_congruent_p(__mpz_struct const * /*[1]*/ a,
-                    __mpz_struct const * /*[1]*/ b,
-                    __mpz_struct const * /*[1]*/ m)
+int mpz_congruent_p(__mpz_struct const a[1], __mpz_struct const b[1],
+                    __mpz_struct const m[1])
 {
   int __retres;
   mpz_t t;
@@ -3558,10 +3517,8 @@ int mpz_congruent_p(__mpz_struct const * /*[1]*/ a,
   return_label: return __retres;
 }
 
-static unsigned long mpz_div_qr_ui(__mpz_struct * /*[1]*/ q,
-                                   __mpz_struct * /*[1]*/ r,
-                                   __mpz_struct const * /*[1]*/ n,
-                                   unsigned long d,
+static unsigned long mpz_div_qr_ui(__mpz_struct q[1], __mpz_struct r[1],
+                                   __mpz_struct const n[1], unsigned long d,
                                    enum mpz_div_round_mode mode)
 {
   unsigned long __retres;
@@ -3626,119 +3583,116 @@ static unsigned long mpz_div_qr_ui(__mpz_struct * /*[1]*/ q,
   return_label: return __retres;
 }
 
-unsigned long mpz_cdiv_qr_ui(__mpz_struct * /*[1]*/ q,
-                             __mpz_struct * /*[1]*/ r,
-                             __mpz_struct const * /*[1]*/ n, unsigned long d)
+unsigned long mpz_cdiv_qr_ui(__mpz_struct q[1], __mpz_struct r[1],
+                             __mpz_struct const n[1], unsigned long d)
 {
   unsigned long tmp;
   tmp = mpz_div_qr_ui(q,r,n,d,GMP_DIV_CEIL);
   return tmp;
 }
 
-unsigned long mpz_fdiv_qr_ui(__mpz_struct * /*[1]*/ q,
-                             __mpz_struct * /*[1]*/ r,
-                             __mpz_struct const * /*[1]*/ n, unsigned long d)
+unsigned long mpz_fdiv_qr_ui(__mpz_struct q[1], __mpz_struct r[1],
+                             __mpz_struct const n[1], unsigned long d)
 {
   unsigned long tmp;
   tmp = mpz_div_qr_ui(q,r,n,d,GMP_DIV_FLOOR);
   return tmp;
 }
 
-unsigned long mpz_tdiv_qr_ui(__mpz_struct * /*[1]*/ q,
-                             __mpz_struct * /*[1]*/ r,
-                             __mpz_struct const * /*[1]*/ n, unsigned long d)
+unsigned long mpz_tdiv_qr_ui(__mpz_struct q[1], __mpz_struct r[1],
+                             __mpz_struct const n[1], unsigned long d)
 {
   unsigned long tmp;
   tmp = mpz_div_qr_ui(q,r,n,d,GMP_DIV_TRUNC);
   return tmp;
 }
 
-unsigned long mpz_cdiv_q_ui(__mpz_struct * /*[1]*/ q,
-                            __mpz_struct const * /*[1]*/ n, unsigned long d)
+unsigned long mpz_cdiv_q_ui(__mpz_struct q[1], __mpz_struct const n[1],
+                            unsigned long d)
 {
   unsigned long tmp;
   tmp = mpz_div_qr_ui(q,(__mpz_struct *)0,n,d,GMP_DIV_CEIL);
   return tmp;
 }
 
-unsigned long mpz_fdiv_q_ui(__mpz_struct * /*[1]*/ q,
-                            __mpz_struct const * /*[1]*/ n, unsigned long d)
+unsigned long mpz_fdiv_q_ui(__mpz_struct q[1], __mpz_struct const n[1],
+                            unsigned long d)
 {
   unsigned long tmp;
   tmp = mpz_div_qr_ui(q,(__mpz_struct *)0,n,d,GMP_DIV_FLOOR);
   return tmp;
 }
 
-unsigned long mpz_tdiv_q_ui(__mpz_struct * /*[1]*/ q,
-                            __mpz_struct const * /*[1]*/ n, unsigned long d)
+unsigned long mpz_tdiv_q_ui(__mpz_struct q[1], __mpz_struct const n[1],
+                            unsigned long d)
 {
   unsigned long tmp;
   tmp = mpz_div_qr_ui(q,(__mpz_struct *)0,n,d,GMP_DIV_TRUNC);
   return tmp;
 }
 
-unsigned long mpz_cdiv_r_ui(__mpz_struct * /*[1]*/ r,
-                            __mpz_struct const * /*[1]*/ n, unsigned long d)
+unsigned long mpz_cdiv_r_ui(__mpz_struct r[1], __mpz_struct const n[1],
+                            unsigned long d)
 {
   unsigned long tmp;
   tmp = mpz_div_qr_ui((__mpz_struct *)0,r,n,d,GMP_DIV_CEIL);
   return tmp;
 }
 
-unsigned long mpz_fdiv_r_ui(__mpz_struct * /*[1]*/ r,
-                            __mpz_struct const * /*[1]*/ n, unsigned long d)
+unsigned long mpz_fdiv_r_ui(__mpz_struct r[1], __mpz_struct const n[1],
+                            unsigned long d)
 {
   unsigned long tmp;
   tmp = mpz_div_qr_ui((__mpz_struct *)0,r,n,d,GMP_DIV_FLOOR);
   return tmp;
 }
 
-unsigned long mpz_tdiv_r_ui(__mpz_struct * /*[1]*/ r,
-                            __mpz_struct const * /*[1]*/ n, unsigned long d)
+unsigned long mpz_tdiv_r_ui(__mpz_struct r[1], __mpz_struct const n[1],
+                            unsigned long d)
 {
   unsigned long tmp;
   tmp = mpz_div_qr_ui((__mpz_struct *)0,r,n,d,GMP_DIV_TRUNC);
   return tmp;
 }
 
-unsigned long mpz_cdiv_ui(__mpz_struct const * /*[1]*/ n, unsigned long d)
+unsigned long mpz_cdiv_ui(__mpz_struct const n[1], unsigned long d)
 {
   unsigned long tmp;
   tmp = mpz_div_qr_ui((__mpz_struct *)0,(__mpz_struct *)0,n,d,GMP_DIV_CEIL);
   return tmp;
 }
 
-unsigned long mpz_fdiv_ui(__mpz_struct const * /*[1]*/ n, unsigned long d)
+unsigned long mpz_fdiv_ui(__mpz_struct const n[1], unsigned long d)
 {
   unsigned long tmp;
   tmp = mpz_div_qr_ui((__mpz_struct *)0,(__mpz_struct *)0,n,d,GMP_DIV_FLOOR);
   return tmp;
 }
 
-unsigned long mpz_tdiv_ui(__mpz_struct const * /*[1]*/ n, unsigned long d)
+unsigned long mpz_tdiv_ui(__mpz_struct const n[1], unsigned long d)
 {
   unsigned long tmp;
   tmp = mpz_div_qr_ui((__mpz_struct *)0,(__mpz_struct *)0,n,d,GMP_DIV_TRUNC);
   return tmp;
 }
 
-unsigned long mpz_mod_ui(__mpz_struct * /*[1]*/ r,
-                         __mpz_struct const * /*[1]*/ n, unsigned long d)
+unsigned long mpz_mod_ui(__mpz_struct r[1], __mpz_struct const n[1],
+                         unsigned long d)
 {
   unsigned long tmp;
   tmp = mpz_div_qr_ui((__mpz_struct *)0,r,n,d,GMP_DIV_FLOOR);
   return tmp;
 }
 
-void mpz_divexact_ui(__mpz_struct * /*[1]*/ q,
-                     __mpz_struct const * /*[1]*/ n, unsigned long d)
+void mpz_divexact_ui(__mpz_struct q[1], __mpz_struct const n[1],
+                     unsigned long d)
 {
   mp_limb_t __cy = mpz_div_qr_ui(q,(__mpz_struct *)0,n,d,GMP_DIV_TRUNC);
   __FC_assert((__cy == (mp_limb_t)0) != 0,"mini-gmp.c",2638,"__cy == 0");
   return;
 }
 
-int mpz_divisible_ui_p(__mpz_struct const * /*[1]*/ n, unsigned long d)
+int mpz_divisible_ui_p(__mpz_struct const n[1], unsigned long d)
 {
   int __retres;
   unsigned long tmp;
@@ -3808,8 +3762,8 @@ static mp_limb_t mpn_gcd_11(mp_limb_t u, mp_limb_t v)
   return_label: return __retres;
 }
 
-unsigned long mpz_gcd_ui(__mpz_struct * /*[1]*/ g,
-                         __mpz_struct const * /*[1]*/ u, unsigned long v)
+unsigned long mpz_gcd_ui(__mpz_struct g[1], __mpz_struct const u[1],
+                         unsigned long v)
 {
   mp_size_t un;
   if (v == (unsigned long)0) {
@@ -3828,7 +3782,7 @@ unsigned long mpz_gcd_ui(__mpz_struct * /*[1]*/ g,
   return v;
 }
 
-static mp_bitcnt_t mpz_make_odd(__mpz_struct * /*[1]*/ r)
+static mp_bitcnt_t mpz_make_odd(__mpz_struct r[1])
 {
   mp_bitcnt_t shift;
   __FC_assert((r->_mp_size > 0) != 0,"mini-gmp.c",2720,"r->_mp_size > 0");
@@ -3839,8 +3793,8 @@ static mp_bitcnt_t mpz_make_odd(__mpz_struct * /*[1]*/ r)
   return shift;
 }
 
-void mpz_gcd(__mpz_struct * /*[1]*/ g, __mpz_struct const * /*[1]*/ u,
-             __mpz_struct const * /*[1]*/ v)
+void mpz_gcd(__mpz_struct g[1], __mpz_struct const u[1],
+             __mpz_struct const v[1])
 {
   mpz_t tu;
   mpz_t tv;
@@ -3892,9 +3846,8 @@ void mpz_gcd(__mpz_struct * /*[1]*/ g, __mpz_struct const * /*[1]*/ u,
   return_label: return;
 }
 
-void mpz_gcdext(__mpz_struct * /*[1]*/ g, __mpz_struct * /*[1]*/ s,
-                __mpz_struct * /*[1]*/ t, __mpz_struct const * /*[1]*/ u,
-                __mpz_struct const * /*[1]*/ v)
+void mpz_gcdext(__mpz_struct g[1], __mpz_struct s[1], __mpz_struct t[1],
+                __mpz_struct const u[1], __mpz_struct const v[1])
 {
   mpz_t tu;
   mpz_t tv;
@@ -4030,8 +3983,8 @@ void mpz_gcdext(__mpz_struct * /*[1]*/ g, __mpz_struct * /*[1]*/ s,
   return_label: return;
 }
 
-void mpz_lcm(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
-             __mpz_struct const * /*[1]*/ v)
+void mpz_lcm(__mpz_struct r[1], __mpz_struct const u[1],
+             __mpz_struct const v[1])
 {
   mpz_t g;
   if (u->_mp_size == 0) goto _LOR;
@@ -4051,8 +4004,7 @@ void mpz_lcm(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
   return_label: return;
 }
 
-void mpz_lcm_ui(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
-                unsigned long v)
+void mpz_lcm_ui(__mpz_struct r[1], __mpz_struct const u[1], unsigned long v)
 {
   unsigned long tmp;
   if (v == (unsigned long)0) goto _LOR;
@@ -4070,8 +4022,8 @@ void mpz_lcm_ui(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
   return_label: return;
 }
 
-int mpz_invert(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
-               __mpz_struct const * /*[1]*/ m)
+int mpz_invert(__mpz_struct r[1], __mpz_struct const u[1],
+               __mpz_struct const m[1])
 {
   int __retres;
   mpz_t g;
@@ -4107,8 +4059,7 @@ int mpz_invert(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
   return_label: return __retres;
 }
 
-void mpz_pow_ui(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ b,
-                unsigned long e)
+void mpz_pow_ui(__mpz_struct r[1], __mpz_struct const b[1], unsigned long e)
 {
   unsigned long bit;
   mpz_t tr;
@@ -4125,8 +4076,7 @@ void mpz_pow_ui(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ b,
   return;
 }
 
-void mpz_ui_pow_ui(__mpz_struct * /*[1]*/ r, unsigned long blimb,
-                   unsigned long e)
+void mpz_ui_pow_ui(__mpz_struct r[1], unsigned long blimb, unsigned long e)
 {
   mpz_t b;
   mpz_srcptr tmp;
@@ -4137,8 +4087,8 @@ void mpz_ui_pow_ui(__mpz_struct * /*[1]*/ r, unsigned long blimb,
   return;
 }
 
-void mpz_powm(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ b,
-              __mpz_struct const * /*[1]*/ e, __mpz_struct const * /*[1]*/ m)
+void mpz_powm(__mpz_struct r[1], __mpz_struct const b[1],
+              __mpz_struct const e[1], __mpz_struct const m[1])
 {
   mpz_t tr;
   mpz_t base;
@@ -4236,8 +4186,8 @@ void mpz_powm(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ b,
   return_label: return;
 }
 
-void mpz_powm_ui(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ b,
-                 unsigned long elimb, __mpz_struct const * /*[1]*/ m)
+void mpz_powm_ui(__mpz_struct r[1], __mpz_struct const b[1],
+                 unsigned long elimb, __mpz_struct const m[1])
 {
   mpz_t e;
   mpz_srcptr tmp;
@@ -4249,8 +4199,8 @@ void mpz_powm_ui(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ b,
   return;
 }
 
-void mpz_rootrem(__mpz_struct * /*[1]*/ x, __mpz_struct * /*[1]*/ r,
-                 __mpz_struct const * /*[1]*/ y, unsigned long z)
+void mpz_rootrem(__mpz_struct x[1], __mpz_struct r[1],
+                 __mpz_struct const y[1], unsigned long z)
 {
   int sgn;
   mpz_t t;
@@ -4311,8 +4261,7 @@ void mpz_rootrem(__mpz_struct * /*[1]*/ x, __mpz_struct * /*[1]*/ r,
   return_label: return;
 }
 
-int mpz_root(__mpz_struct * /*[1]*/ x, __mpz_struct const * /*[1]*/ y,
-             unsigned long z)
+int mpz_root(__mpz_struct x[1], __mpz_struct const y[1], unsigned long z)
 {
   int res;
   mpz_t r;
@@ -4323,20 +4272,20 @@ int mpz_root(__mpz_struct * /*[1]*/ x, __mpz_struct const * /*[1]*/ y,
   return res;
 }
 
-void mpz_sqrtrem(__mpz_struct * /*[1]*/ s, __mpz_struct * /*[1]*/ r,
-                 __mpz_struct const * /*[1]*/ u)
+void mpz_sqrtrem(__mpz_struct s[1], __mpz_struct r[1],
+                 __mpz_struct const u[1])
 {
   mpz_rootrem(s,r,u,(unsigned long)2);
   return;
 }
 
-void mpz_sqrt(__mpz_struct * /*[1]*/ s, __mpz_struct const * /*[1]*/ u)
+void mpz_sqrt(__mpz_struct s[1], __mpz_struct const u[1])
 {
   mpz_rootrem(s,(__mpz_struct *)0,u,(unsigned long)2);
   return;
 }
 
-int mpz_perfect_square_p(__mpz_struct const * /*[1]*/ u)
+int mpz_perfect_square_p(__mpz_struct const u[1])
 {
   int __retres;
   if (u->_mp_size <= 0) {
@@ -4389,7 +4338,7 @@ mp_size_t mpn_sqrtrem(mp_ptr sp, mp_ptr rp, mp_srcptr p, mp_size_t n)
   return res;
 }
 
-void mpz_fac_ui(__mpz_struct * /*[1]*/ x, unsigned long n)
+void mpz_fac_ui(__mpz_struct x[1], unsigned long n)
 {
   mpz_set_ui(x,n + (unsigned long)(n == (unsigned long)0));
   while (n > (unsigned long)2) {
@@ -4401,7 +4350,7 @@ void mpz_fac_ui(__mpz_struct * /*[1]*/ x, unsigned long n)
   return;
 }
 
-void mpz_bin_uiui(__mpz_struct * /*[1]*/ r, unsigned long n, unsigned long k)
+void mpz_bin_uiui(__mpz_struct r[1], unsigned long n, unsigned long k)
 {
   mpz_t t;
   mpz_set_ui(r,(unsigned long)(k <= n));
@@ -4424,10 +4373,9 @@ void mpz_bin_uiui(__mpz_struct * /*[1]*/ r, unsigned long n, unsigned long k)
   return;
 }
 
-static int gmp_millerrabin(__mpz_struct const * /*[1]*/ n,
-                           __mpz_struct const * /*[1]*/ nm1,
-                           __mpz_struct * /*[1]*/ y,
-                           __mpz_struct const * /*[1]*/ q, mp_bitcnt_t k)
+static int gmp_millerrabin(__mpz_struct const n[1],
+                           __mpz_struct const nm1[1], __mpz_struct y[1],
+                           __mpz_struct const q[1], mp_bitcnt_t k)
 {
   int __retres;
   int tmp;
@@ -4469,7 +4417,7 @@ static int gmp_millerrabin(__mpz_struct const * /*[1]*/ n,
   return_label: return __retres;
 }
 
-int mpz_probab_prime_p(__mpz_struct const * /*[1]*/ n, int reps)
+int mpz_probab_prime_p(__mpz_struct const n[1], int reps)
 {
   int __retres;
   mpz_t nm1;
@@ -4540,7 +4488,7 @@ int mpz_probab_prime_p(__mpz_struct const * /*[1]*/ n, int reps)
   return_label: return __retres;
 }
 
-int mpz_tstbit(__mpz_struct const * /*[1]*/ d, mp_bitcnt_t bit_index)
+int mpz_tstbit(__mpz_struct const d[1], mp_bitcnt_t bit_index)
 {
   int __retres;
   mp_size_t limb_index;
@@ -4578,7 +4526,7 @@ int mpz_tstbit(__mpz_struct const * /*[1]*/ d, mp_bitcnt_t bit_index)
   return_label: return __retres;
 }
 
-static void mpz_abs_add_bit(__mpz_struct * /*[1]*/ d, mp_bitcnt_t bit_index)
+static void mpz_abs_add_bit(__mpz_struct d[1], mp_bitcnt_t bit_index)
 {
   mp_size_t dn;
   mp_size_t limb_index;
@@ -4621,7 +4569,7 @@ static void mpz_abs_add_bit(__mpz_struct * /*[1]*/ d, mp_bitcnt_t bit_index)
   return;
 }
 
-static void mpz_abs_sub_bit(__mpz_struct * /*[1]*/ d, mp_bitcnt_t bit_index)
+static void mpz_abs_sub_bit(__mpz_struct d[1], mp_bitcnt_t bit_index)
 {
   mp_size_t dn;
   mp_size_t limb_index;
@@ -4644,7 +4592,7 @@ static void mpz_abs_sub_bit(__mpz_struct * /*[1]*/ d, mp_bitcnt_t bit_index)
   return;
 }
 
-void mpz_setbit(__mpz_struct * /*[1]*/ d, mp_bitcnt_t bit_index)
+void mpz_setbit(__mpz_struct d[1], mp_bitcnt_t bit_index)
 {
   int tmp;
   tmp = mpz_tstbit((__mpz_struct const *)d,bit_index);
@@ -4654,7 +4602,7 @@ void mpz_setbit(__mpz_struct * /*[1]*/ d, mp_bitcnt_t bit_index)
   return;
 }
 
-void mpz_clrbit(__mpz_struct * /*[1]*/ d, mp_bitcnt_t bit_index)
+void mpz_clrbit(__mpz_struct d[1], mp_bitcnt_t bit_index)
 {
   int tmp;
   tmp = mpz_tstbit((__mpz_struct const *)d,bit_index);
@@ -4664,7 +4612,7 @@ void mpz_clrbit(__mpz_struct * /*[1]*/ d, mp_bitcnt_t bit_index)
   return;
 }
 
-void mpz_combit(__mpz_struct * /*[1]*/ d, mp_bitcnt_t bit_index)
+void mpz_combit(__mpz_struct d[1], mp_bitcnt_t bit_index)
 {
   int tmp;
   tmp = mpz_tstbit((__mpz_struct const *)d,bit_index);
@@ -4674,15 +4622,15 @@ void mpz_combit(__mpz_struct * /*[1]*/ d, mp_bitcnt_t bit_index)
   return;
 }
 
-void mpz_com(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u)
+void mpz_com(__mpz_struct r[1], __mpz_struct const u[1])
 {
   mpz_neg(r,u);
   mpz_sub_ui(r,(__mpz_struct const *)r,(unsigned long)1);
   return;
 }
 
-void mpz_and(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
-             __mpz_struct const * /*[1]*/ v)
+void mpz_and(__mpz_struct r[1], __mpz_struct const u[1],
+             __mpz_struct const v[1])
 {
   mp_size_t un;
   mp_size_t vn;
@@ -4766,8 +4714,8 @@ void mpz_and(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
   return_label: return;
 }
 
-void mpz_ior(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
-             __mpz_struct const * /*[1]*/ v)
+void mpz_ior(__mpz_struct r[1], __mpz_struct const u[1],
+             __mpz_struct const v[1])
 {
   mp_size_t un;
   mp_size_t vn;
@@ -4851,8 +4799,8 @@ void mpz_ior(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
   return_label: return;
 }
 
-void mpz_xor(__mpz_struct * /*[1]*/ r, __mpz_struct const * /*[1]*/ u,
-             __mpz_struct const * /*[1]*/ v)
+void mpz_xor(__mpz_struct r[1], __mpz_struct const u[1],
+             __mpz_struct const v[1])
 {
   mp_size_t un;
   mp_size_t vn;
@@ -4967,7 +4915,7 @@ mp_bitcnt_t mpn_popcount(mp_srcptr p, mp_size_t n)
   return c;
 }
 
-mp_bitcnt_t mpz_popcount(__mpz_struct const * /*[1]*/ u)
+mp_bitcnt_t mpz_popcount(__mpz_struct const u[1])
 {
   mp_bitcnt_t __retres;
   mp_size_t un;
@@ -4982,8 +4930,7 @@ mp_bitcnt_t mpz_popcount(__mpz_struct const * /*[1]*/ u)
   return_label: return __retres;
 }
 
-mp_bitcnt_t mpz_hamdist(__mpz_struct const * /*[1]*/ u,
-                        __mpz_struct const * /*[1]*/ v)
+mp_bitcnt_t mpz_hamdist(__mpz_struct const u[1], __mpz_struct const v[1])
 {
   mp_bitcnt_t __retres;
   mp_size_t un;
@@ -5054,8 +5001,7 @@ mp_bitcnt_t mpz_hamdist(__mpz_struct const * /*[1]*/ u,
   return_label: return __retres;
 }
 
-mp_bitcnt_t mpz_scan1(__mpz_struct const * /*[1]*/ u,
-                      mp_bitcnt_t starting_bit)
+mp_bitcnt_t mpz_scan1(__mpz_struct const u[1], mp_bitcnt_t starting_bit)
 {
   mp_bitcnt_t __retres;
   mp_ptr up;
@@ -5093,8 +5039,7 @@ mp_bitcnt_t mpz_scan1(__mpz_struct const * /*[1]*/ u,
   return_label: return __retres;
 }
 
-mp_bitcnt_t mpz_scan0(__mpz_struct const * /*[1]*/ u,
-                      mp_bitcnt_t starting_bit)
+mp_bitcnt_t mpz_scan0(__mpz_struct const u[1], mp_bitcnt_t starting_bit)
 {
   mp_bitcnt_t __retres;
   mp_ptr up;
@@ -5127,7 +5072,7 @@ mp_bitcnt_t mpz_scan0(__mpz_struct const * /*[1]*/ u,
   return_label: return __retres;
 }
 
-size_t mpz_sizeinbase(__mpz_struct const * /*[1]*/ u, int base)
+size_t mpz_sizeinbase(__mpz_struct const u[1], int base)
 {
   size_t __retres;
   mp_size_t un;
@@ -5181,7 +5126,7 @@ size_t mpz_sizeinbase(__mpz_struct const * /*[1]*/ u, int base)
   return_label: return __retres;
 }
 
-char *mpz_get_str(char *sp, int base, __mpz_struct const * /*[1]*/ u)
+char *mpz_get_str(char *sp, int base, __mpz_struct const u[1])
 {
   char *__retres;
   unsigned int bits;
@@ -5246,7 +5191,7 @@ char *mpz_get_str(char *sp, int base, __mpz_struct const * /*[1]*/ u)
   return_label: return __retres;
 }
 
-int mpz_set_str(__mpz_struct * /*[1]*/ r, char const *sp, int base)
+int mpz_set_str(__mpz_struct r[1], char const *sp, int base)
 {
   int __retres;
   unsigned int bits;
@@ -5360,7 +5305,7 @@ int mpz_set_str(__mpz_struct * /*[1]*/ r, char const *sp, int base)
   return_label: return __retres;
 }
 
-int mpz_init_set_str(__mpz_struct * /*[1]*/ r, char const *sp, int base)
+int mpz_init_set_str(__mpz_struct r[1], char const *sp, int base)
 {
   int tmp;
   mpz_init(r);
@@ -5368,7 +5313,7 @@ int mpz_init_set_str(__mpz_struct * /*[1]*/ r, char const *sp, int base)
   return tmp;
 }
 
-size_t mpz_out_str(FILE *stream, int base, __mpz_struct const * /*[1]*/ x)
+size_t mpz_out_str(FILE *stream, int base, __mpz_struct const x[1])
 {
   char *str;
   size_t len;
@@ -5390,8 +5335,8 @@ static int gmp_detect_endian(void)
   return __retres;
 }
 
-void mpz_import(__mpz_struct * /*[1]*/ r, size_t count, int order,
-                size_t size, int endian, size_t nails, void const *src)
+void mpz_import(__mpz_struct r[1], size_t count, int order, size_t size,
+                int endian, size_t nails, void const *src)
 {
   unsigned char const *p;
   ptrdiff_t word_step;
@@ -5466,7 +5411,7 @@ void mpz_import(__mpz_struct * /*[1]*/ r, size_t count, int order,
 }
 
 void *mpz_export(void *r, size_t *countp, int order, size_t size, int endian,
-                 size_t nails, __mpz_struct const * /*[1]*/ u)
+                 size_t nails, __mpz_struct const u[1])
 {
   size_t count;
   mp_size_t un;
@@ -5549,17 +5494,16 @@ void *mpz_export(void *r, size_t *countp, int order, size_t size, int endian,
   return r;
 }
 
-void __gmp_randinit_default(__gmp_randstate_struct *);
+void __gmp_randinit_default(__gmp_randstate_struct [1]);
 
-void __gmp_randseed_ui(__gmp_randstate_struct *, unsigned long);
+void __gmp_randseed_ui(__gmp_randstate_struct [1], unsigned long);
 
 /*@ assigns \result, *a, __fc_random_counter;
     assigns \result \from __fc_random_counter;
     assigns *a \from __fc_random_counter;
     assigns __fc_random_counter \from __fc_random_counter;
  */
-unsigned long __gmp_urandomb_ui(__gmp_randstate_struct * /*[1]*/ a,
-                                unsigned long b);
+unsigned long __gmp_urandomb_ui(__gmp_randstate_struct a[1], unsigned long b);
 
 /*@ requires \valid(strp);
     ensures \initialized(\old(strp));
@@ -5644,8 +5588,7 @@ void __gmpz_powm(mpz_ptr, mpz_srcptr, mpz_srcptr, mpz_srcptr);
     assigns *b \from __fc_random_counter;
     assigns __fc_random_counter \from __fc_random_counter;
  */
-void __gmpz_rrandomb(mpz_ptr a, __gmp_randstate_struct * /*[1]*/ b,
-                     mp_bitcnt_t c);
+void __gmpz_rrandomb(mpz_ptr a, __gmp_randstate_struct b[1], mp_bitcnt_t c);
 
 mp_bitcnt_t __gmpz_scan0(mpz_srcptr, mp_bitcnt_t) __attribute__((__pure__));
 
@@ -5667,7 +5610,7 @@ void __gmpz_tdiv_qr(mpz_ptr, mpz_ptr, mpz_srcptr, mpz_srcptr);
 
 void __gmpz_tdiv_r_2exp(mpz_ptr, mpz_srcptr, mp_bitcnt_t);
 
-void __gmpz_urandomb(mpz_ptr, __gmp_randstate_struct *, mp_bitcnt_t);
+void __gmpz_urandomb(mpz_ptr, __gmp_randstate_struct [1], mp_bitcnt_t);
 
 /*@ assigns *res;
     assigns *res \from a, b; */
@@ -5685,7 +5628,7 @@ static gmp_randstate_t state;
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_1(char const * __restrict format, unsigned long param0);
+int printf_va_1(char const * restrict format, unsigned long param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -5698,7 +5641,7 @@ int printf_va_1(char const * __restrict format, unsigned long param0);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_2(char const * __restrict format, unsigned long param0);
+int printf_va_2(char const * restrict format, unsigned long param0);
 
 void hex_random_init(void)
 {
@@ -6146,10 +6089,10 @@ void hex_random_str_op(unsigned long maxbits, int base, char **ap, char **rp)
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int fprintf_va_3(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_3(FILE * restrict stream, char const * restrict format,
                  char *param0);
 
-static void set_str(__mpz_struct * /*[1]*/ r, char const *s)
+static void set_str(__mpz_struct r[1], char const *s)
 {
   int tmp;
   tmp = mpz_set_str(r,s,16);
@@ -6160,7 +6103,7 @@ static void set_str(__mpz_struct * /*[1]*/ r, char const *s)
   return;
 }
 
-void mini_urandomb(__mpz_struct * /*[1]*/ r, unsigned long bits)
+void mini_urandomb(__mpz_struct r[1], unsigned long bits)
 {
   char *s;
   s = hex_urandomb(bits);
@@ -6169,7 +6112,7 @@ void mini_urandomb(__mpz_struct * /*[1]*/ r, unsigned long bits)
   return;
 }
 
-void mini_rrandomb(__mpz_struct * /*[1]*/ r, unsigned long bits)
+void mini_rrandomb(__mpz_struct r[1], unsigned long bits)
 {
   char *s;
   s = hex_rrandomb(bits);
@@ -6178,8 +6121,8 @@ void mini_rrandomb(__mpz_struct * /*[1]*/ r, unsigned long bits)
   return;
 }
 
-void mini_rrandomb_export(__mpz_struct * /*[1]*/ r, void *dst,
-                          size_t *countp, int order, size_t size, int endian,
+void mini_rrandomb_export(__mpz_struct r[1], void *dst, size_t *countp,
+                          int order, size_t size, int endian,
                           unsigned long bits)
 {
   char *s;
@@ -6190,7 +6133,7 @@ void mini_rrandomb_export(__mpz_struct * /*[1]*/ r, void *dst,
 }
 
 void mini_random_op2(enum hex_random_op op, unsigned long maxbits,
-                     __mpz_struct * /*[1]*/ a, __mpz_struct * /*[1]*/ r)
+                     __mpz_struct a[1], __mpz_struct r[1])
 {
   char *ap;
   char *rp;
@@ -6203,8 +6146,7 @@ void mini_random_op2(enum hex_random_op op, unsigned long maxbits,
 }
 
 void mini_random_op3(enum hex_random_op op, unsigned long maxbits,
-                     __mpz_struct * /*[1]*/ a, __mpz_struct * /*[1]*/ b,
-                     __mpz_struct * /*[1]*/ r)
+                     __mpz_struct a[1], __mpz_struct b[1], __mpz_struct r[1])
 {
   char *ap;
   char *bp;
@@ -6220,8 +6162,8 @@ void mini_random_op3(enum hex_random_op op, unsigned long maxbits,
 }
 
 void mini_random_op4(enum hex_random_op op, unsigned long maxbits,
-                     __mpz_struct * /*[1]*/ a, __mpz_struct * /*[1]*/ b,
-                     __mpz_struct * /*[1]*/ c, __mpz_struct * /*[1]*/ d)
+                     __mpz_struct a[1], __mpz_struct b[1], __mpz_struct c[1],
+                     __mpz_struct d[1])
 {
   char *ap;
   char *bp;
@@ -6240,8 +6182,7 @@ void mini_random_op4(enum hex_random_op op, unsigned long maxbits,
 }
 
 void mini_random_bit_op(enum hex_random_op op, unsigned long maxbits,
-                        __mpz_struct * /*[1]*/ a, mp_bitcnt_t *b,
-                        __mpz_struct * /*[1]*/ r)
+                        __mpz_struct a[1], mp_bitcnt_t *b, __mpz_struct r[1])
 {
   char *ap;
   char *rp;
@@ -6254,8 +6195,7 @@ void mini_random_bit_op(enum hex_random_op op, unsigned long maxbits,
 }
 
 void mini_random_scan_op(enum hex_random_op op, unsigned long maxbits,
-                         __mpz_struct * /*[1]*/ a, mp_bitcnt_t *b,
-                         mp_bitcnt_t *r)
+                         __mpz_struct a[1], mp_bitcnt_t *b, mp_bitcnt_t *r)
 {
   char *ap;
   hex_random_scan_op(op,maxbits,& ap,b,r);

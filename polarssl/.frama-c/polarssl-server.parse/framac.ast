@@ -482,22 +482,21 @@ int aes_setkey_enc(aes_context *ctx, unsigned char const *key,
 int aes_setkey_dec(aes_context *ctx, unsigned char const *key,
                    unsigned int keysize);
 
-int aes_crypt_ecb(aes_context *ctx, int mode,
-                  unsigned char const * /*[16]*/ input,
-                  unsigned char * /*[16]*/ output);
+int aes_crypt_ecb(aes_context *ctx, int mode, unsigned char const input[16],
+                  unsigned char output[16]);
 
 int aes_crypt_cbc(aes_context *ctx, int mode, size_t length,
-                  unsigned char * /*[16]*/ iv, unsigned char const *input,
+                  unsigned char iv[16], unsigned char const *input,
                   unsigned char *output);
 
 int aes_crypt_cfb128(aes_context *ctx, int mode, size_t length,
-                     size_t *iv_off, unsigned char * /*[16]*/ iv,
+                     size_t *iv_off, unsigned char iv[16],
                      unsigned char const *input, unsigned char *output);
 
 int aes_crypt_ctr(aes_context *ctx, size_t length, size_t *nc_off,
-                  unsigned char * /*[16]*/ nonce_counter,
-                  unsigned char * /*[16]*/ stream_block,
-                  unsigned char const *input, unsigned char *output);
+                  unsigned char nonce_counter[16],
+                  unsigned char stream_block[16], unsigned char const *input,
+                  unsigned char *output);
 
 int aes_self_test(int verbose);
 
@@ -668,12 +667,11 @@ void md5_starts(md5_context *ctx);
 
 void md5_update(md5_context *ctx, unsigned char const *input, size_t ilen);
 
-void md5_finish(md5_context *ctx, unsigned char * /*[16]*/ output);
+void md5_finish(md5_context *ctx, unsigned char output[16]);
 
-void md5(unsigned char const *input, size_t ilen,
-         unsigned char * /*[16]*/ output);
+void md5(unsigned char const *input, size_t ilen, unsigned char output[16]);
 
-int md5_file(char const *path, unsigned char * /*[16]*/ output);
+int md5_file(char const *path, unsigned char output[16]);
 
 void md5_hmac_starts(md5_context *ctx, unsigned char const *key,
                      size_t keylen);
@@ -681,28 +679,27 @@ void md5_hmac_starts(md5_context *ctx, unsigned char const *key,
 void md5_hmac_update(md5_context *ctx, unsigned char const *input,
                      size_t ilen);
 
-void md5_hmac_finish(md5_context *ctx, unsigned char * /*[16]*/ output);
+void md5_hmac_finish(md5_context *ctx, unsigned char output[16]);
 
 void md5_hmac_reset(md5_context *ctx);
 
 void md5_hmac(unsigned char const *key, size_t keylen,
               unsigned char const *input, size_t ilen,
-              unsigned char * /*[16]*/ output);
+              unsigned char output[16]);
 
 int md5_self_test(int verbose);
 
-void md5_process(md5_context *ctx, unsigned char const * /*[64]*/ data);
+void md5_process(md5_context *ctx, unsigned char const data[64]);
 
 void sha1_starts(sha1_context *ctx);
 
 void sha1_update(sha1_context *ctx, unsigned char const *input, size_t ilen);
 
-void sha1_finish(sha1_context *ctx, unsigned char * /*[20]*/ output);
+void sha1_finish(sha1_context *ctx, unsigned char output[20]);
 
-void sha1(unsigned char const *input, size_t ilen,
-          unsigned char * /*[20]*/ output);
+void sha1(unsigned char const *input, size_t ilen, unsigned char output[20]);
 
-int sha1_file(char const *path, unsigned char * /*[20]*/ output);
+int sha1_file(char const *path, unsigned char output[20]);
 
 void sha1_hmac_starts(sha1_context *ctx, unsigned char const *key,
                       size_t keylen);
@@ -710,17 +707,17 @@ void sha1_hmac_starts(sha1_context *ctx, unsigned char const *key,
 void sha1_hmac_update(sha1_context *ctx, unsigned char const *input,
                       size_t ilen);
 
-void sha1_hmac_finish(sha1_context *ctx, unsigned char * /*[20]*/ output);
+void sha1_hmac_finish(sha1_context *ctx, unsigned char output[20]);
 
 void sha1_hmac_reset(sha1_context *ctx);
 
 void sha1_hmac(unsigned char const *key, size_t keylen,
                unsigned char const *input, size_t ilen,
-               unsigned char * /*[20]*/ output);
+               unsigned char output[20]);
 
 int sha1_self_test(int verbose);
 
-void sha1_process(sha1_context *ctx, unsigned char const * /*[64]*/ data);
+void sha1_process(sha1_context *ctx, unsigned char const data[64]);
 
 int asn1_get_len(unsigned char **p, unsigned char const *end, size_t *len);
 
@@ -877,7 +874,7 @@ int ssl_handshake_server(ssl_context *ssl);
 
 int ssl_derive_keys(ssl_context *ssl);
 
-void ssl_calc_verify(ssl_context *ssl, unsigned char * /*[36]*/ hash);
+void ssl_calc_verify(ssl_context *ssl, unsigned char hash[36]);
 
 int ssl_read_record(ssl_context *ssl);
 
@@ -944,20 +941,20 @@ int camellia_setkey_dec(camellia_context *ctx, unsigned char const *key,
                         unsigned int keysize);
 
 int camellia_crypt_ecb(camellia_context *ctx, int mode,
-                       unsigned char const * /*[16]*/ input,
-                       unsigned char * /*[16]*/ output);
+                       unsigned char const input[16],
+                       unsigned char output[16]);
 
 int camellia_crypt_cbc(camellia_context *ctx, int mode, size_t length,
-                       unsigned char * /*[16]*/ iv,
-                       unsigned char const *input, unsigned char *output);
+                       unsigned char iv[16], unsigned char const *input,
+                       unsigned char *output);
 
 int camellia_crypt_cfb128(camellia_context *ctx, int mode, size_t length,
-                          size_t *iv_off, unsigned char * /*[16]*/ iv,
+                          size_t *iv_off, unsigned char iv[16],
                           unsigned char const *input, unsigned char *output);
 
 int camellia_crypt_ctr(camellia_context *ctx, size_t length, size_t *nc_off,
-                       unsigned char * /*[16]*/ nonce_counter,
-                       unsigned char * /*[16]*/ stream_block,
+                       unsigned char nonce_counter[16],
+                       unsigned char stream_block[16],
                        unsigned char const *input, unsigned char *output);
 
 int camellia_self_test(int verbose);
@@ -970,36 +967,36 @@ int arc4_crypt(arc4_context *ctx, size_t length, unsigned char const *input,
 
 int arc4_self_test(int verbose);
 
-void des_key_set_parity(unsigned char * /*[8]*/ key);
+void des_key_set_parity(unsigned char key[8]);
 
-int des_key_check_key_parity(unsigned char const * /*[8]*/ key);
+int des_key_check_key_parity(unsigned char const key[8]);
 
-int des_key_check_weak(unsigned char const * /*[8]*/ key);
+int des_key_check_weak(unsigned char const key[8]);
 
-int des_setkey_enc(des_context *ctx, unsigned char const * /*[8]*/ key);
+int des_setkey_enc(des_context *ctx, unsigned char const key[8]);
 
-int des_setkey_dec(des_context *ctx, unsigned char const * /*[8]*/ key);
+int des_setkey_dec(des_context *ctx, unsigned char const key[8]);
 
-int des3_set2key_enc(des3_context *ctx, unsigned char const * /*[16]*/ key);
+int des3_set2key_enc(des3_context *ctx, unsigned char const key[16]);
 
-int des3_set2key_dec(des3_context *ctx, unsigned char const * /*[16]*/ key);
+int des3_set2key_dec(des3_context *ctx, unsigned char const key[16]);
 
-int des3_set3key_enc(des3_context *ctx, unsigned char const * /*[24]*/ key);
+int des3_set3key_enc(des3_context *ctx, unsigned char const key[24]);
 
-int des3_set3key_dec(des3_context *ctx, unsigned char const * /*[24]*/ key);
+int des3_set3key_dec(des3_context *ctx, unsigned char const key[24]);
 
-int des_crypt_ecb(des_context *ctx, unsigned char const * /*[8]*/ input,
-                  unsigned char * /*[8]*/ output);
+int des_crypt_ecb(des_context *ctx, unsigned char const input[8],
+                  unsigned char output[8]);
 
 int des_crypt_cbc(des_context *ctx, int mode, size_t length,
-                  unsigned char * /*[8]*/ iv, unsigned char const *input,
+                  unsigned char iv[8], unsigned char const *input,
                   unsigned char *output);
 
-int des3_crypt_ecb(des3_context *ctx, unsigned char const * /*[8]*/ input,
-                   unsigned char * /*[8]*/ output);
+int des3_crypt_ecb(des3_context *ctx, unsigned char const input[8],
+                   unsigned char output[8]);
 
 int des3_crypt_cbc(des3_context *ctx, int mode, size_t length,
-                   unsigned char * /*[8]*/ iv, unsigned char const *input,
+                   unsigned char iv[8], unsigned char const *input,
                    unsigned char *output);
 
 int des_self_test(int verbose);
@@ -1011,12 +1008,11 @@ int aes_setkey_enc(aes_context *ctx, unsigned char const *key,
 int aes_setkey_dec(aes_context *ctx, unsigned char const *key,
                    unsigned int keysize);
 
-int aes_crypt_ecb(aes_context *ctx, int mode,
-                  unsigned char const * /*[16]*/ input,
-                  unsigned char * /*[16]*/ output);
+int aes_crypt_ecb(aes_context *ctx, int mode, unsigned char const input[16],
+                  unsigned char output[16]);
 
 int aes_crypt_cbc(aes_context *ctx, int mode, size_t length,
-                  unsigned char * /*[16]*/ iv, unsigned char const *input,
+                  unsigned char iv[16], unsigned char const *input,
                   unsigned char *output);
 
 void mpi_free(mpi *X);
@@ -1058,21 +1054,21 @@ int dhm_make_params(dhm_context *ctx, int x_size, unsigned char *output,
                     int (*f_rng)(void *, unsigned char *, size_t ),
                     void *p_rng);
 
-void md5_process(md5_context *ctx, unsigned char const * /*[64]*/ data);
+void md5_process(md5_context *ctx, unsigned char const data[64]);
 
-void sha1_finish(sha1_context *ctx, unsigned char * /*[20]*/ output);
+void sha1_finish(sha1_context *ctx, unsigned char output[20]);
 
-void sha1_process(sha1_context *ctx, unsigned char const * /*[64]*/ data);
+void sha1_process(sha1_context *ctx, unsigned char const data[64]);
 
 int camellia_crypt_cbc(camellia_context *ctx, int mode, size_t length,
-                       unsigned char * /*[16]*/ iv,
-                       unsigned char const *input, unsigned char *output);
+                       unsigned char iv[16], unsigned char const *input,
+                       unsigned char *output);
 
 int arc4_crypt(arc4_context *ctx, size_t length, unsigned char const *input,
                unsigned char *output);
 
-int des3_crypt_ecb(des3_context *ctx, unsigned char const * /*[8]*/ input,
-                   unsigned char * /*[8]*/ output);
+int des3_crypt_ecb(des3_context *ctx, unsigned char const input[8],
+                   unsigned char output[8]);
 
 /*@ ghost int volatile _rsa_keyfile; */
 int x509parse_key(rsa_context *rsa, unsigned char const *key, size_t keylen,
@@ -1081,8 +1077,8 @@ int x509parse_key(rsa_context *rsa, unsigned char const *key, size_t keylen,
 /*@ ghost long volatile _hardclock_clock; */
 unsigned long hardclock(void);
 
-void sha4(unsigned char const *input, size_t ilen,
-          unsigned char * /*[64]*/ output, int is384);
+void sha4(unsigned char const *input, size_t ilen, unsigned char output[64],
+          int is384);
 
 /*@ ghost int volatile _ctr_drbg_random_source; */
 int ctr_drbg_random(void *p_rng, unsigned char *output, size_t output_len);
@@ -1118,9 +1114,9 @@ void sha4_starts(sha4_context *ctx, int is384);
 
 void sha4_update(sha4_context *ctx, unsigned char const *input, size_t ilen);
 
-void sha4_finish(sha4_context *ctx, unsigned char * /*[64]*/ output);
+void sha4_finish(sha4_context *ctx, unsigned char output[64]);
 
-int sha4_file(char const *path, unsigned char * /*[64]*/ output, int is384);
+int sha4_file(char const *path, unsigned char output[64], int is384);
 
 void sha4_hmac_starts(sha4_context *ctx, unsigned char const *key,
                       size_t keylen, int is384);
@@ -1128,25 +1124,24 @@ void sha4_hmac_starts(sha4_context *ctx, unsigned char const *key,
 void sha4_hmac_update(sha4_context *ctx, unsigned char const *input,
                       size_t ilen);
 
-void sha4_hmac_finish(sha4_context *ctx, unsigned char * /*[64]*/ output);
+void sha4_hmac_finish(sha4_context *ctx, unsigned char output[64]);
 
 void sha4_hmac_reset(sha4_context *ctx);
 
 void sha4_hmac(unsigned char const *key, size_t keylen,
                unsigned char const *input, size_t ilen,
-               unsigned char * /*[64]*/ output, int is384);
+               unsigned char output[64], int is384);
 
 int sha4_self_test(int verbose);
 
 int padlock_supports(int feature);
 
 int padlock_xcryptecb(aes_context *ctx, int mode,
-                      unsigned char const * /*[16]*/ input,
-                      unsigned char * /*[16]*/ output);
+                      unsigned char const input[16], unsigned char output[16]);
 
 int padlock_xcryptcbc(aes_context *ctx, int mode, size_t length,
-                      unsigned char * /*[16]*/ iv,
-                      unsigned char const *input, unsigned char *output);
+                      unsigned char iv[16], unsigned char const *input,
+                      unsigned char *output);
 
 static unsigned char FSb[256];
 static unsigned long FT0[256];
@@ -1464,9 +1459,8 @@ int aes_setkey_dec(aes_context *ctx, unsigned char const *key,
     assigns \result \from _state;
     assigns *(output + (0 .. 15)) \from _state;
  */
-int aes_crypt_ecb(aes_context *ctx, int mode,
-                  unsigned char const * /*[16]*/ input,
-                  unsigned char * /*[16]*/ output)
+int aes_crypt_ecb(aes_context *ctx, int mode, unsigned char const input[16],
+                  unsigned char output[16])
 {
   int __retres;
   int i;
@@ -1749,7 +1743,7 @@ int aes_crypt_ecb(aes_context *ctx, int mode,
     assigns \result \from _state;
  */
 int aes_crypt_cbc(aes_context *ctx, int mode, size_t length,
-                  unsigned char * /*[16]*/ iv, unsigned char const *input,
+                  unsigned char iv[16], unsigned char const *input,
                   unsigned char *output)
 {
   int __retres;
@@ -1801,7 +1795,7 @@ int aes_crypt_cbc(aes_context *ctx, int mode, size_t length,
 }
 
 int aes_crypt_cfb128(aes_context *ctx, int mode, size_t length,
-                     size_t *iv_off, unsigned char * /*[16]*/ iv,
+                     size_t *iv_off, unsigned char iv[16],
                      unsigned char const *input, unsigned char *output)
 {
   int __retres;
@@ -1856,9 +1850,9 @@ int aes_crypt_cfb128(aes_context *ctx, int mode, size_t length,
 }
 
 int aes_crypt_ctr(aes_context *ctx, size_t length, size_t *nc_off,
-                  unsigned char * /*[16]*/ nonce_counter,
-                  unsigned char * /*[16]*/ stream_block,
-                  unsigned char const *input, unsigned char *output)
+                  unsigned char nonce_counter[16],
+                  unsigned char stream_block[16], unsigned char const *input,
+                  unsigned char *output)
 {
   int __retres;
   int c;
@@ -2731,7 +2725,7 @@ static int const aes_test_ctr_len[3] = {16, 32, 36};
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param1 + (0 ..)), param0;
  */
-int printf_va_1(char const * __restrict format, int param0, char *param1);
+int printf_va_1(char const * restrict format, int param0, char *param1);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -2743,7 +2737,7 @@ int printf_va_1(char const * __restrict format, int param0, char *param1);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_2(char const * __restrict format);
+int printf_va_2(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -2755,7 +2749,7 @@ int printf_va_2(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_3(char const * __restrict format);
+int printf_va_3(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -2767,7 +2761,7 @@ int printf_va_3(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_4(char const * __restrict format);
+int printf_va_4(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -2779,7 +2773,7 @@ int printf_va_4(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_5(char const * __restrict format);
+int printf_va_5(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires valid_read_string(param1);
@@ -2794,7 +2788,7 @@ int printf_va_5(char const * __restrict format);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param1 + (0 ..)), param0;
  */
-int printf_va_6(char const * __restrict format, int param0, char *param1);
+int printf_va_6(char const * restrict format, int param0, char *param1);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -2806,7 +2800,7 @@ int printf_va_6(char const * __restrict format, int param0, char *param1);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_7(char const * __restrict format);
+int printf_va_7(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -2818,7 +2812,7 @@ int printf_va_7(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_8(char const * __restrict format);
+int printf_va_8(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -2830,7 +2824,7 @@ int printf_va_8(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_9(char const * __restrict format);
+int printf_va_9(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -2842,7 +2836,7 @@ int printf_va_9(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_10(char const * __restrict format);
+int printf_va_10(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires valid_read_string(param1);
@@ -2857,7 +2851,7 @@ int printf_va_10(char const * __restrict format);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param1 + (0 ..)), param0;
  */
-int printf_va_11(char const * __restrict format, int param0, char *param1);
+int printf_va_11(char const * restrict format, int param0, char *param1);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -2869,7 +2863,7 @@ int printf_va_11(char const * __restrict format, int param0, char *param1);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_12(char const * __restrict format);
+int printf_va_12(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -2881,7 +2875,7 @@ int printf_va_12(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_13(char const * __restrict format);
+int printf_va_13(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -2893,7 +2887,7 @@ int printf_va_13(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_14(char const * __restrict format);
+int printf_va_14(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -2905,7 +2899,7 @@ int printf_va_14(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_15(char const * __restrict format);
+int printf_va_15(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires valid_read_string(param0);
@@ -2919,7 +2913,7 @@ int printf_va_15(char const * __restrict format);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_16(char const * __restrict format, char *param0);
+int printf_va_16(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -2931,7 +2925,7 @@ int printf_va_16(char const * __restrict format, char *param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_17(char const * __restrict format);
+int printf_va_17(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -2943,7 +2937,7 @@ int printf_va_17(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_18(char const * __restrict format);
+int printf_va_18(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -2955,7 +2949,7 @@ int printf_va_18(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_19(char const * __restrict format);
+int printf_va_19(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -2967,7 +2961,7 @@ int printf_va_19(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_20(char const * __restrict format);
+int printf_va_20(char const * restrict format);
 
 int aes_self_test(int verbose)
 {
@@ -3353,7 +3347,7 @@ static unsigned char const arc4_test_ct[3][8] =
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_21(char const * __restrict format, int param0);
+int printf_va_21(char const * restrict format, int param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -3365,7 +3359,7 @@ int printf_va_21(char const * __restrict format, int param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_22(char const * __restrict format);
+int printf_va_22(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -3377,7 +3371,7 @@ int printf_va_22(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_23(char const * __restrict format);
+int printf_va_23(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -3389,7 +3383,7 @@ int printf_va_23(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_24(char const * __restrict format);
+int printf_va_24(char const * restrict format);
 
 int arc4_self_test(int verbose)
 {
@@ -4209,7 +4203,7 @@ static unsigned char const base64_test_enc[89] =
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_25(char const * __restrict format);
+int printf_va_25(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -4221,7 +4215,7 @@ int printf_va_25(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_26(char const * __restrict format);
+int printf_va_26(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -4233,7 +4227,7 @@ int printf_va_26(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_27(char const * __restrict format);
+int printf_va_27(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -4245,7 +4239,7 @@ int printf_va_27(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_28(char const * __restrict format);
+int printf_va_28(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -4257,7 +4251,7 @@ int printf_va_28(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_29(char const * __restrict format);
+int printf_va_29(char const * restrict format);
 
 int base64_self_test(int verbose)
 {
@@ -4660,7 +4654,7 @@ static int mpi_write_hlp(mpi *X, int radix, char **p)
     assigns \result \from (indirect: *(format + (0 ..))), (indirect: param0);
     assigns *(s + (0 ..)) \from (indirect: *(format + (0 ..))), param0;
  */
-int sprintf_va_1(char * __restrict s, char const * __restrict format,
+int sprintf_va_1(char * restrict s, char const * restrict format,
                  unsigned int param0);
 
 int mpi_write_string(mpi const *X, int radix, char *s, size_t *slen)
@@ -4793,7 +4787,7 @@ int mpi_read_file(mpi *X, int radix, FILE *fin)
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param1 + (0 ..)), *(param0 + (0 ..));
  */
-int printf_va_30(char const * __restrict format, char *param0, char *param1);
+int printf_va_30(char const * restrict format, char *param0, char *param1);
 
 int mpi_write_file(char const *p, mpi const *X, int radix, FILE *fout)
 {
@@ -6704,7 +6698,7 @@ static int const gcd_pairs[3][3] =
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_31(char const * __restrict format);
+int printf_va_31(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -6716,7 +6710,7 @@ int printf_va_31(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_32(char const * __restrict format);
+int printf_va_32(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -6728,7 +6722,7 @@ int printf_va_32(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_33(char const * __restrict format);
+int printf_va_33(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -6740,7 +6734,7 @@ int printf_va_33(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_34(char const * __restrict format);
+int printf_va_34(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -6752,7 +6746,7 @@ int printf_va_34(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_35(char const * __restrict format);
+int printf_va_35(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -6764,7 +6758,7 @@ int printf_va_35(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_36(char const * __restrict format);
+int printf_va_36(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -6776,7 +6770,7 @@ int printf_va_36(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_37(char const * __restrict format);
+int printf_va_37(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -6788,7 +6782,7 @@ int printf_va_37(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_38(char const * __restrict format);
+int printf_va_38(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -6800,7 +6794,7 @@ int printf_va_38(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_39(char const * __restrict format);
+int printf_va_39(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -6812,7 +6806,7 @@ int printf_va_39(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_40(char const * __restrict format);
+int printf_va_40(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -6824,7 +6818,7 @@ int printf_va_40(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_41(char const * __restrict format);
+int printf_va_41(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -6836,7 +6830,7 @@ int printf_va_41(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_42(char const * __restrict format);
+int printf_va_42(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -6848,7 +6842,7 @@ int printf_va_42(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_43(char const * __restrict format);
+int printf_va_43(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -6861,7 +6855,7 @@ int printf_va_43(char const * __restrict format);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_44(char const * __restrict format, int param0);
+int printf_va_44(char const * restrict format, int param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -6873,7 +6867,7 @@ int printf_va_44(char const * __restrict format, int param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_45(char const * __restrict format);
+int printf_va_45(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -6886,7 +6880,7 @@ int printf_va_45(char const * __restrict format);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_46(char const * __restrict format, unsigned int param0);
+int printf_va_46(char const * restrict format, unsigned int param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -6898,7 +6892,7 @@ int printf_va_46(char const * __restrict format, unsigned int param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_47(char const * __restrict format);
+int printf_va_47(char const * restrict format);
 
 int mpi_self_test(int verbose)
 {
@@ -8326,8 +8320,8 @@ static signed char const transposes[2][20] =
     assigns *(z + (0 .. 1));
     assigns *(z + (0 .. 1)) \from *(k + (0 .. 1)), *(x + (0 .. 1));
  */
-static void camellia_feistel(uint32_t const * /*[2]*/ x,
-                             uint32_t const * /*[2]*/ k, uint32_t * /*[2]*/ z)
+static void camellia_feistel(uint32_t const x[2], uint32_t const k[2],
+                             uint32_t z[2])
 {
   uint32_t I0;
   uint32_t I1;
@@ -8671,8 +8665,8 @@ int camellia_setkey_dec(camellia_context *ctx, unsigned char const *key,
 }
 
 int camellia_crypt_ecb(camellia_context *ctx, int mode,
-                       unsigned char const * /*[16]*/ input,
-                       unsigned char * /*[16]*/ output)
+                       unsigned char const input[16],
+                       unsigned char output[16])
 {
   int __retres;
   int NR;
@@ -8786,8 +8780,8 @@ int camellia_crypt_ecb(camellia_context *ctx, int mode,
     assigns \result \from _state;
  */
 int camellia_crypt_cbc(camellia_context *ctx, int mode, size_t length,
-                       unsigned char * /*[16]*/ iv,
-                       unsigned char const *input, unsigned char *output)
+                       unsigned char iv[16], unsigned char const *input,
+                       unsigned char *output)
 {
   int __retres;
   int i;
@@ -8828,7 +8822,7 @@ int camellia_crypt_cbc(camellia_context *ctx, int mode, size_t length,
 }
 
 int camellia_crypt_cfb128(camellia_context *ctx, int mode, size_t length,
-                          size_t *iv_off, unsigned char * /*[16]*/ iv,
+                          size_t *iv_off, unsigned char iv[16],
                           unsigned char const *input, unsigned char *output)
 {
   int __retres;
@@ -8885,8 +8879,8 @@ int camellia_crypt_cfb128(camellia_context *ctx, int mode, size_t length,
 }
 
 int camellia_crypt_ctr(camellia_context *ctx, size_t length, size_t *nc_off,
-                       unsigned char * /*[16]*/ nonce_counter,
-                       unsigned char * /*[16]*/ stream_block,
+                       unsigned char nonce_counter[16],
+                       unsigned char stream_block[16],
                        unsigned char const *input, unsigned char *output)
 {
   int __retres;
@@ -9775,7 +9769,7 @@ static int const camellia_test_ctr_len[3] = {16, 32, 36};
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param1 + (0 ..)), param0;
  */
-int printf_va_48(char const * __restrict format, int param0, char *param1);
+int printf_va_48(char const * restrict format, int param0, char *param1);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -9787,7 +9781,7 @@ int printf_va_48(char const * __restrict format, int param0, char *param1);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_49(char const * __restrict format);
+int printf_va_49(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -9799,7 +9793,7 @@ int printf_va_49(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_50(char const * __restrict format);
+int printf_va_50(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -9811,7 +9805,7 @@ int printf_va_50(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_51(char const * __restrict format);
+int printf_va_51(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires valid_read_string(param1);
@@ -9826,7 +9820,7 @@ int printf_va_51(char const * __restrict format);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param1 + (0 ..)), param0;
  */
-int printf_va_52(char const * __restrict format, int param0, char *param1);
+int printf_va_52(char const * restrict format, int param0, char *param1);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -9838,7 +9832,7 @@ int printf_va_52(char const * __restrict format, int param0, char *param1);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_53(char const * __restrict format);
+int printf_va_53(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -9850,7 +9844,7 @@ int printf_va_53(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_54(char const * __restrict format);
+int printf_va_54(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -9862,7 +9856,7 @@ int printf_va_54(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_55(char const * __restrict format);
+int printf_va_55(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires valid_read_string(param0);
@@ -9876,7 +9870,7 @@ int printf_va_55(char const * __restrict format);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_56(char const * __restrict format, char *param0);
+int printf_va_56(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -9888,7 +9882,7 @@ int printf_va_56(char const * __restrict format, char *param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_57(char const * __restrict format);
+int printf_va_57(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -9900,7 +9894,7 @@ int printf_va_57(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_58(char const * __restrict format);
+int printf_va_58(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -9912,7 +9906,7 @@ int printf_va_58(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_59(char const * __restrict format);
+int printf_va_59(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -9924,7 +9918,7 @@ int printf_va_59(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_60(char const * __restrict format);
+int printf_va_60(char const * restrict format);
 
 int camellia_self_test(int verbose)
 {
@@ -20805,7 +20799,7 @@ int block_cipher_df(unsigned char *output, unsigned char const *data,
 }
 
 int ctr_drbg_update_internal(ctr_drbg_context *ctx,
-                             unsigned char const * /*[48]*/ data)
+                             unsigned char const data[48])
 {
   int __retres;
   unsigned char tmp[32 + 16];
@@ -21287,7 +21281,7 @@ int ctr_drbg_self_test_entropy(void *data, unsigned char *buf, size_t len)
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_61(char const * __restrict format);
+int printf_va_61(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -21299,7 +21293,7 @@ int printf_va_61(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_62(char const * __restrict format);
+int printf_va_62(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -21311,7 +21305,7 @@ int printf_va_62(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_63(char const * __restrict format);
+int printf_va_63(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -21323,7 +21317,7 @@ int printf_va_63(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_64(char const * __restrict format);
+int printf_va_64(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -21335,7 +21329,7 @@ int printf_va_64(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_65(char const * __restrict format);
+int printf_va_65(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -21347,7 +21341,7 @@ int printf_va_65(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_66(char const * __restrict format);
+int printf_va_66(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -21359,7 +21353,7 @@ int printf_va_66(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_67(char const * __restrict format);
+int printf_va_67(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -21371,7 +21365,7 @@ int printf_va_67(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_68(char const * __restrict format);
+int printf_va_68(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -21383,7 +21377,7 @@ int printf_va_68(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_69(char const * __restrict format);
+int printf_va_69(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -21395,7 +21389,7 @@ int printf_va_69(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_70(char const * __restrict format);
+int printf_va_70(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -21407,7 +21401,7 @@ int printf_va_70(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_71(char const * __restrict format);
+int printf_va_71(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -21419,7 +21413,7 @@ int printf_va_71(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_72(char const * __restrict format);
+int printf_va_72(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -21431,7 +21425,7 @@ int printf_va_72(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_73(char const * __restrict format);
+int printf_va_73(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -21443,7 +21437,7 @@ int printf_va_73(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_74(char const * __restrict format);
+int printf_va_74(char const * restrict format);
 
 int ctr_drbg_self_test(int verbose)
 {
@@ -21586,9 +21580,8 @@ char *debug_fmt(char const *format, void * const *__va_params)
       \from (indirect: n), (indirect: *(format + (0 ..))),
             *(param2 + (0 ..)), param1, *(param0 + (0 ..));
  */
-int snprintf_va_1(char * __restrict s, size_t n,
-                  char const * __restrict format, char *param0, int param1,
-                  char *param2);
+int snprintf_va_1(char * restrict s, size_t n, char const * restrict format,
+                  char *param0, int param1, char *param2);
 
 void debug_print_msg(ssl_context const *ssl, int level, char const *file,
                      int line, char const *text)
@@ -21619,9 +21612,9 @@ void debug_print_msg(ssl_context const *ssl, int level, char const *file,
       \from (indirect: n), (indirect: *(format + (0 ..))), param4, param3,
             *(param2 + (0 ..)), param1, *(param0 + (0 ..));
  */
-int snprintf_va_2(char * __restrict s, size_t n,
-                  char const * __restrict format, char *param0, int param1,
-                  char *param2, int param3, unsigned int param4);
+int snprintf_va_2(char * restrict s, size_t n, char const * restrict format,
+                  char *param0, int param1, char *param2, int param3,
+                  unsigned int param4);
 
 void debug_print_ret(ssl_context const *ssl, int level, char const *file,
                      int line, char const *text, int ret)
@@ -21651,9 +21644,8 @@ void debug_print_ret(ssl_context const *ssl, int level, char const *file,
       \from (indirect: n), (indirect: *(format + (0 ..))), param3,
             *(param2 + (0 ..)), param1, *(param0 + (0 ..));
  */
-int snprintf_va_3(char * __restrict s, size_t n,
-                  char const * __restrict format, char *param0, int param1,
-                  char *param2, int param3);
+int snprintf_va_3(char * restrict s, size_t n, char const * restrict format,
+                  char *param0, int param1, char *param2, int param3);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -21669,9 +21661,8 @@ int snprintf_va_3(char * __restrict s, size_t n,
       \from (indirect: n), (indirect: *(format + (0 ..))), param2, param1,
             *(param0 + (0 ..));
  */
-int snprintf_va_4(char * __restrict s, size_t n,
-                  char const * __restrict format, char *param0, int param1,
-                  unsigned int param2);
+int snprintf_va_4(char * restrict s, size_t n, char const * restrict format,
+                  char *param0, int param1, unsigned int param2);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -21683,8 +21674,8 @@ int snprintf_va_4(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..))), param0;
  */
-int snprintf_va_5(char * __restrict s, size_t n,
-                  char const * __restrict format, unsigned int param0);
+int snprintf_va_5(char * restrict s, size_t n, char const * restrict format,
+                  unsigned int param0);
 
 void debug_print_buf(ssl_context const *ssl, int level, char const *file,
                      int line, char const *text, unsigned char *buf,
@@ -21731,9 +21722,9 @@ void debug_print_buf(ssl_context const *ssl, int level, char const *file,
       \from (indirect: n), (indirect: *(format + (0 ..))), param3,
             *(param2 + (0 ..)), param1, *(param0 + (0 ..));
  */
-int snprintf_va_6(char * __restrict s, size_t n,
-                  char const * __restrict format, char *param0, int param1,
-                  char *param2, unsigned long param3);
+int snprintf_va_6(char * restrict s, size_t n, char const * restrict format,
+                  char *param0, int param1, char *param2,
+                  unsigned long param3);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -21748,8 +21739,8 @@ int snprintf_va_6(char * __restrict s, size_t n,
       \from (indirect: n), (indirect: *(format + (0 ..))), param1,
             *(param0 + (0 ..));
  */
-int snprintf_va_7(char * __restrict s, size_t n,
-                  char const * __restrict format, char *param0, int param1);
+int snprintf_va_7(char * restrict s, size_t n, char const * restrict format,
+                  char *param0, int param1);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -21761,8 +21752,8 @@ int snprintf_va_7(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..))), param0;
  */
-int snprintf_va_8(char * __restrict s, size_t n,
-                  char const * __restrict format, unsigned int param0);
+int snprintf_va_8(char * restrict s, size_t n, char const * restrict format,
+                  unsigned int param0);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -21777,8 +21768,8 @@ int snprintf_va_8(char * __restrict s, size_t n,
       \from (indirect: n), (indirect: *(format + (0 ..))), param1,
             *(param0 + (0 ..));
  */
-int snprintf_va_9(char * __restrict s, size_t n,
-                  char const * __restrict format, char *param0, int param1);
+int snprintf_va_9(char * restrict s, size_t n, char const * restrict format,
+                  char *param0, int param1);
 
 void debug_print_mpi(ssl_context const *ssl, int level, char const *file,
                      int line, char const *text, mpi const *X)
@@ -21861,8 +21852,8 @@ void debug_print_mpi(ssl_context const *ssl, int level, char const *file,
       \from (indirect: n), (indirect: *(format + (0 ..))), param1,
             *(param0 + (0 ..));
  */
-int snprintf_va_10(char * __restrict s, size_t n,
-                   char const * __restrict format, char *param0, int param1);
+int snprintf_va_10(char * restrict s, size_t n, char const * restrict format,
+                   char *param0, int param1);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -21882,9 +21873,9 @@ int snprintf_va_10(char * __restrict s, size_t n,
             *(param4 + (0 ..)), param3, *(param2 + (0 ..)), param1,
             *(param0 + (0 ..));
  */
-int snprintf_va_11(char * __restrict s, size_t n,
-                   char const * __restrict format, char *param0, int param1,
-                   char *param2, int param3, char *param4);
+int snprintf_va_11(char * restrict s, size_t n, char const * restrict format,
+                   char *param0, int param1, char *param2, int param3,
+                   char *param4);
 
 void debug_print_crt(ssl_context const *ssl, int level, char const *file,
                      int line, char const *text, x509_cert const *crt)
@@ -22602,7 +22593,7 @@ static unsigned char const odd_parity_table[128] =
    (unsigned char)251,
    (unsigned char)253,
    (unsigned char)254};
-void des_key_set_parity(unsigned char * /*[8]*/ key)
+void des_key_set_parity(unsigned char key[8])
 {
   int i;
   i = 0;
@@ -22613,7 +22604,7 @@ void des_key_set_parity(unsigned char * /*[8]*/ key)
   return;
 }
 
-int des_key_check_key_parity(unsigned char const * /*[8]*/ key)
+int des_key_check_key_parity(unsigned char const key[8])
 {
   int __retres;
   int i;
@@ -22758,7 +22749,7 @@ static unsigned char const weak_key_table[16][8] =
     (unsigned char)0xF1,
     (unsigned char)0xFE,
     (unsigned char)0xF1}};
-int des_key_check_weak(unsigned char const * /*[8]*/ key)
+int des_key_check_weak(unsigned char const key[8])
 {
   int __retres;
   int i;
@@ -22784,8 +22775,7 @@ int des_key_check_weak(unsigned char const * /*[8]*/ key)
     assigns *(SK + (0 .. 31)) \from _state;
     assigns _state \from _state;
  */
-static void des_setkey(unsigned long * /*[32]*/ SK,
-                       unsigned char const * /*[8]*/ key)
+static void des_setkey(unsigned long SK[32], unsigned char const key[8])
 {
   int i;
   unsigned long X;
@@ -22876,7 +22866,7 @@ static void des_setkey(unsigned long * /*[32]*/ SK,
   return;
 }
 
-int des_setkey_enc(des_context *ctx, unsigned char const * /*[8]*/ key)
+int des_setkey_enc(des_context *ctx, unsigned char const key[8])
 {
   int __retres;
   des_setkey(ctx->sk,key);
@@ -22884,7 +22874,7 @@ int des_setkey_enc(des_context *ctx, unsigned char const * /*[8]*/ key)
   return __retres;
 }
 
-int des_setkey_dec(des_context *ctx, unsigned char const * /*[8]*/ key)
+int des_setkey_dec(des_context *ctx, unsigned char const key[8])
 {
   int __retres;
   int i;
@@ -22909,9 +22899,8 @@ int des_setkey_dec(des_context *ctx, unsigned char const * /*[8]*/ key)
   return __retres;
 }
 
-static void des3_set2key(unsigned long * /*[96]*/ esk,
-                         unsigned long * /*[96]*/ dsk,
-                         unsigned char const * /*[16]*/ key)
+static void des3_set2key(unsigned long esk[96], unsigned long dsk[96],
+                         unsigned char const key[16])
 {
   int i;
   des_setkey(esk,key);
@@ -22931,7 +22920,7 @@ static void des3_set2key(unsigned long * /*[96]*/ esk,
   return;
 }
 
-int des3_set2key_enc(des3_context *ctx, unsigned char const * /*[16]*/ key)
+int des3_set2key_enc(des3_context *ctx, unsigned char const key[16])
 {
   int __retres;
   unsigned long sk[96];
@@ -22941,7 +22930,7 @@ int des3_set2key_enc(des3_context *ctx, unsigned char const * /*[16]*/ key)
   return __retres;
 }
 
-int des3_set2key_dec(des3_context *ctx, unsigned char const * /*[16]*/ key)
+int des3_set2key_dec(des3_context *ctx, unsigned char const key[16])
 {
   int __retres;
   unsigned long sk[96];
@@ -22951,9 +22940,8 @@ int des3_set2key_dec(des3_context *ctx, unsigned char const * /*[16]*/ key)
   return __retres;
 }
 
-static void des3_set3key(unsigned long * /*[96]*/ esk,
-                         unsigned long * /*[96]*/ dsk,
-                         unsigned char const * /*[24]*/ key)
+static void des3_set3key(unsigned long esk[96], unsigned long dsk[96],
+                         unsigned char const key[24])
 {
   int i;
   des_setkey(esk,key);
@@ -22973,7 +22961,7 @@ static void des3_set3key(unsigned long * /*[96]*/ esk,
   return;
 }
 
-int des3_set3key_enc(des3_context *ctx, unsigned char const * /*[24]*/ key)
+int des3_set3key_enc(des3_context *ctx, unsigned char const key[24])
 {
   int __retres;
   unsigned long sk[96];
@@ -22983,7 +22971,7 @@ int des3_set3key_enc(des3_context *ctx, unsigned char const * /*[24]*/ key)
   return __retres;
 }
 
-int des3_set3key_dec(des3_context *ctx, unsigned char const * /*[24]*/ key)
+int des3_set3key_dec(des3_context *ctx, unsigned char const key[24])
 {
   int __retres;
   unsigned long sk[96];
@@ -22993,8 +22981,8 @@ int des3_set3key_dec(des3_context *ctx, unsigned char const * /*[24]*/ key)
   return __retres;
 }
 
-int des_crypt_ecb(des_context *ctx, unsigned char const * /*[8]*/ input,
-                  unsigned char * /*[8]*/ output)
+int des_crypt_ecb(des_context *ctx, unsigned char const input[8],
+                  unsigned char output[8])
 {
   int __retres;
   int i;
@@ -23090,7 +23078,7 @@ int des_crypt_ecb(des_context *ctx, unsigned char const * /*[8]*/ input,
 }
 
 int des_crypt_cbc(des_context *ctx, int mode, size_t length,
-                  unsigned char * /*[8]*/ iv, unsigned char const *input,
+                  unsigned char iv[8], unsigned char const *input,
                   unsigned char *output)
 {
   int __retres;
@@ -23139,8 +23127,8 @@ int des_crypt_cbc(des_context *ctx, int mode, size_t length,
     assigns _state \from _state;
     assigns *(output + (0 .. 7)) \from *(input + (0 .. 7));
  */
-int des3_crypt_ecb(des3_context *ctx, unsigned char const * /*[8]*/ input,
-                   unsigned char * /*[8]*/ output)
+int des3_crypt_ecb(des3_context *ctx, unsigned char const input[8],
+                   unsigned char output[8])
 {
   int __retres;
   int i;
@@ -23331,7 +23319,7 @@ int des3_crypt_ecb(des3_context *ctx, unsigned char const * /*[8]*/ input,
     disjoint behaviors des3_cbc_ok, invalid_length;
  */
 int des3_crypt_cbc(des3_context *ctx, int mode, size_t length,
-                   unsigned char * /*[8]*/ iv, unsigned char const *input,
+                   unsigned char iv[8], unsigned char const *input,
                    unsigned char *output)
 {
   int __retres;
@@ -23528,7 +23516,7 @@ static unsigned char const des3_test_cbc_enc[3][8] =
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param2 + (0 ..)), param1, param0;
  */
-int printf_va_75(char const * __restrict format, int param0, int param1,
+int printf_va_75(char const * restrict format, int param0, int param1,
                  char *param2);
 
 /*@ requires valid_read_string(format);
@@ -23541,7 +23529,7 @@ int printf_va_75(char const * __restrict format, int param0, int param1,
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_76(char const * __restrict format);
+int printf_va_76(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -23553,7 +23541,7 @@ int printf_va_76(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_77(char const * __restrict format);
+int printf_va_77(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -23565,7 +23553,7 @@ int printf_va_77(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_78(char const * __restrict format);
+int printf_va_78(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires valid_read_string(param2);
@@ -23580,7 +23568,7 @@ int printf_va_78(char const * __restrict format);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param2 + (0 ..)), param1, param0;
  */
-int printf_va_79(char const * __restrict format, int param0, int param1,
+int printf_va_79(char const * restrict format, int param0, int param1,
                  char *param2);
 
 /*@ requires valid_read_string(format);
@@ -23593,7 +23581,7 @@ int printf_va_79(char const * __restrict format, int param0, int param1,
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_80(char const * __restrict format);
+int printf_va_80(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -23605,7 +23593,7 @@ int printf_va_80(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_81(char const * __restrict format);
+int printf_va_81(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -23617,7 +23605,7 @@ int printf_va_81(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_82(char const * __restrict format);
+int printf_va_82(char const * restrict format);
 
 int des_self_test(int verbose)
 {
@@ -24513,12 +24501,12 @@ void sha2_starts(sha2_context *ctx, int is224);
 
 void sha2_update(sha2_context *ctx, unsigned char const *input, size_t ilen);
 
-void sha2_finish(sha2_context *ctx, unsigned char * /*[32]*/ output);
+void sha2_finish(sha2_context *ctx, unsigned char output[32]);
 
-void sha2(unsigned char const *input, size_t ilen,
-          unsigned char * /*[32]*/ output, int is224);
+void sha2(unsigned char const *input, size_t ilen, unsigned char output[32],
+          int is224);
 
-int sha2_file(char const *path, unsigned char * /*[32]*/ output, int is224);
+int sha2_file(char const *path, unsigned char output[32], int is224);
 
 void sha2_hmac_starts(sha2_context *ctx, unsigned char const *key,
                       size_t keylen, int is224);
@@ -24526,17 +24514,17 @@ void sha2_hmac_starts(sha2_context *ctx, unsigned char const *key,
 void sha2_hmac_update(sha2_context *ctx, unsigned char const *input,
                       size_t ilen);
 
-void sha2_hmac_finish(sha2_context *ctx, unsigned char * /*[32]*/ output);
+void sha2_hmac_finish(sha2_context *ctx, unsigned char output[32]);
 
 void sha2_hmac_reset(sha2_context *ctx);
 
 void sha2_hmac(unsigned char const *key, size_t keylen,
                unsigned char const *input, size_t ilen,
-               unsigned char * /*[32]*/ output, int is224);
+               unsigned char output[32], int is224);
 
 int sha2_self_test(int verbose);
 
-void sha2_process(sha2_context *ctx, unsigned char const * /*[64]*/ data);
+void sha2_process(sha2_context *ctx, unsigned char const data[64]);
 
 __inline static int const *ssl_list_ciphersuites_1(void)
 {
@@ -24545,14 +24533,13 @@ __inline static int const *ssl_list_ciphersuites_1(void)
   return __retres;
 }
 
-void xtea_setup(xtea_context *ctx, unsigned char * /*[16]*/ key);
+void xtea_setup(xtea_context *ctx, unsigned char key[16]);
 
-int xtea_crypt_ecb(xtea_context *ctx, int mode,
-                   unsigned char * /*[8]*/ input,
-                   unsigned char * /*[8]*/ output);
+int xtea_crypt_ecb(xtea_context *ctx, int mode, unsigned char input[8],
+                   unsigned char output[8]);
 
 int xtea_crypt_cbc(xtea_context *ctx, int mode, size_t length,
-                   unsigned char * /*[8]*/ iv, unsigned char *input,
+                   unsigned char iv[8], unsigned char *input,
                    unsigned char *output);
 
 int xtea_self_test(int verbose);
@@ -25070,7 +25057,7 @@ void md5_starts(md5_context *ctx)
     assigns ctx->state[0 .. 3];
     assigns ctx->state[0 .. 3] \from _state;
  */
-void md5_process(md5_context *ctx, unsigned char const * /*[64]*/ data)
+void md5_process(md5_context *ctx, unsigned char const data[64])
 {
   unsigned long X[16];
   unsigned long A;
@@ -25358,7 +25345,7 @@ static unsigned char const md5_padding[64] =
    (unsigned char)0,
    (unsigned char)0};
 /*@ requires \valid(output + (0 .. 15)); */
-void md5_finish(md5_context *ctx, unsigned char * /*[16]*/ output)
+void md5_finish(md5_context *ctx, unsigned char output[16])
 {
   unsigned long last;
   unsigned long padn;
@@ -25400,8 +25387,7 @@ void md5_finish(md5_context *ctx, unsigned char * /*[16]*/ output)
 }
 
 /*@ requires \valid(output + (0 .. 15)); */
-void md5(unsigned char const *input, size_t ilen,
-         unsigned char * /*[16]*/ output)
+void md5(unsigned char const *input, size_t ilen, unsigned char output[16])
 {
   md5_context ctx;
   md5_starts(& ctx);
@@ -25411,7 +25397,7 @@ void md5(unsigned char const *input, size_t ilen,
   return;
 }
 
-int md5_file(char const *path, unsigned char * /*[16]*/ output)
+int md5_file(char const *path, unsigned char output[16])
 {
   int __retres;
   FILE *f;
@@ -25475,7 +25461,7 @@ void md5_hmac_update(md5_context *ctx, unsigned char const *input,
   return;
 }
 
-void md5_hmac_finish(md5_context *ctx, unsigned char * /*[16]*/ output)
+void md5_hmac_finish(md5_context *ctx, unsigned char output[16])
 {
   unsigned char tmpbuf[16];
   md5_finish(ctx,tmpbuf);
@@ -25496,7 +25482,7 @@ void md5_hmac_reset(md5_context *ctx)
 
 void md5_hmac(unsigned char const *key, size_t keylen,
               unsigned char const *input, size_t ilen,
-              unsigned char * /*[16]*/ output)
+              unsigned char output[16])
 {
   md5_context ctx;
   md5_hmac_starts(& ctx,key,keylen);
@@ -26311,7 +26297,7 @@ static unsigned char const md5_hmac_test_sum[7][16] =
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_83(char const * __restrict format, int param0);
+int printf_va_83(char const * restrict format, int param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -26323,7 +26309,7 @@ int printf_va_83(char const * __restrict format, int param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_84(char const * __restrict format);
+int printf_va_84(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -26335,7 +26321,7 @@ int printf_va_84(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_85(char const * __restrict format);
+int printf_va_85(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -26347,7 +26333,7 @@ int printf_va_85(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_86(char const * __restrict format);
+int printf_va_86(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -26360,7 +26346,7 @@ int printf_va_86(char const * __restrict format);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_87(char const * __restrict format, int param0);
+int printf_va_87(char const * restrict format, int param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -26372,7 +26358,7 @@ int printf_va_87(char const * __restrict format, int param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_88(char const * __restrict format);
+int printf_va_88(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -26384,7 +26370,7 @@ int printf_va_88(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_89(char const * __restrict format);
+int printf_va_89(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -26396,7 +26382,7 @@ int printf_va_89(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_90(char const * __restrict format);
+int printf_va_90(char const * restrict format);
 
 int md5_self_test(int verbose)
 {
@@ -27089,7 +27075,7 @@ int net_connect(int *fd, char const *host, int port)
     assigns *param0
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
  */
-int sscanf_va_1(char const * __restrict s, char const * __restrict format,
+int sscanf_va_1(char const * restrict s, char const * restrict format,
                 int *param0, int *param1, int *param2, int *param3);
 
 int net_bind(int *fd, char const *bind_ip, int port)
@@ -27324,8 +27310,7 @@ int padlock_supports(int feature)
 }
 
 int padlock_xcryptecb(aes_context *ctx, int mode,
-                      unsigned char const * /*[16]*/ input,
-                      unsigned char * /*[16]*/ output)
+                      unsigned char const input[16], unsigned char output[16])
 {
   int __retres;
   int ebx;
@@ -27372,8 +27357,8 @@ int padlock_xcryptecb(aes_context *ctx, int mode,
 }
 
 int padlock_xcryptcbc(aes_context *ctx, int mode, size_t length,
-                      unsigned char * /*[16]*/ iv,
-                      unsigned char const *input, unsigned char *output)
+                      unsigned char iv[16], unsigned char const *input,
+                      unsigned char *output)
 {
   int __retres;
   int ebx;
@@ -27637,9 +27622,9 @@ static void pem_pbkdf1(unsigned char *key, size_t keylen, unsigned char *iv,
   return_label: return;
 }
 
-static void pem_des_decrypt(unsigned char * /*[8]*/ des_iv,
-                            unsigned char *buf, size_t buflen,
-                            unsigned char const *pwd, size_t pwdlen)
+static void pem_des_decrypt(unsigned char des_iv[8], unsigned char *buf,
+                            size_t buflen, unsigned char const *pwd,
+                            size_t pwdlen)
 {
   des_context des_ctx;
   unsigned char des_key[8];
@@ -27651,9 +27636,9 @@ static void pem_des_decrypt(unsigned char * /*[8]*/ des_iv,
   return;
 }
 
-static void pem_des3_decrypt(unsigned char * /*[8]*/ des3_iv,
-                             unsigned char *buf, size_t buflen,
-                             unsigned char const *pwd, size_t pwdlen)
+static void pem_des3_decrypt(unsigned char des3_iv[8], unsigned char *buf,
+                             size_t buflen, unsigned char const *pwd,
+                             size_t pwdlen)
 {
   des3_context des3_ctx;
   unsigned char des3_key[24];
@@ -27665,10 +27650,9 @@ static void pem_des3_decrypt(unsigned char * /*[8]*/ des3_iv,
   return;
 }
 
-static void pem_aes_decrypt(unsigned char * /*[16]*/ aes_iv,
-                            unsigned int keylen, unsigned char *buf,
-                            size_t buflen, unsigned char const *pwd,
-                            size_t pwdlen)
+static void pem_aes_decrypt(unsigned char aes_iv[16], unsigned int keylen,
+                            unsigned char *buf, size_t buflen,
+                            unsigned char const *pwd, size_t pwdlen)
 {
   aes_context aes_ctx;
   unsigned char aes_key[32];
@@ -29169,7 +29153,7 @@ static int myrand(void *rng_state, unsigned char *output, size_t len)
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_91(char const * __restrict format);
+int printf_va_91(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -29181,7 +29165,7 @@ int printf_va_91(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_92(char const * __restrict format);
+int printf_va_92(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -29193,7 +29177,7 @@ int printf_va_92(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_93(char const * __restrict format);
+int printf_va_93(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -29205,7 +29189,7 @@ int printf_va_93(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_94(char const * __restrict format);
+int printf_va_94(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -29217,7 +29201,7 @@ int printf_va_94(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_95(char const * __restrict format);
+int printf_va_95(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -29229,7 +29213,7 @@ int printf_va_95(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_96(char const * __restrict format);
+int printf_va_96(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -29241,7 +29225,7 @@ int printf_va_96(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_97(char const * __restrict format);
+int printf_va_97(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -29253,7 +29237,7 @@ int printf_va_97(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_98(char const * __restrict format);
+int printf_va_98(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -29265,7 +29249,7 @@ int printf_va_98(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_99(char const * __restrict format);
+int printf_va_99(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -29277,7 +29261,7 @@ int printf_va_99(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_100(char const * __restrict format);
+int printf_va_100(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -29289,7 +29273,7 @@ int printf_va_100(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_101(char const * __restrict format);
+int printf_va_101(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -29301,7 +29285,7 @@ int printf_va_101(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_102(char const * __restrict format);
+int printf_va_102(char const * restrict format);
 
 int rsa_self_test(int verbose)
 {
@@ -29422,7 +29406,7 @@ void sha1_starts(sha1_context *ctx)
     assigns ctx->state[0 .. 4];
     assigns ctx->state[0 .. 4] \from _state;
  */
-void sha1_process(sha1_context *ctx, unsigned char const * /*[64]*/ data)
+void sha1_process(sha1_context *ctx, unsigned char const data[64])
 {
   unsigned long temp;
   unsigned long W[16];
@@ -30109,7 +30093,7 @@ static unsigned char const sha1_padding[64] =
     assigns ctx->ipad[0 .. 62] \from _state;
     assigns *(output + (0 .. 19)) \from _state;
  */
-void sha1_finish(sha1_context *ctx, unsigned char * /*[20]*/ output)
+void sha1_finish(sha1_context *ctx, unsigned char output[20])
 {
   unsigned long last;
   unsigned long padn;
@@ -30154,8 +30138,7 @@ void sha1_finish(sha1_context *ctx, unsigned char * /*[20]*/ output)
   return;
 }
 
-void sha1(unsigned char const *input, size_t ilen,
-          unsigned char * /*[20]*/ output)
+void sha1(unsigned char const *input, size_t ilen, unsigned char output[20])
 {
   sha1_context ctx;
   sha1_starts(& ctx);
@@ -30165,7 +30148,7 @@ void sha1(unsigned char const *input, size_t ilen,
   return;
 }
 
-int sha1_file(char const *path, unsigned char * /*[20]*/ output)
+int sha1_file(char const *path, unsigned char output[20])
 {
   int __retres;
   FILE *f;
@@ -30229,7 +30212,7 @@ void sha1_hmac_update(sha1_context *ctx, unsigned char const *input,
   return;
 }
 
-void sha1_hmac_finish(sha1_context *ctx, unsigned char * /*[20]*/ output)
+void sha1_hmac_finish(sha1_context *ctx, unsigned char output[20])
 {
   unsigned char tmpbuf[20];
   sha1_finish(ctx,tmpbuf);
@@ -30250,7 +30233,7 @@ void sha1_hmac_reset(sha1_context *ctx)
 
 void sha1_hmac(unsigned char const *key, size_t keylen,
                unsigned char const *input, size_t ilen,
-               unsigned char * /*[20]*/ output)
+               unsigned char output[20])
 {
   sha1_context ctx;
   sha1_hmac_starts(& ctx,key,keylen);
@@ -30919,7 +30902,7 @@ static unsigned char const sha1_hmac_test_sum[7][20] =
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_103(char const * __restrict format, int param0);
+int printf_va_103(char const * restrict format, int param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -30931,7 +30914,7 @@ int printf_va_103(char const * __restrict format, int param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_104(char const * __restrict format);
+int printf_va_104(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -30943,7 +30926,7 @@ int printf_va_104(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_105(char const * __restrict format);
+int printf_va_105(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -30955,7 +30938,7 @@ int printf_va_105(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_106(char const * __restrict format);
+int printf_va_106(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -30968,7 +30951,7 @@ int printf_va_106(char const * __restrict format);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_107(char const * __restrict format, int param0);
+int printf_va_107(char const * restrict format, int param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -30980,7 +30963,7 @@ int printf_va_107(char const * __restrict format, int param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_108(char const * __restrict format);
+int printf_va_108(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -30992,7 +30975,7 @@ int printf_va_108(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_109(char const * __restrict format);
+int printf_va_109(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -31004,7 +30987,7 @@ int printf_va_109(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_110(char const * __restrict format);
+int printf_va_110(char const * restrict format);
 
 int sha1_self_test(int verbose)
 {
@@ -31114,7 +31097,7 @@ void sha2_starts(sha2_context *ctx, int is224)
   return;
 }
 
-void sha2_process(sha2_context *ctx, unsigned char const * /*[64]*/ data)
+void sha2_process(sha2_context *ctx, unsigned char const data[64])
 {
   unsigned long temp1;
   unsigned long temp2;
@@ -32423,7 +32406,7 @@ static unsigned char const sha2_padding[64] =
    (unsigned char)0,
    (unsigned char)0,
    (unsigned char)0};
-void sha2_finish(sha2_context *ctx, unsigned char * /*[32]*/ output)
+void sha2_finish(sha2_context *ctx, unsigned char output[32])
 {
   unsigned long last;
   unsigned long padn;
@@ -32482,8 +32465,8 @@ void sha2_finish(sha2_context *ctx, unsigned char * /*[32]*/ output)
   return;
 }
 
-void sha2(unsigned char const *input, size_t ilen,
-          unsigned char * /*[32]*/ output, int is224)
+void sha2(unsigned char const *input, size_t ilen, unsigned char output[32],
+          int is224)
 {
   sha2_context ctx;
   sha2_starts(& ctx,is224);
@@ -32493,7 +32476,7 @@ void sha2(unsigned char const *input, size_t ilen,
   return;
 }
 
-int sha2_file(char const *path, unsigned char * /*[32]*/ output, int is224)
+int sha2_file(char const *path, unsigned char output[32], int is224)
 {
   int __retres;
   FILE *f;
@@ -32556,7 +32539,7 @@ void sha2_hmac_update(sha2_context *ctx, unsigned char const *input,
   return;
 }
 
-void sha2_hmac_finish(sha2_context *ctx, unsigned char * /*[32]*/ output)
+void sha2_hmac_finish(sha2_context *ctx, unsigned char output[32])
 {
   int is224;
   int hlen;
@@ -32581,7 +32564,7 @@ void sha2_hmac_reset(sha2_context *ctx)
 
 void sha2_hmac(unsigned char const *key, size_t keylen,
                unsigned char const *input, size_t ilen,
-               unsigned char * /*[32]*/ output, int is224)
+               unsigned char output[32], int is224)
 {
   sha2_context ctx;
   sha2_hmac_starts(& ctx,key,keylen,is224);
@@ -33710,7 +33693,7 @@ static unsigned char const sha2_hmac_test_sum[14][32] =
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param1, param0;
  */
-int printf_va_111(char const * __restrict format, int param0, int param1);
+int printf_va_111(char const * restrict format, int param0, int param1);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -33722,7 +33705,7 @@ int printf_va_111(char const * __restrict format, int param0, int param1);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_112(char const * __restrict format);
+int printf_va_112(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -33734,7 +33717,7 @@ int printf_va_112(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_113(char const * __restrict format);
+int printf_va_113(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -33746,7 +33729,7 @@ int printf_va_113(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_114(char const * __restrict format);
+int printf_va_114(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -33760,7 +33743,7 @@ int printf_va_114(char const * __restrict format);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param1, param0;
  */
-int printf_va_115(char const * __restrict format, int param0, int param1);
+int printf_va_115(char const * restrict format, int param0, int param1);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -33772,7 +33755,7 @@ int printf_va_115(char const * __restrict format, int param0, int param1);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_116(char const * __restrict format);
+int printf_va_116(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -33784,7 +33767,7 @@ int printf_va_116(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_117(char const * __restrict format);
+int printf_va_117(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -33796,7 +33779,7 @@ int printf_va_117(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_118(char const * __restrict format);
+int printf_va_118(char const * restrict format);
 
 int sha2_self_test(int verbose)
 {
@@ -33999,8 +33982,7 @@ void sha4_starts(sha4_context *ctx, int is384)
     assigns ctx->state[0 .. 7]
       \from ctx->state[0 .. 7], *(data + (0 .. 127));
  */
-static void sha4_process(sha4_context *ctx,
-                         unsigned char const * /*[128]*/ data)
+static void sha4_process(sha4_context *ctx, unsigned char const data[128])
 {
   int i;
   unsigned long long temp1;
@@ -34293,7 +34275,7 @@ static unsigned char const sha4_padding[128] =
    (unsigned char)0,
    (unsigned char)0,
    (unsigned char)0};
-void sha4_finish(sha4_context *ctx, unsigned char * /*[64]*/ output)
+void sha4_finish(sha4_context *ctx, unsigned char output[64])
 {
   size_t last;
   size_t padn;
@@ -34399,8 +34381,8 @@ void sha4_finish(sha4_context *ctx, unsigned char * /*[64]*/ output)
     assigns *(output + (0 .. 63));
     assigns *(output + (0 .. 63)) \from *(input + (0 .. ilen - 1)), ilen;
  */
-void sha4(unsigned char const *input, size_t ilen,
-          unsigned char * /*[64]*/ output, int is384)
+void sha4(unsigned char const *input, size_t ilen, unsigned char output[64],
+          int is384)
 {
   sha4_context ctx;
   sha4_starts(& ctx,is384);
@@ -34410,7 +34392,7 @@ void sha4(unsigned char const *input, size_t ilen,
   return;
 }
 
-int sha4_file(char const *path, unsigned char * /*[64]*/ output, int is384)
+int sha4_file(char const *path, unsigned char output[64], int is384)
 {
   int __retres;
   FILE *f;
@@ -34473,7 +34455,7 @@ void sha4_hmac_update(sha4_context *ctx, unsigned char const *input,
   return;
 }
 
-void sha4_hmac_finish(sha4_context *ctx, unsigned char * /*[64]*/ output)
+void sha4_hmac_finish(sha4_context *ctx, unsigned char output[64])
 {
   int is384;
   int hlen;
@@ -34498,7 +34480,7 @@ void sha4_hmac_reset(sha4_context *ctx)
 
 void sha4_hmac(unsigned char const *key, size_t keylen,
                unsigned char const *input, size_t ilen,
-               unsigned char * /*[64]*/ output, int is384)
+               unsigned char output[64], int is384)
 {
   sha4_context ctx;
   sha4_hmac_starts(& ctx,key,keylen,is384);
@@ -36151,7 +36133,7 @@ static unsigned char const sha4_hmac_test_sum[14][64] =
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param1, param0;
  */
-int printf_va_119(char const * __restrict format, int param0, int param1);
+int printf_va_119(char const * restrict format, int param0, int param1);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -36163,7 +36145,7 @@ int printf_va_119(char const * __restrict format, int param0, int param1);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_120(char const * __restrict format);
+int printf_va_120(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -36175,7 +36157,7 @@ int printf_va_120(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_121(char const * __restrict format);
+int printf_va_121(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -36187,7 +36169,7 @@ int printf_va_121(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_122(char const * __restrict format);
+int printf_va_122(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -36201,7 +36183,7 @@ int printf_va_122(char const * __restrict format);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param1, param0;
  */
-int printf_va_123(char const * __restrict format, int param0, int param1);
+int printf_va_123(char const * restrict format, int param0, int param1);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -36213,7 +36195,7 @@ int printf_va_123(char const * __restrict format, int param0, int param1);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_124(char const * __restrict format);
+int printf_va_124(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -36225,7 +36207,7 @@ int printf_va_124(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_125(char const * __restrict format);
+int printf_va_125(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -36237,7 +36219,7 @@ int printf_va_125(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_126(char const * __restrict format);
+int printf_va_126(char const * restrict format);
 
 int sha4_self_test(int verbose)
 {
@@ -37820,7 +37802,7 @@ int ssl_derive_keys(ssl_context *ssl)
   return_label: return __retres;
 }
 
-void ssl_calc_verify(ssl_context *ssl, unsigned char * /*[36]*/ hash)
+void ssl_calc_verify(ssl_context *ssl, unsigned char hash[36])
 {
   md5_context md5_0;
   sha1_context sha1_0;
@@ -39625,7 +39607,7 @@ static int x509_get_name(unsigned char **p, unsigned char const *end,
     assigns *param0
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
  */
-int sscanf_va_2(char const * __restrict s, char const * __restrict format,
+int sscanf_va_2(char const * restrict s, char const * restrict format,
                 int *param0, int *param1, int *param2, int *param3,
                 int *param4, int *param5);
 
@@ -39659,7 +39641,7 @@ int sscanf_va_2(char const * __restrict s, char const * __restrict format,
     assigns *param0
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
  */
-int sscanf_va_3(char const * __restrict s, char const * __restrict format,
+int sscanf_va_3(char const * restrict s, char const * restrict format,
                 int *param0, int *param1, int *param2, int *param3,
                 int *param4, int *param5);
 
@@ -41381,8 +41363,7 @@ int x509parse_dhmfile(dhm_context *dhm, char const *path)
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_12(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_12(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -41393,8 +41374,7 @@ int snprintf_va_12(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_13(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_13(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -41405,8 +41385,7 @@ int snprintf_va_13(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_14(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_14(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -41417,8 +41396,7 @@ int snprintf_va_14(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_15(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_15(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -41429,8 +41407,7 @@ int snprintf_va_15(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_16(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_16(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -41441,8 +41418,7 @@ int snprintf_va_16(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_17(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_17(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -41453,8 +41429,7 @@ int snprintf_va_17(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_18(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_18(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -41466,8 +41441,8 @@ int snprintf_va_18(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..))), param0;
  */
-int snprintf_va_19(char * __restrict s, size_t n,
-                   char const * __restrict format, unsigned int param0);
+int snprintf_va_19(char * restrict s, size_t n, char const * restrict format,
+                   unsigned int param0);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -41478,8 +41453,7 @@ int snprintf_va_19(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_20(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_20(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -41491,8 +41465,8 @@ int snprintf_va_20(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..))), param0;
  */
-int snprintf_va_21(char * __restrict s, size_t n,
-                   char const * __restrict format, unsigned int param0);
+int snprintf_va_21(char * restrict s, size_t n, char const * restrict format,
+                   unsigned int param0);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -41503,8 +41477,7 @@ int snprintf_va_21(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_22(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_22(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -41518,8 +41491,8 @@ int snprintf_va_22(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int snprintf_va_23(char * __restrict s, size_t n,
-                   char const * __restrict format, char *param0);
+int snprintf_va_23(char * restrict s, size_t n, char const * restrict format,
+                   char *param0);
 
 int x509parse_dn_gets(char *buf, size_t size, x509_name const *dn)
 {
@@ -41679,9 +41652,8 @@ int x509parse_dn_gets(char *buf, size_t size, x509_name const *dn)
       \from (indirect: n), (indirect: *(format + (0 ..))),
             *(param1 + (0 ..)), param0;
  */
-int snprintf_va_24(char * __restrict s, size_t n,
-                   char const * __restrict format, unsigned int param0,
-                   char *param1);
+int snprintf_va_24(char * restrict s, size_t n, char const * restrict format,
+                   unsigned int param0, char *param1);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -41692,8 +41664,7 @@ int snprintf_va_24(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_25(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_25(char * restrict s, size_t n, char const * restrict format);
 
 int x509parse_serial_gets(char *buf, size_t size, x509_buf const *serial)
 {
@@ -41765,8 +41736,8 @@ int x509parse_serial_gets(char *buf, size_t size, x509_buf const *serial)
       \from (indirect: n), (indirect: *(format + (0 ..))), param1,
             *(param0 + (0 ..));
  */
-int snprintf_va_26(char * __restrict s, size_t n,
-                   char const * __restrict format, char *param0, int param1);
+int snprintf_va_26(char * restrict s, size_t n, char const * restrict format,
+                   char *param0, int param1);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -41780,8 +41751,8 @@ int snprintf_va_26(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int snprintf_va_27(char * __restrict s, size_t n,
-                   char const * __restrict format, char *param0);
+int snprintf_va_27(char * restrict s, size_t n, char const * restrict format,
+                   char *param0);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -41795,8 +41766,8 @@ int snprintf_va_27(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int snprintf_va_28(char * __restrict s, size_t n,
-                   char const * __restrict format, char *param0);
+int snprintf_va_28(char * restrict s, size_t n, char const * restrict format,
+                   char *param0);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -41810,8 +41781,8 @@ int snprintf_va_28(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int snprintf_va_29(char * __restrict s, size_t n,
-                   char const * __restrict format, char *param0);
+int snprintf_va_29(char * restrict s, size_t n, char const * restrict format,
+                   char *param0);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -41828,9 +41799,9 @@ int snprintf_va_29(char * __restrict s, size_t n,
       \from (indirect: n), (indirect: *(format + (0 ..))), param6, param5,
             param4, param3, param2, param1, *(param0 + (0 ..));
  */
-int snprintf_va_30(char * __restrict s, size_t n,
-                   char const * __restrict format, char *param0, int param1,
-                   int param2, int param3, int param4, int param5, int param6);
+int snprintf_va_30(char * restrict s, size_t n, char const * restrict format,
+                   char *param0, int param1, int param2, int param3,
+                   int param4, int param5, int param6);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -41847,9 +41818,9 @@ int snprintf_va_30(char * __restrict s, size_t n,
       \from (indirect: n), (indirect: *(format + (0 ..))), param6, param5,
             param4, param3, param2, param1, *(param0 + (0 ..));
  */
-int snprintf_va_31(char * __restrict s, size_t n,
-                   char const * __restrict format, char *param0, int param1,
-                   int param2, int param3, int param4, int param5, int param6);
+int snprintf_va_31(char * restrict s, size_t n, char const * restrict format,
+                   char *param0, int param1, int param2, int param3,
+                   int param4, int param5, int param6);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -41863,8 +41834,8 @@ int snprintf_va_31(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int snprintf_va_32(char * __restrict s, size_t n,
-                   char const * __restrict format, char *param0);
+int snprintf_va_32(char * restrict s, size_t n, char const * restrict format,
+                   char *param0);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -41875,8 +41846,7 @@ int snprintf_va_32(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_33(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_33(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -41887,8 +41857,7 @@ int snprintf_va_33(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_34(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_34(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -41899,8 +41868,7 @@ int snprintf_va_34(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_35(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_35(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -41911,8 +41879,7 @@ int snprintf_va_35(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_36(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_36(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -41923,8 +41890,7 @@ int snprintf_va_36(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_37(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_37(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -41935,8 +41901,7 @@ int snprintf_va_37(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_38(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_38(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -41947,8 +41912,7 @@ int snprintf_va_38(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_39(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_39(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -41959,8 +41923,7 @@ int snprintf_va_39(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_40(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_40(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -41971,8 +41934,7 @@ int snprintf_va_40(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_41(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_41(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -41987,8 +41949,8 @@ int snprintf_va_41(char * __restrict s, size_t n,
       \from (indirect: n), (indirect: *(format + (0 ..))), param1,
             *(param0 + (0 ..));
  */
-int snprintf_va_42(char * __restrict s, size_t n,
-                   char const * __restrict format, char *param0, int param1);
+int snprintf_va_42(char * restrict s, size_t n, char const * restrict format,
+                   char *param0, int param1);
 
 int x509parse_cert_info(char *buf, size_t size, char const *prefix,
                         x509_cert const *crt)
@@ -42270,8 +42232,8 @@ char const *x509_oid_get_description(x509_buf *oid)
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..))), param1, param0;
  */
-int snprintf_va_43(char * __restrict s, size_t n,
-                   char const * __restrict format, int param0, int param1);
+int snprintf_va_43(char * restrict s, size_t n, char const * restrict format,
+                   int param0, int param1);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -42283,8 +42245,8 @@ int snprintf_va_43(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..))), param0;
  */
-int snprintf_va_44(char * __restrict s, size_t n,
-                   char const * __restrict format, int param0);
+int snprintf_va_44(char * restrict s, size_t n, char const * restrict format,
+                   int param0);
 
 int x509_oid_get_numeric_string(char *buf, size_t size, x509_buf *oid)
 {
@@ -42350,8 +42312,8 @@ int x509_oid_get_numeric_string(char *buf, size_t size, x509_buf *oid)
       \from (indirect: n), (indirect: *(format + (0 ..))), param1,
             *(param0 + (0 ..));
  */
-int snprintf_va_45(char * __restrict s, size_t n,
-                   char const * __restrict format, char *param0, int param1);
+int snprintf_va_45(char * restrict s, size_t n, char const * restrict format,
+                   char *param0, int param1);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -42365,8 +42327,8 @@ int snprintf_va_45(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int snprintf_va_46(char * __restrict s, size_t n,
-                   char const * __restrict format, char *param0);
+int snprintf_va_46(char * restrict s, size_t n, char const * restrict format,
+                   char *param0);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -42383,9 +42345,9 @@ int snprintf_va_46(char * __restrict s, size_t n,
       \from (indirect: n), (indirect: *(format + (0 ..))), param6, param5,
             param4, param3, param2, param1, *(param0 + (0 ..));
  */
-int snprintf_va_47(char * __restrict s, size_t n,
-                   char const * __restrict format, char *param0, int param1,
-                   int param2, int param3, int param4, int param5, int param6);
+int snprintf_va_47(char * restrict s, size_t n, char const * restrict format,
+                   char *param0, int param1, int param2, int param3,
+                   int param4, int param5, int param6);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -42402,9 +42364,9 @@ int snprintf_va_47(char * __restrict s, size_t n,
       \from (indirect: n), (indirect: *(format + (0 ..))), param6, param5,
             param4, param3, param2, param1, *(param0 + (0 ..));
  */
-int snprintf_va_48(char * __restrict s, size_t n,
-                   char const * __restrict format, char *param0, int param1,
-                   int param2, int param3, int param4, int param5, int param6);
+int snprintf_va_48(char * restrict s, size_t n, char const * restrict format,
+                   char *param0, int param1, int param2, int param3,
+                   int param4, int param5, int param6);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -42418,8 +42380,8 @@ int snprintf_va_48(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int snprintf_va_49(char * __restrict s, size_t n,
-                   char const * __restrict format, char *param0);
+int snprintf_va_49(char * restrict s, size_t n, char const * restrict format,
+                   char *param0);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -42433,8 +42395,8 @@ int snprintf_va_49(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int snprintf_va_50(char * __restrict s, size_t n,
-                   char const * __restrict format, char *param0);
+int snprintf_va_50(char * restrict s, size_t n, char const * restrict format,
+                   char *param0);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -42449,9 +42411,9 @@ int snprintf_va_50(char * __restrict s, size_t n,
       \from (indirect: n), (indirect: *(format + (0 ..))), param5, param4,
             param3, param2, param1, param0;
  */
-int snprintf_va_51(char * __restrict s, size_t n,
-                   char const * __restrict format, int param0, int param1,
-                   int param2, int param3, int param4, int param5);
+int snprintf_va_51(char * restrict s, size_t n, char const * restrict format,
+                   int param0, int param1, int param2, int param3,
+                   int param4, int param5);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -42465,8 +42427,8 @@ int snprintf_va_51(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int snprintf_va_52(char * __restrict s, size_t n,
-                   char const * __restrict format, char *param0);
+int snprintf_va_52(char * restrict s, size_t n, char const * restrict format,
+                   char *param0);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -42477,8 +42439,7 @@ int snprintf_va_52(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_53(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_53(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -42489,8 +42450,7 @@ int snprintf_va_53(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_54(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_54(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -42501,8 +42461,7 @@ int snprintf_va_54(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_55(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_55(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -42513,8 +42472,7 @@ int snprintf_va_55(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_56(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_56(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -42525,8 +42483,7 @@ int snprintf_va_56(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_57(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_57(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -42537,8 +42494,7 @@ int snprintf_va_57(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_58(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_58(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -42549,8 +42505,7 @@ int snprintf_va_58(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_59(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_59(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -42561,8 +42516,7 @@ int snprintf_va_59(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_60(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_60(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -42573,8 +42527,7 @@ int snprintf_va_60(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_61(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_61(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -42585,8 +42538,7 @@ int snprintf_va_61(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..)));
  */
-int snprintf_va_62(char * __restrict s, size_t n,
-                   char const * __restrict format);
+int snprintf_va_62(char * restrict s, size_t n, char const * restrict format);
 
 int x509parse_crl_info(char *buf, size_t size, char const *prefix,
                        x509_crl const *crl)
@@ -43195,7 +43147,7 @@ void x509_crl_free(x509_crl *crl)
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_127(char const * __restrict format);
+int printf_va_127(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -43207,7 +43159,7 @@ int printf_va_127(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_128(char const * __restrict format);
+int printf_va_128(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -43219,7 +43171,7 @@ int printf_va_128(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_129(char const * __restrict format);
+int printf_va_129(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -43231,7 +43183,7 @@ int printf_va_129(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_130(char const * __restrict format);
+int printf_va_130(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -43243,7 +43195,7 @@ int printf_va_130(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_131(char const * __restrict format);
+int printf_va_131(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -43255,7 +43207,7 @@ int printf_va_131(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_132(char const * __restrict format);
+int printf_va_132(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -43268,7 +43220,7 @@ int printf_va_132(char const * __restrict format);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_133(char const * __restrict format, unsigned int param0);
+int printf_va_133(char const * restrict format, unsigned int param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -43280,7 +43232,7 @@ int printf_va_133(char const * __restrict format, unsigned int param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_134(char const * __restrict format);
+int printf_va_134(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -43292,7 +43244,7 @@ int printf_va_134(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_135(char const * __restrict format);
+int printf_va_135(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -43304,7 +43256,7 @@ int printf_va_135(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_136(char const * __restrict format);
+int printf_va_136(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -43316,7 +43268,7 @@ int printf_va_136(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_137(char const * __restrict format);
+int printf_va_137(char const * restrict format);
 
 int x509_self_test(int verbose)
 {
@@ -43388,7 +43340,7 @@ int x509_self_test(int verbose)
   return_label: return __retres;
 }
 
-void xtea_setup(xtea_context *ctx, unsigned char * /*[16]*/ key)
+void xtea_setup(xtea_context *ctx, unsigned char key[16])
 {
   int i;
   memset((void *)ctx,0,sizeof(xtea_context));
@@ -43403,9 +43355,8 @@ void xtea_setup(xtea_context *ctx, unsigned char * /*[16]*/ key)
   return;
 }
 
-int xtea_crypt_ecb(xtea_context *ctx, int mode,
-                   unsigned char * /*[8]*/ input,
-                   unsigned char * /*[8]*/ output)
+int xtea_crypt_ecb(xtea_context *ctx, int mode, unsigned char input[8],
+                   unsigned char output[8])
 {
   int __retres;
   uint32_t *k;
@@ -43458,7 +43409,7 @@ int xtea_crypt_ecb(xtea_context *ctx, int mode,
 }
 
 int xtea_crypt_cbc(xtea_context *ctx, int mode, size_t length,
-                   unsigned char * /*[8]*/ iv, unsigned char *input,
+                   unsigned char iv[8], unsigned char *input,
                    unsigned char *output)
 {
   int __retres;
@@ -43705,7 +43656,7 @@ static unsigned char const xtea_test_ct[6][8] =
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param0;
  */
-int printf_va_138(char const * __restrict format, int param0);
+int printf_va_138(char const * restrict format, int param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -43717,7 +43668,7 @@ int printf_va_138(char const * __restrict format, int param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_139(char const * __restrict format);
+int printf_va_139(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -43729,7 +43680,7 @@ int printf_va_139(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_140(char const * __restrict format);
+int printf_va_140(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -43741,7 +43692,7 @@ int printf_va_140(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_141(char const * __restrict format);
+int printf_va_141(char const * restrict format);
 
 int xtea_self_test(int verbose)
 {
@@ -43805,7 +43756,7 @@ int my_ciphersuites[13] =
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int fprintf_va_1(FILE * __restrict stream, char const * __restrict format,
+int fprintf_va_1(FILE * restrict stream, char const * restrict format,
                  char *param0);
 
 void my_debug(void *ctx, int level, char const *str)

@@ -264,7 +264,7 @@ int editorReadKey(int fd)
     assigns *param0
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
  */
-int sscanf_va_1(char const * __restrict s, char const * __restrict format,
+int sscanf_va_1(char const * restrict s, char const * restrict format,
                 int *param0, int *param1);
 
 int getCursorPosition(int ifd, int ofd, int *rows, int *cols)
@@ -316,8 +316,8 @@ int getCursorPosition(int ifd, int ofd, int *rows, int *cols)
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..))), param1, param0;
  */
-int snprintf_va_1(char * __restrict s, size_t n,
-                  char const * __restrict format, int param0, int param1);
+int snprintf_va_1(char * restrict s, size_t n, char const * restrict format,
+                  int param0, int param1);
 
 int getWindowSize(int ifd, int ofd, int *rows, int *cols)
 {
@@ -1000,8 +1000,8 @@ void abFree(struct abuf *ab)
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..))), *(param0 + (0 ..));
  */
-int snprintf_va_2(char * __restrict s, size_t n,
-                  char const * __restrict format, char *param0);
+int snprintf_va_2(char * restrict s, size_t n, char const * restrict format,
+                  char *param0);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -1013,8 +1013,8 @@ int snprintf_va_2(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..))), param0;
  */
-int snprintf_va_3(char * __restrict s, size_t n,
-                  char const * __restrict format, int param0);
+int snprintf_va_3(char * restrict s, size_t n, char const * restrict format,
+                  int param0);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -1031,9 +1031,8 @@ int snprintf_va_3(char * __restrict s, size_t n,
       \from (indirect: n), (indirect: *(format + (0 ..))),
             *(param2 + (0 ..)), param1, *(param0 + (0 ..));
  */
-int snprintf_va_4(char * __restrict s, size_t n,
-                  char const * __restrict format, char *param0, int param1,
-                  char *param2);
+int snprintf_va_4(char * restrict s, size_t n, char const * restrict format,
+                  char *param0, int param1, char *param2);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -1046,8 +1045,8 @@ int snprintf_va_4(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..))), param1, param0;
  */
-int snprintf_va_5(char * __restrict s, size_t n,
-                  char const * __restrict format, int param0, int param1);
+int snprintf_va_5(char * restrict s, size_t n, char const * restrict format,
+                  int param0, int param1);
 
 /*@ requires
       \valid(s + (0 .. n - 1)) ∨
@@ -1060,8 +1059,8 @@ int snprintf_va_5(char * __restrict s, size_t n,
     assigns *(s + (0 ..))
       \from (indirect: n), (indirect: *(format + (0 ..))), param1, param0;
  */
-int snprintf_va_6(char * __restrict s, size_t n,
-                  char const * __restrict format, int param0, int param1);
+int snprintf_va_6(char * restrict s, size_t n, char const * restrict format,
+                  int param0, int param1);
 
 void editorRefreshScreen(void)
 {
@@ -1528,7 +1527,7 @@ void initEditor(void)
       \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
             (indirect: *(format + (0 ..)));
  */
-int fprintf_va_1(FILE * __restrict stream, char const * __restrict format);
+int fprintf_va_1(FILE * restrict stream, char const * restrict format);
 
 int main(int argc, char **argv)
 {

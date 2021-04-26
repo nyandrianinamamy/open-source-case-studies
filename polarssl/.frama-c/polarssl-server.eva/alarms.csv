@@ -35,11 +35,11 @@ directory	file	line	function	property kind	status	property
 .	fc_stubs.h	356	des3_crypt_cbc	precondition	Unknown	\initialized(input + (0 .. length - 1))
 .	fc_stubs.h	361	des3_crypt_cbc	postcondition	Unknown	\initialized(\old(output) + (0 .. \old(length) - 1))
 .	fc_stubs.h	362	des3_crypt_cbc	postcondition	Unknown	\result ≡ 0
-FRAMAC_SHARE/libc	string.h	92	memcpy	precondition	Unknown	valid_dest: valid_or_empty(dest, n)
-FRAMAC_SHARE/libc	string.h	93	memcpy	precondition	Unknown	valid_src: valid_read_or_empty(src, n)
-FRAMAC_SHARE/libc	string.h	104	memmove	precondition	Unknown	valid_dest: valid_or_empty(dest, n)
-FRAMAC_SHARE/libc	string.h	105	memmove	precondition	Unknown	valid_src: valid_read_or_empty(src, n)
-FRAMAC_SHARE/libc	string.h	115	memset	precondition	Unknown	valid_s: valid_or_empty(s, n)
+FRAMAC_SHARE/libc	string.h	95	memcpy	precondition	Unknown	valid_dest: valid_or_empty(dest, n)
+FRAMAC_SHARE/libc	string.h	96	memcpy	precondition	Unknown	valid_src: valid_read_or_empty(src, n)
+FRAMAC_SHARE/libc	string.h	107	memmove	precondition	Unknown	valid_dest: valid_or_empty(dest, n)
+FRAMAC_SHARE/libc	string.h	108	memmove	precondition	Unknown	valid_src: valid_read_or_empty(src, n)
+FRAMAC_SHARE/libc	string.h	118	memset	precondition	Unknown	valid_s: valid_or_empty(s, n)
 FRAMAC_SHARE/libc	unistd.h	1004	read	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
 FRAMAC_SHARE/libc	unistd.h	1005	read	precondition	Unknown	buf_has_room: \valid((char *)buf + (0 .. count - 1))
 FRAMAC_SHARE/libc	unistd.h	1132	write	precondition	Unknown	valid_fd: 0 ≤ fd < 1024

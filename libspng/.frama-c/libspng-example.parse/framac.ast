@@ -480,7 +480,7 @@ char const *spng_version_string(void);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_1(char const * __restrict format);
+int printf_va_1(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires valid_read_string(param0);
@@ -494,7 +494,7 @@ int printf_va_1(char const * __restrict format);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_2(char const * __restrict format, char *param0);
+int printf_va_2(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -506,7 +506,7 @@ int printf_va_2(char const * __restrict format, char *param0);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_3(char const * __restrict format);
+int printf_va_3(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -518,7 +518,7 @@ int printf_va_3(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_4(char const * __restrict format);
+int printf_va_4(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -530,7 +530,7 @@ int printf_va_4(char const * __restrict format);
       \from (indirect: __fc_stdout->__fc_FILE_id),
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
  */
-int printf_va_5(char const * __restrict format);
+int printf_va_5(char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires valid_read_string(param0);
@@ -544,7 +544,7 @@ int printf_va_5(char const * __restrict format);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_6(char const * __restrict format, char *param0);
+int printf_va_6(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     requires valid_read_string(param0);
@@ -558,7 +558,7 @@ int printf_va_6(char const * __restrict format, char *param0);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_7(char const * __restrict format, char *param0);
+int printf_va_7(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     requires valid_read_string(param0);
@@ -572,7 +572,7 @@ int printf_va_7(char const * __restrict format, char *param0);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_8(char const * __restrict format, char *param0);
+int printf_va_8(char const * restrict format, char *param0);
 
 /*@ requires valid_read_string(format);
     requires valid_read_string(param4);
@@ -588,7 +588,7 @@ int printf_va_8(char const * __restrict format, char *param0);
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param4 + (0 ..)), param3, param2, param1, param0;
  */
-int printf_va_9(char const * __restrict format, unsigned int param0,
+int printf_va_9(char const * restrict format, unsigned int param0,
                 unsigned int param1, int param2, int param3, char *param4);
 
 /*@ requires valid_read_string(format);
@@ -603,7 +603,7 @@ int printf_va_9(char const * __restrict format, unsigned int param0,
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             param2, param1, param0;
  */
-int printf_va_10(char const * __restrict format, int param0, int param1,
+int printf_va_10(char const * restrict format, int param0, int param1,
                  int param2);
 
 /*@ requires valid_read_string(format);
@@ -618,7 +618,7 @@ int printf_va_10(char const * __restrict format, int param0, int param1,
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param0 + (0 ..));
  */
-int printf_va_11(char const * __restrict format, char *param0);
+int printf_va_11(char const * restrict format, char *param0);
 
 int main(int argc, char **argv)
 {
@@ -1956,7 +1956,7 @@ static int check_exif(struct spng_exif const *exif)
   return_label: return __retres;
 }
 
-static int check_png_keyword(char const * /*[80]*/ str)
+static int check_png_keyword(char const str[80])
 {
   int __retres;
   char *tmp_0;
@@ -3279,7 +3279,7 @@ static int read_chunks_after_idat(spng_ctx *ctx)
   return_label: return __retres;
 }
 
-static int calculate_subimages(struct spng_subimage * /*[7]*/ sub,
+static int calculate_subimages(struct spng_subimage sub[7],
                                size_t *widest_scanline,
                                struct spng_ihdr *ihdr, unsigned int channels)
 {
