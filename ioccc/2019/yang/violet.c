@@ -1,5 +1,5 @@
-//@ assigns \result \from \nothing;
-int m(int, int);
+//@ assigns \nothing; //unsound
+void m(int, int);
                                            #include<stdio.h>
                                 #/*     [bbde3cf3]*/include<stdlib.h>
                              #  define D(o,l,I)/*( C ) 2 0 1 9 */o##l##I/*
