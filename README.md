@@ -22,17 +22,24 @@ A few contain sets of tests, benchmarks or tutorials.
 - (required once) `make framac`: prepares a git submodule with a clone
   of the public git of Frama-C, compiles it and installs it locally
   (in `frama-c/build/bin`);
-- `cd` to one of the case studies;
+- (required once) add the following alias to your shell:
+
+        alias fcmake='make -C .frama-c'
+
+  Each "case study" contains a `.frama-c` subdirectory with the Frama-C
+  Makefile. Running `fcmake` will run Frama-C related targets;
+  running `make` will run the case study's original Makefile (if it exists).
+- `cd` to the subdirectory of one of the case studies;
   We recommend `2048` for a short and fast analysis, or `debie1` for
   a finalized analysis.
-- Run `make` to parse and run Eva on the predefined targets.
+- Run `fcmake` to parse and run Eva on the predefined targets.
 
 ## Makefile targets
 
 The scripts provided with Frama-C create several Makefile targets,
 according to the intended usage. The main ones are:
 
-- `help`: lists the base targets
+- `display-targets`: lists the base targets
 - For each base target `t`, the following targets are generated:
   - `t.parse`: parse the sources;
   - `t.eva`: run Eva;
@@ -51,37 +58,34 @@ Other generated targets:
 
 - The output of `t.eva` is verbose, but you can ignore it;
   the important information (warnings and alarms) can be inspected via the GUI.
-- The result of each analysis is stored in a directory containing the full logs
-  and Frama-C save files; successive runs are copied into timestamped
-  directories, to allow comparing them (e.g. via `meld`);
+- The result of the analysis is stored inside `.frama-c`, in subdirectories
+  `t.parse` for parsing and `t.eva` for the Eva analysis.
+  Each subdirectory contains a few log files.
 - To try other parametrizations, simply edit variables
-  `CPPFLAGS/FCFLAGS/EVAFLAGS` in `GNUmakefile` and re-run `make`.
-- Technical remark: the default file used by GNU Make is `GNUmakefile`,
-  if it exists.
-  We use this to avoid renaming the original Makefile, if any. It also means
-  that, if you want to *compile* the code using its Makefile, you have to
-  explicitly name it (e.g. `make -f Makefile`).
-
+  `CPPFLAGS/FCFLAGS/EVAFLAGS` in `.frama-c/GNUmakefile` and re-run `fcmake`.
 
 # Notes
 
 ## Source code modifications
 
-Only minor modifications were performed on each of these case studies:
+We attempt to minimize changes to each case study, to keep the code close to
+the original. Here are the most common kinds of changes:
 
-- File `GNUmakefile` is added to each case study, with Frama-C/Eva-specific
-  rules for parsing and running the analysis;
-- When necessary, syntactic modifications were performed to ensure better
-  C99-compliance and/or the inclusion of stubs to allow Frama-C to parse the
-  files;
-- In some cases, an `eva_main` function was added to provide a better initial
-  context for the analysis;
-- When recursive calls are present, the functions containing them need to be
-  replaced with specifications;
-- Some ACSL annotations were added to the sources
-  (to illustrate their usage, or to improve the analysis);
+- A `.frama-c` directory is added, with a `GNUmakefile` which defines the
+  Frama-C targets and parameters;
+- Some stubs file (e.g. `stubs.c`) are added to the `.frama-c` directory,
+  either to emulate an initial state with command-line arguments, or to provide
+  code/specifications for library functions, missing code, non-portable
+  features, etc.
+- When code modifications are needed (and cannot be moved to the stubs file,
+  e.g. when adding a specification to a `static` functions), we often
+  protect them by `#ifdef __FRAMAC__` guards, to ensure the code compiles
+  as before when not using Frama-C. Note that this is not always the case.
 - Some unnecessary files for the analysis (e.g. documentation, project setups
-  for IDEs, non-code resources) were removed.
+  for IDEs, non-code resources) are removed.
+
+In case studies related to benchmarking, examples or test suites, we often
+apply modifications more liberally.
 
 ## Rationale
 
@@ -100,7 +104,7 @@ Only a few constitute "finalized" case studies.
 
 If you know of other open source code bases where Frama-C/Eva produces
 interesting results, please contribute with pull requests including the
-sources and the `GNUmakefile` that you have devised to run Frama-C.
+case study sources and your `.frama-c/GNUmakefile`.
 
 On the other hand, if you have some interesting open-source C software
 (ideally, C99-compatible) that you are unable to parse and/or run with
@@ -137,12 +141,11 @@ when available. We also summarize the license of each directory below.
 - `jsmn`: MIT
 - `kgflags`: MIT, see `LICENSE`
 - `khash`: MIT
-- `kilo`: BSD 2-clause "Simplified"
-          (see https://github.com/antirez/kilo/blob/master/LICENSE)
+- `kilo`: BSD 2-clause "Simplified", see `LICENSE`
 - `libmodbus`: LGPL
 - `libspng`: BSD 2-clause, see `LICENSE`
 - `libyaml`: MIT, see `License`
-- `mibench`: several (see `LICENSE` file inside each subdirectory)
+- `mibench`: several, see `LICENSE` file inside each subdirectory
 - `mini-gmp`:  LGPL or GPL
 - `miniz`:  MIT
 - `microstrain`: GPL and others, see `LICENSE`
@@ -152,6 +155,6 @@ when available. We also summarize the license of each directory below.
 - `qlz`: GPL
 - `safestringlib`: MIT
 - `semver`: MIT
-- `solitaire`: public domain (see `solitaire.c`)
-- `tweetnacl-usable`: public domain (see `LICENSE.txt`)
-- `x509-parser` : GPLv2 / BSD (see `LICENSE`)
+- `solitaire`: public domain, see `solitaire.c`
+- `tweetnacl-usable`: public domain, see `LICENSE.txt`
+- `x509-parser` : GPLv2 / BSD, see `LICENSE`
