@@ -1,7 +1,7 @@
-[metrics] Defined functions (57)
+[metrics] Defined functions (58)
 ======================
  TDEFL_READ_UNALIGNED_WORD (5 calls); TDEFL_READ_UNALIGNED_WORD2 (18 calls);
- TDEFL_READ_UNALIGNED_WORD32 (2 calls); main (0 call);
+ TDEFL_READ_UNALIGNED_WORD32 (2 calls); eva_main (0 call); main (1 call);
  miniz_def_alloc_func (address taken) (0 call);
  miniz_def_free_func (address taken) (0 call);
  miniz_def_realloc_func (0 call); mz_adler32 (1 call); mz_compress (1 call);
@@ -44,22 +44,22 @@ Undefined and unspecified functions (1)
 
 Potential entry points (13)
 ===========================
- main; miniz_def_realloc_func; mz_deflateReset; mz_error; mz_free;
+ eva_main; miniz_def_realloc_func; mz_deflateReset; mz_error; mz_free;
   mz_inflateReset; mz_version; tdefl_compress_mem_to_heap;
   tdefl_compress_mem_to_mem; tdefl_compressor_alloc; tdefl_compressor_free;
   tdefl_get_prev_return_status; tdefl_write_image_to_png_file_in_memory; 
 
 Global metrics
 ============== 
-Sloc = 2795
-Decision point = 457
+Sloc = 2808
+Decision point = 458
 Global variables = 14
-If = 457
-Loop = 94
+If = 458
+Loop = 95
 Goto = 117
-Assignment = 1405
-Exit point = 57
-Function = 58
-Function call = 206
-Pointer dereferencing = 1239
-Cyclomatic complexity = 514
+Assignment = 1411
+Exit point = 58
+Function = 59
+Function call = 209
+Pointer dereferencing = 1240
+Cyclomatic complexity = 516

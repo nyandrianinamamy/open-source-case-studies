@@ -1,0 +1,56 @@
+directory	file	line	function	property kind	status	property
+.	miniz.c	49	mz_adler32	initialization	Unknown	\initialized(ptr + 0)
+.	miniz.c	49	mz_adler32	mem_access	Unknown	\valid_read(ptr + 0)
+.	miniz.c	50	mz_adler32	initialization	Unknown	\initialized(ptr + 1)
+.	miniz.c	50	mz_adler32	mem_access	Unknown	\valid_read(ptr + 1)
+.	miniz.c	51	mz_adler32	initialization	Unknown	\initialized(ptr + 2)
+.	miniz.c	51	mz_adler32	mem_access	Unknown	\valid_read(ptr + 2)
+.	miniz.c	52	mz_adler32	initialization	Unknown	\initialized(ptr + 3)
+.	miniz.c	52	mz_adler32	mem_access	Unknown	\valid_read(ptr + 3)
+.	miniz.c	53	mz_adler32	initialization	Unknown	\initialized(ptr + 4)
+.	miniz.c	53	mz_adler32	mem_access	Unknown	\valid_read(ptr + 4)
+.	miniz.c	54	mz_adler32	initialization	Unknown	\initialized(ptr + 5)
+.	miniz.c	54	mz_adler32	mem_access	Unknown	\valid_read(ptr + 5)
+.	miniz.c	55	mz_adler32	initialization	Unknown	\initialized(ptr + 6)
+.	miniz.c	55	mz_adler32	mem_access	Unknown	\valid_read(ptr + 6)
+.	miniz.c	56	mz_adler32	initialization	Unknown	\initialized(ptr + 7)
+.	miniz.c	56	mz_adler32	mem_access	Unknown	\valid_read(ptr + 7)
+.	miniz.c	59	mz_adler32	initialization	Unknown	\initialized(tmp)
+.	miniz.c	59	mz_adler32	mem_access	Unknown	\valid_read(tmp)
+.	miniz_tdef.c	618	tdefl_flush_block	initialization	Invalid or unreachable	\initialized(d->m_pLZ_flags)
+.	miniz_tdef.c	762	tdefl_find_match	precondition of __FC_assert	Unknown	nonnull_c: c ≢ 0
+.	miniz_tdef.c	778	tdefl_find_match	initialization	Unknown	\initialized(&d->m_next[probe_pos])
+.	miniz_tdef.c	1043	tdefl_record_literal	initialization	Invalid or unreachable	\initialized(d->m_pLZ_flags)
+.	miniz_tdef.c	1100	tdefl_compress_normal	ptr_comparison	Unknown	\pointer_comparable((void *)pSrc, (void *)pSrc_end)
+.	miniz_tdef.c	1102	tdefl_compress_normal	initialization	Unknown	\initialized(tmp_0)
+.	miniz_tdef.c	1102	tdefl_compress_normal	mem_access	Unknown	\valid_read(tmp_0)
+.	miniz_tdef.c	1117	tdefl_compress_normal	initialization	Unknown	\initialized(tmp_1)
+.	miniz_tdef.c	1117	tdefl_compress_normal	mem_access	Unknown	\valid_read(tmp_1)
+.	miniz_tdef.c	1231	tdefl_flush_output_buffer	differing_blocks	Unknown	\base_addr(d->m_pSrc) ≡ \base_addr((mz_uint8 const *)d->m_pIn_buf)
+.	miniz_tdef.c	1231	tdefl_flush_output_buffer	signed_overflow	Unknown	d->m_pSrc - (mz_uint8 const *)d->m_pIn_buf ≤ 9223372036854775807
+.	miniz_tdef.c	1298	tdefl_compress	differing_blocks	Unknown	\base_addr(d->m_pSrc) ≡ \base_addr((mz_uint8 const *)pIn_buf)
+.	miniz_tdef.c	1298	tdefl_compress	signed_overflow	Unknown	d->m_pSrc - (mz_uint8 const *)pIn_buf ≤ 9223372036854775807
+.	miniz_tdef.c	1403	tdefl_output_buffer_putter	dangling_pointer	Unknown	¬\dangling(&p->m_pBuf)
+.	miniz_tdef.c	1409	tdefl_output_buffer_putter	dangling_pointer	Unknown	¬\dangling(&p->m_pBuf)
+.	miniz_tdef.c	1409	tdefl_output_buffer_putter	precondition of memcpy	Unknown	valid_dest: valid_or_empty(dest, n)
+.	miniz_tdef.c	1505	tdefl_write_image_to_png_file_in_memory_ex	dangling_pointer	Unknown	¬\dangling(&out_buf.m_pBuf)
+FRAMAC_SHARE/libc	assert.h	31	__FC_assert	precondition	Unknown	nonnull_c: c ≢ 0
+FRAMAC_SHARE/libc	string.h	95	memcpy	precondition	Unknown	valid_dest: valid_or_empty(dest, n)
+examples	example6.c	38	hsv_to_rgb	is_nan_or_infinite	Unknown	\is_finite(\div_double(\mul_double((double)4.0, (double)((int)(hue - min))), (double)((int)(max - min))))
+examples	example6.c	45	hsv_to_rgb	float_to_int	Unknown	-1 < X
+examples	example6.c	46	hsv_to_rgb	float_to_int	Unknown	-1 < X
+examples	example6.c	47	hsv_to_rgb	float_to_int	Unknown	-1 < X
+examples	example6.c	48	hsv_to_rgb	float_to_int	Unknown	-1 < X
+examples	example6.c	49	hsv_to_rgb	float_to_int	Unknown	-1 < X
+examples	example6.c	50	hsv_to_rgb	float_to_int	Unknown	-1 < X
+examples	example6.c	110	main	is_nan_or_infinite	Unknown	\is_finite(\add_double(Zx2, Zy2))
+examples	example6.c	112	main	is_nan_or_infinite	Unknown	\is_finite(\mul_double((double)2, Zx))
+examples	example6.c	112	main	is_nan_or_infinite	Unknown	\is_finite(\mul_double(\mul_double((double)2, Zx), Zy))
+examples	example6.c	113	main	is_nan_or_infinite	Unknown	\is_finite(\sub_double(Zx2, Zy2))
+examples	example6.c	114	main	is_nan_or_infinite	Unknown	\is_finite(\mul_double(Zx, Zx))
+examples	example6.c	115	main	is_nan_or_infinite	Unknown	\is_finite(\mul_double(Zy, Zy))
+examples	example6.c	118	main	mem_access	Unknown	\valid(color + 0)
+examples	example6.c	135	main	initialization	Unknown	\initialized(color_0 + 0)
+examples	example6.c	135	main	initialization	Unknown	\initialized(color_0 + 1)
+examples	example6.c	135	main	mem_access	Unknown	\valid_read(color_0 + 0)
+examples	example6.c	135	main	mem_access	Unknown	\valid_read(color_0 + 1)

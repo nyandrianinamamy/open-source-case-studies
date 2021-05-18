@@ -1,0 +1,43 @@
+[metrics] Eva coverage statistics
+=======================
+Syntactically reachable functions = 29 (out of 60)
+Semantically reached functions = 17
+Coverage estimation = 58.6% 
+
+Unreached functions (12) =
+  <miniz.c>: mz_crc32; 
+  <miniz_tdef.c>: tdefl_calculate_minimum_redundancy; tdefl_compress_block;
+    tdefl_compress_fast; tdefl_compress_lz_codes;
+    tdefl_huffman_enforce_max_code_size; tdefl_optimize_huffman_table;
+    tdefl_radix_sort_syms; TDEFL_READ_UNALIGNED_WORD32; tdefl_record_match;
+    tdefl_start_dynamic_block; tdefl_start_static_block;
+[metrics] References to non-analyzed functions
+------------------------------------
+Function tdefl_compress calls tdefl_compress_fast (at miniz_tdef.c:1287)
+Function tdefl_compress_normal calls tdefl_record_match (at miniz_tdef.c:1174)
+Function tdefl_compress_normal calls tdefl_record_match (at miniz_tdef.c:1187)
+Function tdefl_compress_normal calls tdefl_record_match (at miniz_tdef.c:1196)
+Function tdefl_flush_block calls tdefl_compress_block (at miniz_tdef.c:634)
+Function tdefl_flush_block calls tdefl_compress_block (at miniz_tdef.c:662)
+Function tdefl_write_image_to_png_file_in_memory_ex calls mz_crc32 (at miniz_tdef.c:1530)
+Function tdefl_write_image_to_png_file_in_memory_ex calls mz_crc32 (at miniz_tdef.c:1543)
+[metrics] Statements analyzed by Eva
+--------------------------
+1184 stmts in analyzed functions, 556 stmts analyzed (47.0%)
+TDEFL_READ_UNALIGNED_WORD: 2 stmts out of 2 (100.0%)
+TDEFL_READ_UNALIGNED_WORD2: 2 stmts out of 2 (100.0%)
+eva_main: 13 stmts out of 13 (100.0%)
+mz_free: 2 stmts out of 2 (100.0%)
+tdefl_compress_buffer: 3 stmts out of 3 (100.0%)
+tdefl_init: 80 stmts out of 80 (100.0%)
+main: 81 stmts out of 85 (95.3%)
+mz_adler32: 46 stmts out of 49 (93.9%)
+tdefl_output_buffer_putter: 23 stmts out of 26 (88.5%)
+hsv_to_rgb: 45 stmts out of 57 (78.9%)
+tdefl_compress: 59 stmts out of 103 (57.3%)
+tdefl_compress_normal: 92 stmts out of 166 (55.4%)
+tdefl_write_image_to_png_file_in_memory_ex: 56 stmts out of 103 (54.4%)
+tdefl_record_literal: 6 stmts out of 15 (40.0%)
+tdefl_flush_output_buffer: 6 stmts out of 18 (33.3%)
+tdefl_find_match: 27 stmts out of 142 (19.0%)
+tdefl_flush_block: 13 stmts out of 318 (4.1%)
