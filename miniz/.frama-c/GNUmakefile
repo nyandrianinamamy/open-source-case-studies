@@ -17,6 +17,7 @@ CPPFLAGS    += \
 
 ## General flags
 FCFLAGS     += \
+  -main eva_main \
   -add-symbolic-path=..:. \
   -kernel-warn-key annot:missing-spec=abort \
   -kernel-warn-key typing:implicit-function-declaration=abort \
@@ -29,11 +30,52 @@ EVAFLAGS    += \
 FCGUIFLAGS += \
 
 ## Analysis targets (suffixed with .eva)
-TARGETS = miniz.eva
+TARGETS = \
+  miniz-example1.eva \
+  miniz-example2.eva \
+  miniz-example3.eva \
+  miniz-example4.eva \
+  miniz-example5.eva \
+  miniz-example6.eva \
 
 ### Each target <t>.eva needs a rule <t>.parse with source files as prerequisites
-miniz.parse: \
+miniz-example1.parse: \
+  stubs.c \
   ../examples/example1.c \
+  ../miniz.c \
+  ../miniz_tdef.c \
+
+miniz-example2.parse: \
+  stubs.c \
+  ../examples/example2.c \
+  ../miniz.c \
+  ../miniz_tdef.c \
+  ../miniz_tinfl.c \
+  ../miniz_zip.c \
+
+miniz-example3.parse: \
+  stubs.c \
+  ../examples/example3.c \
+  ../miniz.c \
+  ../miniz_tdef.c \
+  ../miniz_tinfl.c \
+
+miniz-example4.parse: \
+  stubs.c \
+  ../examples/example4.c \
+  ../miniz.c \
+  ../miniz_tinfl.c \
+
+miniz-example5.parse: \
+  stubs.c \
+  ../examples/example5.c \
+  ../miniz.c \
+  ../miniz_tdef.c \
+  ../miniz_tinfl.c \
+
+miniz-example6.parse: \
+  stubs.c \
+  ../examples/example6.c \
   ../miniz.c \
   ../miniz_tdef.c \
 
