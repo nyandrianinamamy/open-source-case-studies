@@ -7,7 +7,11 @@ else()
   project(miniz C)
 endif()
 
-include(GNUInstallDirs)
+# determine whether this is a standalone project or included by other projects
+set(MINIZ_STANDALONE_PROJECT OFF)
+if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
+  set(MINIZ_STANDALONE_PROJECT ON)
+endif ()
 
 set(MINIZ_API_VERSION 2)
 set(MINIZ_MINOR_VERSION 1)
@@ -23,13 +27,18 @@ if(CMAKE_BUILD_TYPE STREQUAL "")
 CMAKE_C_FLAGS used) Debug Release RelWithDebInfo MinSizeRel." FORCE)
 endif ()
 
-option(BUILD_EXAMPLES "Build examples" ON)
+option(BUILD_EXAMPLES "Build examples" ${MINIZ_STANDALONE_PROJECT})
 option(BUILD_FUZZERS "Build fuzz targets" OFF)
 option(AMALGAMATE_SOURCES "Amalgamate sources into miniz.h/c" OFF)
 option(BUILD_HEADER_ONLY "Build a header-only version" OFF)
 option(BUILD_SHARED_LIBS "Build shared library instead of static" ON)
+option(INSTALL_PROJECT "Install project" ${MINIZ_STANDALONE_PROJECT})
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
+
+if(INSTALL_PROJECT)
+  include(GNUInstallDirs)
+endif()
 
 if(BUILD_HEADER_ONLY)
   set(AMALGAMATE_SOURCES ON CACHE BOOL "Build a header-only version" FORCE)
@@ -124,11 +133,13 @@ if(NOT BUILD_HEADER_ONLY)
     PRIVATE $<$<C_COMPILER_ID:GNU>:_GNU_SOURCE>)
 
   # pkg-config file
-  configure_file(miniz.pc.in ${CMAKE_BINARY_DIR}/miniz.pc @ONLY)
+  configure_file(miniz.pc.in ${CMAKE_CURRENT_BINARY_DIR}/miniz.pc @ONLY)
 
+  if(INSTALL_PROJECT)
   install(FILES
-    ${CMAKE_BINARY_DIR}/miniz.pc
+      ${CMAKE_CURRENT_BINARY_DIR}/miniz.pc
     DESTINATION ${CMAKE_INSTALL_DATADIR}/pkgconfig)
+  endif()
 endif()
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY
@@ -137,6 +148,7 @@ set_property(TARGET ${PROJECT_NAME} APPEND PROPERTY
   COMPATIBLE_INTERFACE_STRING ${PROJECT_NAME}_MAJOR_VERSION
 )
 
+if(INSTALL_PROJECT)
 install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}Targets
   RUNTIME  DESTINATION ${CMAKE_INSTALL_BINDIR}
   ARCHIVE  DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -179,6 +191,7 @@ install(
   COMPONENT
     Devel
 )
+endif()
 
 if(BUILD_EXAMPLES)
   set(EXAMPLE1_SRC_LIST "${CMAKE_CURRENT_SOURCE_DIR}/examples/example1.c")
@@ -217,6 +230,11 @@ if(BUILD_FUZZERS)
   set(CHECKSUM_FUZZER_SRC_LIST "${FUZZ_MAIN_SRC}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/checksum_fuzzer.c")
   set(FLUSH_FUZZER_SRC_LIST "${FUZZ_MAIN_SRC}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/flush_fuzzer.c")
   set(UNCOMPRESS_FUZZER_SRC_LIST "${FUZZ_MAIN_SRC}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/uncompress_fuzzer.c")
+  set(UNCOMPRESS2_FUZZER_SRC_LIST "${FUZZ_MAIN_SRC}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/uncompress2_fuzzer.c")
+  set(COMPRESS_FUZZER_SRC_LIST "${FUZZ_MAIN_SRC}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/compress_fuzzer.c")
+  set(SMALL_FUZZER_SRC_LIST "${FUZZ_MAIN_SRC}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/small_fuzzer.c")
+  set(LARGE_FUZZER_SRC_LIST "${FUZZ_MAIN_SRC}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/large_fuzzer.c")
+  set(ZIP_FUZZER_SRC_LIST "${FUZZ_MAIN_SRC}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/zip_fuzzer.c")
 
   add_executable(checksum_fuzzer ${CHECKSUM_FUZZER_SRC_LIST})
   target_link_libraries(checksum_fuzzer miniz)
@@ -226,10 +244,26 @@ if(BUILD_FUZZERS)
 
   add_executable(uncompress_fuzzer ${UNCOMPRESS_FUZZER_SRC_LIST})
   target_link_libraries(uncompress_fuzzer miniz)
+
+  add_executable(uncompress2_fuzzer ${UNCOMPRESS2_FUZZER_SRC_LIST})
+  target_link_libraries(uncompress2_fuzzer miniz)
+
+  add_executable(compress_fuzzer ${COMPRESS_FUZZER_SRC_LIST})
+  target_link_libraries(compress_fuzzer miniz)
+
+  add_executable(small_fuzzer ${SMALL_FUZZER_SRC_LIST})
+  target_link_libraries(small_fuzzer miniz)
+
+  add_executable(large_fuzzer ${LARGE_FUZZER_SRC_LIST})
+  target_link_libraries(large_fuzzer miniz)
+
+  add_executable(zip_fuzzer ${ZIP_FUZZER_SRC_LIST})
+  target_link_libraries(zip_fuzzer miniz)
 endif()
 
 set(INCLUDE_INSTALL_DIR "include")
 
+if(INSTALL_PROJECT)
 install(FILES ${INSTALL_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
-
+endif()
 

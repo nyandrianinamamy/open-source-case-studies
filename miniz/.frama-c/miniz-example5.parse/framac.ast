@@ -7778,13 +7778,19 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                 dist += extra_bits_0;
               }
               dist_from_out_buf_start = (unsigned long)(pOut_buf_cur - pOut_buf_start);
-              if ((size_t)dist > dist_from_out_buf_start) 
-                if (decomp_flags & (unsigned int)TINFL_FLAG_USING_NON_WRAPPING_OUTPUT_BUF) 
-                  while (1) {
-                    status = TINFL_STATUS_FAILED;
-                    r->m_state = (unsigned int)37;
-                    goto common_exit;
-                    case (mz_uint32)37: ;
+              if (dist == (mz_uint32)0) goto _LOR_1;
+              else 
+                if ((size_t)dist > dist_from_out_buf_start) goto _LOR_1;
+                else 
+                  if (dist_from_out_buf_start == (size_t)0) {
+                    _LOR_1: ;
+                    if (decomp_flags & (unsigned int)TINFL_FLAG_USING_NON_WRAPPING_OUTPUT_BUF) 
+                      while (1) {
+                        status = TINFL_STATUS_FAILED;
+                        r->m_state = (unsigned int)37;
+                        goto common_exit;
+                        case (mz_uint32)37: ;
+                      }
                   }
               pSrc = pOut_buf_start + ((dist_from_out_buf_start - (size_t)dist) & out_buf_size_mask);
               if (pOut_buf_cur > pSrc) tmp_43 = pOut_buf_cur;

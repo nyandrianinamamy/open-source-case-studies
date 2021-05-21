@@ -15,9 +15,9 @@ Unreached functions (16) =
   <miniz_zip.c>: mz_zip_heap_write_func; mz_zip_writer_add_put_buf_callback;
 [metrics] References to non-analyzed functions
 ------------------------------------
-Function mz_zip_writer_add_mem_ex_v2 references mz_zip_writer_add_put_buf_callback (at miniz_zip.c:3367)
-Function mz_zip_writer_end_internal references mz_zip_heap_write_func (at miniz_zip.c:2676)
-Function mz_zip_writer_init_from_reader_v2 references mz_zip_heap_write_func (at miniz_zip.c:2929)
+Function mz_zip_writer_add_mem_ex_v2 references mz_zip_writer_add_put_buf_callback (at miniz_zip.c:3376)
+Function mz_zip_writer_end_internal references mz_zip_heap_write_func (at miniz_zip.c:2685)
+Function mz_zip_writer_init_from_reader_v2 references mz_zip_heap_write_func (at miniz_zip.c:2938)
 Function tdefl_compress calls tdefl_flush_output_buffer (at miniz_tdef.c:1280)
 Function tdefl_compress calls tdefl_compress_fast (at miniz_tdef.c:1287)
 Function tdefl_compress calls mz_adler32 (at miniz_tdef.c:1298)
@@ -29,7 +29,7 @@ Function tdefl_compress_normal calls tdefl_record_match (at miniz_tdef.c:1196)
 Function tdefl_compress_normal calls tdefl_flush_block (at miniz_tdef.c:1217)
 [metrics] Statements analyzed by Eva
 --------------------------
-4017 stmts in analyzed functions, 2311 stmts analyzed (57.5%)
+4022 stmts in analyzed functions, 2311 stmts analyzed (57.5%)
 TDEFL_READ_UNALIGNED_WORD: 2 stmts out of 2 (100.0%)
 TDEFL_READ_UNALIGNED_WORD2: 2 stmts out of 2 (100.0%)
 eva_main: 13 stmts out of 13 (100.0%)
@@ -102,4 +102,4 @@ tdefl_compress_normal: 58 stmts out of 166 (34.9%)
 mz_zip_writer_write_zeros: 8 stmts out of 24 (33.3%)
 tdefl_compress: 32 stmts out of 103 (31.1%)
 tdefl_find_match: 29 stmts out of 142 (20.4%)
-tinfl_decompress: 11 stmts out of 1120 (1.0%)
+tinfl_decompress: 11 stmts out of 1125 (1.0%)
