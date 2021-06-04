@@ -2014,6 +2014,12 @@ int __attribute__((__visibility__("default"))) mz_inflateInit2(mz_streamp pStrea
   }
   pStream->state = (struct mz_internal_state *)pDecomp;
   pDecomp->m_decomp.m_state = (unsigned int)0;
+  pDecomp->m_decomp.m_num_bits = (unsigned int)0;
+  pDecomp->m_decomp.m_bit_buf = (unsigned long)0;
+  pDecomp->m_decomp.m_dist = (unsigned int)0;
+  pDecomp->m_decomp.m_counter = (unsigned int)0;
+  pDecomp->m_decomp.m_num_extra = (unsigned int)0;
+  pDecomp->m_decomp.m_dist_from_out_buf_start = (unsigned long)0;
   pDecomp->m_dict_ofs = (unsigned int)0;
   pDecomp->m_dict_avail = (unsigned int)0;
   pDecomp->m_last_status = TINFL_STATUS_NEEDS_MORE_INPUT;
@@ -2047,6 +2053,12 @@ int __attribute__((__visibility__("default"))) mz_inflateReset(mz_streamp pStrea
   pStream->reserved = (unsigned long)0;
   pDecomp = (inflate_state *)pStream->state;
   pDecomp->m_decomp.m_state = (unsigned int)0;
+  pDecomp->m_decomp.m_num_bits = (unsigned int)0;
+  pDecomp->m_decomp.m_bit_buf = (unsigned long)0;
+  pDecomp->m_decomp.m_dist = (unsigned int)0;
+  pDecomp->m_decomp.m_counter = (unsigned int)0;
+  pDecomp->m_decomp.m_num_extra = (unsigned int)0;
+  pDecomp->m_decomp.m_dist_from_out_buf_start = (unsigned long)0;
   pDecomp->m_dict_ofs = (unsigned int)0;
   pDecomp->m_dict_avail = (unsigned int)0;
   pDecomp->m_last_status = TINFL_STATUS_NEEDS_MORE_INPUT;
@@ -6405,6 +6417,7 @@ tdefl_status __attribute__((__visibility__("default"))) tdefl_init(tdefl_compres
   d->m_output_flush_ofs = tmp_4;
   d->m_pLZ_code_buf = & d->m_lz_code_buf[1];
   d->m_pLZ_flags = d->m_lz_code_buf;
+  *(d->m_pLZ_flags) = (unsigned char)0;
   d->m_num_flags_left = (unsigned int)8;
   d->m_pOutput_buf = d->m_output_buf;
   d->m_pOutput_buf_end = d->m_output_buf;
@@ -8219,6 +8232,12 @@ void __attribute__((__visibility__("default"))) *tinfl_decompress_mem_to_heap
   size_t out_buf_capacity = (unsigned long)0;
   *pOut_len = (unsigned long)0;
   decomp.m_state = (unsigned int)0;
+  decomp.m_num_bits = (unsigned int)0;
+  decomp.m_bit_buf = (unsigned long)0;
+  decomp.m_dist = (unsigned int)0;
+  decomp.m_counter = (unsigned int)0;
+  decomp.m_num_extra = (unsigned int)0;
+  decomp.m_dist_from_out_buf_start = (unsigned long)0;
   while (1) {
     size_t new_out_buf_capacity;
     tinfl_status __attribute__((__visibility__("default"))) tmp_0;
@@ -8275,6 +8294,12 @@ size_t __attribute__((__visibility__("default"))) tinfl_decompress_mem_to_mem
   tinfl_status __attribute__((__visibility__("default"))) tmp;
   unsigned long tmp_0;
   decomp.m_state = (unsigned int)0;
+  decomp.m_num_bits = (unsigned int)0;
+  decomp.m_bit_buf = (unsigned long)0;
+  decomp.m_dist = (unsigned int)0;
+  decomp.m_counter = (unsigned int)0;
+  decomp.m_num_extra = (unsigned int)0;
+  decomp.m_dist_from_out_buf_start = (unsigned long)0;
   tmp = tinfl_decompress(& decomp,(mz_uint8 const *)pSrc_buf,& src_buf_len,
                          (mz_uint8 *)pOut_buf,(mz_uint8 *)pOut_buf,
                          & out_buf_len,
@@ -8302,6 +8327,12 @@ int __attribute__((__visibility__("default"))) tinfl_decompress_mem_to_callback
     goto return_label;
   }
   decomp.m_state = (unsigned int)0;
+  decomp.m_num_bits = (unsigned int)0;
+  decomp.m_bit_buf = (unsigned long)0;
+  decomp.m_dist = (unsigned int)0;
+  decomp.m_counter = (unsigned int)0;
+  decomp.m_num_extra = (unsigned int)0;
+  decomp.m_dist_from_out_buf_start = (unsigned long)0;
   while (1) {
     tinfl_status __attribute__((__visibility__("default"))) tmp_0;
     size_t in_buf_size = *pIn_buf_size - in_buf_ofs;
@@ -8335,7 +8366,15 @@ tinfl_decompressor __attribute__((__visibility__("default"))) *tinfl_decompresso
 {
   tinfl_decompressor __attribute__((__visibility__("default"))) *__retres;
   tinfl_decompressor *pDecomp = malloc(sizeof(tinfl_decompressor));
-  if (pDecomp) pDecomp->m_state = (unsigned int)0;
+  if (pDecomp) {
+    pDecomp->m_state = (unsigned int)0;
+    pDecomp->m_num_bits = (unsigned int)0;
+    pDecomp->m_bit_buf = (unsigned long)0;
+    pDecomp->m_dist = (unsigned int)0;
+    pDecomp->m_counter = (unsigned int)0;
+    pDecomp->m_num_extra = (unsigned int)0;
+    pDecomp->m_dist_from_out_buf_start = (unsigned long)0;
+  }
   __retres = (tinfl_decompressor __attribute__((__visibility__("default"))) *)pDecomp;
   return __retres;
 }
@@ -10116,6 +10155,12 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_reader_extract_to_mem_
       }
     }
   inflator.m_state = (unsigned int)0;
+  inflator.m_num_bits = (unsigned int)0;
+  inflator.m_bit_buf = (unsigned long)0;
+  inflator.m_dist = (unsigned int)0;
+  inflator.m_counter = (unsigned int)0;
+  inflator.m_num_extra = (unsigned int)0;
+  inflator.m_dist_from_out_buf_start = (unsigned long)0;
   if ((pZip->m_pState)->m_pMem) {
     pRead_buf = (void *)((mz_uint8 *)(pZip->m_pState)->m_pMem + cur_file_ofs);
     read_buf_avail = file_stat.m_comp_size;
@@ -10511,6 +10556,12 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_reader_extract_to_call
     else {
       tinfl_decompressor inflator;
       inflator.m_state = (unsigned int)0;
+      inflator.m_num_bits = (unsigned int)0;
+      inflator.m_bit_buf = (unsigned long)0;
+      inflator.m_dist = (unsigned int)0;
+      inflator.m_counter = (unsigned int)0;
+      inflator.m_num_extra = (unsigned int)0;
+      inflator.m_dist_from_out_buf_start = (unsigned long)0;
       pWrite_buf = (*(pZip->m_pAlloc))(pZip->m_pAlloc_opaque,
                                        (unsigned long)1,(unsigned long)32768);
       if ((void *)0 == pWrite_buf) {
@@ -10744,6 +10795,12 @@ mz_zip_reader_extract_iter_state __attribute__((__visibility__("default"))) *mz_
     if (! (! pState->file_stat.m_method)) {
       void *tmp_4;
       pState->inflator.m_state = (unsigned int)0;
+      pState->inflator.m_num_bits = (unsigned int)0;
+      pState->inflator.m_bit_buf = (unsigned long)0;
+      pState->inflator.m_dist = (unsigned int)0;
+      pState->inflator.m_counter = (unsigned int)0;
+      pState->inflator.m_num_extra = (unsigned int)0;
+      pState->inflator.m_dist_from_out_buf_start = (unsigned long)0;
       tmp_4 = (*(pZip->m_pAlloc))(pZip->m_pAlloc_opaque,(unsigned long)1,
                                   (unsigned long)32768);
       pState->pWrite_buf = tmp_4;
