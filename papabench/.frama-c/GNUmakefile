@@ -20,7 +20,7 @@ CPPFLAGS    += \
   -I../sw/var/include \
   -I../sw/airborne/autopilot \
   -I../avr/include \
-  -iquote ../sw/include \
+  -I../sw/include \
 
 ## General flags
 FCFLAGS     += \
@@ -43,9 +43,8 @@ TARGETS = papabench.eva
 ### Each target <t>.eva needs a rule <t>.parse with source files as prerequisites
 papabench.parse: \
   $(sort $(wildcard ../sw/airborne/autopilot/*.c)) \
-  ../sw/lib/c/math.c \
+  ../sw/lib/c/pp_math.c \
   $(shell $(FRAMAC)-config -print-share-path)/libc/math.c \
-  fc_stubs.h \
 
 
 ### Epilogue. Do not modify this block. #######################################

@@ -1,8 +1,14 @@
 #ifndef MATH_H_
 #define MATH_H_
 
+#include <math.h>
+
+#ifndef M_PI
 #define M_PI 3.141592653589793238462643
+#endif
+#ifndef HALFPI
 #define HALFPI 1.57079632679489661923
+#endif
 #define sin(x)		(pp_sin(x))
 #define atan2(x,y)	(pp_atan2(x,y))
 #define sqrt(x)		(pp_sqrt(x))

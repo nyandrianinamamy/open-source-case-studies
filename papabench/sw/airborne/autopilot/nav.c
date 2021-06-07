@@ -24,7 +24,7 @@
 
 #define NAV_C
 
-#include "math.h"
+#include "pp_math.h"
 
 #include "nav.h"
 #include "estimator.h"

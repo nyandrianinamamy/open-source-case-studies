@@ -41,21 +41,18 @@ sw/airborne/autopilot	nav.c	181	nav_home	precondition of pp_sin	Unknown	\is_fini
 sw/airborne/autopilot	pid.c	54	roll_pitch_pid_run	float_to_int	Unknown	-32769 < tmp
 sw/airborne/autopilot	pid.c	54	roll_pitch_pid_run	float_to_int	Unknown	tmp < 32768
 sw/airborne/autopilot	pid.c	54	roll_pitch_pid_run	is_nan_or_infinite	Unknown	\is_finite(tmp)
-sw/airborne/autopilot	pid.c	57	roll_pitch_pid_run	is_nan	Unknown	¬\is_NaN(\mul_double((double)pitch_of_roll, tmp_0))
+sw/airborne/autopilot	pid.c	57	roll_pitch_pid_run	is_nan	Unknown	¬\is_NaN(\mul_float(pitch_of_roll, tmp_0))
 sw/airborne/autopilot	pid.c	58	roll_pitch_pid_run	float_to_int	Unknown	-32769 < tmp_1
 sw/airborne/autopilot	pid.c	58	roll_pitch_pid_run	float_to_int	Unknown	tmp_1 < 32768
 sw/airborne/autopilot	pid.c	58	roll_pitch_pid_run	is_nan_or_infinite	Unknown	\is_finite(tmp_1)
 sw/airborne/autopilot	pid.c	114	climb_pid_run	float_to_int	Unknown	-32769 < tmp
 sw/airborne/autopilot	pid.c	114	climb_pid_run	float_to_int	Unknown	tmp < 32768
-sw/lib/c	math.c	34	pp_atan2	is_nan	Unknown	¬\is_NaN(\div_double(\sub_double(x, abs_y), \add_double(x, abs_y)))
-sw/lib/c	math.c	34	pp_atan2	is_nan	Unknown	¬\is_NaN(\sub_double(x, abs_y))
-sw/lib/c	math.c	39	pp_atan2	is_nan	Unknown	¬\is_NaN(\div_double(\add_double(x, abs_y), \sub_double(abs_y, x)))
-sw/lib/c	math.c	54	pp_sin	precondition	Unknown	\is_finite(x)
-sw/lib/c	math.c	86	pp_sqrt	initialization	Unknown	\initialized(&e)
-sw/lib/c	math.c	86	pp_sqrt	is_nan	Unknown	¬\is_NaN(m)
-sw/lib/c	math.c	86	pp_sqrt	is_nan	Unknown	¬\is_NaN(tmp)
-sw/lib/c	math.c	91	pp_sqrt	is_nan	Unknown	¬\is_NaN(\add_double((double)x, \div_double(n, (double)x)))
-sw/lib/c	math.c	91	pp_sqrt	is_nan	Unknown	¬\is_NaN(\div_double(n, (double)x))
+sw/lib/c	pp_math.c	34	pp_atan2	is_nan	Unknown	¬\is_NaN(\div_double(\sub_double(x, abs_y), \add_double(x, abs_y)))
+sw/lib/c	pp_math.c	34	pp_atan2	is_nan	Unknown	¬\is_NaN(\sub_double(x, abs_y))
+sw/lib/c	pp_math.c	39	pp_atan2	is_nan	Unknown	¬\is_NaN(\div_double(\add_double(x, abs_y), \sub_double(abs_y, x)))
+sw/lib/c	pp_math.c	54	pp_sin	precondition	Unknown	\is_finite(x)
+sw/lib/c	pp_math.c	91	pp_sqrt	is_nan	Unknown	¬\is_NaN(\add_double((double)x, \div_double(n, (double)x)))
+sw/lib/c	pp_math.c	91	pp_sqrt	is_nan	Unknown	¬\is_NaN(\div_double(n, (double)x))
 sw/var/include	flight_plan.h	423	auto_nav	is_nan	Unknown	¬\is_NaN(estimator_hspeed_mod)
 sw/var/include	flight_plan.h	423	auto_nav	is_nan	Unknown	¬\is_NaN(estimator_hspeed_mod)
 sw/var/include	flight_plan.h	423	auto_nav	is_nan	Unknown	¬\is_NaN(estimator_hspeed_mod)

@@ -28,7 +28,7 @@
 #ifndef GEOMETRY_H
 #define GEOMETRY_H
 
-#include <math.h>
+#include <pp_math.h>
 #include "angles.h"
 /* 
    please use 

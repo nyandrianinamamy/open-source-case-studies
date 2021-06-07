@@ -28,7 +28,7 @@
  */
 
 //#include <stdlib.h>
-#include <math.h>
+#include <pp_math.h>
 
 #include "pid.h"
 
