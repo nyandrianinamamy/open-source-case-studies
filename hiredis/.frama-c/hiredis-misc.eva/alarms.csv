@@ -309,7 +309,7 @@ directory	file	line	function	property kind	status	property
 .	test.c	1015	main	precondition of access	Unknown	valid_string_path: valid_read_string(path)
 FRAMAC_SHARE/libc	assert.h	31	__FC_assert	precondition	Invalid or unreachable	nonnull_c: c ≢ 0
 FRAMAC_SHARE/libc	ctype.h	134	isprint	precondition	Unknown	c_uchar_or_eof: (0 ≤ c ≤ 255) ∨ c ≡ -1
-FRAMAC_SHARE/libc	netdb.h	117	freeaddrinfo	precondition	Unknown	addrinfo_valid: \valid(addrinfo)
+FRAMAC_SHARE/libc	netdb.h	125	freeaddrinfo	precondition	Unknown	addrinfo_valid: \valid(addrinfo)
 FRAMAC_SHARE/libc	stdlib.h	78	atoi	precondition	Unknown	valid_nptr: \valid_read(nptr)
 FRAMAC_SHARE/libc	stdlib.h	405	free	precondition	Unknown	freeable: p ≡ \null ∨ \freeable(p)
 FRAMAC_SHARE/libc	stdlib.h	422	realloc	precondition	Unknown	freeable: ptr ≡ \null ∨ \freeable(ptr)

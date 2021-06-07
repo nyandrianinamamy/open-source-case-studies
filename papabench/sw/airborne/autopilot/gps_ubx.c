@@ -27,7 +27,7 @@
 #include <avr/signal.h>
 #include <avr/interrupt.h>
 //#include <string.h> 
-#include <math.h>
+#include <pp_math.h>
 
 #include "flight_plan.h"
 #include "uart.h"

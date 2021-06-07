@@ -21,7 +21,7 @@
  * Boston, MA 02111-1307, USA. 
  *
  */
-#include <math.h>
+#include <pp_math.h>
 
 double pp_atan2(double x, double y)
 {

@@ -6,10 +6,10 @@ FRAMAC_SHARE/libc	string.h	95	memcpy	precondition	Unknown	valid_dest: valid_or_e
 FRAMAC_SHARE/libc	string.h	96	memcpy	precondition	Unknown	valid_src: valid_read_or_empty(src, n)
 FRAMAC_SHARE/libc	time.h	288	nanosleep	precondition	Unknown	valid_nanosecs: 0 ≤ rqtp->tv_nsec < 1000000000
 FRAMAC_SHARE/libc	unistd.h	782	close	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
-FRAMAC_SHARE/libc	unistd.h	1004	read	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
-FRAMAC_SHARE/libc	unistd.h	1005	read	precondition	Unknown	buf_has_room: \valid((char *)buf + (0 .. count - 1))
-FRAMAC_SHARE/libc	unistd.h	1132	write	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
-FRAMAC_SHARE/libc	unistd.h	1133	write	precondition	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))
+FRAMAC_SHARE/libc	unistd.h	1006	read	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
+FRAMAC_SHARE/libc	unistd.h	1007	read	precondition	Unknown	buf_has_room: \valid((char *)buf + (0 .. count - 1))
+FRAMAC_SHARE/libc	unistd.h	1139	write	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
+FRAMAC_SHARE/libc	unistd.h	1140	write	precondition	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))
 FRAMAC_SHARE/libc/sys	socket.h	301	accept	precondition	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
 FRAMAC_SHARE/libc/sys	socket.h	436	recv	precondition	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
 FRAMAC_SHARE/libc/sys	socket.h	437	recv	precondition	Unknown	valid_buffer_length: \valid((char *)buf + (0 .. len - 1))

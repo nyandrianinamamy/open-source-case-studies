@@ -222,6 +222,12 @@ void __vector_21(void)
   return;
 }
 
+double pp_sin(double x);
+
+double pp_sqrt(double n);
+
+double pp_atan2(double x, double y);
+
 float estimator_x;
 float estimator_y;
 float estimator_z;
@@ -428,7 +434,6 @@ void estimator_update_ir_estim(void)
   if (estimator_update_ir_estim_initialized) {
     float dt = gps_ftow - estimator_update_ir_estim_last_t;
     if ((double)dt > 0.1) {
-      double tmp;
       float phi =
         estimator_hspeed_dir - estimator_update_ir_estim_last_hspeed_dir;
       while ((double)phi > 0x1.921fb54442d18p1) phi = (float)((double)phi - 
@@ -442,8 +447,7 @@ void estimator_update_ir_estim(void)
                                                                 (double)2 * 0x1.921fb54442d18p1);
       estimator_ir = (float)ir_roll;
       estimator_rad = phi;
-      tmp = fabs((double)phi);
-      absphi = (float)tmp;
+      if ((double)phi < 0.) absphi = - phi; else absphi = phi;
       if ((double)absphi < 1.0) 
         if ((double)absphi > 0.05) 
           if (- ((int)ir_contrast) / 2 < (int)ir_roll) 
@@ -3210,12 +3214,6 @@ void __vector_5(void)
   return;
 }
 
-double pp_sin(double x);
-
-double pp_sqrt(double n);
-
-double pp_atan2(double x, double y);
-
 uint8_t nav_stage;
 uint8_t nav_block;
 float dist2_to_wp;
@@ -3273,7 +3271,7 @@ __inline static void auto_nav(void)
             goto return_label;
           }
           else {
-            desired_course = (float)((270.0 / 180.) * 3.141592653589793238462643);
+            desired_course = (float)((270.0 / 180.) * 0x1.921fb54442d18p1);
             auto_pitch = (unsigned char)0;
             nav_pitch = (float)0.150000;
             vertical_mode = (unsigned char)1;
@@ -3300,7 +3298,7 @@ __inline static void auto_nav(void)
               goto return_label;
             }
             else {
-              desired_course = (float)((270.0 / 180.) * 3.141592653589793238462643);
+              desired_course = (float)((270.0 / 180.) * 0x1.921fb54442d18p1);
               auto_pitch = (unsigned char)0;
               nav_pitch = (float)0.000000;
               vertical_mode = (unsigned char)2;
@@ -3711,7 +3709,7 @@ __inline static void auto_nav(void)
                 ;
                 fly_to_xy((float)((double)auto_nav_carrot_x + tmp_16 * (double)tmp_17),
                           (float)((double)auto_nav_carrot_y + tmp_14 * (double)tmp_15));
-                qdr = (float)(((3.141592653589793238462643 / (double)2 - (double)alpha_carrot) / 3.141592653589793238462643) * 180.);
+                qdr = (float)(((0x1.921fb54442d18p1 / (double)2 - (double)alpha_carrot) / 0x1.921fb54442d18p1) * 180.);
                 while (qdr < (float)0) qdr += (float)360;
                 while (qdr >= (float)360) qdr -= (float)360;
               }
@@ -3783,7 +3781,7 @@ __inline static void auto_nav(void)
                 ;
                 fly_to_xy((float)((double)waypoints[0].x + tmp_24 * (double)tmp_25),
                           (float)((double)waypoints[0].y + tmp_22 * (double)tmp_23));
-                qdr = (float)(((3.141592653589793238462643 / (double)2 - (double)alpha_carrot_0) / 3.141592653589793238462643) * 180.);
+                qdr = (float)(((0x1.921fb54442d18p1 / (double)2 - (double)alpha_carrot_0) / 0x1.921fb54442d18p1) * 180.);
                 while (qdr < (float)0) qdr += (float)360;
                 while (qdr >= (float)360) qdr -= (float)360;
               }
@@ -3868,7 +3866,7 @@ __inline static void auto_nav(void)
                     ;
                     fly_to_xy((float)((double)waypoints[1].x + tmp_32 * (double)tmp_33),
                               (float)((double)waypoints[1].y + tmp_30 * (double)tmp_31));
-                    qdr = (float)(((3.141592653589793238462643 / (double)2 - (double)alpha_carrot_1) / 3.141592653589793238462643) * 180.);
+                    qdr = (float)(((0x1.921fb54442d18p1 / (double)2 - (double)alpha_carrot_1) / 0x1.921fb54442d18p1) * 180.);
                     while (qdr < (float)0) qdr += (float)360;
                     while (qdr >= (float)360) qdr -= (float)360;
                   }
@@ -3920,7 +3918,7 @@ __inline static void auto_nav(void)
                       ;
                       fly_to_xy((float)((double)waypoints[4].x + tmp_40 * (double)tmp_41),
                                 (float)((double)waypoints[4].y + tmp_38 * (double)tmp_39));
-                      qdr = (float)(((3.141592653589793238462643 / (double)2 - (double)alpha_carrot_2) / 3.141592653589793238462643) * 180.);
+                      qdr = (float)(((0x1.921fb54442d18p1 / (double)2 - (double)alpha_carrot_2) / 0x1.921fb54442d18p1) * 180.);
                       while (qdr < (float)0) qdr += (float)360;
                       while (qdr >= (float)360) qdr -= (float)360;
                     }
@@ -3996,7 +3994,7 @@ static void fly_to_xy(float x, float y)
   desired_x = x;
   desired_y = y;
   tmp = pp_atan2((double)(y - estimator_y),(double)(x - estimator_x));
-  desired_course = (float)(3.141592653589793238462643 / 2. - tmp);
+  desired_course = (float)(0x1.921fb54442d18p1 / 2. - tmp);
   return;
 }
 
@@ -4066,7 +4064,7 @@ void nav_home(void)
     ;
     fly_to_xy((float)((double)waypoints[0].x + tmp_4 * (double)tmp_5),
               (float)((double)waypoints[0].y + tmp_2 * (double)tmp_3));
-    qdr = (float)(((3.141592653589793238462643 / (double)2 - (double)alpha_carrot) / 3.141592653589793238462643) * 180.);
+    qdr = (float)(((0x1.921fb54442d18p1 / (double)2 - (double)alpha_carrot) / 0x1.921fb54442d18p1) * 180.);
     while (qdr < (float)0) qdr += (float)360;
     while (qdr >= (float)360) qdr -= (float)360;
   }
@@ -4104,7 +4102,7 @@ float pitch_of_vz_pgain = (float)0.05;
 float pitch_of_vz = (float)0.;
 void roll_pitch_pid_run(void)
 {
-  double tmp_0;
+  float tmp_0;
   float err = estimator_phi - desired_roll;
   if (roll_pgain * err < (float)(- (600 * 16))) desired_aileron = (short)(- (
                                                 600 * 16));
@@ -4115,8 +4113,9 @@ void roll_pitch_pid_run(void)
     desired_aileron = (short)tmp;
   }
   if ((double)pitch_of_roll < 0.) pitch_of_roll = (float)0.;
-  tmp_0 = fabs((double)estimator_phi);
-  err = (float)(- ((double)(estimator_theta - desired_pitch) - (double)pitch_of_roll * tmp_0));
+  if ((double)estimator_phi < 0.) tmp_0 = - estimator_phi;
+  else tmp_0 = estimator_phi;
+  err = - ((estimator_theta - desired_pitch) - pitch_of_roll * tmp_0);
   if (pitch_pgain * err < (float)(- (600 * 16))) desired_elevator = (short)(- (
                                                  600 * 16));
   else {
@@ -4383,7 +4382,7 @@ double pp_atan2(double x, double y)
   double r;
   double coeff_1 = 0x1.921fb54442d18p1 / (double)4;
   double coeff_2 = (double)3 * coeff_1;
-  tmp = fabs(y);
+  if (y < 0.) tmp = - y; else tmp = y;
   double abs_y = tmp + 1e-10;
   if (x > (double)0) {
     r = (x - abs_y) / (x + abs_y);

@@ -560,7 +560,7 @@ directory	file	line	function	property kind	status	property
 FRAMAC_SHARE/libc	ctype.h	94	isdigit	precondition	Unknown	c_uchar_or_eof: (0 ≤ c ≤ 255) ∨ c ≡ -1
 FRAMAC_SHARE/libc	ctype.h	134	isprint	precondition	Unknown	c_uchar_or_eof: (0 ≤ c ≤ 255) ∨ c ≡ -1
 FRAMAC_SHARE/libc	ctype.h	161	isspace	precondition	Unknown	c_uchar_or_eof: (0 ≤ c ≤ 255) ∨ c ≡ -1
-FRAMAC_SHARE/libc	fcntl.h	157	__va_open_mode_t	precondition	Unknown	valid_filename: valid_read_string(filename)
+FRAMAC_SHARE/libc	fcntl.h	161	__va_open_mode_t	precondition	Unknown	valid_filename: valid_read_string(filename)
 FRAMAC_SHARE/libc	stdio.c	68	getline	mem_access	Unknown	\valid(*lineptr + tmp_2)
 FRAMAC_SHARE/libc	stdio.c	71	getline	mem_access	Unknown	\valid(*lineptr + cur)
 FRAMAC_SHARE/libc	stdlib.h	405	free	precondition	Unknown	freeable: p ≡ \null ∨ \freeable(p)
@@ -583,7 +583,7 @@ FRAMAC_SHARE/libc	string.h	108	memmove	precondition	Unknown	valid_src: valid_rea
 FRAMAC_SHARE/libc	string.h	118	memset	precondition	Unknown	valid_s: valid_or_empty(s, n)
 FRAMAC_SHARE/libc	string.h	128	strlen	precondition	Unknown	valid_string_s: valid_read_string(s)
 FRAMAC_SHARE/libc	unistd.h	782	close	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
-FRAMAC_SHARE/libc	unistd.h	864	ftruncate	assigns clause	Unknown	assigns \nothing;
-FRAMAC_SHARE/libc	unistd.h	864	ftruncate	from clause	Unknown	assigns \result \from \nothing;
-FRAMAC_SHARE/libc	unistd.h	1132	write	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
-FRAMAC_SHARE/libc	unistd.h	1133	write	precondition	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))
+FRAMAC_SHARE/libc	unistd.h	866	ftruncate	assigns clause	Unknown	assigns \nothing;
+FRAMAC_SHARE/libc	unistd.h	866	ftruncate	from clause	Unknown	assigns \result \from \nothing;
+FRAMAC_SHARE/libc	unistd.h	1139	write	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
+FRAMAC_SHARE/libc	unistd.h	1140	write	precondition	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))

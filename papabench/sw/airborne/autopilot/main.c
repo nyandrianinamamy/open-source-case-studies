@@ -26,7 +26,7 @@
  *
  */
 #include <inttypes.h>
-#include <math.h>
+#include <pp_math.h>
 
 #include "link_autopilot.h"
 
