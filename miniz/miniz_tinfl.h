@@ -87,11 +87,17 @@ typedef enum {
 } tinfl_status;
 
 /* Initializes the decompressor to its initial state. */
-#define tinfl_init(r)     \
-    do                    \
-    {                     \
-        (r)->m_state = 0; \
-    }                     \
+#define tinfl_init(r)                           \
+  do                                            \
+    {                                           \
+      (r)->m_state = 0;                         \
+      (r)->m_num_bits = 0;                      \
+      (r)->m_bit_buf = 0;                       \
+      (r)->m_dist = 0;                          \
+      (r)->m_counter = 0;                       \
+      (r)->m_num_extra = 0;                     \
+      (r)->m_dist_from_out_buf_start = 0;       \
+    }                                           \
     MZ_MACRO_END
 #define tinfl_get_adler32(r) (r)->m_check_adler32
 

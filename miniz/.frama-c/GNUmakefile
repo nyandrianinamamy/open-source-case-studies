@@ -44,6 +44,7 @@ miniz-example1.parse: \
   ../examples/example1.c \
   ../miniz.c \
   ../miniz_tdef.c \
+  ../miniz_tinfl.c \
 
 miniz-example2.parse: \
   stubs.c \
@@ -78,6 +79,10 @@ miniz-example6.parse: \
   ../examples/example6.c \
   ../miniz.c \
   ../miniz_tdef.c \
+
+miniz-example6.parse: FCFLAGS += \
+  -cpp-extra-args-per-file=../miniz.c:"-DMINIZ_NO_TIME -DMINIZ_NO_STDIO" \
+  -cpp-extra-args-per-file=../miniz_tdef.c:"-DMINIZ_NO_TIME -DMINIZ_NO_STDIO" \
 
 ### Epilogue. Do not modify this block. #######################################
 include $(shell $(FRAMAC)-config -print-share-path)/analysis-scripts/epilogue.mk
