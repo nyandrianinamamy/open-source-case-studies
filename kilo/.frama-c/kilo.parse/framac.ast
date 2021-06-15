@@ -250,12 +250,12 @@ int editorReadKey(int fd)
   return_label: return __retres;
 }
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -305,10 +305,10 @@ int getCursorPosition(int ifd, int ofd, int *rows, int *cols)
   return_label: return __retres;
 }
 
-/*@ requires
+/*@ requires valid_read_string(format);
+    requires
       \valid(s + (0 .. n - 1)) ∨
       \valid(s + (0 .. format_length(format) - 1));
-    requires valid_read_string(format);
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -988,11 +988,11 @@ void abFree(struct abuf *ab)
   return;
 }
 
-/*@ requires
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    requires
       \valid(s + (0 .. n - 1)) ∨
       \valid(s + (0 .. format_length(format) - 1));
-    requires valid_read_string(format);
-    requires valid_read_string(param0);
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -1003,10 +1003,10 @@ void abFree(struct abuf *ab)
 int snprintf_va_2(char * restrict s, size_t n, char const * restrict format,
                   char *param0);
 
-/*@ requires
+/*@ requires valid_read_string(format);
+    requires
       \valid(s + (0 .. n - 1)) ∨
       \valid(s + (0 .. format_length(format) - 1));
-    requires valid_read_string(format);
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))), (indirect: param0);
@@ -1016,12 +1016,12 @@ int snprintf_va_2(char * restrict s, size_t n, char const * restrict format,
 int snprintf_va_3(char * restrict s, size_t n, char const * restrict format,
                   int param0);
 
-/*@ requires
+/*@ requires valid_read_nstring(param0, 20);
+    requires valid_read_string(param2);
+    requires valid_read_string(format);
+    requires
       \valid(s + (0 .. n - 1)) ∨
       \valid(s + (0 .. format_length(format) - 1));
-    requires valid_read_string(format);
-    requires valid_read_string(param2);
-    requires valid_read_nstring(param0, 20);
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -1034,10 +1034,10 @@ int snprintf_va_3(char * restrict s, size_t n, char const * restrict format,
 int snprintf_va_4(char * restrict s, size_t n, char const * restrict format,
                   char *param0, int param1, char *param2);
 
-/*@ requires
+/*@ requires valid_read_string(format);
+    requires
       \valid(s + (0 .. n - 1)) ∨
       \valid(s + (0 .. format_length(format) - 1));
-    requires valid_read_string(format);
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -1048,10 +1048,10 @@ int snprintf_va_4(char * restrict s, size_t n, char const * restrict format,
 int snprintf_va_5(char * restrict s, size_t n, char const * restrict format,
                   int param0, int param1);
 
-/*@ requires
+/*@ requires valid_read_string(format);
+    requires
       \valid(s + (0 .. n - 1)) ∨
       \valid(s + (0 .. format_length(format) - 1));
-    requires valid_read_string(format);
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),

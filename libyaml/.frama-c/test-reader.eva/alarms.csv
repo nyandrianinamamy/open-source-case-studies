@@ -1,5 +1,13 @@
 directory	file	line	function	property kind	status	property
 FRAMAC_SHARE/libc	assert.h	31	__FC_assert	precondition	Unknown	nonnull_c: c ≢ 0
+FRAMAC_SHARE/libc	stdio.h	211	printf_va_12	precondition	Unknown	valid_read_string(param0)
+FRAMAC_SHARE/libc	stdio.h	211	printf_va_14	precondition	Unknown	valid_read_string(param0)
+FRAMAC_SHARE/libc	stdio.h	211	printf_va_18	precondition	Unknown	valid_read_string(param0)
+FRAMAC_SHARE/libc	stdio.h	211	printf_va_22	precondition	Unknown	valid_read_string(param0)
+FRAMAC_SHARE/libc	stdio.h	211	printf_va_25	precondition	Unknown	valid_read_string(param0)
+FRAMAC_SHARE/libc	stdio.h	211	printf_va_29	precondition	Unknown	valid_read_string(param0)
+FRAMAC_SHARE/libc	stdio.h	211	printf_va_6	precondition	Unknown	valid_read_string(param0)
+FRAMAC_SHARE/libc	stdio.h	211	printf_va_7	precondition	Unknown	valid_read_string(param0)
 FRAMAC_SHARE/libc	string.h	55	memcmp	precondition	Unknown	valid_s1: valid_read_or_empty(s1, n)
 FRAMAC_SHARE/libc	string.h	57	memcmp	precondition	Unknown	initialization: s1: \initialized((char *)s1 + (0 .. n - 1))
 FRAMAC_SHARE/libc	string.h	59	memcmp	precondition	Unknown	danglingness: s1: non_escaping(s1, n)
@@ -94,20 +102,16 @@ tests	test-reader.c	131	check_utf8_sequences	mem_access	Unknown	\valid_read(end)
 tests	test-reader.c	133	check_utf8_sequences	differing_blocks	Unknown	\base_addr(end) ≡ \base_addr(start)
 tests	test-reader.c	137	check_utf8_sequences	signed_overflow	Unknown	failed + 1 ≤ 2147483647
 tests	test-reader.c	147	check_utf8_sequences	precondition of printf_va_6	Unknown	valid_read_string(param0)
-tests	test-reader.c	147	printf_va_6	precondition	Unknown	valid_read_string(param0)
 tests	test-reader.c	151	check_utf8_sequences	precondition of printf_va_7	Unknown	valid_read_string(param0)
-tests	test-reader.c	151	printf_va_7	precondition	Unknown	valid_read_string(param0)
 tests	test-reader.c	177	check_boms	mem_access	Unknown	\valid_read(end)
 tests	test-reader.c	180	check_boms	differing_blocks	Unknown	\base_addr(end) ≡ \base_addr(start)
 tests	test-reader.c	183	check_boms	precondition of printf_va_12	Unknown	valid_read_string(param0)
-tests	test-reader.c	183	printf_va_12	precondition	Unknown	valid_read_string(param0)
 tests	test-reader.c	184	check_boms	signed_overflow	Unknown	failed + 1 ≤ 2147483647
 tests	test-reader.c	189	check_boms	signed_overflow	Unknown	failed + 1 ≤ 2147483647
 tests	test-reader.c	191	check_boms	precondition of memcmp	Unknown	danglingness: s1: non_escaping(s1, n)
 tests	test-reader.c	191	check_boms	precondition of memcmp	Unknown	initialization: s1: \initialized((char *)s1 + (0 .. n - 1))
 tests	test-reader.c	191	check_boms	precondition of memcmp	Unknown	valid_s1: valid_read_or_empty(s1, n)
 tests	test-reader.c	192	check_boms	precondition of printf_va_14	Unknown	valid_read_string(param0)
-tests	test-reader.c	192	printf_va_14	precondition	Unknown	valid_read_string(param0)
 tests	test-reader.c	193	check_boms	signed_overflow	Unknown	failed + 1 ≤ 2147483647
 tests	test-reader.c	215	check_long_utf8	precondition of __FC_assert	Unknown	nonnull_c: c ≢ 0
 tests	test-reader.c	222	check_long_utf8	signed_overflow	Unknown	k + 1 ≤ 2147483647
@@ -117,13 +121,11 @@ tests	test-reader.c	226	check_long_utf8	signed_overflow	Unknown	k + 1 ≤ 214748
 tests	test-reader.c	226	check_long_utf8	mem_access	Unknown	\valid(buffer + tmp_5)
 tests	test-reader.c	227	check_long_utf8	mem_access	Unknown	\valid(buffer + tmp_6)
 tests	test-reader.c	235	check_long_utf8	precondition of printf_va_18	Unknown	valid_read_string(param0)
-tests	test-reader.c	235	printf_va_18	precondition	Unknown	valid_read_string(param0)
 tests	test-reader.c	253	check_long_utf8	initialization	Unknown	\initialized(parser.buffer.pointer + 0)
 tests	test-reader.c	253	check_long_utf8	mem_access	Unknown	\valid_read(parser.buffer.pointer + 0)
 tests	test-reader.c	253	check_long_utf8	initialization	Unknown	\initialized(parser.buffer.pointer + 1)
 tests	test-reader.c	254	check_long_utf8	initialization	Unknown	\initialized(parser.buffer.pointer + 1)
 tests	test-reader.c	265	check_long_utf8	precondition of printf_va_22	Unknown	valid_read_string(param0)
-tests	test-reader.c	265	printf_va_22	precondition	Unknown	valid_read_string(param0)
 tests	test-reader.c	268	check_long_utf8	initialization	Unknown	\initialized(parser.buffer.pointer + 0)
 tests	test-reader.c	268	check_long_utf8	mem_access	Unknown	\valid_read(parser.buffer.pointer + 0)
 tests	test-reader.c	287	check_long_utf16	precondition of __FC_assert	Unknown	nonnull_c: c ≢ 0
@@ -134,13 +136,11 @@ tests	test-reader.c	297	check_long_utf16	mem_access	Unknown	\valid(buffer + tmp_
 tests	test-reader.c	298	check_long_utf16	signed_overflow	Unknown	k + 1 ≤ 2147483647
 tests	test-reader.c	298	check_long_utf16	mem_access	Unknown	\valid(buffer + tmp_5)
 tests	test-reader.c	306	check_long_utf16	precondition of printf_va_25	Unknown	valid_read_string(param0)
-tests	test-reader.c	306	printf_va_25	precondition	Unknown	valid_read_string(param0)
 tests	test-reader.c	324	check_long_utf16	initialization	Unknown	\initialized(parser.buffer.pointer + 0)
 tests	test-reader.c	324	check_long_utf16	mem_access	Unknown	\valid_read(parser.buffer.pointer + 0)
 tests	test-reader.c	324	check_long_utf16	initialization	Unknown	\initialized(parser.buffer.pointer + 1)
 tests	test-reader.c	325	check_long_utf16	initialization	Unknown	\initialized(parser.buffer.pointer + 1)
 tests	test-reader.c	336	check_long_utf16	precondition of printf_va_29	Unknown	valid_read_string(param0)
-tests	test-reader.c	336	printf_va_29	precondition	Unknown	valid_read_string(param0)
 tests	test-reader.c	339	check_long_utf16	initialization	Unknown	\initialized(parser.buffer.pointer + 0)
 tests	test-reader.c	339	check_long_utf16	mem_access	Unknown	\valid_read(parser.buffer.pointer + 0)
 tests	test-reader.c	353	main	signed_overflow	Unknown	(int)((int)(tmp + tmp_0) + tmp_1) + tmp_2 ≤ 2147483647

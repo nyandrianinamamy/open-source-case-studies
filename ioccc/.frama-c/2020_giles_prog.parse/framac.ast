@@ -8,8 +8,8 @@
 #include "strings.h"
 char const *t =
   "Dual-tone multi-frequency signaling(DTMF) is a telecommunication signalingsystem using the voice-frequency bandInvalid WAV input\000Read error\000Cannot read dtmf.bin\000rb\000" + 111;
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param0);
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
     assigns \result
       \from (indirect: stream->__fc_FILE_id),
@@ -22,8 +22,8 @@ char const *t =
 int fprintf_va_1(FILE * restrict stream, char const * restrict format,
                  char *param0);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param0);
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
     assigns \result
       \from (indirect: stream->__fc_FILE_id),
@@ -36,8 +36,8 @@ int fprintf_va_1(FILE * restrict stream, char const * restrict format,
 int fprintf_va_2(FILE * restrict stream, char const * restrict format,
                  char *param0);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param0);
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
     assigns \result
       \from (indirect: stream->__fc_FILE_id),

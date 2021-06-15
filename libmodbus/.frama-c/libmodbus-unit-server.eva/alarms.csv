@@ -1,19 +1,15 @@
 directory	file	line	function	property kind	status	property
-FRAMAC_SHARE/libc	__fc_select.h	48	select	precondition	Unknown	nfds: nfds ≥ 0
+FRAMAC_SHARE/libc	stdio.h	211	printf_va_15	precondition	Unknown	valid_read_string(param0)
 FRAMAC_SHARE/libc	string.c	130	strcmp	mem_access	Unknown	\valid_read(s1 + i)
 FRAMAC_SHARE/libc	string.c	133	strcmp	mem_access	Unknown	\valid_read((unsigned char *)s1 + i)
 FRAMAC_SHARE/libc	string.h	95	memcpy	precondition	Unknown	valid_dest: valid_or_empty(dest, n)
 FRAMAC_SHARE/libc	string.h	96	memcpy	precondition	Unknown	valid_src: valid_read_or_empty(src, n)
 FRAMAC_SHARE/libc	time.h	288	nanosleep	precondition	Unknown	valid_nanosecs: 0 ≤ rqtp->tv_nsec < 1000000000
-FRAMAC_SHARE/libc	unistd.h	782	close	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
-FRAMAC_SHARE/libc	unistd.h	1006	read	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
-FRAMAC_SHARE/libc	unistd.h	1007	read	precondition	Unknown	buf_has_room: \valid((char *)buf + (0 .. count - 1))
-FRAMAC_SHARE/libc	unistd.h	1139	write	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
-FRAMAC_SHARE/libc	unistd.h	1140	write	precondition	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))
+FRAMAC_SHARE/libc	unistd.h	1008	read	precondition	Unknown	buf_has_room: \valid((char *)buf + (0 .. count - 1))
+FRAMAC_SHARE/libc	unistd.h	1141	write	precondition	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))
 FRAMAC_SHARE/libc/sys	socket.h	301	accept	precondition	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
 FRAMAC_SHARE/libc/sys	socket.h	436	recv	precondition	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
 FRAMAC_SHARE/libc/sys	socket.h	437	recv	precondition	Unknown	valid_buffer_length: \valid((char *)buf + (0 .. len - 1))
-FRAMAC_SHARE/libc/sys	socket.h	493	send	precondition	Unknown	available_sockfd: 0 ≤ sockfd < 1024
 FRAMAC_SHARE/libc/sys	socket.h	494	send	precondition	Unknown	buf_len_ok: \valid_read((char *)buf + (0 .. len - 1))
 src	modbus-data.c	89	modbus_set_bits_from_bytes	initialization	Unknown	\initialized(tab_byte + (unsigned int)((unsigned int)(i - (unsigned int)idx) / 8))
 src	modbus-data.c	89	modbus_set_bits_from_bytes	mem_access	Unknown	\valid(dest + i)
@@ -26,20 +22,13 @@ src	modbus-rtu.c	158	_modbus_rtu_send_msg_pre	mem_access	Unknown	\valid(req + tm
 src	modbus-rtu.c	159	_modbus_rtu_send_msg_pre	signed_overflow	Unknown	req_length + 1 ≤ 2147483647
 src	modbus-rtu.c	159	_modbus_rtu_send_msg_pre	mem_access	Unknown	\valid(req + tmp_1)
 src	modbus-rtu.c	297	_modbus_rtu_send	precondition of write	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))
-src	modbus-rtu.c	297	_modbus_rtu_send	precondition of write	Unknown	valid_fd: 0 ≤ fd < 1024
 src	modbus-rtu.c	332	_modbus_rtu_recv	precondition of read	Unknown	buf_has_room: \valid((char *)buf + (0 .. count - 1))
-src	modbus-rtu.c	332	_modbus_rtu_recv	precondition of read	Unknown	valid_fd: 0 ≤ fd < 1024
 src	modbus-rtu.c	364	_modbus_rtu_check_integrity	initialization	Unknown	\initialized(msg + 0)
 src	modbus-rtu.c	376	_modbus_rtu_check_integrity	signed_overflow	Unknown	-2147483648 ≤ msg_length - 2
 src	modbus-rtu.c	377	_modbus_rtu_check_integrity	initialization	Unknown	\initialized(msg + (int)(msg_length - 1))
 src	modbus-rtu.c	377	_modbus_rtu_check_integrity	initialization	Unknown	\initialized(msg + (int)(msg_length - 2))
 src	modbus-rtu.c	377	_modbus_rtu_check_integrity	mem_access	Unknown	\valid_read(msg + (int)(msg_length - 1))
 src	modbus-rtu.c	377	_modbus_rtu_check_integrity	mem_access	Unknown	\valid_read(msg + (int)(msg_length - 2))
-src	modbus-rtu.c	718	_modbus_rtu_connect	precondition of close	Unknown	valid_fd: 0 ≤ fd < 1024
-src	modbus-rtu.c	892	_modbus_rtu_connect	precondition of close	Unknown	valid_fd: 0 ≤ fd < 1024
-src	modbus-rtu.c	1126	_modbus_rtu_close	precondition of close	Unknown	valid_fd: 0 ≤ fd < 1024
-src	modbus-rtu.c	1159	_modbus_rtu_select	precondition of select	Unknown	nfds: nfds ≥ 0
-src	modbus-rtu.c	1159	_modbus_rtu_select	signed_overflow	Unknown	ctx->s + 1 ≤ 2147483647
 src	modbus-tcp.c	152	_modbus_tcp_prepare_response_tid	initialization	Unknown	\initialized(req + 0)
 src	modbus-tcp.c	152	_modbus_tcp_prepare_response_tid	initialization	Unknown	\initialized(req + 1)
 src	modbus-tcp.c	158	_modbus_tcp_send_msg_pre	signed_overflow	Unknown	-2147483648 ≤ req_length - 6
@@ -113,11 +102,9 @@ src	modbus.c	1012	modbus_reply_exception	initialization	Unknown	\initialized(req
 src	modbus.c	1013	modbus_reply_exception	initialization	Unknown	\initialized(req + offset)
 tests	unit-test-server.c	44	main	mem_access	Unknown	\valid_read(argv + 1)
 tests	unit-test-server.c	51	main	precondition of printf_va_15	Unknown	valid_read_string(param0)
-tests	unit-test-server.c	51	printf_va_15	precondition	Unknown	valid_read_string(param0)
 tests	unit-test-server.c	127	main	initialization	Unknown	\initialized(query + header_length)
 tests	unit-test-server.c	130	main	initialization	Unknown	\initialized(query + (int)((int)(header_length + 3) + 1))
 tests	unit-test-server.c	130	main	initialization	Unknown	\initialized(query + (int)(header_length + 3))
 tests	unit-test-server.c	135	main	initialization	Unknown	\initialized(query + (int)((int)(header_length + 1) + 1))
 tests	unit-test-server.c	135	main	initialization	Unknown	\initialized(query + (int)(header_length + 1))
 tests	unit-test-server.c	170	main	initialization	Unknown	\initialized(query + 1)
-tests	unit-test-server.c	174	main	precondition of send	Unknown	available_sockfd: 0 ≤ sockfd < 1024

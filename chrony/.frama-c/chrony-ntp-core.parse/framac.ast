@@ -915,8 +915,8 @@ void TST_Fail(int line)
  */
 int fprintf_va_1(FILE * restrict stream, char const * restrict format);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param0);
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -2570,12 +2570,12 @@ int DNS_IPAddress2Name(IPAddr *ip_addr, char *name, int len);
 
 void DNS_Reload(void);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -2587,12 +2587,12 @@ void DNS_Reload(void);
 int sscanf_va_1(char const * restrict s, char const * restrict format,
                 int *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -2604,12 +2604,12 @@ int sscanf_va_1(char const * restrict s, char const * restrict format,
 int sscanf_va_2(char const * restrict s, char const * restrict format,
                 int *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -2621,12 +2621,12 @@ int sscanf_va_2(char const * restrict s, char const * restrict format,
 int sscanf_va_3(char const * restrict s, char const * restrict format,
                 int *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -2638,12 +2638,12 @@ int sscanf_va_3(char const * restrict s, char const * restrict format,
 int sscanf_va_4(char const * restrict s, char const * restrict format,
                 unsigned short *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -2655,12 +2655,12 @@ int sscanf_va_4(char const * restrict s, char const * restrict format,
 int sscanf_va_5(char const * restrict s, char const * restrict format,
                 double *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -2672,12 +2672,12 @@ int sscanf_va_5(char const * restrict s, char const * restrict format,
 int sscanf_va_6(char const * restrict s, char const * restrict format,
                 int *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -2689,12 +2689,12 @@ int sscanf_va_6(char const * restrict s, char const * restrict format,
 int sscanf_va_7(char const * restrict s, char const * restrict format,
                 int *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -2706,12 +2706,12 @@ int sscanf_va_7(char const * restrict s, char const * restrict format,
 int sscanf_va_8(char const * restrict s, char const * restrict format,
                 int *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -2723,12 +2723,12 @@ int sscanf_va_8(char const * restrict s, char const * restrict format,
 int sscanf_va_9(char const * restrict s, char const * restrict format,
                 double *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -2740,12 +2740,12 @@ int sscanf_va_9(char const * restrict s, char const * restrict format,
 int sscanf_va_10(char const * restrict s, char const * restrict format,
                  int *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -2757,12 +2757,12 @@ int sscanf_va_10(char const * restrict s, char const * restrict format,
 int sscanf_va_11(char const * restrict s, char const * restrict format,
                  int *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -2774,12 +2774,12 @@ int sscanf_va_11(char const * restrict s, char const * restrict format,
 int sscanf_va_12(char const * restrict s, char const * restrict format,
                  int *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -2791,12 +2791,12 @@ int sscanf_va_12(char const * restrict s, char const * restrict format,
 int sscanf_va_13(char const * restrict s, char const * restrict format,
                  double *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -2808,12 +2808,12 @@ int sscanf_va_13(char const * restrict s, char const * restrict format,
 int sscanf_va_14(char const * restrict s, char const * restrict format,
                  double *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -2825,12 +2825,12 @@ int sscanf_va_14(char const * restrict s, char const * restrict format,
 int sscanf_va_15(char const * restrict s, char const * restrict format,
                  double *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -2842,12 +2842,12 @@ int sscanf_va_15(char const * restrict s, char const * restrict format,
 int sscanf_va_16(char const * restrict s, char const * restrict format,
                  int *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -2859,12 +2859,12 @@ int sscanf_va_16(char const * restrict s, char const * restrict format,
 int sscanf_va_17(char const * restrict s, char const * restrict format,
                  double *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -3258,12 +3258,12 @@ int CPS_ParseNTPSourceAdd(char *line, CPS_NTP_Source *src)
   return_label: return __retres;
 }
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -3275,12 +3275,12 @@ int CPS_ParseNTPSourceAdd(char *line, CPS_NTP_Source *src)
 int sscanf_va_19(char const * restrict s, char const * restrict format,
                  double *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -3436,9 +3436,9 @@ char *CPS_SplitWord(char *line)
   return q;
 }
 
-/*@ requires valid_read_string(s);
+/*@ requires \valid(param0);
     requires valid_read_string(format);
-    requires \valid(param0);
+    requires valid_read_string(s);
     ensures \initialized(param0);
     assigns \result, *param0;
     assigns \result
@@ -4521,9 +4521,9 @@ static int parse_string(char *line, char **result)
   return __retres;
 }
 
-/*@ requires valid_read_string(s);
+/*@ requires \valid(param0);
     requires valid_read_string(format);
-    requires \valid(param0);
+    requires valid_read_string(s);
     ensures \initialized(param0);
     assigns \result, *param0;
     assigns \result
@@ -4549,9 +4549,9 @@ static int parse_int(char *line, int *result)
   return_label: return __retres;
 }
 
-/*@ requires valid_read_string(s);
+/*@ requires \valid(param0);
     requires valid_read_string(format);
-    requires \valid(param0);
+    requires valid_read_string(s);
     ensures \initialized(param0);
     assigns \result, *param0;
     assigns \result
@@ -4601,12 +4601,12 @@ static void parse_source(char *line, NTP_Source_Type type, int pool)
   return_label: return;
 }
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -4652,12 +4652,12 @@ static void parse_ratelimit(char *line, int *enabled_0, int *interval,
   return_label: return;
 }
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -4669,12 +4669,12 @@ static void parse_ratelimit(char *line, int *enabled_0, int *interval,
 int sscanf_va_25(char const * restrict s, char const * restrict format,
                  double *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -4686,12 +4686,12 @@ int sscanf_va_25(char const * restrict s, char const * restrict format,
 int sscanf_va_26(char const * restrict s, char const * restrict format,
                  int *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -4703,12 +4703,12 @@ int sscanf_va_26(char const * restrict s, char const * restrict format,
 int sscanf_va_27(char const * restrict s, char const * restrict format,
                  double *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -4720,12 +4720,12 @@ int sscanf_va_27(char const * restrict s, char const * restrict format,
 int sscanf_va_28(char const * restrict s, char const * restrict format,
                  double *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -4737,12 +4737,12 @@ int sscanf_va_28(char const * restrict s, char const * restrict format,
 int sscanf_va_29(char const * restrict s, char const * restrict format,
                  double *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -4754,12 +4754,12 @@ int sscanf_va_29(char const * restrict s, char const * restrict format,
 int sscanf_va_30(char const * restrict s, char const * restrict format,
                  double *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -4771,12 +4771,12 @@ int sscanf_va_30(char const * restrict s, char const * restrict format,
 int sscanf_va_31(char const * restrict s, char const * restrict format,
                  int *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -4788,12 +4788,12 @@ int sscanf_va_31(char const * restrict s, char const * restrict format,
 int sscanf_va_32(char const * restrict s, char const * restrict format,
                  int *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -4805,12 +4805,12 @@ int sscanf_va_32(char const * restrict s, char const * restrict format,
 int sscanf_va_33(char const * restrict s, char const * restrict format,
                  int *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -4822,12 +4822,12 @@ int sscanf_va_33(char const * restrict s, char const * restrict format,
 int sscanf_va_34(char const * restrict s, char const * restrict format,
                  int *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -4839,12 +4839,12 @@ int sscanf_va_34(char const * restrict s, char const * restrict format,
 int sscanf_va_35(char const * restrict s, char const * restrict format,
                  int *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -4856,12 +4856,12 @@ int sscanf_va_35(char const * restrict s, char const * restrict format,
 int sscanf_va_36(char const * restrict s, char const * restrict format,
                  int *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -4873,9 +4873,9 @@ int sscanf_va_36(char const * restrict s, char const * restrict format,
 int sscanf_va_37(char const * restrict s, char const * restrict format,
                  int *param0, int *param1);
 
-/*@ requires valid_read_string(s);
+/*@ requires \valid(param1);
     requires valid_read_string(format);
-    requires \valid(param1);
+    requires valid_read_string(s);
     ensures \initialized(param1);
     assigns \result, *param1, *(param0 + (0 ..));
     assigns \result
@@ -4888,9 +4888,9 @@ int sscanf_va_37(char const * restrict s, char const * restrict format,
 int sscanf_va_38(char const * restrict s, char const * restrict format,
                  char *param0, int *param1);
 
-/*@ requires valid_read_string(s);
+/*@ requires \valid(param1);
     requires valid_read_string(format);
-    requires \valid(param1);
+    requires valid_read_string(s);
     ensures \initialized(param1);
     assigns \result, *param1, *(param0 + (0 ..));
     assigns \result
@@ -5272,9 +5272,9 @@ static void parse_local(char *line)
   return;
 }
 
-/*@ requires valid_read_string(s);
+/*@ requires \valid(param0);
     requires valid_read_string(format);
-    requires \valid(param0);
+    requires valid_read_string(s);
     ensures \initialized(param0);
     assigns \result, *param0;
     assigns \result
@@ -5345,9 +5345,9 @@ static void parse_leapsecmode(char *line)
   return;
 }
 
-/*@ requires valid_read_string(s);
+/*@ requires \valid(param0);
     requires valid_read_string(format);
-    requires \valid(param0);
+    requires valid_read_string(s);
     ensures \initialized(param0);
     assigns \result, *param0;
     assigns \result
@@ -5367,12 +5367,12 @@ static void parse_clientloglimit(char *line)
   return;
 }
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -5393,12 +5393,12 @@ static void parse_fallbackdrift(char *line)
   return;
 }
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -5425,14 +5425,14 @@ static void parse_makestep(char *line)
   return;
 }
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
-    requires \valid(param2);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param2);
-    ensures \initialized(param1);
+    requires \valid(param2);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
+    ensures \initialized(param2);
     assigns \result, *param2, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -5459,9 +5459,9 @@ static void parse_maxchange(char *line)
   return;
 }
 
-/*@ requires valid_read_string(s);
+/*@ requires \valid(param0);
     requires valid_read_string(format);
-    requires \valid(param0);
+    requires valid_read_string(s);
     ensures \initialized(param0);
     assigns \result, *param0;
     assigns \result
@@ -5489,16 +5489,16 @@ static void parse_mailonchange(char *line)
   return;
 }
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
-    requires \valid(param3);
-    requires \valid(param2);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param3);
-    ensures \initialized(param2);
-    ensures \initialized(param1);
+    requires \valid(param2);
+    requires \valid(param3);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
+    ensures \initialized(param2);
+    ensures \initialized(param3);
     assigns \result, *param3, *param2, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -5515,9 +5515,9 @@ int sscanf_va_46(char const * restrict s, char const * restrict format,
                  unsigned long *param0, unsigned long *param1,
                  unsigned long *param2, unsigned long *param3);
 
-/*@ requires valid_read_string(s);
+/*@ requires \valid(param0);
     requires valid_read_string(format);
-    requires \valid(param0);
+    requires valid_read_string(s);
     ensures \initialized(param0);
     assigns \result, *param0;
     assigns \result
@@ -5689,9 +5689,9 @@ static void parse_bindcmdaddress(char *line)
   return;
 }
 
-/*@ requires valid_read_string(s);
+/*@ requires \valid(param0);
     requires valid_read_string(format);
-    requires \valid(param0);
+    requires valid_read_string(s);
     ensures \initialized(param0);
     assigns \result, *param0;
     assigns \result
@@ -5702,9 +5702,9 @@ static void parse_bindcmdaddress(char *line)
 int sscanf_va_48(char const * restrict s, char const * restrict format,
                  int *param0);
 
-/*@ requires valid_read_string(s);
+/*@ requires \valid(param0);
     requires valid_read_string(format);
-    requires \valid(param0);
+    requires valid_read_string(s);
     ensures \initialized(param0);
     assigns \result, *param0;
     assigns \result
@@ -5760,12 +5760,12 @@ static void parse_broadcast(char *line)
   return_label: return;
 }
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -5801,9 +5801,9 @@ static void parse_smoothtime(char *line)
   return;
 }
 
-/*@ requires valid_read_string(s);
+/*@ requires \valid(param0);
     requires valid_read_string(format);
-    requires \valid(param0);
+    requires valid_read_string(s);
     ensures \initialized(param0);
     assigns \result, *param0;
     assigns \result
@@ -5814,18 +5814,18 @@ static void parse_smoothtime(char *line)
 int sscanf_va_51(char const * restrict s, char const * restrict format,
                  double *param0);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
-    requires \valid(param4);
-    requires \valid(param3);
-    requires \valid(param2);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param4);
-    ensures \initialized(param3);
-    ensures \initialized(param2);
-    ensures \initialized(param1);
+    requires \valid(param2);
+    requires \valid(param3);
+    requires \valid(param4);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
+    ensures \initialized(param2);
+    ensures \initialized(param3);
+    ensures \initialized(param4);
     assigns \result, *param4, *param3, *param2, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -5886,9 +5886,9 @@ static void parse_tempcomp(char *line)
   return_label: return;
 }
 
-/*@ requires valid_read_string(s);
+/*@ requires \valid(param1);
     requires valid_read_string(format);
-    requires \valid(param1);
+    requires valid_read_string(s);
     ensures \initialized(param1);
     assigns \result, *param1, *(param0 + (0 ..));
     assigns \result
@@ -5901,12 +5901,12 @@ static void parse_tempcomp(char *line)
 int sscanf_va_53(char const * restrict s, char const * restrict format,
                  char *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -5918,12 +5918,12 @@ int sscanf_va_53(char const * restrict s, char const * restrict format,
 int sscanf_va_54(char const * restrict s, char const * restrict format,
                  double *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -5935,12 +5935,12 @@ int sscanf_va_54(char const * restrict s, char const * restrict format,
 int sscanf_va_55(char const * restrict s, char const * restrict format,
                  double *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -5952,12 +5952,12 @@ int sscanf_va_55(char const * restrict s, char const * restrict format,
 int sscanf_va_56(char const * restrict s, char const * restrict format,
                  double *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -5969,12 +5969,12 @@ int sscanf_va_56(char const * restrict s, char const * restrict format,
 int sscanf_va_57(char const * restrict s, char const * restrict format,
                  int *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -5986,12 +5986,12 @@ int sscanf_va_57(char const * restrict s, char const * restrict format,
 int sscanf_va_58(char const * restrict s, char const * restrict format,
                  int *param0, int *param1);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -8368,11 +8368,11 @@ DNS_Status DNS_Name2IPAddress(char const *name, IPAddr *ip_addrs,
   return_label: return __retres;
 }
 
-/*@ requires
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    requires
       \valid(s + (0 .. n - 1)) ∨
       \valid(s + (0 .. format_length(format) - 1));
-    requires valid_read_string(format);
-    requires valid_read_string(param0);
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -9091,11 +9091,11 @@ static void handle_slew(struct timespec *raw, struct timespec *cooked,
   return;
 }
 
-/*@ requires valid_read_string(format);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param1);
+    requires valid_read_string(format);
     ensures \initialized(param0);
+    ensures \initialized(param1);
     assigns \result, stream->__fc_FILE_data, *param1, *param0;
     assigns \result
       \from (indirect: stream->__fc_FILE_id),
@@ -9480,11 +9480,11 @@ static void end_ref_mode(int result)
   return;
 }
 
-/*@ requires
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    requires
       \valid(s + (0 .. n - 1)) ∨
       \valid(s + (0 .. format_length(format) - 1));
-    requires valid_read_string(format);
-    requires valid_read_string(param0);
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -9495,8 +9495,8 @@ static void end_ref_mode(int result)
 int snprintf_va_2(char * restrict s, size_t n, char const * restrict format,
                   char *param0);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param0);
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
     assigns \result
       \from (indirect: stream->__fc_FILE_id),
@@ -9509,8 +9509,8 @@ int snprintf_va_2(char * restrict s, size_t n, char const * restrict format,
 int fprintf_va_3(FILE * restrict stream, char const * restrict format,
                  char *param0);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param0);
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
     assigns \result
       \from (indirect: stream->__fc_FILE_id),
@@ -13061,12 +13061,12 @@ static void add_dispersion(double dispersion, void *anything)
   return;
 }
 
-/*@ requires
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(param1);
+    requires valid_read_string(format);
+    requires
       \valid(s + (0 .. n - 1)) ∨
       \valid(s + (0 .. format_length(format) - 1));
-    requires valid_read_string(format);
-    requires valid_read_string(param1);
-    requires valid_read_string(param0);
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -13078,11 +13078,11 @@ static void add_dispersion(double dispersion, void *anything)
 int snprintf_va_3(char * restrict s, size_t n, char const * restrict format,
                   char *param0, char *param1);
 
-/*@ requires
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    requires
       \valid(s + (0 .. n - 1)) ∨
       \valid(s + (0 .. format_length(format) - 1));
-    requires valid_read_string(format);
-    requires valid_read_string(param0);
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -13209,11 +13209,11 @@ void SRC_ReloadSources(void)
   return;
 }
 
-/*@ requires
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    requires
       \valid(s + (0 .. n - 1)) ∨
       \valid(s + (0 .. format_length(format) - 1));
-    requires valid_read_string(format);
-    requires valid_read_string(param0);
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -13224,11 +13224,11 @@ void SRC_ReloadSources(void)
 int snprintf_va_5(char * restrict s, size_t n, char const * restrict format,
                   char *param0);
 
-/*@ requires
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    requires
       \valid(s + (0 .. n - 1)) ∨
       \valid(s + (0 .. format_length(format) - 1));
-    requires valid_read_string(format);
-    requires valid_read_string(param0);
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -14130,9 +14130,9 @@ void SST_SaveToFile(SST_Stats inst, FILE *out)
   return;
 }
 
-/*@ requires valid_read_string(s);
+/*@ requires \valid(param0);
     requires valid_read_string(format);
-    requires \valid(param0);
+    requires valid_read_string(s);
     ensures \initialized(param0);
     assigns \result, *param0;
     assigns \result
@@ -14143,28 +14143,28 @@ void SST_SaveToFile(SST_Stats inst, FILE *out)
 int sscanf_va_60(char const * restrict s, char const * restrict format,
                  int *param0);
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
-    requires \valid(param9);
-    requires \valid(param8);
-    requires \valid(param7);
-    requires \valid(param6);
-    requires \valid(param5);
-    requires \valid(param4);
-    requires \valid(param3);
-    requires \valid(param2);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param9);
-    ensures \initialized(param8);
-    ensures \initialized(param7);
-    ensures \initialized(param6);
-    ensures \initialized(param5);
-    ensures \initialized(param4);
-    ensures \initialized(param3);
-    ensures \initialized(param2);
-    ensures \initialized(param1);
+    requires \valid(param2);
+    requires \valid(param3);
+    requires \valid(param4);
+    requires \valid(param5);
+    requires \valid(param6);
+    requires \valid(param7);
+    requires \valid(param8);
+    requires \valid(param9);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
+    ensures \initialized(param2);
+    ensures \initialized(param3);
+    ensures \initialized(param4);
+    ensures \initialized(param5);
+    ensures \initialized(param6);
+    ensures \initialized(param7);
+    ensures \initialized(param8);
+    ensures \initialized(param9);
     assigns \result, *param9, *param8, *param7, *param6, *param5, *param4,
             *param3, *param2, *param1, *param0;
     assigns \result
@@ -14196,9 +14196,9 @@ int sscanf_va_61(char const * restrict s, char const * restrict format,
                  double *param5, double *param6, double *param7,
                  double *param8, int *param9);
 
-/*@ requires valid_read_string(s);
+/*@ requires \valid(param0);
     requires valid_read_string(format);
-    requires \valid(param0);
+    requires valid_read_string(s);
     ensures \initialized(param0);
     assigns \result, *param0;
     assigns \result
@@ -14554,10 +14554,10 @@ void UTI_AddDiffToTimespec(struct timespec *a, struct timespec *b,
 
 static char buffer_pool[16][64];
 static int pool_ptr = 0;
-/*@ requires
+/*@ requires valid_read_string(format);
+    requires
       \valid(s + (0 .. n - 1)) ∨
       \valid(s + (0 .. format_length(format) - 1));
-    requires valid_read_string(format);
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -14619,10 +14619,10 @@ char *UTI_RefidToString(uint32_t ref_id)
   return result;
 }
 
-/*@ requires
+/*@ requires valid_read_string(format);
+    requires
       \valid(s + (0 .. n - 1)) ∨
       \valid(s + (0 .. format_length(format) - 1));
-    requires valid_read_string(format);
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -14630,10 +14630,10 @@ char *UTI_RefidToString(uint32_t ref_id)
  */
 int snprintf_va_8(char * restrict s, size_t n, char const * restrict format);
 
-/*@ requires
+/*@ requires valid_read_string(format);
+    requires
       \valid(s + (0 .. n - 1)) ∨
       \valid(s + (0 .. format_length(format) - 1));
-    requires valid_read_string(format);
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -14647,10 +14647,10 @@ int snprintf_va_9(char * restrict s, size_t n, char const * restrict format,
                   unsigned long param0, unsigned long param1,
                   unsigned long param2, unsigned long param3);
 
-/*@ requires
+/*@ requires valid_read_string(format);
+    requires
       \valid(s + (0 .. n - 1)) ∨
       \valid(s + (0 .. format_length(format) - 1));
-    requires valid_read_string(format);
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))), (indirect: param0);
@@ -14660,10 +14660,10 @@ int snprintf_va_9(char * restrict s, size_t n, char const * restrict format,
 int snprintf_va_10(char * restrict s, size_t n, char const * restrict format,
                    unsigned int param0);
 
-/*@ requires
+/*@ requires valid_read_string(format);
+    requires
       \valid(s + (0 .. n - 1)) ∨
       \valid(s + (0 .. format_length(format) - 1));
-    requires valid_read_string(format);
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -14710,16 +14710,16 @@ char *UTI_IPToString(IPAddr *addr)
   return result;
 }
 
-/*@ requires valid_read_string(s);
-    requires valid_read_string(format);
-    requires \valid(param3);
-    requires \valid(param2);
+/*@ requires \valid(param0);
     requires \valid(param1);
-    requires \valid(param0);
-    ensures \initialized(param3);
-    ensures \initialized(param2);
-    ensures \initialized(param1);
+    requires \valid(param2);
+    requires \valid(param3);
+    requires valid_read_string(format);
+    requires valid_read_string(s);
     ensures \initialized(param0);
+    ensures \initialized(param1);
+    ensures \initialized(param2);
+    ensures \initialized(param3);
     assigns \result, *param3, *param2, *param1, *param0;
     assigns \result
       \from (indirect: *(s + (0 ..))), (indirect: *(format + (0 ..)));
@@ -14938,11 +14938,11 @@ int UTI_IPAndPortToSockaddr(IPAddr *ip, unsigned short port,
   return_label: return __retres;
 }
 
-/*@ requires
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    requires
       \valid(s + (0 .. n - 1)) ∨
       \valid(s + (0 .. format_length(format) - 1));
-    requires valid_read_string(format);
-    requires valid_read_string(param0);
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -14954,11 +14954,11 @@ int UTI_IPAndPortToSockaddr(IPAddr *ip, unsigned short port,
 int snprintf_va_12(char * restrict s, size_t n, char const * restrict format,
                    char *param0, int param1);
 
-/*@ requires
+/*@ requires valid_read_nstring(param1, param0);
+    requires valid_read_string(format);
+    requires
       \valid(s + (0 .. n - 1)) ∨
       \valid(s + (0 .. format_length(format) - 1));
-    requires valid_read_string(format);
-    requires valid_read_nstring(param1, param0);
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -14970,10 +14970,10 @@ int snprintf_va_12(char * restrict s, size_t n, char const * restrict format,
 int snprintf_va_13(char * restrict s, size_t n, char const * restrict format,
                    int param0, char *param1);
 
-/*@ requires
+/*@ requires valid_read_string(format);
+    requires
       \valid(s + (0 .. n - 1)) ∨
       \valid(s + (0 .. format_length(format) - 1));
-    requires valid_read_string(format);
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -15027,10 +15027,10 @@ char const *UTI_SockaddrFamilyToString(int family)
   return_label: return __retres;
 }
 
-/*@ requires
+/*@ requires valid_read_string(format);
+    requires
       \valid(s + (0 .. n - 1)) ∨
       \valid(s + (0 .. format_length(format) - 1));
-    requires valid_read_string(format);
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -15489,11 +15489,11 @@ void UTI_SetQuitSignalsHandler(void (*handler)(int ), int ignore_sigpipe)
   return;
 }
 
-/*@ requires
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    requires
       \valid(s + (0 .. n - 1)) ∨
       \valid(s + (0 .. format_length(format) - 1));
-    requires valid_read_string(format);
-    requires valid_read_string(param0);
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),

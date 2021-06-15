@@ -1266,8 +1266,8 @@ static int _modbus_rtu_check_integrity(modbus_t *ctx, uint8_t *msg,
   return_label: return __retres;
 }
 
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param0);
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -1283,9 +1283,9 @@ static int _modbus_rtu_check_integrity(modbus_t *ctx, uint8_t *msg,
 int printf_va_3(char const * restrict format, char *param0, int param1,
                 int param2, int param3, int param4);
 
-/*@ requires valid_read_string(format);
+/*@ requires valid_read_string(param0);
     requires valid_read_string(param1);
-    requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
     assigns \result
       \from (indirect: stream->__fc_FILE_id),
@@ -1300,8 +1300,8 @@ int printf_va_3(char const * restrict format, char *param0, int param1,
 int fprintf_va_4(FILE * restrict stream, char const * restrict format,
                  char *param0, char *param1);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param1);
+/*@ requires valid_read_string(param1);
+    requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
     assigns \result
       \from (indirect: stream->__fc_FILE_id),
@@ -2039,8 +2039,8 @@ static int _connect(int sockfd, struct sockaddr const *addr,
   return_label: return __retres;
 }
 
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param0);
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -2091,8 +2091,8 @@ static int _modbus_tcp_connect(modbus_t *ctx)
   return_label: return __retres;
 }
 
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param0);
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
     assigns \result
       \from (indirect: stream->__fc_FILE_id),
@@ -2105,9 +2105,9 @@ static int _modbus_tcp_connect(modbus_t *ctx)
 int fprintf_va_13(FILE * restrict stream, char const * restrict format,
                   char *param0);
 
-/*@ requires valid_read_string(format);
+/*@ requires valid_read_string(param0);
     requires valid_read_string(param1);
-    requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -2261,8 +2261,8 @@ int modbus_tcp_listen(modbus_t *ctx, int nb_connection)
   return_label: return __retres;
 }
 
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param0);
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
     assigns \result
       \from (indirect: stream->__fc_FILE_id),
@@ -2365,8 +2365,8 @@ int modbus_tcp_pi_listen(modbus_t *ctx, int nb_connection)
   return_label: return __retres;
 }
 
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param0);
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -2754,8 +2754,8 @@ char const *modbus_strerror(int errnum)
   return_label: return __retres;
 }
 
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param0);
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
     assigns \result
       \from (indirect: stream->__fc_FILE_id),
@@ -2768,8 +2768,8 @@ char const *modbus_strerror(int errnum)
 int fprintf_va_22(FILE * restrict stream, char const * restrict format,
                   char *param0);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param0);
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
     assigns \result
       \from (indirect: stream->__fc_FILE_id),
@@ -5114,8 +5114,8 @@ void modbus_mapping_free(modbus_mapping_t *mb_mapping)
   return_label: return;
 }
 
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param0);
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
     assigns \result
       \from (indirect: stream->__fc_FILE_id),

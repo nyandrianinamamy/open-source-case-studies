@@ -19,8 +19,8 @@ int stack_top;
  */
 int printf_va_1(char const * restrict format);
 
-/*@ requires valid_read_string(format);
-    requires \valid(param0);
+/*@ requires \valid(param0);
+    requires valid_read_string(format);
     ensures \initialized(param0);
     assigns \result, __fc_stdin->__fc_FILE_data, *param0;
     assigns \result

@@ -278,8 +278,8 @@ struct hfa34 hfa34 =
    .b = (long double)34.2,
    .c = (long double)34.3,
    .d = (long double)34.4};
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 1);
+/*@ requires valid_read_nstring(param0, 1);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -298,8 +298,8 @@ void fa_s1(struct s1 a)
   return;
 }
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 2);
+/*@ requires valid_read_nstring(param0, 2);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -318,8 +318,8 @@ void fa_s2(struct s2 a)
   return;
 }
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 3);
+/*@ requires valid_read_nstring(param0, 3);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -338,8 +338,8 @@ void fa_s3(struct s3 a)
   return;
 }
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 4);
+/*@ requires valid_read_nstring(param0, 4);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -358,8 +358,8 @@ void fa_s4(struct s4 a)
   return;
 }
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 5);
+/*@ requires valid_read_nstring(param0, 5);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -378,8 +378,8 @@ void fa_s5(struct s5 a)
   return;
 }
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 6);
+/*@ requires valid_read_nstring(param0, 6);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -398,8 +398,8 @@ void fa_s6(struct s6 a)
   return;
 }
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 7);
+/*@ requires valid_read_nstring(param0, 7);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -418,8 +418,8 @@ void fa_s7(struct s7 a)
   return;
 }
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 8);
+/*@ requires valid_read_nstring(param0, 8);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -438,8 +438,8 @@ void fa_s8(struct s8 a)
   return;
 }
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 9);
+/*@ requires valid_read_nstring(param0, 9);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -458,8 +458,8 @@ void fa_s9(struct s9 a)
   return;
 }
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 10);
+/*@ requires valid_read_nstring(param0, 10);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -478,8 +478,8 @@ void fa_s10(struct s10 a)
   return;
 }
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 11);
+/*@ requires valid_read_nstring(param0, 11);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -498,8 +498,8 @@ void fa_s11(struct s11 a)
   return;
 }
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 12);
+/*@ requires valid_read_nstring(param0, 12);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -518,8 +518,8 @@ void fa_s12(struct s12 a)
   return;
 }
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 13);
+/*@ requires valid_read_nstring(param0, 13);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -538,8 +538,8 @@ void fa_s13(struct s13 a)
   return;
 }
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 14);
+/*@ requires valid_read_nstring(param0, 14);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -558,8 +558,8 @@ void fa_s14(struct s14 a)
   return;
 }
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 15);
+/*@ requires valid_read_nstring(param0, 15);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -578,8 +578,8 @@ void fa_s15(struct s15 a)
   return;
 }
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 16);
+/*@ requires valid_read_nstring(param0, 16);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -598,8 +598,8 @@ void fa_s16(struct s16 a)
   return;
 }
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 17);
+/*@ requires valid_read_nstring(param0, 17);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -863,13 +863,13 @@ void fa_hfa34(struct hfa34 a)
   return;
 }
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param5, 3);
-    requires valid_read_nstring(param4, 3);
-    requires valid_read_nstring(param3, 3);
-    requires valid_read_nstring(param2, 3);
+/*@ requires valid_read_nstring(param0, 3);
     requires valid_read_nstring(param1, 3);
-    requires valid_read_nstring(param0, 3);
+    requires valid_read_nstring(param2, 3);
+    requires valid_read_nstring(param3, 3);
+    requires valid_read_nstring(param4, 3);
+    requires valid_read_nstring(param5, 3);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -894,13 +894,13 @@ void fa1(struct s8 a, struct s9 b, struct s10 c, struct s11 d, struct s12 e,
   return;
 }
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param5, 3);
-    requires valid_read_nstring(param4, 3);
-    requires valid_read_nstring(param3, 3);
-    requires valid_read_nstring(param2, 3);
+/*@ requires valid_read_nstring(param0, 3);
     requires valid_read_nstring(param1, 3);
-    requires valid_read_nstring(param0, 3);
+    requires valid_read_nstring(param2, 3);
+    requires valid_read_nstring(param3, 3);
+    requires valid_read_nstring(param4, 3);
+    requires valid_read_nstring(param5, 3);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -949,10 +949,10 @@ void fa3(struct hfa14 a, struct hfa23 b, struct hfa32 c)
   return;
 }
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param6, 3);
+/*@ requires valid_read_nstring(param0, 1);
     requires valid_read_nstring(param3, 2);
-    requires valid_read_nstring(param0, 1);
+    requires valid_read_nstring(param6, 3);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -1188,8 +1188,8 @@ struct hfa34 fr_hfa34(void)
  */
 int printf_va_35(char const * restrict format);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 1);
+/*@ requires valid_read_nstring(param0, 1);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -1202,8 +1202,8 @@ int printf_va_35(char const * restrict format);
  */
 int printf_va_36(char const * restrict format, char *param0);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 2);
+/*@ requires valid_read_nstring(param0, 2);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -1216,8 +1216,8 @@ int printf_va_36(char const * restrict format, char *param0);
  */
 int printf_va_37(char const * restrict format, char *param0);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 3);
+/*@ requires valid_read_nstring(param0, 3);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -1230,8 +1230,8 @@ int printf_va_37(char const * restrict format, char *param0);
  */
 int printf_va_38(char const * restrict format, char *param0);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 4);
+/*@ requires valid_read_nstring(param0, 4);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -1244,8 +1244,8 @@ int printf_va_38(char const * restrict format, char *param0);
  */
 int printf_va_39(char const * restrict format, char *param0);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 5);
+/*@ requires valid_read_nstring(param0, 5);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -1258,8 +1258,8 @@ int printf_va_39(char const * restrict format, char *param0);
  */
 int printf_va_40(char const * restrict format, char *param0);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 6);
+/*@ requires valid_read_nstring(param0, 6);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -1272,8 +1272,8 @@ int printf_va_40(char const * restrict format, char *param0);
  */
 int printf_va_41(char const * restrict format, char *param0);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 7);
+/*@ requires valid_read_nstring(param0, 7);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -1286,8 +1286,8 @@ int printf_va_41(char const * restrict format, char *param0);
  */
 int printf_va_42(char const * restrict format, char *param0);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 8);
+/*@ requires valid_read_nstring(param0, 8);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -1300,8 +1300,8 @@ int printf_va_42(char const * restrict format, char *param0);
  */
 int printf_va_43(char const * restrict format, char *param0);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 9);
+/*@ requires valid_read_nstring(param0, 9);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -1314,8 +1314,8 @@ int printf_va_43(char const * restrict format, char *param0);
  */
 int printf_va_44(char const * restrict format, char *param0);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 10);
+/*@ requires valid_read_nstring(param0, 10);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -1328,8 +1328,8 @@ int printf_va_44(char const * restrict format, char *param0);
  */
 int printf_va_45(char const * restrict format, char *param0);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 11);
+/*@ requires valid_read_nstring(param0, 11);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -1342,8 +1342,8 @@ int printf_va_45(char const * restrict format, char *param0);
  */
 int printf_va_46(char const * restrict format, char *param0);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 12);
+/*@ requires valid_read_nstring(param0, 12);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -1356,8 +1356,8 @@ int printf_va_46(char const * restrict format, char *param0);
  */
 int printf_va_47(char const * restrict format, char *param0);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 13);
+/*@ requires valid_read_nstring(param0, 13);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -1370,8 +1370,8 @@ int printf_va_47(char const * restrict format, char *param0);
  */
 int printf_va_48(char const * restrict format, char *param0);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 14);
+/*@ requires valid_read_nstring(param0, 14);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -1384,8 +1384,8 @@ int printf_va_48(char const * restrict format, char *param0);
  */
 int printf_va_49(char const * restrict format, char *param0);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 15);
+/*@ requires valid_read_nstring(param0, 15);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -1398,8 +1398,8 @@ int printf_va_49(char const * restrict format, char *param0);
  */
 int printf_va_50(char const * restrict format, char *param0);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 16);
+/*@ requires valid_read_nstring(param0, 16);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -1412,8 +1412,8 @@ int printf_va_50(char const * restrict format, char *param0);
  */
 int printf_va_51(char const * restrict format, char *param0);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 17);
+/*@ requires valid_read_nstring(param0, 17);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -1710,8 +1710,8 @@ int match(char const **s, char const *f)
   return_label: return __retres;
 }
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 7);
+/*@ requires valid_read_nstring(param0, 7);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -1724,8 +1724,8 @@ int match(char const **s, char const *f)
  */
 int printf_va_65(char const * restrict format, char *param0);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_nstring(param0, 9);
+/*@ requires valid_read_nstring(param0, 9);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),

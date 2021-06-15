@@ -921,8 +921,8 @@ static char const *s_pTest_str =
   "MISSION CONTROL I wouldn\'t worry too much about the computer. First of all, there is still a chance that he is right, despite your tests, andif it should happen again, we suggest eliminating this possibility by allowing the unit to remain in place and seeing whether or not itactually fails. If the computer should turn out to be wrong, the situation is still not alarming. The type of obsessional error he may beguilty of is not unknown among the latest generation of HAL 9000 computers. It has almost always revolved around a single detail, such asthe one you have described, and it has never interfered with the integrity or reliability of the computer\'s performance in other areas.No one is certain of the cause of this kind of malfunctioning. It may be over-programming, but it could also be any number of reasons. In anyevent, it is somewhat analogous to human neurotic behavior. Does this answer your query?  Zero-five-three-Zero, MC, transmission concluded.";
 static char const *s_pComment = "This is a comment";
 static char const *main_s_Test_archive_filename = "__mz_example2_test__.zip";
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param0);
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -943,8 +943,8 @@ int printf_va_1(char const * restrict format, char *param0);
 int sprintf_va_1(char * restrict s, char const * restrict format,
                  unsigned int param0);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param1);
+/*@ requires valid_read_string(param1);
+    requires valid_read_string(format);
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: *(format + (0 ..))), (indirect: param2),
@@ -1004,9 +1004,9 @@ int printf_va_4(char const * restrict format);
  */
 int printf_va_5(char const * restrict format);
 
-/*@ requires valid_read_string(format);
+/*@ requires valid_read_string(param0);
     requires valid_read_string(param1);
-    requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -1054,8 +1054,8 @@ int printf_va_8(char const * restrict format);
 int sprintf_va_3(char * restrict s, char const * restrict format,
                  unsigned int param0);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param1);
+/*@ requires valid_read_string(param1);
+    requires valid_read_string(format);
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: *(format + (0 ..))), (indirect: param2),
@@ -1091,8 +1091,8 @@ int printf_va_9(char const * restrict format);
  */
 int printf_va_10(char const * restrict format);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param0);
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -1107,8 +1107,8 @@ int printf_va_10(char const * restrict format);
 int printf_va_11(char const * restrict format, char *param0,
                  unsigned int param1);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param0);
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),

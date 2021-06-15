@@ -20,8 +20,8 @@ typedef struct _board_square_t board_square_t;
  */
 int printf_va_1(char const * restrict format);
 
-/*@ requires valid_read_string(format);
-    requires \valid(param0);
+/*@ requires \valid(param0);
+    requires valid_read_string(format);
     ensures \initialized(param0);
     assigns \result, __fc_stdin->__fc_FILE_data, *param0;
     assigns \result
@@ -61,8 +61,8 @@ int fprintf_va_1(FILE * restrict stream, char const * restrict format);
  */
 int printf_va_2(char const * restrict format);
 
-/*@ requires valid_read_string(format);
-    requires \valid(param0);
+/*@ requires \valid(param0);
+    requires valid_read_string(format);
     ensures \initialized(param0);
     assigns \result, __fc_stdin->__fc_FILE_data, *param0;
     assigns \result

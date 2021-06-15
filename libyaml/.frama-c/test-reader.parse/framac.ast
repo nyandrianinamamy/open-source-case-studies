@@ -22727,8 +22727,8 @@ char *bom_original =
  */
 int printf_va_1(char const * restrict format);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param0);
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -22777,8 +22777,8 @@ int printf_va_4(char const * restrict format);
  */
 int printf_va_5(char const * restrict format);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param0);
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -22793,8 +22793,8 @@ int printf_va_5(char const * restrict format);
 int printf_va_6(char const * restrict format, char *param0,
                 unsigned int param1, long param2);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param0);
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -22900,8 +22900,8 @@ int check_utf8_sequences(void)
  */
 int printf_va_10(char const * restrict format);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param0);
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -22914,8 +22914,8 @@ int printf_va_10(char const * restrict format);
  */
 int printf_va_11(char const * restrict format, char *param0);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param0);
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -22943,9 +22943,9 @@ int printf_va_12(char const * restrict format, char *param0, long param1);
  */
 int printf_va_13(char const * restrict format, long param0, int param1);
 
-/*@ requires valid_read_string(format);
+/*@ requires valid_read_string(param0);
     requires valid_read_string(param1);
-    requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -23047,8 +23047,8 @@ int check_boms(void)
  */
 int printf_va_17(char const * restrict format);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param0);
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -23106,8 +23106,8 @@ int printf_va_20(char const * restrict format, unsigned int param0,
 int printf_va_21(char const * restrict format, unsigned int param0,
                  int param1, long param2);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param0);
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -23262,8 +23262,8 @@ int check_long_utf8(void)
  */
 int printf_va_24(char const * restrict format);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param0);
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -23321,8 +23321,8 @@ int printf_va_27(char const * restrict format, unsigned int param0,
 int printf_va_28(char const * restrict format, unsigned int param0,
                  int param1, long param2);
 
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param0);
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),

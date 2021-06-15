@@ -539,8 +539,8 @@ void testmain(int argc, char **argv)
 }
 
 int const mp_bits_per_limb = (int)(sizeof(mp_limb_t) * (unsigned int)8);
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param0);
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
     assigns \result
       \from (indirect: stream->__fc_FILE_id),
@@ -6078,8 +6078,8 @@ void hex_random_str_op(unsigned long maxbits, int base, char **ap, char **rp)
   return;
 }
 
-/*@ requires valid_read_string(format);
-    requires valid_read_string(param0);
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
     assigns \result
       \from (indirect: stream->__fc_FILE_id),

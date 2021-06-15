@@ -8,7 +8,6 @@ directory	file	line	function	property kind	status	property
 .	kilo.c	310	getCursorPosition	initialization	Unknown	\initialized((char *)buf)
 .	kilo.c	310	getCursorPosition	initialization	Unknown	\initialized(&buf[1])
 .	kilo.c	311	getCursorPosition	precondition of sscanf_va_1	Unknown	valid_read_string(s)
-.	kilo.c	311	sscanf_va_1	precondition	Unknown	valid_read_string(s)
 .	kilo.c	321	getWindowSize	initialization	Unknown	\initialized(&ws.ws_col)
 .	kilo.c	336	getWindowSize	initialization	Unknown	\initialized(&orig_col)
 .	kilo.c	336	getWindowSize	initialization	Unknown	\initialized(&orig_row)
@@ -401,8 +400,6 @@ directory	file	line	function	property kind	status	property
 .	kilo.c	800	editorOpen	mem_access	Unknown	\valid(line + linelen)
 .	kilo.c	813	editorSave	precondition of __va_open_mode_t	Unknown	valid_filename: valid_read_string(filename)
 .	kilo.c	819	editorSave	precondition of write	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))
-.	kilo.c	819	editorSave	precondition of write	Unknown	valid_fd: 0 ≤ fd < 1024
-.	kilo.c	829	editorSave	precondition of close	Unknown	valid_fd: 0 ≤ fd < 1024
 .	kilo.c	848	abAppend	signed_overflow	Unknown	-2147483648 ≤ ab->len + len
 .	kilo.c	848	abAppend	signed_overflow	Unknown	ab->len + len ≤ 2147483647
 .	kilo.c	851	abAppend	precondition of memcpy	Unknown	valid_dest: valid_or_empty(dest, n)
@@ -429,7 +426,6 @@ directory	file	line	function	property kind	status	property
 .	kilo.c	904	editorRefreshScreen	initialization	Unknown	\initialized(c + j)
 .	kilo.c	904	editorRefreshScreen	mem_access	Unknown	\valid_read(c + j)
 .	kilo.c	937	editorRefreshScreen	precondition of snprintf_va_4	Unknown	valid_read_nstring(param0, 20)
-.	kilo.c	937	snprintf_va_4	precondition	Unknown	valid_read_nstring(param0, 20)
 .	kilo.c	940	editorRefreshScreen	signed_overflow	Unknown	(int)(E.rowoff + E.cy) + 1 ≤ 2147483647
 .	kilo.c	940	editorRefreshScreen	signed_overflow	Unknown	-2147483648 ≤ E.rowoff + E.cy
 .	kilo.c	940	editorRefreshScreen	signed_overflow	Unknown	E.rowoff + E.cy ≤ 2147483647
@@ -560,9 +556,11 @@ directory	file	line	function	property kind	status	property
 FRAMAC_SHARE/libc	ctype.h	94	isdigit	precondition	Unknown	c_uchar_or_eof: (0 ≤ c ≤ 255) ∨ c ≡ -1
 FRAMAC_SHARE/libc	ctype.h	134	isprint	precondition	Unknown	c_uchar_or_eof: (0 ≤ c ≤ 255) ∨ c ≡ -1
 FRAMAC_SHARE/libc	ctype.h	161	isspace	precondition	Unknown	c_uchar_or_eof: (0 ≤ c ≤ 255) ∨ c ≡ -1
-FRAMAC_SHARE/libc	fcntl.h	161	__va_open_mode_t	precondition	Unknown	valid_filename: valid_read_string(filename)
+FRAMAC_SHARE/libc	fcntl.h	165	__va_open_mode_t	precondition	Unknown	valid_filename: valid_read_string(filename)
 FRAMAC_SHARE/libc	stdio.c	68	getline	mem_access	Unknown	\valid(*lineptr + tmp_2)
 FRAMAC_SHARE/libc	stdio.c	71	getline	mem_access	Unknown	\valid(*lineptr + cur)
+FRAMAC_SHARE/libc	stdio.h	213	snprintf_va_4	precondition	Unknown	valid_read_nstring(param0, 20)
+FRAMAC_SHARE/libc	stdio.h	217	sscanf_va_1	precondition	Unknown	valid_read_string(s)
 FRAMAC_SHARE/libc	stdlib.h	405	free	precondition	Unknown	freeable: p ≡ \null ∨ \freeable(p)
 FRAMAC_SHARE/libc	stdlib.h	422	realloc	precondition	Unknown	freeable: ptr ≡ \null ∨ \freeable(ptr)
 FRAMAC_SHARE/libc	string.c	153	memcmp	initialization	Unknown	\initialized(p1 + i)
@@ -582,8 +580,6 @@ FRAMAC_SHARE/libc	string.h	107	memmove	precondition	Unknown	valid_dest: valid_or
 FRAMAC_SHARE/libc	string.h	108	memmove	precondition	Unknown	valid_src: valid_read_or_empty(src, n)
 FRAMAC_SHARE/libc	string.h	118	memset	precondition	Unknown	valid_s: valid_or_empty(s, n)
 FRAMAC_SHARE/libc	string.h	128	strlen	precondition	Unknown	valid_string_s: valid_read_string(s)
-FRAMAC_SHARE/libc	unistd.h	782	close	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
-FRAMAC_SHARE/libc	unistd.h	866	ftruncate	assigns clause	Unknown	assigns \nothing;
-FRAMAC_SHARE/libc	unistd.h	866	ftruncate	from clause	Unknown	assigns \result \from \nothing;
-FRAMAC_SHARE/libc	unistd.h	1139	write	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
-FRAMAC_SHARE/libc	unistd.h	1140	write	precondition	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))
+FRAMAC_SHARE/libc	unistd.h	867	ftruncate	assigns clause	Unknown	assigns \nothing;
+FRAMAC_SHARE/libc	unistd.h	867	ftruncate	from clause	Unknown	assigns \result \from \nothing;
+FRAMAC_SHARE/libc	unistd.h	1141	write	precondition	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))

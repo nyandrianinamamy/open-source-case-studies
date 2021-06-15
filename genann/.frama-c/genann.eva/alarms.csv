@@ -29,7 +29,6 @@ directory	file	line	function	property kind	status	property
 .	genann.c	141	genann_init	mem_access	Unknown	\valid(&ret->activation_hidden)
 .	genann.c	142	genann_init	mem_access	Unknown	\valid(&ret->activation_output)
 .	genann.c	164	genann_read	mem_access	Unknown	\valid_read(&ann->total_weights)
-.	genann.c	166	fscanf_va_2	precondition	Unknown	\valid(param0)
 .	genann.c	166	genann_read	mem_access	Unknown	\valid_read(&ann->weight)
 .	genann.c	166	genann_read	precondition of fscanf_va_2	Unknown	\valid(param0)
 .	genann.c	180	genann_copy	mem_access	Unknown	\valid_read(&ann->inputs)
@@ -74,3 +73,4 @@ directory	file	line	function	property kind	status	property
 .	test.c	271	main	signed_overflow	Unknown	(int)(ltests - ts_7) - (int)(lfails - fs_7) ≤ 2147483647
 .	test.c	271	main	signed_overflow	Unknown	-2147483648 ≤ (int)(ltests - ts_7) - (int)(lfails - fs_7)
 FRAMAC_SHARE/libc	stdio.h	120	fclose	precondition	Unknown	valid_stream: \valid(stream)
+FRAMAC_SHARE/libc	stdio.h	209	fscanf_va_2	precondition	Unknown	\valid(param0)
