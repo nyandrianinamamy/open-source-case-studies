@@ -3319,7 +3319,7 @@ static void Acquisition_Tests (void)
       Check_Zero (event_queue_length);
 
       octets = 0;
-      /* @ loop unroll 17676; */
+      /*@ loop unroll 17676; */
       while (mail_count[TCTM_MAILBOX] == 0)
       {
          if (telemetry_pointer < telemetry_end_pointer)
