@@ -3487,6 +3487,7 @@ void SU_Self_Test_Tests (void)
 
       /* Run Monitoring up to but not including round_7_e: */
 
+      //@ loop unroll 10;
       while (health_mon_round != round_7_e)
       {
          Monitor_Health (Prob6a);
@@ -3530,6 +3531,7 @@ void SU_Self_Test_Tests (void)
 
       /* Run Monitoring up to but not including round_7_e: */
 
+      //@ loop unroll 10;
       while (health_mon_round != round_7_e)
       {
          Monitor_Health (Prob6a);

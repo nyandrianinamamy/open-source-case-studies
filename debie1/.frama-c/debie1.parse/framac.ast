@@ -5330,6 +5330,7 @@ void SU_Self_Test_Tests(void)
   Check_Zero((int)telemetry_data.error_status & 1);
   Check_Nonzero(self_test_SU_number == (sensor_number_t)2);
   Check_No_Errors();
+  /*@ loop unroll 10; */
   while (health_mon_round != (uint_least8_t)round_7_e) Monitor_Health(61);
   Check_Nonzero(self_test_SU_number == (sensor_number_t)2);
   Check_Nonzero(SU_state[1] == (unsigned int)self_test_mon_e);
@@ -5349,6 +5350,7 @@ void SU_Self_Test_Tests(void)
   Check_Nonzero(self_test_SU_number == (sensor_number_t)2);
   Check_Nonzero(SU_state[1] == (unsigned int)self_test_mon_e);
   sim_self_test = (unsigned char)0;
+  /*@ loop unroll 10; */
   while (health_mon_round != (uint_least8_t)round_7_e) Monitor_Health(61);
   Check_Nonzero(self_test_SU_number == (sensor_number_t)2);
   Check_Nonzero(SU_state[1] == (unsigned int)self_test_mon_e);

@@ -25,8 +25,7 @@ FCFLAGS     += \
 EVAFLAGS    += \
   -eva-warn-key builtins:missing-spec=abort \
   -eva-domains equality \
-  -eva-auto-loop-unroll 128 \
-  -eva-slevel 11 \
+  -eva-auto-loop-unroll 180 \
 
 # -eva-slevel 10 seems insufficient to remove the 5th alarm
 # -eva-auto-loop-unroll is also necessary to avoid a 5th alarm
