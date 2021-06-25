@@ -15,7 +15,7 @@ help::
 	@echo "- 'make clean': clean all analyses"
 	@echo ""
 	@echo "*** USAGE WITH FRAMA-C INSTALLED IN THE PATH"
-	@echo "- delete 'frama-c-path.mk' or comment its lines"
+	@echo "- delete 'path.mk' or comment its lines"
 
 # Note: if the user runs `make framac` before `make submodules`, the latter
 # will fail.
