@@ -295,6 +295,8 @@ struct termios o;
 int printf_va_1(char const * restrict format, char *param0, int param1,
                 char *param2);
 
+int printf_fallback_1(char const * restrict format);
+
 /*@ requires valid_read_nstring(param2, 11);
     requires valid_read_string(param7);
     requires valid_read_string(param8);
@@ -557,10 +559,7 @@ int main(int F_0, char **D_0)
                     }
                   }
                 }
-                {
-                  void *__va_args[1] = {(void *)0};
-                  printf((char const *)I,(void * const *)(__va_args));
-                }
+                printf((char const *)I); /* printf_fallback_1 */
                 break;
               }
             }

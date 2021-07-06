@@ -3134,6 +3134,9 @@ unsigned int check_integer_format(char const format)
   return retValue;
 }
 
+int snprintf_fallback_1(char * restrict s, size_t n,
+                        char const * restrict format, int param0);
+
 int snprintf_s_i(char *dest_0, rsize_t dmax, char const *format, int a)
 {
   int __retres;
@@ -3154,14 +3157,13 @@ int snprintf_s_i(char *dest_0, rsize_t dmax, char const *format, int a)
     goto return_label;
   }
   index_0 ++;
-  {
-    int __va_arg0 = a;
-    void *__va_args[1] = {& __va_arg0};
-    tmp_1 = snprintf(dest_0,dmax,format,(void * const *)(__va_args));
-  }
+  tmp_1 = snprintf(dest_0,dmax,format,a); /* snprintf_fallback_1 */
   __retres = tmp_1;
   return_label: return __retres;
 }
+
+int snprintf_fallback_2(char * restrict s, size_t n,
+                        char const * restrict format, long param0);
 
 int snprintf_s_l(char *dest_0, rsize_t dmax, char const *format, long a)
 {
@@ -3183,14 +3185,14 @@ int snprintf_s_l(char *dest_0, rsize_t dmax, char const *format, long a)
     goto return_label;
   }
   index_0 ++;
-  {
-    long __va_arg0 = a;
-    void *__va_args[1] = {& __va_arg0};
-    tmp_1 = snprintf(dest_0,dmax,format,(void * const *)(__va_args));
-  }
+  tmp_1 = snprintf(dest_0,dmax,format,a); /* snprintf_fallback_2 */
   __retres = tmp_1;
   return_label: return __retres;
 }
+
+int snprintf_fallback_3(char * restrict s, size_t n,
+                        char const * restrict format, char *param0,
+                        int param1);
 
 int snprintf_s_si(char *dest_0, rsize_t dmax, char const *format, char *s,
                   int a)
@@ -3221,15 +3223,14 @@ int snprintf_s_si(char *dest_0, rsize_t dmax, char const *format, char *s,
     goto return_label;
   }
   index_0 ++;
-  {
-    char *__va_arg0 = s;
-    int __va_arg1 = a;
-    void *__va_args[2] = {& __va_arg0, & __va_arg1};
-    tmp_2 = snprintf(dest_0,dmax,format,(void * const *)(__va_args));
-  }
+  tmp_2 = snprintf(dest_0,dmax,format,s,a); /* snprintf_fallback_3 */
   __retres = tmp_2;
   return_label: return __retres;
 }
+
+int snprintf_fallback_4(char * restrict s, size_t n,
+                        char const * restrict format, char *param0,
+                        long param1);
 
 int snprintf_s_sl(char *dest_0, rsize_t dmax, char const *format, char *s,
                   long a)
@@ -3260,12 +3261,7 @@ int snprintf_s_sl(char *dest_0, rsize_t dmax, char const *format, char *s,
     goto return_label;
   }
   index_0 ++;
-  {
-    char *__va_arg0 = s;
-    long __va_arg1 = a;
-    void *__va_args[2] = {& __va_arg0, & __va_arg1};
-    tmp_2 = snprintf(dest_0,dmax,format,(void * const *)(__va_args));
-  }
+  tmp_2 = snprintf(dest_0,dmax,format,s,a); /* snprintf_fallback_4 */
   __retres = tmp_2;
   return_label: return __retres;
 }

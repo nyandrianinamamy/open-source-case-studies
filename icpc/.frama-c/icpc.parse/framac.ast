@@ -752,6 +752,12 @@ void Sim_init(void)
 char *output_header =
   (char *)"time(ms)\tengineVoltage\tlegAngle\tlegAngleValid\tisActive\n";
 char *output_row_fmt_string = (char *)"%d\t%f\t%f\t%d\t%d\n";
+int fprintf_fallback_1(FILE * restrict stream, char const * restrict format);
+
+int fprintf_fallback_2(FILE * restrict stream, char const * restrict format,
+                       sint32 param0, real64 param1, real64 param2,
+                       int param3, int param4);
+
 int main(void)
 {
   int __retres;
@@ -766,11 +772,7 @@ int main(void)
   RoCo_activeDesired = (char)1;
   RoCo_moveFast = (char)0;
   int cnt = 0;
-  {
-    void *__va_args[1] = {(void *)0};
-    fprintf(__fc_stderr,(char const *)output_header,
-            (void * const *)(__va_args));
-  }
+  fprintf(__fc_stderr,(char const *)output_header); /* fprintf_fallback_1 */
   while (cnt < 9000) {
     sint32 tmp_0;
     tmp_0 = Time();
@@ -778,19 +780,10 @@ int main(void)
     lastTime = Time();
     RoCo_process();
     Sim_process();
-    if (cnt % 5 == 0) {
-      {
-        sint32 __va_arg0 = lastTime;
-        real64 __va_arg1 = RoCo_engineVoltage;
-        real64 __va_arg2 = RoCo_legAngle;
-        int __va_arg3 = (int)RoCo_legAngleValid;
-        int __va_arg4 = (int)RoCo_isActive;
-        void *__va_args_12[5] =
-          {& __va_arg0, & __va_arg1, & __va_arg2, & __va_arg3, & __va_arg4};
-        fprintf(__fc_stderr,(char const *)output_row_fmt_string,
-                (void * const *)(__va_args_12));
-      }
-    }
+    if (cnt % 5 == 0) fprintf(__fc_stderr,
+                              (char const *)output_row_fmt_string,lastTime,
+                              RoCo_engineVoltage,RoCo_legAngle,
+                              (int)RoCo_legAngleValid,(int)RoCo_isActive); /* fprintf_fallback_2 */
     Sleep(20);
     cnt ++;
     if (cnt == 2500) {

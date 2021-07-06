@@ -1,5 +1,8 @@
 directory	file	line	function	property kind	status	property
-FRAMAC_SHARE/libc	stdio.h	207	fprintf	assigns clause	Unknown	assigns \result, *stream;
-FRAMAC_SHARE/libc	stdio.h	207	fprintf	from clause	Unknown	assigns *stream \from *stream, *(format + (0 ..));
-FRAMAC_SHARE/libc	stdio.h	207	fprintf	from clause	Unknown	assigns \result \from *stream, *(format + (0 ..));
+FRAMAC_SHARE/libc	stdio.h	207	fprintf_fallback_1	assigns clause	Unknown	assigns \result, *stream;
+FRAMAC_SHARE/libc	stdio.h	207	fprintf_fallback_1	from clause	Unknown	assigns *stream \from *stream, *(format + (0 ..));
+FRAMAC_SHARE/libc	stdio.h	207	fprintf_fallback_1	from clause	Unknown	assigns \result \from *stream, *(format + (0 ..));
+FRAMAC_SHARE/libc	stdio.h	207	fprintf_fallback_2	assigns clause	Unknown	assigns \result, *stream;
+FRAMAC_SHARE/libc	stdio.h	207	fprintf_fallback_2	from clause	Unknown	assigns *stream \from *stream, *(format + (0 ..)), param0, param1, param2, param3, param4;
+FRAMAC_SHARE/libc	stdio.h	207	fprintf_fallback_2	from clause	Unknown	assigns \result \from *stream, *(format + (0 ..)), param0, param1, param2, param3, param4;
 src	impls.c	96	Sleep	signed_overflow	Unknown	_t + delayMs ≤ 2147483647

@@ -253,6 +253,8 @@ void d(void)
   return;
 }
 
+int printf_fallback_1(char const * restrict format, P param0);
+
 void R(void)
 {
   int tmp_1;
@@ -262,11 +264,7 @@ void R(void)
   D = & j[*(i + 2)];
   tmp = U((unsigned int)1);
   if (E) tmp_0 = "%c"; else tmp_0 = "%u,";
-  {
-    P __va_arg0 = tmp;
-    void *__va_args[1] = {& __va_arg0};
-    tmp_1 = printf(tmp_0,(void * const *)(__va_args));
-  }
+  tmp_1 = printf(tmp_0,tmp); /* printf_fallback_1 */
   tmp_2 = w((unsigned int)2);
   *D = l(tmp_2,(unsigned int)tmp_1);
   D ++;
