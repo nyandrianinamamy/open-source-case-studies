@@ -23,7 +23,7 @@
 
 
 #ifndef MSG_CTRL_H
-#define MSR_CTRL_H
+#define MSG_CTRL_H
 
 #include "keyword.h"
 
