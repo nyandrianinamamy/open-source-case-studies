@@ -13,13 +13,12 @@ MACHDEP = x86_64
 
 ## Preprocessing flags (for -cpp-extra-args)
 CPPFLAGS    += \
-  -I .. \
   -D_XOPEN_SOURCE=200112L \
   -DNB_TESTS=3 \
 
 ## General flags
 FCFLAGS     += \
-  -cpp-command "cpp -E -C -I.." \
+  -cpp-command "gcc -E -C -I.." \
   -cpp-frama-c-compliant \
   -add-symbolic-path=..:. \
   -kernel-warn-key typing:implicit-function-declaration=abort \
