@@ -202,8 +202,8 @@ genann *genann_init(int inputs, int hidden_layers, int hidden, int outputs)
   ret->output = ret->weight + ret->total_weights;
   ret->delta = ret->output + ret->total_neurons;
   genann_randomize(ret);
-  ret->activation_hidden = (double (*)(struct genann const *ann, double a))(& genann_act_sigmoid_cached);
-  ret->activation_output = (double (*)(struct genann const *ann, double a))(& genann_act_sigmoid_cached);
+  ret->activation_hidden = & genann_act_sigmoid_cached;
+  ret->activation_output = & genann_act_sigmoid_cached;
   genann_init_sigmoid_lookup((genann const *)ret);
   __retres = ret;
   return_label: return __retres;
