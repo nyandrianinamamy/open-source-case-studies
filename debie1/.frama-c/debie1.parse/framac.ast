@@ -862,9 +862,22 @@ void SendTaskMail(unsigned char mailbox, uint16_t message,
 
 unsigned char isr_send_message(unsigned char mailbox, uint16_t message);
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_1(char const * restrict format);
+
 int main(void)
 {
   int __retres;
+  printf("Target Init.\n"); /* printf_va_1 */
   EA = (unsigned char)0;
   Init_DPU(s_w_reset);
   Boot();
@@ -3455,8 +3468,34 @@ void ResetEventQueueLength(void)
 }
 
 unsigned char EA;
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_2(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_3(char const * restrict format);
+
 void CreateTask(task_info_t *new_task)
 {
+  printf("CreateTask %d\n",(int)new_task->rtx_task_number); /* printf_va_2 */
   switch ((int)new_task->rtx_task_number) {
     case 1: InitTelecommandTask();
     break;
@@ -3464,94 +3503,320 @@ void CreateTask(task_info_t *new_task)
     break;
     case 3: InitHitTriggerTask();
     break;
-    default: ;
+    default: printf("CreateTask: unknown task number\n"); /* printf_va_3 */
     break;
   }
   return;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_4(char const * restrict format, int param0);
+
 void WaitInterval(unsigned char time)
 {
+  printf("WaitInterval %d\n",(int)time); /* printf_va_4 */
   return;
 }
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_5(char const * restrict format, int param0);
 
 void WaitTimeout(unsigned char time)
 {
+  printf("WaitTimeout %d\n",(int)time); /* printf_va_5 */
   return;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_6(char const * restrict format, unsigned int param0);
+
 void SetTimeSlice(unsigned int time_slice)
 {
+  printf("SetTimeSlice %u\n",time_slice); /* printf_va_6 */
   return;
 }
 
 static unsigned int ad_converting = (unsigned int)0;
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_7(char const * restrict format, unsigned int param0);
+
 void ShortDelay(uint_least8_t delay_loops)
 {
+  printf("ShortDelay %u\n",delay_loops); /* printf_va_7 */
   ad_converting = (unsigned int)0;
   return;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param2),
+            (indirect: param1), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param2, param1, param0;
+ */
+int printf_va_8(char const * restrict format, int param0, int param1,
+                int param2);
+
 unsigned char isr_send_message(unsigned char mailbox, uint16_t message)
 {
   unsigned char __retres;
+  printf("isr_send_message to %hhu, message %hu = 0x%hx\n",(int)mailbox,
+         (int)message,(int)message); /* printf_va_8 */
   SendTaskMail(mailbox,message,(unsigned char)0);
   __retres = (unsigned char)8;
   return __retres;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_9(char const * restrict format, int param0);
+
 void AttachInterrupt(unsigned char ISR_VectorNumber)
 {
+  printf("AttachInterrupt %d\n",(int)ISR_VectorNumber); /* printf_va_9 */
   return;
 }
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_10(char const * restrict format, int param0);
 
 void EnableInterrupt(unsigned char ISR_VectorNumber)
 {
+  printf("EnableInterrupt %d\n",(int)ISR_VectorNumber); /* printf_va_10 */
   return;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_11(char const * restrict format, int param0);
+
 void DisableInterrupt(unsigned char ISR_VectorNumber)
 {
+  printf("DisableInterrupt %d\n",(int)ISR_VectorNumber); /* printf_va_11 */
   return;
 }
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_12(char const * restrict format, int param0);
 
 signed char SetInterruptMask(unsigned char ISR_MaskNumber)
 {
   signed char __retres;
+  printf("SetInterruptMask 0x%hhx\n",(int)ISR_MaskNumber); /* printf_va_12 */
   __retres = (signed char)0;
   return __retres;
 }
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_13(char const * restrict format, int param0);
 
 signed char ResetInterruptMask(unsigned char ISR_MaskNumber)
 {
   signed char __retres;
+  printf("ResetInterruptMask 0x%hhx\n",(int)ISR_MaskNumber); /* printf_va_13 */
   __retres = (signed char)0;
   return __retres;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param1),
+            (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param1, param0;
+ */
+int printf_va_14(char const * restrict format, int param0, int param1);
+
 void WaitInterrupt(unsigned char ISR_VectorNumber, unsigned char timer)
 {
+  printf("WaitInterrupt %d, time %d\n",(int)ISR_VectorNumber,(int)timer); /* printf_va_14 */
   return;
 }
 
 static uint16_t mail_message[8];
 static int mail_count[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static int mail_overflows = 0;
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param2),
+            (indirect: param1), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param2, param1, param0;
+ */
+int printf_va_15(char const * restrict format, int param0, int param1,
+                 int param2);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param1),
+            (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param1, param0;
+ */
+int printf_va_16(char const * restrict format, int param0, int param1);
+
 void SendTaskMail(unsigned char mailbox, uint16_t message,
                   unsigned char timeout)
 {
+  printf("SendTaskMail to %d, message %d, timeout %d\n",(int)mailbox,
+         (int)message,(int)timeout); /* printf_va_15 */
   if (mail_count[mailbox] == 0) mail_message[mailbox] = message;
-  else mail_overflows ++;
+  else {
+    printf("Overflow on mailbox %d, already %d message(s)\n",(int)mailbox,
+           mail_count[mailbox]); /* printf_va_16 */
+    mail_overflows ++;
+  }
   (mail_count[mailbox]) ++;
   return;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param1),
+            (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param1, param0;
+ */
+int printf_va_17(char const * restrict format, int param0, int param1);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param2),
+            (indirect: param1), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param2, param1, param0;
+ */
+int printf_va_18(char const * restrict format, int param0, int param1,
+                 int param2);
+
 void WaitMail(incoming_mail_t *message)
 {
+  printf("WaitMail from %d, timeout %d\n",(int)message->mailbox_number,
+         (int)message->timeout); /* printf_va_17 */
   if (mail_count[message->mailbox_number] > 0) {
     message->wait_result = (signed char)1;
     message->execution_result = (signed char)1;
     *(message->message) = mail_message[message->mailbox_number];
+    printf("Message from %d is %d = 0x%hhx\n",(int)message->mailbox_number,
+           (int)*(message->message),(int)*(message->message)); /* printf_va_18 */
     (mail_count[message->mailbox_number]) --;
   }
   else {
@@ -3562,16 +3827,58 @@ void WaitMail(incoming_mail_t *message)
   return;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param1),
+            (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param1, param0;
+ */
+int printf_va_19(char const * restrict format, int param0, int param1);
+
 static void FlushMail(unsigned char mailbox)
 {
+  printf("FlushMail from box %d, which had %d messages.\n",(int)mailbox,
+         mail_count[mailbox]); /* printf_va_19 */
   mail_count[mailbox] = 0;
   return;
 }
 
 static unsigned int check_current_errors = (unsigned int)0;
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_20(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_21(char const * restrict format);
+
 unsigned char Check_Current(unsigned char bits)
 {
   unsigned char val;
+  printf("Check_Current 0x%hhx\n",(int)bits); /* printf_va_20 */
   switch ((int)bits) {
     case 3: val = (unsigned char)1;
     break;
@@ -3582,6 +3889,7 @@ unsigned char Check_Current(unsigned char bits)
     case 192: val = (unsigned char)64;
     break;
     default: val = (unsigned char)0;
+    printf("Check_Current param error\n"); /* printf_va_21 */
     break;
   }
   if (check_current_errors > (unsigned int)0) {
@@ -3591,29 +3899,102 @@ unsigned char Check_Current(unsigned char bits)
   return val;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_22(char const * restrict format, unsigned int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_23(char const * restrict format);
+
 void Reboot(reset_class_t boot_type)
 {
+  printf("Reboot %u\n",boot_type); /* printf_va_22 */
   if (boot_type == (unsigned int)checksum_reset_e) reference_checksum = code_checksum;
+  printf("Target Reboot.\n"); /* printf_va_23 */
   return;
 }
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_24(char const * restrict format, int param0);
 
 unsigned char TestMemBits(data_address_t address)
 {
   unsigned char __retres;
+  printf("TestMemBits 0x%hhx\n",(int)address); /* printf_va_24 */
   __retres = (unsigned char)0;
   return __retres;
 }
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param1),
+            (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param1, param0;
+ */
+int printf_va_25(char const * restrict format, int param0,
+                 unsigned int param1);
 
 unsigned char TestMemData(data_address_t start, uint_least8_t bytes)
 {
   unsigned char __retres;
+  printf("TestMemData start 0x%hhx, bytes %u\n",(int)start,bytes); /* printf_va_25 */
   __retres = (unsigned char)0;
   return __retres;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param1),
+            (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param1, param0;
+ */
+int printf_va_26(char const * restrict format, int param0,
+                 unsigned int param1);
+
 unsigned char TestMemSeq(data_address_t start, uint_least8_t bytes)
 {
   unsigned char __retres;
+  printf("TestMemSeq start 0x%hhx, bytes %u\n",(int)start,bytes); /* printf_va_26 */
   __retres = (unsigned char)0;
   return __retres;
 }
@@ -3621,44 +4002,139 @@ unsigned char TestMemSeq(data_address_t start, uint_least8_t bytes)
 static unsigned char tc_msb;
 static unsigned char tc_lsb;
 static uint16_t tc_word;
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_27(char const * restrict format);
+
 unsigned char Read_TC_MSB(void)
 {
+  printf("Read_TC_MSB\n"); /* printf_va_27 */
   return tc_msb;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_28(char const * restrict format);
+
 unsigned char Read_TC_LSB(void)
 {
+  printf("Read_TC_LSB\n"); /* printf_va_28 */
   return tc_lsb;
 }
 
 static unsigned char tm_msb;
 static unsigned char tm_lsb;
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param1),
+            (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param1, param0;
+ */
+int printf_va_29(char const * restrict format, int param0, int param1);
+
 void Write_TM_LSB(unsigned char value)
 {
+  printf("Write_TM_LSB %d = 0x%hhx\n",(int)value,(int)value); /* printf_va_29 */
   tm_lsb = value;
   return;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param1),
+            (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param1, param0;
+ */
+int printf_va_30(char const * restrict format, int param0, int param1);
+
 void Write_TM_MSB(unsigned char value)
 {
+  printf("Write_TM_MSB %d = 0x%hhx\n",(int)value,(int)value); /* printf_va_30 */
   tm_msb = value;
   return;
 }
 
 static unsigned char tc_timer_overflow = (unsigned char)1;
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_31(char const * restrict format);
+
 unsigned char TC_Timer_Overflow_Flag(void)
 {
+  printf("TC_Timer_Overflow_Flag\n"); /* printf_va_31 */
   return tc_timer_overflow;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_32(char const * restrict format);
+
 void Clear_TC_Timer_Overflow_Flag(void)
 {
+  printf("Clear_TC_Timer_Overflow_Flag\n"); /* printf_va_32 */
   tc_timer_overflow = (unsigned char)0;
   return;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_33(char const * restrict format);
+
 void Set_TC_Timer_Overflow_Flag(void)
 {
+  printf("Set_TC_Timer_Overflow_Flag\n"); /* printf_va_33 */
   tc_timer_overflow = (unsigned char)1;
   return;
 }
@@ -3704,9 +4180,22 @@ static ad_limit_t ad_limit[0x28] =
    {.min = (unsigned short)0, .max = (unsigned short)0xffff},
    {.min = (unsigned short)0, .max = (unsigned short)0xffff},
    {.min = (unsigned short)0, .max = (unsigned short)0xffff}};
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_34(char const * restrict format);
+
 void Set_AD_Unlimited(void)
 {
   uint_least8_t c;
+  printf("Set AD Unlimited\n"); /* printf_va_34 */
   c = (unsigned int)0;
   while (c < (uint_least8_t)0x28) {
     ad_limit[c].min = (unsigned short)0;
@@ -3716,8 +4205,21 @@ void Set_AD_Unlimited(void)
   return;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_35(char const * restrict format);
+
 void Set_AD_Nominal(void)
 {
+  printf("Set AD Nominal\n"); /* printf_va_35 */
   ad_limit[16].min = (unsigned short)0xba00;
   ad_limit[16].max = (unsigned short)0xe4ff;
   ad_limit[17].min = (unsigned short)0xba00;
@@ -4120,20 +4622,72 @@ static unsigned int ad_hit_rand_index = (unsigned int)0;
 static unsigned int total_adc_hits = (unsigned int)0;
 static unsigned int ad_random_failures = (unsigned int)0;
 static unsigned int ad_fail_index = (unsigned int)0;
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_36(char const * restrict format, int param0);
+
 void Update_ADC_Channel_Reg(unsigned char channel)
 {
+  printf("Update_ADC_Channel_Reg %hhx\n",(int)channel); /* printf_va_36 */
   return;
 }
 
 static unsigned int start_conversion_count = (unsigned int)0;
 static uint16_t ad_value = (unsigned short)0;
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_37(char const * restrict format, unsigned int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_38(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_39(char const * restrict format);
+
 void Start_Conversion(void)
 {
   uint_least8_t channel;
   unsigned char tmp;
   unsigned char tmp_0;
   channel = (unsigned int)((int)ADC_channel_register & 0x3f);
-  if (ad_converting != (unsigned int)0) ;
+  printf("Start_Conversion on channel %u\n",channel); /* printf_va_37 */
+  if (ad_converting != (unsigned int)0) printf("- previous conversion did not end.\n"); /* printf_va_38 */
   tmp = Next_Rand(& ad_rand_index);
   ad_value = (unsigned short)((int)((unsigned short)tmp) << 8);
   tmp_0 = Next_Rand(& ad_rand_index);
@@ -4149,6 +4703,7 @@ void Start_Conversion(void)
     unsigned char tmp_1;
     tmp_1 = Next_Rand(& ad_fail_index);
     if ((int)tmp_1 > 0x3f) {
+      printf("Start_Conversion starts a failing A/D conversion.\n"); /* printf_va_39 */
       ad_conv_timer = -5000;
       ad_random_failures --;
     }
@@ -4157,17 +4712,71 @@ void Start_Conversion(void)
   return;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param1),
+            (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param1, param0;
+ */
+int printf_va_40(char const * restrict format, unsigned int param0,
+                 int param1);
+
 void Report_Start_Conversion_Count(int problem)
 {
+  printf("Called Start_Conversion %u times in problem %d.\n",
+         start_conversion_count,problem); /* printf_va_40 */
   start_conversion_count = (unsigned int)0;
   return;
 }
 
 static unsigned int end_of_adc_count = (unsigned int)0;
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_41(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_42(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_43(char const * restrict format);
+
 unsigned char End_Of_ADC(void)
 {
   unsigned char __retres;
-  if (ad_converting == (unsigned int)0) ;
+  printf("End_Of_ADC\n"); /* printf_va_41 */
+  if (ad_converting == (unsigned int)0) printf("- conversion not going on.\n"); /* printf_va_42 */
   end_of_adc_count ++;
   ad_conv_timer ++;
   if (ad_conv_timer >= ad_conv_delay[ad_conv_num]) {
@@ -4180,6 +4789,7 @@ unsigned char End_Of_ADC(void)
       unsigned char tmp;
       tmp = Next_Rand(& ad_hit_rand_index);
       if ((int)tmp > 0x7f) {
+        printf("Hit during A/D\n"); /* printf_va_43 */
         confirm_hit_result = (unsigned char)1;
         total_adc_hits ++;
         max_adc_hits --;
@@ -4194,22 +4804,68 @@ unsigned char End_Of_ADC(void)
   return_label: return __retres;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param1),
+            (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param1, param0;
+ */
+int printf_va_44(char const * restrict format, unsigned int param0,
+                 int param1);
+
 void Report_End_Of_ADC_Count(int problem)
 {
+  printf("Called End_Of_ADC %u times in problem %d.\n",end_of_adc_count,
+         problem); /* printf_va_44 */
   end_of_adc_count = (unsigned int)0;
   return;
 }
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param1),
+            (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param1, param0;
+ */
+int printf_va_45(char const * restrict format, int param0, int param1);
 
 unsigned char Get_Result(void)
 {
   unsigned char value;
   value = (unsigned char)(((int)ad_value >> 8) & 0xff);
+  printf("Get_Result %hhu = 0x%hhx\n",(int)value,(int)value); /* printf_va_45 */
   ad_value = (unsigned short)((int)ad_value << 8);
   return value;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_46(char const * restrict format, int param0);
+
 void Set_DAC_Output(unsigned char level)
 {
+  printf("Set_DAC_Output %d\n",(int)level); /* printf_va_46 */
   return;
 }
 
@@ -4224,14 +4880,28 @@ static unsigned char lsb2_counter = (unsigned char)88;
 static unsigned char rise_time_counter = (unsigned char)102;
 static unsigned char sim_self_test = (unsigned char)0;
 static unsigned char self_test_pulse = (unsigned char)0;
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_47(char const * restrict format);
+
 void Sim_Self_Test_Trigger(void)
 {
   if ((int)sim_self_test == 1) 
     if ((int)hit_enabled == 1) 
       if ((int)self_test_pulse > 0) 
         if (self_test_SU_number != (sensor_number_t)0) 
-          if (SU_state[self_test_SU_number - (sensor_number_t)1] == (unsigned int)self_test_trigger_e) 
+          if (SU_state[self_test_SU_number - (sensor_number_t)1] == (unsigned int)self_test_trigger_e) {
+            printf("SU Self Test trigger!\n"); /* printf_va_47 */
             SU_state[self_test_SU_number - (sensor_number_t)1] = self_test_e;
+          }
   return;
 }
 
@@ -4251,80 +4921,265 @@ void Random_Event(void)
   return;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_48(char const * restrict format, unsigned int param0);
+
 static void Set_Trigger_SU(sensor_index_t SU)
 {
+  printf("Set Trigger SU index %u\n",SU); /* printf_va_48 */
   trigger_source_0 = (unsigned char)(SU & (unsigned int)1);
   trigger_source_1 = (unsigned char)((SU >> 1) & (unsigned int)1);
   return;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_49(char const * restrict format);
+
 void Enable_Hit_Trigger(void)
 {
+  printf("Enable_Hit_Trigger\n"); /* printf_va_49 */
   hit_enabled = (unsigned char)1;
   Sim_Self_Test_Trigger();
   return;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_50(char const * restrict format);
+
 void Disable_Hit_Trigger(void)
 {
+  printf("Disable_Hit_Trigger\n"); /* printf_va_50 */
   hit_enabled = (unsigned char)0;
   Sim_Self_Test_Trigger();
   return;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_51(char const * restrict format);
+
 unsigned char Hit_Trigger_Flag(void)
 {
+  printf("Hit_Trigger_Flag\n"); /* printf_va_51 */
   return trigger_flag;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_52(char const * restrict format);
+
 unsigned char Event_Flag(void)
 {
+  printf("Event_Flag \n"); /* printf_va_52 */
   return event_flag;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_53(char const * restrict format);
+
 unsigned char Get_MSB_Counter(void)
 {
+  printf("Get_MSB_Counter\n"); /* printf_va_53 */
   return msb_counter;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_54(char const * restrict format);
+
 unsigned char Get_LSB1_Counter(void)
 {
+  printf("Get_LSB1_Counter\n"); /* printf_va_54 */
   return lsb1_counter;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_55(char const * restrict format);
+
 unsigned char Get_LSB2_Counter(void)
 {
+  printf("Get_LSB2_Counter\n"); /* printf_va_55 */
   return lsb2_counter;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_56(char const * restrict format);
+
 unsigned char Rise_Time_Counter(void)
 {
+  printf("Rise_Time_Counter\n"); /* printf_va_56 */
   return rise_time_counter;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_57(char const * restrict format);
+
 unsigned char Trigger_Source_0(void)
 {
+  printf("Trigger_Source_0\n"); /* printf_va_57 */
   return trigger_source_0;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_58(char const * restrict format);
+
 unsigned char Trigger_Source_1(void)
 {
+  printf("Trigger_Source_1\n"); /* printf_va_58 */
   return trigger_source_1;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_59(char const * restrict format, int param0);
+
 void Set_SU_Self_Test_Ch(unsigned char value)
 {
+  printf("Set SU Self-Test Channel %hhx\n",(int)value); /* printf_va_59 */
   return;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_60(char const * restrict format, int param0);
+
 void Set_Test_Pulse_Level(unsigned char level)
 {
+  printf("Set SU Self-Test Pulse Level %hhu\n",(int)level); /* printf_va_60 */
   self_test_pulse = level;
   Sim_Self_Test_Trigger();
   return;
 }
 
 static unsigned int v_down_errors = (unsigned int)0;
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_61(char const * restrict format, int param0);
+
 unsigned char V_Down(void)
 {
   unsigned char result;
@@ -4333,12 +5188,29 @@ unsigned char V_Down(void)
     v_down_errors --;
   }
   else result = (unsigned char)1;
+  printf("V_Down %d\n",(int)result); /* printf_va_61 */
   return result;
 }
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param1),
+            (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param1, param0;
+ */
+int printf_va_62(char const * restrict format, int param0, int param1);
 
 void SignalPeakDetectorReset(unsigned char low_reset_value,
                              unsigned char high_reset_value)
 {
+  printf("SignalPeakDetectorReset low %hhu, high %hhu\n",
+         (int)low_reset_value,(int)high_reset_value); /* printf_va_62 */
   return;
 }
 
@@ -4349,8 +5221,22 @@ unsigned short Short_Value(uskew16_t *x)
   return val;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_63(char const * restrict format, int param0);
+
 void Call_Patch(fptr_t func)
 {
+  printf("Call_Patch 0x%hx\n",(int)func); /* printf_va_63 */
   return;
 }
 
@@ -4374,14 +5260,60 @@ void Check_Type_Size(void)
 
 static unsigned int checks = (unsigned int)0;
 static unsigned int check_errors = (unsigned int)0;
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_64(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param1),
+            (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param1, param0;
+ */
+int printf_va_65(char const * restrict format, unsigned int param0,
+                 unsigned int param1);
+
 static void Report_Checks(void)
 {
+  printf("Target Mark.\n"); /* printf_va_64 */
+  printf("Total checks done %u, failed %u\n",checks,check_errors); /* printf_va_65 */
   return;
 }
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param1),
+            (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param1, *(param0 + (0 ..));
+ */
+int printf_va_66(char const * restrict format, char *param0,
+                 unsigned int param1);
 
 static void Fail_Check(char *message)
 {
   check_errors ++;
+  printf("%s: FAILED (#%u)\n",message,check_errors); /* printf_va_66 */
   return;
 }
 
@@ -4405,9 +5337,65 @@ static void Check_No_Errors(void)
   return;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_67(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_68(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_69(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_70(char const * restrict format, int param0);
+
 static void TC_Interrupt(void)
 {
+  printf("RPT_Ipoint %d\n",3); /* printf_va_67 */
+  printf("RPT_Ipoint %d\n",10); /* printf_va_68 */
   TC_InterruptService();
+  printf("RPT_Ipoint %d\n",3); /* printf_va_69 */
+  printf("RPT_Ipoint %d\n",0); /* printf_va_70 */
   return;
 }
 
@@ -4437,18 +5425,206 @@ static void Send_TC_Word(uint_least16_t word)
   return;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_71(char const * restrict format);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_72(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_73(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_74(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_75(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_76(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_77(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_78(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_79(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_80(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_81(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_82(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_83(char const * restrict format, char *param0);
+
 static void TC_ISR_Tests(void)
 {
+  printf("\nTC_ISR_Tests\n"); /* printf_va_71 */
+  printf("\nCASE: %s:\n\n",
+         (char *)"TC rejected because timer overflow is not set"); /* printf_va_72 */
   tc_timer_overflow = (unsigned char)0;
   TC_Interrupt();
+  printf("\nCASE: %s:\n\n",(char *)"TC rejected because TC_state is SC_TM_e"); /* printf_va_73 */
   TC_state = SC_TM_e;
   Send_TC((unsigned char)0,(unsigned char)0);
+  printf("\nCASE: %s:\n\n",
+         (char *)"TC rejected because TC_state is memory_dump_e"); /* printf_va_74 */
   TC_state = memory_dump_e;
   Send_TC((unsigned char)0,(unsigned char)0);
+  printf("\nCASE: %s:\n\n",(char *)"TC in TC_state = memory_patch_e"); /* printf_va_75 */
   TC_state = memory_patch_e;
   Send_TC((unsigned char)0,(unsigned char)0);
   Check_Nonzero(mail_count[0] == 1);
   FlushMail((unsigned char)0);
+  printf("\nCASE: %s:\n\n",(char *)"TC with parity error"); /* printf_va_76 */
   TC_state = TC_handling_e;
   tc_timer_overflow = (unsigned char)1;
   tc_msb = (unsigned char)0;
@@ -4456,34 +5632,41 @@ static void TC_ISR_Tests(void)
   tc_word = (unsigned short)1;
   TC_Interrupt();
   Check_Nonzero((int)telemetry_data.error_status & 2);
+  printf("\nCASE: %s:\n\n",(char *)"TC = ERROR_STATUS_CLEAR, ok"); /* printf_va_77 */
   Send_TC((unsigned char)0x03,(unsigned char)0x03);
   Check_Nonzero((int)telemetry_data.error_status & 2);
   Check_Nonzero(mail_count[0] == 1);
   FlushMail((unsigned char)0);
   telemetry_data.error_status = (unsigned char)0;
   Check_No_Errors();
+  printf("\nCASE: %s:\n\n",(char *)"TC = SEND_STATUS_REGISTER, ok"); /* printf_va_78 */
   Send_TC((unsigned char)0x05,(unsigned char)8);
   Check_No_Errors();
   Check_Nonzero(TC_state == (unsigned int)register_TM_e);
   Check_Nonzero(mail_count[0] == 1);
   FlushMail((unsigned char)0);
+  printf("\nCASE: %s:\n\n",(char *)"TC type ALL_INVALID"); /* printf_va_79 */
   Send_TC((unsigned char)4,(unsigned char)4);
   Check_Nonzero((int)telemetry_data.error_status == 1);
   Check_Nonzero(mail_count[0] == 0);
   telemetry_data.error_status = (unsigned char)0;
+  printf("\nCASE: %s:\n\n",(char *)"TC type ONLY_EQUAL, fail"); /* printf_va_80 */
   Send_TC((unsigned char)0x03,(unsigned char)(~ 0x03));
   Check_Nonzero((int)telemetry_data.error_status == 1);
   Check_Nonzero(mail_count[0] == 0);
   telemetry_data.error_status = (unsigned char)0;
+  printf("\nCASE: %s:\n\n",(char *)"TC type ON_OFF_TC, fail"); /* printf_va_81 */
   Send_TC((unsigned char)0x40,(unsigned char)0x3F);
   Check_Nonzero((int)telemetry_data.error_status == 1);
   Check_Nonzero(mail_count[0] == 0);
   telemetry_data.error_status = (unsigned char)0;
+  printf("\nCASE: %s:\n\n",(char *)"TC type ONLY_EVEN, fail (odd)"); /* printf_va_82 */
   Send_TC((unsigned char)0x05,(unsigned char)5);
   Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
   Check_Nonzero((int)telemetry_data.error_status == 1);
   Check_Nonzero(mail_count[0] == 0);
   telemetry_data.error_status = (unsigned char)0;
+  printf("\nCASE: %s:\n\n",(char *)"TC type ONLY_EVEN, fail (too large)"); /* printf_va_83 */
   Send_TC((unsigned char)0x05,(unsigned char)(0x74 + 2));
   Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
   Check_Nonzero((int)telemetry_data.error_status == 1);
@@ -4492,10 +5675,66 @@ static void TC_ISR_Tests(void)
   return;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_84(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_85(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_86(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_87(char const * restrict format, int param0);
+
 static void Handle_TC(int problem)
 {
   Check_Nonzero(mail_count[0] == 1);
+  printf("RPT_Ipoint %d\n",3); /* printf_va_84 */
+  printf("RPT_Ipoint %d\n",problem); /* printf_va_85 */
   HandleTelecommand();
+  printf("RPT_Ipoint %d\n",3); /* printf_va_86 */
+  printf("RPT_Ipoint %d\n",0); /* printf_va_87 */
   Check_Nonzero(mail_count[0] == 0);
   return;
 }
@@ -4553,6 +5792,110 @@ static void Send_Patch_Data(uint16_t address, unsigned char *checksum)
   return;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_88(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_89(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_90(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_91(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_92(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_93(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_94(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_95(char const * restrict format, int param0);
+
 static void Read_Data_Memory(uint16_t address)
 {
   uint_least8_t i;
@@ -4565,12 +5908,20 @@ static void Read_Data_Memory(uint16_t address)
   i = (unsigned int)0;
   while (i < (uint_least8_t)16) {
     Check_Nonzero(telemetry_pointer < telemetry_end_pointer);
+    printf("RPT_Ipoint %d\n",3); /* printf_va_88 */
+    printf("RPT_Ipoint %d\n",21); /* printf_va_89 */
     TM_InterruptService();
+    printf("RPT_Ipoint %d\n",3); /* printf_va_90 */
+    printf("RPT_Ipoint %d\n",0); /* printf_va_91 */
     Check_Nonzero(TC_state == (unsigned int)memory_dump_e);
     i ++;
   }
   Check_Nonzero(telemetry_pointer == telemetry_end_pointer);
+  printf("RPT_Ipoint %d\n",3); /* printf_va_92 */
+  printf("RPT_Ipoint %d\n",23); /* printf_va_93 */
   TM_InterruptService();
+  printf("RPT_Ipoint %d\n",3); /* printf_va_94 */
+  printf("RPT_Ipoint %d\n",0); /* printf_va_95 */
   Handle_TC(10);
   Check_No_Errors();
   Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
@@ -4585,16 +5936,569 @@ void Clear_Errors(void)
   return;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_96(char const * restrict format);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_97(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_98(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_99(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_100(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_101(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_102(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_103(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_104(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_105(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_106(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_107(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_108(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_109(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_110(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_111(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_112(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_113(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_114(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_115(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_116(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_117(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_118(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_119(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_120(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_121(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_122(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_123(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_124(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_125(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_126(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_127(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_128(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_129(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_130(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_131(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_132(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_133(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_134(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_135(char const * restrict format, char *param0);
+
 static void TC_Task_Tests(void)
 {
   unsigned char chsum;
   DEBIE_mode_t tmp;
   DEBIE_mode_t tmp_0;
+  printf("\nTC_Task_Tests\n"); /* printf_va_96 */
+  printf("\nCASE: %s:\n\n",(char *)"TC = ERROR_STATUS_CLEAR, ok"); /* printf_va_97 */
   telemetry_data.error_status = (unsigned char)2;
   Send_TC((unsigned char)0x03,(unsigned char)0x03);
   Check_Nonzero((int)telemetry_data.error_status & 2);
   Handle_TC(41);
   Check_No_Errors();
+  printf("\nCASE: %s:\n\n",(char *)"TC to set SU parameters"); /* printf_va_98 */
   Exec_TC((unsigned char)0x21,(unsigned char)23,41);
   Exec_TC((unsigned char)0x31,(unsigned char)26,41);
   Exec_TC((unsigned char)0x41,(unsigned char)32,41);
@@ -4660,12 +6564,14 @@ static void TC_Task_Tests(void)
   Exec_TC((unsigned char)0x4D,(unsigned char)209,41);
   Exec_TC((unsigned char)0x5D,(unsigned char)208,41);
   Check_No_Errors();
+  printf("\nCASE: %s:\n\n",(char *)"TC to set classification coefficients"); /* printf_va_99 */
   Exec_TC((unsigned char)0x70,(unsigned char)1,41);
   Exec_TC((unsigned char)0x71,(unsigned char)2,41);
   Exec_TC((unsigned char)0x72,(unsigned char)3,41);
   Exec_TC((unsigned char)0x73,(unsigned char)4,41);
   Exec_TC((unsigned char)0x74,(unsigned char)5,41);
   Check_No_Errors();
+  printf("\nCASE: %s:\n\n",(char *)"TC to patch code memory, call patch"); /* printf_va_100 */
   Send_Patch_Code((unsigned short)0x1100,& chsum);
   chsum = (unsigned char)((int)chsum ^ 0x5A);
   Check_Zero((int)telemetry_data.mode_status & 0x10);
@@ -4674,6 +6580,7 @@ static void TC_Task_Tests(void)
   Check_Zero((int)telemetry_data.mode_status & 0x10);
   Check_No_Errors();
   Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
+  printf("\nCASE: %s:\n\n",(char *)"TC to patch code memory, no action"); /* printf_va_101 */
   Send_Patch_Code((unsigned short)0x1300,& chsum);
   chsum = (unsigned char)((int)chsum ^ 0x00);
   Check_Zero((int)telemetry_data.mode_status & 0x10);
@@ -4682,6 +6589,7 @@ static void TC_Task_Tests(void)
   Check_Zero((int)telemetry_data.mode_status & 0x10);
   Check_No_Errors();
   Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
+  printf("\nCASE: %s:\n\n",(char *)"TC to patch code memory, soft reset"); /* printf_va_102 */
   Send_Patch_Code((unsigned short)0x1400,& chsum);
   chsum = (unsigned char)((int)chsum ^ 0x09);
   Check_Zero((int)telemetry_data.mode_status & 0x10);
@@ -4690,6 +6598,7 @@ static void TC_Task_Tests(void)
   Check_Zero((int)telemetry_data.mode_status & 0x10);
   Check_No_Errors();
   Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
+  printf("\nCASE: %s:\n\n",(char *)"TC to patch code memory, warm reset"); /* printf_va_103 */
   Send_Patch_Code((unsigned short)0x2100,& chsum);
   chsum = (unsigned char)((int)chsum ^ 0x37);
   Check_Zero((int)telemetry_data.mode_status & 0x10);
@@ -4698,6 +6607,7 @@ static void TC_Task_Tests(void)
   Check_Zero((int)telemetry_data.mode_status & 0x10);
   Check_No_Errors();
   Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
+  printf("\nCASE: %s:\n\n",(char *)"TC to patch code memory, invalid action"); /* printf_va_104 */
   Send_Patch_Code((unsigned short)0x2400,& chsum);
   chsum = (unsigned char)((int)chsum ^ 0x62);
   Check_Zero((int)telemetry_data.mode_status & 0x10);
@@ -4706,6 +6616,8 @@ static void TC_Task_Tests(void)
   Check_Nonzero((int)telemetry_data.error_status == 1);
   Check_Zero((int)telemetry_data.mode_status & 0x10);
   Clear_Errors();
+  printf("\nCASE: %s:\n\n",
+         (char *)"TC to patch code memory, invalid address"); /* printf_va_105 */
   Send_Patch_Code((unsigned short)0x0fff,& chsum);
   chsum = (unsigned char)((int)chsum ^ 0x00);
   Check_Zero((int)telemetry_data.mode_status & 0x10);
@@ -4714,6 +6626,7 @@ static void TC_Task_Tests(void)
   Check_Nonzero((int)telemetry_data.error_status == 1);
   Check_Zero((int)telemetry_data.mode_status & 0x10);
   Clear_Errors();
+  printf("\nCASE: %s:\n\n",(char *)"TC to patch code memory, checksum error"); /* printf_va_106 */
   Send_Patch_Code((unsigned short)0x1200,& chsum);
   chsum = (unsigned char)((int)chsum ^ 0x5A);
   chsum = (unsigned char)((int)chsum ^ 0xff);
@@ -4723,10 +6636,14 @@ static void TC_Task_Tests(void)
   Check_Nonzero((int)telemetry_data.mode_status & 0x10);
   Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
   Clear_Errors();
+  printf("\nCASE: %s:\n\n",
+         (char *)"TC to patch code, TC sequence error at first word"); /* printf_va_107 */
   Exec_TC((unsigned char)0x6F,(unsigned char)0x32,41);
   Check_Nonzero((int)telemetry_data.error_status == 1);
   Check_Zero((int)telemetry_data.mode_status & 0x10);
   Clear_Errors();
+  printf("\nCASE: %s:\n\n",
+         (char *)"TC to patch code, TC sequence error at second word"); /* printf_va_108 */
   Exec_TC((unsigned char)0x10,(unsigned char)0x32,41);
   Check_No_Errors();
   Check_Nonzero(TC_state == (unsigned int)write_memory_e);
@@ -4734,6 +6651,7 @@ static void TC_Task_Tests(void)
   Check_Nonzero((int)telemetry_data.error_status == 1);
   Check_Zero((int)telemetry_data.mode_status & 0x10);
   Clear_Errors();
+  printf("\nCASE: %s:\n\n",(char *)"TC to patch data memory"); /* printf_va_109 */
   Send_Patch_Data((unsigned short)0x2200,& chsum);
   chsum = (unsigned char)((int)chsum ^ 0x11);
   Check_Zero((int)telemetry_data.mode_status & 0x10);
@@ -4742,6 +6660,7 @@ static void TC_Task_Tests(void)
   Check_Zero((int)telemetry_data.mode_status & 0x10);
   Check_No_Errors();
   Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
+  printf("\nCASE: %s:\n\n",(char *)"TC to patch data memory, address error"); /* printf_va_110 */
   Send_Patch_Data((unsigned short)0xfef0,& chsum);
   chsum = (unsigned char)((int)chsum ^ 0x11);
   Check_Zero((int)telemetry_data.mode_status & 0x10);
@@ -4750,10 +6669,14 @@ static void TC_Task_Tests(void)
   Check_Nonzero((int)telemetry_data.error_status == 1);
   Check_Zero((int)telemetry_data.mode_status & 0x10);
   Clear_Errors();
+  printf("\nCASE: %s:\n\n",
+         (char *)"TC to patch data memory, TC sequence error at first word"); /* printf_va_111 */
   Exec_TC((unsigned char)0x6A,(unsigned char)0x32,41);
   Check_Nonzero((int)telemetry_data.error_status == 1);
   Check_Zero((int)telemetry_data.mode_status & 0x10);
   Clear_Errors();
+  printf("\nCASE: %s:\n\n",
+         (char *)"TC to patch data memory, TC sequence error at second word"); /* printf_va_112 */
   Exec_TC((unsigned char)0x15,(unsigned char)0x32,41);
   Check_No_Errors();
   Check_Nonzero(TC_state == (unsigned int)write_memory_e);
@@ -4761,6 +6684,7 @@ static void TC_Task_Tests(void)
   Check_Nonzero((int)telemetry_data.error_status == 1);
   Check_Zero((int)telemetry_data.mode_status & 0x10);
   Clear_Errors();
+  printf("\nCASE: %s:\n\n",(char *)"TC to patch data memory, checksum error"); /* printf_va_113 */
   Send_Patch_Data((unsigned short)0x2300,& chsum);
   chsum = (unsigned char)((int)chsum ^ 0x11);
   chsum = (unsigned char)((int)chsum ^ 0xff);
@@ -4770,43 +6694,63 @@ static void TC_Task_Tests(void)
   Check_Nonzero((int)telemetry_data.mode_status & 0x10);
   Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
   Clear_Errors();
+  printf("\nCASE: %s:\n\n",
+         (char *)"TC to patch data memory, time-out on TC word reception"); /* printf_va_114 */
   Send_Patch_Data((unsigned short)0x2200,& chsum);
   chsum = (unsigned char)((int)chsum ^ 0x11);
   Check_Nonzero(TC_state == (unsigned int)memory_patch_e);
   Check_Zero((int)telemetry_data.mode_status & 0x10);
   Check_Nonzero(mail_count[0] == 0);
+  printf("RPT_Ipoint %d\n",3); /* printf_va_115 */
+  printf("RPT_Ipoint %d\n",41); /* printf_va_116 */
   HandleTelecommand();
+  printf("RPT_Ipoint %d\n",3); /* printf_va_117 */
+  printf("RPT_Ipoint %d\n",0); /* printf_va_118 */
   Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
   Check_Nonzero((int)telemetry_data.error_status == 1);
   Clear_Errors();
+  printf("\nCASE: %s:\n\n",(char *)"TC timeout during TC handling, normal"); /* printf_va_119 */
   Check_Nonzero(mail_count[0] == 0);
+  printf("RPT_Ipoint %d\n",3); /* printf_va_120 */
+  printf("RPT_Ipoint %d\n",41); /* printf_va_121 */
   HandleTelecommand();
+  printf("RPT_Ipoint %d\n",3); /* printf_va_122 */
+  printf("RPT_Ipoint %d\n",0); /* printf_va_123 */
   Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
   Check_No_Errors();
+  printf("\nCASE: %s:\n\n",(char *)"TC to read data memory"); /* printf_va_124 */
   Read_Data_Memory((unsigned short)0x2041);
+  printf("\nCASE: %s:\n\n",(char *)"TC to read data memory, address error"); /* printf_va_125 */
   Exec_TC((unsigned char)0x1F,(unsigned char)0xfe,41);
   Check_No_Errors();
   Check_Nonzero(TC_state == (unsigned int)read_memory_e);
   Exec_TC((unsigned char)0x60,(unsigned char)0xf0,41);
   Check_Nonzero((int)telemetry_data.error_status == 1);
   Clear_Errors();
+  printf("\nCASE: %s:\n\n",
+         (char *)"TC to read data memory, TC sequence error at first word"); /* printf_va_126 */
   Exec_TC((unsigned char)0x60,(unsigned char)0xfe,41);
   Check_Nonzero((int)telemetry_data.error_status == 1);
   Clear_Errors();
+  printf("\nCASE: %s:\n\n",
+         (char *)"TC to read data memory, TC sequence error at second word"); /* printf_va_127 */
   Exec_TC((unsigned char)0x1F,(unsigned char)0xab,41);
   Check_No_Errors();
   Check_Nonzero(TC_state == (unsigned int)read_memory_e);
   Exec_TC((unsigned char)0x0A,(unsigned char)0x0A,41);
   Check_Nonzero((int)telemetry_data.error_status == 1);
   Clear_Errors();
+  printf("\nCASE: %s:\n\n",(char *)"TC = CLEAR_WATCHDOG_FAILURES"); /* printf_va_128 */
   telemetry_data.watchdog_failures = (unsigned char)3;
   Exec_TC((unsigned char)0x0A,(unsigned char)0x0A,41);
   Check_No_Errors();
   Check_Zero((int)telemetry_data.watchdog_failures);
+  printf("\nCASE: %s:\n\n",(char *)"TC = CLEAR_CHECKSUM_FAILURES"); /* printf_va_129 */
   telemetry_data.checksum_failures = (unsigned char)9;
   Exec_TC((unsigned char)0x0B,(unsigned char)0x0B,41);
   Check_No_Errors();
   Check_Zero((int)telemetry_data.checksum_failures);
+  printf("\nCASE: %s:\n\n",(char *)"TC to set DEBIE time"); /* printf_va_130 */
   Exec_TC((unsigned char)0x0F,(unsigned char)0x44,41);
   Check_No_Errors();
   Exec_TC((unsigned char)0x0E,(unsigned char)0x33,41);
@@ -4816,6 +6760,8 @@ static void TC_Task_Tests(void)
   Exec_TC((unsigned char)0x0C,(unsigned char)0x11,41);
   Check_No_Errors();
   Check_Nonzero(internal_time == (dpu_time_t)0x44332211);
+  printf("\nCASE: %s:\n\n",
+         (char *)"TC to set DEBIE time, sequence error at byte 2"); /* printf_va_131 */
   internal_time = (unsigned int)0x01122334;
   Exec_TC((unsigned char)0x0F,(unsigned char)0x44,41);
   Check_No_Errors();
@@ -4823,6 +6769,8 @@ static void TC_Task_Tests(void)
   Check_Nonzero((int)telemetry_data.error_status == 1);
   Check_Nonzero(internal_time == (dpu_time_t)0x44000000);
   Clear_Errors();
+  printf("\nCASE: %s:\n\n",
+         (char *)"TC to set DEBIE time, sequence error at byte 1"); /* printf_va_132 */
   internal_time = (unsigned int)0x01122334;
   Exec_TC((unsigned char)0x0F,(unsigned char)0x44,41);
   Check_No_Errors();
@@ -4832,6 +6780,8 @@ static void TC_Task_Tests(void)
   Check_Nonzero((int)telemetry_data.error_status == 1);
   Check_Nonzero(internal_time == (dpu_time_t)0x44330000);
   Clear_Errors();
+  printf("\nCASE: %s:\n\n",
+         (char *)"TC to set DEBIE time, sequence error at byte 0"); /* printf_va_133 */
   internal_time = (unsigned int)0x01122334;
   Exec_TC((unsigned char)0x0F,(unsigned char)0x44,41);
   Check_No_Errors();
@@ -4843,8 +6793,10 @@ static void TC_Task_Tests(void)
   Check_Nonzero((int)telemetry_data.error_status == 1);
   Check_Nonzero(internal_time == (dpu_time_t)0x44332200);
   Clear_Errors();
+  printf("\nCASE: %s:\n\n",(char *)"TC = SOFT_RESET"); /* printf_va_134 */
   Exec_TC((unsigned char)0x09,(unsigned char)0x09,41);
   Check_No_Errors();
+  printf("\nCASE: %s:\n\n",(char *)"TC = STOP_ACQUISITION in STAND_BY, fail"); /* printf_va_135 */
   tmp = GetMode();
   Check_Nonzero((int)tmp == 1);
   Exec_TC((unsigned char)0x02,(unsigned char)0x02,41);
@@ -4855,15 +6807,195 @@ static void TC_Task_Tests(void)
   return;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_136(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_137(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_138(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_139(char const * restrict format, int param0);
+
 void Monitor_Health(int problem)
 {
   start_conversion_count = (unsigned int)0;
   end_of_adc_count = (unsigned int)0;
+  printf("RPT_Ipoint %d\n",3); /* printf_va_136 */
+  printf("RPT_Ipoint %d\n",problem); /* printf_va_137 */
   HandleHealthMonitoring();
+  printf("RPT_Ipoint %d\n",3); /* printf_va_138 */
+  printf("RPT_Ipoint %d\n",0); /* printf_va_139 */
   Report_Start_Conversion_Count(problem);
   Report_End_Of_ADC_Count(problem);
   return;
 }
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_140(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_141(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_142(char const * restrict format, unsigned int param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_143(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_144(char const * restrict format, unsigned int param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_145(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param1),
+            (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param1, param0;
+ */
+int printf_va_146(char const * restrict format, int param0, int param1);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_147(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param1),
+            (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param1, param0;
+ */
+int printf_va_148(char const * restrict format, int param0, int param1);
 
 void Monitoring_Task_Tests(void)
 {
@@ -4876,6 +7008,8 @@ void Monitoring_Task_Tests(void)
   voltage_meas_count = (unsigned int)17;
   checksum_count = (unsigned int)59;
   Set_AD_Nominal();
+  printf("\nCASE: %s:\n\n",
+         (char *)"Monitoring without errors or interrupting hits"); /* printf_va_140 */
   Set_AD_Delay(2);
   Check_Nonzero(health_mon_round == (uint_least8_t)9);
   Check_Nonzero(temp_meas_count == (uint_least8_t)5);
@@ -4905,6 +7039,8 @@ void Monitoring_Task_Tests(void)
   Check_Nonzero(voltage_meas_count == (uint_least8_t)17);
   Check_Nonzero(checksum_count == (uint_least8_t)59);
   Check_No_Errors();
+  printf("\nCASE: %s:\n\n",
+         (char *)"Monitoring without errors, at most one interrupting hit"); /* printf_va_141 */
   total_adc_hits = (unsigned int)0;
   sec = 1;
   while (sec <= 180) {
@@ -4912,12 +7048,15 @@ void Monitoring_Task_Tests(void)
     Monitor_Health(62);
     sec ++;
   }
+  printf("Total hits %u\n",total_adc_hits); /* printf_va_142 */
   Check_Nonzero((int)total_adc_hits);
   Check_Nonzero(health_mon_round == (uint_least8_t)9);
   Check_Nonzero(temp_meas_count == (uint_least8_t)5);
   Check_Nonzero(voltage_meas_count == (uint_least8_t)17);
   Check_Nonzero(checksum_count == (uint_least8_t)59);
   Check_No_Errors();
+  printf("\nCASE: %s:\n\n",
+         (char *)"Monitoring without errors, many interrupting hits"); /* printf_va_143 */
   total_adc_hits = (unsigned int)0;
   sec = 1;
   while (sec <= 180) {
@@ -4925,12 +7064,15 @@ void Monitoring_Task_Tests(void)
     Monitor_Health(63);
     sec ++;
   }
+  printf("Total hits %u\n",total_adc_hits); /* printf_va_144 */
   Check_Nonzero((int)total_adc_hits);
   Check_Nonzero(health_mon_round == (uint_least8_t)9);
   Check_Nonzero(temp_meas_count == (uint_least8_t)5);
   Check_Nonzero(voltage_meas_count == (uint_least8_t)17);
   Check_Nonzero(checksum_count == (uint_least8_t)59);
   Check_No_Errors();
+  printf("\nCASE: %s:\n\n",
+         (char *)"Monitoring with SU errors, no interrupting hits"); /* printf_va_145 */
   Set_AD_Unlimited();
   max_adc_hits = (unsigned int)0;
   tot_errors = 0;
@@ -4944,11 +7086,15 @@ void Monitoring_Task_Tests(void)
     }
     if ((int)telemetry_data.error_status != 0) {
       tot_errors ++;
+      printf("Monitoring (6d) error %d, error status %hhx\n",tot_errors,
+             (int)telemetry_data.error_status); /* printf_va_146 */
       Clear_Errors();
     }
     if (! (tot_errors < max_errors)) break;
   }
   Check_No_Errors();
+  printf("\nCASE: %s:\n\n",
+         (char *)"Monitoring with any kind of error and interrupting hit"); /* printf_va_147 */
   Set_AD_Unlimited();
   tot_errors = 0;
   while (1) {
@@ -4963,6 +7109,8 @@ void Monitoring_Task_Tests(void)
     }
     if ((int)telemetry_data.error_status != 0) {
       tot_errors ++;
+      printf("Monitoring (6e) error %d, error status %hhx\n",tot_errors,
+             (int)telemetry_data.error_status); /* printf_va_148 */
       Clear_Errors();
     }
     if (! (tot_errors < max_errors)) break;
@@ -4971,9 +7119,390 @@ void Monitoring_Task_Tests(void)
   return;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_149(char const * restrict format);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_150(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_151(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_152(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_153(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_154(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_155(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_156(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_157(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_158(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_159(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_160(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_161(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_162(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_163(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_164(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_165(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_166(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_167(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_168(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_169(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_170(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_171(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_172(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_173(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_174(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_175(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_176(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_177(char const * restrict format, int param0);
+
 void TM_Tests(void)
 {
   int octets;
+  printf("\nTM_ISR_Tests\n"); /* printf_va_149 */
+  printf("\nCASE: %s:\n\n",(char *)"One whole round of register TM"); /* printf_va_150 */
   Send_TC((unsigned char)0x05,(unsigned char)0);
   Check_No_Errors();
   Check_Nonzero(TC_state == (unsigned int)register_TM_e);
@@ -4981,12 +7510,24 @@ void TM_Tests(void)
   Check_Nonzero(TC_state == (unsigned int)register_TM_e);
   octets = 0;
   while ((unsigned int)octets < sizeof(telemetry_data_t)) {
-    if (telemetry_pointer != (unsigned char *)(& telemetry_data.time)) 
+    if (telemetry_pointer != (unsigned char *)(& telemetry_data.time)) {
+      printf("RPT_Ipoint %d\n",3); /* printf_va_151 */
+      printf("RPT_Ipoint %d\n",21); /* printf_va_152 */
       TM_InterruptService();
-    else TM_InterruptService();
+      printf("RPT_Ipoint %d\n",3); /* printf_va_153 */
+      printf("RPT_Ipoint %d\n",0); /* printf_va_154 */
+    }
+    else {
+      printf("RPT_Ipoint %d\n",3); /* printf_va_155 */
+      printf("RPT_Ipoint %d\n",22); /* printf_va_156 */
+      TM_InterruptService();
+      printf("RPT_Ipoint %d\n",3); /* printf_va_157 */
+      printf("RPT_Ipoint %d\n",0); /* printf_va_158 */
+    }
     Check_Nonzero(TC_state == (unsigned int)register_TM_e);
     octets += 2;
   }
+  printf("\nCASE: %s:\n\n",(char *)"Partial register TM, stop by TC"); /* printf_va_159 */
   Send_TC((unsigned char)0x05,(unsigned char)22);
   Check_No_Errors();
   Check_Nonzero(TC_state == (unsigned int)register_TM_e);
@@ -4994,9 +7535,20 @@ void TM_Tests(void)
   Check_Nonzero(TC_state == (unsigned int)register_TM_e);
   octets = 0;
   while (octets < 40) {
-    if (telemetry_pointer != (unsigned char *)(& telemetry_data.time)) 
+    if (telemetry_pointer != (unsigned char *)(& telemetry_data.time)) {
+      printf("RPT_Ipoint %d\n",3); /* printf_va_160 */
+      printf("RPT_Ipoint %d\n",21); /* printf_va_161 */
       TM_InterruptService();
-    else TM_InterruptService();
+      printf("RPT_Ipoint %d\n",3); /* printf_va_162 */
+      printf("RPT_Ipoint %d\n",0); /* printf_va_163 */
+    }
+    else {
+      printf("RPT_Ipoint %d\n",3); /* printf_va_164 */
+      printf("RPT_Ipoint %d\n",22); /* printf_va_165 */
+      TM_InterruptService();
+      printf("RPT_Ipoint %d\n",3); /* printf_va_166 */
+      printf("RPT_Ipoint %d\n",0); /* printf_va_167 */
+    }
     Check_Nonzero(TC_state == (unsigned int)register_TM_e);
     octets += 2;
   }
@@ -5004,6 +7556,7 @@ void TM_Tests(void)
   Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
   Handle_TC(41);
   Check_No_Errors();
+  printf("\nCASE: %s:\n\n",(char *)"Science Data TM"); /* printf_va_168 */
   Send_TC((unsigned char)0x06,(unsigned char)0x06);
   Check_No_Errors();
   Check_Nonzero(TC_state == (unsigned int)SC_TM_e);
@@ -5012,21 +7565,128 @@ void TM_Tests(void)
   octets = 0;
   /*@ loop unroll 22; */
   while (mail_count[0] == 0) {
-    if (telemetry_pointer < telemetry_end_pointer) TM_InterruptService();
-    else TM_InterruptService();
+    if (telemetry_pointer < telemetry_end_pointer) {
+      printf("RPT_Ipoint %d\n",3); /* printf_va_169 */
+      printf("RPT_Ipoint %d\n",21); /* printf_va_170 */
+      TM_InterruptService();
+      printf("RPT_Ipoint %d\n",3); /* printf_va_171 */
+      printf("RPT_Ipoint %d\n",0); /* printf_va_172 */
+    }
+    else {
+      printf("RPT_Ipoint %d\n",3); /* printf_va_173 */
+      printf("RPT_Ipoint %d\n",23); /* printf_va_174 */
+      TM_InterruptService();
+      printf("RPT_Ipoint %d\n",3); /* printf_va_175 */
+      printf("RPT_Ipoint %d\n",0); /* printf_va_176 */
+    }
     octets += 2;
     Check_Nonzero(TC_state == (unsigned int)SC_TM_e);
   }
+  printf("Science TM octets sent %d\n",octets); /* printf_va_177 */
   Handle_TC(41);
   Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
   return;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_178(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_179(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_180(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_181(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_182(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_183(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_184(char const * restrict format);
+
 static void Trigger_Hit(int problem)
 {
   Check_Nonzero(mail_count[1] == 0);
+  printf("Hit!\n"); /* printf_va_178 */
+  printf("RPT_Ipoint %d\n",3); /* printf_va_179 */
+  printf("RPT_Ipoint %d\n",problem); /* printf_va_180 */
   HandleHitTrigger();
-  int tmp = mail_count[1] == 0;
+  printf("RPT_Ipoint %d\n",3); /* printf_va_181 */
+  printf("RPT_Ipoint %d\n",0); /* printf_va_182 */
+  if (mail_count[1] == 0) printf("- hit rejected\n"); /* printf_va_183 */
+  else printf("- hit accepted\n"); /* printf_va_184 */
   return;
 }
 
@@ -5037,17 +7697,201 @@ static void Trigger_SU_Hit(sensor_index_t SU, int problem)
   return;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_185(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_186(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_187(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_188(char const * restrict format, int param0);
+
 static void Acquire_Hit(int hit_problem, int acq_problem)
 {
   Trigger_Hit(hit_problem);
-  if (mail_count[1] > 0) HandleAcquisition();
+  if (mail_count[1] > 0) {
+    printf("RPT_Ipoint %d\n",3); /* printf_va_185 */
+    printf("RPT_Ipoint %d\n",acq_problem); /* printf_va_186 */
+    HandleAcquisition();
+    printf("RPT_Ipoint %d\n",3); /* printf_va_187 */
+    printf("RPT_Ipoint %d\n",0); /* printf_va_188 */
+  }
   return;
 }
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_189(char const * restrict format);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_190(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_191(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_192(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_193(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_194(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_195(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_196(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_197(char const * restrict format, char *param0);
 
 static void Hit_ISR_Tests(void)
 {
   sensor_index_t su;
+  printf("\nHit_ISR_Tests\n"); /* printf_va_189 */
   telemetry_data.hit_budget_exceedings = (unsigned char)0;
+  printf("\nCASE: %s:\n\n",(char *)"Hit Trigger, budget exhausted"); /* printf_va_190 */
   Check_Nonzero((int)telemetry_data.hit_budget_exceedings == 0);
   hit_budget_left = (unsigned int)0;
   Trigger_SU_Hit((unsigned int)0,31);
@@ -5056,6 +7900,8 @@ static void Hit_ISR_Tests(void)
   Trigger_SU_Hit((unsigned int)1,31);
   Check_Nonzero(mail_count[1] == 0);
   Check_Nonzero((int)telemetry_data.hit_budget_exceedings == 2);
+  printf("\nCASE: %s:\n\n",
+         (char *)"Hit Trigger, budget exhausted for the 255th and 256th time"); /* printf_va_191 */
   telemetry_data.hit_budget_exceedings = (unsigned char)254;
   hit_budget_left = (unsigned int)0;
   Trigger_SU_Hit((unsigned int)3,31);
@@ -5064,6 +7910,7 @@ static void Hit_ISR_Tests(void)
   Trigger_SU_Hit((unsigned int)1,31);
   Check_Nonzero(mail_count[1] == 0);
   Check_Nonzero((int)telemetry_data.hit_budget_exceedings == 255);
+  printf("\nCASE: %s:\n\n",(char *)"Hit Trigger, budget left, no A/D errors"); /* printf_va_192 */
   hit_budget_left = (unsigned int)15;
   Set_AD_Delay(2);
   ad_conv_num = (unsigned int)0;
@@ -5076,6 +7923,8 @@ static void Hit_ISR_Tests(void)
     su ++;
   }
   Check_Nonzero(hit_budget_left == (uint_least8_t)(15 - 4));
+  printf("\nCASE: %s:\n\n",
+         (char *)"Hit Trigger, budget left, no A/D errors, SU self test ok"); /* printf_va_193 */
   su = (unsigned int)0;
   while (su < (sensor_index_t)4) {
     self_test_SU_number = su + (sensor_index_t)1;
@@ -5087,6 +7936,8 @@ static void Hit_ISR_Tests(void)
     FlushMail((unsigned char)1);
     su ++;
   }
+  printf("\nCASE: %s:\n\n",
+         (char *)"Hit Trigger, budget left, no A/D errors, SU self test wrong"); /* printf_va_194 */
   su = (unsigned int)0;
   while (su < (sensor_index_t)4) {
     self_test_SU_number = su + (sensor_index_t)1;
@@ -5104,6 +7955,8 @@ static void Hit_ISR_Tests(void)
     SU_state[su] = off_e;
     su ++;
   }
+  printf("\nCASE: %s:\n\n",
+         (char *)"Hit Trigger, budget left, all A/D delays at limit but ok"); /* printf_va_195 */
   hit_budget_left = (unsigned int)15;
   Set_AD_Delay(25);
   ad_conv_num = (unsigned int)0;
@@ -5116,6 +7969,8 @@ static void Hit_ISR_Tests(void)
     su ++;
   }
   Check_Nonzero(hit_budget_left == (uint_least8_t)(15 - 4));
+  printf("\nCASE: %s:\n\n",
+         (char *)"Hit Trigger, budget left, one A/D failure, others at limit"); /* printf_va_196 */
   hit_budget_left = (unsigned int)15;
   ad_conv_delay[0] = 25 + 1;
   su = (unsigned int)0;
@@ -5128,6 +7983,8 @@ static void Hit_ISR_Tests(void)
     su ++;
   }
   Check_Nonzero(hit_budget_left == (uint_least8_t)(15 - 4));
+  printf("\nCASE: %s:\n\n",
+         (char *)"Hit Trigger, budget left, any number of A/D failures"); /* printf_va_197 */
   hit_budget_left = (unsigned int)80;
   su = (unsigned int)(4 - 1);
   while (hit_budget_left > (uint_least8_t)0) {
@@ -5146,6 +8003,21 @@ unsigned char switch_su_cmd[4] =
    (unsigned char)0x30,
    (unsigned char)0x40,
    (unsigned char)0x50};
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param2),
+            (indirect: param1), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param2, param1, param0;
+ */
+int printf_va_198(char const * restrict format, unsigned int param0,
+                  int param1, int param2);
+
 void Report_Event_Histo(void)
 {
   sensor_index_t sen;
@@ -5153,11 +8025,301 @@ void Report_Event_Histo(void)
   sen = (unsigned int)0;
   while (sen < (sensor_index_t)4) {
     class = 0;
-    while (class < 10) class ++;
+    while (class < 10) {
+      printf("Events from SU %u, class %d: %d\n",sen,class,
+             (int)science_data.event_counter[sen][class]); /* printf_va_198 */
+      class ++;
+    }
     sen ++;
   }
   return;
 }
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_199(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_200(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_201(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_202(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_203(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_204(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param1),
+            (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param1, param0;
+ */
+int printf_va_205(char const * restrict format, unsigned int param0,
+                  unsigned int param1);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_206(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_207(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_208(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_209(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_210(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_211(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_212(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_213(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_214(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_215(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_216(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_217(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_218(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_219(char const * restrict format, char *param0);
 
 static void Acquisition_Tests(void)
 {
@@ -5166,6 +8328,7 @@ static void Acquisition_Tests(void)
   int octets;
   DEBIE_mode_t tmp;
   DEBIE_mode_t tmp_0;
+  printf("\nCASE: %s:\n\n",(char *)"Turn Sensor Units ON"); /* printf_va_199 */
   sen = (unsigned int)0;
   while (sen < (sensor_index_t)4) {
     Check_Nonzero(SU_state[sen] == (unsigned int)off_e);
@@ -5191,10 +8354,12 @@ static void Acquisition_Tests(void)
     Check_Nonzero(SU_state[sen] == (unsigned int)on_e);
     sen ++;
   }
+  printf("\nCASE: %s:\n\n",(char *)"SWITCH_SU_ON when already ON, fail"); /* printf_va_200 */
   Exec_TC((unsigned char)0x30,(unsigned char)0x55,41);
   Check_Nonzero((int)telemetry_data.error_status == 1);
   Check_Nonzero(SU_state[1] == (unsigned int)on_e);
   Clear_Errors();
+  printf("\nCASE: %s:\n\n",(char *)"Start Acquisition"); /* printf_va_201 */
   Check_Nonzero(((int)telemetry_data.mode_status & 3) == 1);
   Exec_TC((unsigned char)0x01,(unsigned char)0x01,41);
   Check_No_Errors();
@@ -5204,14 +8369,18 @@ static void Acquisition_Tests(void)
     Check_Nonzero(SU_state[sen] == (unsigned int)acquisition_e);
     sen ++;
   }
+  printf("\nCASE: %s:\n\n",(char *)"TC = SWITCH_SU in ACQUISITION, fail"); /* printf_va_202 */
   Exec_TC((unsigned char)0x20,(unsigned char)0x55,41);
   Check_Nonzero((int)telemetry_data.error_status == 1);
   Clear_Errors();
+  printf("\nCASE: %s:\n\n",
+         (char *)"TC = START_ACQUISITION in ACQUISITION, fail"); /* printf_va_203 */
   Exec_TC((unsigned char)0x01,(unsigned char)0x01,41);
   Check_Nonzero((int)telemetry_data.error_status == 1);
   tmp = GetMode();
   Check_Nonzero((int)tmp == 2);
   Clear_Errors();
+  printf("\nCASE: %s:\n\n",(char *)"Hits with Science Data not full"); /* printf_va_204 */
   Set_AD_Delay(2);
   hits = (unsigned int)0;
   while (free_slot_index < max_events) {
@@ -5221,7 +8390,10 @@ static void Acquisition_Tests(void)
     Random_Event();
     Acquire_Hit(31,51);
   }
+  printf("Science Data filled with %u events after %u hits.\n",max_events,
+         hits); /* printf_va_205 */
   Report_Event_Histo();
+  printf("\nCASE: %s:\n\n",(char *)"Hits with Science Data full"); /* printf_va_206 */
   while (hits > (unsigned int)0) {
     hits --;
     internal_time ++;
@@ -5230,6 +8402,8 @@ static void Acquisition_Tests(void)
     Acquire_Hit(31,52);
   }
   Report_Event_Histo();
+  printf("\nCASE: %s:\n\n",
+         (char *)"Science Data TM, full Science Data, some hits during TM"); /* printf_va_207 */
   Send_TC((unsigned char)0x06,(unsigned char)0x06);
   Check_No_Errors();
   Check_Nonzero(TC_state == (unsigned int)SC_TM_e);
@@ -5241,8 +8415,20 @@ static void Acquisition_Tests(void)
   octets = 0;
   /*@ loop unroll 17676; */
   while (mail_count[0] == 0) {
-    if (telemetry_pointer < telemetry_end_pointer) TM_InterruptService();
-    else TM_InterruptService();
+    if (telemetry_pointer < telemetry_end_pointer) {
+      printf("RPT_Ipoint %d\n",3); /* printf_va_208 */
+      printf("RPT_Ipoint %d\n",21); /* printf_va_209 */
+      TM_InterruptService();
+      printf("RPT_Ipoint %d\n",3); /* printf_va_210 */
+      printf("RPT_Ipoint %d\n",0); /* printf_va_211 */
+    }
+    else {
+      printf("RPT_Ipoint %d\n",3); /* printf_va_212 */
+      printf("RPT_Ipoint %d\n",23); /* printf_va_213 */
+      TM_InterruptService();
+      printf("RPT_Ipoint %d\n",3); /* printf_va_214 */
+      printf("RPT_Ipoint %d\n",0); /* printf_va_215 */
+    }
     octets += 2;
     Check_Nonzero(TC_state == (unsigned int)SC_TM_e);
     if (hits < (unsigned int)(10 + 4)) {
@@ -5255,12 +8441,15 @@ static void Acquisition_Tests(void)
       else Check_Nonzero(event_queue_length == (uint_least8_t)10);
     }
   }
+  printf("Science TM octets sent %d\n",octets); /* printf_va_216 */
   Check_Zero((int)hit_budget_left);
   Check_Nonzero(hits == (unsigned int)(10 + 4));
   Handle_TC(41);
   Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
   Check_Zero((int)event_queue_length);
   Check_Nonzero(free_slot_index == (unsigned int)10);
+  printf("\nCASE: %s:\n\n",
+         (char *)"Switch to Self Test in Acquisition mode, fail"); /* printf_va_217 */
   tmp_0 = GetMode();
   Check_Nonzero((int)tmp_0 == 2);
   Check_Zero((int)telemetry_data.error_status & 1);
@@ -5268,6 +8457,7 @@ static void Acquisition_Tests(void)
   Check_Nonzero((int)telemetry_data.error_status & 1);
   Exec_TC((unsigned char)0x03,(unsigned char)0x03,41);
   Check_Zero((int)telemetry_data.error_status & 1);
+  printf("\nCASE: %s:\n\n",(char *)"Stop acquisition"); /* printf_va_218 */
   Exec_TC((unsigned char)0x02,(unsigned char)0x02,41);
   Check_No_Errors();
   Check_Nonzero(((int)telemetry_data.mode_status & 3) == 1);
@@ -5276,6 +8466,7 @@ static void Acquisition_Tests(void)
     Check_Nonzero(SU_state[sen] == (unsigned int)on_e);
     sen ++;
   }
+  printf("\nCASE: %s:\n\n",(char *)"Turn Sensor Units OFF"); /* printf_va_219 */
   sen = (unsigned int)0;
   while (sen < (sensor_index_t)4) {
     Exec_TC(switch_su_cmd[sen],(unsigned char)0x73,41);
@@ -5286,12 +8477,139 @@ static void Acquisition_Tests(void)
   return;
 }
 
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_220(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_221(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_222(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_223(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_224(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_225(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_226(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_227(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_228(char const * restrict format, char *param0);
+
 void SU_Self_Test_Tests(void)
 {
   sensor_index_t sen;
   DEBIE_mode_t tmp;
   DEBIE_mode_t tmp_0;
   sim_self_test = (unsigned char)1;
+  printf("\nCASE: %s:\n\n",(char *)"Turn Sensor Units ON for Self Test"); /* printf_va_220 */
   sen = (unsigned int)0;
   while (sen < (sensor_index_t)4) {
     Check_Nonzero(SU_state[sen] == (unsigned int)off_e);
@@ -5317,6 +8635,7 @@ void SU_Self_Test_Tests(void)
     Check_Nonzero(SU_state[sen] == (unsigned int)on_e);
     sen ++;
   }
+  printf("\nCASE: %s:\n\n",(char *)"Switch SU2 to Self Test in Standby mode"); /* printf_va_221 */
   tmp = GetMode();
   Check_Nonzero((int)tmp == 1);
   Check_No_Errors();
@@ -5324,12 +8643,14 @@ void SU_Self_Test_Tests(void)
   Check_No_Errors();
   Check_Nonzero(self_test_SU_number == (sensor_number_t)2);
   Check_Nonzero(SU_state[1] == (unsigned int)self_test_mon_e);
+  printf("\nCASE: %s:\n\n",(char *)"Switch SU3 (also) to Self Test, fail"); /* printf_va_222 */
   Exec_TC((unsigned char)0x40,(unsigned char)0x99,41);
   Check_Nonzero((int)telemetry_data.error_status & 1);
   Exec_TC((unsigned char)0x03,(unsigned char)0x03,41);
   Check_Zero((int)telemetry_data.error_status & 1);
   Check_Nonzero(self_test_SU_number == (sensor_number_t)2);
   Check_No_Errors();
+  printf("\nCASE: %s:\n\n",(char *)"Run Self Test for SU2"); /* printf_va_223 */
   /*@ loop unroll 10; */
   while (health_mon_round != (uint_least8_t)round_7_e) Monitor_Health(61);
   Check_Nonzero(self_test_SU_number == (sensor_number_t)2);
@@ -5342,6 +8663,7 @@ void SU_Self_Test_Tests(void)
   Check_Nonzero(self_test_SU_number == (sensor_number_t)0);
   Check_Nonzero(SU_state[1] == (unsigned int)on_e);
   Check_No_Errors();
+  printf("\nCASE: %s:\n\n",(char *)"Run Self Test for SU2, fail"); /* printf_va_224 */
   tmp_0 = GetMode();
   Check_Nonzero((int)tmp_0 == 1);
   Check_No_Errors();
@@ -5364,6 +8686,8 @@ void SU_Self_Test_Tests(void)
   Check_Nonzero((int)telemetry_data.SU_status[1] & 0x10);
   Check_Nonzero((int)telemetry_data.error_status == 0x20);
   Clear_Errors();
+  printf("\nCASE: %s:\n\n",
+         (char *)"Hit Trigger, SU Self Test, correct pulse"); /* printf_va_225 */
   hit_budget_left = (unsigned int)15;
   Set_AD_Delay(2);
   ad_conv_num = (unsigned int)0;
@@ -5379,6 +8703,8 @@ void SU_Self_Test_Tests(void)
     sen ++;
   }
   Check_Nonzero(hit_budget_left == (uint_least8_t)(15 - 4));
+  printf("\nCASE: %s:\n\n",
+         (char *)"Hit Trigger, SU Self Test, incorrect pulse"); /* printf_va_226 */
   hit_budget_left = (unsigned int)15;
   Set_AD_Delay(2);
   ad_conv_num = (unsigned int)0;
@@ -5394,6 +8720,7 @@ void SU_Self_Test_Tests(void)
     sen ++;
   }
   Check_Nonzero(hit_budget_left == (uint_least8_t)(15 - 4));
+  printf("\nCASE: %s:\n\n",(char *)"Hit Trigger, SU Self Test, other pulse"); /* printf_va_227 */
   hit_budget_left = (unsigned int)15;
   Set_AD_Delay(2);
   ad_conv_num = (unsigned int)0;
@@ -5410,6 +8737,7 @@ void SU_Self_Test_Tests(void)
   }
   Check_Nonzero(hit_budget_left == (uint_least8_t)(15 - 4));
   Check_No_Errors();
+  printf("\nCASE: %s:\n\n",(char *)"Turn Sensor Units OFF after Self Tests"); /* printf_va_228 */
   sen = (unsigned int)0;
   while (sen < (sensor_index_t)4) {
     Exec_TC(switch_su_cmd[sen],(unsigned char)0x73,41);
@@ -5421,10 +8749,64 @@ void SU_Self_Test_Tests(void)
 }
 
 static unsigned int test_round = (unsigned int)0;
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_229(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_230(char const * restrict format, unsigned int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_231(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_232(char const * restrict format, int param0);
+
 void StartSystem(unsigned char task_number)
 {
+  printf("StartSystem %d\n",(int)task_number); /* printf_va_229 */
   InitHealthMonitoring();
   test_round ++;
+  printf("Test round %u\n",test_round); /* printf_va_230 */
+  printf("Target Start Test.\n"); /* printf_va_231 */
   TC_ISR_Tests();
   Report_Checks();
   TC_Task_Tests();
@@ -5440,6 +8822,7 @@ void StartSystem(unsigned char task_number)
   SU_Self_Test_Tests();
   Report_Checks();
   checks = (unsigned int)0;
+  printf("Total mailbox overflows %d\n",mail_overflows); /* printf_va_232 */
   exit(0);
   return;
 }
@@ -5452,15 +8835,49 @@ unsigned char *Data_Pointer(uint16_t address)
   return __retres;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param2),
+            (indirect: param1), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param2, param1, param0;
+ */
+int printf_va_233(char const * restrict format, int param0, int param1,
+                  int param2);
+
 void Set_Data_Byte(data_address_t addr, unsigned char value)
 {
+  printf("Set_Data_Byte 0x%hhx to %hhu = 0x%hhx\n",(int)addr,(int)value,
+         (int)value); /* printf_va_233 */
   data_memory[addr] = (char)value;
   return;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param2),
+            (indirect: param1), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param2, param1, param0;
+ */
+int printf_va_234(char const * restrict format, int param0, int param1,
+                  int param2);
+
 unsigned char Get_Data_Byte(data_address_t addr)
 {
   unsigned char value = (unsigned char)data_memory[addr];
+  printf("Get_Data_Byte 0x%hhx is %hhu = 0x%hhx\n",(int)addr,(int)value,
+         (int)value); /* printf_va_234 */
   return value;
 }
 

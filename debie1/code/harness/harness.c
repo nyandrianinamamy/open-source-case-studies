@@ -170,7 +170,7 @@ void SetTimeSlice(unsigned int time_slice)
 /*                   the software_error register.                            */
 {
 #if defined(TRACE_HARNESS)
-   printf ("SetTimeSlice %d\n", time_slice);
+   printf ("SetTimeSlice %u\n", time_slice);
 #endif
 }
 
@@ -185,7 +185,7 @@ static unsigned int ad_converting = 0;
 void ShortDelay (uint_least8_t delay_loops)
 {
 #if defined(TRACE_HARNESS)
-   printf ("ShortDelay %d\n", delay_loops);
+   printf ("ShortDelay %u\n", delay_loops);
 #endif
 
    ad_converting = 0;
@@ -208,7 +208,7 @@ unsigned char isr_send_message (
 /*                    telemetry.                                            */
 {
 #if defined(TRACE_HARNESS)
-   printf ("isr_send_message to %d, message %d = 0x%x\n",
+   printf ("isr_send_message to %hhu, message %hu = 0x%hx\n",
       mailbox, message, message);
 #endif
    SendTaskMail (mailbox, message, 0);
@@ -281,7 +281,7 @@ signed char SetInterruptMask(unsigned char ISR_MaskNumber)
 /* Algorithm      : RTX syntax is used.                                      */
 {
 #if defined(TRACE_HARNESS)
-   printf ("SetInterruptMask 0x%x\n", ISR_MaskNumber);
+  printf ("SetInterruptMask 0x%hhx\n", ISR_MaskNumber);
 #endif
    return 0;  /* Success. */
 }
@@ -301,7 +301,7 @@ signed char ResetInterruptMask(unsigned char ISR_MaskNumber)
 /* Algorithm      : RTX syntax is used.                                      */
 {
 #if defined(TRACE_HARNESS)
-   printf ("ResetInterruptMask 0x%x\n", ISR_MaskNumber);
+   printf ("ResetInterruptMask 0x%hhx\n", ISR_MaskNumber);
 #endif
    return 0;  /* Success. */
 }
@@ -406,7 +406,7 @@ void WaitMail (incoming_mail_t EXTERNAL *message) COMPACT_DATA REENTRANT_FUNC
       *(message -> message)       = mail_message[message -> mailbox_number];
 
 #if defined(TRACE_HARNESS)
-      printf ("Message from %d is %d = 0x%x\n",
+      printf ("Message from %d is %d = 0x%hhx\n",
          message -> mailbox_number,
          *(message -> message),
          *(message -> message));
@@ -451,7 +451,7 @@ unsigned char Check_Current (unsigned char bits)
 {
    unsigned char val;
 #if defined(TRACE_HARNESS)
-   printf ("Check_Current 0x%x\n", bits);
+   printf ("Check_Current 0x%hhx\n", bits);
 #endif
    switch (bits) {
    case   3: val =  1; break;
@@ -493,7 +493,7 @@ unsigned char Check_Current (unsigned char bits)
 void Reboot(reset_class_t boot_type)
 {
 #if defined(TRACE_HARNESS)
-   printf ("Reboot %d\n", boot_type);
+   printf ("Reboot %u\n", boot_type);
 #endif
 
    if (boot_type == checksum_reset_e)
@@ -524,7 +524,7 @@ unsigned char TestMemBits (data_address_t address)
  */
 {
 #if defined(TRACE_HARNESS)
-   printf ("TestMemBits 0x%x\n", address);
+   printf ("TestMemBits 0x%hhx\n", address);
 #endif
    return 0;
 }
@@ -551,7 +551,7 @@ unsigned char TestMemData (
  */
 {
 #if defined(TRACE_HARNESS)
-   printf ("TestMemData start 0x%x, bytes %d\n", start, bytes);
+  printf ("TestMemData start 0x%hhx, bytes %u\n", start, bytes);
 #endif
    return 0;
 }
@@ -579,7 +579,7 @@ unsigned char TestMemSeq (
  */
 {
 #if defined(TRACE_HARNESS)
-   printf ("TestMemSeq start 0x%x, bytes %d\n", start, bytes);
+   printf ("TestMemSeq start 0x%hhx, bytes %u\n", start, bytes);
 #endif
    return 0;
 }
@@ -623,7 +623,7 @@ static unsigned char tm_msb, tm_lsb;
 void Write_TM_LSB (unsigned char value)
 {
 #if defined(TRACE_HARNESS)
-   printf ("Write_TM_LSB %d = 0x%x\n", value, value);
+   printf ("Write_TM_LSB %d = 0x%hhx\n", value, value);
 #endif
    tm_lsb = value;
 }
@@ -632,7 +632,7 @@ void Write_TM_LSB (unsigned char value)
 void Write_TM_MSB (unsigned char value)
 {
 #if defined(TRACE_HARNESS)
-   printf ("Write_TM_MSB %d = 0x%x\n", value, value);
+   printf ("Write_TM_MSB %d = 0x%hhx\n", value, value);
 #endif
    tm_msb = value;
 }
@@ -981,7 +981,7 @@ static unsigned int ad_fail_index = 0;
 void Update_ADC_Channel_Reg (unsigned char channel)
 {
 #if defined(TRACE_HARNESS)
-   printf ("Update_ADC_Channel_Reg %x\n", channel);
+   printf ("Update_ADC_Channel_Reg %hhx\n", channel);
 #endif
 }
 
@@ -1002,7 +1002,7 @@ void Start_Conversion (void)
    channel = ADC_channel_register & 0x3f;
 
 #if defined(TRACE_HARNESS)
-   printf ("Start_Conversion on channel %d\n", channel);
+   printf ("Start_Conversion on channel %u\n", channel);
 #endif
 
    if (ad_converting != 0)
@@ -1056,7 +1056,7 @@ void Report_Start_Conversion_Count (int problem)
  */
 {
 #if defined(TRACE_HARNESS)
-   printf ("Called Start_Conversion %d times in problem %d.\n",
+   printf ("Called Start_Conversion %u times in problem %d.\n",
       start_conversion_count, problem);
 #endif
 
@@ -1137,7 +1137,7 @@ void Report_End_Of_ADC_Count (int problem)
  */
 {
 #if defined(TRACE_HARNESS)
-   printf ("Called End_Of_ADC %d times in problem %d.\n",
+   printf ("Called End_Of_ADC %u times in problem %d.\n",
       end_of_adc_count, problem);
 #endif
 
@@ -1154,7 +1154,7 @@ unsigned char Get_Result (void)
    value = (ad_value >> 8) & 0xff;
 
 #if defined(TRACE_HARNESS)
-   printf ("Get_Result %d = 0x%x\n", value, value);
+   printf ("Get_Result %hhu = 0x%hhx\n", value, value);
 #endif
 
    /* Shift the LSB to the MSB, for next Get_Result: */
@@ -1256,7 +1256,7 @@ static void Set_Trigger_SU (sensor_index_t SU)
 /* Sets the given SU in trigger_source_0/1. */
 {
 #if defined(TRACE_HARNESS)
-   printf ("Set Trigger SU index %d\n", SU);
+   printf ("Set Trigger SU index %u\n", SU);
 #endif
 
    trigger_source_0 =  SU       & 1;
@@ -1362,7 +1362,7 @@ void Set_SU_Self_Test_Ch (unsigned char value)
 /* Set the SU Self Test Channel selectors. */
 {
 #if defined(TRACE_HARNESS)
-   printf ("Set SU Self-Test Channel %x\n", value);
+   printf ("Set SU Self-Test Channel %hhx\n", value);
 #endif
 }
 
@@ -1371,7 +1371,7 @@ void Set_Test_Pulse_Level (unsigned char level)
 /* Set the SU Self Test pulse level. */
 {
 #if defined(TRACE_HARNESS)
-   printf ("Set SU Self-Test Pulse Level %d\n", level);
+   printf ("Set SU Self-Test Pulse Level %hhu\n", level);
 #endif
    self_test_pulse = level;
    Sim_Self_Test_Trigger ();
@@ -1409,7 +1409,7 @@ void SignalPeakDetectorReset(
    unsigned char high_reset_value)
 {
 #if defined(TRACE_HARNESS)
-   printf ("SignalPeakDetectorReset low %d, high %d\n",
+   printf ("SignalPeakDetectorReset low %hhu, high %hhu\n",
       low_reset_value, high_reset_value);
 #endif
 }
@@ -1450,7 +1450,7 @@ unsigned short int Short_Value (tm_ushort_t *x)
 void Call_Patch (fptr_t func)
 {
 #if defined(TRACE_HARNESS)
-   printf ("Call_Patch 0x%x\n", (code_address_t)func);
+   printf ("Call_Patch 0x%hx\n", (code_address_t)func);
 #endif
 }
 
@@ -1576,7 +1576,7 @@ static void Report_Checks (void)
 {
    TARGET_MARK;
 #if defined(TRACE_HARNESS)
-   printf ("Total checks done %d, failed %d\n", checks, check_errors);
+   printf ("Total checks done %u, failed %u\n", checks, check_errors);
 #endif
 }
 
@@ -1586,7 +1586,7 @@ static void Fail_Check (char *message)
 {
    check_errors ++;
 #if defined(TRACE_HARNESS)
-   printf ("%s: FAILED (#%d)\n", message, check_errors);
+   printf ("%s: FAILED (#%u)\n", message, check_errors);
 #endif
 }
 
@@ -2632,7 +2632,7 @@ void Monitoring_Task_Tests (void)
       }
 
 #if defined(TRACE_HARNESS)
-      printf ("Total hits %d\n", total_adc_hits);
+      printf ("Total hits %u\n", total_adc_hits);
 #endif
 
       Check_Nonzero (total_adc_hits);
@@ -2655,7 +2655,7 @@ void Monitoring_Task_Tests (void)
       }
 
 #if defined(TRACE_HARNESS)
-      printf ("Total hits %d\n", total_adc_hits);
+      printf ("Total hits %u\n", total_adc_hits);
 #endif
 
       Check_Nonzero (total_adc_hits);
@@ -2693,7 +2693,7 @@ void Monitoring_Task_Tests (void)
             tot_errors ++;
 
 #if defined(TRACE_HARNESS)
-            printf ("Monitoring (6d) error %d, error status %x\n",
+            printf ("Monitoring (6d) error %d, error status %hhx\n",
                tot_errors, telemetry_data.error_status);
 #endif
             Clear_Errors ();
@@ -2730,7 +2730,7 @@ void Monitoring_Task_Tests (void)
             tot_errors ++;
 
 #if defined(TRACE_HARNESS)
-            printf ("Monitoring (6e) error %d, error status %x\n",
+            printf ("Monitoring (6e) error %d, error status %hhx\n",
                tot_errors, telemetry_data.error_status);
 #endif
             Clear_Errors ();
@@ -3151,7 +3151,7 @@ void Report_Event_Histo (void)
    for (sen = 0; sen < NUM_SU; sen ++)
       for (class = 0; class <NUM_CLASSES; class ++)
       {
-         printf ("Events from SU %d, class %d: %d\n",
+         printf ("Events from SU %u, class %d: %d\n",
             sen, class, science_data.event_counter[sen][class]);
       }
 #endif
@@ -3275,7 +3275,7 @@ static void Acquisition_Tests (void)
       }
 
 #if defined(TRACE_HARNESS)
-      printf ("Science Data filled with %d events after %d hits.\n",
+      printf ("Science Data filled with %u events after %u hits.\n",
          max_events, hits);
 #endif
       Report_Event_Histo ();
@@ -3690,7 +3690,7 @@ void StartSystem(unsigned char task_number)
       test_round ++;
 
 #if defined(TRACE_HARNESS)
-      printf ("Test round %d\n", test_round);
+      printf ("Test round %u\n", test_round);
 #endif
 
       TARGET_START_TEST;

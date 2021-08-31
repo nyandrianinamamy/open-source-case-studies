@@ -164,8 +164,4 @@ extern void Call_Patch (fptr_t func);
 #define TARGET_START_TEST  printf ("Target Start Test.\n")
 #define TARGET_REPEAT_TEST 0
 
-// To avoid variadic warnings with printf()
-#undef printf
-#define printf(...)
-
 #endif

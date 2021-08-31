@@ -58,7 +58,7 @@ unsigned char *Data_Pointer (uint16_t address)
 void Set_Data_Byte (data_address_t addr, unsigned char value)
 {
 #if defined(TRACE_TARGET)
-   printf ("Set_Data_Byte 0x%x to %d = 0x%x\n", addr, value, value);
+   printf ("Set_Data_Byte 0x%hhx to %hhu = 0x%hhx\n", addr, value, value);
 #endif
    data_memory[addr] = value;
 }
@@ -68,7 +68,7 @@ unsigned char Get_Data_Byte (data_address_t addr)
 {
    unsigned char value = data_memory[addr];
 #if defined(TRACE_TARGET)
-   printf ("Get_Data_Byte 0x%x is %d = 0x%x\n", addr, value, value);
+   printf ("Get_Data_Byte 0x%hhx is %hhu = 0x%hhx\n", addr, value, value);
 #endif
    return value;
 }
