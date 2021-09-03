@@ -32,8 +32,8 @@ int blah(void)
 }
 
 /*@ assigns \result;
-    assigns \result \from (indirect: *( + (0 ..))); */
-int printf_va_1(char const *);
+    assigns \result \from (indirect: *(param0 + (0 ..))); */
+int printf_va_1(char const *param0);
 
 int convert_like_real(tree convs)
 {

@@ -14,14 +14,14 @@ int ( __attribute__((__noinline__)) actual_function)(void)
 }
 
 /*@ assigns \result;
-    assigns \result \from (indirect: *( + (0 ..))), (indirect: param0);
+    assigns \result \from (indirect: *(param0 + (0 ..))), (indirect: param1);
  */
-int printf_va_1(char const *, int param0);
+int printf_va_1(char const *param0, int param1);
 
 /*@ assigns \result;
-    assigns \result \from (indirect: *( + (0 ..))), (indirect: param0);
+    assigns \result \from (indirect: *(param0 + (0 ..))), (indirect: param1);
  */
-int printf_va_2(char const *, int param0);
+int printf_va_2(char const *param0, int param1);
 
 int main(void)
 {

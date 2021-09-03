@@ -12,9 +12,9 @@ char t[10] =
    (char)'\000'};
 /*@ assigns \result;
     assigns \result
-      \from (indirect: *( + (0 ..))), (indirect: *(param0 + (0 ..)));
+      \from (indirect: *(param0 + (0 ..))), (indirect: *(param1 + (0 ..)));
  */
-int printf_va_1(char const *, char *param0);
+int printf_va_1(char const *param0, char *param1);
 
 int main(void)
 {
