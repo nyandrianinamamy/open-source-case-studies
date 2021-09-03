@@ -856,7 +856,7 @@ FRAMAC_SHARE/libc	string.h	173	strchr	precondition	Unknown	valid_string_s: valid
 FRAMAC_SHARE/libc	unistd.h	775	chown	precondition	Unknown	valid_string_path: valid_read_string(path)
 FRAMAC_SHARE/libc	unistd.h	1124	unlink	precondition	Unknown	valid_string_path: valid_read_string(path)
 FRAMAC_SHARE/libc/sys	stat.h	32	chmod	assigns clause	Unknown	assigns \nothing;
-FRAMAC_SHARE/libc/sys	stat.h	32	chmod	from clause	Unknown	assigns \result \from \nothing;
+FRAMAC_SHARE/libc/sys	stat.h	32	chmod	from clause	Unknown	assigns \result \from *(__x0 + (0 ..)), __x1;
 FRAMAC_SHARE/libc/sys	stat.h	87	stat	precondition	Unknown	valid_pathname: valid_read_string(pathname)
 test/unit	ntp_core.c	179	send_response	precondition of __FC_assert	Invalid or unreachable	nonnull_c: c ≢ 0
 test/unit	ntp_core.c	186	send_response	precondition of __FC_assert	Unknown	nonnull_c: c ≢ 0

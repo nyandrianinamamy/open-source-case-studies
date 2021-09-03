@@ -159,6 +159,9 @@ directory	file	line	function	property kind	status	property
 .	gzip.c	896	create_outfile	precondition of fprintf_va_27	Unknown	valid_read_string(param0)
 .	gzip.c	897	create_outfile	precondition of perror	Unknown	valid_string_s: valid_read_string(s)
 .	gzip.c	899	create_outfile	precondition of unlink	Unknown	valid_string_path: valid_read_string(path)
+.	gzip.c	907	create_outfile	precondition of fprintf_va_28	Unknown	valid_read_string(param0)
+.	gzip.c	907	create_outfile	precondition of fprintf_va_28	Unknown	valid_read_string(param1)
+.	gzip.c	912	create_outfile	precondition of unlink	Unknown	valid_string_path: valid_read_string(path)
 .	gzip.c	933	do_stat	precondition of lstat	Unknown	valid_path: valid_read_string(path)
 .	gzip.c	936	do_stat	precondition of stat	Unknown	valid_pathname: valid_read_string(pathname)
 .	gzip.c	964	get_suffix	precondition of strcmp	Unknown	valid_string_s1: valid_read_string(s1)
@@ -257,6 +260,7 @@ directory	file	line	function	property kind	status	property
 .	gzip.c	1402	do_list	signed_overflow	Unknown	bytes_in - header_bytes ≤ 2147483647
 .	gzip.c	1403	do_list	precondition of printf_va_8	Unknown	valid_read_string(param0)
 .	gzip.c	1413	same_file	initialization	Unknown	\initialized(&stat1->st_ino)
+.	gzip.c	1414	same_file	initialization	Unknown	\initialized(&stat1->st_dev)
 .	gzip.c	1436	name_too_long	precondition of strlen	Unknown	valid_string_s: valid_read_string(s)
 .	gzip.c	1437	name_too_long	mem_access	Unknown	\valid_read(name + (int)(s - 1))
 .	gzip.c	1437	name_too_long	signed_overflow	Unknown	-2147483648 ≤ s - 1
@@ -576,6 +580,8 @@ FRAMAC_SHARE/libc	stdio.h	207	fprintf_va_22	precondition	Unknown	valid_read_stri
 FRAMAC_SHARE/libc	stdio.h	207	fprintf_va_23	precondition	Unknown	valid_read_string(param0)
 FRAMAC_SHARE/libc	stdio.h	207	fprintf_va_25	precondition	Unknown	valid_read_string(param0)
 FRAMAC_SHARE/libc	stdio.h	207	fprintf_va_27	precondition	Unknown	valid_read_string(param0)
+FRAMAC_SHARE/libc	stdio.h	207	fprintf_va_28	precondition	Unknown	valid_read_string(param0)
+FRAMAC_SHARE/libc	stdio.h	207	fprintf_va_28	precondition	Unknown	valid_read_string(param1)
 FRAMAC_SHARE/libc	stdio.h	207	fprintf_va_29	precondition	Unknown	valid_read_string(param0)
 FRAMAC_SHARE/libc	stdio.h	207	fprintf_va_29	precondition	Unknown	valid_read_string(param1)
 FRAMAC_SHARE/libc	stdio.h	207	fprintf_va_30	precondition	Unknown	valid_read_string(param0)
@@ -677,8 +683,9 @@ FRAMAC_SHARE/libc	unistd.h	1124	unlink	precondition	Unknown	valid_string_path: v
 FRAMAC_SHARE/libc	unistd.h	1140	write	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
 FRAMAC_SHARE/libc	unistd.h	1141	write	precondition	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))
 FRAMAC_SHARE/libc/sys	stat.h	32	chmod	assigns clause	Unknown	assigns \nothing;
-FRAMAC_SHARE/libc/sys	stat.h	32	chmod	from clause	Unknown	assigns \result \from \nothing;
-FRAMAC_SHARE/libc/sys	stat.h	35	fstat	assigns clause	Unknown	assigns \nothing;
-FRAMAC_SHARE/libc/sys	stat.h	35	fstat	from clause	Unknown	assigns \result \from \nothing;
+FRAMAC_SHARE/libc/sys	stat.h	32	chmod	from clause	Unknown	assigns \result \from *(__x0 + (0 ..)), __x1;
+FRAMAC_SHARE/libc/sys	stat.h	35	fstat	assigns clause	Unknown	assigns \result, *__x1;
+FRAMAC_SHARE/libc/sys	stat.h	35	fstat	from clause	Unknown	assigns *__x1 \from *__x1, __x0;
+FRAMAC_SHARE/libc/sys	stat.h	35	fstat	from clause	Unknown	assigns \result \from *__x1, __x0;
 FRAMAC_SHARE/libc/sys	stat.h	43	lstat	precondition	Unknown	valid_path: valid_read_string(path)
 FRAMAC_SHARE/libc/sys	stat.h	87	stat	precondition	Unknown	valid_pathname: valid_read_string(pathname)
