@@ -6634,6 +6634,16 @@ stack: SST_DoNewRegression :: sources.c:350 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
+sourcestats.c:581:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&est_var);
+stack: SST_DoNewRegression :: sources.c:350 <-
+       SRC_AccumulateSample :: ntp_core.c:1506 <-
+       process_sample :: ntp_core.c:1834 <-
+       receive_packet :: ntp_core.c:2070 <-
+       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+       process_response :: test/unit/ntp_core.c:391 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
 sourcestats.c:582:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&nruns);
 stack: SST_DoNewRegression :: sources.c:350 <-
        SRC_AccumulateSample :: ntp_core.c:1506 <-

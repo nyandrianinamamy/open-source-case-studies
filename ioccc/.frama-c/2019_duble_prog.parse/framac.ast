@@ -295,7 +295,17 @@ struct termios o;
 int printf_va_1(char const * restrict format, char *param0, int param1,
                 char *param2);
 
-int printf_fallback_1(char const * restrict format);
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_2(char const * restrict format);
 
 /*@ requires valid_read_nstring(param2, 11);
     requires valid_read_string(param7);
@@ -316,7 +326,7 @@ int printf_fallback_1(char const * restrict format);
             *(param8 + (0 ..)), *(param7 + (0 ..)), param6, param5, param4,
             param3, *(param2 + (0 ..)), param1, param0;
  */
-int printf_va_2(char const * restrict format, int param0, int param1,
+int printf_va_3(char const * restrict format, int param0, int param1,
                 char *param2, int param3, int param4, int param5, int param6,
                 char *param7, char *param8);
 
@@ -559,7 +569,7 @@ int main(int F_0, char **D_0)
                     }
                   }
                 }
-                printf((char const *)I); /* printf_fallback_1 */
+                printf((char const *)I); /* printf_va_2 */
                 break;
               }
             }
@@ -594,7 +604,7 @@ int main(int F_0, char **D_0)
                 *(M - 6) = (char)(w.E * 7 + 48);
                 if (a) *(M + 2) = (char)42; else *(M + 2) = (char)32;
                 printf("\033[%d;%dH%.11s\033[%d;%dH\033[0;4%dm%c%s%s",
-                       e + 2,d + 2,M - 8,24,8,x.D,x.J + 65,I + 8,J); /* printf_va_2 */
+                       e + 2,d + 2,M - 8,24,8,x.D,x.J + 65,I + 8,J); /* printf_va_3 */
                 if (! ((f ^ d) | (e ^ h))) break;
                 b = n;
                 ;

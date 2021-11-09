@@ -17,10 +17,10 @@ FRAMAC_SHARE/libc	string.h	95	memcpy	precondition	Unknown	valid_dest: valid_or_e
 FRAMAC_SHARE/libc	string.h	96	memcpy	precondition	Unknown	valid_src: valid_read_or_empty(src, n)
 FRAMAC_SHARE/libc	string.h	368	strcpy	precondition	Invalid or unreachable	room_string: \valid(dest + (0 .. strlen(src)))
 FRAMAC_SHARE/libc	string.h	426	strcat	precondition	Unknown	room_string: \valid(dest + (0 .. strlen(dest) + strlen(src)))
-FRAMAC_SHARE/libc	unistd.h	1007	read	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
-FRAMAC_SHARE/libc	unistd.h	1008	read	precondition	Unknown	buf_has_room: \valid((char *)buf + (0 .. count - 1))
-FRAMAC_SHARE/libc	unistd.h	1140	write	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
-FRAMAC_SHARE/libc	unistd.h	1141	write	precondition	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))
+FRAMAC_SHARE/libc	unistd.h	993	read	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
+FRAMAC_SHARE/libc	unistd.h	994	read	precondition	Unknown	buf_has_room: \valid((char *)buf + (0 .. count - 1))
+FRAMAC_SHARE/libc	unistd.h	1126	write	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
+FRAMAC_SHARE/libc	unistd.h	1127	write	precondition	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))
 MIPSDK/C/Examples/Linux/GX4-45/GX4_45_Test	GX4-45_Test.c	258	main	precondition of printf_va_25	Unknown	valid_read_string(param0)
 MIPSDK/C/Examples/Linux/GX4-45/GX4_45_Test	GX4-45_Test.c	261	main	precondition of printf_va_26	Unknown	valid_read_string(param0)
 MIPSDK/C/Examples/Linux/GX4-45/GX4_45_Test	GX4-45_Test.c	264	main	precondition of printf_va_27	Unknown	valid_read_string(param0)

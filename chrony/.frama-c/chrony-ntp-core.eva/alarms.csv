@@ -638,6 +638,7 @@ directory	file	line	function	property kind	status	property
 .	sourcestats.c	578	SST_DoNewRegression	initialization	Unknown	\initialized(&est_intercept)
 .	sourcestats.c	579	SST_DoNewRegression	initialization	Unknown	\initialized(&inst->last_sample)
 .	sourcestats.c	580	SST_DoNewRegression	initialization	Unknown	\initialized(&est_intercept_sd)
+.	sourcestats.c	581	SST_DoNewRegression	initialization	Unknown	\initialized(&est_var)
 .	sourcestats.c	582	SST_DoNewRegression	initialization	Unknown	\initialized(&nruns)
 .	sourcestats.c	593	SST_DoNewRegression	initialization	Unknown	\initialized(&best_start)
 .	sourcestats.c	593	SST_DoNewRegression	initialization	Unknown	\initialized(&inst->asymmetry)
@@ -853,8 +854,8 @@ FRAMAC_SHARE/libc	string.h	121	memmove	precondition	Unknown	valid_src: valid_rea
 FRAMAC_SHARE/libc	string.h	131	memset	precondition	Unknown	valid_s: valid_or_empty(s, n)
 FRAMAC_SHARE/libc	string.h	141	strlen	precondition	Unknown	valid_string_s: valid_read_string(s)
 FRAMAC_SHARE/libc	string.h	173	strchr	precondition	Unknown	valid_string_s: valid_read_string(s)
-FRAMAC_SHARE/libc	unistd.h	775	chown	precondition	Unknown	valid_string_path: valid_read_string(path)
-FRAMAC_SHARE/libc	unistd.h	1124	unlink	precondition	Unknown	valid_string_path: valid_read_string(path)
+FRAMAC_SHARE/libc	unistd.h	761	chown	precondition	Unknown	valid_string_path: valid_read_string(path)
+FRAMAC_SHARE/libc	unistd.h	1110	unlink	precondition	Unknown	valid_string_path: valid_read_string(path)
 FRAMAC_SHARE/libc/sys	stat.h	32	chmod	assigns clause	Unknown	assigns \nothing;
 FRAMAC_SHARE/libc/sys	stat.h	32	chmod	from clause	Unknown	assigns \result \from *(__x0 + (0 ..)), __x1;
 FRAMAC_SHARE/libc/sys	stat.h	87	stat	precondition	Unknown	valid_pathname: valid_read_string(pathname)

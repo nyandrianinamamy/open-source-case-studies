@@ -752,11 +752,34 @@ void Sim_init(void)
 char *output_header =
   (char *)"time(ms)\tengineVoltage\tlegAngle\tlegAngleValid\tisActive\n";
 char *output_row_fmt_string = (char *)"%d\t%f\t%f\t%d\t%d\n";
-int fprintf_fallback_1(FILE * restrict stream, char const * restrict format);
+/*@ requires valid_read_string(format);
+    assigns \result, stream->__fc_FILE_data;
+    assigns \result
+      \from (indirect: stream->__fc_FILE_id),
+            (indirect: stream->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns stream->__fc_FILE_data
+      \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
+            (indirect: *(format + (0 ..)));
+ */
+int fprintf_va_1(FILE * restrict stream, char const * restrict format);
 
-int fprintf_fallback_2(FILE * restrict stream, char const * restrict format,
-                       sint32 param0, real64 param1, real64 param2,
-                       int param3, int param4);
+/*@ requires valid_read_string(format);
+    assigns \result, stream->__fc_FILE_data;
+    assigns \result
+      \from (indirect: stream->__fc_FILE_id),
+            (indirect: stream->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param4),
+            (indirect: param3), (indirect: param2), (indirect: param1),
+            (indirect: param0);
+    assigns stream->__fc_FILE_data
+      \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
+            (indirect: *(format + (0 ..))), param4, param3, param2, param1,
+            param0;
+ */
+int fprintf_va_2(FILE * restrict stream, char const * restrict format,
+                 int param0, double param1, double param2, int param3,
+                 int param4);
 
 int main(void)
 {
@@ -772,7 +795,7 @@ int main(void)
   RoCo_activeDesired = (char)1;
   RoCo_moveFast = (char)0;
   int cnt = 0;
-  fprintf(__fc_stderr,(char const *)output_header); /* fprintf_fallback_1 */
+  fprintf(__fc_stderr,(char const *)output_header); /* fprintf_va_1 */
   while (cnt < 9000) {
     sint32 tmp_0;
     tmp_0 = Time();
@@ -783,7 +806,7 @@ int main(void)
     if (cnt % 5 == 0) fprintf(__fc_stderr,
                               (char const *)output_row_fmt_string,lastTime,
                               RoCo_engineVoltage,RoCo_legAngle,
-                              (int)RoCo_legAngleValid,(int)RoCo_isActive); /* fprintf_fallback_2 */
+                              (int)RoCo_legAngleValid,(int)RoCo_isActive); /* fprintf_va_2 */
     Sleep(20);
     cnt ++;
     if (cnt == 2500) {

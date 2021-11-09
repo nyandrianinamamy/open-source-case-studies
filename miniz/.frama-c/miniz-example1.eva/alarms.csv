@@ -33,7 +33,6 @@ directory	file	line	function	property kind	status	property
 .	miniz.c	265	mz_deflate	initialization	Unknown	\initialized(&in_bytes)
 .	miniz.c	270	mz_deflate	dangling_pointer	Unknown	¬\dangling(&out_bytes)
 .	miniz.c	270	mz_deflate	initialization	Unknown	\initialized(&out_bytes)
-.	miniz.c	323	mz_compress2	dangling_pointer	Unknown	¬\dangling(pDest_len)
 .	miniz.c	342	mz_compress2	dangling_pointer	Unknown	¬\dangling(&stream.total_out)
 .	miniz.c	447	mz_inflate	dangling_pointer	Unknown	¬\dangling(&pState->m_window_bits)
 .	miniz.c	447	mz_inflate	initialization	Unknown	\initialized(&pState->m_window_bits)
@@ -1945,6 +1944,7 @@ FRAMAC_SHARE/libc	string.h	95	memcpy	precondition	Unknown	valid_dest: valid_or_e
 FRAMAC_SHARE/libc	string.h	96	memcpy	precondition	Unknown	valid_src: valid_read_or_empty(src, n)
 FRAMAC_SHARE/libc	string.h	98	memcpy	precondition	Unknown	separation: \separated((char *)dest + (0 .. n - 1), (char *)src + (0 .. n - 1))
 FRAMAC_SHARE/libc	string.h	131	memset	precondition	Unknown	valid_s: valid_or_empty(s, n)
+examples	example1.c	34	main	dangling_pointer	Unknown	¬\dangling(&cmp_len)
 examples	example1.c	52	main	dangling_pointer	Unknown	¬\dangling(&cmp_len)
 examples	example1.c	60	main	division_by_zero	Unknown	cmp_len ≢ 0
 examples	example1.c	61	main	dangling_pointer	Unknown	¬\dangling(pCmp + i)
