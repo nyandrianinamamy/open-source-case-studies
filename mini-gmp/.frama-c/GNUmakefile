@@ -15,6 +15,7 @@ MACHDEP = gcc_x86_32
 CPPFLAGS    += \
   -std=c99 \
   -I .. \
+  -D__gmp_asprintf=asprintf
 
 # note: '-std=c99' is used to avoid issues with old GCCs (< 5) due to the
 #       presence of inline attributes.
@@ -38,8 +39,9 @@ TARGETS = mini-gmp.eva
 
 ### Each target <t>.eva needs a rule <t>.parse with source files as prerequisites
 mini-gmp.parse: \
+  $(shell $(FRAMAC)-config -print-share-path)/libc/stdio.c \
+  ../tests/testutils.c \
   ../tests/t-add.c \
-  ../mini-gmp.c \
   ../tests/hex-random.c \
   ../tests/mini-random.c \
   fc_stubs.h \

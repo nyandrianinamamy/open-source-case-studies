@@ -1,22 +1,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-/*@
-  requires \valid(strp);
-  assigns \result, *strp \from fmt;
-  ensures \initialized(strp);
-  allocates strp;
-*/
-int asprintf(char **strp, const char *fmt, ...);
-
-/*@
-  requires \valid(strp);
-  assigns \result, *strp \from fmt;
-  ensures \initialized(strp);
-  allocates strp;
-*/
-int __gmp_asprintf(char **strp, const char *fmt, ...);
-
 #include "gmp.h"
 /*@
   assigns *a, __fc_random_counter \from __fc_random_counter;
