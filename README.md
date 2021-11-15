@@ -160,4 +160,5 @@ when available. We also summarize the license of each directory below.
 - `solitaire`: public domain, see `solitaire.c`
 - `tsvc`: MIT, see `license.txt`
 - `tweetnacl-usable`: public domain, see `LICENSE.txt`
+- `verisec`: several, according to each app
 - `x509-parser` : GPLv2 / BSD, see `LICENSE`
