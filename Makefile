@@ -82,6 +82,7 @@ TARGETS=\
   solitaire \
   tsvc \
   tweetnacl-usable \
+  verisec \
   x509-parser \
 
 help::

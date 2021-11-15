@@ -49,5 +49,6 @@ typedef int u_int32_t;
 int dn_expand(const u_char *msg, const u_char *eomorig,
               const u_char *comp_dn, char *exp_dn, int length);
 
-
+#ifndef __FRAMAC__
 extern int nondet_int();
+#endif

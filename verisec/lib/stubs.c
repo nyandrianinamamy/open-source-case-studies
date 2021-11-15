@@ -1,5 +1,10 @@
 #include "stubs.h"
 
+#ifdef __FRAMAC__
+// These signatures and redefinitions are incompatible with Frama-C's libc
+#error "This file is incompatible with Frama-C's libc"
+#endif
+
 /*
  * KK: I think SatAbs/CBMC front-end complains about this, but the backend
  * knows what it means.

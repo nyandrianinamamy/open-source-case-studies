@@ -11,6 +11,10 @@ rrextract(u_char *msg, int msglen, u_char *rrp, u_char *dname, int namelen)
   int n1,n2;
   u_int32_t ttl;
   u_char data[MAXDATA*2];
+#ifdef __FRAMAC__
+  // data must be initialized to avoid UB
+  Frama_C_make_unknown(data, (MAXDATA+2)-1);
+#endif
   data [(MAXDATA*2)-1] = EOS;
 
   cp = rrp;
@@ -76,7 +80,15 @@ int main(){
   u_char name [NAMELEN];
   u_char msg [MSGLEN+BYTES_TO_SKIP];
 
+#ifdef __FRAMAC__
+  // name must be initialized to avoid UB
+  Frama_C_make_unknown(name, NAMELEN-1);
+#endif
   name [NAMELEN-1] = EOS;
+#ifdef __FRAMAC__
+  // msg must be initialized to avoid UB
+  Frama_C_make_unknown(msg, MSGLEN+BYTES_TO_SKIP-1);
+#endif
   msg [MSGLEN+BYTES_TO_SKIP-1] = EOS;
 
   msglen = MSGLEN;

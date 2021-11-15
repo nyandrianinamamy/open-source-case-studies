@@ -1,6 +1,5 @@
 # Common rules used by all subdirectories
 *.sav
-*.sav.crash
 *.o
 *~
 config.status
@@ -14,10 +13,11 @@ stats.txt
 flamegraph.txt
 
 *.error
+*.break
+*#
 
 benchs-value.csv
 bench_clone
 
-# .sarif reports are produced as CI artifacts, but we do not want to version
-# them, due to their size and the redundancy w.r.t. Eva logs.
+# SARIF files are currently not versioned
 *.sarif

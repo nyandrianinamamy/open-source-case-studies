@@ -33,7 +33,7 @@ void message_write (char *msg, int len)
 
 int main ()
 {
-  char msg [INSZ] = "message";
+  char msg [INSZ] = "messa\n.";
 
   message_write (msg, INSZ);
   
