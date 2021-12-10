@@ -9222,7 +9222,7 @@ out:
 	return ret;
 }
 
-#if defined(__FRAMAC__)
+#if defined(__FRAMAC__) && !defined(__FC_EACSL__)
 
 /* This dummy main allows testing */
 

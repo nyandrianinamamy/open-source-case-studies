@@ -23,7 +23,21 @@ static void usage(char *argv0)
 
 int main(int argc, char *argv[])
 {
+  // To illustrate E-ACSL on this code, we deliberately change the buffer
+  // declaration to introduce errors during execution
+#ifndef __FC_EACSL__
+	// Original (bug-free) declaration
 	u8 buf[ASN1_MAX_BUFFER_SIZE];
+#else
+# ifdef EACSL_STACK_OVERFLOW
+	// Buffer size too small: a stack overflow will happen
+	u8 buf[ASN1_MAX_BUFFER_SIZE/64];
+# endif
+# ifdef EACSL_HEAP_OVERFLOW
+	// Buffer size too small: a heap overflow will happen
+	u8 *buf = malloc(sizeof(u8) * ASN1_MAX_BUFFER_SIZE/64);
+# endif
+#endif
 	off_t pos, offset = 0;
 	char *path = argv[1];
 	u16 rem, copied, eaten;
