@@ -6499,7 +6499,7 @@ sds sdscatfmt(sds s, char const *fmt, void * const *__va_params)
         break;
         case 'i': case 'I': ;
         if ((int)next == 'i') {
-          num = *((int *)*ap);
+          num = (long long)*((int *)*ap);
           ap ++;
         }
         else {
@@ -6525,7 +6525,7 @@ sds sdscatfmt(sds s, char const *fmt, void * const *__va_params)
         break;
         case 'u': case 'U': ;
         if ((int)next == 'u') {
-          unum = *((unsigned int *)*ap);
+          unum = (unsigned long long)*((unsigned int *)*ap);
           ap ++;
         }
         else {

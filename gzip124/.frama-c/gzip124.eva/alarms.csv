@@ -558,7 +558,7 @@ directory	file	line	function	property kind	status	property
 .	zip.c	111	file_read	precondition of read	Unknown	buf_has_room: \valid((char *)buf + (0 .. count - 1))
 .	zip.c	111	file_read	precondition of read	Unknown	valid_fd: 0 ≤ fd < 1024
 FRAMAC_SHARE/libc	ctype.h	174	isupper	precondition	Unknown	c_uchar_or_eof: (0 ≤ c ≤ 255) ∨ c ≡ -1
-FRAMAC_SHARE/libc	fcntl.h	165	__va_open_mode_t	precondition	Unknown	valid_filename: valid_read_string(filename)
+FRAMAC_SHARE/libc	fcntl.h	168	__va_open_mode_t	precondition	Unknown	valid_filename: valid_read_string(filename)
 FRAMAC_SHARE/libc	stdio.h	207	fprintf_va_1	precondition	Unknown	valid_read_string(param0)
 FRAMAC_SHARE/libc	stdio.h	207	fprintf_va_11	precondition	Unknown	valid_read_string(param0)
 FRAMAC_SHARE/libc	stdio.h	207	fprintf_va_12	precondition	Unknown	valid_read_string(param0)
