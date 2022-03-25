@@ -27,8 +27,8 @@ int main(void)
   int __retres;
   char const *tmp;
   int x = 1;
-  uintptr_t i = (unsigned int)(& x);
-  uintptr_t j = (unsigned int)(& x);
+  uintptr_t i = (uintptr_t)(& x);
+  uintptr_t j = (uintptr_t)(& x);
   _Bool b = (_Bool)(i == j);
   if (b) tmp = "true"; else tmp = "false";
   printf("(i==j)=%s\n",(char *)tmp); /* printf_va_1 */

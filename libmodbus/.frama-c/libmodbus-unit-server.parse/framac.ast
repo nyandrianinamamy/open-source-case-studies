@@ -311,8 +311,8 @@ void modbus_set_bits_from_byte(uint8_t *dest, int idx, uint8_t const value)
   int i;
   i = 0;
   while (i < 8) {
-    if ((int)value & (1 << i)) *(dest + (idx + i)) = (unsigned char)1;
-    else *(dest + (idx + i)) = (unsigned char)0;
+    if ((int)value & (1 << i)) *(dest + (idx + i)) = (uint8_t)1;
+    else *(dest + (idx + i)) = (uint8_t)0;
     i ++;
   }
   return;
@@ -326,8 +326,8 @@ void modbus_set_bits_from_bytes(uint8_t *dest, int idx, unsigned int nb_bits,
   i = (unsigned int)idx;
   while (i < (unsigned int)idx + nb_bits) {
     if ((int)*(tab_byte + (i - (unsigned int)idx) / (unsigned int)8) & (
-        1 << shift)) *(dest + i) = (unsigned char)1;
-    else *(dest + i) = (unsigned char)0;
+        1 << shift)) *(dest + i) = (uint8_t)1;
+    else *(dest + i) = (uint8_t)0;
     shift ++;
     shift %= 8;
     i ++;
@@ -339,7 +339,7 @@ uint8_t modbus_get_byte_from_bits(uint8_t const *src, int idx,
                                   unsigned int nb_bits)
 {
   unsigned int i;
-  uint8_t value = (unsigned char)0;
+  uint8_t value = (uint8_t)0;
   if (nb_bits > (unsigned int)8) {
     __FC_assert((nb_bits < (unsigned int)8) != 0,"src/modbus-data.c",106,
                 "nb_bits < 8");
@@ -347,7 +347,7 @@ uint8_t modbus_get_byte_from_bits(uint8_t const *src, int idx,
   }
   i = (unsigned int)0;
   while (i < nb_bits) {
-    value = (unsigned char)((int)value | ((int)*(src + ((unsigned int)idx + i)) << i));
+    value = (uint8_t)((int)value | ((int)*(src + ((unsigned int)idx + i)) << i));
     i ++;
   }
   return value;
@@ -357,7 +357,7 @@ float modbus_get_float_abcd(uint16_t const *src)
 {
   float f;
   uint32_t i;
-  i = ntohl(((unsigned int)*(src + 0) << 16) + (unsigned int)*(src + 1));
+  i = ntohl(((uint32_t)*(src + 0) << 16) + (uint32_t)*(src + 1));
   memcpy((void *)(& f),(void const *)(& i),sizeof(float));
   return f;
 }
@@ -367,8 +367,7 @@ float modbus_get_float_dcba(uint16_t const *src)
   float f;
   uint32_t i;
   unsigned int tmp;
-  tmp = __builtin_bswap32(((unsigned int)*(src + 0) << 16) + (unsigned int)*(
-                          src + 1));
+  tmp = __builtin_bswap32(((uint32_t)*(src + 0) << 16) + (uint32_t)*(src + 1));
   i = ntohl(tmp);
   memcpy((void *)(& f),(void const *)(& i),sizeof(float));
   return f;
@@ -388,7 +387,7 @@ float modbus_get_float_badc(uint16_t const *src)
     register unsigned short __x_0 = *(src + 1);
     tmp_0 = (((int)__x_0 >> 8) & 0xff) | (((int)__x_0 & 0xff) << 8);
   }
-  i = ntohl((unsigned int)(tmp << 16) + (unsigned int)tmp_0);
+  i = ntohl((uint32_t)(tmp << 16) + (uint32_t)tmp_0);
   memcpy((void *)(& f),(void const *)(& i),sizeof(float));
   return f;
 }
@@ -397,7 +396,7 @@ float modbus_get_float_cdab(uint16_t const *src)
 {
   float f;
   uint32_t i;
-  i = ntohl(((unsigned int)*(src + 1) << 16) + (unsigned int)*(src + 0));
+  i = ntohl(((uint32_t)*(src + 1) << 16) + (uint32_t)*(src + 0));
   memcpy((void *)(& f),(void const *)(& i),sizeof(float));
   return f;
 }
@@ -406,7 +405,7 @@ float modbus_get_float(uint16_t const *src)
 {
   float f;
   uint32_t i;
-  i = ((unsigned int)*(src + 1) << 16) + (unsigned int)*(src + 0);
+  i = ((uint32_t)*(src + 1) << 16) + (uint32_t)*(src + 0);
   memcpy((void *)(& f),(void const *)(& i),sizeof(float));
   return f;
 }
@@ -416,8 +415,8 @@ void modbus_set_float_abcd(float f, uint16_t *dest)
   uint32_t i;
   memcpy((void *)(& i),(void const *)(& f),sizeof(uint32_t));
   i = htonl(i);
-  *(dest + 0) = (unsigned short)(i >> 16);
-  *(dest + 1) = (unsigned short)i;
+  *(dest + 0) = (uint16_t)(i >> 16);
+  *(dest + 1) = (uint16_t)i;
   return;
 }
 
@@ -428,8 +427,8 @@ void modbus_set_float_dcba(float f, uint16_t *dest)
   memcpy((void *)(& i),(void const *)(& f),sizeof(uint32_t));
   tmp = htonl(i);
   i = __builtin_bswap32(tmp);
-  *(dest + 0) = (unsigned short)(i >> 16);
-  *(dest + 1) = (unsigned short)i;
+  *(dest + 0) = (uint16_t)(i >> 16);
+  *(dest + 1) = (uint16_t)i;
   return;
 }
 
@@ -444,13 +443,13 @@ void modbus_set_float_badc(float f, uint16_t *dest)
     register unsigned short __x = (unsigned short)(i >> 16);
     tmp = (((int)__x >> 8) & 0xff) | (((int)__x & 0xff) << 8);
   }
-  *(dest + 0) = (unsigned short)tmp;
+  *(dest + 0) = (uint16_t)tmp;
   {
     register unsigned short __x_0 =
       (unsigned short)(i & (unsigned int)0xFFFF);
     tmp_0 = (((int)__x_0 >> 8) & 0xff) | (((int)__x_0 & 0xff) << 8);
   }
-  *(dest + 1) = (unsigned short)tmp_0;
+  *(dest + 1) = (uint16_t)tmp_0;
   return;
 }
 
@@ -459,8 +458,8 @@ void modbus_set_float_cdab(float f, uint16_t *dest)
   uint32_t i;
   memcpy((void *)(& i),(void const *)(& f),sizeof(uint32_t));
   i = htonl(i);
-  *(dest + 0) = (unsigned short)i;
-  *(dest + 1) = (unsigned short)(i >> 16);
+  *(dest + 0) = (uint16_t)i;
+  *(dest + 1) = (uint16_t)(i >> 16);
   return;
 }
 
@@ -468,8 +467,8 @@ void modbus_set_float(float f, uint16_t *dest)
 {
   uint32_t i;
   memcpy((void *)(& i),(void const *)(& f),sizeof(uint32_t));
-  *(dest + 0) = (unsigned short)i;
-  *(dest + 1) = (unsigned short)(i >> 16);
+  *(dest + 0) = (uint16_t)i;
+  *(dest + 1) = (uint16_t)(i >> 16);
   return;
 }
 
@@ -480,519 +479,519 @@ void _error_print(modbus_t *ctx, char const *context);
 int _modbus_receive_msg(modbus_t *ctx, uint8_t *msg, msg_type_t msg_type);
 
 static uint8_t const table_crc_hi[256] =
-  {(unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x01,
-   (unsigned char)0xC0,
-   (unsigned char)0x80,
-   (unsigned char)0x41,
-   (unsigned char)0x00,
-   (unsigned char)0xC1,
-   (unsigned char)0x81,
-   (unsigned char)0x40};
+  {(uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x01,
+   (uint8_t)0xC0,
+   (uint8_t)0x80,
+   (uint8_t)0x41,
+   (uint8_t)0x00,
+   (uint8_t)0xC1,
+   (uint8_t)0x81,
+   (uint8_t)0x40};
 static uint8_t const table_crc_lo[256] =
-  {(unsigned char)0x00,
-   (unsigned char)0xC0,
-   (unsigned char)0xC1,
-   (unsigned char)0x01,
-   (unsigned char)0xC3,
-   (unsigned char)0x03,
-   (unsigned char)0x02,
-   (unsigned char)0xC2,
-   (unsigned char)0xC6,
-   (unsigned char)0x06,
-   (unsigned char)0x07,
-   (unsigned char)0xC7,
-   (unsigned char)0x05,
-   (unsigned char)0xC5,
-   (unsigned char)0xC4,
-   (unsigned char)0x04,
-   (unsigned char)0xCC,
-   (unsigned char)0x0C,
-   (unsigned char)0x0D,
-   (unsigned char)0xCD,
-   (unsigned char)0x0F,
-   (unsigned char)0xCF,
-   (unsigned char)0xCE,
-   (unsigned char)0x0E,
-   (unsigned char)0x0A,
-   (unsigned char)0xCA,
-   (unsigned char)0xCB,
-   (unsigned char)0x0B,
-   (unsigned char)0xC9,
-   (unsigned char)0x09,
-   (unsigned char)0x08,
-   (unsigned char)0xC8,
-   (unsigned char)0xD8,
-   (unsigned char)0x18,
-   (unsigned char)0x19,
-   (unsigned char)0xD9,
-   (unsigned char)0x1B,
-   (unsigned char)0xDB,
-   (unsigned char)0xDA,
-   (unsigned char)0x1A,
-   (unsigned char)0x1E,
-   (unsigned char)0xDE,
-   (unsigned char)0xDF,
-   (unsigned char)0x1F,
-   (unsigned char)0xDD,
-   (unsigned char)0x1D,
-   (unsigned char)0x1C,
-   (unsigned char)0xDC,
-   (unsigned char)0x14,
-   (unsigned char)0xD4,
-   (unsigned char)0xD5,
-   (unsigned char)0x15,
-   (unsigned char)0xD7,
-   (unsigned char)0x17,
-   (unsigned char)0x16,
-   (unsigned char)0xD6,
-   (unsigned char)0xD2,
-   (unsigned char)0x12,
-   (unsigned char)0x13,
-   (unsigned char)0xD3,
-   (unsigned char)0x11,
-   (unsigned char)0xD1,
-   (unsigned char)0xD0,
-   (unsigned char)0x10,
-   (unsigned char)0xF0,
-   (unsigned char)0x30,
-   (unsigned char)0x31,
-   (unsigned char)0xF1,
-   (unsigned char)0x33,
-   (unsigned char)0xF3,
-   (unsigned char)0xF2,
-   (unsigned char)0x32,
-   (unsigned char)0x36,
-   (unsigned char)0xF6,
-   (unsigned char)0xF7,
-   (unsigned char)0x37,
-   (unsigned char)0xF5,
-   (unsigned char)0x35,
-   (unsigned char)0x34,
-   (unsigned char)0xF4,
-   (unsigned char)0x3C,
-   (unsigned char)0xFC,
-   (unsigned char)0xFD,
-   (unsigned char)0x3D,
-   (unsigned char)0xFF,
-   (unsigned char)0x3F,
-   (unsigned char)0x3E,
-   (unsigned char)0xFE,
-   (unsigned char)0xFA,
-   (unsigned char)0x3A,
-   (unsigned char)0x3B,
-   (unsigned char)0xFB,
-   (unsigned char)0x39,
-   (unsigned char)0xF9,
-   (unsigned char)0xF8,
-   (unsigned char)0x38,
-   (unsigned char)0x28,
-   (unsigned char)0xE8,
-   (unsigned char)0xE9,
-   (unsigned char)0x29,
-   (unsigned char)0xEB,
-   (unsigned char)0x2B,
-   (unsigned char)0x2A,
-   (unsigned char)0xEA,
-   (unsigned char)0xEE,
-   (unsigned char)0x2E,
-   (unsigned char)0x2F,
-   (unsigned char)0xEF,
-   (unsigned char)0x2D,
-   (unsigned char)0xED,
-   (unsigned char)0xEC,
-   (unsigned char)0x2C,
-   (unsigned char)0xE4,
-   (unsigned char)0x24,
-   (unsigned char)0x25,
-   (unsigned char)0xE5,
-   (unsigned char)0x27,
-   (unsigned char)0xE7,
-   (unsigned char)0xE6,
-   (unsigned char)0x26,
-   (unsigned char)0x22,
-   (unsigned char)0xE2,
-   (unsigned char)0xE3,
-   (unsigned char)0x23,
-   (unsigned char)0xE1,
-   (unsigned char)0x21,
-   (unsigned char)0x20,
-   (unsigned char)0xE0,
-   (unsigned char)0xA0,
-   (unsigned char)0x60,
-   (unsigned char)0x61,
-   (unsigned char)0xA1,
-   (unsigned char)0x63,
-   (unsigned char)0xA3,
-   (unsigned char)0xA2,
-   (unsigned char)0x62,
-   (unsigned char)0x66,
-   (unsigned char)0xA6,
-   (unsigned char)0xA7,
-   (unsigned char)0x67,
-   (unsigned char)0xA5,
-   (unsigned char)0x65,
-   (unsigned char)0x64,
-   (unsigned char)0xA4,
-   (unsigned char)0x6C,
-   (unsigned char)0xAC,
-   (unsigned char)0xAD,
-   (unsigned char)0x6D,
-   (unsigned char)0xAF,
-   (unsigned char)0x6F,
-   (unsigned char)0x6E,
-   (unsigned char)0xAE,
-   (unsigned char)0xAA,
-   (unsigned char)0x6A,
-   (unsigned char)0x6B,
-   (unsigned char)0xAB,
-   (unsigned char)0x69,
-   (unsigned char)0xA9,
-   (unsigned char)0xA8,
-   (unsigned char)0x68,
-   (unsigned char)0x78,
-   (unsigned char)0xB8,
-   (unsigned char)0xB9,
-   (unsigned char)0x79,
-   (unsigned char)0xBB,
-   (unsigned char)0x7B,
-   (unsigned char)0x7A,
-   (unsigned char)0xBA,
-   (unsigned char)0xBE,
-   (unsigned char)0x7E,
-   (unsigned char)0x7F,
-   (unsigned char)0xBF,
-   (unsigned char)0x7D,
-   (unsigned char)0xBD,
-   (unsigned char)0xBC,
-   (unsigned char)0x7C,
-   (unsigned char)0xB4,
-   (unsigned char)0x74,
-   (unsigned char)0x75,
-   (unsigned char)0xB5,
-   (unsigned char)0x77,
-   (unsigned char)0xB7,
-   (unsigned char)0xB6,
-   (unsigned char)0x76,
-   (unsigned char)0x72,
-   (unsigned char)0xB2,
-   (unsigned char)0xB3,
-   (unsigned char)0x73,
-   (unsigned char)0xB1,
-   (unsigned char)0x71,
-   (unsigned char)0x70,
-   (unsigned char)0xB0,
-   (unsigned char)0x50,
-   (unsigned char)0x90,
-   (unsigned char)0x91,
-   (unsigned char)0x51,
-   (unsigned char)0x93,
-   (unsigned char)0x53,
-   (unsigned char)0x52,
-   (unsigned char)0x92,
-   (unsigned char)0x96,
-   (unsigned char)0x56,
-   (unsigned char)0x57,
-   (unsigned char)0x97,
-   (unsigned char)0x55,
-   (unsigned char)0x95,
-   (unsigned char)0x94,
-   (unsigned char)0x54,
-   (unsigned char)0x9C,
-   (unsigned char)0x5C,
-   (unsigned char)0x5D,
-   (unsigned char)0x9D,
-   (unsigned char)0x5F,
-   (unsigned char)0x9F,
-   (unsigned char)0x9E,
-   (unsigned char)0x5E,
-   (unsigned char)0x5A,
-   (unsigned char)0x9A,
-   (unsigned char)0x9B,
-   (unsigned char)0x5B,
-   (unsigned char)0x99,
-   (unsigned char)0x59,
-   (unsigned char)0x58,
-   (unsigned char)0x98,
-   (unsigned char)0x88,
-   (unsigned char)0x48,
-   (unsigned char)0x49,
-   (unsigned char)0x89,
-   (unsigned char)0x4B,
-   (unsigned char)0x8B,
-   (unsigned char)0x8A,
-   (unsigned char)0x4A,
-   (unsigned char)0x4E,
-   (unsigned char)0x8E,
-   (unsigned char)0x8F,
-   (unsigned char)0x4F,
-   (unsigned char)0x8D,
-   (unsigned char)0x4D,
-   (unsigned char)0x4C,
-   (unsigned char)0x8C,
-   (unsigned char)0x44,
-   (unsigned char)0x84,
-   (unsigned char)0x85,
-   (unsigned char)0x45,
-   (unsigned char)0x87,
-   (unsigned char)0x47,
-   (unsigned char)0x46,
-   (unsigned char)0x86,
-   (unsigned char)0x82,
-   (unsigned char)0x42,
-   (unsigned char)0x43,
-   (unsigned char)0x83,
-   (unsigned char)0x41,
-   (unsigned char)0x81,
-   (unsigned char)0x80,
-   (unsigned char)0x40};
+  {(uint8_t)0x00,
+   (uint8_t)0xC0,
+   (uint8_t)0xC1,
+   (uint8_t)0x01,
+   (uint8_t)0xC3,
+   (uint8_t)0x03,
+   (uint8_t)0x02,
+   (uint8_t)0xC2,
+   (uint8_t)0xC6,
+   (uint8_t)0x06,
+   (uint8_t)0x07,
+   (uint8_t)0xC7,
+   (uint8_t)0x05,
+   (uint8_t)0xC5,
+   (uint8_t)0xC4,
+   (uint8_t)0x04,
+   (uint8_t)0xCC,
+   (uint8_t)0x0C,
+   (uint8_t)0x0D,
+   (uint8_t)0xCD,
+   (uint8_t)0x0F,
+   (uint8_t)0xCF,
+   (uint8_t)0xCE,
+   (uint8_t)0x0E,
+   (uint8_t)0x0A,
+   (uint8_t)0xCA,
+   (uint8_t)0xCB,
+   (uint8_t)0x0B,
+   (uint8_t)0xC9,
+   (uint8_t)0x09,
+   (uint8_t)0x08,
+   (uint8_t)0xC8,
+   (uint8_t)0xD8,
+   (uint8_t)0x18,
+   (uint8_t)0x19,
+   (uint8_t)0xD9,
+   (uint8_t)0x1B,
+   (uint8_t)0xDB,
+   (uint8_t)0xDA,
+   (uint8_t)0x1A,
+   (uint8_t)0x1E,
+   (uint8_t)0xDE,
+   (uint8_t)0xDF,
+   (uint8_t)0x1F,
+   (uint8_t)0xDD,
+   (uint8_t)0x1D,
+   (uint8_t)0x1C,
+   (uint8_t)0xDC,
+   (uint8_t)0x14,
+   (uint8_t)0xD4,
+   (uint8_t)0xD5,
+   (uint8_t)0x15,
+   (uint8_t)0xD7,
+   (uint8_t)0x17,
+   (uint8_t)0x16,
+   (uint8_t)0xD6,
+   (uint8_t)0xD2,
+   (uint8_t)0x12,
+   (uint8_t)0x13,
+   (uint8_t)0xD3,
+   (uint8_t)0x11,
+   (uint8_t)0xD1,
+   (uint8_t)0xD0,
+   (uint8_t)0x10,
+   (uint8_t)0xF0,
+   (uint8_t)0x30,
+   (uint8_t)0x31,
+   (uint8_t)0xF1,
+   (uint8_t)0x33,
+   (uint8_t)0xF3,
+   (uint8_t)0xF2,
+   (uint8_t)0x32,
+   (uint8_t)0x36,
+   (uint8_t)0xF6,
+   (uint8_t)0xF7,
+   (uint8_t)0x37,
+   (uint8_t)0xF5,
+   (uint8_t)0x35,
+   (uint8_t)0x34,
+   (uint8_t)0xF4,
+   (uint8_t)0x3C,
+   (uint8_t)0xFC,
+   (uint8_t)0xFD,
+   (uint8_t)0x3D,
+   (uint8_t)0xFF,
+   (uint8_t)0x3F,
+   (uint8_t)0x3E,
+   (uint8_t)0xFE,
+   (uint8_t)0xFA,
+   (uint8_t)0x3A,
+   (uint8_t)0x3B,
+   (uint8_t)0xFB,
+   (uint8_t)0x39,
+   (uint8_t)0xF9,
+   (uint8_t)0xF8,
+   (uint8_t)0x38,
+   (uint8_t)0x28,
+   (uint8_t)0xE8,
+   (uint8_t)0xE9,
+   (uint8_t)0x29,
+   (uint8_t)0xEB,
+   (uint8_t)0x2B,
+   (uint8_t)0x2A,
+   (uint8_t)0xEA,
+   (uint8_t)0xEE,
+   (uint8_t)0x2E,
+   (uint8_t)0x2F,
+   (uint8_t)0xEF,
+   (uint8_t)0x2D,
+   (uint8_t)0xED,
+   (uint8_t)0xEC,
+   (uint8_t)0x2C,
+   (uint8_t)0xE4,
+   (uint8_t)0x24,
+   (uint8_t)0x25,
+   (uint8_t)0xE5,
+   (uint8_t)0x27,
+   (uint8_t)0xE7,
+   (uint8_t)0xE6,
+   (uint8_t)0x26,
+   (uint8_t)0x22,
+   (uint8_t)0xE2,
+   (uint8_t)0xE3,
+   (uint8_t)0x23,
+   (uint8_t)0xE1,
+   (uint8_t)0x21,
+   (uint8_t)0x20,
+   (uint8_t)0xE0,
+   (uint8_t)0xA0,
+   (uint8_t)0x60,
+   (uint8_t)0x61,
+   (uint8_t)0xA1,
+   (uint8_t)0x63,
+   (uint8_t)0xA3,
+   (uint8_t)0xA2,
+   (uint8_t)0x62,
+   (uint8_t)0x66,
+   (uint8_t)0xA6,
+   (uint8_t)0xA7,
+   (uint8_t)0x67,
+   (uint8_t)0xA5,
+   (uint8_t)0x65,
+   (uint8_t)0x64,
+   (uint8_t)0xA4,
+   (uint8_t)0x6C,
+   (uint8_t)0xAC,
+   (uint8_t)0xAD,
+   (uint8_t)0x6D,
+   (uint8_t)0xAF,
+   (uint8_t)0x6F,
+   (uint8_t)0x6E,
+   (uint8_t)0xAE,
+   (uint8_t)0xAA,
+   (uint8_t)0x6A,
+   (uint8_t)0x6B,
+   (uint8_t)0xAB,
+   (uint8_t)0x69,
+   (uint8_t)0xA9,
+   (uint8_t)0xA8,
+   (uint8_t)0x68,
+   (uint8_t)0x78,
+   (uint8_t)0xB8,
+   (uint8_t)0xB9,
+   (uint8_t)0x79,
+   (uint8_t)0xBB,
+   (uint8_t)0x7B,
+   (uint8_t)0x7A,
+   (uint8_t)0xBA,
+   (uint8_t)0xBE,
+   (uint8_t)0x7E,
+   (uint8_t)0x7F,
+   (uint8_t)0xBF,
+   (uint8_t)0x7D,
+   (uint8_t)0xBD,
+   (uint8_t)0xBC,
+   (uint8_t)0x7C,
+   (uint8_t)0xB4,
+   (uint8_t)0x74,
+   (uint8_t)0x75,
+   (uint8_t)0xB5,
+   (uint8_t)0x77,
+   (uint8_t)0xB7,
+   (uint8_t)0xB6,
+   (uint8_t)0x76,
+   (uint8_t)0x72,
+   (uint8_t)0xB2,
+   (uint8_t)0xB3,
+   (uint8_t)0x73,
+   (uint8_t)0xB1,
+   (uint8_t)0x71,
+   (uint8_t)0x70,
+   (uint8_t)0xB0,
+   (uint8_t)0x50,
+   (uint8_t)0x90,
+   (uint8_t)0x91,
+   (uint8_t)0x51,
+   (uint8_t)0x93,
+   (uint8_t)0x53,
+   (uint8_t)0x52,
+   (uint8_t)0x92,
+   (uint8_t)0x96,
+   (uint8_t)0x56,
+   (uint8_t)0x57,
+   (uint8_t)0x97,
+   (uint8_t)0x55,
+   (uint8_t)0x95,
+   (uint8_t)0x94,
+   (uint8_t)0x54,
+   (uint8_t)0x9C,
+   (uint8_t)0x5C,
+   (uint8_t)0x5D,
+   (uint8_t)0x9D,
+   (uint8_t)0x5F,
+   (uint8_t)0x9F,
+   (uint8_t)0x9E,
+   (uint8_t)0x5E,
+   (uint8_t)0x5A,
+   (uint8_t)0x9A,
+   (uint8_t)0x9B,
+   (uint8_t)0x5B,
+   (uint8_t)0x99,
+   (uint8_t)0x59,
+   (uint8_t)0x58,
+   (uint8_t)0x98,
+   (uint8_t)0x88,
+   (uint8_t)0x48,
+   (uint8_t)0x49,
+   (uint8_t)0x89,
+   (uint8_t)0x4B,
+   (uint8_t)0x8B,
+   (uint8_t)0x8A,
+   (uint8_t)0x4A,
+   (uint8_t)0x4E,
+   (uint8_t)0x8E,
+   (uint8_t)0x8F,
+   (uint8_t)0x4F,
+   (uint8_t)0x8D,
+   (uint8_t)0x4D,
+   (uint8_t)0x4C,
+   (uint8_t)0x8C,
+   (uint8_t)0x44,
+   (uint8_t)0x84,
+   (uint8_t)0x85,
+   (uint8_t)0x45,
+   (uint8_t)0x87,
+   (uint8_t)0x47,
+   (uint8_t)0x46,
+   (uint8_t)0x86,
+   (uint8_t)0x82,
+   (uint8_t)0x42,
+   (uint8_t)0x43,
+   (uint8_t)0x83,
+   (uint8_t)0x41,
+   (uint8_t)0x81,
+   (uint8_t)0x80,
+   (uint8_t)0x40};
 static int _modbus_set_slave(modbus_t *ctx, int slave)
 {
   int __retres;
@@ -1016,12 +1015,12 @@ static int _modbus_rtu_build_request_basis(modbus_t *ctx, int function,
   int __retres;
   __FC_assert((ctx->slave != -1) != 0,"src/modbus-rtu.c",110,
               "ctx->slave != -1");
-  *(req + 0) = (unsigned char)ctx->slave;
-  *(req + 1) = (unsigned char)function;
-  *(req + 2) = (unsigned char)(addr >> 8);
-  *(req + 3) = (unsigned char)(addr & 0x00ff);
-  *(req + 4) = (unsigned char)(nb >> 8);
-  *(req + 5) = (unsigned char)(nb & 0x00ff);
+  *(req + 0) = (uint8_t)ctx->slave;
+  *(req + 1) = (uint8_t)function;
+  *(req + 2) = (uint8_t)(addr >> 8);
+  *(req + 3) = (uint8_t)(addr & 0x00ff);
+  *(req + 4) = (uint8_t)(nb >> 8);
+  *(req + 5) = (uint8_t)(nb & 0x00ff);
   __retres = 6;
   return __retres;
 }
@@ -1029,8 +1028,8 @@ static int _modbus_rtu_build_request_basis(modbus_t *ctx, int function,
 static int _modbus_rtu_build_response_basis(sft_t *sft, uint8_t *rsp)
 {
   int __retres;
-  *(rsp + 0) = (unsigned char)sft->slave;
-  *(rsp + 1) = (unsigned char)sft->function;
+  *(rsp + 0) = (uint8_t)sft->slave;
+  *(rsp + 1) = (uint8_t)sft->function;
   __retres = 2;
   return __retres;
 }
@@ -1039,12 +1038,12 @@ static uint16_t crc16(uint8_t *buffer, uint16_t buffer_length)
 {
   uint16_t __retres;
   unsigned int i;
-  uint8_t crc_hi = (unsigned char)0xFF;
-  uint8_t crc_lo = (unsigned char)0xFF;
+  uint8_t crc_hi = (uint8_t)0xFF;
+  uint8_t crc_lo = (uint8_t)0xFF;
   while (1) {
     uint16_t tmp_0;
     tmp_0 = buffer_length;
-    buffer_length = (unsigned short)((int)buffer_length - 1);
+    buffer_length = (uint16_t)((int)buffer_length - 1);
     ;
     if (! tmp_0) break;
     {
@@ -1052,11 +1051,11 @@ static uint16_t crc16(uint8_t *buffer, uint16_t buffer_length)
       tmp = buffer;
       buffer ++;
       i = (unsigned int)((int)crc_hi ^ (int)*tmp);
-      crc_hi = (unsigned char)((int)crc_lo ^ (int)table_crc_hi[i]);
+      crc_hi = (uint8_t)((int)crc_lo ^ (int)table_crc_hi[i]);
       crc_lo = table_crc_lo[i];
     }
   }
-  __retres = (unsigned short)(((int)crc_hi << 8) | (int)crc_lo);
+  __retres = (uint16_t)(((int)crc_hi << 8) | (int)crc_lo);
   return __retres;
 }
 
@@ -1073,13 +1072,13 @@ static int _modbus_rtu_send_msg_pre(uint8_t *req, int req_length)
 {
   int tmp_0;
   int tmp_1;
-  uint16_t crc = crc16(req,(unsigned short)req_length);
+  uint16_t crc = crc16(req,(uint16_t)req_length);
   tmp_0 = req_length;
   req_length ++;
-  *(req + tmp_0) = (unsigned char)((int)crc >> 8);
+  *(req + tmp_0) = (uint8_t)((int)crc >> 8);
   tmp_1 = req_length;
   req_length ++;
-  *(req + tmp_1) = (unsigned char)((int)crc & 0x00FF);
+  *(req + tmp_1) = (uint8_t)((int)crc & 0x00FF);
   return req_length;
 }
 
@@ -1114,16 +1113,16 @@ static ssize_t _modbus_rtu_send(modbus_t *ctx, uint8_t const *req,
     ssize_t size;
     if (ctx->debug) fprintf(__fc_stderr,"Sending request using RTS signal\n"); /* fprintf_va_1 */
     (*(ctx_rtu->set_rts))(ctx,ctx_rtu->rts == 1);
-    usleep((unsigned int)ctx_rtu->rts_delay);
-    size = write(ctx->s,(void const *)req,(unsigned long)req_length);
-    usleep((unsigned int)(ctx_rtu->onebyte_time * req_length + ctx_rtu->rts_delay));
+    usleep((useconds_t)ctx_rtu->rts_delay);
+    size = write(ctx->s,(void const *)req,(size_t)req_length);
+    usleep((useconds_t)(ctx_rtu->onebyte_time * req_length + ctx_rtu->rts_delay));
     (*(ctx_rtu->set_rts))(ctx,ctx_rtu->rts != 1);
     __retres = size;
     goto return_label;
   }
   else {
     ssize_t tmp;
-    tmp = write(ctx->s,(void const *)req,(unsigned long)req_length);
+    tmp = write(ctx->s,(void const *)req,(size_t)req_length);
     __retres = tmp;
     goto return_label;
   }
@@ -1162,7 +1161,7 @@ static int _modbus_rtu_receive(modbus_t *ctx, uint8_t *req)
 static ssize_t _modbus_rtu_recv(modbus_t *ctx, uint8_t *rsp, int rsp_length)
 {
   ssize_t tmp;
-  tmp = read(ctx->s,(void *)rsp,(unsigned long)rsp_length);
+  tmp = read(ctx->s,(void *)rsp,(size_t)rsp_length);
   return tmp;
 }
 
@@ -1250,9 +1249,9 @@ static int _modbus_rtu_check_integrity(modbus_t *ctx, uint8_t *msg,
       __retres = 0;
       goto return_label;
     }
-  crc_calculated = crc16(msg,(unsigned short)(msg_length - 2));
-  crc_received = (unsigned short)(((int)*(msg + (msg_length - 2)) << 8) | (int)*(
-                                  msg + (msg_length - 1)));
+  crc_calculated = crc16(msg,(uint16_t)(msg_length - 2));
+  crc_received = (uint16_t)(((int)*(msg + (msg_length - 2)) << 8) | (int)*(
+                            msg + (msg_length - 1)));
   if ((int)crc_calculated == (int)crc_received) {
     __retres = msg_length;
     goto return_label;
@@ -1350,53 +1349,53 @@ static int _modbus_rtu_connect(modbus_t *ctx)
   tcgetattr(ctx->s,& ctx_rtu->old_tios);
   memset((void *)(& tios),0,sizeof(struct termios));
   switch (ctx_rtu->baud) {
-    case 110: speed = (unsigned int)0000003;
+    case 110: speed = (speed_t)0000003;
     break;
-    case 300: speed = (unsigned int)0000007;
+    case 300: speed = (speed_t)0000007;
     break;
-    case 600: speed = (unsigned int)0000010;
+    case 600: speed = (speed_t)0000010;
     break;
-    case 1200: speed = (unsigned int)0000011;
+    case 1200: speed = (speed_t)0000011;
     break;
-    case 2400: speed = (unsigned int)0000013;
+    case 2400: speed = (speed_t)0000013;
     break;
-    case 4800: speed = (unsigned int)0000014;
+    case 4800: speed = (speed_t)0000014;
     break;
-    case 9600: speed = (unsigned int)0000015;
+    case 9600: speed = (speed_t)0000015;
     break;
-    case 19200: speed = (unsigned int)0000016;
+    case 19200: speed = (speed_t)0000016;
     break;
-    case 38400: speed = (unsigned int)0000017;
+    case 38400: speed = (speed_t)0000017;
     break;
-    case 57600: speed = (unsigned int)0010001;
+    case 57600: speed = (speed_t)0010001;
     break;
-    case 115200: speed = (unsigned int)0010002;
+    case 115200: speed = (speed_t)0010002;
     break;
-    case 230400: speed = (unsigned int)0010003;
+    case 230400: speed = (speed_t)0010003;
     break;
-    case 460800: speed = (unsigned int)0010004;
+    case 460800: speed = (speed_t)0010004;
     break;
-    case 500000: speed = (unsigned int)0010005;
+    case 500000: speed = (speed_t)0010005;
     break;
-    case 576000: speed = (unsigned int)0010006;
+    case 576000: speed = (speed_t)0010006;
     break;
-    case 921600: speed = (unsigned int)0010007;
+    case 921600: speed = (speed_t)0010007;
     break;
-    case 1000000: speed = (unsigned int)0010010;
+    case 1000000: speed = (speed_t)0010010;
     break;
-    case 1152000: speed = (unsigned int)0010011;
+    case 1152000: speed = (speed_t)0010011;
     break;
-    case 1500000: speed = (unsigned int)0010012;
+    case 1500000: speed = (speed_t)0010012;
     break;
-    case 2500000: speed = (unsigned int)0010014;
+    case 2500000: speed = (speed_t)0010014;
     break;
-    case 3000000: speed = (unsigned int)0010015;
+    case 3000000: speed = (speed_t)0010015;
     break;
-    case 3500000: speed = (unsigned int)0010016;
+    case 3500000: speed = (speed_t)0010016;
     break;
-    case 4000000: speed = (unsigned int)0010017;
+    case 4000000: speed = (speed_t)0010017;
     break;
-    default: speed = (unsigned int)0000015;
+    default: speed = (speed_t)0000015;
     if (ctx->debug) fprintf(__fc_stderr,
                             "WARNING Unknown baud rate %d for %s (B9600 used)\n",
                             ctx_rtu->baud,ctx_rtu->device); /* fprintf_va_5 */
@@ -1444,8 +1443,8 @@ static int _modbus_rtu_connect(modbus_t *ctx)
   else tios.c_iflag |= (unsigned int)0000020;
   tios.c_iflag &= (unsigned int)(~ ((0002000 | 0010000) | 0004000));
   tios.c_oflag &= (unsigned int)(~ 0000001);
-  tios.c_cc[6] = (unsigned char)0;
-  tios.c_cc[5] = (unsigned char)0;
+  tios.c_cc[6] = (cc_t)0;
+  tios.c_cc[5] = (cc_t)0;
   tmp_2 = tcsetattr(ctx->s,0,& tios);
   if (tmp_2 < 0) {
     close(ctx->s);
@@ -1809,8 +1808,8 @@ modbus_t *modbus_new_rtu(char const *device, int baud, char parity,
         __retres = (modbus_t *)0;
         goto return_label;
       }
-  ctx_rtu->data_bit = (unsigned char)data_bit;
-  ctx_rtu->stop_bit = (unsigned char)stop_bit;
+  ctx_rtu->data_bit = (uint8_t)data_bit;
+  ctx_rtu->stop_bit = (uint8_t)stop_bit;
   ctx_rtu->rts = 0;
   if ((int)parity == 'N') tmp_3 = 0; else tmp_3 = 1;
   ctx_rtu->onebyte_time = (1000000 * (((1 + data_bit) + tmp_3) + stop_bit)) / baud;
@@ -1845,18 +1844,18 @@ static int _modbus_tcp_build_request_basis(modbus_t *ctx, int function,
 {
   int __retres;
   modbus_tcp_t *ctx_tcp = (modbus_tcp_t *)ctx->backend_data;
-  if ((int)ctx_tcp->t_id < 65535) ctx_tcp->t_id = (unsigned short)((int)ctx_tcp->t_id + 1);
-  else ctx_tcp->t_id = (unsigned short)0;
-  *(req + 0) = (unsigned char)((int)ctx_tcp->t_id >> 8);
-  *(req + 1) = (unsigned char)((int)ctx_tcp->t_id & 0x00ff);
-  *(req + 2) = (unsigned char)0;
-  *(req + 3) = (unsigned char)0;
-  *(req + 6) = (unsigned char)ctx->slave;
-  *(req + 7) = (unsigned char)function;
-  *(req + 8) = (unsigned char)(addr >> 8);
-  *(req + 9) = (unsigned char)(addr & 0x00ff);
-  *(req + 10) = (unsigned char)(nb >> 8);
-  *(req + 11) = (unsigned char)(nb & 0x00ff);
+  if ((int)ctx_tcp->t_id < 65535) ctx_tcp->t_id = (uint16_t)((int)ctx_tcp->t_id + 1);
+  else ctx_tcp->t_id = (uint16_t)0;
+  *(req + 0) = (uint8_t)((int)ctx_tcp->t_id >> 8);
+  *(req + 1) = (uint8_t)((int)ctx_tcp->t_id & 0x00ff);
+  *(req + 2) = (uint8_t)0;
+  *(req + 3) = (uint8_t)0;
+  *(req + 6) = (uint8_t)ctx->slave;
+  *(req + 7) = (uint8_t)function;
+  *(req + 8) = (uint8_t)(addr >> 8);
+  *(req + 9) = (uint8_t)(addr & 0x00ff);
+  *(req + 10) = (uint8_t)(nb >> 8);
+  *(req + 11) = (uint8_t)(nb & 0x00ff);
   __retres = 12;
   return __retres;
 }
@@ -1864,12 +1863,12 @@ static int _modbus_tcp_build_request_basis(modbus_t *ctx, int function,
 static int _modbus_tcp_build_response_basis(sft_t *sft, uint8_t *rsp)
 {
   int __retres;
-  *(rsp + 0) = (unsigned char)(sft->t_id >> 8);
-  *(rsp + 1) = (unsigned char)(sft->t_id & 0x00ff);
-  *(rsp + 2) = (unsigned char)0;
-  *(rsp + 3) = (unsigned char)0;
-  *(rsp + 6) = (unsigned char)sft->slave;
-  *(rsp + 7) = (unsigned char)sft->function;
+  *(rsp + 0) = (uint8_t)(sft->t_id >> 8);
+  *(rsp + 1) = (uint8_t)(sft->t_id & 0x00ff);
+  *(rsp + 2) = (uint8_t)0;
+  *(rsp + 3) = (uint8_t)0;
+  *(rsp + 6) = (uint8_t)sft->slave;
+  *(rsp + 7) = (uint8_t)sft->function;
   __retres = 8;
   return __retres;
 }
@@ -1885,8 +1884,8 @@ static int _modbus_tcp_prepare_response_tid(uint8_t const *req,
 static int _modbus_tcp_send_msg_pre(uint8_t *req, int req_length)
 {
   int mbap_length = req_length - 6;
-  *(req + 4) = (unsigned char)(mbap_length >> 8);
-  *(req + 5) = (unsigned char)(mbap_length & 0x00FF);
+  *(req + 4) = (uint8_t)(mbap_length >> 8);
+  *(req + 5) = (uint8_t)(mbap_length & 0x00FF);
   return req_length;
 }
 
@@ -1894,7 +1893,7 @@ static ssize_t _modbus_tcp_send(modbus_t *ctx, uint8_t const *req,
                                 int req_length)
 {
   ssize_t tmp;
-  tmp = send(ctx->s,(void const *)req,(unsigned long)req_length,0x4000);
+  tmp = send(ctx->s,(void const *)req,(size_t)req_length,0x4000);
   return tmp;
 }
 
@@ -1908,7 +1907,7 @@ static int _modbus_tcp_receive(modbus_t *ctx, uint8_t *req)
 static ssize_t _modbus_tcp_recv(modbus_t *ctx, uint8_t *rsp, int rsp_length)
 {
   ssize_t tmp;
-  tmp = recv(ctx->s,(void *)rsp,(unsigned long)rsp_length,0);
+  tmp = recv(ctx->s,(void *)rsp,(size_t)rsp_length,0);
   return tmp;
 }
 
@@ -1988,7 +1987,7 @@ static int _modbus_tcp_set_ipv4_options(int s)
   int option;
   option = 1;
   rc = setsockopt(s,IPPROTO_TCP,1,(void const *)(& option),
-                  (unsigned int)sizeof(int));
+                  (socklen_t)sizeof(int));
   if (rc == -1) {
     __retres = -1;
     goto return_label;
@@ -1997,7 +1996,7 @@ static int _modbus_tcp_set_ipv4_options(int s)
   ioctl(s,0x5421,(void *)(& option)); /* __va_ioctl_ptr */
   option = 0x10;
   rc = setsockopt(s,IPPROTO_IP,1,(void const *)(& option),
-                  (unsigned int)sizeof(int));
+                  (socklen_t)sizeof(int));
   if (rc == -1) {
     __retres = -1;
     goto return_label;
@@ -2015,7 +2014,7 @@ static int _connect(int sockfd, struct sockaddr const *addr,
     if (__fc_errno == 115) {
       fd_set wset;
       int optval;
-      socklen_t optlen = (unsigned int)sizeof(optval);
+      socklen_t optlen = (socklen_t)sizeof(optval);
       struct timeval tv = *ro_tv;
       FD_ZERO(& wset);
       FD_SET(sockfd,& wset);
@@ -2080,11 +2079,11 @@ static int _modbus_tcp_connect(modbus_t *ctx)
     goto return_label;
   }
   if (ctx->debug) printf("Connecting to %s:%d\n",ctx_tcp->ip,ctx_tcp->port); /* printf_va_4 */
-  addr.sin_family = (unsigned short)2;
-  addr.sin_port = htons((unsigned short)ctx_tcp->port);
+  addr.sin_family = (sa_family_t)2;
+  addr.sin_port = htons((uint16_t)ctx_tcp->port);
   addr.sin_addr.s_addr = inet_addr((char const *)(ctx_tcp->ip));
   rc = _connect(ctx->s,(struct sockaddr const *)(& addr),
-                (unsigned int)sizeof(addr),
+                (socklen_t)sizeof(addr),
                 (struct timeval const *)(& ctx->response_timeout));
   if (rc == -1) {
     close(ctx->s);
@@ -2206,7 +2205,7 @@ static int _modbus_tcp_flush(modbus_t *ctx)
     {
       char devnull[260];
       ssize_t tmp;
-      tmp = recv(ctx->s,(void *)(devnull),(unsigned long)260,0x40);
+      tmp = recv(ctx->s,(void *)(devnull),(size_t)260,0x40);
       rc = (int)tmp;
       if (rc > 0) rc_sum += rc;
     }
@@ -2238,19 +2237,19 @@ int modbus_tcp_listen(modbus_t *ctx, int nb_connection)
   }
   enable = 1;
   tmp = setsockopt(new_s,1,2,(void const *)(& enable),
-                   (unsigned int)sizeof(enable));
+                   (socklen_t)sizeof(enable));
   if (tmp == -1) {
     close(new_s);
     __retres = -1;
     goto return_label;
   }
   memset((void *)(& addr),0,sizeof(addr));
-  addr.sin_family = (unsigned short)2;
-  addr.sin_port = htons((unsigned short)ctx_tcp->port);
-  if ((int)ctx_tcp->ip[0] == '0') addr.sin_addr.s_addr = htonl((unsigned int)0);
+  addr.sin_family = (sa_family_t)2;
+  addr.sin_port = htons((uint16_t)ctx_tcp->port);
+  if ((int)ctx_tcp->ip[0] == '0') addr.sin_addr.s_addr = htonl((uint32_t)0);
   else addr.sin_addr.s_addr = inet_addr((char const *)(ctx_tcp->ip));
   tmp_0 = bind(new_s,(struct sockaddr const *)(& addr),
-               (unsigned int)sizeof(addr));
+               (socklen_t)sizeof(addr));
   if (tmp_0 == -1) {
     close(new_s);
     __retres = -1;
@@ -2336,7 +2335,7 @@ int modbus_tcp_pi_listen(modbus_t *ctx, int nb_connection)
       else {
         int enable = 1;
         rc = setsockopt(s,1,2,(void const *)(& enable),
-                        (unsigned int)sizeof(enable));
+                        (socklen_t)sizeof(enable));
         if (rc != 0) {
           close(s);
           if (ctx->debug) perror("setsockopt");
@@ -2394,7 +2393,7 @@ int modbus_tcp_accept(modbus_t *ctx, int *s)
     __retres = -1;
     goto return_label;
   }
-  addrlen = (unsigned int)sizeof(addr);
+  addrlen = (socklen_t)sizeof(addr);
   ctx->s = accept(*s,(struct sockaddr *)(& addr),& addrlen);
   if (ctx->s == -1) {
     __retres = -1;
@@ -2431,7 +2430,7 @@ int modbus_tcp_pi_accept(modbus_t *ctx, int *s)
     __retres = -1;
     goto return_label;
   }
-  addrlen = (unsigned int)sizeof(addr);
+  addrlen = (socklen_t)sizeof(addr);
   ctx->s = accept(*s,(struct sockaddr *)(& addr),& addrlen);
   if (ctx->s == -1) {
     __retres = -1;
@@ -2591,7 +2590,7 @@ modbus_t *modbus_new_tcp(char const *ip, int port)
   }
   else ctx_tcp->ip[0] = (char)'0';
   ctx_tcp->port = port;
-  ctx_tcp->t_id = (unsigned short)0;
+  ctx_tcp->t_id = (uint16_t)0;
   __retres = ctx;
   return_label: return __retres;
 }
@@ -2680,7 +2679,7 @@ modbus_t *modbus_new_tcp_pi(char const *node, char const *service)
     dest_size = sizeof(char) * (unsigned long)32;
     ret_size = strlcpy(ctx_tcp_pi->service,service,dest_size);
   }
-  else ret_size = (unsigned long)0;
+  else ret_size = (size_t)0;
   if (ret_size == (size_t)0) {
     fprintf(__fc_stderr,"The service string is empty\n"); /* fprintf_va_20 */
     modbus_free(ctx);
@@ -2695,7 +2694,7 @@ modbus_t *modbus_new_tcp_pi(char const *node, char const *service)
     __retres = (modbus_t *)0;
     goto return_label;
   }
-  ctx_tcp_pi->t_id = (unsigned short)0;
+  ctx_tcp_pi->t_id = (uint16_t)0;
   __retres = ctx;
   return_label: return __retres;
 }
@@ -3004,7 +3003,7 @@ int modbus_send_raw_request(modbus_t *ctx, uint8_t *raw_req,
   req_length = (*((ctx->backend)->build_response_basis))(& sft,req);
   if (raw_req_length > 2) {
     memcpy((void *)(& req[req_length]),(void const *)(raw_req + 2),
-           (unsigned long)(raw_req_length - 2));
+           (size_t)(raw_req_length - 2));
     req_length += raw_req_length - 2;
   }
   tmp = send_msg(ctx,req,req_length);
@@ -3036,7 +3035,7 @@ static uint8_t compute_meta_length_after_function(int function,
       break;
       default: length = 1;
     }
-  __retres = (unsigned char)length;
+  __retres = (uint8_t)length;
   return __retres;
 }
 
@@ -3453,7 +3452,7 @@ static int response_io_status(uint8_t *tab_io_status, int address, int nb,
       int tmp;
       tmp = offset;
       offset ++;
-      *(rsp + tmp) = (unsigned char)one_byte;
+      *(rsp + tmp) = (uint8_t)one_byte;
       shift = 0;
       one_byte = shift;
     }
@@ -3464,7 +3463,7 @@ static int response_io_status(uint8_t *tab_io_status, int address, int nb,
     int tmp_0;
     tmp_0 = offset;
     offset ++;
-    *(rsp + tmp_0) = (unsigned char)one_byte;
+    *(rsp + tmp_0) = (uint8_t)one_byte;
   }
   return offset;
 }
@@ -3488,7 +3487,7 @@ static int response_exception(modbus_t *ctx, sft_t *sft, int exception_code,
   rsp_length = (*((ctx->backend)->build_response_basis))(sft,rsp);
   tmp = rsp_length;
   rsp_length ++;
-  *(rsp + tmp) = (unsigned char)exception_code;
+  *(rsp + tmp) = (uint8_t)exception_code;
   return rsp_length;
 }
 
@@ -3524,8 +3523,8 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
   offset = (int)(ctx->backend)->header_length;
   slave = (int)*(req + (offset - 1));
   function = (int)*(req + offset);
-  address = (unsigned short)(((int)*(req + (offset + 1)) << 8) + (int)*(
-                             req + (offset + 2)));
+  address = (uint16_t)(((int)*(req + (offset + 1)) << 8) + (int)*(req + (
+                                                                  offset + 2)));
   sft.slave = slave;
   sft.function = function;
   sft.t_id = (*((ctx->backend)->prepare_response_tid))(req,& req_length);
@@ -3598,7 +3597,7 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
               tmp_4 = rsp_length;
               rsp_length ++;
               if (nb % 8) tmp_5 = 1; else tmp_5 = 0;
-              rsp[tmp_4] = (unsigned char)(nb / 8 + tmp_5);
+              rsp[tmp_4] = (uint8_t)(nb / 8 + tmp_5);
               rsp_length = response_io_status(tab_bits,mapping_address,nb,
                                               rsp,rsp_length);
             }
@@ -3673,7 +3672,7 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
                                                                     rsp);
               tmp_11 = rsp_length;
               rsp_length ++;
-              rsp[tmp_11] = (unsigned char)(nb_0 << 1);
+              rsp[tmp_11] = (uint8_t)(nb_0 << 1);
               i = mapping_address_0;
               while (i < mapping_address_0 + nb_0) {
                 {
@@ -3681,10 +3680,10 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
                   int tmp_13;
                   tmp_12 = rsp_length;
                   rsp_length ++;
-                  rsp[tmp_12] = (unsigned char)((int)*(tab_registers + i) >> 8);
+                  rsp[tmp_12] = (uint8_t)((int)*(tab_registers + i) >> 8);
                   tmp_13 = rsp_length;
                   rsp_length ++;
-                  rsp[tmp_13] = (unsigned char)((int)*(tab_registers + i) & 0xFF);
+                  rsp[tmp_13] = (uint8_t)((int)*(tab_registers + i) & 0xFF);
                 }
                 i ++;
               }
@@ -3716,10 +3715,9 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
             if (data == 0x0) {
               _LOR_3:
               {
-                if (data) *(mb_mapping->tab_bits + mapping_address_1) = (unsigned char)1;
-                else *(mb_mapping->tab_bits + mapping_address_1) = (unsigned char)0;
-                memcpy((void *)(rsp),(void const *)req,
-                       (unsigned long)req_length);
+                if (data) *(mb_mapping->tab_bits + mapping_address_1) = (uint8_t)1;
+                else *(mb_mapping->tab_bits + mapping_address_1) = (uint8_t)0;
+                memcpy((void *)(rsp),(void const *)req,(size_t)req_length);
                 rsp_length = req_length;
               }
             }
@@ -3758,8 +3756,8 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
         else {
           int data_0 =
             ((int)*(req + (offset + 3)) << 8) + (int)*(req + (offset + 4));
-          *(mb_mapping->tab_registers + mapping_address_2) = (unsigned short)data_0;
-          memcpy((void *)(rsp),(void const *)req,(unsigned long)req_length);
+          *(mb_mapping->tab_registers + mapping_address_2) = (uint16_t)data_0;
+          memcpy((void *)(rsp),(void const *)req,(size_t)req_length);
           rsp_length = req_length;
         }
     }
@@ -3813,7 +3811,7 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
               rsp_length = (*((ctx->backend)->build_response_basis))(& sft,
                                                                     rsp);
               memcpy((void *)(& rsp[rsp_length]),
-                     (void const *)(req + rsp_length),(unsigned long)4);
+                     (void const *)(req + rsp_length),(size_t)4);
               rsp_length += 4;
             }
     }
@@ -3865,15 +3863,18 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
               i_0 = mapping_address_4;
               j = 6;
               while (i_0 < mapping_address_4 + nb_2) {
-                *(mb_mapping->tab_registers + i_0) = (unsigned short)(
-                ((int)*(req + (offset + j)) << 8) + (int)*(req + ((offset + j) + 1)));
+                *(mb_mapping->tab_registers + i_0) = (uint16_t)(((int)*(
+                                                                 req + (
+                                                                 offset + j)) << 8) + (int)*(
+                                                                req + (
+                                                                (offset + j) + 1)));
                 i_0 ++;
                 j += 2;
               }
               rsp_length = (*((ctx->backend)->build_response_basis))(& sft,
                                                                     rsp);
               memcpy((void *)(& rsp[rsp_length]),
-                     (void const *)(req + rsp_length),(unsigned long)4);
+                     (void const *)(req + rsp_length),(size_t)4);
               rsp_length += 4;
             }
     }
@@ -3892,16 +3893,16 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
       byte_count_pos = tmp_16;
       tmp_17 = rsp_length;
       rsp_length ++;
-      rsp[tmp_17] = (unsigned char)180;
+      rsp[tmp_17] = (uint8_t)180;
       tmp_18 = rsp_length;
       rsp_length ++;
-      rsp[tmp_18] = (unsigned char)0xFF;
+      rsp[tmp_18] = (uint8_t)0xFF;
       tmp_19 = strlen("3.1.4");
       str_len = (int)((size_t)3 + tmp_19);
       memcpy((void *)(& rsp[rsp_length]),(void const *)"LMB3.1.4",
-             (unsigned long)str_len);
+             (size_t)str_len);
       rsp_length += str_len;
-      rsp[byte_count_pos] = (unsigned char)((rsp_length - byte_count_pos) - 1);
+      rsp[byte_count_pos] = (uint8_t)((rsp_length - byte_count_pos) - 1);
     }
     break;
     case 0x07: ;
@@ -3930,14 +3931,14 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
         else {
           uint16_t data_1 = *(mb_mapping->tab_registers + mapping_address_5);
           uint16_t and =
-            (unsigned short)(((int)*(req + (offset + 3)) << 8) + (int)*(
-                             req + (offset + 4)));
+            (uint16_t)(((int)*(req + (offset + 3)) << 8) + (int)*(req + (
+                                                                  offset + 4)));
           uint16_t or =
-            (unsigned short)(((int)*(req + (offset + 5)) << 8) + (int)*(
-                             req + (offset + 6)));
-          data_1 = (unsigned short)(((int)data_1 & (int)and) | ((int)or & ~ ((int)and)));
+            (uint16_t)(((int)*(req + (offset + 5)) << 8) + (int)*(req + (
+                                                                  offset + 6)));
+          data_1 = (uint16_t)(((int)data_1 & (int)and) | ((int)or & ~ ((int)and)));
           *(mb_mapping->tab_registers + mapping_address_5) = data_1;
-          memcpy((void *)(rsp),(void const *)req,(unsigned long)req_length);
+          memcpy((void *)(rsp),(void const *)req,(size_t)req_length);
           rsp_length = req_length;
         }
     }
@@ -3947,8 +3948,8 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
       int nb_3 =
         ((int)*(req + (offset + 3)) << 8) + (int)*(req + (offset + 4));
       uint16_t address_write =
-        (unsigned short)(((int)*(req + (offset + 5)) << 8) + (int)*(req + (
-                                                                    offset + 6)));
+        (uint16_t)(((int)*(req + (offset + 5)) << 8) + (int)*(req + (
+                                                              offset + 6)));
       int nb_write =
         ((int)*(req + (offset + 7)) << 8) + (int)*(req + (offset + 8));
       int nb_write_bytes = (int)*(req + (offset + 9));
@@ -4022,11 +4023,11 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
                         (& sft,rsp);
                         tmp_22 = rsp_length;
                         rsp_length ++;
-                        rsp[tmp_22] = (unsigned char)(nb_3 << 1);
+                        rsp[tmp_22] = (uint8_t)(nb_3 << 1);
                         i_1 = mapping_address_write;
                         j_0 = 10;
                         while (i_1 < mapping_address_write + nb_write) {
-                          *(mb_mapping->tab_registers + i_1) = (unsigned short)(
+                          *(mb_mapping->tab_registers + i_1) = (uint16_t)(
                           ((int)*(req + (offset + j_0)) << 8) + (int)*(
                           req + ((offset + j_0) + 1)));
                           i_1 ++;
@@ -4039,10 +4040,10 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
                             int tmp_24;
                             tmp_23 = rsp_length;
                             rsp_length ++;
-                            rsp[tmp_23] = (unsigned char)((int)*(mb_mapping->tab_registers + i_1) >> 8);
+                            rsp[tmp_23] = (uint8_t)((int)*(mb_mapping->tab_registers + i_1) >> 8);
                             tmp_24 = rsp_length;
                             rsp_length ++;
-                            rsp[tmp_24] = (unsigned char)((int)*(mb_mapping->tab_registers + i_1) & 0xFF);
+                            rsp[tmp_24] = (uint8_t)((int)*(mb_mapping->tab_registers + i_1) & 0xFF);
                           }
                           i_1 ++;
                         }
@@ -4094,7 +4095,7 @@ int modbus_reply_exception(modbus_t *ctx, uint8_t const *req,
     int tmp_0;
     tmp = rsp_length;
     rsp_length ++;
-    rsp[tmp] = (unsigned char)exception_code;
+    rsp[tmp] = (uint8_t)exception_code;
     tmp_0 = send_msg(ctx,rsp,rsp_length);
     __retres = tmp_0;
     goto return_label;
@@ -4152,8 +4153,8 @@ static int read_io_status(modbus_t *ctx, int function, int addr, int nb,
           int tmp;
           tmp = pos;
           pos ++;
-          if (temp & bit) *(dest + tmp) = (unsigned char)1;
-          else *(dest + tmp) = (unsigned char)0;
+          if (temp & bit) *(dest + tmp) = (uint8_t)1;
+          else *(dest + tmp) = (uint8_t)0;
           bit <<= 1;
         }
       }
@@ -4300,8 +4301,8 @@ static int read_registers(modbus_t *ctx, int function, int addr, int nb,
     i = 0;
     /*@ loop unroll 100; */
     while (i < rc) {
-      *(dest + i) = (unsigned short)(((int)rsp[(offset + 2) + (i << 1)] << 8) | (int)rsp[
-                                     (offset + 3) + (i << 1)]);
+      *(dest + i) = (uint16_t)(((int)rsp[(offset + 2) + (i << 1)] << 8) | (int)rsp[
+                               (offset + 3) + (i << 1)]);
       i ++;
     }
   }
@@ -4484,14 +4485,14 @@ int modbus_write_bits(modbus_t *ctx, int addr, int nb, uint8_t const *src)
   byte_count = nb / 8 + tmp;
   tmp_0 = req_length;
   req_length ++;
-  req[tmp_0] = (unsigned char)byte_count;
+  req[tmp_0] = (uint8_t)byte_count;
   i = 0;
   /*@ loop unroll 13; */
   while (i < byte_count) {
     {
       int bit;
       bit = 0x01;
-      req[req_length] = (unsigned char)0;
+      req[req_length] = (uint8_t)0;
       while (1) {
         if (bit & 0xFF) {
           int tmp_2;
@@ -4506,8 +4507,8 @@ int modbus_write_bits(modbus_t *ctx, int addr, int nb, uint8_t const *src)
           tmp_1 = pos;
           pos ++;
           ;
-          if (*(src + tmp_1)) req[req_length] = (unsigned char)((int)req[req_length] | bit);
-          else req[req_length] = (unsigned char)((int)req[req_length] & ~ bit);
+          if (*(src + tmp_1)) req[req_length] = (uint8_t)((int)req[req_length] | bit);
+          else req[req_length] = (uint8_t)((int)req[req_length] & ~ bit);
           bit <<= 1;
         }
       }
@@ -4570,7 +4571,7 @@ int modbus_write_registers(modbus_t *ctx, int addr, int nb,
   byte_count = nb * 2;
   tmp = req_length;
   req_length ++;
-  req[tmp] = (unsigned char)byte_count;
+  req[tmp] = (uint8_t)byte_count;
   i = 0;
   /*@ loop unroll 100; */
   while (i < nb) {
@@ -4579,10 +4580,10 @@ int modbus_write_registers(modbus_t *ctx, int addr, int nb,
       int tmp_1;
       tmp_0 = req_length;
       req_length ++;
-      req[tmp_0] = (unsigned char)((int)*(src + i) >> 8);
+      req[tmp_0] = (uint8_t)((int)*(src + i) >> 8);
       tmp_1 = req_length;
       req_length ++;
-      req[tmp_1] = (unsigned char)((int)*(src + i) & 0x00FF);
+      req[tmp_1] = (uint8_t)((int)*(src + i) & 0x00FF);
     }
     i ++;
   }
@@ -4615,16 +4616,16 @@ int modbus_mask_write_register(modbus_t *ctx, int addr, uint16_t and_mask,
   req_length -= 2;
   tmp = req_length;
   req_length ++;
-  req[tmp] = (unsigned char)((int)and_mask >> 8);
+  req[tmp] = (uint8_t)((int)and_mask >> 8);
   tmp_0 = req_length;
   req_length ++;
-  req[tmp_0] = (unsigned char)((int)and_mask & 0x00ff);
+  req[tmp_0] = (uint8_t)((int)and_mask & 0x00ff);
   tmp_1 = req_length;
   req_length ++;
-  req[tmp_1] = (unsigned char)((int)or_mask >> 8);
+  req[tmp_1] = (uint8_t)((int)or_mask >> 8);
   tmp_2 = req_length;
   req_length ++;
-  req[tmp_2] = (unsigned char)((int)or_mask & 0x00ff);
+  req[tmp_2] = (uint8_t)((int)or_mask & 0x00ff);
   rc = send_msg(ctx,req,req_length);
   if (rc > 0) {
     uint8_t rsp[260];
@@ -4709,20 +4710,20 @@ int modbus_write_and_read_registers(modbus_t *ctx, int write_addr,
                                                         read_nb,req);
   tmp = req_length;
   req_length ++;
-  req[tmp] = (unsigned char)(write_addr >> 8);
+  req[tmp] = (uint8_t)(write_addr >> 8);
   tmp_0 = req_length;
   req_length ++;
-  req[tmp_0] = (unsigned char)(write_addr & 0x00ff);
+  req[tmp_0] = (uint8_t)(write_addr & 0x00ff);
   tmp_1 = req_length;
   req_length ++;
-  req[tmp_1] = (unsigned char)(write_nb >> 8);
+  req[tmp_1] = (uint8_t)(write_nb >> 8);
   tmp_2 = req_length;
   req_length ++;
-  req[tmp_2] = (unsigned char)(write_nb & 0x00ff);
+  req[tmp_2] = (uint8_t)(write_nb & 0x00ff);
   byte_count = write_nb * 2;
   tmp_3 = req_length;
   req_length ++;
-  req[tmp_3] = (unsigned char)byte_count;
+  req[tmp_3] = (uint8_t)byte_count;
   i = 0;
   /*@ loop unroll 100; */
   while (i < write_nb) {
@@ -4731,10 +4732,10 @@ int modbus_write_and_read_registers(modbus_t *ctx, int write_addr,
       int tmp_5;
       tmp_4 = req_length;
       req_length ++;
-      req[tmp_4] = (unsigned char)((int)*(src + i) >> 8);
+      req[tmp_4] = (uint8_t)((int)*(src + i) >> 8);
       tmp_5 = req_length;
       req_length ++;
-      req[tmp_5] = (unsigned char)((int)*(src + i) & 0x00FF);
+      req[tmp_5] = (uint8_t)((int)*(src + i) & 0x00FF);
     }
     i ++;
   }
@@ -4755,8 +4756,8 @@ int modbus_write_and_read_registers(modbus_t *ctx, int write_addr,
     i = 0;
     /*@ loop unroll 100; */
     while (i < rc) {
-      *(dest + i) = (unsigned short)(((int)rsp[(offset + 2) + (i << 1)] << 8) | (int)rsp[
-                                     (offset + 3) + (i << 1)]);
+      *(dest + i) = (uint16_t)(((int)rsp[(offset + 2) + (i << 1)] << 8) | (int)rsp[
+                               (offset + 3) + (i << 1)]);
       i ++;
     }
   }
@@ -4817,9 +4818,9 @@ void _modbus_init_common(modbus_t *ctx)
   ctx->s = -1;
   ctx->debug = 0;
   ctx->error_recovery = MODBUS_ERROR_RECOVERY_NONE;
-  ctx->response_timeout.tv_sec = (long)0;
+  ctx->response_timeout.tv_sec = (time_t)0;
   ctx->response_timeout.tv_usec = 500000;
-  ctx->byte_timeout.tv_sec = (long)0;
+  ctx->byte_timeout.tv_sec = (time_t)0;
   ctx->byte_timeout.tv_usec = 500000;
   return;
 }
@@ -4859,7 +4860,7 @@ int modbus_set_error_recovery(modbus_t *ctx,
     __retres = -1;
     goto return_label;
   }
-  ctx->error_recovery = (int)((unsigned char)error_recovery);
+  ctx->error_recovery = (int)((uint8_t)error_recovery);
   __retres = 0;
   return_label: return __retres;
 }
@@ -4898,8 +4899,8 @@ int modbus_get_response_timeout(modbus_t *ctx, uint32_t *to_sec,
     __retres = -1;
     goto return_label;
   }
-  *to_sec = (unsigned int)ctx->response_timeout.tv_sec;
-  *to_usec = (unsigned int)ctx->response_timeout.tv_usec;
+  *to_sec = (uint32_t)ctx->response_timeout.tv_sec;
+  *to_usec = (uint32_t)ctx->response_timeout.tv_usec;
   __retres = 0;
   return_label: return __retres;
 }
@@ -4923,8 +4924,8 @@ int modbus_set_response_timeout(modbus_t *ctx, uint32_t to_sec,
               }
       }
     }
-  ctx->response_timeout.tv_sec = (long)to_sec;
-  ctx->response_timeout.tv_usec = (int)to_usec;
+  ctx->response_timeout.tv_sec = (time_t)to_sec;
+  ctx->response_timeout.tv_usec = (suseconds_t)to_usec;
   __retres = 0;
   return_label: return __retres;
 }
@@ -4938,8 +4939,8 @@ int modbus_get_byte_timeout(modbus_t *ctx, uint32_t *to_sec,
     __retres = -1;
     goto return_label;
   }
-  *to_sec = (unsigned int)ctx->byte_timeout.tv_sec;
-  *to_usec = (unsigned int)ctx->byte_timeout.tv_usec;
+  *to_sec = (uint32_t)ctx->byte_timeout.tv_sec;
+  *to_usec = (uint32_t)ctx->byte_timeout.tv_usec;
   __retres = 0;
   return_label: return __retres;
 }
@@ -4956,8 +4957,8 @@ int modbus_set_byte_timeout(modbus_t *ctx, uint32_t to_sec, uint32_t to_usec)
               goto return_label;
             }
     }
-  ctx->byte_timeout.tv_sec = (long)to_sec;
-  ctx->byte_timeout.tv_usec = (int)to_usec;
+  ctx->byte_timeout.tv_sec = (time_t)to_sec;
+  ctx->byte_timeout.tv_usec = (suseconds_t)to_usec;
   __retres = 0;
   return_label: return __retres;
 }
@@ -5119,36 +5120,31 @@ void modbus_mapping_free(modbus_mapping_t *mb_mapping)
   return_label: return;
 }
 
-uint16_t const UT_BITS_ADDRESS = (unsigned short)0x130;
-uint16_t const UT_BITS_NB = (unsigned short)0x25;
+uint16_t const UT_BITS_ADDRESS = (uint16_t)0x130;
+uint16_t const UT_BITS_NB = (uint16_t)0x25;
 uint8_t const UT_BITS_TAB[5] =
-  {(unsigned char)0xCD,
-   (unsigned char)0x6B,
-   (unsigned char)0xB2,
-   (unsigned char)0x0E,
-   (unsigned char)0x1B};
-uint16_t const UT_INPUT_BITS_ADDRESS = (unsigned short)0x1C4;
-uint16_t const UT_INPUT_BITS_NB = (unsigned short)0x16;
+  {(uint8_t)0xCD, (uint8_t)0x6B, (uint8_t)0xB2, (uint8_t)0x0E, (uint8_t)0x1B};
+uint16_t const UT_INPUT_BITS_ADDRESS = (uint16_t)0x1C4;
+uint16_t const UT_INPUT_BITS_NB = (uint16_t)0x16;
 uint8_t const UT_INPUT_BITS_TAB[3] =
-  {(unsigned char)0xAC, (unsigned char)0xDB, (unsigned char)0x35};
-uint16_t const UT_REGISTERS_ADDRESS = (unsigned short)0x160;
-uint16_t const UT_REGISTERS_NB = (unsigned short)0x3;
-uint16_t const UT_REGISTERS_NB_MAX = (unsigned short)0x20;
+  {(uint8_t)0xAC, (uint8_t)0xDB, (uint8_t)0x35};
+uint16_t const UT_REGISTERS_ADDRESS = (uint16_t)0x160;
+uint16_t const UT_REGISTERS_NB = (uint16_t)0x3;
+uint16_t const UT_REGISTERS_NB_MAX = (uint16_t)0x20;
 uint16_t const UT_REGISTERS_TAB[3] =
-  {(unsigned short)0x022B, (unsigned short)0x0001, (unsigned short)0x0064};
-uint16_t const UT_REGISTERS_ADDRESS_SPECIAL = (unsigned short)0x170;
-uint16_t const UT_REGISTERS_ADDRESS_INVALID_TID_OR_SLAVE =
-  (unsigned short)0x171;
-uint16_t const UT_REGISTERS_ADDRESS_SLEEP_500_MS = (unsigned short)0x172;
-uint16_t const UT_REGISTERS_ADDRESS_BYTE_SLEEP_5_MS = (unsigned short)0x173;
-uint16_t const UT_REGISTERS_NB_SPECIAL = (unsigned short)0x2;
-uint16_t const UT_INPUT_REGISTERS_ADDRESS = (unsigned short)0x108;
-uint16_t const UT_INPUT_REGISTERS_NB = (unsigned short)0x1;
-uint16_t const UT_INPUT_REGISTERS_TAB[1] = {(unsigned short)0x000A};
+  {(uint16_t)0x022B, (uint16_t)0x0001, (uint16_t)0x0064};
+uint16_t const UT_REGISTERS_ADDRESS_SPECIAL = (uint16_t)0x170;
+uint16_t const UT_REGISTERS_ADDRESS_INVALID_TID_OR_SLAVE = (uint16_t)0x171;
+uint16_t const UT_REGISTERS_ADDRESS_SLEEP_500_MS = (uint16_t)0x172;
+uint16_t const UT_REGISTERS_ADDRESS_BYTE_SLEEP_5_MS = (uint16_t)0x173;
+uint16_t const UT_REGISTERS_NB_SPECIAL = (uint16_t)0x2;
+uint16_t const UT_INPUT_REGISTERS_ADDRESS = (uint16_t)0x108;
+uint16_t const UT_INPUT_REGISTERS_NB = (uint16_t)0x1;
+uint16_t const UT_INPUT_REGISTERS_TAB[1] = {(uint16_t)0x000A};
 float const UT_REAL = (float)123456.00;
-uint32_t const UT_IREAL_ABCD = (unsigned int)0x0020F147;
-uint32_t const UT_IREAL_DCBA = (unsigned int)0x47F12000;
-uint32_t const UT_IREAL_BADC = (unsigned int)0x200047F1;
+uint32_t const UT_IREAL_ABCD = (uint32_t)0x0020F147;
+uint32_t const UT_IREAL_DCBA = (uint32_t)0x47F12000;
+uint32_t const UT_IREAL_BADC = (uint32_t)0x200047F1;
 uint32_t const UT_IREAL_CDAB = 0xF1470020;
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
@@ -5315,17 +5311,17 @@ int main(int argc, char **argv)
   else use_backend = TCP;
   if (use_backend == TCP) {
     ctx = modbus_new_tcp("127.0.0.1",1502);
-    query = (uint8_t *)malloc((unsigned long)260);
+    query = (uint8_t *)malloc((size_t)260);
   }
   else 
     if (use_backend == TCP_PI) {
       ctx = modbus_new_tcp_pi("::0","1502");
-      query = (uint8_t *)malloc((unsigned long)260);
+      query = (uint8_t *)malloc((size_t)260);
     }
     else {
       ctx = modbus_new_rtu("/dev/ttyUSB0",115200,(char)'N',8,1);
       modbus_set_slave(ctx,17);
-      query = (uint8_t *)malloc((unsigned long)256);
+      query = (uint8_t *)malloc((size_t)256);
     }
   header_length = modbus_get_header_length(ctx);
   modbus_set_debug(ctx,1);
@@ -5387,8 +5383,8 @@ int main(int argc, char **argv)
       if (((int)*(query + (header_length + 3)) << 8) + (int)*(query + (
                                                               (header_length + 3) + 1)) == (int)UT_REGISTERS_NB_SPECIAL) {
         printf("Set an incorrect number of values\n"); /* printf_va_16 */
-        *(query + (header_length + 3)) = (unsigned char)(((int)UT_REGISTERS_NB_SPECIAL - 1) >> 8);
-        *(query + ((header_length + 3) + 1)) = (unsigned char)(((int)UT_REGISTERS_NB_SPECIAL - 1) & 0xFF);
+        *(query + (header_length + 3)) = (uint8_t)(((int)UT_REGISTERS_NB_SPECIAL - 1) >> 8);
+        *(query + ((header_length + 3) + 1)) = (uint8_t)(((int)UT_REGISTERS_NB_SPECIAL - 1) & 0xFF);
       }
       else 
         if (((int)*(query + (header_length + 1)) << 8) + (int)*(query + (
@@ -5405,11 +5401,11 @@ int main(int argc, char **argv)
             int const RAW_REQ_LENGTH = 5;
             if (use_backend == RTU) tmp_4 = 18; else tmp_4 = 0xFF;
             uint8_t raw_req[5] =
-              {(unsigned char)tmp_4,
-               (unsigned char)0x03,
-               (unsigned char)0x02,
-               (unsigned char)0x00,
-               (unsigned char)0x00};
+              {(uint8_t)tmp_4,
+               (uint8_t)0x03,
+               (uint8_t)0x02,
+               (uint8_t)0x00,
+               (uint8_t)0x00};
             printf("Reply with an invalid TID or slave\n"); /* printf_va_18 */
             modbus_send_raw_request(ctx,raw_req,
                                     (int)((unsigned long)RAW_REQ_LENGTH * sizeof(uint8_t)));
@@ -5420,24 +5416,24 @@ int main(int argc, char **argv)
                                                                     (
                                                                     header_length + 1) + 1)) == (int)UT_REGISTERS_ADDRESS_SLEEP_500_MS) {
               printf("Sleep 0.5 s before replying\n"); /* printf_va_19 */
-              usleep((unsigned int)500000);
+              usleep((useconds_t)500000);
             }
             else 
               if (((int)*(query + (header_length + 1)) << 8) + (int)*(
                   query + ((header_length + 1) + 1)) == (int)UT_REGISTERS_ADDRESS_BYTE_SLEEP_5_MS) {
                 uint8_t req[12] =
-                  {(unsigned char)'\000',
-                   (unsigned char)'\034',
-                   (unsigned char)'\000',
-                   (unsigned char)'\000',
-                   (unsigned char)'\000',
-                   (unsigned char)'\005',
-                   (unsigned char)'\377',
-                   (unsigned char)'\003',
-                   (unsigned char)'\002',
-                   (unsigned char)'\000',
-                   (unsigned char)'\000',
-                   (unsigned char)'\000'};
+                  {(uint8_t)'\000',
+                   (uint8_t)'\034',
+                   (uint8_t)'\000',
+                   (uint8_t)'\000',
+                   (uint8_t)'\000',
+                   (uint8_t)'\005',
+                   (uint8_t)'\377',
+                   (uint8_t)'\003',
+                   (uint8_t)'\002',
+                   (uint8_t)'\000',
+                   (uint8_t)'\000',
+                   (uint8_t)'\000'};
                 int req_length = 11;
                 int w_s = modbus_get_socket(ctx);
                 if (w_s == -1) {
@@ -5451,9 +5447,9 @@ int main(int argc, char **argv)
                   {
                     ssize_t tmp_6;
                     printf("(%.2X)",(unsigned int)((int)req[i])); /* printf_va_20 */
-                    usleep((unsigned int)5000);
-                    tmp_6 = send(w_s,(void const *)(& req[i]),
-                                 (unsigned long)1,0x4000);
+                    usleep((useconds_t)5000);
+                    tmp_6 = send(w_s,(void const *)(& req[i]),(size_t)1,
+                                 0x4000);
                     rc = (int)tmp_6;
                     if (rc == -1) break;
                   }

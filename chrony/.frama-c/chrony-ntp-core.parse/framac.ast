@@ -330,9 +330,7 @@ struct __anonstruct_Record_80 {
    NTP_int64 ntp_tx_ts ;
 };
 typedef struct __anonstruct_Record_80 Record;
-struct SST_Stats_Record;
 typedef struct SST_Stats_Record *SST_Stats;
-struct SRC_Instance_Record;
 typedef struct SRC_Instance_Record *SRC_Instance;
 enum __anonenum_SRC_Type_23 {
     SRC_NTP = 0,
@@ -1026,7 +1024,7 @@ void TST_GetRandomAddress(IPAddr *ip, int family, int bits)
       tmp = random();
       if (tmp % (long)2) family = 1; else family = 2;
     }
-  ip->family = (unsigned short)family;
+  ip->family = (uint16_t)family;
   if (family == 1) {
     if (bits < 0) bits = 32;
     __FC_assert((bits <= 32) != 0,"test/unit/test.c",106,"bits <= 32");
@@ -1035,13 +1033,13 @@ void TST_GetRandomAddress(IPAddr *ip, int family, int bits)
       long tmp_1;
       tmp_0 = random();
       tmp_1 = random();
-      ip->addr.in4 = ((unsigned int)tmp_0 % (1U << (bits - 16)) << 16) | 
-                     (unsigned int)tmp_1 % (1U << 16);
+      ip->addr.in4 = ((uint32_t)tmp_0 % (1U << (bits - 16)) << 16) | 
+                     (uint32_t)tmp_1 % (1U << 16);
     }
     else {
       long tmp_2;
       tmp_2 = random();
-      ip->addr.in4 = (unsigned int)tmp_2 % (1U << bits);
+      ip->addr.in4 = (uint32_t)tmp_2 % (1U << bits);
     }
   }
   else {
@@ -1053,13 +1051,13 @@ void TST_GetRandomAddress(IPAddr *ip, int family, int bits)
     b = 120;
     /*@ loop unroll 16; */
     while (i < 16) {
-      if (b >= bits) ip->addr.in6[i] = (unsigned char)0;
+      if (b >= bits) ip->addr.in6[i] = (uint8_t)0;
       else {
         long tmp_3;
         int tmp_4;
         tmp_3 = random();
         if (bits - b < 8) tmp_4 = bits - b; else tmp_4 = 8;
-        ip->addr.in6[i] = (unsigned char)(tmp_3 % (long)(1U << tmp_4));
+        ip->addr.in6[i] = (uint8_t)(tmp_3 % (long)(1U << tmp_4));
       }
       i ++;
       b -= 8;
@@ -1078,10 +1076,10 @@ void TST_SwapAddressBit(IPAddr *ip, unsigned int b)
     if ((int)ip->family == 2) {
       __FC_assert((b < (unsigned int)128) != 0,"test/unit/test.c",138,
                   "b < 128");
-      ip->addr.in6[b / (unsigned int)8] = (unsigned char)((unsigned int)ip->addr.in6[
-                                                          b / (unsigned int)8] ^ (
-                                                          1U << ((unsigned int)7 - 
-                                                                 b % (unsigned int)8)));
+      ip->addr.in6[b / (unsigned int)8] = (uint8_t)((unsigned int)ip->addr.in6[
+                                                    b / (unsigned int)8] ^ (
+                                                    1U << ((unsigned int)7 - 
+                                                           b % (unsigned int)8)));
     }
     else __FC_assert(0 != 0,"test/unit/test.c",141,"0");
   return;
@@ -1162,7 +1160,7 @@ static void split_ip6(IPAddr *ip, uint32_t *dst)
   i = 0;
   /*@ loop unroll 4; */
   while (i < 4) {
-    *(dst + i) = ((((unsigned int)ip->addr.in6[i * 4 + 0] << 24) | (unsigned int)(
+    *(dst + i) = ((((uint32_t)ip->addr.in6[i * 4 + 0] << 24) | (unsigned int)(
                    (int)ip->addr.in6[i * 4 + 1] << 16)) | (unsigned int)(
                   (int)ip->addr.in6[i * 4 + 2] << 8)) | (unsigned int)ip->addr.in6[
                  i * 4 + 3];
@@ -1177,9 +1175,9 @@ __inline static uint32_t get_subnet(uint32_t *addr, unsigned int where)
   int off;
   off = (int)(where / (unsigned int)32);
   where %= (unsigned int)32;
-  __retres = (unsigned int)((unsigned long)(*(addr + off) >> ((unsigned int)(
-                                                              32 - 4) - where)) & (
-                            (1UL << 4) - (unsigned long)1));
+  __retres = (uint32_t)((unsigned long)(*(addr + off) >> ((unsigned int)(
+                                                          32 - 4) - where)) & (
+                        (1UL << 4) - (unsigned long)1));
   return __retres;
 }
 
@@ -1521,8 +1519,8 @@ static void realloc_array(ARR_Instance array, unsigned int min_size)
       if (array->allocated) array->allocated = (unsigned int)2 * array->allocated;
       else array->allocated = (unsigned int)1;
   else array->allocated = min_size;
-  array->data = Realloc2(array->data,(unsigned long)array->allocated,
-                         (unsigned long)array->elem_size);
+  array->data = Realloc2(array->data,(size_t)array->allocated,
+                         (size_t)array->elem_size);
   return_label: return;
 }
 
@@ -1540,7 +1538,7 @@ void *ARR_GetElement(ARR_Instance array, unsigned int index_0)
   void *__retres;
   __FC_assert((index_0 < array->used) != 0,"array.c",94,
               "index < array->used");
-  __retres = (void *)((char *)array->data + (unsigned long)index_0 * (unsigned long)array->elem_size);
+  __retres = (void *)((char *)array->data + (size_t)index_0 * (size_t)array->elem_size);
   return __retres;
 }
 
@@ -1560,7 +1558,7 @@ void ARR_AppendElement(ARR_Instance array, void *element)
 {
   void *e;
   e = ARR_GetNewElement(array);
-  memcpy(e,(void const *)element,(unsigned long)array->elem_size);
+  memcpy(e,(void const *)element,(size_t)array->elem_size);
   return;
 }
 
@@ -1828,7 +1826,7 @@ static int compare_ts(uint32_t x, uint32_t y)
     __retres = 1;
     goto return_label;
   }
-  if ((int)(x - y) > 0) tmp = 1; else tmp = -1;
+  if ((int32_t)(x - y) > 0) tmp = 1; else tmp = -1;
   __retres = tmp;
   return_label: return __retres;
 }
@@ -1845,7 +1843,7 @@ static Record *get_record(IPAddr *ip)
   uint32_t tmp_5;
   uint16_t tmp_6;
   int8_t tmp_7;
-  time_t oldest_hit = (long)0;
+  time_t oldest_hit = (time_t)0;
   if (! active) {
     __retres = (Record *)0;
     goto return_label;
@@ -1876,13 +1874,12 @@ static Record *get_record(IPAddr *ip)
           }
           if ((int)record->ip_addr.family == 0) break;
           tmp_1 = compare_ts(record->last_ntp_hit,record->last_cmd_hit);
-          if (tmp_1 > 0) last_hit = (long)record->last_ntp_hit;
-          else last_hit = (long)record->last_cmd_hit;
+          if (tmp_1 > 0) last_hit = (time_t)record->last_ntp_hit;
+          else last_hit = (time_t)record->last_cmd_hit;
           if (! oldest_record) goto _LOR;
           else {
             int tmp_2;
-            tmp_2 = compare_ts((unsigned int)oldest_hit,
-                               (unsigned int)last_hit);
+            tmp_2 = compare_ts((uint32_t)oldest_hit,(uint32_t)last_hit);
             if (tmp_2 > 0) goto _LOR;
             else 
               if (oldest_hit == last_hit) 
@@ -1900,27 +1897,27 @@ static Record *get_record(IPAddr *ip)
       tmp_3 = expand_hashtable();
       if (tmp_3) continue;
       record = oldest_record;
-      total_record_drops += (uint32_t)1;
+      total_record_drops ++;
       break;
     }
   }
   record->ip_addr = *ip;
-  tmp_4 = (unsigned int)0;
+  tmp_4 = (uint32_t)0;
   record->last_cmd_hit = tmp_4;
   record->last_ntp_hit = tmp_4;
-  tmp_5 = (unsigned int)0;
+  tmp_5 = (uint32_t)0;
   record->cmd_hits = tmp_5;
   record->ntp_hits = tmp_5;
-  tmp_6 = (unsigned short)0;
+  tmp_6 = (uint16_t)0;
   record->cmd_drops = tmp_6;
   record->ntp_drops = tmp_6;
   record->ntp_tokens = max_ntp_tokens;
   record->cmd_tokens = max_cmd_tokens;
-  tmp_7 = (signed char)(-128);
+  tmp_7 = (int8_t)(-128);
   record->cmd_rate = tmp_7;
   record->ntp_rate = tmp_7;
-  record->ntp_timeout_rate = (signed char)(-128);
-  record->flags = (unsigned char)0;
+  record->ntp_timeout_rate = (int8_t)(-128);
+  record->flags = (uint8_t)0;
   UTI_ZeroNtp64(& record->ntp_rx_ts);
   UTI_ZeroNtp64(& record->ntp_tx_ts);
   __retres = record;
@@ -1948,7 +1945,7 @@ static int expand_hashtable(void)
   i = (unsigned int)0;
   while (i < slots * (1U << 4)) {
     new_record = (Record *)ARR_GetElement(records,i);
-    new_record->ip_addr.family = (unsigned short)0;
+    new_record->ip_addr.family = (uint16_t)0;
     i ++;
   }
   if (! old_records) {
@@ -2002,12 +1999,12 @@ static void set_bucket_params(int interval, int burst, uint16_t *max_tokens,
   }
   else {
     *token_shift = interval + 4;
-    *tokens_per_packet = (unsigned short)1;
+    *tokens_per_packet = (uint16_t)1;
     if (1U << - *token_shift > (unsigned int)burst) burst = (int)(1U << - *token_shift);
     else burst = burst;
   }
-  *tokens_per_packet = (unsigned short)(1U << ((4 + interval) - *token_shift));
-  *max_tokens = (unsigned short)((int)*tokens_per_packet * burst);
+  *tokens_per_packet = (uint16_t)(1U << ((4 + interval) - *token_shift));
+  *max_tokens = (uint16_t)((int)*tokens_per_packet * burst);
   return;
 }
 
@@ -2022,9 +2019,9 @@ void CLG_Initialise(void)
   int tmp_7;
   unsigned long tmp_9;
   unsigned int tmp_10;
-  max_cmd_tokens = (unsigned short)0;
+  max_cmd_tokens = (uint16_t)0;
   max_ntp_tokens = max_cmd_tokens;
-  cmd_tokens_per_packet = (unsigned short)0;
+  cmd_tokens_per_packet = (uint16_t)0;
   ntp_tokens_per_packet = cmd_tokens_per_packet;
   cmd_token_shift = 0;
   ntp_token_shift = cmd_token_shift;
@@ -2098,7 +2095,7 @@ void CLG_Initialise(void)
     max_slots = tmp_11;
   }
   slots = (unsigned int)0;
-  records = (struct ARR_Instance_Record *)0;
+  records = (ARR_Instance)0;
   expand_hashtable();
   UTI_GetRandomBytes((void *)(& ts_offset),(unsigned int)sizeof(ts_offset));
   ts_offset %= 1000000000U / (1U << 4);
@@ -2115,12 +2112,12 @@ void CLG_Finalise(void)
 static uint32_t get_ts_from_timespec(struct timespec *ts)
 {
   uint32_t __retres;
-  uint32_t sec = (unsigned int)ts->tv_sec;
-  uint32_t nsec = (unsigned int)ts->tv_nsec;
+  uint32_t sec = (uint32_t)ts->tv_sec;
+  uint32_t nsec = (uint32_t)ts->tv_nsec;
   nsec += ts_offset;
   if (nsec >= 1000000000U) {
     nsec -= 1000000000U;
-    sec += (uint32_t)1;
+    sec ++;
   }
   __retres = (sec << 4) | (140740U * (nsec >> 15) >> (32 - 4));
   return __retres;
@@ -2138,18 +2135,18 @@ static void update_record(struct timespec *now, uint32_t *last_hit,
   now_ts = get_ts_from_timespec(now);
   prev_hit = *last_hit;
   *last_hit = now_ts;
-  *hits += (uint32_t)1;
+  (*hits) ++;
   interval = now_ts - prev_hit;
   if (prev_hit == (uint32_t)0) goto return_label;
   else 
-    if ((int)interval < 0) goto return_label;
+    if ((int32_t)interval < 0) goto return_label;
   if (token_shift >= 0) new_tokens = (now_ts >> token_shift) - (prev_hit >> token_shift);
   else 
     if (now_ts - prev_hit > max_tokens) new_tokens = max_tokens;
     else new_tokens = (now_ts - prev_hit) << - token_shift;
-  if ((uint32_t)*tokens + new_tokens < max_tokens) *tokens = (unsigned short)(
+  if ((uint32_t)*tokens + new_tokens < max_tokens) *tokens = (uint16_t)(
                                                    (uint32_t)*tokens + new_tokens);
-  else *tokens = (unsigned short)max_tokens;
+  else *tokens = (uint16_t)max_tokens;
   if (interval) {
     interval += interval >> 1;
     interval2 = -4 * 4;
@@ -2160,14 +2157,13 @@ static void update_record(struct timespec *now, uint32_t *last_hit,
     }
   }
   else interval2 = -4 * (4 + 1);
-  if ((int)*rate == -128) *rate = (signed char)(- interval2);
+  if ((int)*rate == -128) *rate = (int8_t)(- interval2);
   else 
-    if ((int)*rate < - interval2) *rate = (signed char)((int)*rate + 1);
+    if ((int)*rate < - interval2) *rate = (int8_t)((int)*rate + 1);
     else 
       if ((int)*rate > - interval2) 
-        if ((int)*rate > (4 * 5) / 2 - interval2) *rate = (signed char)(
-                                                  (4 * 5) / 2 - interval2);
-        else *rate = (signed char)((((int)*rate - interval2) - 1) / 2);
+        if ((int)*rate > (4 * 5) / 2 - interval2) *rate = (int8_t)((4 * 5) / 2 - interval2);
+        else *rate = (int8_t)((((int)*rate - interval2) - 1) / 2);
   return_label: return;
 }
 
@@ -2202,7 +2198,7 @@ int CLG_LogNTPAccess(IPAddr *client, struct timespec *now)
   Record *record;
   int8_t *tmp;
   int tmp_0;
-  total_ntp_hits += (uint32_t)1;
+  total_ntp_hits ++;
   record = get_record(client);
   if (record == (Record *)0) {
     __retres = -1;
@@ -2217,7 +2213,7 @@ int CLG_LogNTPAccess(IPAddr *client, struct timespec *now)
   ;
   ;
   update_record(now,& record->last_ntp_hit,& record->ntp_hits,
-                & record->ntp_tokens,(unsigned int)max_ntp_tokens,
+                & record->ntp_tokens,(uint32_t)max_ntp_tokens,
                 ntp_token_shift,tmp);
   tmp_0 = get_index(record);
   __retres = tmp_0;
@@ -2229,14 +2225,14 @@ int CLG_LogCommandAccess(IPAddr *client, struct timespec *now)
   int __retres;
   Record *record;
   int tmp;
-  total_cmd_hits += (uint32_t)1;
+  total_cmd_hits ++;
   record = get_record(client);
   if (record == (Record *)0) {
     __retres = -1;
     goto return_label;
   }
   update_record(now,& record->last_cmd_hit,& record->cmd_hits,
-                & record->cmd_tokens,(unsigned int)max_cmd_tokens,
+                & record->cmd_tokens,(uint32_t)max_cmd_tokens,
                 cmd_token_shift,& record->cmd_rate);
   tmp = get_index(record);
   __retres = tmp;
@@ -2271,9 +2267,9 @@ int CLG_LimitNTPResponseRate(int index_0)
     goto return_label;
   }
   record = (Record *)ARR_GetElement(records,(unsigned int)index_0);
-  record->flags = (unsigned char)((int)record->flags & ~ 0x1);
+  record->flags = (uint8_t)((int)record->flags & ~ 0x1);
   if ((int)record->ntp_tokens >= (int)ntp_tokens_per_packet) {
-    record->ntp_tokens = (unsigned short)((int)record->ntp_tokens - (int)ntp_tokens_per_packet);
+    record->ntp_tokens = (uint16_t)((int)record->ntp_tokens - (int)ntp_tokens_per_packet);
     __retres = 0;
     goto return_label;
   }
@@ -2281,13 +2277,13 @@ int CLG_LimitNTPResponseRate(int index_0)
   if ((int)record->ntp_timeout_rate != -128) 
     if ((int)record->ntp_timeout_rate > (int)record->ntp_rate + 4) drop = ! drop;
   if (! drop) {
-    record->ntp_tokens = (unsigned short)0;
+    record->ntp_tokens = (uint16_t)0;
     __retres = 0;
     goto return_label;
   }
-  record->flags = (unsigned char)((int)record->flags | 0x1);
-  record->ntp_drops = (unsigned short)((int)record->ntp_drops + 1);
-  total_ntp_drops += (uint32_t)1;
+  record->flags = (uint8_t)((int)record->flags | 0x1);
+  record->ntp_drops = (uint16_t)((int)record->ntp_drops + 1);
+  total_ntp_drops ++;
   __retres = 1;
   return_label: return __retres;
 }
@@ -2303,18 +2299,18 @@ int CLG_LimitCommandResponseRate(int index_0)
   }
   record = (Record *)ARR_GetElement(records,(unsigned int)index_0);
   if ((int)record->cmd_tokens >= (int)cmd_tokens_per_packet) {
-    record->cmd_tokens = (unsigned short)((int)record->cmd_tokens - (int)cmd_tokens_per_packet);
+    record->cmd_tokens = (uint16_t)((int)record->cmd_tokens - (int)cmd_tokens_per_packet);
     __retres = 0;
     goto return_label;
   }
   tmp = limit_response_random(cmd_leak_rate);
   if (! tmp) {
-    record->cmd_tokens = (unsigned short)0;
+    record->cmd_tokens = (uint16_t)0;
     __retres = 0;
     goto return_label;
   }
-  record->cmd_drops = (unsigned short)((int)record->cmd_drops + 1);
-  total_cmd_drops += (uint32_t)1;
+  record->cmd_drops = (uint16_t)((int)record->cmd_drops + 1);
+  total_cmd_drops ++;
   __retres = 1;
   return_label: return __retres;
 }
@@ -2364,12 +2360,12 @@ static uint32_t get_last_ago(uint32_t x, uint32_t y)
 {
   uint32_t __retres;
   if (y == (uint32_t)0) {
-    __retres = (unsigned int)(-1);
+    __retres = (uint32_t)(-1);
     goto return_label;
   }
   else 
-    if ((int)(x - y) < 0) {
-      __retres = (unsigned int)(-1);
+    if ((int32_t)(x - y) < 0) {
+      __retres = (uint32_t)(-1);
       goto return_label;
     }
   __retres = (x - y) >> 4;
@@ -2416,11 +2412,11 @@ int CLG_GetClientAccessReportByIndex(int index_0,
   report->ntp_drops = record->ntp_drops;
   report->cmd_drops = record->cmd_drops;
   tmp_0 = get_interval((int)record->ntp_rate);
-  report->ntp_interval = (signed char)tmp_0;
+  report->ntp_interval = (int8_t)tmp_0;
   tmp_1 = get_interval((int)record->cmd_rate);
-  report->cmd_interval = (signed char)tmp_1;
+  report->cmd_interval = (int8_t)tmp_1;
   tmp_2 = get_interval((int)record->ntp_timeout_rate);
-  report->ntp_timeout_interval = (signed char)tmp_2;
+  report->ntp_timeout_interval = (int8_t)tmp_2;
   report->last_ntp_hit_ago = get_last_ago(now_ts,record->last_ntp_hit);
   report->last_cmd_hit_ago = get_last_ago(now_ts,record->last_cmd_hit);
   __retres = 1;
@@ -2899,7 +2895,7 @@ int CPS_ParseNTPSourceAdd(char *line, CPS_NTP_Source *src)
   src->params.filter_length = 0;
   src->params.interleaved = 0;
   src->params.sel_options = 0;
-  src->params.authkey = (unsigned int)0;
+  src->params.authkey = (uint32_t)0;
   src->params.max_delay = 3.0;
   src->params.max_delay_ratio = 0.0;
   src->params.max_delay_dev_ratio = 10.0;
@@ -3223,8 +3219,7 @@ int CPS_ParseNTPSourceAdd(char *line, CPS_NTP_Source *src)
                       else {
                         int tmp;
                         tmp = sscanf((char const *)line,"%u%n",
-                                     (unsigned int *)(& src->params.authkey),
-                                     & n); /* sscanf_va_18 */
+                                     & src->params.authkey,& n); /* sscanf_va_18 */
                         if (tmp != 1) {
                           __retres = 0;
                           goto return_label;
@@ -3470,7 +3465,7 @@ int CPS_ParseKey(char *line, uint32_t *id, char const **hash, char **key)
       __retres = 0;
       goto return_label;
     }
-  tmp = sscanf((char const *)s1,"%u",(unsigned int *)id); /* sscanf_va_21 */
+  tmp = sscanf((char const *)s1,"%u",id); /* sscanf_va_21 */
   if (tmp != 1) {
     __retres = 0;
     goto return_label;
@@ -4943,9 +4938,9 @@ static void parse_refclock(char *line)
   precision = 0.0;
   max_dispersion = 0.0;
   pulse_width = 0.0;
-  ref_id = (unsigned int)0;
+  ref_id = (uint32_t)0;
   max_lock_age = 2;
-  lock_ref_id = (unsigned int)0;
+  lock_ref_id = (uint32_t)0;
   stratum = 0;
   tai = 0;
   if (! *line) {
@@ -5167,15 +5162,15 @@ static void parse_refclock(char *line)
           int tmp_0;
           tmp_0 = sscanf((char const *)line,"%4s%n",(char *)(ref),& n); /* sscanf_va_38 */
           if (tmp_0 != 1) break;
-          lock_ref_id = ((((unsigned int)ref[0] << 24) | (unsigned int)(
-                          (int)ref[1] << 16)) | (unsigned int)((int)ref[2] << 8)) | (unsigned int)ref[3];
+          lock_ref_id = ((((uint32_t)ref[0] << 24) | (unsigned int)((int)ref[1] << 16)) | (unsigned int)(
+                         (int)ref[2] << 8)) | (unsigned int)ref[3];
         }
       }
       else {
         int tmp;
         tmp = sscanf((char const *)line,"%4s%n",(char *)(ref),& n); /* sscanf_va_39 */
         if (tmp != 1) break;
-        ref_id = ((((unsigned int)ref[0] << 24) | (unsigned int)((int)ref[1] << 16)) | (unsigned int)(
+        ref_id = ((((uint32_t)ref[0] << 24) | (unsigned int)((int)ref[1] << 16)) | (unsigned int)(
                   (int)ref[2] << 8)) | (unsigned int)ref[3];
       }
     }
@@ -5541,7 +5536,7 @@ static void parse_allow_deny(char *line, ARR_Instance restrictions, int allow)
   int all = 0;
   AllowDeny *new_node = (AllowDeny *)0;
   p = line;
-  tmp = strncmp((char const *)p,"all",(unsigned long)3);
+  tmp = strncmp((char const *)p,"all",(size_t)3);
   if (! tmp) {
     all = 1;
     p = CPS_SplitWord(line);
@@ -5550,7 +5545,7 @@ static void parse_allow_deny(char *line, ARR_Instance restrictions, int allow)
     new_node = (AllowDeny *)ARR_GetNewElement(restrictions);
     new_node->allow = allow;
     new_node->all = all;
-    new_node->ip.family = (unsigned short)0;
+    new_node->ip.family = (uint16_t)0;
     new_node->subnet_bits = 0;
   }
   else {
@@ -5579,28 +5574,28 @@ static void parse_allow_deny(char *line, ARR_Instance restrictions, int allow)
             else new_node->subnet_bits = 32;
           }
           else {
-            new_node->ip.family = (unsigned short)1;
+            new_node->ip.family = (uint16_t)1;
             a &= (unsigned long)0xff;
             b &= (unsigned long)0xff;
             c &= (unsigned long)0xff;
             d &= (unsigned long)0xff;
             switch (n) {
               case (unsigned long)1:
-              new_node->ip.addr.in4 = (unsigned int)(a << 24);
+              new_node->ip.addr.in4 = (uint32_t)(a << 24);
               new_node->subnet_bits = 8;
               break;
               case (unsigned long)2:
-              new_node->ip.addr.in4 = (unsigned int)((a << 24) | (b << 16));
+              new_node->ip.addr.in4 = (uint32_t)((a << 24) | (b << 16));
               new_node->subnet_bits = 16;
               break;
               case (unsigned long)3:
-              new_node->ip.addr.in4 = (unsigned int)(((a << 24) | (b << 16)) | (
-                                                     c << 8));
+              new_node->ip.addr.in4 = (uint32_t)(((a << 24) | (b << 16)) | (
+                                                 c << 8));
               new_node->subnet_bits = 24;
               break;
               case (unsigned long)4:
-              new_node->ip.addr.in4 = (unsigned int)((((a << 24) | (b << 16)) | (
-                                                      c << 8)) | d);
+              new_node->ip.addr.in4 = (uint32_t)((((a << 24) | (b << 16)) | (
+                                                  c << 8)) | d);
               new_node->subnet_bits = 32;
               break;
               default: __FC_assert(0 != 0,"conf.c",1073,"0");
@@ -6146,10 +6141,10 @@ static void parse_include(char *line)
     }
     goto return_label;
   }
-  i = (unsigned long)0;
+  i = (size_t)0;
   while (i < gl.gl_pathc) {
     CNF_ReadFile((char const *)*(gl.gl_pathv + i));
-    i += (size_t)1;
+    i ++;
   }
   globfree(& gl);
   return_label: return;
@@ -6161,9 +6156,8 @@ void CNF_CreateDirs(uid_t uid, gid_t gid)
   if (*(bind_cmd_path + 0)) {
     int tmp;
     dir = UTI_PathToDir((char const *)bind_cmd_path);
-    UTI_CreateDirAndParents((char const *)dir,(unsigned int)0770,uid,gid);
-    tmp = UTI_CheckDirPermissions((char const *)dir,(unsigned int)0770,uid,
-                                  gid);
+    UTI_CreateDirAndParents((char const *)dir,(mode_t)0770,uid,gid);
+    tmp = UTI_CheckDirPermissions((char const *)dir,(mode_t)0770,uid,gid);
     if (! tmp) {
       {
         char *__va_arg0 = bind_cmd_path;
@@ -6176,9 +6170,9 @@ void CNF_CreateDirs(uid_t uid, gid_t gid)
     free((void *)dir);
   }
   if (*(logdir + 0)) UTI_CreateDirAndParents((char const *)logdir,
-                                             (unsigned int)0755,uid,gid);
+                                             (mode_t)0755,uid,gid);
   if (*(dumpdir + 0)) UTI_CreateDirAndParents((char const *)dumpdir,
-                                              (unsigned int)0755,uid,gid);
+                                              (mode_t)0755,uid,gid);
   return;
 }
 
@@ -6551,8 +6545,7 @@ void CNF_GetBindAddress(int family, IPAddr *addr)
 {
   if (family == 1) *addr = bind_address4;
   else 
-    if (family == 2) *addr = bind_address6;
-    else addr->family = (unsigned short)0;
+    if (family == 2) *addr = bind_address6; else addr->family = (uint16_t)0;
   return;
 }
 
@@ -6561,7 +6554,7 @@ void CNF_GetBindAcquisitionAddress(int family, IPAddr *addr)
   if (family == 1) *addr = bind_acq_address4;
   else 
     if (family == 2) *addr = bind_acq_address6;
-    else addr->family = (unsigned short)0;
+    else addr->family = (uint16_t)0;
   return;
 }
 
@@ -6575,7 +6568,7 @@ void CNF_GetBindCommandAddress(int family, IPAddr *addr)
   if (family == 1) *addr = bind_cmd_address4;
   else 
     if (family == 2) *addr = bind_cmd_address6;
-    else addr->family = (unsigned short)0;
+    else addr->family = (uint16_t)0;
   return;
 }
 
@@ -6778,13 +6771,13 @@ void MD5Init(MD5_CTX *mdContext) __attribute__((__FC_OLDSTYLEPROTO__));
 void MD5Init(MD5_CTX *mdContext)
 {
   UINT4 tmp;
-  tmp = (unsigned int)0;
+  tmp = (UINT4)0;
   mdContext->i[1] = tmp;
   mdContext->i[0] = tmp;
-  mdContext->buf[0] = (unsigned int)0x67452301;
+  mdContext->buf[0] = (UINT4)0x67452301;
   mdContext->buf[1] = 0xefcdab89;
   mdContext->buf[2] = 0x98badcfe;
-  mdContext->buf[3] = (unsigned int)0x10325476;
+  mdContext->buf[3] = (UINT4)0x10325476;
   return;
 }
 
@@ -6798,7 +6791,7 @@ void MD5Update(MD5_CTX *mdContext, unsigned char const *inBuf,
   unsigned int i;
   unsigned int ii;
   mdi = (int)((mdContext->i[0] >> 3) & (unsigned int)0x3F);
-  if (mdContext->i[0] + (inLen << 3) < mdContext->i[0]) mdContext->i[1] += (UINT4)1;
+  if (mdContext->i[0] + (inLen << 3) < mdContext->i[0]) (mdContext->i[1]) ++;
   mdContext->i[0] += inLen << 3;
   mdContext->i[1] += inLen >> 29;
   while (1) {
@@ -6820,9 +6813,9 @@ void MD5Update(MD5_CTX *mdContext, unsigned char const *inBuf,
         ii = (unsigned int)0;
         /*@ loop unroll 16; */
         while (i < (unsigned int)16) {
-          in[i] = ((((unsigned int)mdContext->in[ii + (unsigned int)3] << 24) | (
-                    (unsigned int)mdContext->in[ii + (unsigned int)2] << 16)) | (
-                   (unsigned int)mdContext->in[ii + (unsigned int)1] << 8)) | (unsigned int)mdContext->in[ii];
+          in[i] = ((((UINT4)mdContext->in[ii + (unsigned int)3] << 24) | (
+                    (UINT4)mdContext->in[ii + (unsigned int)2] << 16)) | (
+                   (UINT4)mdContext->in[ii + (unsigned int)1] << 8)) | (UINT4)mdContext->in[ii];
           i ++;
           ii += (unsigned int)4;
         }
@@ -6852,9 +6845,9 @@ void MD5Final(MD5_CTX *mdContext)
   ii = (unsigned int)0;
   /*@ loop unroll 14; */
   while (i < (unsigned int)14) {
-    in[i] = ((((unsigned int)mdContext->in[ii + (unsigned int)3] << 24) | (
-              (unsigned int)mdContext->in[ii + (unsigned int)2] << 16)) | (
-             (unsigned int)mdContext->in[ii + (unsigned int)1] << 8)) | (unsigned int)mdContext->in[ii];
+    in[i] = ((((UINT4)mdContext->in[ii + (unsigned int)3] << 24) | ((UINT4)mdContext->in[
+                                                                    ii + (unsigned int)2] << 16)) | (
+             (UINT4)mdContext->in[ii + (unsigned int)1] << 8)) | (UINT4)mdContext->in[ii];
     i ++;
     ii += (unsigned int)4;
   }
@@ -6890,7 +6883,7 @@ static void Transform(UINT4 *buf, UINT4 *in)
   d += (((a & b) | (~ a & c)) + *(in + 1)) + 0xe8c7b756;
   d = (d << 12) | (d >> (32 - 12));
   d += a;
-  c += (((d & a) | (~ d & b)) + *(in + 2)) + (unsigned int)0x242070db;
+  c += (((d & a) | (~ d & b)) + *(in + 2)) + (UINT4)0x242070db;
   c = (c << 17) | (c >> (32 - 17));
   c += d;
   b += (((c & d) | (~ c & a)) + *(in + 3)) + 0xc1bdceee;
@@ -6899,7 +6892,7 @@ static void Transform(UINT4 *buf, UINT4 *in)
   a += (((b & c) | (~ b & d)) + *(in + 4)) + 0xf57c0faf;
   a = (a << 7) | (a >> (32 - 7));
   a += b;
-  d += (((a & b) | (~ a & c)) + *(in + 5)) + (unsigned int)0x4787c62a;
+  d += (((a & b) | (~ a & c)) + *(in + 5)) + (UINT4)0x4787c62a;
   d = (d << 12) | (d >> (32 - 12));
   d += a;
   c += (((d & a) | (~ d & b)) + *(in + 6)) + 0xa8304613;
@@ -6908,7 +6901,7 @@ static void Transform(UINT4 *buf, UINT4 *in)
   b += (((c & d) | (~ c & a)) + *(in + 7)) + 0xfd469501;
   b = (b << 22) | (b >> (32 - 22));
   b += c;
-  a += (((b & c) | (~ b & d)) + *(in + 8)) + (unsigned int)0x698098d8;
+  a += (((b & c) | (~ b & d)) + *(in + 8)) + (UINT4)0x698098d8;
   a = (a << 7) | (a >> (32 - 7));
   a += b;
   d += (((a & b) | (~ a & c)) + *(in + 9)) + 0x8b44f7af;
@@ -6920,7 +6913,7 @@ static void Transform(UINT4 *buf, UINT4 *in)
   b += (((c & d) | (~ c & a)) + *(in + 11)) + 0x895cd7be;
   b = (b << 22) | (b >> (32 - 22));
   b += c;
-  a += (((b & c) | (~ b & d)) + *(in + 12)) + (unsigned int)0x6b901122;
+  a += (((b & c) | (~ b & d)) + *(in + 12)) + (UINT4)0x6b901122;
   a = (a << 7) | (a >> (32 - 7));
   a += b;
   d += (((a & b) | (~ a & c)) + *(in + 13)) + 0xfd987193;
@@ -6929,7 +6922,7 @@ static void Transform(UINT4 *buf, UINT4 *in)
   c += (((d & a) | (~ d & b)) + *(in + 14)) + 0xa679438e;
   c = (c << 17) | (c >> (32 - 17));
   c += d;
-  b += (((c & d) | (~ c & a)) + *(in + 15)) + (unsigned int)0x49b40821;
+  b += (((c & d) | (~ c & a)) + *(in + 15)) + (UINT4)0x49b40821;
   b = (b << 22) | (b >> (32 - 22));
   b += c;
   a += (((b & d) | (c & ~ d)) + *(in + 1)) + 0xf61e2562;
@@ -6938,7 +6931,7 @@ static void Transform(UINT4 *buf, UINT4 *in)
   d += (((a & c) | (b & ~ c)) + *(in + 6)) + 0xc040b340;
   d = (d << 9) | (d >> (32 - 9));
   d += a;
-  c += (((d & b) | (a & ~ b)) + *(in + 11)) + (unsigned int)0x265e5a51;
+  c += (((d & b) | (a & ~ b)) + *(in + 11)) + (UINT4)0x265e5a51;
   c = (c << 14) | (c >> (32 - 14));
   c += d;
   b += (((c & a) | (d & ~ a)) + *(in + 0)) + 0xe9b6c7aa;
@@ -6947,7 +6940,7 @@ static void Transform(UINT4 *buf, UINT4 *in)
   a += (((b & d) | (c & ~ d)) + *(in + 5)) + 0xd62f105d;
   a = (a << 5) | (a >> (32 - 5));
   a += b;
-  d += (((a & c) | (b & ~ c)) + *(in + 10)) + (unsigned int)0x2441453;
+  d += (((a & c) | (b & ~ c)) + *(in + 10)) + (UINT4)0x2441453;
   d = (d << 9) | (d >> (32 - 9));
   d += a;
   c += (((d & b) | (a & ~ b)) + *(in + 15)) + 0xd8a1e681;
@@ -6956,7 +6949,7 @@ static void Transform(UINT4 *buf, UINT4 *in)
   b += (((c & a) | (d & ~ a)) + *(in + 4)) + 0xe7d3fbc8;
   b = (b << 20) | (b >> (32 - 20));
   b += c;
-  a += (((b & d) | (c & ~ d)) + *(in + 9)) + (unsigned int)0x21e1cde6;
+  a += (((b & d) | (c & ~ d)) + *(in + 9)) + (UINT4)0x21e1cde6;
   a = (a << 5) | (a >> (32 - 5));
   a += b;
   d += (((a & c) | (b & ~ c)) + *(in + 14)) + 0xc33707d6;
@@ -6965,7 +6958,7 @@ static void Transform(UINT4 *buf, UINT4 *in)
   c += (((d & b) | (a & ~ b)) + *(in + 3)) + 0xf4d50d87;
   c = (c << 14) | (c >> (32 - 14));
   c += d;
-  b += (((c & a) | (d & ~ a)) + *(in + 8)) + (unsigned int)0x455a14ed;
+  b += (((c & a) | (d & ~ a)) + *(in + 8)) + (UINT4)0x455a14ed;
   b = (b << 20) | (b >> (32 - 20));
   b += c;
   a += (((b & d) | (c & ~ d)) + *(in + 13)) + 0xa9e3e905;
@@ -6974,7 +6967,7 @@ static void Transform(UINT4 *buf, UINT4 *in)
   d += (((a & c) | (b & ~ c)) + *(in + 2)) + 0xfcefa3f8;
   d = (d << 9) | (d >> (32 - 9));
   d += a;
-  c += (((d & b) | (a & ~ b)) + *(in + 7)) + (unsigned int)0x676f02d9;
+  c += (((d & b) | (a & ~ b)) + *(in + 7)) + (UINT4)0x676f02d9;
   c = (c << 14) | (c >> (32 - 14));
   c += d;
   b += (((c & a) | (d & ~ a)) + *(in + 12)) + 0x8d2a4c8a;
@@ -6986,7 +6979,7 @@ static void Transform(UINT4 *buf, UINT4 *in)
   d += (((a ^ b) ^ c) + *(in + 8)) + 0x8771f681;
   d = (d << 11) | (d >> (32 - 11));
   d += a;
-  c += (((d ^ a) ^ b) + *(in + 11)) + (unsigned int)0x6d9d6122;
+  c += (((d ^ a) ^ b) + *(in + 11)) + (UINT4)0x6d9d6122;
   c = (c << 16) | (c >> (32 - 16));
   c += d;
   b += (((c ^ d) ^ a) + *(in + 14)) + 0xfde5380c;
@@ -6995,7 +6988,7 @@ static void Transform(UINT4 *buf, UINT4 *in)
   a += (((b ^ c) ^ d) + *(in + 1)) + 0xa4beea44;
   a = (a << 4) | (a >> (32 - 4));
   a += b;
-  d += (((a ^ b) ^ c) + *(in + 4)) + (unsigned int)0x4bdecfa9;
+  d += (((a ^ b) ^ c) + *(in + 4)) + (UINT4)0x4bdecfa9;
   d = (d << 11) | (d >> (32 - 11));
   d += a;
   c += (((d ^ a) ^ b) + *(in + 7)) + 0xf6bb4b60;
@@ -7004,7 +6997,7 @@ static void Transform(UINT4 *buf, UINT4 *in)
   b += (((c ^ d) ^ a) + *(in + 10)) + 0xbebfbc70;
   b = (b << 23) | (b >> (32 - 23));
   b += c;
-  a += (((b ^ c) ^ d) + *(in + 13)) + (unsigned int)0x289b7ec6;
+  a += (((b ^ c) ^ d) + *(in + 13)) + (UINT4)0x289b7ec6;
   a = (a << 4) | (a >> (32 - 4));
   a += b;
   d += (((a ^ b) ^ c) + *(in + 0)) + 0xeaa127fa;
@@ -7013,7 +7006,7 @@ static void Transform(UINT4 *buf, UINT4 *in)
   c += (((d ^ a) ^ b) + *(in + 3)) + 0xd4ef3085;
   c = (c << 16) | (c >> (32 - 16));
   c += d;
-  b += (((c ^ d) ^ a) + *(in + 6)) + (unsigned int)0x4881d05;
+  b += (((c ^ d) ^ a) + *(in + 6)) + (UINT4)0x4881d05;
   b = (b << 23) | (b >> (32 - 23));
   b += c;
   a += (((b ^ c) ^ d) + *(in + 9)) + 0xd9d4d039;
@@ -7022,7 +7015,7 @@ static void Transform(UINT4 *buf, UINT4 *in)
   d += (((a ^ b) ^ c) + *(in + 12)) + 0xe6db99e5;
   d = (d << 11) | (d >> (32 - 11));
   d += a;
-  c += (((d ^ a) ^ b) + *(in + 15)) + (unsigned int)0x1fa27cf8;
+  c += (((d ^ a) ^ b) + *(in + 15)) + (UINT4)0x1fa27cf8;
   c = (c << 16) | (c >> (32 - 16));
   c += d;
   b += (((c ^ d) ^ a) + *(in + 2)) + 0xc4ac5665;
@@ -7031,7 +7024,7 @@ static void Transform(UINT4 *buf, UINT4 *in)
   a += ((c ^ (b | ~ d)) + *(in + 0)) + 0xf4292244;
   a = (a << 6) | (a >> (32 - 6));
   a += b;
-  d += ((b ^ (a | ~ c)) + *(in + 7)) + (unsigned int)0x432aff97;
+  d += ((b ^ (a | ~ c)) + *(in + 7)) + (UINT4)0x432aff97;
   d = (d << 10) | (d >> (32 - 10));
   d += a;
   c += ((a ^ (d | ~ b)) + *(in + 14)) + 0xab9423a7;
@@ -7040,7 +7033,7 @@ static void Transform(UINT4 *buf, UINT4 *in)
   b += ((d ^ (c | ~ a)) + *(in + 5)) + 0xfc93a039;
   b = (b << 21) | (b >> (32 - 21));
   b += c;
-  a += ((c ^ (b | ~ d)) + *(in + 12)) + (unsigned int)0x655b59c3;
+  a += ((c ^ (b | ~ d)) + *(in + 12)) + (UINT4)0x655b59c3;
   a = (a << 6) | (a >> (32 - 6));
   a += b;
   d += ((b ^ (a | ~ c)) + *(in + 3)) + 0x8f0ccc92;
@@ -7052,7 +7045,7 @@ static void Transform(UINT4 *buf, UINT4 *in)
   b += ((d ^ (c | ~ a)) + *(in + 1)) + 0x85845dd1;
   b = (b << 21) | (b >> (32 - 21));
   b += c;
-  a += ((c ^ (b | ~ d)) + *(in + 8)) + (unsigned int)0x6fa87e4f;
+  a += ((c ^ (b | ~ d)) + *(in + 8)) + (UINT4)0x6fa87e4f;
   a = (a << 6) | (a >> (32 - 6));
   a += b;
   d += ((b ^ (a | ~ c)) + *(in + 15)) + 0xfe2ce6e0;
@@ -7061,7 +7054,7 @@ static void Transform(UINT4 *buf, UINT4 *in)
   c += ((a ^ (d | ~ b)) + *(in + 6)) + 0xa3014314;
   c = (c << 15) | (c >> (32 - 15));
   c += d;
-  b += ((d ^ (c | ~ a)) + *(in + 13)) + (unsigned int)0x4e0811a1;
+  b += ((d ^ (c | ~ a)) + *(in + 13)) + (UINT4)0x4e0811a1;
   b = (b << 21) | (b >> (32 - 21));
   b += c;
   a += ((c ^ (b | ~ d)) + *(in + 4)) + 0xf7537e82;
@@ -7070,7 +7063,7 @@ static void Transform(UINT4 *buf, UINT4 *in)
   d += ((b ^ (a | ~ c)) + *(in + 11)) + 0xbd3af235;
   d = (d << 10) | (d >> (32 - 10));
   d += a;
-  c += ((a ^ (d | ~ b)) + *(in + 2)) + (unsigned int)0x2ad7d2bb;
+  c += ((a ^ (d | ~ b)) + *(in + 2)) + (UINT4)0x2ad7d2bb;
   c = (c << 15) | (c >> (32 - 15));
   c += d;
   b += ((d ^ (c | ~ a)) + *(in + 9)) + 0xeb86d391;
@@ -7107,7 +7100,7 @@ unsigned int HSH_Hash(int id, unsigned char const *in1, unsigned int in1_len,
   MD5Final(& ctx);
   if (out_len < (unsigned int)16) out_len = out_len;
   else out_len = (unsigned int)16;
-  memcpy((void *)out,(void const *)(ctx.digest),(unsigned long)out_len);
+  memcpy((void *)out,(void const *)(ctx.digest),(size_t)out_len);
   return out_len;
 }
 
@@ -7302,10 +7295,10 @@ static int decode_password(char *key)
   int tmp_2;
   tmp = strlen((char const *)key);
   int len = (int)tmp;
-  tmp_2 = strncmp((char const *)key,"ASCII:",(unsigned long)6);
+  tmp_2 = strncmp((char const *)key,"ASCII:",(size_t)6);
   if (tmp_2) {
     int tmp_1;
-    tmp_1 = strncmp((char const *)key,"HEX:",(unsigned long)4);
+    tmp_1 = strncmp((char const *)key,"HEX:",(size_t)4);
     if (tmp_1) {
       __retres = len;
       goto return_label;
@@ -7338,7 +7331,7 @@ static int decode_password(char *key)
     }
   }
   else {
-    memmove((void *)key,(void const *)(key + 6),(unsigned long)(len - 6));
+    memmove((void *)key,(void const *)(key + 6),(size_t)(len - 6));
     __retres = len - 6;
     goto return_label;
   }
@@ -7434,15 +7427,15 @@ void KEY_Reload(void)
         continue;
       }
       key.id = key_id;
-      key.val = (char *)Malloc2((unsigned long)key.len,sizeof(char));
-      memcpy((void *)key.val,(void const *)keyval,(unsigned long)key.len);
+      key.val = (char *)Malloc2((size_t)key.len,sizeof(char));
+      memcpy((void *)key.val,(void const *)keyval,(size_t)key.len);
       ARR_AppendElement(keys,(void *)(& key));
     }
   }
   fclose(in);
   tmp_2 = ARR_GetSize(keys);
   tmp_3 = ARR_GetElements(keys);
-  qsort(tmp_3,(unsigned long)tmp_2,sizeof(Key),& compare_keys_by_id);
+  qsort(tmp_3,(size_t)tmp_2,sizeof(Key),& compare_keys_by_id);
   i = (unsigned int)1;
   while (1) {
     unsigned int tmp_7;
@@ -7499,7 +7492,7 @@ static int lookup_key(uint32_t id)
   tmp = ARR_GetSize(keys);
   ;
   tmp_0 = bsearch((void const *)(& specimen),(void const *)keys_ptr,
-                  (unsigned long)tmp,sizeof(Key),& compare_keys_by_id);
+                  (size_t)tmp,sizeof(Key),& compare_keys_by_id);
   where = (Key *)tmp_0;
   if (! where) {
     __retres = -1;
@@ -7618,8 +7611,7 @@ static int check_ntp_auth(int hash_id, unsigned char const *key, int key_len,
   ;
   if (tmp == auth_len) {
     int tmp_0;
-    tmp_0 = memcmp((void const *)(buf),(void const *)auth,
-                   (unsigned long)auth_len);
+    tmp_0 = memcmp((void const *)(buf),(void const *)auth,(size_t)auth_len);
     if (tmp_0) tmp_1 = 0; else tmp_1 = 1;
   }
   else tmp_1 = 0;
@@ -8353,12 +8345,12 @@ DNS_Status DNS_Name2IPAddress(char const *name, IPAddr *ip_addrs,
         if (! (i < max_addrs)) break;
       }
       else break;
-      (ip_addrs + i)->family = (unsigned short)1;
+      (ip_addrs + i)->family = (uint16_t)1;
       (ip_addrs + i)->addr.in4 = ntohl(*((uint32_t *)*(host->h_addr_list + i)));
       i ++;
     }
     while (i < max_addrs) {
-      (ip_addrs + i)->family = (unsigned short)0;
+      (ip_addrs + i)->family = (uint16_t)0;
       i ++;
     }
     __retres = DNS_Success;
@@ -8392,14 +8384,13 @@ int DNS_IPAddress2Name(IPAddr *ip_addr, char *name, int len)
   char *result = (char *)0;
   switch ((int)ip_addr->family) {
     case 1: addr = htonl(ip_addr->addr.in4);
-    host = gethostbyaddr((void const *)(& addr),
-                         (unsigned int)sizeof(ip_addr),2);
+    host = gethostbyaddr((void const *)(& addr),(socklen_t)sizeof(ip_addr),2);
     break;
     default: host = (struct hostent *)0;
   }
   if (host) result = host->h_name;
   if (result == (char *)0) result = UTI_IPToString(ip_addr);
-  tmp = snprintf(name,(unsigned long)len,"%s",result); /* snprintf_va_1 */
+  tmp = snprintf(name,(size_t)len,"%s",result); /* snprintf_va_1 */
   ;
   if (tmp >= len) {
     __retres = 0;
@@ -8515,7 +8506,7 @@ static int prepare_socket(int family, int port_number, int client_only)
     if (tmp_4) ;
   }
   memset((void *)(& my_addr),0,sizeof(my_addr));
-  my_addr_len = (unsigned int)0;
+  my_addr_len = (socklen_t)0;
   switch (family) {
     case 2:
     if (! client_only) CNF_GetBindAddress(1,& bind_address);
@@ -8523,18 +8514,18 @@ static int prepare_socket(int family, int port_number, int client_only)
     if ((int)bind_address.family == 1) my_addr.in4.sin_addr.s_addr = htonl
                                        (bind_address.addr.in4);
     else 
-      if (port_number) my_addr.in4.sin_addr.s_addr = htonl((unsigned int)0);
+      if (port_number) my_addr.in4.sin_addr.s_addr = htonl((uint32_t)0);
       else break;
-    my_addr.in4.sin_family = (unsigned short)family;
-    my_addr.in4.sin_port = htons((unsigned short)port_number);
-    my_addr_len = (unsigned int)sizeof(my_addr.in4);
+    my_addr.in4.sin_family = (sa_family_t)family;
+    my_addr.in4.sin_port = htons((uint16_t)port_number);
+    my_addr_len = (socklen_t)sizeof(my_addr.in4);
     break;
     default: __FC_assert(0 != 0,"ntp_io.c",194,"0");
   }
   if (port_number) {
     int tmp_5;
     tmp_5 = setsockopt(sock_fd,1,2,(void const *)(& on_off),
-                       (unsigned int)sizeof(on_off));
+                       (socklen_t)sizeof(on_off));
     if (tmp_5 < 0) {
       {
         char const *__va_arg0_25 = "SO_REUSEADDR";
@@ -8547,7 +8538,7 @@ static int prepare_socket(int family, int port_number, int client_only)
   if (! client_only) {
     int tmp_6;
     tmp_6 = setsockopt(sock_fd,1,6,(void const *)(& on_off),
-                       (unsigned int)sizeof(on_off));
+                       (socklen_t)sizeof(on_off));
     if (tmp_6 < 0) {
       {
         char const *__va_arg0_29 = "SO_BROADCAST";
@@ -8558,11 +8549,11 @@ static int prepare_socket(int family, int port_number, int client_only)
     }
   }
   tmp_8 = setsockopt(sock_fd,1,35,(void const *)(& on_off),
-                     (unsigned int)sizeof(on_off));
+                     (socklen_t)sizeof(on_off));
   if (tmp_8 < 0) {
     int tmp_7;
     tmp_7 = setsockopt(sock_fd,1,29,(void const *)(& on_off),
-                       (unsigned int)sizeof(on_off));
+                       (socklen_t)sizeof(on_off));
     if (tmp_7 < 0) {
       {
         char const *__va_arg0_33 = "SO_TIMESTAMP";
@@ -8575,7 +8566,7 @@ static int prepare_socket(int family, int port_number, int client_only)
   if (my_addr_len > (socklen_t)0) {
     int tmp_9;
     tmp_9 = setsockopt(sock_fd,IPPROTO_IP,15,(void const *)(& on_off),
-                       (unsigned int)sizeof(on_off));
+                       (socklen_t)sizeof(on_off));
     if (tmp_9 < 0) {
       {
         char const *__va_arg0_37 = "IP_FREEBIND";
@@ -8634,7 +8625,7 @@ static int connect_socket(int sock_fd, NTP_Remote_Address *remote_addr)
   int tmp_2;
   tmp = UTI_IPAndPortToSockaddr(& remote_addr->ip_addr,remote_addr->port,
                                 & addr.u);
-  addr_len = (unsigned int)tmp;
+  addr_len = (socklen_t)tmp;
   __FC_assert(addr_len != (socklen_t)0,"ntp_io.c",305,"addr_len");
   tmp_2 = connect(sock_fd,(struct sockaddr const *)(& addr.u),addr_len);
   if (tmp_2 < 0) {
@@ -8665,11 +8656,11 @@ static void prepare_buffers(unsigned int n)
     msg->iov.iov_base = (void *)(& msg->buf);
     msg->iov.iov_len = sizeof(msg->buf);
     hdr->msg_hdr.msg_name = (void *)(& msg->name);
-    hdr->msg_hdr.msg_namelen = (unsigned int)sizeof(msg->name);
+    hdr->msg_hdr.msg_namelen = (socklen_t)sizeof(msg->name);
     hdr->msg_hdr.msg_iov = & msg->iov;
     hdr->msg_hdr.msg_iovlen = 1;
     hdr->msg_hdr.msg_control = (void *)(& msg->cmsgbuf);
-    hdr->msg_hdr.msg_controllen = (unsigned int)sizeof(msg->cmsgbuf);
+    hdr->msg_hdr.msg_controllen = (socklen_t)sizeof(msg->cmsgbuf);
     hdr->msg_hdr.msg_flags = 0;
     hdr->msg_len = (unsigned int)0;
     i ++;
@@ -8884,10 +8875,10 @@ static void process_message(struct msghdr *hdr, int length, int sock_fd)
     UTI_SockaddrToIPAndPort((struct sockaddr *)hdr->msg_name,
                             & remote_addr.ip_addr,& remote_addr.port);
   else {
-    remote_addr.ip_addr.family = (unsigned short)0;
+    remote_addr.ip_addr.family = (uint16_t)0;
     remote_addr.port = (unsigned short)0;
   }
-  local_addr.ip_addr.family = (unsigned short)0;
+  local_addr.ip_addr.family = (uint16_t)0;
   local_addr.if_index = -1;
   local_addr.sock_fd = sock_fd;
   if (hdr->msg_flags & 0x20) goto return_label;
@@ -8963,7 +8954,7 @@ int NIO_SendPacket(NTP_Packet *packet, NTP_Remote_Address *remote_addr,
   int cmsglen;
   int tmp_1;
   ssize_t tmp_5;
-  socklen_t addrlen = (unsigned int)0;
+  socklen_t addrlen = (socklen_t)0;
   __FC_assert(initialised != 0,"ntp_io.c",791,"initialised");
   if (local_addr->sock_fd == -1) {
     __retres = 0;
@@ -8978,7 +8969,7 @@ int NIO_SendPacket(NTP_Packet *packet, NTP_Remote_Address *remote_addr,
         int tmp_0;
         tmp_0 = UTI_IPAndPortToSockaddr(& remote_addr->ip_addr,
                                         remote_addr->port,& remote.u);
-        addrlen = (unsigned int)tmp_0;
+        addrlen = (socklen_t)tmp_0;
         if (! addrlen) {
           __retres = 0;
           goto return_label;
@@ -8991,18 +8982,18 @@ int NIO_SendPacket(NTP_Packet *packet, NTP_Remote_Address *remote_addr,
   }
   else {
     msg.msg_name = (void *)0;
-    msg.msg_namelen = (unsigned int)0;
+    msg.msg_namelen = (socklen_t)0;
   }
   iov.iov_base = (void *)packet;
-  iov.iov_len = (unsigned long)length;
+  iov.iov_len = (size_t)length;
   msg.msg_iov = & iov;
   msg.msg_iovlen = 1;
   msg.msg_control = (void *)(cmsgbuf);
-  msg.msg_controllen = (unsigned int)sizeof(cmsgbuf);
+  msg.msg_controllen = (socklen_t)sizeof(cmsgbuf);
   msg.msg_flags = 0;
   cmsglen = 0;
   if ((int)local_addr->ip_addr.family == 1) ;
-  msg.msg_controllen = (unsigned int)cmsglen;
+  msg.msg_controllen = (socklen_t)cmsglen;
   if (! cmsglen) msg.msg_control = (void *)0;
   tmp_5 = sendmsg(local_addr->sock_fd,(struct msghdr const *)(& msg),0);
   if (tmp_5 < (ssize_t)0) {
@@ -9190,7 +9181,7 @@ void REF_Initialise(void)
   enable_local_stratum = CNF_AllowLocalReference(& local_stratum_0,
                                                  & local_orphan_0,
                                                  & local_distance_0);
-  leap_timeout_id = (unsigned int)0;
+  leap_timeout_id = (SCH_TimeoutID)0;
   leap_in_progress = 0;
   leap_mode = CNF_GetLeapSecMode();
   if (leap_mode == (unsigned int)REF_LeapModeSystem) {
@@ -9201,11 +9192,11 @@ void REF_Initialise(void)
   leap_tzname = CNF_GetLeapSecTimezone();
   if (leap_tzname) {
     NTP_Leap tmp_5;
-    tmp_5 = get_tz_leap((long)1341014400,& tai_offset);
+    tmp_5 = get_tz_leap((time_t)1341014400,& tai_offset);
     if (tmp_5 == (unsigned int)LEAP_InsertSecond) {
       if (tai_offset == 34) {
         NTP_Leap tmp_6;
-        tmp_6 = get_tz_leap((long)1356912000,& tai_offset);
+        tmp_6 = get_tz_leap((time_t)1356912000,& tai_offset);
         if (tmp_6 == (unsigned int)LEAP_Normal) {
           if (tai_offset == 35) {
             {
@@ -9244,12 +9235,12 @@ void REF_Initialise(void)
   CNF_GetFallbackDrifts(& fb_drift_min_0,& fb_drift_max_0);
   if (fb_drift_max_0 >= fb_drift_min_0) 
     if (fb_drift_min_0 > 0) {
-      fb_drifts = (struct fb_drift *)Malloc2((unsigned long)((fb_drift_max_0 - fb_drift_min_0) + 1),
+      fb_drifts = (struct fb_drift *)Malloc2((size_t)((fb_drift_max_0 - fb_drift_min_0) + 1),
                                              sizeof(struct fb_drift));
       memset((void *)fb_drifts,0,
              sizeof(struct fb_drift) * (unsigned long)((fb_drift_max_0 - fb_drift_min_0) + 1));
       next_fb_drift = 0;
-      fb_drift_timeout_id = (unsigned int)0;
+      fb_drift_timeout_id = (SCH_TimeoutID)0;
     }
   UTI_ZeroTimespec(& our_ref_time);
   UTI_ZeroTimespec(& last_ref_update);
@@ -9261,7 +9252,7 @@ void REF_Initialise(void)
 
 void REF_Finalise(void)
 {
-  update_leap_status(LEAP_Unsynchronised,(long)0,0);
+  update_leap_status(LEAP_Unsynchronised,(time_t)0,0);
   if (drift_file_0) {
     double tmp;
     ;
@@ -9403,7 +9394,7 @@ static void update_fb_drifts(double freq_ppm, double update_interval)
               "are_we_synchronised");
   if (next_fb_drift > 0) next_fb_drift = 0;
   SCH_RemoveTimeout(fb_drift_timeout_id);
-  fb_drift_timeout_id = (unsigned int)0;
+  fb_drift_timeout_id = (SCH_TimeoutID)0;
   if (update_interval < 1.0) goto return_label;
   else 
     if (update_interval > last_ref_update_interval * 4.0) goto return_label;
@@ -9435,7 +9426,7 @@ static void fb_drift_timeout(void *arg)
   else tmp = 0;
   __FC_assert(tmp != 0,"reference.c",441,
               "next_fb_drift >= fb_drift_min && next_fb_drift <= fb_drift_max");
-  fb_drift_timeout_id = (unsigned int)0;
+  fb_drift_timeout_id = (SCH_TimeoutID)0;
   LCL_SetAbsoluteFrequency((fb_drifts + (next_fb_drift - fb_drift_min_0))->freq);
   REF_SetUnsynchronised();
   return;
@@ -9729,7 +9720,7 @@ static NTP_Leap get_tz_leap(time_t when, int *tai_offset)
 
 static void leap_end_timeout(void *arg)
 {
-  leap_timeout_id = (unsigned int)0;
+  leap_timeout_id = (SCH_TimeoutID)0;
   leap_in_progress = 0;
   if (our_tai_offset) our_tai_offset += our_leap_sec;
   our_leap_sec = 0;
@@ -9781,7 +9772,7 @@ static void set_leap_timeout(time_t now)
 {
   struct timespec when;
   SCH_RemoveTimeout(leap_timeout_id);
-  leap_timeout_id = (unsigned int)0;
+  leap_timeout_id = (SCH_TimeoutID)0;
   leap_in_progress = 0;
   if (! our_leap_sec) goto return_label;
   when.tv_sec = (now / (time_t)(24 * 3600) + (time_t)1) * (time_t)(24 * 3600);
@@ -10098,8 +10089,7 @@ void REF_SetReference(int stratum, NTP_Leap leap, int combined_sources,
   are_we_synchronised = leap != (unsigned int)LEAP_Unsynchronised;
   our_stratum = stratum + 1;
   our_ref_id = ref_id;
-  if (ref_ip) our_ref_ip = *ref_ip;
-  else our_ref_ip.family = (unsigned short)0;
+  if (ref_ip) our_ref_ip = *ref_ip; else our_ref_ip.family = (uint16_t)0;
   our_ref_time = *ref_time;
   our_skew = skew;
   our_residual_freq = residual_frequency;
@@ -10176,7 +10166,7 @@ void REF_SetReference(int stratum, NTP_Leap leap, int combined_sources,
 void REF_SetManualReference(struct timespec *ref_time, double offset,
                             double frequency, double skew)
 {
-  REF_SetReference(0,LEAP_Unsynchronised,1,(unsigned int)0x4D414E55UL,
+  REF_SetReference(0,LEAP_Unsynchronised,1,(uint32_t)0x4D414E55UL,
                    (IPAddr *)0,ref_time,offset,0.0,frequency,skew,skew,0.0,
                    0.0);
   return;
@@ -10198,9 +10188,9 @@ void REF_SetUnsynchronised(void)
   LCL_GetOffsetCorrection(& now_raw,& uncorrected_offset,(double *)0);
   UTI_AddDoubleToTimespec(& now_raw,uncorrected_offset,& now);
   if (fb_drifts) schedule_fb_drift(& now);
-  update_leap_status(LEAP_Unsynchronised,(long)0,0);
-  our_ref_ip.family = (unsigned short)1;
-  our_ref_ip.addr.in4 = (unsigned int)0;
+  update_leap_status(LEAP_Unsynchronised,(time_t)0,0);
+  our_ref_ip.family = (uint16_t)1;
+  our_ref_ip.addr.in4 = (uint32_t)0;
   our_stratum = 0;
   are_we_synchronised = 0;
   LCL_SetSyncStatus(0,0.0,0.0);
@@ -10247,7 +10237,7 @@ void REF_GetReferenceParams(struct timespec *local_time,
     if (enable_local_stratum) {
       *is_synchronised = 0;
       *stratum = local_stratum_0;
-      *ref_id = (unsigned int)0x7F7F0101UL;
+      *ref_id = (uint32_t)0x7F7F0101UL;
       *ref_time = *local_time;
       (ref_time->tv_sec) --;
       *leap_status = LEAP_Normal;
@@ -10258,7 +10248,7 @@ void REF_GetReferenceParams(struct timespec *local_time,
       *is_synchronised = 0;
       *leap_status = LEAP_Unsynchronised;
       *stratum = 16;
-      *ref_id = (unsigned int)0x0UL;
+      *ref_id = (uint32_t)0x0UL;
       UTI_ZeroTimespec(ref_time);
       *root_dispersion = 1.0;
       *root_delay = 1.0;
@@ -10391,7 +10381,7 @@ void REF_GetTrackingReport(RPT_TrackingReport *rep)
                          & rep->root_delay,& rep->root_dispersion);
   if (rep->stratum == 16) 
     if (! synchronised) rep->stratum = 0;
-  rep->ip_addr.family = (unsigned short)0;
+  rep->ip_addr.family = (uint16_t)0;
   rep->current_correction = correction;
   rep->freq_ppm = LCL_ReadAbsoluteFrequency();
   rep->resid_freq_ppm = 0.0;
@@ -11235,7 +11225,7 @@ void SCH_Initialise(void)
 {
   file_handlers = ARR_CreateInstance((unsigned int)sizeof(FileHandlerEntry));
   n_timer_queue_entries = (unsigned long)0;
-  next_tqe_id = (unsigned int)0;
+  next_tqe_id = (SCH_TimeoutID)0;
   timer_queue.next = & timer_queue;
   timer_queue.prev = & timer_queue;
   need_to_exit = 0;
@@ -11335,7 +11325,7 @@ static TimerQueueEntry *allocate_tqe(void)
   TimerQueueEntry *result;
   int i;
   if (tqe_free_list == (TimerQueueEntry *)0) {
-    new_block = (TimerQueueEntry *)Malloc2((unsigned long)32,
+    new_block = (TimerQueueEntry *)Malloc2((size_t)32,
                                            sizeof(TimerQueueEntry));
     i = 1;
     while (i < 32) {
@@ -11448,7 +11438,7 @@ SCH_TimeoutID SCH_AddTimeoutInClass(double min_delay, double separation,
   if (randomness > 0.0) {
     uint32_t rnd;
     UTI_GetRandomBytes((void *)(& rnd),(unsigned int)sizeof(rnd));
-    r = (double)rnd * (randomness / (double)((unsigned int)(-1))) + 1.0;
+    r = (double)rnd * (randomness / (double)((uint32_t)(-1))) + 1.0;
     min_delay *= r;
     separation *= r;
   }
@@ -11797,7 +11787,7 @@ void SCH_MainLoop(void)
     else {
       ptv = (struct timeval *)0;
       saved_tv.tv_usec = 0;
-      saved_tv.tv_sec = (long)saved_tv.tv_usec;
+      saved_tv.tv_sec = (time_t)saved_tv.tv_usec;
     }
     p_read_fds = & read_fds;
     p_write_fds = & write_fds;
@@ -12194,20 +12184,20 @@ SRC_Instance SRC_CreateNewInstance(uint32_t ref_id, SRC_Type type,
     else max_n_sources = 4;
     if (sources) {
       sources = (struct SRC_Instance_Record **)Realloc2((void *)sources,
-                                                        (unsigned long)max_n_sources,
+                                                        (size_t)max_n_sources,
                                                         sizeof(struct SRC_Instance_Record *));
       sort_list = (struct Sort_Element *)Realloc2((void *)sort_list,
-                                                  (unsigned long)(3 * max_n_sources),
+                                                  (size_t)(3 * max_n_sources),
                                                   sizeof(struct Sort_Element));
       sel_sources = (int *)Realloc2((void *)sel_sources,
-                                    (unsigned long)max_n_sources,sizeof(int));
+                                    (size_t)max_n_sources,sizeof(int));
     }
     else {
-      sources = (struct SRC_Instance_Record **)Malloc2((unsigned long)max_n_sources,
+      sources = (struct SRC_Instance_Record **)Malloc2((size_t)max_n_sources,
                                                        sizeof(struct SRC_Instance_Record *));
-      sort_list = (struct Sort_Element *)Malloc2((unsigned long)(3 * max_n_sources),
+      sort_list = (struct Sort_Element *)Malloc2((size_t)(3 * max_n_sources),
                                                  sizeof(struct Sort_Element));
-      sel_sources = (int *)Malloc2((unsigned long)max_n_sources,sizeof(int));
+      sel_sources = (int *)Malloc2((size_t)max_n_sources,sizeof(int));
     }
   }
   *(sources + n_sources) = result;
@@ -12331,7 +12321,7 @@ void SRC_UpdateReachability(SRC_Instance inst, int reachable)
   inst->reachability = (int)((unsigned int)inst->reachability % (1U << 8));
   if (inst->reachability_size < 8) (inst->reachability_size) ++;
   if (! reachable) 
-    if (inst->index == selected_source_index) SRC_SelectSource((struct SRC_Instance_Record *)0);
+    if (inst->index == selected_source_index) SRC_SelectSource((SRC_Instance)0);
   tmp = REF_GetMode();
   if (tmp != (unsigned int)REF_ModeNormal) {
     int tmp_0;
@@ -12732,8 +12722,8 @@ void SRC_SelectSource(SRC_Instance updated_inst)
     }
     goto return_label;
   }
-  qsort((void *)sort_list,(unsigned long)n_endpoints,
-        sizeof(struct Sort_Element),& compare_sort_elements);
+  qsort((void *)sort_list,(size_t)n_endpoints,sizeof(struct Sort_Element),
+        & compare_sort_elements);
   best_trust_depth = 0;
   trust_depth = best_trust_depth;
   best_depth = 0;
@@ -13013,7 +13003,7 @@ void SRC_SelectSource(SRC_Instance updated_inst)
 void SRC_ReselectSource(void)
 {
   selected_source_index = -1;
-  SRC_SelectSource((struct SRC_Instance_Record *)0);
+  SRC_SelectSource((SRC_Instance)0);
   return;
 }
 
@@ -13045,7 +13035,7 @@ static void slew_sources(struct timespec *raw, struct timespec *cooked,
     i ++;
   }
   if (change_type == (unsigned int)LCL_ChangeUnknownStep) SRC_SelectSource
-                                                          ((struct SRC_Instance_Record *)0);
+                                                          ((SRC_Instance)0);
   return;
 }
 
@@ -13259,7 +13249,7 @@ void SRC_RemoveDumpFiles(void)
   tmp_0 = glob((char const *)(pattern),0,
                (int (*)(char const *epath, int eerrno))0,& gl);
   if (tmp_0) goto return_label;
-  i = (unsigned long)0;
+  i = (size_t)0;
   while (i < gl.gl_pathc) {
     {
       size_t tmp_2;
@@ -13276,7 +13266,7 @@ void SRC_RemoveDumpFiles(void)
       if (tmp_2 < (size_t)4) goto __Cont;
       tmp_3 = strlen((char const *)(name));
       name[tmp_3 - (size_t)4] = (char)'\000';
-      tmp_4 = strncmp((char const *)(name),"refid:",(unsigned long)6);
+      tmp_4 = strncmp((char const *)(name),"refid:",(size_t)6);
       if (tmp_4) {
         int tmp_5;
         tmp_5 = UTI_StringToIP((char const *)(name),& ip_addr);
@@ -13284,7 +13274,7 @@ void SRC_RemoveDumpFiles(void)
       }
       unlink((char const *)*(gl.gl_pathv + i));
     }
-    __Cont: i += (size_t)1;
+    __Cont: i ++;
   }
   globfree(& gl);
   return_label: return;
@@ -13348,7 +13338,7 @@ int SRC_ReportSource(int index_0, RPT_SourceReport *report,
       if (src->ip_addr) report->ip_addr = *(src->ip_addr);
       else {
         report->ip_addr.addr.in4 = src->ref_id;
-        report->ip_addr.family = (unsigned short)1;
+        report->ip_addr.family = (uint16_t)1;
       }
       switch (src->status) {
         case (SRC_Status)SRC_FALSETICKER: report->state = RPT_FALSETICKER;
@@ -13393,7 +13383,7 @@ int SRC_ReportSourcestats(int index_0, RPT_SourcestatsReport *report,
       src = *(sources + index_0);
       report->ref_id = src->ref_id;
       if (src->ip_addr) report->ip_addr = *(src->ip_addr);
-      else report->ip_addr.family = (unsigned short)0;
+      else report->ip_addr.family = (uint16_t)0;
       SST_DoSourcestatsReport(src->stats,report,now);
       __retres = 1;
       goto return_label;
@@ -13405,12 +13395,12 @@ SRC_Type SRC_GetType(int index_0)
 {
   SRC_Type __retres;
   if (index_0 >= n_sources) {
-    __retres = (enum __anonenum_SRC_Type_23)(-1);
+    __retres = (SRC_Type)(-1);
     goto return_label;
   }
   else 
     if (index_0 < 0) {
-      __retres = (enum __anonenum_SRC_Type_23)(-1);
+      __retres = (SRC_Type)(-1);
       goto return_label;
     }
   __retres = (*(sources + index_0))->type;
@@ -14119,7 +14109,7 @@ void SST_SaveToFile(SST_Stats inst, FILE *out)
     i = get_runsbuf_index(inst,m);
     j = get_buf_index(inst,m);
     fprintf(out,"%08lx %08lx %.6e %.6e %.6e %.6e %.6e %.6e %.6e %d\n",
-            (unsigned long)inst->sample_times[i].tv_sec,
+            (uint64_t)inst->sample_times[i].tv_sec,
             (unsigned long)inst->sample_times[i].tv_nsec / (unsigned long)1000,
             inst->offsets[i],inst->orig_offsets[j],inst->peer_delays[i],
             inst->peer_dispersions[j],inst->root_delays[j],
@@ -14235,9 +14225,9 @@ int SST_LoadFromFile(SST_Stats inst, FILE *in)
               if (tmp) {
                 int tmp_0;
                 tmp_0 = sscanf((char const *)(line),
-                               "%lx%lx%lf%lf%lf%lf%lf%lf%lf%d\n",
-                               (unsigned long *)(& sec),& usec,
-                               & inst->offsets[i],& inst->orig_offsets[i],
+                               "%lx%lx%lf%lf%lf%lf%lf%lf%lf%d\n",& sec,
+                               & usec,& inst->offsets[i],
+                               & inst->orig_offsets[i],
                                & inst->peer_delays[i],
                                & inst->peer_dispersions[i],
                                & inst->root_delays[i],
@@ -14313,7 +14303,7 @@ void SST_DoSourceReport(SST_Stats inst, RPT_SourceReport *report,
     report->latest_meas_ago = (unsigned long)tmp;
   }
   else {
-    report->latest_meas_ago = (unsigned long)((unsigned int)(-1));
+    report->latest_meas_ago = (unsigned long)((uint32_t)(-1));
     report->orig_latest_meas = (double)0;
     report->latest_meas = (double)0;
     report->latest_meas_err = (double)0;
@@ -14410,7 +14400,7 @@ void UTI_TimevalToTimespec(struct timeval *tv, struct timespec *ts)
 void UTI_TimespecToTimeval(struct timespec *ts, struct timeval *tv)
 {
   tv->tv_sec = ts->tv_sec;
-  tv->tv_usec = (int)(ts->tv_nsec / (long)1000);
+  tv->tv_usec = (suseconds_t)(ts->tv_nsec / (long)1000);
   return;
 }
 
@@ -14457,10 +14447,10 @@ double UTI_TimevalToDouble(struct timeval *tv)
 void UTI_DoubleToTimeval(double a, struct timeval *b)
 {
   double frac_part;
-  b->tv_sec = (long)a;
+  b->tv_sec = (time_t)a;
   frac_part = 1.0e6 * (a - (double)b->tv_sec);
-  if (frac_part > (double)0) b->tv_usec = (int)(frac_part + 0.5);
-  else b->tv_usec = (int)(frac_part - 0.5);
+  if (frac_part > (double)0) b->tv_usec = (suseconds_t)(frac_part + 0.5);
+  else b->tv_usec = (suseconds_t)(frac_part - 0.5);
   UTI_NormaliseTimeval(b);
   return;
 }
@@ -14477,7 +14467,7 @@ void UTI_NormaliseTimeval(struct timeval *x)
       }
     }
   if (x->tv_usec < 0) {
-    x->tv_sec -= (time_t)1;
+    (x->tv_sec) --;
     x->tv_usec += 1000000;
   }
   return;
@@ -14527,7 +14517,7 @@ void UTI_AddDoubleToTimespec(struct timespec *start, double increment,
                              struct timespec *end)
 {
   time_t int_part;
-  int_part = (long)increment;
+  int_part = (time_t)increment;
   end->tv_sec = start->tv_sec + int_part;
   end->tv_nsec = (long)((double)start->tv_nsec + 1.0e9 * (increment - (double)int_part));
   UTI_NormaliseTimespec(end);
@@ -14573,7 +14563,7 @@ char *UTI_TimespecToString(struct timespec *ts)
   char *result;
   pool_ptr = (pool_ptr + 1) % 16;
   result = buffer_pool[pool_ptr];
-  snprintf(result,(unsigned long)64,"%ld.%09lu",ts->tv_sec,
+  snprintf(result,(size_t)64,"%ld.%09lu",ts->tv_sec,
            (unsigned long)ts->tv_nsec); /* snprintf_va_7 */
   return result;
 }
@@ -14683,15 +14673,14 @@ char *UTI_IPToString(IPAddr *addr)
   pool_ptr = (pool_ptr + 1) % 16;
   result = buffer_pool[pool_ptr];
   switch ((int)addr->family) {
-    case 0:
-    snprintf(result,(unsigned long)64,"[UNSPEC]"); /* snprintf_va_8 */
+    case 0: snprintf(result,(size_t)64,"[UNSPEC]"); /* snprintf_va_8 */
     break;
     case 1: ip = (unsigned long)addr->addr.in4;
     a = (ip >> 24) & (unsigned long)0xff;
     b = (ip >> 16) & (unsigned long)0xff;
     c = (ip >> 8) & (unsigned long)0xff;
     d = (ip >> 0) & (unsigned long)0xff;
-    snprintf(result,(unsigned long)64,"%lu.%lu.%lu.%lu",a,b,c,d); /* snprintf_va_9 */
+    snprintf(result,(size_t)64,"%lu.%lu.%lu.%lu",a,b,c,d); /* snprintf_va_9 */
     break;
     case 2: ip6 = addr->addr.in6;
     __FC_assert((64 >= 40) != 0,"util.c",308,"BUFFER_LENGTH >= 40");
@@ -14704,8 +14693,7 @@ char *UTI_IPToString(IPAddr *addr)
       a ++;
     }
     break;
-    default:
-    snprintf(result,(unsigned long)64,"[UNKNOWN]"); /* snprintf_va_11 */
+    default: snprintf(result,(size_t)64,"[UNKNOWN]"); /* snprintf_va_11 */
   }
   return result;
 }
@@ -14748,12 +14736,11 @@ int UTI_StringToIP(char const *addr, IPAddr *ip)
   tmp = sscanf(addr,"%lu.%lu.%lu.%lu",& a,& b,& c,& d); /* sscanf_va_63 */
   n = (unsigned long)tmp;
   if (n == (unsigned long)4) {
-    ip->family = (unsigned short)1;
-    ip->_pad = (unsigned short)0;
-    ip->addr.in4 = (unsigned int)(((((a & (unsigned long)0xff) << 24) | (
-                                    (b & (unsigned long)0xff) << 16)) | (
-                                   (c & (unsigned long)0xff) << 8)) | (
-                                  d & (unsigned long)0xff));
+    ip->family = (uint16_t)1;
+    ip->_pad = (uint16_t)0;
+    ip->addr.in4 = (uint32_t)(((((a & (unsigned long)0xff) << 24) | (
+                                (b & (unsigned long)0xff) << 16)) | (
+                               (c & (unsigned long)0xff) << 8)) | (d & (unsigned long)0xff));
     __retres = 1;
     goto return_label;
   }
@@ -14793,15 +14780,15 @@ uint32_t UTI_IPToRefid(IPAddr *ip)
         }
       }
     }
-    __retres = ((((unsigned int)buf[0] << 24) | (unsigned int)((int)buf[1] << 16)) | (unsigned int)(
+    __retres = ((((uint32_t)buf[0] << 24) | (unsigned int)((int)buf[1] << 16)) | (unsigned int)(
                 (int)buf[2] << 8)) | (unsigned int)buf[3];
     goto return_label;
   }
-  __retres = (unsigned int)0;
+  __retres = (uint32_t)0;
   return_label: return __retres;
 }
 
-static uint32_t UTI_IPToHash_seed = (unsigned int)0;
+static uint32_t UTI_IPToHash_seed = (uint32_t)0;
 uint32_t UTI_IPToHash(IPAddr *ip)
 {
   uint32_t __retres;
@@ -14813,10 +14800,10 @@ uint32_t UTI_IPToHash(IPAddr *ip)
     case 1: addr = (unsigned char *)(& ip->addr.in4);
     len = (unsigned int)sizeof(ip->addr.in4);
     break;
-    case 2: addr = (unsigned char *)(ip->addr.in6);
+    case 2: addr = ip->addr.in6;
     len = (unsigned int)sizeof(ip->addr.in6);
     break;
-    default: __retres = (unsigned int)0;
+    default: __retres = (uint32_t)0;
     goto return_label;
   }
   while (! UTI_IPToHash_seed) UTI_GetRandomBytes((void *)(& UTI_IPToHash_seed),
@@ -14842,7 +14829,7 @@ void UTI_IPHostToNetwork(IPAddr *src, IPAddr *dest)
     memcpy((void *)(dest->addr.in6),(void const *)(src->addr.in6),
            sizeof(dest->addr.in6));
     break;
-    default: dest->family = htons((unsigned short)0);
+    default: dest->family = htons((uint16_t)0);
   }
   return;
 }
@@ -14850,7 +14837,7 @@ void UTI_IPHostToNetwork(IPAddr *src, IPAddr *dest)
 void UTI_IPNetworkToHost(IPAddr *src, IPAddr *dest)
 {
   dest->family = ntohs(src->family);
-  dest->_pad = (unsigned short)0;
+  dest->_pad = (uint16_t)0;
   switch ((int)dest->family) {
     case 1: dest->addr.in4 = ntohl(src->addr.in4);
     break;
@@ -14858,7 +14845,7 @@ void UTI_IPNetworkToHost(IPAddr *src, IPAddr *dest)
     memcpy((void *)(dest->addr.in6),(void const *)(src->addr.in6),
            sizeof(dest->addr.in6));
     break;
-    default: dest->family = (unsigned short)0;
+    default: dest->family = (uint16_t)0;
   }
   return;
 }
@@ -14909,11 +14896,11 @@ void UTI_SockaddrToIPAndPort(struct sockaddr *sa, IPAddr *ip,
                              unsigned short *port)
 {
   switch ((int)sa->sa_family) {
-    case 2: ip->family = (unsigned short)1;
+    case 2: ip->family = (uint16_t)1;
     ip->addr.in4 = ntohl(((struct sockaddr_in *)sa)->sin_addr.s_addr);
     *port = ntohs(((struct sockaddr_in *)sa)->sin_port);
     break;
-    default: ip->family = (unsigned short)0;
+    default: ip->family = (uint16_t)0;
     *port = (unsigned short)0;
   }
   return;
@@ -14925,13 +14912,13 @@ int UTI_IPAndPortToSockaddr(IPAddr *ip, unsigned short port,
   int __retres;
   switch ((int)ip->family) {
     case 1: memset((void *)sa,0,sizeof(struct sockaddr_in));
-    sa->sa_family = (unsigned short)2;
+    sa->sa_family = (sa_family_t)2;
     ((struct sockaddr_in *)sa)->sin_addr.s_addr = htonl(ip->addr.in4);
     ((struct sockaddr_in *)sa)->sin_port = htons(port);
     __retres = (int)sizeof(struct sockaddr_in);
     goto return_label;
     default: memset((void *)sa,0,sizeof(struct sockaddr));
-    sa->sa_family = (unsigned short)0;
+    sa->sa_family = (sa_family_t)0;
     __retres = 0;
     goto return_label;
   }
@@ -14996,15 +14983,14 @@ char *UTI_SockaddrToString(struct sockaddr *sa)
     ;
     tmp = UTI_IPToString(& ip);
     ;
-    snprintf(result,(unsigned long)64,"%s:%hu",tmp,(int)port); /* snprintf_va_12 */
+    snprintf(result,(size_t)64,"%s:%hu",tmp,(int)port); /* snprintf_va_12 */
     break;
     case 1: sun_path = ((struct sockaddr_un *)sa)->sun_path;
-    snprintf(result,(unsigned long)64,"%.*s",64 - 1,sun_path); /* snprintf_va_13 */
+    snprintf(result,(size_t)64,"%.*s",64 - 1,sun_path); /* snprintf_va_13 */
     tmp_0 = strlen((char const *)sun_path);
     if (tmp_0 >= (size_t)64) *(result + (64 - 2)) = (char)'>';
     break;
-    default:
-    snprintf(result,(unsigned long)64,"[UNKNOWN]"); /* snprintf_va_14 */
+    default: snprintf(result,(size_t)64,"[UNKNOWN]"); /* snprintf_va_14 */
   }
   return result;
 }
@@ -15045,9 +15031,9 @@ char *UTI_TimeToLogForm(time_t t)
   pool_ptr = (pool_ptr + 1) % 16;
   result = buffer_pool[pool_ptr];
   stm = gmtime((time_t const *)(& t));
-  if (stm) strftime(result,(unsigned long)64,"%Y-%m-%d %H:%M:%S",
+  if (stm) strftime(result,(size_t)64,"%Y-%m-%d %H:%M:%S",
                     (struct tm const *)stm);
-  else snprintf(result,(unsigned long)64,"INVALID    INVALID "); /* snprintf_va_15 */
+  else snprintf(result,(size_t)64,"INVALID    INVALID "); /* snprintf_va_15 */
   return result;
 }
 
@@ -15075,7 +15061,7 @@ void UTI_GetNtp64Fuzz(NTP_int64 *ts, int precision)
   __FC_assert((sizeof(*ts) == (unsigned long)8) != 0,"util.c",645,
               "sizeof (*ts) == 8");
   start = (int)(sizeof(*ts) - (unsigned long)(((precision + 32) + 7) / 8));
-  tmp_0 = (unsigned int)0;
+  tmp_0 = (uint32_t)0;
   ts->lo = tmp_0;
   ts->hi = tmp_0;
   UTI_GetRandomBytes((void *)((unsigned char *)ts + start),
@@ -15102,11 +15088,11 @@ NTP_int32 UTI_DoubleToNtp32(double x)
   NTP_int32 tmp;
   if (x >= 4294967295.0 / 65536.0) r = 0xffffffff;
   else 
-    if (x <= 0.0) r = (unsigned int)0;
+    if (x <= 0.0) r = (NTP_int32)0;
     else {
       x *= 65536.0;
-      r = (unsigned int)x;
-      if ((double)r < x) r += (NTP_int32)1;
+      r = (NTP_int32)x;
+      if ((double)r < x) r ++;
     }
   tmp = htonl(r);
   return tmp;
@@ -15115,7 +15101,7 @@ NTP_int32 UTI_DoubleToNtp32(double x)
 void UTI_ZeroNtp64(NTP_int64 *ts)
 {
   uint32_t tmp;
-  tmp = htonl((unsigned int)0);
+  tmp = htonl((uint32_t)0);
   ts->lo = tmp;
   ts->hi = tmp;
   return;
@@ -15146,7 +15132,7 @@ int UTI_CompareNtp64(NTP_int64 *a, NTP_int64 *b)
     }
   tmp = ntohl(a->hi);
   tmp_0 = ntohl(b->hi);
-  diff = (int)(tmp - tmp_0);
+  diff = (int32_t)(tmp - tmp_0);
   if (diff < 0) {
     __retres = -1;
     goto return_label;
@@ -15195,11 +15181,11 @@ void UTI_TimespecToNtp64(struct timespec *src, NTP_int64 *dest,
   uint32_t lo;
   uint32_t sec;
   uint32_t nsec;
-  sec = (unsigned int)src->tv_sec;
-  nsec = (unsigned int)src->tv_nsec;
+  sec = (uint32_t)src->tv_sec;
+  nsec = (uint32_t)src->tv_nsec;
   if (! nsec) {
     if (! sec) {
-      lo = (unsigned int)0;
+      lo = (uint32_t)0;
       hi = lo;
     }
     else goto _LAND;
@@ -15207,8 +15193,8 @@ void UTI_TimespecToNtp64(struct timespec *src, NTP_int64 *dest,
   else {
     _LAND:
     {
-      hi = htonl((unsigned int)((unsigned long)sec + 0x83aa7e80UL));
-      lo = htonl((unsigned int)(4.294967296 * (double)nsec));
+      hi = htonl((uint32_t)((unsigned long)sec + 0x83aa7e80UL));
+      lo = htonl((uint32_t)(4.294967296 * (double)nsec));
       if (fuzz) {
         hi ^= fuzz->hi;
         lo ^= fuzz->lo;
@@ -15232,9 +15218,9 @@ void UTI_Ntp64ToTimespec(NTP_int64 *src, struct timespec *dest)
   }
   ntp_sec = ntohl(src->hi);
   ntp_frac = ntohl(src->lo);
-  dest->tv_sec = (long)(ntp_sec - (unsigned int)((unsigned long long)(
-                                                 1516643532LL - (long long)(
-                                                 (18250 * 24) * 3600)) + (unsigned long long)0x83aa7e80UL)) + (long)(
+  dest->tv_sec = (time_t)(ntp_sec - (uint32_t)((unsigned long long)(1516643532LL - (long long)(
+                                                                    (
+                                                                    18250 * 24) * 3600)) + (unsigned long long)0x83aa7e80UL)) + (time_t)(
                  1516643532LL - (long long)((18250 * 24) * 3600));
   dest->tv_nsec = (long)((double)ntp_frac / 4.294967296);
   return_label: return;
@@ -15280,12 +15266,12 @@ double UTI_Log2ToDouble(int l)
   double __retres;
   if (l >= 0) {
     if (l > 31) l = 31;
-    __retres = (double)((unsigned int)1 << l);
+    __retres = (double)((uint32_t)1 << l);
     goto return_label;
   }
   else {
     if (l < -31) l = -31;
-    __retres = 1.0 / (double)((unsigned int)1 << - l);
+    __retres = 1.0 / (double)((uint32_t)1 << - l);
     goto return_label;
   }
   return_label: return __retres;
@@ -15298,8 +15284,8 @@ void UTI_TimespecNetworkToHost(Timespec *src, struct timespec *dest)
   uint32_t sec_high;
   sec_low = ntohl(src->tv_sec_low);
   sec_high = ntohl(src->tv_sec_high);
-  if (sec_high == (uint32_t)0x7fffffff) sec_high = (unsigned int)0;
-  dest->tv_sec = (long)(((unsigned long)sec_high << 32) | (unsigned long)sec_low);
+  if (sec_high == (uint32_t)0x7fffffff) sec_high = (uint32_t)0;
+  dest->tv_sec = (long)(((uint64_t)sec_high << 32) | (unsigned long)sec_low);
   nsec = ntohl(src->tv_nsec);
   if (nsec < 999999999U) dest->tv_nsec = (long)nsec;
   else dest->tv_nsec = (long)999999999U;
@@ -15308,9 +15294,9 @@ void UTI_TimespecNetworkToHost(Timespec *src, struct timespec *dest)
 
 void UTI_TimespecHostToNetwork(struct timespec *src, Timespec *dest)
 {
-  dest->tv_nsec = htonl((unsigned int)src->tv_nsec);
-  dest->tv_sec_high = htonl((unsigned int)((unsigned long)src->tv_sec >> 32));
-  dest->tv_sec_low = htonl((unsigned int)src->tv_sec);
+  dest->tv_nsec = htonl((uint32_t)src->tv_nsec);
+  dest->tv_sec_high = htonl((uint32_t)((uint64_t)src->tv_sec >> 32));
+  dest->tv_sec_low = htonl((uint32_t)src->tv_sec);
   return;
 }
 
@@ -15321,11 +15307,11 @@ double UTI_FloatNetworkToHost(Float f)
   int32_t coef;
   uint32_t x;
   double tmp;
-  x = ntohl((unsigned int)f.f);
-  exp_0 = (int)(x >> ((int)sizeof(int32_t) * 8 - 7));
+  x = ntohl((uint32_t)f.f);
+  exp_0 = (int32_t)(x >> ((int)sizeof(int32_t) * 8 - 7));
   if (exp_0 >= 1 << (7 - 1)) exp_0 -= 1 << 7;
   exp_0 -= (int)sizeof(int32_t) * 8 - 7;
-  coef = (int)(x % (1U << ((int)sizeof(int32_t) * 8 - 7)));
+  coef = (int32_t)(x % (1U << ((int)sizeof(int32_t) * 8 - 7)));
   if (coef >= 1 << (((int)sizeof(int32_t) * 8 - 7) - 1)) coef -= 1 << (
                                                                  (int)sizeof(int32_t) * 8 - 7);
   tmp = pow(2.0,(double)exp_0);
@@ -15366,9 +15352,9 @@ Float UTI_FloatHostToNetwork(double x)
       double tmp_1;
       tmp = log(x);
       tmp_0 = log((double)2);
-      exp_0 = (int)(tmp / tmp_0 + (double)1);
+      exp_0 = (int32_t)(tmp / tmp_0 + (double)1);
       tmp_1 = pow(2.0,(double)(- exp_0 + ((int)sizeof(int32_t) * 8 - 7)));
-      coef = (int)(x * tmp_1 + 0.5);
+      coef = (int32_t)(x * tmp_1 + 0.5);
       __FC_assert((coef > 0) != 0,"util.c",949,"coef > 0");
       while (coef > (- (- (1 << (((int)sizeof(int32_t) * 8 - 7) - 1))) - 1) + neg) {
         coef >>= 1;
@@ -15389,9 +15375,9 @@ Float UTI_FloatHostToNetwork(double x)
             exp_0 = coef;
           }
     }
-  if (neg) coef = (int)(((unsigned int)(- coef) << 7) >> 7);
-  tmp_2 = htonl(((unsigned int)exp_0 << ((int)sizeof(int32_t) * 8 - 7)) | (unsigned int)coef);
-  f.f = (int)tmp_2;
+  if (neg) coef = (int32_t)(((uint32_t)(- coef) << 7) >> 7);
+  tmp_2 = htonl(((uint32_t)exp_0 << ((int)sizeof(int32_t) * 8 - 7)) | (unsigned int)coef);
+  f.f = (int32_t)tmp_2;
   return f;
 }
 
@@ -15522,8 +15508,8 @@ char *UTI_PathToDir(char const *path)
     __retres = tmp_0;
     goto return_label;
   }
-  dir = (char *)Malloc((unsigned long)((slash - path) + (long)1));
-  snprintf(dir,(unsigned long)((slash - path) + (long)1),"%s",(char *)path); /* snprintf_va_16 */
+  dir = (char *)Malloc((size_t)((slash - path) + (long)1));
+  snprintf(dir,(size_t)((slash - path) + (long)1),"%s",(char *)path); /* snprintf_va_16 */
   __retres = dir;
   return_label: return __retres;
 }
@@ -15652,9 +15638,9 @@ int UTI_CreateDirAndParents(char const *path, mode_t mode_0, uid_t uid,
               j ++;
             }
             *(p + i) = (char)0;
-            if (last) tmp_4 = gid; else tmp_4 = (unsigned int)0;
-            if (last) tmp_5 = uid; else tmp_5 = (unsigned int)0;
-            if (last) tmp_6 = mode_0; else tmp_6 = (unsigned int)0755;
+            if (last) tmp_4 = gid; else tmp_4 = (gid_t)0;
+            if (last) tmp_5 = uid; else tmp_5 = (uid_t)0;
+            if (last) tmp_6 = mode_0; else tmp_6 = (mode_t)0755;
             ;
             tmp_7 = create_dir(p,tmp_6,tmp_5,tmp_4);
             if (! tmp_7) {
@@ -15748,7 +15734,7 @@ void UTI_DropRoot(uid_t uid, gid_t gid)
   int tmp_0;
   int tmp_2;
   int tmp_4;
-  tmp_0 = setgroups((unsigned long)0,(gid_t const *)0);
+  tmp_0 = setgroups((size_t)0,(gid_t const *)0);
   if (tmp_0) {
     char *tmp;
     tmp = strerror(__fc_errno);
@@ -15809,8 +15795,7 @@ void UTI_GetRandomBytesUrandom(void *buf, unsigned int len)
     }
     exit(1);
   }
-  tmp_0 = fread(buf,(unsigned long)1,(unsigned long)len,
-                UTI_GetRandomBytesUrandom_f);
+  tmp_0 = fread(buf,(size_t)1,(size_t)len,UTI_GetRandomBytesUrandom_f);
   ;
   if (tmp_0 != (size_t)len) {
     {
@@ -15893,8 +15878,9 @@ void DNS_Name2IPAddressAsync(char const *name,
   }
   UTI_FdSetCloexec(inst->pipe[0]);
   UTI_FdSetCloexec(inst->pipe[1]);
-  SCH_AddFileHandler(inst->pipe[0],1,& resolve_name,(void *)inst);
-  tmp_1 = write(inst->pipe[1],(void const *)"",(unsigned long)1);
+  SCH_AddFileHandler(inst->pipe[0],1,& resolve_name,
+                     (SCH_ArbitraryArgument)inst);
+  tmp_1 = write(inst->pipe[1],(void const *)"",(size_t)1);
   return;
 }
 
@@ -15939,7 +15925,7 @@ int eva_main(void)
     int i = 0;
     /*@ loop unroll 5; */
     while (i < 5) {
-      Frama_C_make_unknown(argv[i],(unsigned long)255);
+      Frama_C_make_unknown(argv[i],(size_t)255);
       *(argv[i] + 255) = (char)0;
       i ++;
     }
@@ -15961,7 +15947,7 @@ static SCH_TimeoutID add_timeout_in_class(double min_delay,
                                           SCH_ArbitraryArgument arg)
 {
   SCH_TimeoutID __retres;
-  __retres = (unsigned int)102;
+  __retres = (SCH_TimeoutID)102;
   return __retres;
 }
 
@@ -16035,7 +16021,7 @@ static void do_time_checks(void)
   NTP_int64 nts2;
   int r;
   int tmp;
-  time_t warning_advance = (long)(((3600 * 24) * 365) * 10);
+  time_t warning_advance = (time_t)(((3600 * 24) * 365) * 10);
   struct timespec ts1 =
     {.tv_sec = (long)(1516643532LL - (long long)((18250 * 24) * 3600)),
      .tv_nsec = (long)1};
@@ -16135,7 +16121,7 @@ static void restart_timeout(NCR_Instance inst, double delay)
     if (inst->rx_timeout_id == (SCH_TimeoutID)102) tmp = 1; else tmp = 0;
   __FC_assert(tmp != 0,"ntp_core.c",437,
               "!inst->rx_timeout_id || inst->rx_timeout_id == 102");
-  inst->rx_timeout_id = (unsigned int)0;
+  inst->rx_timeout_id = (SCH_TimeoutID)0;
   if (! inst->tx_timeout_id) tmp_0 = 1;
   else 
     if (inst->tx_timeout_id == (SCH_TimeoutID)102) tmp_0 = 1; else tmp_0 = 0;
@@ -16147,7 +16133,7 @@ static void restart_timeout(NCR_Instance inst, double delay)
   tmp_2 = get_separation(inst->local_poll);
   ;
   inst->tx_timeout_id = add_timeout_in_class(delay,tmp_2,0.02,
-                                             (enum __anonenum_SCH_TimeoutClass_30)tmp_1,
+                                             (SCH_TimeoutClass)tmp_1,
                                              & transmit_timeout,(void *)inst);
   return_label: return;
 }
@@ -16183,7 +16169,7 @@ static void close_client_socket(NCR_Instance inst)
     if (inst->rx_timeout_id == (SCH_TimeoutID)102) tmp = 1; else tmp = 0;
   __FC_assert(tmp != 0,"ntp_core.c",488,
               "!inst->rx_timeout_id || inst->rx_timeout_id == 102");
-  inst->rx_timeout_id = (unsigned int)0;
+  inst->rx_timeout_id = (SCH_TimeoutID)0;
   return;
 }
 
@@ -16196,7 +16182,7 @@ static void take_offline(NCR_Instance inst)
     if (inst->tx_timeout_id == (SCH_TimeoutID)102) tmp = 1; else tmp = 0;
   __FC_assert(tmp != 0,"ntp_core.c",499,
               "!inst->tx_timeout_id || inst->tx_timeout_id == 102");
-  inst->tx_timeout_id = (unsigned int)0;
+  inst->tx_timeout_id = (SCH_TimeoutID)0;
   SRC_UnsetActive(inst->source);
   close_client_socket(inst);
   NCR_ResetInstance(inst);
@@ -16213,7 +16199,7 @@ NCR_Instance NCR_GetInstance(NTP_Remote_Address *remote_addr,
   uint32_t tmp_13;
   result = (NCR_Instance)Malloc(sizeof(struct NCR_Instance_Record));
   result->remote_addr = *remote_addr;
-  result->local_addr.ip_addr.family = (unsigned short)0;
+  result->local_addr.ip_addr.family = (uint16_t)0;
   result->local_addr.if_index = -1;
   switch (type) {
     case (NTP_Source_Type)NTP_SERVER: result->local_addr.sock_fd = -2;
@@ -16276,7 +16262,7 @@ NCR_Instance NCR_GetInstance(NTP_Remote_Address *remote_addr,
   result->version = 4;
   if (params->authkey == (uint32_t)0) {
     result->auth_mode = AUTH_NONE;
-    result->auth_key_id = (unsigned int)0;
+    result->auth_key_id = (uint32_t)0;
   }
   else {
     int tmp_9;
@@ -16343,9 +16329,9 @@ NCR_Instance NCR_GetInstance(NTP_Remote_Address *remote_addr,
   if (params->filter_length >= 1) result->filter = SPF_CreateInstance
                                   (params->filter_length,
                                    params->filter_length,16.0,0.0);
-  else result->filter = (struct SPF_Instance_Record *)0;
-  result->rx_timeout_id = (unsigned int)0;
-  result->tx_timeout_id = (unsigned int)0;
+  else result->filter = (SPF_Instance)0;
+  result->rx_timeout_id = (SCH_TimeoutID)0;
+  result->tx_timeout_id = (SCH_TimeoutID)0;
   result->tx_suspended = 1;
   if (params->connectivity == (unsigned int)SRC_ONLINE) result->opmode = MD_ONLINE;
   else 
@@ -16436,7 +16422,7 @@ void NCR_ChangeRemoteAddress(NCR_Instance inst,
   else {
     __FC_assert((inst->local_addr.sock_fd == 100) != 0,"ntp_core.c",726,
                 "inst->local_addr.sock_fd == 100");
-    inst->local_addr.ip_addr.family = (unsigned short)0;
+    inst->local_addr.ip_addr.family = (uint16_t)0;
     inst->local_addr.if_index = -1;
     if ((int)remote_addr->ip_addr.family != 0) inst->local_addr.sock_fd = 100;
     else inst->local_addr.sock_fd = 0;
@@ -16592,8 +16578,8 @@ static double get_separation(int poll)
 
 static void receive_timeout(void *arg)
 {
-  NCR_Instance inst = (struct NCR_Instance_Record *)arg;
-  inst->rx_timeout_id = (unsigned int)0;
+  NCR_Instance inst = (NCR_Instance)arg;
+  inst->rx_timeout_id = (SCH_TimeoutID)0;
   close_client_socket(inst);
   return;
 }
@@ -16642,9 +16628,9 @@ static int transmit_packet(NTP_Mode my_mode, int interleaved, int my_poll,
   smooth_offset_0 = 0.0;
   if (my_mode == (unsigned int)MODE_CLIENT) {
     precision = 32;
-    our_ref_id_0 = (unsigned int)0;
+    our_ref_id_0 = (uint32_t)0;
     our_stratum_0 = (int)our_ref_id_0;
-    leap_status = (enum __anonenum_NTP_Leap_7)our_stratum_0;
+    leap_status = (NTP_Leap)our_stratum_0;
     our_root_dispersion_0 = 0.0;
     our_root_delay_0 = our_root_dispersion_0;
     UTI_ZeroTimespec(& our_ref_time_0);
@@ -16686,19 +16672,19 @@ static int transmit_packet(NTP_Mode my_mode, int interleaved, int my_poll,
     tmp_5 = UTI_IsZeroTimespec(& local_rx->ts);
     if (tmp_5) goto _LAND;
     else {
-      our_ref_id_0 = (unsigned int)0x7F7F01FFUL;
+      our_ref_id_0 = (uint32_t)0x7F7F01FFUL;
       UTI_AddDoubleToTimespec(& our_ref_time_0,smooth_offset_0,
                               & our_ref_time_0);
       UTI_AddDoubleToTimespec(& local_rx->ts,smooth_offset_0,& local_receive);
     }
   }
   else _LAND: local_receive = local_rx->ts;
-  message.lvm = (unsigned char)((((leap_status << 6) & (unsigned int)0xc0) | (unsigned int)(
-                                 (version << 3) & 0x38)) | (my_mode & (unsigned int)0x07));
-  if (our_stratum_0 < 16) message.stratum = (unsigned char)our_stratum_0;
-  else message.stratum = (unsigned char)0;
-  message.poll = (signed char)my_poll;
-  message.precision = (signed char)precision;
+  message.lvm = (uint8_t)((((leap_status << 6) & (unsigned int)0xc0) | (unsigned int)(
+                           (version << 3) & 0x38)) | (my_mode & (unsigned int)0x07));
+  if (our_stratum_0 < 16) message.stratum = (uint8_t)our_stratum_0;
+  else message.stratum = (uint8_t)0;
+  message.poll = (int8_t)my_poll;
+  message.precision = (int8_t)precision;
   message.root_delay = UTI_DoubleToNtp32(our_root_delay_0);
   message.root_dispersion = UTI_DoubleToNtp32(our_root_dispersion_0);
   message.reference_id = htonl(our_ref_id_0);
@@ -16797,8 +16783,7 @@ static int transmit_packet(NTP_Mode my_mode, int interleaved, int my_poll,
       if (! tmp_15) break;
     }
   }
-  memcpy((void *)(& req_buffer),(void const *)(& message),
-         (unsigned long)length);
+  memcpy((void *)(& req_buffer),(void const *)(& message),(size_t)length);
   req_length = length;
   ret = 1;
   if (local_tx) {
@@ -16824,8 +16809,8 @@ static void transmit_timeout(void *arg)
   NTP_int64 *tmp_5;
   NTP_int64 *tmp_6;
   double tmp_10;
-  NCR_Instance inst = (struct NCR_Instance_Record *)arg;
-  inst->tx_timeout_id = (unsigned int)0;
+  NCR_Instance inst = (NCR_Instance)arg;
+  inst->tx_timeout_id = (SCH_TimeoutID)0;
   switch (inst->opmode) {
     case (OperatingMode)MD_BURST_WAS_ONLINE: ;
     if (inst->burst_total_samples_to_go <= 1) inst->opmode = MD_ONLINE;
@@ -16854,7 +16839,7 @@ static void transmit_timeout(void *arg)
     if ((int)inst->remote_addr.ip_addr.family != 0) inst->local_addr.sock_fd = 101;
     else inst->local_addr.sock_fd = 0;
   }
-  local_addr.ip_addr.family = (unsigned short)0;
+  local_addr.ip_addr.family = (uint16_t)0;
   local_addr.if_index = -1;
   local_addr.sock_fd = inst->local_addr.sock_fd;
   if (inst->interleaved) 
@@ -16916,7 +16901,7 @@ static void transmit_timeout(void *arg)
                          & inst->local_ntp_tx,& inst->remote_addr,
                          & local_addr);
   (inst->tx_count) ++;
-  if (sent) inst->report.total_tx_count += (uint32_t)1;
+  if (sent) (inst->report.total_tx_count) ++;
   if (inst->tx_count >= (unsigned int)2) 
     if (sent) {
       double tmp_8;
@@ -16945,7 +16930,7 @@ static void transmit_timeout(void *arg)
   tmp_10 = get_transmit_delay(inst,1,0.0);
   ;
   restart_timeout(inst,tmp_10);
-  if (inst->mode == (unsigned int)MODE_CLIENT) inst->rx_timeout_id = (unsigned int)102;
+  if (inst->mode == (unsigned int)MODE_CLIENT) inst->rx_timeout_id = (SCH_TimeoutID)102;
   return_label: return;
 }
 
@@ -17022,14 +17007,9 @@ static int check_packet_auth(NTP_Packet *pkt, int length,
           *key_id = id;
           if (version == 4) 
             if (48 + remainder_0 == length) 
-              if (remainder_0 > 4 + 20) pkt->lvm = (unsigned char)(((
-                                                                    (
-                                                                    (
-                                                                    (
-                                                                    (int)pkt->lvm >> 6) & 0x3) << 6) & 0xc0) | (
-                                                                    (
-                                                                    3 << 3) & 0x38)) | (
-                                                                   ((int)pkt->lvm & 0x7) & 0x07));
+              if (remainder_0 > 4 + 20) pkt->lvm = (uint8_t)(((((((int)pkt->lvm >> 6) & 0x3) << 6) & 0xc0) | (
+                                                              (3 << 3) & 0x38)) | (
+                                                             ((int)pkt->lvm & 0x7) & 0x07));
           __retres = 1;
           goto return_label;
         }
@@ -17069,7 +17049,7 @@ static int check_packet_auth(NTP_Packet *pkt, int length,
   }
   else {
     *auth_mode = AUTH_NONE;
-    *key_id = (unsigned int)0;
+    *key_id = (uint32_t)0;
   }
   __retres = 0;
   return_label: return __retres;
@@ -17245,7 +17225,7 @@ static int receive_packet(NCR_Instance inst, NTP_Local_Address *local_addr,
   int tmp_16;
   int tmp_34;
   stats = SRC_GetSourcestats(inst->source);
-  inst->report.total_rx_count += (uint32_t)1;
+  (inst->report.total_rx_count) ++;
   pkt_leap = ((int)message->lvm >> 6) & 0x3;
   pkt_version = ((int)message->lvm >> 3) & 0x7;
   pkt_refid = ntohl(message->reference_id);
@@ -17507,7 +17487,7 @@ static int receive_packet(NCR_Instance inst, NTP_Local_Address *local_addr,
   sample.root_dispersion = pkt_root_dispersion + sample.peer_dispersion;
   if ((int)message->stratum > inst->min_stratum) sample.stratum = (int)message->stratum;
   else sample.stratum = inst->min_stratum;
-  sample.leap = (enum __anonenum_NTP_Leap_7)pkt_leap;
+  sample.leap = (NTP_Leap)pkt_leap;
   if (inst->mode == (unsigned int)MODE_CLIENT) {
     if (valid_packet) {
       if (! inst->valid_rx) goto _LOR_2; else goto _LAND_9;
@@ -17650,9 +17630,9 @@ static int receive_packet(NCR_Instance inst, NTP_Local_Address *local_addr,
     inst->report.remote_addr = inst->remote_addr.ip_addr;
     inst->report.local_addr = inst->local_addr.ip_addr;
     inst->report.remote_port = inst->remote_addr.port;
-    inst->report.leap = (unsigned char)pkt_leap;
-    inst->report.version = (unsigned char)pkt_version;
-    inst->report.mode = (unsigned char)((int)message->lvm & 0x7);
+    inst->report.leap = (uint8_t)pkt_leap;
+    inst->report.version = (uint8_t)pkt_version;
+    inst->report.mode = (uint8_t)((int)message->lvm & 0x7);
     inst->report.stratum = message->stratum;
     inst->report.poll = message->poll;
     inst->report.precision = message->precision;
@@ -17665,12 +17645,12 @@ static int receive_packet(NCR_Instance inst, NTP_Local_Address *local_addr,
     inst->report.peer_dispersion = sample.peer_dispersion;
     inst->report.response_time = response_time;
     inst->report.jitter_asymmetry = SST_GetJitterAsymmetry(stats);
-    inst->report.tests = (unsigned short)((((((((((((((((((test1 << 1) | test2) << 1) | test3) << 1) | test5) << 1) | test6) << 1) | test7) << 1) | testA) << 1) | testB) << 1) | testC) << 1) | testD);
+    inst->report.tests = (uint16_t)((((((((((((((((((test1 << 1) | test2) << 1) | test3) << 1) | test5) << 1) | test6) << 1) | test7) << 1) | testA) << 1) | testB) << 1) | testC) << 1) | testD);
     inst->report.interleaved = interleaved_packet;
     inst->report.authenticated = inst->auth_mode != (unsigned int)AUTH_NONE;
     inst->report.tx_tss_char = tss_chars[local_transmit.source];
     inst->report.rx_tss_char = tss_chars[local_receive.source];
-    inst->report.total_valid_count += (uint32_t)1;
+    (inst->report.total_valid_count) ++;
   }
   if (logfileid_1 != -1) 
     if (log_raw_measurements) goto _LOR_4;
@@ -17879,7 +17859,7 @@ void NCR_ProcessRxUnknown(NTP_Remote_Address *remote_addr,
   if (! tmp) goto return_label;
   tmp_1 = ADF_IsAllowed(access_auth_table,& remote_addr->ip_addr);
   if (! tmp_1) goto return_label;
-  pkt_mode = (enum __anonenum_NTP_Mode_8)((int)message->lvm & 0x7);
+  pkt_mode = (NTP_Mode)((int)message->lvm & 0x7);
   pkt_version = ((int)message->lvm >> 3) & 0x7;
   switch (pkt_mode) {
     case (NTP_Mode)MODE_ACTIVE: my_mode = MODE_PASSIVE;
@@ -17987,7 +17967,7 @@ void NCR_ProcessTxKnown(NCR_Instance inst, NTP_Local_Address *local_addr,
   int tmp;
   tmp = check_packet_format(message,length);
   if (! tmp) goto return_label;
-  pkt_mode = (enum __anonenum_NTP_Mode_8)((int)message->lvm & 0x7);
+  pkt_mode = (NTP_Mode)((int)message->lvm & 0x7);
   if (pkt_mode != (unsigned int)MODE_CLIENT) 
     if (pkt_mode != (unsigned int)MODE_ACTIVE) {
       NCR_ProcessTxUnknown(& inst->remote_addr,local_addr,tx_ts,message,
@@ -18331,7 +18311,7 @@ int NCR_AddAccessRestriction(IPAddr *ip_addr, int subnet_bits, int allow,
       int tmp;
       tmp = ADF_IsAnyAllowed(access_auth_table,1);
       if (tmp) {
-        remote_addr.ip_addr.family = (unsigned short)1;
+        remote_addr.ip_addr.family = (uint16_t)1;
         if ((int)remote_addr.ip_addr.family != 0) server_sock_fd4_0 = 100;
         else server_sock_fd4_0 = 0;
       }
@@ -18340,7 +18320,7 @@ int NCR_AddAccessRestriction(IPAddr *ip_addr, int subnet_bits, int allow,
       int tmp_0;
       tmp_0 = ADF_IsAnyAllowed(access_auth_table,2);
       if (tmp_0) {
-        remote_addr.ip_addr.family = (unsigned short)2;
+        remote_addr.ip_addr.family = (uint16_t)2;
         if ((int)remote_addr.ip_addr.family != 0) server_sock_fd6 = 100;
         else server_sock_fd6 = 0;
       }
@@ -18433,9 +18413,9 @@ static void broadcast_timeout(void *arg)
   poll = (int)(tmp / tmp_0 + 0.5);
   UTI_ZeroNtp64(& orig_ts);
   zero_local_timestamp(& recv_ts);
-  transmit_packet(MODE_BROADCAST,0,poll,4,0,(unsigned int)0,& orig_ts,
-                  & orig_ts,& recv_ts,(NTP_Local_Timestamp *)0,
-                  (NTP_int64 *)0,(NTP_int64 *)0,& destination->addr,
+  transmit_packet(MODE_BROADCAST,0,poll,4,0,(uint32_t)0,& orig_ts,& orig_ts,
+                  & recv_ts,(NTP_Local_Timestamp *)0,(NTP_int64 *)0,
+                  (NTP_int64 *)0,& destination->addr,
                   & destination->local_addr);
   ;
   tmp_1 = get_separation(poll);
@@ -18454,7 +18434,7 @@ void NCR_AddBroadcastDestination(IPAddr *addr, unsigned short port,
   destination = (BroadcastDestination *)ARR_GetNewElement(broadcasts_0);
   destination->addr.ip_addr = *addr;
   destination->addr.port = port;
-  destination->local_addr.ip_addr.family = (unsigned short)0;
+  destination->local_addr.ip_addr.family = (uint16_t)0;
   destination->local_addr.if_index = -1;
   if ((int)destination->addr.ip_addr.family != 0) destination->local_addr.sock_fd = 100;
   else destination->local_addr.sock_fd = 0;
@@ -18487,7 +18467,7 @@ static uint32_t get_random_key_id(void)
     {
       long tmp;
       tmp = random();
-      id = (unsigned int)(tmp % (long)6 + (long)2);
+      id = (uint32_t)(tmp % (long)6 + (long)2);
     }
     tmp_0 = KEY_KeyKnown(id);
     if (tmp_0) break;
@@ -18514,7 +18494,7 @@ static void send_request(NCR_Instance inst)
   advance_time(1e-5);
   tmp = random();
   if (tmp % (long)2) {
-    local_addr.ip_addr.family = (unsigned short)0;
+    local_addr.ip_addr.family = (uint16_t)0;
     local_addr.if_index = -1;
     local_addr.sock_fd = 101;
     local_ts.ts = current_time;
@@ -18531,7 +18511,7 @@ static void process_request(NTP_Remote_Address *remote_addr)
   NTP_Local_Address local_addr;
   NTP_Local_Timestamp local_ts;
   long tmp;
-  local_addr.ip_addr.family = (unsigned short)0;
+  local_addr.ip_addr.family = (uint16_t)0;
   local_addr.if_index = -1;
   local_addr.sock_fd = 100;
   local_ts.ts = current_time;
@@ -18570,14 +18550,14 @@ static void send_response(int interleaved, int authenticated,
   }
   if (((int)req->lvm & 0x7) == MODE_CLIENT) tmp = MODE_SERVER;
   else tmp = MODE_ACTIVE;
-  res->lvm = (unsigned char)((((LEAP_Normal << 6) & 0xc0) | (((((int)req->lvm >> 3) & 0x7) << 3) & 0x38)) | (
-                             tmp & 0x07));
-  res->stratum = (unsigned char)1;
+  res->lvm = (uint8_t)((((LEAP_Normal << 6) & 0xc0) | (((((int)req->lvm >> 3) & 0x7) << 3) & 0x38)) | (
+                       tmp & 0x07));
+  res->stratum = (uint8_t)1;
   res->poll = req->poll;
-  res->precision = (signed char)(-20);
+  res->precision = (int8_t)(-20);
   res->root_delay = UTI_DoubleToNtp32(0.1);
   res->root_dispersion = UTI_DoubleToNtp32(0.1);
-  res->reference_id = (unsigned int)0;
+  res->reference_id = (NTP_int32)0;
   UTI_ZeroNtp64(& res->reference_ts);
   if (interleaved) res->originate_ts = req->receive_ts;
   else res->originate_ts = req->transmit_ts;
@@ -18600,13 +18580,13 @@ static void send_response(int interleaved, int authenticated,
       case (long)0:
       { /* sequence */
         tmp_5 = random();
-        res->originate_ts.hi = (unsigned int)tmp_5;
+        res->originate_ts.hi = (uint32_t)tmp_5;
       }
       break;
       case (long)1:
       { /* sequence */
         tmp_6 = random();
-        res->originate_ts.lo = (unsigned int)tmp_6;
+        res->originate_ts.lo = (uint32_t)tmp_6;
       }
       break;
       case (long)2: UTI_ZeroNtp64(& res->originate_ts);
@@ -18645,7 +18625,7 @@ static void send_response(int interleaved, int authenticated,
     ;
     tmp_11 = ntohl(res->auth_keyid);
     tmp_12 = KEY_GenerateAuth(tmp_11,(unsigned char const *)res,48,
-                              (unsigned char *)(res->auth_data),auth_len);
+                              res->auth_data,auth_len);
     ;
     if (tmp_12 != auth_len) __FC_assert(0 != 0,"test/unit/ntp_core.c",192,
                                         "0");
@@ -18680,7 +18660,7 @@ static void send_response(int interleaved, int authenticated,
         ;
         tmp_16 = ntohl(res->auth_keyid);
         tmp_17 = KEY_GenerateAuth(tmp_16,(unsigned char const *)res,48,
-                                  (unsigned char *)(res->auth_data),auth_len);
+                                  res->auth_data,auth_len);
         ;
         if (tmp_17 != auth_len) __FC_assert(0 != 0,"test/unit/ntp_core.c",
                                             209,"0");
@@ -18688,8 +18668,8 @@ static void send_response(int interleaved, int authenticated,
         case (long)2:
         { /* sequence */
           tmp_18 = random();
-          res->auth_data[tmp_18 % (long)auth_len] = (unsigned char)((int)res->auth_data[
-                                                                    tmp_18 % (long)auth_len] + 1);
+          res->auth_data[tmp_18 % (long)auth_len] = (uint8_t)((int)res->auth_data[
+                                                              tmp_18 % (long)auth_len] + 1);
         }
         break;
         case (long)3:
@@ -18719,7 +18699,7 @@ static void process_response(NCR_Instance inst, int good, int valid,
   int prev_open_socket;
   int ret;
   res = & res_buffer.ntp_pkt;
-  local_addr.ip_addr.family = (unsigned short)0;
+  local_addr.ip_addr.family = (uint16_t)0;
   local_addr.if_index = -1;
   if (((int)res->lvm & 0x7) != MODE_SERVER) local_addr.sock_fd = 100;
   else local_addr.sock_fd = 101;
@@ -18964,8 +18944,7 @@ void test_unit(void)
       remote_addr.port = (unsigned short)123;
       tmp_3 = random();
       if (tmp_3 % (long)2) tmp_4 = NTP_SERVER; else tmp_4 = NTP_PEER;
-      inst1 = NCR_GetInstance(& remote_addr,
-                              (enum __anonenum_NTP_Source_Type_30)tmp_4,
+      inst1 = NCR_GetInstance(& remote_addr,(NTP_Source_Type)tmp_4,
                               & source.params);
       NCR_StartInstance(inst1);
       has_updated = 0;
@@ -19047,8 +19026,7 @@ void test_unit(void)
       NCR_DestroyInstance(inst1);
       tmp_13 = random();
       if (tmp_13 % (long)2) tmp_14 = NTP_SERVER; else tmp_14 = NTP_PEER;
-      inst1 = NCR_GetInstance(& remote_addr,
-                              (enum __anonenum_NTP_Source_Type_30)tmp_14,
+      inst1 = NCR_GetInstance(& remote_addr,(NTP_Source_Type)tmp_14,
                               & source.params);
       NCR_StartInstance(inst1);
       j = 0;

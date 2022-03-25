@@ -7,6 +7,7 @@
 typedef unsigned int uint32;
 typedef int sint32;
 typedef short sint16;
+typedef unsigned char uint8;
 typedef unsigned short uint16;
 typedef char boolean;
 typedef double real64;
@@ -85,14 +86,14 @@ real64 Interpolate_from_curve(Curve_t *curve, real64 x)
   else 
     if (x >= curve->x[(int)curve->numPoints - 1]) result = curve->y[(int)curve->numPoints - 1];
     else {
-      i = (short)((int)curve->numPoints - 2);
+      i = (sint16)((int)curve->numPoints - 2);
       while ((int)i >= 0) {
         if (x >= curve->x[i]) {
           result = curve->y[i] + ((x - curve->x[i]) / (curve->x[(int)i + 1] - curve->x[i])) * (
                                  curve->y[(int)i + 1] - curve->y[i]);
           break;
         }
-        i = (short)((int)i - 1);
+        i = (sint16)((int)i - 1);
       }
     }
   return result;
@@ -105,12 +106,12 @@ boolean Turn_on_delay(Delay_t *delay, boolean signal, real64 timeLimit,
   if (signal) 
     if (*delay < timeLimit) {
       *delay += dt;
-      result = (char)0;
+      result = (boolean)0;
     }
-    else result = (char)1;
+    else result = (boolean)1;
   else {
     *delay = 0.0;
-    result = (char)0;
+    result = (boolean)0;
   }
   return result;
 }
@@ -157,7 +158,7 @@ real64 Ramp_out(Ramp_t *data, real64 target, real64 slopePos,
       else {
         data->state += slopePos * dt;
         if (data->state > target) data->state = target;
-        data->dir = (short)1;
+        data->dir = (sint16)1;
       }
     else goto _LAND;
   }
@@ -169,10 +170,10 @@ real64 Ramp_out(Ramp_t *data, real64 target, real64 slopePos,
         else {
           data->state -= slopeNeg * dt;
           if (data->state < target) data->state = target;
-          data->dir = (short)(-1);
+          data->dir = (sint16)(-1);
         }
   }
-  if (data->state == target) data->dir = (short)0;
+  if (data->state == target) data->dir = (sint16)0;
   __retres = data->state;
   return __retres;
 }
@@ -194,7 +195,7 @@ real64 Ramp_getValue(Ramp_t *data)
 boolean Ramp_targetReached(Ramp_t *data)
 {
   boolean __retres;
-  __retres = (char)(data->state == data->target);
+  __retres = (boolean)(data->state == data->target);
   return __retres;
 }
 
@@ -283,33 +284,33 @@ real64 RoCo_legAngle;
 boolean RoCo_legAngleValid;
 real64 RoCo_engineVoltage;
 Curve_t RoCo_acceleration_CURVE =
-  {.numPoints = (unsigned short)4,
+  {.numPoints = (uint16)4,
    .x = {0.0, 0.33, 0.67, 1.0},
    .y = {0.0, 0.2, 0.5, 1.0}};
 Curve_t RoCo_accelerationFast_CURVE =
-  {.numPoints = (unsigned short)4,
+  {.numPoints = (uint16)4,
    .x = {0.0, 0.33, 0.67, 1.0},
    .y = {0.0, 2.0, 4.0, 5.0}};
-boolean RoCo_adaptationActive = (char)1;
+boolean RoCo_adaptationActive = (boolean)1;
 real64 RoCo_angleAtMark_PARAM = 19.0;
 real64 RoCo_angleReachedThreshold1_PARAM = 5.0;
 real64 RoCo_angleReachedThreshold1Fast_PARAM = 10.0;
 real64 RoCo_angleReachedThreshold2_PARAM = 0.5;
 real64 RoCo_batteryLowLimit_PARAM = 19.5;
 real64 RoCo_batteryLowDelay_PARAM = 60.0;
-boolean RoCo_checkBatteryVoltage_PARAM = (char)1;
-boolean RoCo_checkHumidity_PARAM = (char)0;
+boolean RoCo_checkBatteryVoltage_PARAM = (boolean)1;
+boolean RoCo_checkHumidity_PARAM = (boolean)0;
 Curve_t RoCo_deceleration_CURVE =
-  {.numPoints = (unsigned short)4,
+  {.numPoints = (uint16)4,
    .x = {0.0, 0.33, 0.67, 1.0},
    .y = {0.0, 0.25, 0.75, 1.0}};
 Curve_t RoCo_decelerationFast_CURVE =
-  {.numPoints = (unsigned short)4,
+  {.numPoints = (uint16)4,
    .x = {0.0, 0.33, 0.67, 1.0},
    .y = {0.0, 2.0, 4.0, 5.0}};
 real64 RoCo_envTempLowerLimit_PARAM = 5.0;
 real64 RoCo_envTempUpperLimit_PARAM = 30.0;
-boolean RoCo_hasMinMaxAngles_PARAM = (char)1;
+boolean RoCo_hasMinMaxAngles_PARAM = (boolean)1;
 real64 RoCo_humidityLimit_PARAM = 0.8;
 real64 RoCo_idlePosition_PARAM = 0.0;
 real64 RoCo_initMoveSpeed_PARAM = 1.0;
@@ -330,11 +331,11 @@ real64 RoCo_voltageFilter_PARAM = 0.1;
 real64 Engine_maxVoltage_PARAM = 24.0;
 real64 Engine_minVoltage_PARAM = - 24.0;
 Curve_t EngineSpeedToVoltage_CURVE =
-  {.numPoints = (unsigned short)5,
+  {.numPoints = (uint16)5,
    .x = {- 3.0, - 1.5, 0.0, 1.5, 3.0},
    .y = {- 24.0, - 15.0, 0.0, 15.0, 24.0}};
 Curve_t LegSensorSignalToAngle_CURVE =
-  {.numPoints = (unsigned short)4,
+  {.numPoints = (uint16)4,
    .x = {- 24.0, - 12.0, 12.0, 24.0},
    .y = {- 60.0, - 30.0, 30.0, 60.0}};
 boolean RoCo_isAdapted;
@@ -354,25 +355,25 @@ static real64 targetAngle;
 static boolean init;
 static boolean final;
 static boolean deltaSearchPhase;
-static Ramp_t initRamp = {.dir = (short)0, .state = 0.0, .target = 0.0};
+static Ramp_t initRamp = {.dir = (sint16)0, .state = 0.0, .target = 0.0};
 static Timer_t initTimer;
-static Ramp_t moveTimeRamp = {.dir = (short)0, .state = 0.0, .target = 0.0};
+static Ramp_t moveTimeRamp = {.dir = (sint16)0, .state = 0.0, .target = 0.0};
 static PT1_t envTempFilter;
 static Timer_t shutdownTimer;
 static real64 voltageFilter;
 static Delay_t batteryLowDelay;
 static Delay_t standstillDelay;
 static real64 adaptation[2] = {0.0, 0.0};
-static boolean rampHighReached = (char)0;
+static boolean rampHighReached = (boolean)0;
 static boolean wasRampEnded;
 void RoCo_init(void)
 {
-  enabled = (char)0;
+  enabled = (boolean)0;
   angleDiffRequest = 0.0;
   desiredEngineVoltage = 0.0;
-  initBackwards = (char)0;
+  initBackwards = (boolean)0;
   initTimer = 0.0;
-  limitationActive = (char)0;
+  limitationActive = (boolean)0;
   prevAngleSignal = 0.0;
   envTempFilter = Env_temperature;
   rampValue = 0.0;
@@ -383,24 +384,24 @@ void RoCo_init(void)
   shutdownTimer = 0.0;
   rampTarget = 0.0;
   voltageFilter = 0.0;
-  wasActive = (char)0;
-  wasInit = (char)0;
-  deltaSearchPhase = (char)0;
-  init = (char)0;
-  final = (char)0;
-  RoCo_activeDesired = (char)0;
-  RoCo_commandMoveByAngle = (char)0;
-  RoCo_commandMoveToAngle = (char)0;
-  RoCo_commandShutOff = (char)0;
+  wasActive = (boolean)0;
+  wasInit = (boolean)0;
+  deltaSearchPhase = (boolean)0;
+  init = (boolean)0;
+  final = (boolean)0;
+  RoCo_activeDesired = (boolean)0;
+  RoCo_commandMoveByAngle = (boolean)0;
+  RoCo_commandMoveToAngle = (boolean)0;
+  RoCo_commandShutOff = (boolean)0;
   RoCo_desiredDeltaAngle = 0.0;
   RoCo_desiredTargetAngle = 0.0;
-  RoCo_moveFast = (char)0;
-  RoCo_isActive = (char)0;
+  RoCo_moveFast = (boolean)0;
+  RoCo_isActive = (boolean)0;
   RoCo_legAngle = 0.0;
-  RoCo_legAngleValid = (char)0;
-  RoCo_error = (char)0;
+  RoCo_legAngleValid = (boolean)0;
+  RoCo_error = (boolean)0;
   RoCo_engineVoltage = 0.0;
-  RoCo_isAdapted = (char)0;
+  RoCo_isAdapted = (boolean)0;
   return;
 }
 
@@ -434,7 +435,7 @@ void RoCo_process(void)
   if (tmp_0) {
     boolean tmp_1;
     tmp_1 = Turn_on_delay(& batteryLowDelay,
-                          (char)(t1 < RoCo_batteryLowLimit_PARAM),
+                          (boolean)(t1 < RoCo_batteryLowLimit_PARAM),
                           RoCo_batteryLowDelay_PARAM,dT);
     if (tmp_1) 
       if (! RoCo_checkBatteryVoltage_PARAM) 
@@ -443,14 +444,14 @@ void RoCo_process(void)
     else goto _LOR;
   }
   else tmp_2 = 0;
-  enabled = (char)tmp_2;
+  enabled = (boolean)tmp_2;
   if (! enabled) {
     int tmp_3;
     if (wasActive) 
       if (RoCo_activeDesired) tmp_3 = 1; else tmp_3 = 0;
     else tmp_3 = 0;
-    wasActive = (char)tmp_3;
-    RoCo_isActive = (char)0;
+    wasActive = (boolean)tmp_3;
+    RoCo_isActive = (boolean)0;
     RoCo_engineVoltage = 0.0;
   }
   else 
@@ -465,20 +466,20 @@ void RoCo_process(void)
           RoCo_legAngle += t15;
           if (t4) {
             RoCo_legAngle = RoCo_angleAtMark_PARAM;
-            RoCo_legAngleValid = (char)1;
+            RoCo_legAngleValid = (boolean)1;
           }
           if (RoCo_activeDesired) 
             if (! wasActive) {
-              if (! RoCo_legAngleValid) init = (char)1;
-              RoCo_isActive = (char)1;
+              if (! RoCo_legAngleValid) init = (boolean)1;
+              RoCo_isActive = (boolean)1;
             }
           if (! RoCo_activeDesired) 
             if (wasActive) 
               if (! init) 
-                if (! final) RoCo_commandShutOff = (char)1;
+                if (! final) RoCo_commandShutOff = (boolean)1;
           if (init) {
             real64 tmp_4;
-            t14 = (char)(RoCo_angleAtMark_PARAM > RoCo_idlePosition_PARAM);
+            t14 = (boolean)(RoCo_angleAtMark_PARAM > RoCo_idlePosition_PARAM);
             if (! wasActive) Timer_start(& initTimer);
             tmp_4 = Timer_elapsedTime(& initTimer);
             ;
@@ -489,20 +490,21 @@ void RoCo_process(void)
               ;
               ;
               tmp_5 = fabs(t15);
-              tmp_6 = Turn_on_delay(& standstillDelay,(char)(tmp_5 < 0.001),
+              tmp_6 = Turn_on_delay(& standstillDelay,
+                                    (boolean)(tmp_5 < 0.001),
                                     RoCo_initStandstillTimeout_PARAM,dT);
               if (tmp_6) 
                 _LOR_0:
                 if (! initBackwards) {
-                  initBackwards = (char)1;
+                  initBackwards = (boolean)1;
                   Timer_start(& initTimer);
-                  Turn_on_delay(& standstillDelay,(char)0,
+                  Turn_on_delay(& standstillDelay,(boolean)0,
                                 RoCo_initStandstillTimeout_PARAM,dT);
                 }
                 else {
-                  RoCo_error = (char)1;
-                  RoCo_isActive = (char)0;
-                  init = (char)0;
+                  RoCo_error = (boolean)1;
+                  RoCo_isActive = (boolean)0;
+                  init = (boolean)0;
                 }
             }
             if ((int)initBackwards ^ (int)t14) rampTarget = RoCo_initMoveSpeed_PARAM;
@@ -511,8 +513,8 @@ void RoCo_process(void)
                                         RoCo_initRampSlopePos_PARAM,
                                         RoCo_initRampSlopeNeg_PARAM,dT);
             if (RoCo_legAngleValid) {
-              init = (char)0;
-              initBackwards = (char)0;
+              init = (boolean)0;
+              initBackwards = (boolean)0;
             }
           }
           if (! init) {
@@ -520,16 +522,16 @@ void RoCo_process(void)
             sint16 tmp_11;
             double tmp_12;
             if (RoCo_commandShutOff) {
-              final = (char)1;
-              RoCo_commandShutOff = (char)0;
+              final = (boolean)1;
+              RoCo_commandShutOff = (boolean)0;
               targetAngle = RoCo_idlePosition_PARAM;
               Timer_start(& shutdownTimer);
-              RoCo_activeDesired = (char)0;
+              RoCo_activeDesired = (boolean)0;
             }
             if (! final) {
               if (RoCo_commandMoveToAngle) {
                 targetAngle = RoCo_desiredTargetAngle;
-                RoCo_commandMoveToAngle = (char)0;
+                RoCo_commandMoveToAngle = (boolean)0;
                 direction = 0;
               }
               else goto _LAND;
@@ -543,7 +545,7 @@ void RoCo_process(void)
                   else 
                     if (RoCo_desiredDeltaAngle > 0.0) direction = -1;
                     else direction = 1;
-                  RoCo_commandMoveByAngle = (char)0;
+                  RoCo_commandMoveByAngle = (boolean)0;
                 }
             if (RoCo_hasMinMaxAngles_PARAM) targetAngle = Limiter_out
                                             (RoCo_minAngle_PARAM,targetAngle,
@@ -591,10 +593,10 @@ void RoCo_process(void)
               if (RoCo_moveFast) t12 = & RoCo_accelerationFast_CURVE;
               else t12 = & RoCo_acceleration_CURVE;
             angleDiffRequest = Interpolate_from_curve(t12,rampValue);
-            angleDiffRequest *= (double)direction;
+            angleDiffRequest *= (real64)direction;
             t10 = RoCo_legAngle - targetAngle;
             tmp_12 = fabs(rampValue);
-            if (tmp_12 == 1.0) rampHighReached = (char)1;
+            if (tmp_12 == 1.0) rampHighReached = (boolean)1;
             if (rampValue == 0.0) {
               double tmp_15;
               if (RoCo_adaptationActive) 
@@ -612,7 +614,7 @@ void RoCo_process(void)
                             double tmp_13;
                             tmp_13 = fabs(t10);
                             adaptation[RoCo_moveFast] += tmp_13;
-                            RoCo_isAdapted = (char)1;
+                            RoCo_isAdapted = (boolean)1;
                           }
                         }
                     }
@@ -623,9 +625,9 @@ void RoCo_process(void)
                 if (t10 > 0.0) tmp_14 = - 1.0; else tmp_14 = 1.0;
                 angleDiffRequest += (tmp_14 * RoCo_stepSpeed_PARAM) * dT;
               }
-              rampHighReached = (char)0;
+              rampHighReached = (boolean)0;
             }
-            wasRampEnded = (char)(rampValue == 0.0);
+            wasRampEnded = (boolean)(rampValue == 0.0);
           }
           if (final) 
             if (RoCo_legAngleValid) {
@@ -649,9 +651,9 @@ void RoCo_process(void)
               if (tmp_18 > RoCo_shutdownTimeout_PARAM) {
                 _LOR_3:
                 {
-                  final = (char)0;
-                  RoCo_isActive = (char)0;
-                  RoCo_legAngleValid = (char)0;
+                  final = (boolean)0;
+                  RoCo_isActive = (boolean)0;
+                  RoCo_legAngleValid = (boolean)0;
                 }
               }
             }
@@ -664,7 +666,7 @@ void RoCo_process(void)
           else 
             if (Engine_minVoltage_PARAM == desiredEngineVoltage) tmp_19 = 1;
             else tmp_19 = 0;
-          limitationActive = (char)tmp_19;
+          limitationActive = (boolean)tmp_19;
           RoCo_engineVoltage = PT1_Filter(& voltageFilter,
                                           desiredEngineVoltage,t13,dT);
           wasInit = init;
@@ -697,7 +699,7 @@ void Sim_process(void)
   int tmp_0;
   real64 t1 = RoCo_engineVoltage;
   real64 t2 = Engine_realVoltage;
-  uint32 t3 = (unsigned int)LegSensor_atMark;
+  uint32 t3 = (uint32)LegSensor_atMark;
   real64 t4 = LegSensor_signal;
   buf5 = buf4;
   buf4 = buf3;
@@ -724,11 +726,11 @@ void Sim_process(void)
       else tmp_0 = 0;
     else tmp_0 = 0;
   }
-  t3 = (unsigned int)((unsigned char)tmp_0);
+  t3 = (uint32)((uint8)tmp_0);
   t2 = buf5 * 0.9;
   oldInternalPosition = internalPosition;
   Engine_realVoltage = t2;
-  LegSensor_atMark = (char)t3;
+  LegSensor_atMark = (boolean)t3;
   LegSensor_signal = t4 / 2.5;
   return;
 }
@@ -736,7 +738,7 @@ void Sim_process(void)
 void Sim_init(void)
 {
   Engine_realVoltage = 0.0;
-  LegSensor_atMark = (char)0;
+  LegSensor_atMark = (boolean)0;
   LegSensor_signal = 0.0;
   buf1 = 0.0;
   buf2 = 0.0;
@@ -791,9 +793,9 @@ int main(void)
   Battery_voltage = 21.3;
   Env_humidity = 0.5;
   Env_temperature = 20.0;
-  Global_emergencyMode = (char)0;
-  RoCo_activeDesired = (char)1;
-  RoCo_moveFast = (char)0;
+  Global_emergencyMode = (boolean)0;
+  RoCo_activeDesired = (boolean)1;
+  RoCo_moveFast = (boolean)0;
   int cnt = 0;
   fprintf(__fc_stderr,(char const *)output_header); /* fprintf_va_1 */
   while (cnt < 9000) {
@@ -810,26 +812,26 @@ int main(void)
     Sleep(20);
     cnt ++;
     if (cnt == 2500) {
-      RoCo_commandMoveToAngle = (char)1;
+      RoCo_commandMoveToAngle = (boolean)1;
       RoCo_desiredTargetAngle = 15.0;
     }
     else 
       if (cnt == 3500) {
-        RoCo_commandMoveToAngle = (char)1;
+        RoCo_commandMoveToAngle = (boolean)1;
         RoCo_desiredTargetAngle = - 55.0;
       }
       else 
         if (cnt == 5000) {
-          RoCo_commandMoveToAngle = (char)1;
+          RoCo_commandMoveToAngle = (boolean)1;
           RoCo_desiredTargetAngle = 30.0;
         }
         else 
           if (cnt == 7000) {
-            RoCo_commandMoveToAngle = (char)1;
+            RoCo_commandMoveToAngle = (boolean)1;
             RoCo_desiredTargetAngle = - 5.0;
           }
           else 
-            if (cnt == 8000) RoCo_commandShutOff = (char)1;
+            if (cnt == 8000) RoCo_commandShutOff = (boolean)1;
   }
   __retres = 0;
   return __retres;

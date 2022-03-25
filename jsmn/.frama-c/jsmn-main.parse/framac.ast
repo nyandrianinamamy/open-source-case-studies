@@ -519,7 +519,7 @@ static int vtokeq(char const *s, jsmntok_t *t, int numtok, va_list ap)
           else {
             int tmp_0;
             tmp_0 = strncmp(p,(char const *)value,
-                            (unsigned int)((t + i)->end - (t + i)->start));
+                            (size_t)((t + i)->end - (t + i)->start));
             if (tmp_0 != 0) {
               _LOR:
               {
@@ -1363,7 +1363,7 @@ int test_partial_string(void)
     if (! ((size_t)i <= tmp_1)) break;
     {
       size_t tmp_0;
-      r = jsmn_parse(& p,js,(unsigned int)i,tok,sizeof(tok) / sizeof(tok[0]));
+      r = jsmn_parse(& p,js,(size_t)i,tok,sizeof(tok) / sizeof(tok[0]));
       tmp_0 = strlen(js);
       ;
       if ((size_t)i == tmp_0) {
@@ -1620,7 +1620,7 @@ int test_input_length(void)
   jsmntok_t tokens[10];
   js = "{\"a\": 0}garbage";
   jsmn_init(& p);
-  r = jsmn_parse(& p,js,(unsigned int)8,tokens,(unsigned int)10);
+  r = jsmn_parse(& p,js,(size_t)8,tokens,(unsigned int)10);
   if (! (r == 3)) {
     __retres = 196;
     goto return_label;

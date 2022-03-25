@@ -5,10 +5,10 @@ directory	file	line	function	property kind	status	property
 2019/adamovsky	iocccsize_2018.c	276	find_member	precondition of isalnum	Unknown	c_uchar_or_eof_or_EOF: (0 ≤ c ≤ 255) ∨ c ≡ -1
 2019/adamovsky	iocccsize_2018.c	298	read_line	precondition of fgetc	Unknown	valid_stream: \valid(stream)
 2019/adamovsky	iocccsize_2018.c	305	read_line	signed_overflow	Unknown	xbcount + 1 ≤ 2147483647
-2019/adamovsky	iocccsize_2018.c	309	read_line	initialization	Unknown	\initialized(buf + (unsigned long)(length - 2))
-2019/adamovsky	iocccsize_2018.c	309	read_line	initialization	Unknown	\initialized(buf + (unsigned long)(length - 1))
+2019/adamovsky	iocccsize_2018.c	309	read_line	initialization	Unknown	\initialized(buf + (size_t)(length - 2))
+2019/adamovsky	iocccsize_2018.c	309	read_line	initialization	Unknown	\initialized(buf + (size_t)(length - 1))
 2019/adamovsky	iocccsize_2018.c	314	read_line	signed_overflow	Unknown	xbcount + 2 ≤ 2147483647
-2019/adamovsky	iocccsize_2018.c	318	read_line	initialization	Unknown	\initialized(buf + (unsigned long)(length - 1))
+2019/adamovsky	iocccsize_2018.c	318	read_line	initialization	Unknown	\initialized(buf + (size_t)(length - 1))
 2019/adamovsky	iocccsize_2018.c	322	read_line	signed_overflow	Unknown	xbcount + 2 ≤ 2147483647
 2019/adamovsky	iocccsize_2018.c	323	read_line	signed_overflow	Unknown	xwcount + 1 ≤ 2147483647
 2019/adamovsky	iocccsize_2018.c	324	read_line	signed_overflow	Unknown	xlcount + 1 ≤ 2147483647

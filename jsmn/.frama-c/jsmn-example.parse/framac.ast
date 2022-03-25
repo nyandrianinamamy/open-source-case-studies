@@ -347,8 +347,7 @@ static int jsoneq(char const *json, jsmntok_t *tok, char const *s)
     ;
     if ((int)tmp == tok->end - tok->start) {
       int tmp_0;
-      tmp_0 = strncmp(json + tok->start,s,
-                      (unsigned int)(tok->end - tok->start));
+      tmp_0 = strncmp(json + tok->start,s,(size_t)(tok->end - tok->start));
       if (tmp_0 == 0) {
         __retres = 0;
         goto return_label;

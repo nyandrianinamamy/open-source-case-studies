@@ -65,11 +65,11 @@ int main(void)
   int *p = & x;
   FILE *f = fopen("provenance_via_io_bytewise_global.tmp","w+b");
   printf("Addresses: p=%p\n",(void *)p); /* printf_va_1 */
-  tmp_0 = fwrite((void const *)(& p),(unsigned int)1,sizeof(int *),f);
+  tmp_0 = fwrite((void const *)(& p),(size_t)1,sizeof(int *),f);
   int nw = (int)tmp_0;
   if ((unsigned int)nw != sizeof(int *)) exit(1);
   rewind(f);
-  tmp_1 = fread((void *)(& r),(unsigned int)1,sizeof(int *),f);
+  tmp_1 = fread((void *)(& r),(size_t)1,sizeof(int *),f);
   int nr = (int)tmp_1;
   if ((unsigned int)nr != sizeof(int *)) exit(1);
   printf("Addresses: r=%p\n",(void *)r); /* printf_va_2 */

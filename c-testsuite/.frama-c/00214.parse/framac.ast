@@ -71,9 +71,9 @@ int main(void)
 {
   int __retres;
   void *r;
-  _brk_start = (unsigned long)1024;
-  _brk_end = (unsigned long)1024;
-  r = extend_brk((unsigned long)4096,(unsigned long)16);
+  _brk_start = (size_t)1024;
+  _brk_end = (size_t)1024;
+  r = extend_brk((size_t)4096,(size_t)16);
   if (! r) printf("wrong4\n"); /* printf_va_5 */
   else printf("okay\n"); /* printf_va_6 */
   bla();

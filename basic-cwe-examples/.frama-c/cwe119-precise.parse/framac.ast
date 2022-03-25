@@ -59,13 +59,13 @@ static int my_strcmp(char const *s1, char const *s2)
 {
   int __retres;
   size_t i;
-  i = (unsigned long)0;
+  i = (size_t)0;
   while ((int)*(s1 + i) == (int)*(s2 + i)) {
     if ((int)*(s1 + i) == 0) {
       __retres = 0;
       goto return_label;
     }
-    i += (size_t)1;
+    i ++;
   }
   __retres = (int)*((unsigned char *)s1 + i) - (int)*((unsigned char *)s2 + i);
   return_label: return __retres;
@@ -77,7 +77,7 @@ static in_addr_t my_inet_addr(char const *cp)
   int tmp_0;
   tmp_0 = my_strcmp(cp,"127.0.0.1");
   if (tmp_0 == 0) {
-    __retres = (unsigned int)0;
+    __retres = (in_addr_t)0;
     goto return_label;
   }
   else {
@@ -108,7 +108,7 @@ void host_lookup(char *user_supplied_addr)
   validate_addr_form(user_supplied_addr);
   addr = my_inet_addr((char const *)user_supplied_addr);
   hp = my_gethostbyaddr((void const *)(& addr),
-                        (unsigned int)sizeof(struct in_addr),2);
+                        (socklen_t)sizeof(struct in_addr),2);
   strcpy(hostname,(char const *)hp->h_name);
   return;
 }

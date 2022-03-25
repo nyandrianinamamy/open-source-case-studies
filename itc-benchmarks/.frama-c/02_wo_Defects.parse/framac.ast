@@ -430,7 +430,7 @@ int eva_main(void)
     int i = 0;
     /*@ loop unroll 5; */
     while (i < 5) {
-      Frama_C_make_unknown(argv[i],(unsigned int)255);
+      Frama_C_make_unknown(argv[i],(size_t)255);
       *(argv[i] + 255) = (char)0;
       i ++;
     }
@@ -916,7 +916,7 @@ void bit_shift_main(void)
 void dynamic_buffer_overrun_001(void)
 {
   int i;
-  char *buf_0 = calloc((unsigned int)5,sizeof(char));
+  char *buf_0 = calloc((size_t)5,sizeof(char));
   if (buf_0 != (char *)0) {
     i = 0;
     while (i < 5) {
@@ -930,7 +930,7 @@ void dynamic_buffer_overrun_001(void)
 
 void dynamic_buffer_overrun_002(void)
 {
-  short *buf_0 = calloc((unsigned int)5,sizeof(short));
+  short *buf_0 = calloc((size_t)5,sizeof(short));
   if (buf_0 != (short *)0) {
     *(buf_0 + 4) = (short)1;
     free((void *)buf_0);
@@ -955,7 +955,7 @@ void dynamic_buffer_overrun_003(void)
 {
   int ret;
   int i;
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   if (buf_0 != (int *)0) {
     i = 0;
     while (i < 5) {
@@ -971,7 +971,7 @@ void dynamic_buffer_overrun_003(void)
 
 void dynamic_buffer_overrun_004(void)
 {
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   if (buf_0 != (int *)0) {
     *(buf_0 + 4) = 1;
     free((void *)buf_0);
@@ -982,7 +982,7 @@ void dynamic_buffer_overrun_004(void)
 void dynamic_buffer_overrun_005(void)
 {
   int i;
-  long *buf_0 = calloc((unsigned int)5,sizeof(long));
+  long *buf_0 = calloc((size_t)5,sizeof(long));
   if (buf_0 != (long *)0) {
     i = 0;
     while (i < 5) {
@@ -997,7 +997,7 @@ void dynamic_buffer_overrun_005(void)
 void dynamic_buffer_overrun_006(void)
 {
   int i;
-  float *buf_0 = calloc((unsigned int)5,sizeof(float));
+  float *buf_0 = calloc((size_t)5,sizeof(float));
   if (buf_0 != (float *)0) {
     i = 0;
     while (i < 5) {
@@ -1012,7 +1012,7 @@ void dynamic_buffer_overrun_006(void)
 void dynamic_buffer_overrun_007(void)
 {
   int i;
-  double *buf_0 = calloc((unsigned int)5,sizeof(double));
+  double *buf_0 = calloc((size_t)5,sizeof(double));
   if (buf_0 != (double *)0) {
     i = 0;
     while (i < 5) {
@@ -1028,10 +1028,10 @@ void dynamic_buffer_overrun_008(void)
 {
   int i;
   int j;
-  int **buf_0 = calloc((unsigned int)5,sizeof(int *));
+  int **buf_0 = calloc((size_t)5,sizeof(int *));
   i = 0;
   while (i < 5) {
-    *(buf_0 + i) = (int *)calloc((unsigned int)5,sizeof(int));
+    *(buf_0 + i) = (int *)calloc((size_t)5,sizeof(int));
     i ++;
   }
   i = 0;
@@ -1051,11 +1051,11 @@ void dynamic_buffer_overrun_008(void)
 void dynamic_buffer_overrun_009(void)
 {
   int i;
-  int *buf1 = calloc((unsigned int)5,sizeof(int));
-  int *buf2 = calloc((unsigned int)5,sizeof(int));
-  int *buf3 = calloc((unsigned int)5,sizeof(int));
-  int *buf4 = calloc((unsigned int)5,sizeof(int));
-  int *buf5 = calloc((unsigned int)5,sizeof(int));
+  int *buf1 = calloc((size_t)5,sizeof(int));
+  int *buf2 = calloc((size_t)5,sizeof(int));
+  int *buf3 = calloc((size_t)5,sizeof(int));
+  int *buf4 = calloc((size_t)5,sizeof(int));
+  int *buf5 = calloc((size_t)5,sizeof(int));
   int **pbuf[5] = {& buf1, & buf2, & buf3, & buf4, & buf5};
   int j = 4;
   i = 0;
@@ -1074,7 +1074,7 @@ void dynamic_buffer_overrun_009(void)
 void dynamic_buffer_overrun_010(void)
 {
   dynamic_buffer_overrun_010_s_001 *sbuf =
-    calloc((unsigned int)5,sizeof(dynamic_buffer_overrun_010_s_001));
+    calloc((size_t)5,sizeof(dynamic_buffer_overrun_010_s_001));
   if (sbuf != (dynamic_buffer_overrun_010_s_001 *)0) {
     (sbuf + 4)->a = 1;
     free((void *)sbuf);
@@ -1085,7 +1085,7 @@ void dynamic_buffer_overrun_010(void)
 void dynamic_buffer_overrun_011(void)
 {
   dynamic_buffer_overrun_011_s_001 *s_0 =
-    calloc((unsigned int)5,sizeof(dynamic_buffer_overrun_011_s_001));
+    calloc((size_t)5,sizeof(dynamic_buffer_overrun_011_s_001));
   if (s_0 != (dynamic_buffer_overrun_011_s_001 *)0) {
     (s_0 + 4)->buf[4] = 1;
     free((void *)s_0);
@@ -1095,7 +1095,7 @@ void dynamic_buffer_overrun_011(void)
 
 void dynamic_buffer_overrun_012(void)
 {
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   int index_0 = 4;
   if (buf_0 != (int *)0) {
     *(buf_0 + index_0) = 9;
@@ -1106,7 +1106,7 @@ void dynamic_buffer_overrun_012(void)
 
 void dynamic_buffer_overrun_013(void)
 {
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   int index_0 = 4;
   if (buf_0 != (int *)0) {
     *(buf_0 + index_0) = 1;
@@ -1117,7 +1117,7 @@ void dynamic_buffer_overrun_013(void)
 
 void dynamic_buffer_overrun_014(void)
 {
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   int index_0 = 1;
   if (buf_0 != (int *)0) {
     *(buf_0 + (2 * index_0 + 1)) = 1;
@@ -1128,7 +1128,7 @@ void dynamic_buffer_overrun_014(void)
 
 void dynamic_buffer_overrun_015(void)
 {
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   int index_0 = 1;
   if (buf_0 != (int *)0) {
     *(buf_0 + (index_0 * index_0 + 1)) = 1;
@@ -1146,7 +1146,7 @@ int dynamic_buffer_overrun_016_func_001(void)
 
 void dynamic_buffer_overrun_016(void)
 {
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   if (buf_0 != (int *)0) {
     int tmp_0;
     tmp_0 = dynamic_buffer_overrun_016_func_001();
@@ -1158,7 +1158,7 @@ void dynamic_buffer_overrun_016(void)
 
 void dynamic_buffer_overrun_017_func_001(int index_0)
 {
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   if (buf_0 != (int *)0) {
     *(buf_0 + index_0) = 1;
     free((void *)buf_0);
@@ -1174,7 +1174,7 @@ void dynamic_buffer_overrun_017(void)
 
 void dynamic_buffer_overrun_018(void)
 {
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   int indexes[4] = {3, 4, 5, 6};
   int index_0 = 1;
   if (buf_0 != (int *)0) {
@@ -1187,7 +1187,7 @@ void dynamic_buffer_overrun_018(void)
 void dynamic_buffer_overrun_019(void)
 {
   int index1;
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   int index_0 = 4;
   index1 = index_0;
   if (buf_0 != (int *)0) {
@@ -1201,7 +1201,7 @@ void dynamic_buffer_overrun_020(void)
 {
   int index1;
   int index2;
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   int index_0 = 4;
   index1 = index_0;
   index2 = index1;
@@ -1216,7 +1216,7 @@ void dynamic_buffer_overrun_021(void)
 {
   int *p1;
   int *p2;
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   if (buf_0 != (int *)0) {
     p1 = buf_0;
     p2 = p1;
@@ -1229,7 +1229,7 @@ void dynamic_buffer_overrun_021(void)
 void dynamic_buffer_overrun_022(void)
 {
   int *p;
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   if (buf_0 != (int *)0) {
     p = buf_0;
     *(p + 4) = 1;
@@ -1242,7 +1242,7 @@ void dynamic_buffer_overrun_023(void)
 {
   int *p;
   int i;
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   if (buf_0 != (int *)0) {
     p = buf_0;
     i = 0;
@@ -1264,7 +1264,7 @@ void dynamic_buffer_overrun_024_func_001(int *buf_0)
 
 void dynamic_buffer_overrun_024(void)
 {
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   dynamic_buffer_overrun_024_func_001(buf_0);
   if (buf_0 != (int *)0) free((void *)buf_0);
   return;
@@ -1273,7 +1273,7 @@ void dynamic_buffer_overrun_024(void)
 void dynamic_buffer_overrun_025(void)
 {
   int i;
-  char *buf_0 = calloc((unsigned int)5,sizeof(char));
+  char *buf_0 = calloc((size_t)5,sizeof(char));
   if (buf_0 != (char *)0) {
     i = 0;
     while (i < 5) {
@@ -1288,7 +1288,7 @@ void dynamic_buffer_overrun_025(void)
 void dynamic_buffer_overrun_026(void)
 {
   int *p;
-  char *buf_0 = calloc((unsigned int)5,sizeof(char));
+  char *buf_0 = calloc((size_t)5,sizeof(char));
   p = (int *)buf_0;
   if (buf_0 != (char *)0) {
     *(p + 0) = 1;
@@ -1300,7 +1300,7 @@ void dynamic_buffer_overrun_026(void)
 void dynamic_buffer_overrun_027(void)
 {
   char *p;
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   p = (char *)buf_0;
   if (buf_0 != (int *)0) {
     *(p + 1) = (char)1;
@@ -1312,8 +1312,8 @@ void dynamic_buffer_overrun_027(void)
 void dynamic_buffer_overrun_028(void)
 {
   int i;
-  int *buf1 = calloc((unsigned int)5,sizeof(int));
-  int *buf2 = calloc((unsigned int)3,sizeof(int));
+  int *buf1 = calloc((size_t)5,sizeof(int));
+  int *buf2 = calloc((size_t)3,sizeof(int));
   i = 0;
   while (i < 5) {
     *(buf1 + i) = i;
@@ -1367,7 +1367,7 @@ void dynamic_buffer_overrun_031(void)
 {
   int i;
   char a_0[12];
-  char *ptr1 = calloc((unsigned int)12,sizeof(char));
+  char *ptr1 = calloc((size_t)12,sizeof(char));
   char *ptr2 = a_0;
   if (ptr1 != (char *)0) {
     i = 0;
@@ -1376,7 +1376,7 @@ void dynamic_buffer_overrun_031(void)
       i ++;
     }
     *(ptr1 + i) = (char)'\000';
-    memcpy((void *)ptr2,(void const *)ptr1,(unsigned int)11);
+    memcpy((void *)ptr2,(void const *)ptr1,(size_t)11);
     free((void *)ptr1);
   }
   return;
@@ -1502,7 +1502,7 @@ void dynamic_buffer_overrun_main(void)
 void dynamic_buffer_underrun_001(void)
 {
   int i;
-  char *buf_0 = calloc((unsigned int)5,sizeof(char));
+  char *buf_0 = calloc((size_t)5,sizeof(char));
   if (buf_0 != (char *)0) {
     i = 4;
     while (i >= 0) {
@@ -1516,7 +1516,7 @@ void dynamic_buffer_underrun_001(void)
 
 void dynamic_buffer_underrun_002(void)
 {
-  short *buf_0 = calloc((unsigned int)5,sizeof(short));
+  short *buf_0 = calloc((size_t)5,sizeof(short));
   if (buf_0 != (short *)0) {
     *(buf_0 - 0) = (short)1;
     free((void *)buf_0);
@@ -1541,7 +1541,7 @@ void dynamic_buffer_underrun_003(void)
 {
   int ret;
   int i;
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   if (buf_0 != (int *)0) {
     i = 0;
     while (i < 5) {
@@ -1557,7 +1557,7 @@ void dynamic_buffer_underrun_003(void)
 
 void dynamic_buffer_underrun_004(void)
 {
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   if (buf_0 != (int *)0) {
     *(buf_0 - 0) = 1;
     free((void *)buf_0);
@@ -1568,7 +1568,7 @@ void dynamic_buffer_underrun_004(void)
 void dynamic_buffer_underrun_005(void)
 {
   int i;
-  long *buf_0 = calloc((unsigned int)5,sizeof(long));
+  long *buf_0 = calloc((size_t)5,sizeof(long));
   if (buf_0 != (long *)0) {
     i = 0;
     while (i < 5) {
@@ -1583,7 +1583,7 @@ void dynamic_buffer_underrun_005(void)
 void dynamic_buffer_underrun_006(void)
 {
   int i;
-  float *buf_0 = calloc((unsigned int)5,sizeof(float));
+  float *buf_0 = calloc((size_t)5,sizeof(float));
   if (buf_0 != (float *)0) {
     i = 0;
     while (i < 5) {
@@ -1598,7 +1598,7 @@ void dynamic_buffer_underrun_006(void)
 void dynamic_buffer_underrun_007(void)
 {
   int i;
-  double *buf_0 = calloc((unsigned int)5,sizeof(double));
+  double *buf_0 = calloc((size_t)5,sizeof(double));
   if (buf_0 != (double *)0) {
     i = 0;
     while (i < 5) {
@@ -1614,10 +1614,10 @@ void dynamic_buffer_underrun_008(void)
 {
   int i;
   int j;
-  int **buf_0 = calloc((unsigned int)5,sizeof(int *));
+  int **buf_0 = calloc((size_t)5,sizeof(int *));
   i = 0;
   while (i < 5) {
-    *(buf_0 + i) = (int *)calloc((unsigned int)5,sizeof(int));
+    *(buf_0 + i) = (int *)calloc((size_t)5,sizeof(int));
     i ++;
   }
   i = 0;
@@ -1637,11 +1637,11 @@ void dynamic_buffer_underrun_008(void)
 void dynamic_buffer_underrun_009(void)
 {
   int i;
-  int *buf1 = calloc((unsigned int)5,sizeof(int));
-  int *buf2 = calloc((unsigned int)5,sizeof(int));
-  int *buf3 = calloc((unsigned int)5,sizeof(int));
-  int *buf4 = calloc((unsigned int)5,sizeof(int));
-  int *buf5 = calloc((unsigned int)5,sizeof(int));
+  int *buf1 = calloc((size_t)5,sizeof(int));
+  int *buf2 = calloc((size_t)5,sizeof(int));
+  int *buf3 = calloc((size_t)5,sizeof(int));
+  int *buf4 = calloc((size_t)5,sizeof(int));
+  int *buf5 = calloc((size_t)5,sizeof(int));
   int **pbuf[5] = {& buf1, & buf2, & buf3, & buf4, & buf5};
   int j = 4;
   i = 0;
@@ -1660,7 +1660,7 @@ void dynamic_buffer_underrun_009(void)
 void dynamic_buffer_underrun_010(void)
 {
   dynamic_buffer_underrun_010_s_001 *sbuf =
-    calloc((unsigned int)5,sizeof(dynamic_buffer_underrun_010_s_001));
+    calloc((size_t)5,sizeof(dynamic_buffer_underrun_010_s_001));
   if (sbuf != (dynamic_buffer_underrun_010_s_001 *)0) {
     (sbuf + 0)->a = 1;
     free((void *)sbuf);
@@ -1671,7 +1671,7 @@ void dynamic_buffer_underrun_010(void)
 void dynamic_buffer_underrun_011(void)
 {
   dynamic_buffer_underrun_011_s_001 *s_0 =
-    calloc((unsigned int)5,sizeof(dynamic_buffer_underrun_011_s_001));
+    calloc((size_t)5,sizeof(dynamic_buffer_underrun_011_s_001));
   if (s_0 != (dynamic_buffer_underrun_011_s_001 *)0) {
     (s_0 + 0)->buf[4] = 1;
     free((void *)s_0);
@@ -1681,7 +1681,7 @@ void dynamic_buffer_underrun_011(void)
 
 void dynamic_buffer_underrun_012(void)
 {
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   int index_0 = 0;
   if (buf_0 != (int *)0) {
     *(buf_0 - index_0) = 9;
@@ -1692,7 +1692,7 @@ void dynamic_buffer_underrun_012(void)
 
 void dynamic_buffer_underrun_013(void)
 {
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   int index_0 = 3;
   if (buf_0 != (int *)0) {
     *(buf_0 + (-2 * index_0 + 6)) = 1;
@@ -1703,7 +1703,7 @@ void dynamic_buffer_underrun_013(void)
 
 void dynamic_buffer_underrun_014(void)
 {
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   int index_0 = 2;
   if (buf_0 != (int *)0) {
     *(buf_0 + (index_0 * index_0 - 4)) = 1;
@@ -1714,7 +1714,7 @@ void dynamic_buffer_underrun_014(void)
 
 void dynamic_buffer_underrun_015(void)
 {
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   int index_0 = 2;
   if (buf_0 != (int *)0) {
     *(buf_0 + (index_0 * index_0 - 4)) = 1;
@@ -1732,7 +1732,7 @@ int dynamic_buffer_underrun_016_func_001(void)
 
 void dynamic_buffer_underrun_016(void)
 {
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   if (buf_0 != (int *)0) {
     int tmp_0;
     tmp_0 = dynamic_buffer_underrun_016_func_001();
@@ -1744,7 +1744,7 @@ void dynamic_buffer_underrun_016(void)
 
 void dynamic_buffer_underrun_017_func_001(int index_0)
 {
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   if (buf_0 != (int *)0) {
     *(buf_0 - index_0) = 1;
     free((void *)buf_0);
@@ -1760,7 +1760,7 @@ void dynamic_buffer_underrun_017(void)
 
 void dynamic_buffer_underrun_018(void)
 {
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   int indexes[5] = {3, 4, 0, 5, 6};
   int index_0 = 2;
   if (buf_0 != (int *)0) {
@@ -1773,7 +1773,7 @@ void dynamic_buffer_underrun_018(void)
 void dynamic_buffer_underrun_019(void)
 {
   int index1;
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   int index_0 = 0;
   index1 = index_0;
   if (buf_0 != (int *)0) {
@@ -1787,7 +1787,7 @@ void dynamic_buffer_underrun_020(void)
 {
   int index1;
   int index2;
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   int index_0 = 0;
   index1 = index_0;
   index2 = index1;
@@ -1802,7 +1802,7 @@ void dynamic_buffer_underrun_021(void)
 {
   int *p1;
   int *p2;
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   if (buf_0 != (int *)0) {
     p1 = buf_0;
     p2 = p1;
@@ -1815,7 +1815,7 @@ void dynamic_buffer_underrun_021(void)
 void dynamic_buffer_underrun_022(void)
 {
   int *p;
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   if (buf_0 != (int *)0) {
     p = buf_0;
     *(p - 0) = 1;
@@ -1828,7 +1828,7 @@ void dynamic_buffer_underrun_023(void)
 {
   int *p;
   int i;
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   if (buf_0 != (int *)0) {
     p = buf_0;
     i = 4;
@@ -1849,7 +1849,7 @@ void dynamic_buffer_underrun_024_func_001(int *buf_0)
 
 void dynamic_buffer_underrun_024(void)
 {
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   if (buf_0 != (int *)0) {
     dynamic_buffer_underrun_024_func_001(buf_0);
     free((void *)buf_0);
@@ -1860,7 +1860,7 @@ void dynamic_buffer_underrun_024(void)
 void dynamic_buffer_underrun_025(void)
 {
   int i;
-  char *buf_0 = calloc((unsigned int)5,sizeof(char));
+  char *buf_0 = calloc((size_t)5,sizeof(char));
   if (buf_0 != (char *)0) {
     i = 4;
     while (i > 0) {
@@ -1875,7 +1875,7 @@ void dynamic_buffer_underrun_025(void)
 void dynamic_buffer_underrun_026(void)
 {
   int *p;
-  char *buf_0 = calloc((unsigned int)5,sizeof(char));
+  char *buf_0 = calloc((size_t)5,sizeof(char));
   if (buf_0 != (char *)0) {
     p = (int *)buf_0;
     *(p - 0) = 1;
@@ -1887,7 +1887,7 @@ void dynamic_buffer_underrun_026(void)
 void dynamic_buffer_underrun_027(void)
 {
   char *p;
-  int *buf_0 = calloc((unsigned int)5,sizeof(int));
+  int *buf_0 = calloc((size_t)5,sizeof(int));
   if (buf_0 != (int *)0) {
     p = (char *)buf_0;
     *(p - 0) = (char)1;
@@ -1899,8 +1899,8 @@ void dynamic_buffer_underrun_027(void)
 void dynamic_buffer_underrun_028(void)
 {
   int i;
-  int *buf1 = calloc((unsigned int)5,sizeof(int));
-  int *buf2 = calloc((unsigned int)3,sizeof(int));
+  int *buf1 = calloc((size_t)5,sizeof(int));
+  int *buf2 = calloc((size_t)3,sizeof(int));
   i = 0;
   while (i < 5) {
     *(buf1 + i) = i;
@@ -1934,7 +1934,7 @@ void dynamic_buffer_underrun_030(void)
   char **doubleptr = malloc((unsigned int)10 * sizeof(char *));
   i = 0;
   while (i < 10) {
-    *(doubleptr + i) = (char *)calloc((unsigned int)10,sizeof(char));
+    *(doubleptr + i) = (char *)calloc((size_t)10,sizeof(char));
     i ++;
   }
   i = 0;
@@ -1955,7 +1955,7 @@ void dynamic_buffer_underrun_031(void)
 {
   int i;
   char a_0[12];
-  char *ptr1 = calloc((unsigned int)12,sizeof(char));
+  char *ptr1 = calloc((size_t)12,sizeof(char));
   char *ptr2 = a_0;
   if (ptr1 != (char *)0) {
     *(ptr1 + 11) = (char)'\000';
@@ -1964,7 +1964,7 @@ void dynamic_buffer_underrun_031(void)
       *(ptr1 + i) = (char)'a';
       i --;
     }
-    memcpy((void *)ptr2,(void const *)ptr1,(unsigned int)12);
+    memcpy((void *)ptr2,(void const *)ptr1,(size_t)12);
     free((void *)ptr1);
   }
   return;
@@ -1974,7 +1974,7 @@ void dynamic_buffer_underrun_032(void)
 {
   int i;
   dynamic_buffer_underrun_s_032 *ptr_s =
-    calloc((unsigned int)10,sizeof(dynamic_buffer_underrun_s_032));
+    calloc((size_t)10,sizeof(dynamic_buffer_underrun_s_032));
   if (ptr_s != (dynamic_buffer_underrun_s_032 *)0) {
     i = 0;
     while (i < 10) {
@@ -1989,7 +1989,7 @@ void dynamic_buffer_underrun_032(void)
 void dynamic_buffer_underrun_033(void)
 {
   int c;
-  char *message = calloc((unsigned int)12,sizeof(char));
+  char *message = calloc((size_t)12,sizeof(char));
   int index_0 = 12;
   int len = index_0 - 1;
   if (message != (char *)0) {
@@ -2022,7 +2022,7 @@ void dynamic_buffer_underrun_034(void)
       if ((int)*(srcbuf + i) == (int)ch) loc = i;
       i ++;
     }
-    strncpy(destbuf + loc,(char const *)(srcbuf + loc),(unsigned int)1);
+    strncpy(destbuf + loc,(char const *)(srcbuf + loc),(size_t)1);
     free((void *)destbuf);
   }
   return;
@@ -2072,7 +2072,7 @@ void dynamic_buffer_underrun_036(void)
      (char)'\000'};
   char *newTest = malloc((unsigned int)15 * sizeof(char));
   if (newTest != (char *)0) {
-    memcpy((void *)newTest,(void const *)(test),(unsigned int)15);
+    memcpy((void *)newTest,(void const *)(test),(size_t)15);
     free((void *)newTest);
   }
   return;
@@ -3385,8 +3385,8 @@ void free_nondynamic_allocated_memory_004(void)
 void free_nondynamic_allocated_memory_005(void)
 {
   int i;
-  char *buf1 = calloc((unsigned int)5,sizeof(char));
-  char *buf2 = calloc((unsigned int)5,sizeof(char));
+  char *buf1 = calloc((size_t)5,sizeof(char));
+  char *buf2 = calloc((size_t)5,sizeof(char));
   char **pbuf[2] = {& buf1, & buf2};
   int j = 1;
   if (buf2 != (char *)0) *(buf2 + 0) = (char)10.0;
@@ -3725,7 +3725,7 @@ void invalid_memory_access_004(void)
   if (staticflag1) {
     buf_0 = (char *)malloc((unsigned int)100 * sizeof(char));
     if (buf_0 != (char *)0) {
-      memset((void *)buf_0,'A',(unsigned int)(100 - 1));
+      memset((void *)buf_0,'A',(size_t)(100 - 1));
       *(buf_0 + (100 - 1)) = (char)'\000';
       free((void *)buf_0);
       buf_0 = (char *)0;
@@ -3744,7 +3744,7 @@ int invalid_memory_access_005(int count)
   }
   else {
     int tmp_0;
-    ptr = (int *)calloc((unsigned int)count,sizeof(int));
+    ptr = (int *)calloc((size_t)count,sizeof(int));
     if (ptr != (int *)0) {
       *(ptr + (count - 1)) = 5 * count;
       free((void *)ptr);
@@ -3761,11 +3761,11 @@ int invalid_memory_access_005(int count)
 void invalid_memory_access_006(void)
 {
   int i;
-  float *buf1 = calloc((unsigned int)5,sizeof(float));
-  float *buf2 = calloc((unsigned int)5,sizeof(float));
-  float *buf3 = calloc((unsigned int)5,sizeof(float));
-  float *buf4 = calloc((unsigned int)5,sizeof(float));
-  float *buf5 = calloc((unsigned int)5,sizeof(float));
+  float *buf1 = calloc((size_t)5,sizeof(float));
+  float *buf2 = calloc((size_t)5,sizeof(float));
+  float *buf3 = calloc((size_t)5,sizeof(float));
+  float *buf4 = calloc((size_t)5,sizeof(float));
+  float *buf5 = calloc((size_t)5,sizeof(float));
   float **pbuf[5] = {& buf1, & buf2, & buf3, & buf4, & buf5};
   int j = 4;
   if (buf2 != (float *)0) *(buf2 + 0) = (float)10.0;
@@ -3806,10 +3806,10 @@ void invalid_memory_access_007(void)
 
 void invalid_memory_access_008(void)
 {
-  char *buf_0 = calloc((unsigned int)25,sizeof(char));
+  char *buf_0 = calloc((size_t)25,sizeof(char));
   char *buf1 = (char *)"This is a string";
   if (buf_0 != (char *)0) {
-    memcpy((void *)buf_0,(void const *)buf1,(unsigned int)11);
+    memcpy((void *)buf_0,(void const *)buf1,(size_t)11);
     free((void *)buf_0);
     buf_0 = (char *)0;
   }
@@ -3882,7 +3882,7 @@ void invalid_memory_access_011(void)
 int invalid_memory_access_012_func_001(int flag)
 {
   invalid_memory_access_012_s_001 *s_0;
-  s_0 = (invalid_memory_access_012_s_001 *)calloc((unsigned int)1,
+  s_0 = (invalid_memory_access_012_s_001 *)calloc((size_t)1,
                                                   sizeof(invalid_memory_access_012_s_001));
   int i = 0;
   switch (flag) {
@@ -3941,7 +3941,7 @@ invalid_memory_access_013_s_001 *invalid_memory_access_013_s_001_s_gbl;
 void invalid_memory_access_013_func_001(int flag)
 {
   if (flag > 0) invalid_memory_access_013_s_001_s_gbl = (invalid_memory_access_013_s_001 *)calloc
-                ((unsigned int)1,sizeof(invalid_memory_access_013_s_001));
+                ((size_t)1,sizeof(invalid_memory_access_013_s_001));
   return;
 }
 
@@ -4042,7 +4042,7 @@ static char *invalid_memory_access_015_func_001(char *str1)
     size_t tmp;
     tmp = strlen((char const *)str1);
     i = (int)tmp;
-    str_rev = (char *)malloc((unsigned int)(i + 1));
+    str_rev = (char *)malloc((size_t)(i + 1));
     if (str_rev != (char *)0) {
       j = 0;
       while (j < i) {
@@ -4594,7 +4594,7 @@ void memory_allocation_failure_001(void)
   long *buf_0;
   i = 0;
   while (1) {
-    buf_0 = (long *)calloc((unsigned int)5,sizeof(long));
+    buf_0 = (long *)calloc((size_t)5,sizeof(long));
     if (buf_0 != (long *)0) {
       *(buf_0 + 1) = (long)1;
       free((void *)buf_0);
@@ -4678,14 +4678,14 @@ int memory_allocation_failure_005_func_001(int flag)
     }
     case 2:
     {
-      vptr = calloc((unsigned int)10,sizeof(char));
+      vptr = calloc((size_t)10,sizeof(char));
       if (vptr != (void *)0) *((char *)vptr + 2) = (char)'a';
       __retres = 2;
       goto return_label;
     }
     case 3:
     {
-      vptr = calloc((unsigned int)10,sizeof(float));
+      vptr = calloc((size_t)10,sizeof(float));
       if (vptr != (void *)0) *((float *)vptr + 3) = (float)5.5;
       __retres = 3;
       goto return_label;
@@ -4871,7 +4871,7 @@ void memory_allocation_failure_009_func_001(char *buf_0)
 {
   int i = 0;
   while (1) {
-    buf_0 = (char *)malloc((unsigned int)(429496728UL * (unsigned long)sizeof(char)));
+    buf_0 = (char *)malloc((size_t)(429496728UL * (unsigned long)sizeof(char)));
     i ++;
     if (! (i < 10)) break;
   }
@@ -4960,7 +4960,7 @@ void memory_allocation_failure_011_func_002(void)
   memory_allocation_failure_011_gbl_u1 = (memory_allocation_failure_011_uni_001 *)tmp_0;
   memory_allocation_failure_011_gbl_u1->s1 = (memory_allocation_failure_011_s_001 *)malloc
   (sizeof(memory_allocation_failure_011_s_001));
-  (memory_allocation_failure_011_gbl_u1->s1)->a = (int *)calloc((unsigned int)5,
+  (memory_allocation_failure_011_gbl_u1->s1)->a = (int *)calloc((size_t)5,
                                                                 sizeof(int));
   return;
 }
@@ -5008,7 +5008,7 @@ void memory_allocation_failure_012_func_002(int **pbuf)
   int ret;
   int buf1[5] = {1, 2, 3, 4, 5};
   tmp = memory_allocation_failure_012_func_001(1);
-  tmp_0 = calloc((unsigned int)tmp,sizeof(int));
+  tmp_0 = calloc((size_t)tmp,sizeof(int));
   memory_allocation_failure_012_buf2_gbl = (int *)tmp_0;
   int buf3[5] = {1, 2, 3, 4, 5};
   int buf4[5] = {1, 2, 3, 4, 5};
@@ -7700,7 +7700,7 @@ int printf_va_24(char const * restrict format, double param0);
 
 void uninit_memory_access_002(void)
 {
-  double *a_0 = calloc((unsigned int)3,sizeof(double));
+  double *a_0 = calloc((size_t)3,sizeof(double));
   if (a_0 != (double *)0) {
     *(a_0 + 1) = 10.00000;
     printf("%lf ",*(a_0 + 1)); /* printf_va_24 */
@@ -7727,7 +7727,7 @@ int printf_va_25(char const * restrict format, char *param0, char *param1);
 
 void uninit_memory_access_003(void)
 {
-  char *str1 = calloc((unsigned int)25,sizeof(char));
+  char *str1 = calloc((size_t)25,sizeof(char));
   char *str2 = (char *)"THIS IS STRING";
   if (str1 != (char *)0) {
     strcpy(str1,(char const *)str2);
@@ -7753,7 +7753,7 @@ int printf_va_26(char const * restrict format, int param0);
 void uninit_memory_access_004(void)
 {
   short **ptr = (short **)0;
-  short *p1 = calloc((unsigned int)10,sizeof(short));
+  short *p1 = calloc((size_t)10,sizeof(short));
   short *p2 = (short *)0;
   if (p1 != (short *)0) {
     *p1 = (short)20;
@@ -7836,7 +7836,7 @@ int printf_va_28(char const * restrict format, char *param0);
 
 void uninit_memory_access_006(void)
 {
-  char *str1 = calloc((unsigned int)25,sizeof(char));
+  char *str1 = calloc((size_t)25,sizeof(char));
   char *str2 = (char *)"STRING";
   uninit_memory_access_006_func_001(str1,(char const *)str2);
   printf("%s\n",str1); /* printf_va_28 */
@@ -8044,7 +8044,7 @@ void uninit_memory_access_012(void)
 {
   uninit_memory_access_012_s_001 *s1;
   uninit_memory_access_012_s_001 s_0;
-  s1 = (uninit_memory_access_012_s_001 *)calloc((unsigned int)1,
+  s1 = (uninit_memory_access_012_s_001 *)calloc((size_t)1,
                                                 sizeof(uninit_memory_access_012_s_001));
   if (s1 != (uninit_memory_access_012_s_001 *)0) {
     s1->int_a = 10;
@@ -8062,7 +8062,7 @@ void uninit_memory_access_013(void)
   int i;
   uninit_memory_access_013_s_001 *s1;
   uninit_memory_access_013_s_001 s_0;
-  s1 = (uninit_memory_access_013_s_001 *)calloc((unsigned int)1,
+  s1 = (uninit_memory_access_013_s_001 *)calloc((size_t)1,
                                                 sizeof(uninit_memory_access_013_s_001));
   s1->int_a = 10;
   s1->int_c = 20;
@@ -8088,7 +8088,7 @@ uninit_memory_access_014_u_001 *uninit_memory_access_014_func_001(void)
   switch (flag) {
     case 1:
     {
-      u = (uninit_memory_access_014_u_001 *)calloc((unsigned int)1,
+      u = (uninit_memory_access_014_u_001 *)calloc((size_t)1,
                                                    sizeof(uninit_memory_access_014_u_001));
       u->a = 40;
       __retres = u;
@@ -8096,7 +8096,7 @@ uninit_memory_access_014_u_001 *uninit_memory_access_014_func_001(void)
     }
     case 2:
     {
-      u = (uninit_memory_access_014_u_001 *)calloc((unsigned int)2,
+      u = (uninit_memory_access_014_u_001 *)calloc((size_t)2,
                                                    sizeof(uninit_memory_access_014_u_001));
       u->a = 20;
       __retres = u;
@@ -8104,7 +8104,7 @@ uninit_memory_access_014_u_001 *uninit_memory_access_014_func_001(void)
     }
     case 3:
     {
-      u = (uninit_memory_access_014_u_001 *)calloc((unsigned int)3,
+      u = (uninit_memory_access_014_u_001 *)calloc((size_t)3,
                                                    sizeof(uninit_memory_access_014_u_001));
       u->a = 30;
       __retres = u;
@@ -8478,7 +8478,7 @@ void uninit_pointer_014_func_001(int flag)
   switch (flag) {
     case 1:
     {
-      s = (uninit_pointer_014_s_001 *)calloc((unsigned int)1,
+      s = (uninit_pointer_014_s_001 *)calloc((size_t)1,
                                              sizeof(uninit_pointer_014_s_001));
       if (s != (uninit_pointer_014_s_001 *)0) {
         s->a = 10;
@@ -8489,7 +8489,7 @@ void uninit_pointer_014_func_001(int flag)
     }
     case 2:
     {
-      s = (uninit_pointer_014_s_001 *)calloc((unsigned int)1,
+      s = (uninit_pointer_014_s_001 *)calloc((size_t)1,
                                              sizeof(uninit_pointer_014_s_001));
       if (s != (uninit_pointer_014_s_001 *)0) {
         s->a = 20;

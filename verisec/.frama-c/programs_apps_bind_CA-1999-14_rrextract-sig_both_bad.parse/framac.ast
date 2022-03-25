@@ -25,14 +25,14 @@ static int rrextract(u_char *msg, int msglen, u_char *rrp, u_char *dname,
   long origTTL;
   u_char data[2 * 2 + 4];
   size_t tmp_0;
-  Frama_C_make_unknown(data,(unsigned long)((2 * 2 - 1) + 4));
-  data[(2 * 2 - 1) + 4] = (char)0;
+  Frama_C_make_unknown(data,(size_t)((2 * 2 - 1) + 4));
+  data[(2 * 2 - 1) + 4] = (u_char)0;
   cp = rrp;
   eom = msg + msglen;
   {
     short tmp;
     tmp = Frama_C_short_interval((short)(-32768),(short)32767);
-    dlen = (int)tmp;
+    dlen = (u_int)tmp;
     cp += 2;
   }
   if (cp + dlen > eom) {
@@ -52,7 +52,7 @@ static int rrextract(u_char *msg, int msglen, u_char *rrp, u_char *dname,
     __retres = -1;
     goto return_label;
   }
-  memcpy((void *)cp1,(void const *)cp,(unsigned long)4);
+  memcpy((void *)cp1,(void const *)cp,(size_t)4);
   cp += 4;
   cp1 += 4;
   n = dn_expand((u_char const *)msg,(u_char const *)eom,(u_char const *)cp,
@@ -69,7 +69,7 @@ static int rrextract(u_char *msg, int msglen, u_char *rrp, u_char *dname,
     __retres = -1;
     goto return_label;
   }
-  memcpy((void *)cp1,(void const *)cp,(unsigned long)n);
+  memcpy((void *)cp1,(void const *)cp,(size_t)n);
   __retres = 0;
   return_label: return __retres;
 }
@@ -82,10 +82,10 @@ int main(void)
   u_char *dp;
   u_char name[3];
   u_char msg[(2 + 2) + 4];
-  Frama_C_make_unknown(name,(unsigned long)(3 - 1));
-  name[3 - 1] = (char)0;
-  Frama_C_make_unknown(msg,(unsigned long)(((2 + 2) - 1) + 4));
-  msg[((2 + 2) - 1) + 4] = (char)0;
+  Frama_C_make_unknown(name,(size_t)(3 - 1));
+  name[3 - 1] = (u_char)0;
+  Frama_C_make_unknown(msg,(size_t)(((2 + 2) - 1) + 4));
+  msg[((2 + 2) - 1) + 4] = (u_char)0;
   msglen = 2 + 2;
   dp = msg;
   ret = rrextract(msg,msglen,dp,name,3);
@@ -104,7 +104,7 @@ int dn_expand(u_char const *msg, u_char const *eomorig,
     __retres = -1;
     goto return_label;
   }
-  else *(exp_dn + (length - 1)) = (char)0;
+  else *(exp_dn + (length - 1)) = (u_char)0;
   tmp_0 = strlen(comp_dn);
   __retres = (int)tmp_0;
   return_label: return __retres;

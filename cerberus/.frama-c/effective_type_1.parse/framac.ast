@@ -23,7 +23,7 @@ int printf_va_1(char const * restrict format, unsigned int param0);
 
 void f(uint32_t *p1, float *p2)
 {
-  *p1 = (unsigned int)2;
+  *p1 = (uint32_t)2;
   *p2 = (float)3.0;
   printf("f: *p1 = %u\n",*p1); /* printf_va_1 */
   return;
@@ -50,7 +50,7 @@ int main(void)
   float *p2;
   __FC_assert((sizeof(uint32_t) == sizeof(float)) != 0,"effective_type_1.c",
               7,"sizeof(uint32_t)==sizeof(float)");
-  uint32_t i = (unsigned int)1;
+  uint32_t i = (uint32_t)1;
   uint32_t *p1 = & i;
   p2 = (float *)p1;
   f(p1,p2);

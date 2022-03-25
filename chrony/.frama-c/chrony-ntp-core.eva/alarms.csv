@@ -394,10 +394,10 @@ directory	file	line	function	property kind	status	property
 .	reference.c	534	maybe_log_offset	precondition of fprintf_va_4	Unknown	valid_read_string(param0)
 .	reference.c	541	maybe_log_offset	precondition of fputs	Unknown	valid_string_s: valid_read_string(s)
 .	reference.c	551	maybe_log_offset	precondition of pclose	Unknown	open_pipe: is_open_pipe(stream)
-.	reference.c	659	get_tz_leap	signed_overflow	Unknown	(long)(t - when) + 10 ≤ 9223372036854775807
+.	reference.c	659	get_tz_leap	signed_overflow	Unknown	(time_t)(t - when) + 10 ≤ 9223372036854775807
 .	reference.c	659	get_tz_leap	signed_overflow	Unknown	-9223372036854775808 ≤ t - when
 .	reference.c	659	get_tz_leap	signed_overflow	Unknown	t - when ≤ 9223372036854775807
-.	reference.c	757	set_leap_timeout	signed_overflow	Unknown	(long)((long)(now / (long)((int)(24 * 3600))) + 1) * (long)((int)(24 * 3600)) ≤ 9223372036854775807
+.	reference.c	757	set_leap_timeout	signed_overflow	Unknown	(time_t)((time_t)(now / (time_t)((int)(24 * 3600))) + 1) * (time_t)((int)(24 * 3600)) ≤ 9223372036854775807
 .	reference.c	1011	REF_SetReference	signed_overflow	Unknown	stratum + 1 ≤ 2147483647
 .	reference.c	1212	REF_GetReferenceParams	signed_overflow	Unknown	-9223372036854775808 ≤ ref_time->tv_sec - 1
 .	reference.c	1324	REF_IsLeapSecondClose	signed_overflow	Unknown	-now.tv_sec ≤ 9223372036854775807
@@ -836,8 +836,8 @@ FRAMAC_SHARE/libc	string.c	186	strcasecmp	mem_access	Unknown	\valid_read(s2 + i)
 FRAMAC_SHARE/libc	string.c	190	strcasecmp	mem_access	Unknown	\valid_read(s2 + i)
 FRAMAC_SHARE/libc	string.c	198	strcat	precondition of strlen	Unknown	valid_string_s: valid_read_string(s)
 FRAMAC_SHARE/libc	string.c	199	strcat	mem_access	Unknown	\valid_read(src + i)
-FRAMAC_SHARE/libc	string.c	200	strcat	mem_access	Unknown	\valid(dest + (unsigned long)(n + i))
-FRAMAC_SHARE/libc	string.c	202	strcat	mem_access	Unknown	\valid(dest + (unsigned long)(n + i))
+FRAMAC_SHARE/libc	string.c	200	strcat	mem_access	Unknown	\valid(dest + (size_t)(n + i))
+FRAMAC_SHARE/libc	string.c	202	strcat	mem_access	Unknown	\valid(dest + (size_t)(n + i))
 FRAMAC_SHARE/libc	string.c	223	strcpy	initialization	Unknown	\initialized(src + i)
 FRAMAC_SHARE/libc	string.c	223	strcpy	mem_access	Unknown	\valid_read(src + i)
 FRAMAC_SHARE/libc	string.c	224	strcpy	mem_access	Unknown	\valid(dest + i)
@@ -855,7 +855,7 @@ FRAMAC_SHARE/libc	string.h	131	memset	precondition	Unknown	valid_s: valid_or_emp
 FRAMAC_SHARE/libc	string.h	141	strlen	precondition	Unknown	valid_string_s: valid_read_string(s)
 FRAMAC_SHARE/libc	string.h	173	strchr	precondition	Unknown	valid_string_s: valid_read_string(s)
 FRAMAC_SHARE/libc	unistd.h	761	chown	precondition	Unknown	valid_string_path: valid_read_string(path)
-FRAMAC_SHARE/libc	unistd.h	1110	unlink	precondition	Unknown	valid_string_path: valid_read_string(path)
+FRAMAC_SHARE/libc	unistd.h	1124	unlink	precondition	Unknown	valid_string_path: valid_read_string(path)
 FRAMAC_SHARE/libc/sys	stat.h	32	chmod	assigns clause	Unknown	assigns \nothing;
 FRAMAC_SHARE/libc/sys	stat.h	32	chmod	from clause	Unknown	assigns \result \from *(__x0 + (0 ..)), __x1;
 FRAMAC_SHARE/libc/sys	stat.h	87	stat	precondition	Unknown	valid_pathname: valid_read_string(pathname)

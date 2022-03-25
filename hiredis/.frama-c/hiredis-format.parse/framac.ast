@@ -184,7 +184,6 @@ struct __anonstruct_ev_6 {
    void (*cleanup)(void *privdata) ;
    void (*scheduleTimer)(void *privdata, struct timeval tv) ;
 };
-struct sockaddr;
 struct __anonstruct_sub_7 {
    redisCallbackList invalid ;
    struct dict *channels ;
@@ -312,22 +311,22 @@ __inline static size_t sdslen(sds const s)
   unsigned char flags = (unsigned char)*(s + -1);
   switch ((int)flags & 7) {
     case 0: ;
-    __retres = (unsigned int)((int)flags >> 3);
+    __retres = (size_t)((int)flags >> 3);
     goto return_label;
     case 1: ;
-    __retres = (unsigned int)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len;
+    __retres = (size_t)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len;
     goto return_label;
     case 2: ;
-    __retres = (unsigned int)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len;
+    __retres = (size_t)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len;
     goto return_label;
     case 3: ;
     __retres = ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->len;
     goto return_label;
     case 4: ;
-    __retres = (unsigned int)((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len;
+    __retres = (size_t)((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len;
     goto return_label;
   }
-  __retres = (unsigned int)0;
+  __retres = (size_t)0;
   return_label: return __retres;
 }
 
@@ -337,20 +336,20 @@ __inline static size_t sdsavail(sds const s)
   unsigned char flags = (unsigned char)*(s + -1);
   switch ((int)flags & 7) {
     case 0: {
-              __retres = (unsigned int)0;
+              __retres = (size_t)0;
               goto return_label;
             }
     case 1:
     {
       struct sdshdr8 *sh = (struct sdshdr8 *)(s - sizeof(struct sdshdr8));
-      __retres = (unsigned int)((int)sh->alloc - (int)sh->len);
+      __retres = (size_t)((int)sh->alloc - (int)sh->len);
       goto return_label;
     }
     case 2:
     {
       struct sdshdr16 *sh_0 =
         (struct sdshdr16 *)(s - sizeof(struct sdshdr16));
-      __retres = (unsigned int)((int)sh_0->alloc - (int)sh_0->len);
+      __retres = (size_t)((int)sh_0->alloc - (int)sh_0->len);
       goto return_label;
     }
     case 3:
@@ -364,11 +363,11 @@ __inline static size_t sdsavail(sds const s)
     {
       struct sdshdr64 *sh_2 =
         (struct sdshdr64 *)(s - sizeof(struct sdshdr64));
-      __retres = (unsigned int)(sh_2->alloc - sh_2->len);
+      __retres = (size_t)(sh_2->alloc - sh_2->len);
       goto return_label;
     }
   }
-  __retres = (unsigned int)0;
+  __retres = (size_t)0;
   return_label: return __retres;
 }
 
@@ -383,15 +382,15 @@ __inline static void sdssetlen(sds s, size_t newlen)
     }
     break;
     case 1:
-    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len = (unsigned char)newlen;
+    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len = (uint8_t)newlen;
     break;
     case 2:
-    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len = (unsigned short)newlen;
+    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len = (uint16_t)newlen;
     break;
     case 3: ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->len = newlen;
     break;
     case 4:
-    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len = (unsigned long long)newlen;
+    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len = (uint64_t)newlen;
     break;
   }
   return;
@@ -410,17 +409,17 @@ __inline static void sdsinclen(sds s, size_t inc)
     }
     break;
     case 1:
-    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len = (unsigned char)(
-    (int)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len + (int)((unsigned char)inc));
+    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len = (uint8_t)(
+    (int)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len + (int)((uint8_t)inc));
     break;
     case 2:
-    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len = (unsigned short)(
-    (int)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len + (int)((unsigned short)inc));
+    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len = (uint16_t)(
+    (int)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len + (int)((uint16_t)inc));
     break;
     case 3: ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->len += inc;
     break;
     case 4:
-    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len += (unsigned long long)inc;
+    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len += (uint64_t)inc;
     break;
   }
   return;
@@ -432,22 +431,22 @@ __inline static size_t sdsalloc(sds const s)
   unsigned char flags = (unsigned char)*(s + -1);
   switch ((int)flags & 7) {
     case 0: ;
-    __retres = (unsigned int)((int)flags >> 3);
+    __retres = (size_t)((int)flags >> 3);
     goto return_label;
     case 1: ;
-    __retres = (unsigned int)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->alloc;
+    __retres = (size_t)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->alloc;
     goto return_label;
     case 2: ;
-    __retres = (unsigned int)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->alloc;
+    __retres = (size_t)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->alloc;
     goto return_label;
     case 3: ;
     __retres = ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->alloc;
     goto return_label;
     case 4: ;
-    __retres = (unsigned int)((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->alloc;
+    __retres = (size_t)((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->alloc;
     goto return_label;
   }
-  __retres = (unsigned int)0;
+  __retres = (size_t)0;
   return_label: return __retres;
 }
 
@@ -457,16 +456,16 @@ __inline static void sdssetalloc(sds s, size_t newlen)
   switch ((int)flags & 7) {
     case 0: break;
     case 1:
-    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->alloc = (unsigned char)newlen;
+    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->alloc = (uint8_t)newlen;
     break;
     case 2:
-    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->alloc = (unsigned short)newlen;
+    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->alloc = (uint16_t)newlen;
     break;
     case 3:
     ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->alloc = newlen;
     break;
     case 4:
-    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->alloc = (unsigned long long)newlen;
+    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->alloc = (uint64_t)newlen;
     break;
   }
   return;
@@ -786,7 +785,7 @@ static int dictExpand(dict *ht, unsigned long size)
   _dictInit(& n,ht->type,ht->privdata);
   n.size = realsize;
   n.sizemask = realsize - (unsigned long)1;
-  n.table = (dictEntry **)calloc((unsigned int)realsize,sizeof(dictEntry *));
+  n.table = (dictEntry **)calloc((size_t)realsize,sizeof(dictEntry *));
   n.used = ht->used;
   i = (unsigned long)0;
   while (1) {
@@ -1103,7 +1102,7 @@ static unsigned int callbackHash(void const *key)
 {
   unsigned int tmp_0;
   size_t tmp;
-  tmp = sdslen((char *)key);
+  tmp = sdslen((sds)key);
   ;
   tmp_0 = dictGenHashFunction((unsigned char const *)key,(int)tmp);
   return tmp_0;
@@ -1128,22 +1127,22 @@ static int callbackKeyCompare(void *privdata, void const *key1,
   size_t tmp;
   size_t tmp_0;
   int tmp_1;
-  tmp = sdslen((char *)key1);
+  tmp = sdslen((sds)key1);
   l1 = (int)tmp;
-  tmp_0 = sdslen((char *)key2);
+  tmp_0 = sdslen((sds)key2);
   l2 = (int)tmp_0;
   if (l1 != l2) {
     __retres = 0;
     goto return_label;
   }
-  tmp_1 = memcmp(key1,key2,(unsigned int)l1);
+  tmp_1 = memcmp(key1,key2,(size_t)l1);
   __retres = tmp_1 == 0;
   return_label: return __retres;
 }
 
 static void callbackKeyDestructor(void *privdata, void *key)
 {
-  sdsfree((char *)key);
+  sdsfree((sds)key);
   return;
 }
 
@@ -1714,7 +1713,7 @@ static char const *nextArgument(char const *start, char const **str,
     }
   }
   tmp = strtol(p + 1,(char **)0,10);
-  *len = (unsigned int)((int)tmp);
+  *len = (size_t)((int)tmp);
   p = (char const *)strchr(p,'\r');
   __FC_assert(p != (char const *)0,"async.c",627,"p");
   *str = p + 2;
@@ -1757,7 +1756,7 @@ static int __redisAsyncCommand(redisAsyncContext *ac, redisCallbackFn *fn,
   clen -= (size_t)pvariant;
   if (hasnext) {
     int tmp_2;
-    tmp_2 = strncasecmp(cstr,"subscribe\r\n",(unsigned int)11);
+    tmp_2 = strncasecmp(cstr,"subscribe\r\n",(size_t)11);
     if (tmp_2 == 0) {
       c->flags |= 0x20;
       while (1) {
@@ -1779,7 +1778,7 @@ static int __redisAsyncCommand(redisAsyncContext *ac, redisCallbackFn *fn,
   }
   else {
     int tmp_1;
-    _LAND: tmp_1 = strncasecmp(cstr,"unsubscribe\r\n",(unsigned int)13);
+    _LAND: tmp_1 = strncasecmp(cstr,"unsubscribe\r\n",(size_t)13);
     if (tmp_1 == 0) {
       if (! (c->flags & 0x20)) {
         __retres = -1;
@@ -1788,7 +1787,7 @@ static int __redisAsyncCommand(redisAsyncContext *ac, redisCallbackFn *fn,
     }
     else {
       int tmp_0;
-      tmp_0 = strncasecmp(cstr,"monitor\r\n",(unsigned int)9);
+      tmp_0 = strncasecmp(cstr,"monitor\r\n",(size_t)9);
       if (tmp_0 == 0) {
         c->flags |= 0x40;
         __redisPushCallback(& ac->replies,& cb);
@@ -1817,8 +1816,7 @@ int redisvAsyncCommand(redisAsyncContext *ac, redisCallbackFn *fn,
     __retres = -1;
     goto return_label;
   }
-  status = __redisAsyncCommand(ac,fn,privdata,(char const *)cmd,
-                               (unsigned int)len);
+  status = __redisAsyncCommand(ac,fn,privdata,(char const *)cmd,(size_t)len);
   free((void *)cmd);
   __retres = status;
   return_label: return __retres;
@@ -1848,8 +1846,7 @@ int redisAsyncCommandArgv(redisAsyncContext *ac, redisCallbackFn *fn,
     __retres = -1;
     goto return_label;
   }
-  status = __redisAsyncCommand(ac,fn,privdata,(char const *)cmd,
-                               (unsigned int)len);
+  status = __redisAsyncCommand(ac,fn,privdata,(char const *)cmd,(size_t)len);
   sdsfree(cmd);
   __retres = status;
   return_label: return __retres;
@@ -1864,7 +1861,7 @@ int redisAsyncFormattedCommand(redisAsyncContext *ac, redisCallbackFn *fn,
 
 void redisAsyncSetTimeout(redisAsyncContext *ac, struct timeval tv)
 {
-  if (! ac->c.timeout) ac->c.timeout = (struct timeval *)hi_calloc((unsigned int)1,
+  if (! ac->c.timeout) ac->c.timeout = (struct timeval *)hi_calloc((size_t)1,
                                                                    sizeof(tv));
   if (tv.tv_sec == (ac->c.timeout)->tv_sec) 
     if (tv.tv_usec == (ac->c.timeout)->tv_usec) goto return_label;
@@ -1959,7 +1956,7 @@ static int dictExpand_0(dict *ht, unsigned long size)
   _dictInit_0(& n,ht->type,ht->privdata);
   n.size = realsize;
   n.sizemask = realsize - (unsigned long)1;
-  n.table = (dictEntry **)calloc((unsigned int)realsize,sizeof(dictEntry *));
+  n.table = (dictEntry **)calloc((size_t)realsize,sizeof(dictEntry *));
   n.used = ht->used;
   i = (unsigned long)0;
   while (1) {
@@ -2260,22 +2257,22 @@ __inline static size_t sdslen_0(sds const s)
   unsigned char flags = (unsigned char)*(s + -1);
   switch ((int)flags & 7) {
     case 0: ;
-    __retres = (unsigned int)((int)flags >> 3);
+    __retres = (size_t)((int)flags >> 3);
     goto return_label;
     case 1: ;
-    __retres = (unsigned int)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len;
+    __retres = (size_t)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len;
     goto return_label;
     case 2: ;
-    __retres = (unsigned int)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len;
+    __retres = (size_t)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len;
     goto return_label;
     case 3: ;
     __retres = ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->len;
     goto return_label;
     case 4: ;
-    __retres = (unsigned int)((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len;
+    __retres = (size_t)((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len;
     goto return_label;
   }
-  __retres = (unsigned int)0;
+  __retres = (size_t)0;
   return_label: return __retres;
 }
 
@@ -2285,20 +2282,20 @@ __inline static size_t sdsavail_0(sds const s)
   unsigned char flags = (unsigned char)*(s + -1);
   switch ((int)flags & 7) {
     case 0: {
-              __retres = (unsigned int)0;
+              __retres = (size_t)0;
               goto return_label;
             }
     case 1:
     {
       struct sdshdr8 *sh = (struct sdshdr8 *)(s - sizeof(struct sdshdr8));
-      __retres = (unsigned int)((int)sh->alloc - (int)sh->len);
+      __retres = (size_t)((int)sh->alloc - (int)sh->len);
       goto return_label;
     }
     case 2:
     {
       struct sdshdr16 *sh_0 =
         (struct sdshdr16 *)(s - sizeof(struct sdshdr16));
-      __retres = (unsigned int)((int)sh_0->alloc - (int)sh_0->len);
+      __retres = (size_t)((int)sh_0->alloc - (int)sh_0->len);
       goto return_label;
     }
     case 3:
@@ -2312,11 +2309,11 @@ __inline static size_t sdsavail_0(sds const s)
     {
       struct sdshdr64 *sh_2 =
         (struct sdshdr64 *)(s - sizeof(struct sdshdr64));
-      __retres = (unsigned int)(sh_2->alloc - sh_2->len);
+      __retres = (size_t)(sh_2->alloc - sh_2->len);
       goto return_label;
     }
   }
-  __retres = (unsigned int)0;
+  __retres = (size_t)0;
   return_label: return __retres;
 }
 
@@ -2331,15 +2328,15 @@ __inline static void sdssetlen_0(sds s, size_t newlen)
     }
     break;
     case 1:
-    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len = (unsigned char)newlen;
+    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len = (uint8_t)newlen;
     break;
     case 2:
-    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len = (unsigned short)newlen;
+    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len = (uint16_t)newlen;
     break;
     case 3: ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->len = newlen;
     break;
     case 4:
-    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len = (unsigned long long)newlen;
+    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len = (uint64_t)newlen;
     break;
   }
   return;
@@ -2358,17 +2355,17 @@ __inline static void sdsinclen_0(sds s, size_t inc)
     }
     break;
     case 1:
-    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len = (unsigned char)(
-    (int)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len + (int)((unsigned char)inc));
+    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len = (uint8_t)(
+    (int)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len + (int)((uint8_t)inc));
     break;
     case 2:
-    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len = (unsigned short)(
-    (int)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len + (int)((unsigned short)inc));
+    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len = (uint16_t)(
+    (int)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len + (int)((uint16_t)inc));
     break;
     case 3: ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->len += inc;
     break;
     case 4:
-    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len += (unsigned long long)inc;
+    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len += (uint64_t)inc;
     break;
   }
   return;
@@ -2380,22 +2377,22 @@ __inline static size_t sdsalloc_0(sds const s)
   unsigned char flags = (unsigned char)*(s + -1);
   switch ((int)flags & 7) {
     case 0: ;
-    __retres = (unsigned int)((int)flags >> 3);
+    __retres = (size_t)((int)flags >> 3);
     goto return_label;
     case 1: ;
-    __retres = (unsigned int)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->alloc;
+    __retres = (size_t)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->alloc;
     goto return_label;
     case 2: ;
-    __retres = (unsigned int)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->alloc;
+    __retres = (size_t)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->alloc;
     goto return_label;
     case 3: ;
     __retres = ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->alloc;
     goto return_label;
     case 4: ;
-    __retres = (unsigned int)((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->alloc;
+    __retres = (size_t)((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->alloc;
     goto return_label;
   }
-  __retres = (unsigned int)0;
+  __retres = (size_t)0;
   return_label: return __retres;
 }
 
@@ -2405,16 +2402,16 @@ __inline static void sdssetalloc_0(sds s, size_t newlen)
   switch ((int)flags & 7) {
     case 0: break;
     case 1:
-    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->alloc = (unsigned char)newlen;
+    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->alloc = (uint8_t)newlen;
     break;
     case 2:
-    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->alloc = (unsigned short)newlen;
+    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->alloc = (uint16_t)newlen;
     break;
     case 3:
     ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->alloc = newlen;
     break;
     case 4:
-    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->alloc = (unsigned long long)newlen;
+    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->alloc = (uint64_t)newlen;
     break;
   }
   return;
@@ -2454,7 +2451,7 @@ static redisReply *createReplyObject(int type)
 {
   redisReply *__retres;
   redisReply *tmp_0;
-  redisReply *r = calloc((unsigned int)1,sizeof(*tmp_0));
+  redisReply *r = calloc((size_t)1,sizeof(*tmp_0));
   if (r == (redisReply *)0) {
     __retres = (redisReply *)0;
     goto return_label;
@@ -2681,7 +2678,7 @@ static void *createBoolObject(redisReadTask const *task, int bval)
 static uint32_t countDigits(uint64_t v)
 {
   uint32_t __retres;
-  uint32_t result = (unsigned int)1;
+  uint32_t result = (uint32_t)1;
   while (1) {
     if (v < (uint64_t)10) {
       __retres = result;
@@ -2709,7 +2706,7 @@ static size_t bulklen(size_t len)
 {
   size_t __retres;
   uint32_t tmp;
-  tmp = countDigits((unsigned long long)len);
+  tmp = countDigits((uint64_t)len);
   ;
   __retres = ((((uint32_t)1 + tmp) + (uint32_t)2) + len) + (uint32_t)2;
   return __retres;
@@ -2792,7 +2789,7 @@ int redisvFormatCommand(char **target, char const *format, va_list ap)
           }
         }
         else {
-          newarg = sdscatlen(curarg,(void const *)c,(unsigned int)1);
+          newarg = sdscatlen(curarg,(void const *)c,(size_t)1);
           if (newarg == (sds)0) goto memory_err;
           curarg = newarg;
           touched = 1;
@@ -2828,7 +2825,7 @@ int redisvFormatCommand(char **target, char const *format, va_list ap)
             char *tmp_6;
             char *tmp_8;
             char const *_p = c + 1;
-            size_t _l = (unsigned int)0;
+            size_t _l = (size_t)0;
             while (1) {
               if ((int)*_p != '\000') {
                 char *tmp_2;
@@ -2934,7 +2931,7 @@ int redisvFormatCommand(char **target, char const *format, va_list ap)
             }
             fmt_invalid: ;
             goto format_err;
-            fmt_valid: _l = (unsigned int)((_p + 1) - c);
+            fmt_valid: _l = (size_t)((_p + 1) - c);
             if (_l < sizeof(_format) - (unsigned int)2) {
               memcpy((void *)(_format),(void const *)c,_l);
               _format[_l] = (char)'\000';
@@ -2967,10 +2964,10 @@ int redisvFormatCommand(char **target, char const *format, va_list ap)
     totlen = (int)((size_t)totlen + tmp_19);
   }
   else sdsfree(curarg);
-  curarg = (char *)0;
-  tmp_20 = countDigits((unsigned long long)argc);
+  curarg = (sds)0;
+  tmp_20 = countDigits((uint64_t)argc);
   totlen = (int)((uint32_t)totlen + (((uint32_t)1 + tmp_20) + (uint32_t)2));
-  cmd = (char *)malloc((unsigned int)(totlen + 1));
+  cmd = (char *)malloc((size_t)(totlen + 1));
   if (cmd == (char *)0) goto memory_err;
   pos = sprintf(cmd,"*%d\r\n",argc); /* sprintf_va_1 */
   j = 0;
@@ -3055,7 +3052,7 @@ int redisFormatSdsCommandArgv(sds *target, int argc, char const **argv,
     __retres = -1;
     goto return_label;
   }
-  tmp = countDigits((unsigned long long)argc);
+  tmp = countDigits((uint64_t)argc);
   totlen = (unsigned long long)(((uint32_t)1 + tmp) + (uint32_t)2);
   j = 0;
   while (j < argc) {
@@ -3072,7 +3069,7 @@ int redisFormatSdsCommandArgv(sds *target, int argc, char const **argv,
     __retres = -1;
     goto return_label;
   }
-  cmd = sdsMakeRoomFor(cmd,(unsigned int)totlen);
+  cmd = sdsMakeRoomFor(cmd,(size_t)totlen);
   if (cmd == (sds)0) {
     __retres = -1;
     goto return_label;
@@ -3139,7 +3136,7 @@ int redisFormatCommandArgv(char **target, int argc, char const **argv,
     __retres = -1;
     goto return_label;
   }
-  tmp = countDigits((unsigned long long)argc);
+  tmp = countDigits((uint64_t)argc);
   totlen = (int)(((uint32_t)1 + tmp) + (uint32_t)2);
   j = 0;
   while (j < argc) {
@@ -3151,7 +3148,7 @@ int redisFormatCommandArgv(char **target, int argc, char const **argv,
     }
     j ++;
   }
-  cmd = (char *)malloc((unsigned int)(totlen + 1));
+  cmd = (char *)malloc((size_t)(totlen + 1));
   if (cmd == (char *)0) {
     __retres = -1;
     goto return_label;
@@ -3219,7 +3216,7 @@ static redisContext *redisContextInit(redisOptions const *options)
 {
   redisContext *__retres;
   redisContext *c;
-  c = (redisContext *)calloc((unsigned int)1,sizeof(*c));
+  c = (redisContext *)calloc((size_t)1,sizeof(*c));
   if (c == (redisContext *)0) {
     __retres = (redisContext *)0;
     goto return_label;
@@ -3542,7 +3539,7 @@ int redisBufferRead(redisContext *c)
   nread = (*((c->funcs)->read))(c,buf,sizeof(buf));
   if (nread > 0) {
     int tmp;
-    tmp = redisReaderFeed(c->reader,(char const *)(buf),(unsigned int)nread);
+    tmp = redisReaderFeed(c->reader,(char const *)(buf),(size_t)nread);
     if (tmp != 0) {
       __redisSetError(c,(c->reader)->err,(char const *)((c->reader)->errstr));
       __retres = -1;
@@ -3703,7 +3700,7 @@ int redisvAppendCommand(redisContext *c, char const *format, va_list ap)
       __retres = -1;
       goto return_label;
     }
-  tmp = __redisAppendCommand(c,(char const *)cmd,(unsigned int)len);
+  tmp = __redisAppendCommand(c,(char const *)cmd,(size_t)len);
   if (tmp != 0) {
     free((void *)cmd);
     __retres = -1;
@@ -3737,7 +3734,7 @@ int redisAppendCommandArgv(redisContext *c, int argc, char const **argv,
     __retres = -1;
     goto return_label;
   }
-  tmp = __redisAppendCommand(c,(char const *)cmd,(unsigned int)len);
+  tmp = __redisAppendCommand(c,(char const *)cmd,(size_t)len);
   if (tmp != 0) {
     sdsfree(cmd);
     __retres = -1;
@@ -3812,22 +3809,22 @@ __inline static size_t sdslen_1(sds const s)
   unsigned char flags = (unsigned char)*(s + -1);
   switch ((int)flags & 7) {
     case 0: ;
-    __retres = (unsigned int)((int)flags >> 3);
+    __retres = (size_t)((int)flags >> 3);
     goto return_label;
     case 1: ;
-    __retres = (unsigned int)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len;
+    __retres = (size_t)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len;
     goto return_label;
     case 2: ;
-    __retres = (unsigned int)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len;
+    __retres = (size_t)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len;
     goto return_label;
     case 3: ;
     __retres = ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->len;
     goto return_label;
     case 4: ;
-    __retres = (unsigned int)((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len;
+    __retres = (size_t)((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len;
     goto return_label;
   }
-  __retres = (unsigned int)0;
+  __retres = (size_t)0;
   return_label: return __retres;
 }
 
@@ -3837,20 +3834,20 @@ __inline static size_t sdsavail_1(sds const s)
   unsigned char flags = (unsigned char)*(s + -1);
   switch ((int)flags & 7) {
     case 0: {
-              __retres = (unsigned int)0;
+              __retres = (size_t)0;
               goto return_label;
             }
     case 1:
     {
       struct sdshdr8 *sh = (struct sdshdr8 *)(s - sizeof(struct sdshdr8));
-      __retres = (unsigned int)((int)sh->alloc - (int)sh->len);
+      __retres = (size_t)((int)sh->alloc - (int)sh->len);
       goto return_label;
     }
     case 2:
     {
       struct sdshdr16 *sh_0 =
         (struct sdshdr16 *)(s - sizeof(struct sdshdr16));
-      __retres = (unsigned int)((int)sh_0->alloc - (int)sh_0->len);
+      __retres = (size_t)((int)sh_0->alloc - (int)sh_0->len);
       goto return_label;
     }
     case 3:
@@ -3864,11 +3861,11 @@ __inline static size_t sdsavail_1(sds const s)
     {
       struct sdshdr64 *sh_2 =
         (struct sdshdr64 *)(s - sizeof(struct sdshdr64));
-      __retres = (unsigned int)(sh_2->alloc - sh_2->len);
+      __retres = (size_t)(sh_2->alloc - sh_2->len);
       goto return_label;
     }
   }
-  __retres = (unsigned int)0;
+  __retres = (size_t)0;
   return_label: return __retres;
 }
 
@@ -3883,15 +3880,15 @@ __inline static void sdssetlen_1(sds s, size_t newlen)
     }
     break;
     case 1:
-    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len = (unsigned char)newlen;
+    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len = (uint8_t)newlen;
     break;
     case 2:
-    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len = (unsigned short)newlen;
+    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len = (uint16_t)newlen;
     break;
     case 3: ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->len = newlen;
     break;
     case 4:
-    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len = (unsigned long long)newlen;
+    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len = (uint64_t)newlen;
     break;
   }
   return;
@@ -3910,17 +3907,17 @@ __inline static void sdsinclen_1(sds s, size_t inc)
     }
     break;
     case 1:
-    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len = (unsigned char)(
-    (int)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len + (int)((unsigned char)inc));
+    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len = (uint8_t)(
+    (int)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len + (int)((uint8_t)inc));
     break;
     case 2:
-    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len = (unsigned short)(
-    (int)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len + (int)((unsigned short)inc));
+    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len = (uint16_t)(
+    (int)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len + (int)((uint16_t)inc));
     break;
     case 3: ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->len += inc;
     break;
     case 4:
-    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len += (unsigned long long)inc;
+    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len += (uint64_t)inc;
     break;
   }
   return;
@@ -3932,22 +3929,22 @@ __inline static size_t sdsalloc_1(sds const s)
   unsigned char flags = (unsigned char)*(s + -1);
   switch ((int)flags & 7) {
     case 0: ;
-    __retres = (unsigned int)((int)flags >> 3);
+    __retres = (size_t)((int)flags >> 3);
     goto return_label;
     case 1: ;
-    __retres = (unsigned int)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->alloc;
+    __retres = (size_t)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->alloc;
     goto return_label;
     case 2: ;
-    __retres = (unsigned int)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->alloc;
+    __retres = (size_t)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->alloc;
     goto return_label;
     case 3: ;
     __retres = ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->alloc;
     goto return_label;
     case 4: ;
-    __retres = (unsigned int)((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->alloc;
+    __retres = (size_t)((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->alloc;
     goto return_label;
   }
-  __retres = (unsigned int)0;
+  __retres = (size_t)0;
   return_label: return __retres;
 }
 
@@ -3957,16 +3954,16 @@ __inline static void sdssetalloc_1(sds s, size_t newlen)
   switch ((int)flags & 7) {
     case 0: break;
     case 1:
-    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->alloc = (unsigned char)newlen;
+    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->alloc = (uint8_t)newlen;
     break;
     case 2:
-    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->alloc = (unsigned short)newlen;
+    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->alloc = (uint16_t)newlen;
     break;
     case 3:
     ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->alloc = newlen;
     break;
     case 4:
-    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->alloc = (unsigned long long)newlen;
+    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->alloc = (uint64_t)newlen;
     break;
   }
   return;
@@ -4076,11 +4073,11 @@ static void __redisSetErrorFromErrno(redisContext *c, int type,
 {
   int errorno = __fc_errno;
   char buf[128] = {(char)0};
-  size_t len = (unsigned int)0;
+  size_t len = (size_t)0;
   if (prefix != (char const *)0) {
     int tmp;
     tmp = snprintf(buf,sizeof(buf),"%s: ",(char *)prefix); /* snprintf_va_2 */
-    len = (unsigned int)tmp;
+    len = (size_t)tmp;
   }
   strerror_r(errorno,& buf[len],sizeof(buf) - len);
   __redisSetError(c,type,(char const *)(buf));
@@ -4220,7 +4217,7 @@ static int redisContextWaitReady(redisContext *c, long msec)
   if (__fc_errno == 115) {
     int res;
     int tmp;
-    res = poll(wfd,(unsigned long)1,(int)msec);
+    res = poll(wfd,(nfds_t)1,(int)msec);
     if (res == -1) {
       __redisSetErrorFromErrno(c,1,"poll(2)");
       redisNetClose(c);
@@ -4432,7 +4429,7 @@ static int _redisContextConnectTcp(redisContext *c, char const *addr,
       free((void *)c->tcp.source_addr);
       c->tcp.source_addr = hi_strdup(source_addr);
     }
-  snprintf(_port,(unsigned int)6,"%d",port); /* snprintf_va_3 */
+  snprintf(_port,(size_t)6,"%d",port); /* snprintf_va_3 */
   memset((void *)(& hints),0,sizeof(hints));
   hints.ai_family = 2;
   hints.ai_socktype = 1;
@@ -4630,7 +4627,7 @@ int redisContextConnectUnix(redisContext *c, char const *path,
   c->saddr = tmp_2;
   sa = (struct sockaddr_un *)tmp_2;
   c->addrlen = sizeof(struct sockaddr_un);
-  sa->sun_family = (unsigned short)1;
+  sa->sun_family = (sa_family_t)1;
   strncpy(sa->sun_path,path,sizeof(sa->sun_path) - (unsigned int)1);
   tmp_4 = connect(c->fd,(struct sockaddr const *)sa,sizeof(*sa));
   if (tmp_4 == -1) 
@@ -4667,22 +4664,22 @@ __inline static size_t sdslen_2(sds const s)
   unsigned char flags = (unsigned char)*(s + -1);
   switch ((int)flags & 7) {
     case 0: ;
-    __retres = (unsigned int)((int)flags >> 3);
+    __retres = (size_t)((int)flags >> 3);
     goto return_label;
     case 1: ;
-    __retres = (unsigned int)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len;
+    __retres = (size_t)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len;
     goto return_label;
     case 2: ;
-    __retres = (unsigned int)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len;
+    __retres = (size_t)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len;
     goto return_label;
     case 3: ;
     __retres = ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->len;
     goto return_label;
     case 4: ;
-    __retres = (unsigned int)((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len;
+    __retres = (size_t)((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len;
     goto return_label;
   }
-  __retres = (unsigned int)0;
+  __retres = (size_t)0;
   return_label: return __retres;
 }
 
@@ -4692,20 +4689,20 @@ __inline static size_t sdsavail_2(sds const s)
   unsigned char flags = (unsigned char)*(s + -1);
   switch ((int)flags & 7) {
     case 0: {
-              __retres = (unsigned int)0;
+              __retres = (size_t)0;
               goto return_label;
             }
     case 1:
     {
       struct sdshdr8 *sh = (struct sdshdr8 *)(s - sizeof(struct sdshdr8));
-      __retres = (unsigned int)((int)sh->alloc - (int)sh->len);
+      __retres = (size_t)((int)sh->alloc - (int)sh->len);
       goto return_label;
     }
     case 2:
     {
       struct sdshdr16 *sh_0 =
         (struct sdshdr16 *)(s - sizeof(struct sdshdr16));
-      __retres = (unsigned int)((int)sh_0->alloc - (int)sh_0->len);
+      __retres = (size_t)((int)sh_0->alloc - (int)sh_0->len);
       goto return_label;
     }
     case 3:
@@ -4719,11 +4716,11 @@ __inline static size_t sdsavail_2(sds const s)
     {
       struct sdshdr64 *sh_2 =
         (struct sdshdr64 *)(s - sizeof(struct sdshdr64));
-      __retres = (unsigned int)(sh_2->alloc - sh_2->len);
+      __retres = (size_t)(sh_2->alloc - sh_2->len);
       goto return_label;
     }
   }
-  __retres = (unsigned int)0;
+  __retres = (size_t)0;
   return_label: return __retres;
 }
 
@@ -4738,15 +4735,15 @@ __inline static void sdssetlen_2(sds s, size_t newlen)
     }
     break;
     case 1:
-    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len = (unsigned char)newlen;
+    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len = (uint8_t)newlen;
     break;
     case 2:
-    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len = (unsigned short)newlen;
+    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len = (uint16_t)newlen;
     break;
     case 3: ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->len = newlen;
     break;
     case 4:
-    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len = (unsigned long long)newlen;
+    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len = (uint64_t)newlen;
     break;
   }
   return;
@@ -4765,17 +4762,17 @@ __inline static void sdsinclen_2(sds s, size_t inc)
     }
     break;
     case 1:
-    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len = (unsigned char)(
-    (int)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len + (int)((unsigned char)inc));
+    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len = (uint8_t)(
+    (int)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len + (int)((uint8_t)inc));
     break;
     case 2:
-    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len = (unsigned short)(
-    (int)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len + (int)((unsigned short)inc));
+    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len = (uint16_t)(
+    (int)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len + (int)((uint16_t)inc));
     break;
     case 3: ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->len += inc;
     break;
     case 4:
-    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len += (unsigned long long)inc;
+    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len += (uint64_t)inc;
     break;
   }
   return;
@@ -4787,22 +4784,22 @@ __inline static size_t sdsalloc_2(sds const s)
   unsigned char flags = (unsigned char)*(s + -1);
   switch ((int)flags & 7) {
     case 0: ;
-    __retres = (unsigned int)((int)flags >> 3);
+    __retres = (size_t)((int)flags >> 3);
     goto return_label;
     case 1: ;
-    __retres = (unsigned int)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->alloc;
+    __retres = (size_t)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->alloc;
     goto return_label;
     case 2: ;
-    __retres = (unsigned int)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->alloc;
+    __retres = (size_t)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->alloc;
     goto return_label;
     case 3: ;
     __retres = ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->alloc;
     goto return_label;
     case 4: ;
-    __retres = (unsigned int)((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->alloc;
+    __retres = (size_t)((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->alloc;
     goto return_label;
   }
-  __retres = (unsigned int)0;
+  __retres = (size_t)0;
   return_label: return __retres;
 }
 
@@ -4812,16 +4809,16 @@ __inline static void sdssetalloc_2(sds s, size_t newlen)
   switch ((int)flags & 7) {
     case 0: break;
     case 1:
-    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->alloc = (unsigned char)newlen;
+    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->alloc = (uint8_t)newlen;
     break;
     case 2:
-    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->alloc = (unsigned short)newlen;
+    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->alloc = (uint16_t)newlen;
     break;
     case 3:
     ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->alloc = newlen;
     break;
     case 4:
-    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->alloc = (unsigned long long)newlen;
+    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->alloc = (uint64_t)newlen;
     break;
   }
   return;
@@ -4839,7 +4836,7 @@ static void __redisReaderSetError(redisReader *r, int type, char const *str)
       }
   sdsfree(r->buf);
   r->buf = (char *)0;
-  tmp = (unsigned int)0;
+  tmp = (size_t)0;
   r->len = tmp;
   r->pos = tmp;
   r->ridx = -1;
@@ -4948,7 +4945,7 @@ int snprintf_va_14(char * restrict s, size_t n, char const * restrict format,
 
 static size_t chrtos(char *buf, size_t size, char byte)
 {
-  size_t len = (unsigned int)0;
+  size_t len = (size_t)0;
   switch ((int)byte) {
     int tmp;
     int tmp_0;
@@ -4960,50 +4957,50 @@ static size_t chrtos(char *buf, size_t size, char byte)
     case '\\': case '\"':
     { /* sequence */
       tmp = snprintf(buf,size,"\"\\%c\"",(int)byte); /* snprintf_va_7 */
-      len = (unsigned int)tmp;
+      len = (size_t)tmp;
     }
     break;
     case '\n':
     { /* sequence */
       tmp_0 = snprintf(buf,size,"\"\\n\""); /* snprintf_va_8 */
-      len = (unsigned int)tmp_0;
+      len = (size_t)tmp_0;
     }
     break;
     case '\r':
     { /* sequence */
       tmp_1 = snprintf(buf,size,"\"\\r\""); /* snprintf_va_9 */
-      len = (unsigned int)tmp_1;
+      len = (size_t)tmp_1;
     }
     break;
     case '\t':
     { /* sequence */
       tmp_2 = snprintf(buf,size,"\"\\t\""); /* snprintf_va_10 */
-      len = (unsigned int)tmp_2;
+      len = (size_t)tmp_2;
     }
     break;
     case '\a':
     { /* sequence */
       tmp_3 = snprintf(buf,size,"\"\\a\""); /* snprintf_va_11 */
-      len = (unsigned int)tmp_3;
+      len = (size_t)tmp_3;
     }
     break;
     case '\b':
     { /* sequence */
       tmp_4 = snprintf(buf,size,"\"\\b\""); /* snprintf_va_12 */
-      len = (unsigned int)tmp_4;
+      len = (size_t)tmp_4;
     }
     break;
     default: tmp_7 = isprint((int)byte);
     if (tmp_7) {
       int tmp_5;
       tmp_5 = snprintf(buf,size,"\"%c\"",(int)byte); /* snprintf_va_13 */
-      len = (unsigned int)tmp_5;
+      len = (size_t)tmp_5;
     }
     else {
       int tmp_6;
       tmp_6 = snprintf(buf,size,"\"\\x%02x\"",
                        (unsigned int)((int)((unsigned char)byte))); /* snprintf_va_14 */
-      len = (unsigned int)tmp_6;
+      len = (size_t)tmp_6;
     }
     break;
   }
@@ -5089,7 +5086,7 @@ static int string2ll(char const *s, size_t slen, long long *value)
   int __retres;
   unsigned long long v;
   char const *p = s;
-  size_t plen = (unsigned int)0;
+  size_t plen = (size_t)0;
   int negative = 0;
   if (plen == slen) {
     __retres = -1;
@@ -5104,7 +5101,7 @@ static int string2ll(char const *s, size_t slen, long long *value)
   if ((int)*(p + 0) == '-') {
     negative = 1;
     p ++;
-    plen += (size_t)1;
+    plen ++;
     if (plen == slen) {
       __retres = -1;
       goto return_label;
@@ -5114,7 +5111,7 @@ static int string2ll(char const *s, size_t slen, long long *value)
     if ((int)*(p + 0) <= '9') {
       v = (unsigned long long)((int)*(p + 0) - '0');
       p ++;
-      plen += (size_t)1;
+      plen ++;
     }
     else goto _LAND_0;
   }
@@ -5153,7 +5150,7 @@ static int string2ll(char const *s, size_t slen, long long *value)
     }
     v += (unsigned long long)((int)*(p + 0) - '0');
     p ++;
-    plen += (size_t)1;
+    plen ++;
   }
   if (plen < slen) {
     __retres = -1;
@@ -5242,7 +5239,7 @@ static int processLineItem(redisReader *r)
         if ((r->fn)->createInteger) {
           long long v;
           int tmp;
-          tmp = string2ll((char const *)p,(unsigned int)len,& v);
+          tmp = string2ll((char const *)p,(size_t)len,& v);
           if (tmp == -1) {
             __redisReaderSetError(r,4,"Bad integer value");
             __retres = -1;
@@ -5261,12 +5258,12 @@ static int processLineItem(redisReader *r)
             char *eptr;
             double d;
             int tmp_4;
-            if ((unsigned int)len >= sizeof(buf)) {
+            if ((size_t)len >= sizeof(buf)) {
               __redisReaderSetError(r,4,"Double value is too large");
               __retres = -1;
               goto return_label;
             }
-            memcpy((void *)(buf),(void const *)p,(unsigned int)len);
+            memcpy((void *)(buf),(void const *)p,(size_t)len);
             buf[len] = (char)'\000';
             tmp_4 = strcasecmp((char const *)(buf),",inf");
             if (tmp_4 == 0) d = (double)INFINITY;
@@ -5303,7 +5300,7 @@ static int processLineItem(redisReader *r)
               }
             }
             obj = (*((r->fn)->createDouble))((redisReadTask const *)cur,d,
-                                             buf,(unsigned int)len);
+                                             buf,(size_t)len);
           }
           else goto _LAND_0;
         }
@@ -5331,9 +5328,9 @@ static int processLineItem(redisReader *r)
             if (r->fn) 
               if ((r->fn)->createString) obj = (*((r->fn)->createString))
                                          ((redisReadTask const *)cur,p,
-                                          (unsigned int)len);
-              else obj = (void *)((unsigned int)cur->type);
-            else obj = (void *)((unsigned int)cur->type);
+                                          (size_t)len);
+              else obj = (void *)((size_t)cur->type);
+            else obj = (void *)((size_t)cur->type);
     if (obj == (void *)0) {
       __redisReaderSetErrorOOM(r);
       __retres = -1;
@@ -5364,8 +5361,8 @@ static int processBulkItem(redisReader *r)
     int tmp;
     p = r->buf + r->pos;
     bytelen = (unsigned long)((s - (r->buf + r->pos)) + 2);
-    tmp = string2ll((char const *)p,
-                    (unsigned int)(bytelen - (unsigned long)2),& len);
+    tmp = string2ll((char const *)p,(size_t)(bytelen - (unsigned long)2),
+                    & len);
     if (tmp == -1) {
       __redisReaderSetError(r,4,"Bad bulk string length");
       __retres = -1;
@@ -5395,7 +5392,7 @@ static int processBulkItem(redisReader *r)
         if (r->fn) 
           if ((r->fn)->createString) obj = (*((r->fn)->createString))
                                      ((redisReadTask const *)cur,s + 2,
-                                      (unsigned int)len);
+                                      (size_t)len);
           else obj = (void *)1;
         else obj = (void *)1;
         success = 1;
@@ -5407,7 +5404,7 @@ static int processBulkItem(redisReader *r)
         __retres = -1;
         goto return_label;
       }
-      r->pos = (unsigned int)((unsigned long)r->pos + bytelen);
+      r->pos = (size_t)((unsigned long)r->pos + bytelen);
       if (r->ridx == 0) r->reply = obj;
       moveToNextTask(r);
       __retres = 0;
@@ -5436,7 +5433,7 @@ static int processAggregateItem(redisReader *r)
   p = readLine(r,& len);
   if (p != (char *)0) {
     int tmp;
-    tmp = string2ll((char const *)p,(unsigned int)len,& elements);
+    tmp = string2ll((char const *)p,(size_t)len,& elements);
     if (tmp == -1) {
       __redisReaderSetError(r,4,"Bad multi-bulk length");
       __retres = -1;
@@ -5470,7 +5467,7 @@ static int processAggregateItem(redisReader *r)
       if (cur->type == 9) elements *= (long long)2;
       if (r->fn) 
         if ((r->fn)->createArray) obj = (*((r->fn)->createArray))((redisReadTask const *)cur,
-                                                                  (unsigned int)elements);
+                                                                  (size_t)elements);
         else obj = (void *)((long)cur->type);
       else obj = (void *)((long)cur->type);
       if (obj == (void *)0) {
@@ -5561,14 +5558,14 @@ redisReader *redisReaderCreateWithFunctions(redisReplyObjectFunctions *fn)
 {
   redisReader *__retres;
   redisReader *r;
-  r = (redisReader *)calloc((unsigned int)1,sizeof(redisReader));
+  r = (redisReader *)calloc((size_t)1,sizeof(redisReader));
   if (r == (redisReader *)0) {
     __retres = (redisReader *)0;
     goto return_label;
   }
   r->fn = fn;
   r->buf = sdsempty();
-  r->maxbuf = (unsigned int)(1024 * 16);
+  r->maxbuf = (size_t)(1024 * 16);
   if (r->buf == (char *)0) {
     free((void *)r);
     __retres = (redisReader *)0;
@@ -5608,7 +5605,7 @@ int redisReaderFeed(redisReader *r, char const *buf, size_t len)
           if (tmp > r->maxbuf) {
             sdsfree(r->buf);
             r->buf = sdsempty();
-            r->pos = (unsigned int)0;
+            r->pos = (size_t)0;
             __FC_assert((r->buf != (char *)0) != 0,"read.c",602,
                         "r->buf != NULL");
           }
@@ -5658,7 +5655,7 @@ int redisReaderGetReply(redisReader *r, void **reply)
   }
   if (r->pos >= (size_t)1024) {
     sdsrange(r->buf,(int)r->pos,-1);
-    r->pos = (unsigned int)0;
+    r->pos = (size_t)0;
     r->len = sdslen_2(r->buf);
   }
   if (r->ridx == -1) {
@@ -5679,22 +5676,22 @@ __inline static size_t sdslen_3(sds const s)
   unsigned char flags = (unsigned char)*(s + -1);
   switch ((int)flags & 7) {
     case 0: ;
-    __retres = (unsigned int)((int)flags >> 3);
+    __retres = (size_t)((int)flags >> 3);
     goto return_label;
     case 1: ;
-    __retres = (unsigned int)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len;
+    __retres = (size_t)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len;
     goto return_label;
     case 2: ;
-    __retres = (unsigned int)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len;
+    __retres = (size_t)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len;
     goto return_label;
     case 3: ;
     __retres = ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->len;
     goto return_label;
     case 4: ;
-    __retres = (unsigned int)((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len;
+    __retres = (size_t)((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len;
     goto return_label;
   }
-  __retres = (unsigned int)0;
+  __retres = (size_t)0;
   return_label: return __retres;
 }
 
@@ -5704,20 +5701,20 @@ __inline static size_t sdsavail_3(sds const s)
   unsigned char flags = (unsigned char)*(s + -1);
   switch ((int)flags & 7) {
     case 0: {
-              __retres = (unsigned int)0;
+              __retres = (size_t)0;
               goto return_label;
             }
     case 1:
     {
       struct sdshdr8 *sh = (struct sdshdr8 *)(s - sizeof(struct sdshdr8));
-      __retres = (unsigned int)((int)sh->alloc - (int)sh->len);
+      __retres = (size_t)((int)sh->alloc - (int)sh->len);
       goto return_label;
     }
     case 2:
     {
       struct sdshdr16 *sh_0 =
         (struct sdshdr16 *)(s - sizeof(struct sdshdr16));
-      __retres = (unsigned int)((int)sh_0->alloc - (int)sh_0->len);
+      __retres = (size_t)((int)sh_0->alloc - (int)sh_0->len);
       goto return_label;
     }
     case 3:
@@ -5731,11 +5728,11 @@ __inline static size_t sdsavail_3(sds const s)
     {
       struct sdshdr64 *sh_2 =
         (struct sdshdr64 *)(s - sizeof(struct sdshdr64));
-      __retres = (unsigned int)(sh_2->alloc - sh_2->len);
+      __retres = (size_t)(sh_2->alloc - sh_2->len);
       goto return_label;
     }
   }
-  __retres = (unsigned int)0;
+  __retres = (size_t)0;
   return_label: return __retres;
 }
 
@@ -5750,15 +5747,15 @@ __inline static void sdssetlen_3(sds s, size_t newlen)
     }
     break;
     case 1:
-    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len = (unsigned char)newlen;
+    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len = (uint8_t)newlen;
     break;
     case 2:
-    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len = (unsigned short)newlen;
+    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len = (uint16_t)newlen;
     break;
     case 3: ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->len = newlen;
     break;
     case 4:
-    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len = (unsigned long long)newlen;
+    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len = (uint64_t)newlen;
     break;
   }
   return;
@@ -5777,17 +5774,17 @@ __inline static void sdsinclen_3(sds s, size_t inc)
     }
     break;
     case 1:
-    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len = (unsigned char)(
-    (int)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len + (int)((unsigned char)inc));
+    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len = (uint8_t)(
+    (int)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len + (int)((uint8_t)inc));
     break;
     case 2:
-    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len = (unsigned short)(
-    (int)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len + (int)((unsigned short)inc));
+    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len = (uint16_t)(
+    (int)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len + (int)((uint16_t)inc));
     break;
     case 3: ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->len += inc;
     break;
     case 4:
-    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len += (unsigned long long)inc;
+    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len += (uint64_t)inc;
     break;
   }
   return;
@@ -5799,22 +5796,22 @@ __inline static size_t sdsalloc_3(sds const s)
   unsigned char flags = (unsigned char)*(s + -1);
   switch ((int)flags & 7) {
     case 0: ;
-    __retres = (unsigned int)((int)flags >> 3);
+    __retres = (size_t)((int)flags >> 3);
     goto return_label;
     case 1: ;
-    __retres = (unsigned int)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->alloc;
+    __retres = (size_t)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->alloc;
     goto return_label;
     case 2: ;
-    __retres = (unsigned int)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->alloc;
+    __retres = (size_t)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->alloc;
     goto return_label;
     case 3: ;
     __retres = ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->alloc;
     goto return_label;
     case 4: ;
-    __retres = (unsigned int)((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->alloc;
+    __retres = (size_t)((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->alloc;
     goto return_label;
   }
-  __retres = (unsigned int)0;
+  __retres = (size_t)0;
   return_label: return __retres;
 }
 
@@ -5824,16 +5821,16 @@ __inline static void sdssetalloc_3(sds s, size_t newlen)
   switch ((int)flags & 7) {
     case 0: break;
     case 1:
-    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->alloc = (unsigned char)newlen;
+    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->alloc = (uint8_t)newlen;
     break;
     case 2:
-    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->alloc = (unsigned short)newlen;
+    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->alloc = (uint16_t)newlen;
     break;
     case 3:
     ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->alloc = newlen;
     break;
     case 4:
-    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->alloc = (unsigned long long)newlen;
+    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->alloc = (uint64_t)newlen;
     break;
   }
   return;
@@ -5893,7 +5890,7 @@ sds sdsnewlen(void const *init, size_t initlen)
   int hdrlen = sdsHdrSize(type);
   sh = malloc(((size_t)hdrlen + initlen) + (size_t)1);
   if (sh == (void *)0) {
-    __retres = (char *)0;
+    __retres = (sds)0;
     goto return_label;
   }
   if (! init) memset(sh,0,((size_t)hdrlen + initlen) + (size_t)1);
@@ -5908,8 +5905,8 @@ sds sdsnewlen(void const *init, size_t initlen)
     case 1:
     {
       struct sdshdr8 *sh_0 = (struct sdshdr8 *)(s - sizeof(struct sdshdr8));
-      sh_0->len = (unsigned char)initlen;
-      sh_0->alloc = (unsigned char)initlen;
+      sh_0->len = (uint8_t)initlen;
+      sh_0->alloc = (uint8_t)initlen;
       *fp = (unsigned char)type;
       break;
     }
@@ -5917,8 +5914,8 @@ sds sdsnewlen(void const *init, size_t initlen)
     {
       struct sdshdr16 *sh_1 =
         (struct sdshdr16 *)(s - sizeof(struct sdshdr16));
-      sh_1->len = (unsigned short)initlen;
-      sh_1->alloc = (unsigned short)initlen;
+      sh_1->len = (uint16_t)initlen;
+      sh_1->alloc = (uint16_t)initlen;
       *fp = (unsigned char)type;
       break;
     }
@@ -5935,8 +5932,8 @@ sds sdsnewlen(void const *init, size_t initlen)
     {
       struct sdshdr64 *sh_3 =
         (struct sdshdr64 *)(s - sizeof(struct sdshdr64));
-      sh_3->len = (unsigned long long)initlen;
-      sh_3->alloc = (unsigned long long)initlen;
+      sh_3->len = (uint64_t)initlen;
+      sh_3->alloc = (uint64_t)initlen;
       *fp = (unsigned char)type;
       break;
     }
@@ -5951,7 +5948,7 @@ sds sdsnewlen(void const *init, size_t initlen)
 sds sdsempty(void)
 {
   sds tmp;
-  tmp = sdsnewlen((void const *)"",(unsigned int)0);
+  tmp = sdsnewlen((void const *)"",(size_t)0);
   return tmp;
 }
 
@@ -5959,8 +5956,7 @@ sds sdsnew(char const *init)
 {
   size_t tmp_0;
   sds tmp_1;
-  if (init == (char const *)0) tmp_0 = (unsigned int)0;
-  else tmp_0 = strlen(init);
+  if (init == (char const *)0) tmp_0 = (size_t)0; else tmp_0 = strlen(init);
   size_t initlen = tmp_0;
   tmp_1 = sdsnewlen((void const *)init,initlen);
   return tmp_1;
@@ -5991,13 +5987,13 @@ void sdsupdatelen(sds s)
   size_t tmp;
   tmp = strlen((char const *)s);
   int reallen = (int)tmp;
-  sdssetlen_3(s,(unsigned int)reallen);
+  sdssetlen_3(s,(size_t)reallen);
   return;
 }
 
 void sdsclear(sds s)
 {
-  sdssetlen_3(s,(unsigned int)0);
+  sdssetlen_3(s,(size_t)0);
   *(s + 0) = (char)'\000';
   return;
 }
@@ -6031,7 +6027,7 @@ sds sdsMakeRoomFor(sds s, size_t addlen)
     newsh = realloc(sh,((size_t)hdrlen + newlen) + (size_t)1);
     if (newsh == (void *)0) {
       free(sh);
-      __retres = (char *)0;
+      __retres = (sds)0;
       goto return_label;
     }
     s = (char *)newsh + hdrlen;
@@ -6039,7 +6035,7 @@ sds sdsMakeRoomFor(sds s, size_t addlen)
   else {
     newsh = malloc(((size_t)hdrlen + newlen) + (size_t)1);
     if (newsh == (void *)0) {
-      __retres = (char *)0;
+      __retres = (sds)0;
       goto return_label;
     }
     memcpy((void *)((char *)newsh + hdrlen),(void const *)s,len + (size_t)1);
@@ -6070,7 +6066,7 @@ sds sdsRemoveFreeSpace(sds s)
   if ((int)oldtype == (int)type) {
     newsh = realloc(sh,((size_t)hdrlen + len) + (size_t)1);
     if (newsh == (void *)0) {
-      __retres = (char *)0;
+      __retres = (sds)0;
       goto return_label;
     }
     s = (char *)newsh + hdrlen;
@@ -6078,7 +6074,7 @@ sds sdsRemoveFreeSpace(sds s)
   else {
     newsh = malloc(((size_t)hdrlen + len) + (size_t)1);
     if (newsh == (void *)0) {
-      __retres = (char *)0;
+      __retres = (sds)0;
       goto return_label;
     }
     memcpy((void *)((char *)newsh + hdrlen),(void const *)s,len + (size_t)1);
@@ -6136,7 +6132,7 @@ void sdsIncrLen(sds s, int incr)
       __FC_assert(tmp != 0,"sds.c",322,
                   "(incr > 0 && oldlen+incr < 32) || (incr < 0 && oldlen >= (unsigned int)(-incr))");
       *fp = (unsigned char)(0 | (((int)oldlen + incr) << 3));
-      len = (unsigned int)((int)oldlen + incr);
+      len = (size_t)((int)oldlen + incr);
       break;
     }
     case 1:
@@ -6156,8 +6152,8 @@ void sdsIncrLen(sds s, int incr)
       }
       __FC_assert(tmp_0 != 0,"sds.c",329,
                   "(incr >= 0 && sh->alloc-sh->len >= incr) || (incr < 0 && sh->len >= (unsigned int)(-incr))");
-      sh->len = (unsigned char)((int)sh->len + incr);
-      len = (unsigned int)sh->len;
+      sh->len = (uint8_t)((int)sh->len + incr);
+      len = (size_t)sh->len;
       break;
     }
     case 2:
@@ -6178,8 +6174,8 @@ void sdsIncrLen(sds s, int incr)
       }
       __FC_assert(tmp_1 != 0,"sds.c",335,
                   "(incr >= 0 && sh->alloc-sh->len >= incr) || (incr < 0 && sh->len >= (unsigned int)(-incr))");
-      sh_0->len = (unsigned short)((int)sh_0->len + incr);
-      len = (unsigned int)sh_0->len;
+      sh_0->len = (uint16_t)((int)sh_0->len + incr);
+      len = (size_t)sh_0->len;
       break;
     }
     case 3:
@@ -6209,23 +6205,22 @@ void sdsIncrLen(sds s, int incr)
       struct sdshdr64 *sh_2 =
         (struct sdshdr64 *)(s - sizeof(struct sdshdr64));
       if (incr >= 0) {
-        if (sh_2->alloc - sh_2->len >= (unsigned long long)incr) tmp_3 = 1;
+        if (sh_2->alloc - sh_2->len >= (uint64_t)incr) tmp_3 = 1;
         else goto _LAND_3;
       }
       else {
         _LAND_3: ;
         if (incr < 0) 
-          if (sh_2->len >= (unsigned long long)(- incr)) tmp_3 = 1;
-          else tmp_3 = 0;
+          if (sh_2->len >= (uint64_t)(- incr)) tmp_3 = 1; else tmp_3 = 0;
         else tmp_3 = 0;
       }
       __FC_assert(tmp_3 != 0,"sds.c",347,
                   "(incr >= 0 && sh->alloc-sh->len >= (uint64_t)incr) || (incr < 0 && sh->len >= (uint64_t)(-incr))");
       sh_2->len += (uint64_t)incr;
-      len = (unsigned int)sh_2->len;
+      len = (size_t)sh_2->len;
       break;
     }
-    default: len = (unsigned int)0;
+    default: len = (size_t)0;
   }
   *(s + len) = (char)'\000';
   return;
@@ -6241,7 +6236,7 @@ sds sdsgrowzero(sds s, size_t len)
   }
   s = sdsMakeRoomFor(s,len - curlen);
   if (s == (sds)0) {
-    __retres = (char *)0;
+    __retres = (sds)0;
     goto return_label;
   }
   memset((void *)(s + curlen),0,(len - curlen) + (size_t)1);
@@ -6256,7 +6251,7 @@ sds sdscatlen(sds s, void const *t, size_t len)
   size_t curlen = sdslen_3(s);
   s = sdsMakeRoomFor(s,len);
   if (s == (sds)0) {
-    __retres = (char *)0;
+    __retres = (sds)0;
     goto return_label;
   }
   memcpy((void *)(s + curlen),t,len);
@@ -6300,7 +6295,7 @@ sds sdscpylen(sds s, char const *t, size_t len)
     ;
     s = sdsMakeRoomFor(s,len - tmp);
     if (s == (sds)0) {
-      __retres = (char *)0;
+      __retres = (sds)0;
       goto return_label;
     }
   }
@@ -6348,7 +6343,7 @@ int sdsll2str(char *s, long long value)
     p ++;
     *tmp_0 = (char)'-';
   }
-  l = (unsigned int)(p - s);
+  l = (size_t)(p - s);
   *p = (char)'\000';
   p --;
   while (s < p) {
@@ -6379,7 +6374,7 @@ int sdsull2str(char *s, unsigned long long v)
     }
     if (! v) break;
   }
-  l = (unsigned int)(p - s);
+  l = (size_t)(p - s);
   *p = (char)'\000';
   p --;
   while (s < p) {
@@ -6398,7 +6393,7 @@ sds sdsfromlonglong(long long value)
   char buf[21];
   sds tmp_0;
   int len = sdsll2str(buf,value);
-  tmp_0 = sdsnewlen((void const *)(buf),(unsigned int)len);
+  tmp_0 = sdsnewlen((void const *)(buf),(size_t)len);
   return tmp_0;
 }
 
@@ -6415,7 +6410,7 @@ sds sdscatvprintf(sds s, char const *fmt, va_list ap)
   if (buflen > sizeof(staticbuf)) {
     buf = (char *)malloc(buflen);
     if (buf == (char *)0) {
-      __retres = (char *)0;
+      __retres = (sds)0;
       goto return_label;
     }
   }
@@ -6429,7 +6424,7 @@ sds sdscatvprintf(sds s, char const *fmt, va_list ap)
       buflen *= (size_t)2;
       buf = (char *)malloc(buflen);
       if (buf == (char *)0) {
-        __retres = (char *)0;
+        __retres = (sds)0;
         goto return_label;
       }
       continue;
@@ -6471,7 +6466,7 @@ sds sdscatfmt(sds s, char const *fmt, void * const *__va_params)
     size_t tmp_0;
     tmp_0 = sdsavail_3(s);
     if (tmp_0 == (size_t)0) {
-      s = sdsMakeRoomFor(s,(unsigned int)1);
+      s = sdsMakeRoomFor(s,(size_t)1);
       if (s == (sds)0) goto fmt_error;
     }
     switch ((int)*f) {
@@ -6511,7 +6506,7 @@ sds sdscatfmt(sds s, char const *fmt, void * const *__va_params)
           int tmp_4;
           size_t tmp_5;
           tmp_4 = sdsll2str(buf,num);
-          l = (unsigned int)tmp_4;
+          l = (size_t)tmp_4;
           tmp_5 = sdsavail_3(s);
           ;
           if (tmp_5 < l) {
@@ -6537,7 +6532,7 @@ sds sdscatfmt(sds s, char const *fmt, void * const *__va_params)
           int tmp_6;
           size_t tmp_7;
           tmp_6 = sdsull2str(buf_0,unum);
-          l = (unsigned int)tmp_6;
+          l = (size_t)tmp_6;
           tmp_7 = sdsavail_3(s);
           ;
           if (tmp_7 < l) {
@@ -6554,7 +6549,7 @@ sds sdscatfmt(sds s, char const *fmt, void * const *__va_params)
                    i ++;
                    *(s + tmp_8) = next;
                  }
-        sdsinclen_3(s,(unsigned int)1);
+        sdsinclen_3(s,(size_t)1);
         break;
       }
       break;
@@ -6563,7 +6558,7 @@ sds sdscatfmt(sds s, char const *fmt, void * const *__va_params)
                  i ++;
                  *(s + tmp_9) = *f;
                }
-      sdsinclen_3(s,(unsigned int)1);
+      sdsinclen_3(s,(size_t)1);
       break;
     }
     f ++;
@@ -6572,7 +6567,7 @@ sds sdscatfmt(sds s, char const *fmt, void * const *__va_params)
   __retres = s;
   goto return_label;
   fmt_error: ;
-  __retres = (char *)0;
+  __retres = (sds)0;
   return_label: return __retres;
 }
 
@@ -6607,8 +6602,7 @@ sds sdstrim(sds s, char const *cset)
     else break;
     ep --;
   }
-  if (sp > ep) len = (unsigned int)0;
-  else len = (unsigned int)((ep - sp) + 1);
+  if (sp > ep) len = (size_t)0; else len = (size_t)((ep - sp) + 1);
   if (s != sp) memmove((void *)s,(void const *)sp,len);
   *(s + len) = (char)'\000';
   sdssetlen_3(s,len);
@@ -6628,15 +6622,15 @@ void sdsrange(sds s, int start, int end)
     end = (int)(len + (size_t)end);
     if (end < 0) end = 0;
   }
-  if (start > end) newlen = (unsigned int)0;
-  else newlen = (unsigned int)((end - start) + 1);
+  if (start > end) newlen = (size_t)0;
+  else newlen = (size_t)((end - start) + 1);
   if (newlen != (size_t)0) {
-    if (start >= (int)len) newlen = (unsigned int)0;
+    if (start >= (int)len) newlen = (size_t)0;
     else 
       if (end >= (int)len) {
         end = (int)(len - (size_t)1);
-        if (start > end) newlen = (unsigned int)0;
-        else newlen = (unsigned int)((end - start) + 1);
+        if (start > end) newlen = (size_t)0;
+        else newlen = (size_t)((end - start) + 1);
       }
   }
   else start = 0;
@@ -6742,13 +6736,12 @@ sds *sdssplitlen(char const *s, int len, char const *sep, int seplen,
     else {
       int tmp;
       _LAND:
-      tmp = memcmp((void const *)(s + j),(void const *)sep,
-                   (unsigned int)seplen);
+      tmp = memcmp((void const *)(s + j),(void const *)sep,(size_t)seplen);
       if (tmp == 0) {
         _LOR:
         {
           *(tokens + elements) = sdsnewlen((void const *)(s + start),
-                                           (unsigned int)(j - start));
+                                           (size_t)(j - start));
           if (*(tokens + elements) == (sds)0) goto cleanup;
           elements ++;
           start = j + seplen;
@@ -6759,7 +6752,7 @@ sds *sdssplitlen(char const *s, int len, char const *sep, int seplen,
     j ++;
   }
   *(tokens + elements) = sdsnewlen((void const *)(s + start),
-                                   (unsigned int)(len - start));
+                                   (size_t)(len - start));
   if (*(tokens + elements) == (sds)0) goto cleanup;
   elements ++;
   *count = elements;
@@ -6798,11 +6791,11 @@ void sdsfreesplitres(sds *tokens, int count)
 sds sdscatrepr(sds s, char const *p, size_t len)
 {
   sds tmp_1;
-  s = sdscatlen(s,(void const *)"\"",(unsigned int)1);
+  s = sdscatlen(s,(void const *)"\"",(size_t)1);
   while (1) {
     size_t tmp_0;
     tmp_0 = len;
-    len -= (size_t)1;
+    len --;
     ;
     if (! tmp_0) break;
     switch ((int)*p) {
@@ -6814,15 +6807,15 @@ sds sdscatrepr(sds s, char const *p, size_t len)
         s = sdscatprintf(s,"\\%c",(void * const *)(__va_args));
       }
       break;
-      case '\n': s = sdscatlen(s,(void const *)"\\n",(unsigned int)2);
+      case '\n': s = sdscatlen(s,(void const *)"\\n",(size_t)2);
       break;
-      case '\r': s = sdscatlen(s,(void const *)"\\r",(unsigned int)2);
+      case '\r': s = sdscatlen(s,(void const *)"\\r",(size_t)2);
       break;
-      case '\t': s = sdscatlen(s,(void const *)"\\t",(unsigned int)2);
+      case '\t': s = sdscatlen(s,(void const *)"\\t",(size_t)2);
       break;
-      case '\a': s = sdscatlen(s,(void const *)"\\a",(unsigned int)2);
+      case '\a': s = sdscatlen(s,(void const *)"\\a",(size_t)2);
       break;
-      case '\b': s = sdscatlen(s,(void const *)"\\b",(unsigned int)2);
+      case '\b': s = sdscatlen(s,(void const *)"\\b",(size_t)2);
       break;
       default: tmp = isprint((int)*p);
       if (tmp) {
@@ -6843,7 +6836,7 @@ sds sdscatrepr(sds s, char const *p, size_t len)
     }
     p ++;
   }
-  tmp_1 = sdscatlen(s,(void const *)"\"",(unsigned int)1);
+  tmp_1 = sdscatlen(s,(void const *)"\"",(size_t)1);
   return tmp_1;
 }
 
@@ -6949,7 +6942,7 @@ sds *sdssplitargs(char const *line, int *argc)
                   tmp_1 = hex_digit_to_int(*(p + 3));
                   byte = (unsigned char)(tmp_0 * 16 + tmp_1);
                   current = sdscatlen(current,(void const *)(& byte),
-                                      (unsigned int)1);
+                                      (size_t)1);
                   p += 3;
                 }
                 else goto _LAND_2;
@@ -6978,8 +6971,7 @@ sds *sdssplitargs(char const *line, int *argc)
                   default: c = *p;
                   break;
                 }
-                current = sdscatlen(current,(void const *)(& c),
-                                    (unsigned int)1);
+                current = sdscatlen(current,(void const *)(& c),(size_t)1);
               }
               else goto _LAND;
             }
@@ -6995,8 +6987,7 @@ sds *sdssplitargs(char const *line, int *argc)
               }
               else 
                 if (! *p) goto err;
-                else current = sdscatlen(current,(void const *)p,
-                                         (unsigned int)1);
+                else current = sdscatlen(current,(void const *)p,(size_t)1);
             }
           }
         else 
@@ -7004,8 +6995,7 @@ sds *sdssplitargs(char const *line, int *argc)
             if ((int)*p == '\\') {
               if ((int)*(p + 1) == '\'') {
                 p ++;
-                current = sdscatlen(current,(void const *)"\'",
-                                    (unsigned int)1);
+                current = sdscatlen(current,(void const *)"\'",(size_t)1);
               }
               else goto _LAND_3;
             }
@@ -7021,8 +7011,7 @@ sds *sdssplitargs(char const *line, int *argc)
               }
               else 
                 if (! *p) goto err;
-                else current = sdscatlen(current,(void const *)p,
-                                         (unsigned int)1);
+                else current = sdscatlen(current,(void const *)p,(size_t)1);
             }
           else 
             switch ((int)*p) {
@@ -7034,7 +7023,7 @@ sds *sdssplitargs(char const *line, int *argc)
               case '\'': insq = 1;
               break;
               default:
-              current = sdscatlen(current,(void const *)p,(unsigned int)1);
+              current = sdscatlen(current,(void const *)p,(size_t)1);
               break;
             }
         if (*p) p ++;
@@ -7080,17 +7069,17 @@ sds sdsmapchars(sds s, char const *from, char const *to, size_t setlen)
   size_t j;
   size_t i;
   size_t l = sdslen_3(s);
-  j = (unsigned int)0;
+  j = (size_t)0;
   while (j < l) {
-    i = (unsigned int)0;
+    i = (size_t)0;
     while (i < setlen) {
       if ((int)*(s + j) == (int)*(from + i)) {
         *(s + j) = *(to + i);
         break;
       }
-      i += (size_t)1;
+      i ++;
     }
-    j += (size_t)1;
+    j ++;
   }
   return s;
 }
@@ -7147,22 +7136,22 @@ __inline static size_t sdslen_4(sds const s)
   unsigned char flags = (unsigned char)*(s + -1);
   switch ((int)flags & 7) {
     case 0: ;
-    __retres = (unsigned int)((int)flags >> 3);
+    __retres = (size_t)((int)flags >> 3);
     goto return_label;
     case 1: ;
-    __retres = (unsigned int)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len;
+    __retres = (size_t)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len;
     goto return_label;
     case 2: ;
-    __retres = (unsigned int)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len;
+    __retres = (size_t)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len;
     goto return_label;
     case 3: ;
     __retres = ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->len;
     goto return_label;
     case 4: ;
-    __retres = (unsigned int)((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len;
+    __retres = (size_t)((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len;
     goto return_label;
   }
-  __retres = (unsigned int)0;
+  __retres = (size_t)0;
   return_label: return __retres;
 }
 
@@ -7172,20 +7161,20 @@ __inline static size_t sdsavail_4(sds const s)
   unsigned char flags = (unsigned char)*(s + -1);
   switch ((int)flags & 7) {
     case 0: {
-              __retres = (unsigned int)0;
+              __retres = (size_t)0;
               goto return_label;
             }
     case 1:
     {
       struct sdshdr8 *sh = (struct sdshdr8 *)(s - sizeof(struct sdshdr8));
-      __retres = (unsigned int)((int)sh->alloc - (int)sh->len);
+      __retres = (size_t)((int)sh->alloc - (int)sh->len);
       goto return_label;
     }
     case 2:
     {
       struct sdshdr16 *sh_0 =
         (struct sdshdr16 *)(s - sizeof(struct sdshdr16));
-      __retres = (unsigned int)((int)sh_0->alloc - (int)sh_0->len);
+      __retres = (size_t)((int)sh_0->alloc - (int)sh_0->len);
       goto return_label;
     }
     case 3:
@@ -7199,11 +7188,11 @@ __inline static size_t sdsavail_4(sds const s)
     {
       struct sdshdr64 *sh_2 =
         (struct sdshdr64 *)(s - sizeof(struct sdshdr64));
-      __retres = (unsigned int)(sh_2->alloc - sh_2->len);
+      __retres = (size_t)(sh_2->alloc - sh_2->len);
       goto return_label;
     }
   }
-  __retres = (unsigned int)0;
+  __retres = (size_t)0;
   return_label: return __retres;
 }
 
@@ -7218,15 +7207,15 @@ __inline static void sdssetlen_4(sds s, size_t newlen)
     }
     break;
     case 1:
-    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len = (unsigned char)newlen;
+    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len = (uint8_t)newlen;
     break;
     case 2:
-    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len = (unsigned short)newlen;
+    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len = (uint16_t)newlen;
     break;
     case 3: ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->len = newlen;
     break;
     case 4:
-    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len = (unsigned long long)newlen;
+    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len = (uint64_t)newlen;
     break;
   }
   return;
@@ -7245,17 +7234,17 @@ __inline static void sdsinclen_4(sds s, size_t inc)
     }
     break;
     case 1:
-    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len = (unsigned char)(
-    (int)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len + (int)((unsigned char)inc));
+    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len = (uint8_t)(
+    (int)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->len + (int)((uint8_t)inc));
     break;
     case 2:
-    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len = (unsigned short)(
-    (int)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len + (int)((unsigned short)inc));
+    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len = (uint16_t)(
+    (int)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->len + (int)((uint16_t)inc));
     break;
     case 3: ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->len += inc;
     break;
     case 4:
-    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len += (unsigned long long)inc;
+    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->len += (uint64_t)inc;
     break;
   }
   return;
@@ -7267,22 +7256,22 @@ __inline static size_t sdsalloc_4(sds const s)
   unsigned char flags = (unsigned char)*(s + -1);
   switch ((int)flags & 7) {
     case 0: ;
-    __retres = (unsigned int)((int)flags >> 3);
+    __retres = (size_t)((int)flags >> 3);
     goto return_label;
     case 1: ;
-    __retres = (unsigned int)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->alloc;
+    __retres = (size_t)((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->alloc;
     goto return_label;
     case 2: ;
-    __retres = (unsigned int)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->alloc;
+    __retres = (size_t)((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->alloc;
     goto return_label;
     case 3: ;
     __retres = ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->alloc;
     goto return_label;
     case 4: ;
-    __retres = (unsigned int)((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->alloc;
+    __retres = (size_t)((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->alloc;
     goto return_label;
   }
-  __retres = (unsigned int)0;
+  __retres = (size_t)0;
   return_label: return __retres;
 }
 
@@ -7292,16 +7281,16 @@ __inline static void sdssetalloc_4(sds s, size_t newlen)
   switch ((int)flags & 7) {
     case 0: break;
     case 1:
-    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->alloc = (unsigned char)newlen;
+    ((struct sdshdr8 *)(s - sizeof(struct sdshdr8)))->alloc = (uint8_t)newlen;
     break;
     case 2:
-    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->alloc = (unsigned short)newlen;
+    ((struct sdshdr16 *)(s - sizeof(struct sdshdr16)))->alloc = (uint16_t)newlen;
     break;
     case 3:
     ((struct sdshdr32 *)(s - sizeof(struct sdshdr32)))->alloc = newlen;
     break;
     case 4:
-    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->alloc = (unsigned long long)newlen;
+    ((struct sdshdr64 *)(s - sizeof(struct sdshdr64)))->alloc = (uint64_t)newlen;
     break;
   }
   return;
@@ -8679,8 +8668,7 @@ static void test_format_commands(void)
     len = redisFormatCommand(& cmd,"SET foo bar",(void * const *)(__va_args));
   }
   tmp = strncmp((char const *)cmd,
-                "*3\r\n$3\r\nSET\r\n$3\r\nfoo\r\n$3\r\nbar\r\n",
-                (unsigned int)len);
+                "*3\r\n$3\r\nSET\r\n$3\r\nfoo\r\n$3\r\nbar\r\n",(size_t)len);
   if (tmp == 0) {
     if (len == (((((4 + 4) + (3 + 2)) + 4) + (3 + 2)) + 4) + (3 + 2)) 
       printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_7 */
@@ -8706,7 +8694,7 @@ static void test_format_commands(void)
   }
   tmp_0 = strncmp((char const *)cmd,
                   "*3\r\n$3\r\nSET\r\n$3\r\nfoo\r\n$3\r\nbar\r\n",
-                  (unsigned int)len);
+                  (size_t)len);
   if (tmp_0 == 0) {
     if (len == (((((4 + 4) + (3 + 2)) + 4) + (3 + 2)) + 4) + (3 + 2)) 
       printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_11 */
@@ -8731,8 +8719,7 @@ static void test_format_commands(void)
                              (void * const *)(__va_args_52));
   }
   tmp_1 = strncmp((char const *)cmd,
-                  "*3\r\n$3\r\nSET\r\n$3\r\nfoo\r\n$0\r\n\r\n",
-                  (unsigned int)len);
+                  "*3\r\n$3\r\nSET\r\n$3\r\nfoo\r\n$0\r\n\r\n",(size_t)len);
   if (tmp_1 == 0) {
     if (len == (((((4 + 4) + (3 + 2)) + 4) + (3 + 2)) + 4) + (0 + 2)) 
       printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_15 */
@@ -8757,8 +8744,7 @@ static void test_format_commands(void)
                              (void * const *)(__va_args_58));
   }
   tmp_2 = strncmp((char const *)cmd,
-                  "*3\r\n$3\r\nSET\r\n$0\r\n\r\n$3\r\nfoo\r\n",
-                  (unsigned int)len);
+                  "*3\r\n$3\r\nSET\r\n$0\r\n\r\n$3\r\nfoo\r\n",(size_t)len);
   if (tmp_2 == 0) {
     if (len == (((((4 + 4) + (3 + 2)) + 4) + (0 + 2)) + 4) + (3 + 2)) 
       printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_19 */
@@ -8777,9 +8763,9 @@ static void test_format_commands(void)
   printf("Format command with %%b string interpolation: "); /* printf_va_22 */
   {
     char const *__va_arg0_60 = "foo";
-    unsigned int __va_arg1_62 = (unsigned int)3;
+    size_t __va_arg1_62 = (size_t)3;
     char const *__va_arg2 = "b\000r";
-    unsigned int __va_arg3 = (unsigned int)3;
+    size_t __va_arg3 = (size_t)3;
     void *__va_args_66[4] =
       {& __va_arg0_60, & __va_arg1_62, & __va_arg2, & __va_arg3};
     len = redisFormatCommand(& cmd,"SET %b %b",
@@ -8787,7 +8773,7 @@ static void test_format_commands(void)
   }
   tmp_3 = strncmp((char const *)cmd,
                   "*3\r\n$3\r\nSET\r\n$3\r\nfoo\r\n$3\r\nb\000r\r\n",
-                  (unsigned int)len);
+                  (size_t)len);
   if (tmp_3 == 0) {
     if (len == (((((4 + 4) + (3 + 2)) + 4) + (3 + 2)) + 4) + (3 + 2)) 
       printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_23 */
@@ -8806,17 +8792,16 @@ static void test_format_commands(void)
   printf("Format command with %%b and an empty string: "); /* printf_va_26 */
   {
     char const *__va_arg0_68 = "foo";
-    unsigned int __va_arg1_70 = (unsigned int)3;
+    size_t __va_arg1_70 = (size_t)3;
     char const *__va_arg2_72 = "";
-    unsigned int __va_arg3_74 = (unsigned int)0;
+    size_t __va_arg3_74 = (size_t)0;
     void *__va_args_76[4] =
       {& __va_arg0_68, & __va_arg1_70, & __va_arg2_72, & __va_arg3_74};
     len = redisFormatCommand(& cmd,"SET %b %b",
                              (void * const *)(__va_args_76));
   }
   tmp_4 = strncmp((char const *)cmd,
-                  "*3\r\n$3\r\nSET\r\n$3\r\nfoo\r\n$0\r\n\r\n",
-                  (unsigned int)len);
+                  "*3\r\n$3\r\nSET\r\n$3\r\nfoo\r\n$0\r\n\r\n",(size_t)len);
   if (tmp_4 == 0) {
     if (len == (((((4 + 4) + (3 + 2)) + 4) + (3 + 2)) + 4) + (0 + 2)) 
       printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_27 */
@@ -8839,8 +8824,7 @@ static void test_format_commands(void)
                              (void * const *)(__va_args_78));
   }
   tmp_5 = strncmp((char const *)cmd,
-                  "*3\r\n$3\r\nSET\r\n$1\r\n%\r\n$1\r\n%\r\n",
-                  (unsigned int)len);
+                  "*3\r\n$3\r\nSET\r\n$1\r\n%\r\n$1\r\n%\r\n",(size_t)len);
   if (tmp_5 == 0) {
     if (len == (((((4 + 4) + (3 + 2)) + 4) + (1 + 2)) + 4) + (1 + 2)) 
       printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_31 */
@@ -8869,7 +8853,7 @@ static void test_format_commands(void)
     }
     tmp_6 = strncmp((char const *)cmd,
                     "*2\r\n$12\r\nkey:00000123\r\n$9\r\nstr:hello\r\n",
-                    (unsigned int)len);
+                    (size_t)len);
     if (tmp_6 == 0) {
       if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_35 */
       else goto _LAND_6;
@@ -8898,7 +8882,7 @@ static void test_format_commands(void)
     }
     tmp_7 = strncmp((char const *)cmd,
                     "*2\r\n$12\r\nkey:00000123\r\n$9\r\nstr:hello\r\n",
-                    (unsigned int)len);
+                    (size_t)len);
     if (tmp_7 == 0) {
       if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_39 */
       else goto _LAND_7;
@@ -8927,7 +8911,7 @@ static void test_format_commands(void)
     }
     tmp_8 = strncmp((char const *)cmd,
                     "*2\r\n$12\r\nkey:00000123\r\n$9\r\nstr:hello\r\n",
-                    (unsigned int)len);
+                    (size_t)len);
     if (tmp_8 == 0) {
       if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_43 */
       else goto _LAND_8;
@@ -8956,7 +8940,7 @@ static void test_format_commands(void)
     }
     tmp_9 = strncmp((char const *)cmd,
                     "*2\r\n$12\r\nkey:00000123\r\n$9\r\nstr:hello\r\n",
-                    (unsigned int)len);
+                    (size_t)len);
     if (tmp_9 == 0) {
       if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_47 */
       else goto _LAND_9;
@@ -8985,7 +8969,7 @@ static void test_format_commands(void)
     }
     tmp_10 = strncmp((char const *)cmd,
                      "*2\r\n$12\r\nkey:00000123\r\n$9\r\nstr:hello\r\n",
-                     (unsigned int)len);
+                     (size_t)len);
     if (tmp_10 == 0) {
       if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_51 */
       else goto _LAND_10;
@@ -9014,7 +8998,7 @@ static void test_format_commands(void)
     }
     tmp_11 = strncmp((char const *)cmd,
                      "*2\r\n$12\r\nkey:00000123\r\n$9\r\nstr:hello\r\n",
-                     (unsigned int)len);
+                     (size_t)len);
     if (tmp_11 == 0) {
       if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_55 */
       else goto _LAND_11;
@@ -9043,7 +9027,7 @@ static void test_format_commands(void)
     }
     tmp_12 = strncmp((char const *)cmd,
                      "*2\r\n$12\r\nkey:00000123\r\n$9\r\nstr:hello\r\n",
-                     (unsigned int)len);
+                     (size_t)len);
     if (tmp_12 == 0) {
       if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_59 */
       else goto _LAND_12;
@@ -9072,7 +9056,7 @@ static void test_format_commands(void)
     }
     tmp_13 = strncmp((char const *)cmd,
                      "*2\r\n$12\r\nkey:00000123\r\n$9\r\nstr:hello\r\n",
-                     (unsigned int)len);
+                     (size_t)len);
     if (tmp_13 == 0) {
       if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_63 */
       else goto _LAND_13;
@@ -9101,7 +9085,7 @@ static void test_format_commands(void)
     }
     tmp_14 = strncmp((char const *)cmd,
                      "*2\r\n$12\r\nkey:00000123\r\n$9\r\nstr:hello\r\n",
-                     (unsigned int)len);
+                     (size_t)len);
     if (tmp_14 == 0) {
       if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_67 */
       else goto _LAND_14;
@@ -9130,7 +9114,7 @@ static void test_format_commands(void)
     }
     tmp_15 = strncmp((char const *)cmd,
                      "*2\r\n$12\r\nkey:00000123\r\n$9\r\nstr:hello\r\n",
-                     (unsigned int)len);
+                     (size_t)len);
     if (tmp_15 == 0) {
       if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_71 */
       else goto _LAND_15;
@@ -9159,7 +9143,7 @@ static void test_format_commands(void)
     }
     tmp_16 = strncmp((char const *)cmd,
                      "*2\r\n$12\r\nkey:0123.000\r\n$9\r\nstr:hello\r\n",
-                     (unsigned int)len);
+                     (size_t)len);
     if (tmp_16 == 0) {
       if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_75 */
       else goto _LAND_16;
@@ -9188,7 +9172,7 @@ static void test_format_commands(void)
     }
     tmp_17 = strncmp((char const *)cmd,
                      "*2\r\n$12\r\nkey:0123.000\r\n$9\r\nstr:hello\r\n",
-                     (unsigned int)len);
+                     (size_t)len);
     if (tmp_17 == 0) {
       if (len == (((4 + 5) + (12 + 2)) + 4) + (9 + 2)) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_79 */
       else goto _LAND_17;
@@ -9208,7 +9192,7 @@ static void test_format_commands(void)
   {
     void *__va_arg0_152 = (void *)1234;
     char const *__va_arg1_154 = "foo";
-    unsigned int __va_arg2_156 = (unsigned int)3;
+    size_t __va_arg2_156 = (size_t)3;
     void *__va_args_158[3] =
       {& __va_arg0_152, & __va_arg1_154, & __va_arg2_156};
     len = redisFormatCommand(& cmd,"key:%08p %b",
@@ -9222,7 +9206,7 @@ static void test_format_commands(void)
   argv[0] = "SET";
   argv[1] = "foo\000xxx";
   argv[2] = "bar";
-  size_t lens[3] = {(unsigned int)3, (unsigned int)7, (unsigned int)3};
+  size_t lens[3] = {(size_t)3, (size_t)7, (size_t)3};
   int argc = 3;
   tests ++;
   printf("#%02d ",tests); /* printf_va_85 */
@@ -9230,7 +9214,7 @@ static void test_format_commands(void)
   len = redisFormatCommandArgv(& cmd,argc,argv,(size_t const *)0);
   tmp_18 = strncmp((char const *)cmd,
                    "*3\r\n$3\r\nSET\r\n$3\r\nfoo\r\n$3\r\nbar\r\n",
-                   (unsigned int)len);
+                   (size_t)len);
   if (tmp_18 == 0) {
     if (len == (((((4 + 4) + (3 + 2)) + 4) + (3 + 2)) + 4) + (3 + 2)) 
       printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_87 */
@@ -9250,7 +9234,7 @@ static void test_format_commands(void)
   len = redisFormatCommandArgv(& cmd,argc,argv,(size_t const *)(lens));
   tmp_19 = strncmp((char const *)cmd,
                    "*3\r\n$3\r\nSET\r\n$7\r\nfoo\000xxx\r\n$3\r\nbar\r\n",
-                   (unsigned int)len);
+                   (size_t)len);
   if (tmp_19 == 0) {
     if (len == (((((4 + 4) + (3 + 2)) + 4) + (7 + 2)) + 4) + (3 + 2)) 
       printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_91 */
@@ -9264,14 +9248,14 @@ static void test_format_commands(void)
     }
   }
   free((void *)cmd);
-  sds_cmd = (char *)0;
+  sds_cmd = (sds)0;
   tests ++;
   printf("#%02d ",tests); /* printf_va_93 */
   printf("Format command into sds by passing argc/argv without lengths: "); /* printf_va_94 */
   len = redisFormatSdsCommandArgv(& sds_cmd,argc,argv,(size_t const *)0);
   tmp_20 = strncmp((char const *)sds_cmd,
                    "*3\r\n$3\r\nSET\r\n$3\r\nfoo\r\n$3\r\nbar\r\n",
-                   (unsigned int)len);
+                   (size_t)len);
   if (tmp_20 == 0) {
     if (len == (((((4 + 4) + (3 + 2)) + 4) + (3 + 2)) + 4) + (3 + 2)) 
       printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_95 */
@@ -9285,14 +9269,14 @@ static void test_format_commands(void)
     }
   }
   sdsfree(sds_cmd);
-  sds_cmd = (char *)0;
+  sds_cmd = (sds)0;
   tests ++;
   printf("#%02d ",tests); /* printf_va_97 */
   printf("Format command into sds by passing argc/argv with lengths: "); /* printf_va_98 */
   len = redisFormatSdsCommandArgv(& sds_cmd,argc,argv,(size_t const *)(lens));
   tmp_21 = strncmp((char const *)sds_cmd,
                    "*3\r\n$3\r\nSET\r\n$7\r\nfoo\000xxx\r\n$3\r\nbar\r\n",
-                   (unsigned int)len);
+                   (size_t)len);
   if (tmp_21 == 0) {
     if (len == (((((4 + 4) + (3 + 2)) + 4) + (7 + 2)) + 4) + (3 + 2)) 
       printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_99 */
@@ -9374,7 +9358,7 @@ static void test_append_formatted_commands(struct config config)
     void *__va_args[1] = {(void *)0};
     len = redisFormatCommand(& cmd,"SET foo bar",(void * const *)(__va_args));
   }
-  tmp = redisAppendFormattedCommand(c,(char const *)cmd,(unsigned int)len);
+  tmp = redisAppendFormattedCommand(c,(char const *)cmd,(size_t)len);
   if (tmp == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_103 */
   else {
     printf("\033[0;31mFAILED\033[0;0m\n"); /* printf_va_104 */
@@ -10135,7 +10119,7 @@ static void test_reply_reader(void)
   printf("#%02d ",tests); /* printf_va_105 */
   printf("Error handling in reply parser: "); /* printf_va_106 */
   reader = redisReaderCreate();
-  redisReaderFeed(reader,"@foo\r\n",(unsigned int)6);
+  redisReaderFeed(reader,"@foo\r\n",(size_t)6);
   ret = redisReaderGetReply(reader,(void **)0);
   if (ret == -1) {
     int tmp;
@@ -10156,9 +10140,9 @@ static void test_reply_reader(void)
   printf("#%02d ",tests); /* printf_va_109 */
   printf("Memory cleanup in reply parser: "); /* printf_va_110 */
   reader = redisReaderCreate();
-  redisReaderFeed(reader,"*2\r\n",(unsigned int)4);
-  redisReaderFeed(reader,"$5\r\nhello\r\n",(unsigned int)11);
-  redisReaderFeed(reader,"@foo\r\n",(unsigned int)6);
+  redisReaderFeed(reader,"*2\r\n",(size_t)4);
+  redisReaderFeed(reader,"$5\r\nhello\r\n",(size_t)11);
+  redisReaderFeed(reader,"@foo\r\n",(size_t)6);
   ret = redisReaderGetReply(reader,(void **)0);
   if (ret == -1) {
     int tmp_0;
@@ -10181,14 +10165,14 @@ static void test_reply_reader(void)
   reader = redisReaderCreate();
   i = 0;
   while (i < 9) {
-    redisReaderFeed(reader,"*1\r\n",(unsigned int)4);
+    redisReaderFeed(reader,"*1\r\n",(size_t)4);
     i ++;
   }
   ret = redisReaderGetReply(reader,(void **)0);
   if (ret == -1) {
     int tmp_1;
     tmp_1 = strncasecmp((char const *)(reader->errstr),"No support for",
-                        (unsigned int)14);
+                        (size_t)14);
     if (tmp_1 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_115 */
     else goto _LAND_1;
   }
@@ -10204,7 +10188,7 @@ static void test_reply_reader(void)
   printf("#%02d ",tests); /* printf_va_117 */
   printf("Correctly parses LLONG_MAX: "); /* printf_va_118 */
   reader = redisReaderCreate();
-  redisReaderFeed(reader,":9223372036854775807\r\n",(unsigned int)22);
+  redisReaderFeed(reader,":9223372036854775807\r\n",(size_t)22);
   ret = redisReaderGetReply(reader,& reply);
   if (ret == 0) {
     if (((redisReply *)reply)->type == 3) {
@@ -10227,7 +10211,7 @@ static void test_reply_reader(void)
   printf("#%02d ",tests); /* printf_va_121 */
   printf("Set error when > LLONG_MAX: "); /* printf_va_122 */
   reader = redisReaderCreate();
-  redisReaderFeed(reader,":9223372036854775808\r\n",(unsigned int)22);
+  redisReaderFeed(reader,":9223372036854775808\r\n",(size_t)22);
   ret = redisReaderGetReply(reader,& reply);
   if (ret == -1) {
     int tmp_2;
@@ -10248,7 +10232,7 @@ static void test_reply_reader(void)
   printf("#%02d ",tests); /* printf_va_125 */
   printf("Correctly parses LLONG_MIN: "); /* printf_va_126 */
   reader = redisReaderCreate();
-  redisReaderFeed(reader,":-9223372036854775808\r\n",(unsigned int)23);
+  redisReaderFeed(reader,":-9223372036854775808\r\n",(size_t)23);
   ret = redisReaderGetReply(reader,& reply);
   if (ret == 0) {
     if (((redisReply *)reply)->type == 3) {
@@ -10271,7 +10255,7 @@ static void test_reply_reader(void)
   printf("#%02d ",tests); /* printf_va_129 */
   printf("Set error when < LLONG_MIN: "); /* printf_va_130 */
   reader = redisReaderCreate();
-  redisReaderFeed(reader,":-9223372036854775809\r\n",(unsigned int)23);
+  redisReaderFeed(reader,":-9223372036854775809\r\n",(size_t)23);
   ret = redisReaderGetReply(reader,& reply);
   if (ret == -1) {
     int tmp_3;
@@ -10292,7 +10276,7 @@ static void test_reply_reader(void)
   printf("#%02d ",tests); /* printf_va_133 */
   printf("Set error when array < -1: "); /* printf_va_134 */
   reader = redisReaderCreate();
-  redisReaderFeed(reader,"*-2\r\n+asdf\r\n",(unsigned int)12);
+  redisReaderFeed(reader,"*-2\r\n+asdf\r\n",(size_t)12);
   ret = redisReaderGetReply(reader,& reply);
   if (ret == -1) {
     int tmp_4;
@@ -10314,7 +10298,7 @@ static void test_reply_reader(void)
   printf("#%02d ",tests); /* printf_va_137 */
   printf("Set error when bulk < -1: "); /* printf_va_138 */
   reader = redisReaderCreate();
-  redisReaderFeed(reader,"$-2\r\nasdf\r\n",(unsigned int)11);
+  redisReaderFeed(reader,"$-2\r\nasdf\r\n",(size_t)11);
   ret = redisReaderGetReply(reader,& reply);
   if (ret == -1) {
     int tmp_5;
@@ -10336,8 +10320,7 @@ static void test_reply_reader(void)
   printf("#%02d ",tests); /* printf_va_141 */
   printf("Set error when array > SIZE_MAX: "); /* printf_va_142 */
   reader = redisReaderCreate();
-  redisReaderFeed(reader,"*9223372036854775807\r\n+asdf\r\n",
-                  (unsigned int)29);
+  redisReaderFeed(reader,"*9223372036854775807\r\n+asdf\r\n",(size_t)29);
   ret = redisReaderGetReply(reader,& reply);
   if (ret == -1) {
     int tmp_6;
@@ -10359,7 +10342,7 @@ static void test_reply_reader(void)
   printf("#%02d ",tests); /* printf_va_145 */
   printf("Set error when bulk > SIZE_MAX: "); /* printf_va_146 */
   reader = redisReaderCreate();
-  redisReaderFeed(reader,"$9223372036854775807\r\nasdf\r\n",(unsigned int)28);
+  redisReaderFeed(reader,"$9223372036854775807\r\nasdf\r\n",(size_t)28);
   ret = redisReaderGetReply(reader,& reply);
   if (ret == -1) {
     int tmp_7;
@@ -10382,7 +10365,7 @@ static void test_reply_reader(void)
   printf("Works with NULL functions for reply: "); /* printf_va_150 */
   reader = redisReaderCreate();
   reader->fn = (redisReplyObjectFunctions *)0;
-  redisReaderFeed(reader,"+OK\r\n",(unsigned int)5);
+  redisReaderFeed(reader,"+OK\r\n",(size_t)5);
   ret = redisReaderGetReply(reader,& reply);
   if (ret == 0) {
     if (reply == (void *)5) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_151 */
@@ -10401,13 +10384,13 @@ static void test_reply_reader(void)
   printf("Works when a single newline (\\r\\n) covers two calls to feed: "); /* printf_va_154 */
   reader = redisReaderCreate();
   reader->fn = (redisReplyObjectFunctions *)0;
-  redisReaderFeed(reader,"+OK\r",(unsigned int)4);
+  redisReaderFeed(reader,"+OK\r",(size_t)4);
   ret = redisReaderGetReply(reader,& reply);
   if (ret == 0) 
     if (reply == (void *)0) tmp_8 = 1; else tmp_8 = 0;
   else tmp_8 = 0;
   __FC_assert(tmp_8 != 0,"test.c",444,"ret == REDIS_OK && reply == NULL");
-  redisReaderFeed(reader,"\n",(unsigned int)1);
+  redisReaderFeed(reader,"\n",(size_t)1);
   ret = redisReaderGetReply(reader,& reply);
   if (ret == 0) {
     if (reply == (void *)5) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_155 */
@@ -10426,7 +10409,7 @@ static void test_reply_reader(void)
   printf("Don\'t reset state after protocol error: "); /* printf_va_158 */
   reader = redisReaderCreate();
   reader->fn = (redisReplyObjectFunctions *)0;
-  redisReaderFeed(reader,"x",(unsigned int)1);
+  redisReaderFeed(reader,"x",(size_t)1);
   ret = redisReaderGetReply(reader,& reply);
   __FC_assert((ret == -1) != 0,"test.c",455,"ret == REDIS_ERR");
   ret = redisReaderGetReply(reader,& reply);
@@ -10446,7 +10429,7 @@ static void test_reply_reader(void)
   printf("#%02d ",tests); /* printf_va_161 */
   printf("Don\'t do empty allocation for empty multi bulk: "); /* printf_va_162 */
   reader = redisReaderCreate();
-  redisReaderFeed(reader,"*0\r\n",(unsigned int)4);
+  redisReaderFeed(reader,"*0\r\n",(size_t)4);
   ret = redisReaderGetReply(reader,& reply);
   if (ret == 0) {
     if (((redisReply *)reply)->type == 2) {
@@ -11543,9 +11526,9 @@ static void test_blocking_connection(struct config config)
   printf("%%b String interpolation works: "); /* printf_va_207 */
   {
     char const *__va_arg0_30 = "foo";
-    unsigned int __va_arg1_32 = (unsigned int)3;
+    size_t __va_arg1_32 = (size_t)3;
     char const *__va_arg2 = "hello\000world";
-    unsigned int __va_arg3 = (unsigned int)11;
+    size_t __va_arg3 = (size_t)11;
     void *__va_args_36[4] =
       {& __va_arg0_30, & __va_arg1_32, & __va_arg2, & __va_arg3};
     reply = (redisReply *)redisCommand(c,"SET %b %b",
@@ -11560,7 +11543,7 @@ static void test_blocking_connection(struct config config)
   if (reply->type == 1) {
     int tmp_2;
     tmp_2 = memcmp((void const *)reply->str,(void const *)"hello\000world",
-                   (unsigned int)11);
+                   (size_t)11);
     if (tmp_2 == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_208 */
     else goto _LAND_2;
   }
@@ -11636,12 +11619,12 @@ static void test_blocking_connection(struct config config)
     if (reply->elements == (size_t)2) {
       int tmp_5;
       tmp_5 = memcmp((void const *)(*(reply->element + 0))->str,
-                     (void const *)"bar",(unsigned int)3);
+                     (void const *)"bar",(size_t)3);
       if (tmp_5) goto _LAND_6;
       else {
         int tmp_6;
         tmp_6 = memcmp((void const *)(*(reply->element + 1))->str,
-                       (void const *)"foo",(unsigned int)3);
+                       (void const *)"foo",(size_t)3);
         if (tmp_6) goto _LAND_6;
         else printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_224 */
       }
@@ -11686,12 +11669,12 @@ static void test_blocking_connection(struct config config)
         if ((*(reply->element + 0))->elements == (size_t)2) {
           int tmp_10;
           tmp_10 = memcmp((void const *)(*((*(reply->element + 0))->element + 0))->str,
-                          (void const *)"bar",(unsigned int)3);
+                          (void const *)"bar",(size_t)3);
           if (tmp_10) goto _LAND_13;
           else {
             int tmp_11;
             tmp_11 = memcmp((void const *)(*((*(reply->element + 0))->element + 1))->str,
-                            (void const *)"foo",(unsigned int)3);
+                            (void const *)"foo",(size_t)3);
             if (tmp_11) goto _LAND_13;
             else 
               if ((*(reply->element + 1))->type == 5) {
@@ -12002,7 +11985,7 @@ static void test_blocking_connection_timeouts(struct config config)
                                        (void * const *)(__va_args));
   }
   freeReplyObject((void *)reply);
-  tv.tv_sec = (long)0;
+  tv.tv_sec = (time_t)0;
   tv.tv_usec = 10000;
   redisSetTimeout(c,tv);
   {
@@ -12013,8 +11996,7 @@ static void test_blocking_connection_timeouts(struct config config)
   if (reply != (redisReply *)0) {
     if (reply->type == 1) {
       int tmp;
-      tmp = memcmp((void const *)reply->str,(void const *)"fast",
-                   (unsigned int)4);
+      tmp = memcmp((void const *)reply->str,(void const *)"fast",(size_t)4);
       if (tmp == 0) printf("\033[0;32mPASSED\033[0;0m\n"); /* printf_va_236 */
       else goto _LAND_0;
     }
@@ -12041,7 +12023,7 @@ static void test_blocking_connection_timeouts(struct config config)
     ;
     redisAppendFormattedCommand(c,sleep_cmd,tmp_0);
     s = (*((c->funcs)->write))(c);
-    tv.tv_sec = (long)0;
+    tv.tv_sec = (time_t)0;
     tv.tv_usec = 10000;
     redisSetTimeout(c,tv);
     {
@@ -12337,7 +12319,7 @@ static void test_blocking_io_errors(struct config config)
   tests ++;
   printf("#%02d ",tests); /* printf_va_257 */
   printf("Returns I/O error on socket timeout: "); /* printf_va_258 */
-  struct timeval tv = {.tv_sec = (long)0, .tv_usec = 1000};
+  struct timeval tv = {.tv_sec = (time_t)0, .tv_usec = 1000};
   tmp_4 = redisSetTimeout(c,tv);
   __FC_assert((tmp_4 == 0) != 0,"test.c",732,
               "redisSetTimeout(c,tv) == REDIS_OK");
@@ -12464,7 +12446,7 @@ static void test_invalid_timeout_errors(struct config config)
   tests ++;
   printf("#%02d ",tests); /* printf_va_261 */
   printf("Set error when an invalid timeout usec value is given to redisConnectWithTimeout: "); /* printf_va_262 */
-  config.tcp.timeout.tv_sec = (long)0;
+  config.tcp.timeout.tv_sec = (time_t)0;
   config.tcp.timeout.tv_usec = 10000001;
   c = redisConnectWithTimeout(config.tcp.host,config.tcp.port,
                               config.tcp.timeout);
@@ -13027,7 +13009,7 @@ int eva_main(void)
     int i = 0;
     /*@ loop unroll 5; */
     while (i < 5) {
-      Frama_C_make_unknown(argv[i],(unsigned int)255);
+      Frama_C_make_unknown(argv[i],(size_t)255);
       *(argv[i] + 255) = (char)0;
       i ++;
     }

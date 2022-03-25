@@ -29,7 +29,7 @@ int main(void)
   int tmp_0;
   char const *tmp_1;
   int *p = (int *)0;
-  int **q = calloc((unsigned int)1,sizeof(int *));
+  int **q = calloc((size_t)1,sizeof(int *));
   tmp_0 = memcmp((void const *)(& p),(void const *)q,sizeof(p));
   _Bool b = (_Bool)(tmp_0 == 0);
   if (b) tmp_1 = "zero"; else tmp_1 = "nonzero";

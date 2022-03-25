@@ -547,7 +547,7 @@ int eva_main(void)
     int i = 0;
     /*@ loop unroll 5; */
     while (i < 5) {
-      Frama_C_make_unknown(argv[i],(unsigned int)255);
+      Frama_C_make_unknown(argv[i],(size_t)255);
       *(argv[i] + 255) = (char)0;
       i ++;
     }

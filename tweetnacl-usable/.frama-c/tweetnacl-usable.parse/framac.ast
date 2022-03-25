@@ -154,7 +154,7 @@ void hexdump(char *data, int len)
   i = 0;
   /*@ loop unroll 105; */
   while (i < len) {
-    printf("%02X",(unsigned int)((int)((unsigned char)*(data + i)))); /* printf_va_1 */
+    printf("%02X",(unsigned int)((int)((u8)*(data + i)))); /* printf_va_1 */
     i ++;
   }
   printf("\n"); /* printf_va_2 */
@@ -296,11 +296,11 @@ int main(void)
   size_t tmp_1;
   int tmp_4;
   int tmp_5;
-  u8 sk[32] = {(unsigned char)0};
-  u8 pk[32] = {(unsigned char)0};
-  u8 sk2[32] = {(unsigned char)0};
-  u8 pk2[32] = {(unsigned char)0};
-  u8 nonce[24] = {(unsigned char)0};
+  u8 sk[32] = {(u8)0};
+  u8 pk[32] = {(u8)0};
+  u8 sk2[32] = {(u8)0};
+  u8 pk2[32] = {(u8)0};
+  u8 nonce[24] = {(u8)0};
   char *message =
     (char *)"This is a cross-platform test of crypto_box/crypto_box_open in TweetNaCl.";
   randombytes(nonce,(unsigned long long)24);
@@ -318,14 +318,14 @@ int main(void)
   hexdump((char *)(sk2),32);
   tmp = strlen((char const *)message);
   padded_mlen = (int)(tmp + (size_t)32);
-  padded_message = (char *)malloc((unsigned int)padded_mlen);
-  memset((void *)padded_message,0,(unsigned int)32);
+  padded_message = (char *)malloc((size_t)padded_mlen);
+  memset((void *)padded_message,0,(size_t)32);
   tmp_1 = strlen((char const *)message);
   ;
   ;
   memcpy((void *)(padded_message + 32),(void const *)message,tmp_1);
-  ciphertext = (u8 *)malloc((unsigned int)padded_mlen);
-  decryptedmessage = (char *)malloc((unsigned int)(padded_mlen + 1));
+  ciphertext = (u8 *)malloc((size_t)padded_mlen);
+  decryptedmessage = (char *)malloc((size_t)(padded_mlen + 1));
   *(decryptedmessage + padded_mlen) = (char)'\000';
   tmp_4 = crypto_box_curve25519xsalsa20poly1305_tweet(ciphertext,
                                                       (unsigned char const *)padded_message,
@@ -354,95 +354,95 @@ int main(void)
 }
 
 static u8 const _0[16];
-static u8 const _9[32] = {(unsigned char)9};
+static u8 const _9[32] = {(u8)9};
 static gf const gf0;
-static gf const gf1 = {(long long)1};
-static gf const _121665 = {(long long)0xDB41, (long long)1};
+static gf const gf1 = {(i64)1};
+static gf const _121665 = {(i64)0xDB41, (i64)1};
 static gf const D =
-  {(long long)0x78a3,
-   (long long)0x1359,
-   (long long)0x4dca,
-   (long long)0x75eb,
-   (long long)0xd8ab,
-   (long long)0x4141,
-   (long long)0x0a4d,
-   (long long)0x0070,
-   (long long)0xe898,
-   (long long)0x7779,
-   (long long)0x4079,
-   (long long)0x8cc7,
-   (long long)0xfe73,
-   (long long)0x2b6f,
-   (long long)0x6cee,
-   (long long)0x5203};
+  {(i64)0x78a3,
+   (i64)0x1359,
+   (i64)0x4dca,
+   (i64)0x75eb,
+   (i64)0xd8ab,
+   (i64)0x4141,
+   (i64)0x0a4d,
+   (i64)0x0070,
+   (i64)0xe898,
+   (i64)0x7779,
+   (i64)0x4079,
+   (i64)0x8cc7,
+   (i64)0xfe73,
+   (i64)0x2b6f,
+   (i64)0x6cee,
+   (i64)0x5203};
 static gf const D2 =
-  {(long long)0xf159,
-   (long long)0x26b2,
-   (long long)0x9b94,
-   (long long)0xebd6,
-   (long long)0xb156,
-   (long long)0x8283,
-   (long long)0x149a,
-   (long long)0x00e0,
-   (long long)0xd130,
-   (long long)0xeef3,
-   (long long)0x80f2,
-   (long long)0x198e,
-   (long long)0xfce7,
-   (long long)0x56df,
-   (long long)0xd9dc,
-   (long long)0x2406};
+  {(i64)0xf159,
+   (i64)0x26b2,
+   (i64)0x9b94,
+   (i64)0xebd6,
+   (i64)0xb156,
+   (i64)0x8283,
+   (i64)0x149a,
+   (i64)0x00e0,
+   (i64)0xd130,
+   (i64)0xeef3,
+   (i64)0x80f2,
+   (i64)0x198e,
+   (i64)0xfce7,
+   (i64)0x56df,
+   (i64)0xd9dc,
+   (i64)0x2406};
 static gf const X =
-  {(long long)0xd51a,
-   (long long)0x8f25,
-   (long long)0x2d60,
-   (long long)0xc956,
-   (long long)0xa7b2,
-   (long long)0x9525,
-   (long long)0xc760,
-   (long long)0x692c,
-   (long long)0xdc5c,
-   (long long)0xfdd6,
-   (long long)0xe231,
-   (long long)0xc0a4,
-   (long long)0x53fe,
-   (long long)0xcd6e,
-   (long long)0x36d3,
-   (long long)0x2169};
+  {(i64)0xd51a,
+   (i64)0x8f25,
+   (i64)0x2d60,
+   (i64)0xc956,
+   (i64)0xa7b2,
+   (i64)0x9525,
+   (i64)0xc760,
+   (i64)0x692c,
+   (i64)0xdc5c,
+   (i64)0xfdd6,
+   (i64)0xe231,
+   (i64)0xc0a4,
+   (i64)0x53fe,
+   (i64)0xcd6e,
+   (i64)0x36d3,
+   (i64)0x2169};
 static gf const Y =
-  {(long long)0x6658,
-   (long long)0x6666,
-   (long long)0x6666,
-   (long long)0x6666,
-   (long long)0x6666,
-   (long long)0x6666,
-   (long long)0x6666,
-   (long long)0x6666,
-   (long long)0x6666,
-   (long long)0x6666,
-   (long long)0x6666,
-   (long long)0x6666,
-   (long long)0x6666,
-   (long long)0x6666,
-   (long long)0x6666,
-   (long long)0x6666};
+  {(i64)0x6658,
+   (i64)0x6666,
+   (i64)0x6666,
+   (i64)0x6666,
+   (i64)0x6666,
+   (i64)0x6666,
+   (i64)0x6666,
+   (i64)0x6666,
+   (i64)0x6666,
+   (i64)0x6666,
+   (i64)0x6666,
+   (i64)0x6666,
+   (i64)0x6666,
+   (i64)0x6666,
+   (i64)0x6666,
+   (i64)0x6666};
 static gf const I =
-  {(long long)0xa0b0,
-   (long long)0x4a0e,
-   (long long)0x1b27,
-   (long long)0xc4ee,
-   (long long)0xe478,
-   (long long)0xad2f,
-   (long long)0x1806,
-   (long long)0x2f43,
-   (long long)0xd7a7,
-   (long long)0x3dfb,
-   (long long)0x0099,
-   (long long)0x2b4d,
-   (long long)0xdf0b,
-   (long long)0x4fc1,
-   (long long)0x2480,
-   (long long)0x2b83};
+  {(i64)0xa0b0,
+   (i64)0x4a0e,
+   (i64)0x1b27,
+   (i64)0xc4ee,
+   (i64)0xe478,
+   (i64)0xad2f,
+   (i64)0x1806,
+   (i64)0x2f43,
+   (i64)0xd7a7,
+   (i64)0x3dfb,
+   (i64)0x0099,
+   (i64)0x2b4d,
+   (i64)0xdf0b,
+   (i64)0x4fc1,
+   (i64)0x2480,
+   (i64)0x2b83};
 static u32 L32(u32 x, int c)
 {
   u32 __retres;
@@ -453,7 +453,7 @@ static u32 L32(u32 x, int c)
 static u32 ld32(u8 const *x)
 {
   u32 __retres;
-  u32 u = (unsigned long)*(x + 3);
+  u32 u = (u32)*(x + 3);
   u = (u << 8) | (unsigned long)*(x + 2);
   u = (u << 8) | (unsigned long)*(x + 1);
   __retres = (u << 8) | (unsigned long)*(x + 0);
@@ -463,8 +463,8 @@ static u32 ld32(u8 const *x)
 static u64 dl64(u8 const *x)
 {
   u64 i;
-  u64 u = (unsigned long long)0;
-  i = (unsigned long long)0;
+  u64 u = (u64)0;
+  i = (u64)0;
   /*@ loop unroll 8; */
   while (i < (u64)8) {
     u = (u << 8) | (unsigned long long)*(x + i);
@@ -479,7 +479,7 @@ static void st32(u8 *x, u32 u)
   i = 0;
   /*@ loop unroll 4; */
   while (i < 4) {
-    *(x + i) = (unsigned char)u;
+    *(x + i) = (u8)u;
     u >>= 8;
     i ++;
   }
@@ -491,7 +491,7 @@ static void ts64(u8 *x, u64 u)
   int i;
   i = 7;
   while (i >= 0) {
-    *(x + i) = (unsigned char)u;
+    *(x + i) = (u8)u;
     u >>= 8;
     i --;
   }
@@ -502,8 +502,8 @@ static int vn(u8 const *x, u8 const *y, int n)
 {
   int __retres;
   u32 i;
-  u32 d = (unsigned long)0;
-  i = (unsigned long)0;
+  u32 d = (u32)0;
+  i = (u32)0;
   /*@ loop unroll 32; */
   while (i < (u32)n) {
     d |= (unsigned long)((int)*(x + i) ^ (int)*(y + i));
@@ -650,22 +650,22 @@ int crypto_core_hsalsa20_tweet(unsigned char *out, unsigned char const *in,
 }
 
 static u8 const sigma[16] =
-  {(unsigned char)'e',
-   (unsigned char)'x',
-   (unsigned char)'p',
-   (unsigned char)'a',
-   (unsigned char)'n',
-   (unsigned char)'d',
-   (unsigned char)' ',
-   (unsigned char)'3',
-   (unsigned char)'2',
-   (unsigned char)'-',
-   (unsigned char)'b',
-   (unsigned char)'y',
-   (unsigned char)'t',
-   (unsigned char)'e',
-   (unsigned char)' ',
-   (unsigned char)'k'};
+  {(u8)'e',
+   (u8)'x',
+   (u8)'p',
+   (u8)'a',
+   (u8)'n',
+   (u8)'d',
+   (u8)' ',
+   (u8)'3',
+   (u8)'2',
+   (u8)'-',
+   (u8)'b',
+   (u8)'y',
+   (u8)'t',
+   (u8)'e',
+   (u8)' ',
+   (u8)'k'};
 int crypto_stream_salsa20_tweet_xor(unsigned char *c, unsigned char const *m,
                                     unsigned long long b,
                                     unsigned char const *n,
@@ -680,13 +680,13 @@ int crypto_stream_salsa20_tweet_xor(unsigned char *c, unsigned char const *m,
     __retres = 0;
     goto return_label;
   }
-  i = (unsigned long)0;
+  i = (u32)0;
   /*@ loop unroll 16; */
   while (i < (u32)16) {
-    z[i] = (unsigned char)0;
+    z[i] = (u8)0;
     i ++;
   }
-  i = (unsigned long)0;
+  i = (u32)0;
   /*@ loop unroll 8; */
   while (i < (u32)8) {
     z[i] = *(n + i);
@@ -695,7 +695,7 @@ int crypto_stream_salsa20_tweet_xor(unsigned char *c, unsigned char const *m,
   /*@ loop unroll 64; */
   while (b >= (unsigned long long)64) {
     crypto_core_salsa20_tweet(x,(unsigned char const *)(z),k,sigma);
-    i = (unsigned long)0;
+    i = (u32)0;
     /*@ loop unroll 64; */
     while (i < (u32)64) {
       int tmp;
@@ -703,12 +703,12 @@ int crypto_stream_salsa20_tweet_xor(unsigned char *c, unsigned char const *m,
       *(c + i) = (unsigned char)(tmp ^ (int)x[i]);
       i ++;
     }
-    u = (unsigned long)1;
-    i = (unsigned long)8;
+    u = (u32)1;
+    i = (u32)8;
     /*@ loop unroll 8; */
     while (i < (u32)16) {
-      u += (unsigned long)z[i];
-      z[i] = (unsigned char)u;
+      u += (u32)z[i];
+      z[i] = (u8)u;
       u >>= 8;
       i ++;
     }
@@ -718,7 +718,7 @@ int crypto_stream_salsa20_tweet_xor(unsigned char *c, unsigned char const *m,
   }
   if (b) {
     crypto_core_salsa20_tweet(x,(unsigned char const *)(z),k,sigma);
-    i = (unsigned long)0;
+    i = (u32)0;
     /*@ loop unroll 64; */
     while ((unsigned long long)i < b) {
       int tmp_0;
@@ -768,8 +768,8 @@ int crypto_stream_xsalsa20_tweet_xor(unsigned char *c,
 static void add1305(u32 *h, u32 const *c)
 {
   u32 j;
-  u32 u = (unsigned long)0;
-  j = (unsigned long)0;
+  u32 u = (u32)0;
+  j = (u32)0;
   /*@ loop unroll 17; */
   while (j < (u32)17) {
     u += *(h + j) + *(c + j);
@@ -781,23 +781,23 @@ static void add1305(u32 *h, u32 const *c)
 }
 
 static u32 const minusp[17] =
-  {(unsigned long)5,
-   (unsigned long)0,
-   (unsigned long)0,
-   (unsigned long)0,
-   (unsigned long)0,
-   (unsigned long)0,
-   (unsigned long)0,
-   (unsigned long)0,
-   (unsigned long)0,
-   (unsigned long)0,
-   (unsigned long)0,
-   (unsigned long)0,
-   (unsigned long)0,
-   (unsigned long)0,
-   (unsigned long)0,
-   (unsigned long)0,
-   (unsigned long)252};
+  {(u32)5,
+   (u32)0,
+   (u32)0,
+   (u32)0,
+   (u32)0,
+   (u32)0,
+   (u32)0,
+   (u32)0,
+   (u32)0,
+   (u32)0,
+   (u32)0,
+   (u32)0,
+   (u32)0,
+   (u32)0,
+   (u32)0,
+   (u32)0,
+   (u32)252};
 int crypto_onetimeauth_poly1305_tweet(unsigned char *out,
                                       unsigned char const *m,
                                       unsigned long long n,
@@ -813,19 +813,19 @@ int crypto_onetimeauth_poly1305_tweet(unsigned char *out,
   u32 h[17];
   u32 c[17];
   u32 g[17];
-  j = (unsigned long)0;
+  j = (u32)0;
   /*@ loop unroll 17; */
   while (j < (u32)17) {
     u32 tmp;
-    tmp = (unsigned long)0;
+    tmp = (u32)0;
     h[j] = tmp;
     r[j] = tmp;
     j ++;
   }
-  j = (unsigned long)0;
+  j = (u32)0;
   /*@ loop unroll 16; */
   while (j < (u32)16) {
-    r[j] = (unsigned long)*(k + j);
+    r[j] = (u32)*(k + j);
     j ++;
   }
   r[3] &= (unsigned long)15;
@@ -836,31 +836,31 @@ int crypto_onetimeauth_poly1305_tweet(unsigned char *out,
   r[12] &= (unsigned long)252;
   r[15] &= (unsigned long)15;
   while (n > (unsigned long long)0) {
-    j = (unsigned long)0;
+    j = (u32)0;
     /*@ loop unroll 17; */
     while (j < (u32)17) {
-      c[j] = (unsigned long)0;
+      c[j] = (u32)0;
       j ++;
     }
-    j = (unsigned long)0;
+    j = (u32)0;
     /*@ loop unroll 16; */
     while (1) {
       if (j < (u32)16) {
         if (! ((unsigned long long)j < n)) break;
       }
       else break;
-      c[j] = (unsigned long)*(m + j);
+      c[j] = (u32)*(m + j);
       j ++;
     }
-    c[j] = (unsigned long)1;
+    c[j] = (u32)1;
     m += j;
     n -= (unsigned long long)j;
     add1305(h,(u32 const *)(c));
-    i = (unsigned long)0;
+    i = (u32)0;
     /*@ loop unroll 17; */
     while (i < (u32)17) {
-      x[i] = (unsigned long)0;
-      j = (unsigned long)0;
+      x[i] = (u32)0;
+      j = (u32)0;
       /*@ loop unroll 17; */
       while (j < (u32)17) {
         u32 tmp_0;
@@ -871,14 +871,14 @@ int crypto_onetimeauth_poly1305_tweet(unsigned char *out,
       }
       i ++;
     }
-    i = (unsigned long)0;
+    i = (u32)0;
     /*@ loop unroll 17; */
     while (i < (u32)17) {
       h[i] = x[i];
       i ++;
     }
-    u = (unsigned long)0;
-    j = (unsigned long)0;
+    u = (u32)0;
+    j = (u32)0;
     /*@ loop unroll 16; */
     while (j < (u32)16) {
       u += h[j];
@@ -889,7 +889,7 @@ int crypto_onetimeauth_poly1305_tweet(unsigned char *out,
     u += h[16];
     h[16] = u & (unsigned long)3;
     u = (u32)5 * (u >> 2);
-    j = (unsigned long)0;
+    j = (u32)0;
     /*@ loop unroll 16; */
     while (j < (u32)16) {
       u += h[j];
@@ -900,7 +900,7 @@ int crypto_onetimeauth_poly1305_tweet(unsigned char *out,
     u += h[16];
     h[16] = u;
   }
-  j = (unsigned long)0;
+  j = (u32)0;
   /*@ loop unroll 17; */
   while (j < (u32)17) {
     g[j] = h[j];
@@ -908,21 +908,21 @@ int crypto_onetimeauth_poly1305_tweet(unsigned char *out,
   }
   add1305(h,minusp);
   s = - (h[16] >> 7);
-  j = (unsigned long)0;
+  j = (u32)0;
   /*@ loop unroll 17; */
   while (j < (u32)17) {
     h[j] ^= s & (g[j] ^ h[j]);
     j ++;
   }
-  j = (unsigned long)0;
+  j = (u32)0;
   /*@ loop unroll 16; */
   while (j < (u32)16) {
-    c[j] = (unsigned long)*(k + (j + (u32)16));
+    c[j] = (u32)*(k + (j + (u32)16));
     j ++;
   }
-  c[16] = (unsigned long)0;
+  c[16] = (u32)0;
   add1305(h,(u32 const *)(c));
-  j = (unsigned long)0;
+  j = (u32)0;
   /*@ loop unroll 16; */
   while (j < (u32)16) {
     *(out + j) = (unsigned char)h[j];
@@ -1036,8 +1036,8 @@ static void sel25519(i64 p[16], i64 q[16], int b)
 {
   i64 t;
   i64 i;
-  i64 c = (long long)(~ (b - 1));
-  i = (long long)0;
+  i64 c = (i64)(~ (b - 1));
+  i = (i64)0;
   /*@ loop unroll 16; */
   while (i < (i64)16) {
     t = c & (*(p + i) ^ *(q + i));
@@ -1084,8 +1084,8 @@ static void pack25519(u8 *o, i64 const n[16])
   i = 0;
   /*@ loop unroll 16; */
   while (i < 16) {
-    *(o + 2 * i) = (unsigned char)(t[i] & (long long)0xff);
-    *(o + (2 * i + 1)) = (unsigned char)(t[i] >> 8);
+    *(o + 2 * i) = (u8)(t[i] & (long long)0xff);
+    *(o + (2 * i + 1)) = (u8)(t[i] >> 8);
     i ++;
   }
   return;
@@ -1108,7 +1108,7 @@ static u8 par25519(i64 const a[16])
   u8 __retres;
   u8 d[32];
   pack25519(d,a);
-  __retres = (unsigned char)((int)d[0] & 1);
+  __retres = (u8)((int)d[0] & 1);
   return __retres;
 }
 
@@ -1118,7 +1118,7 @@ static void unpack25519(i64 o[16], u8 const *n)
   i = 0;
   /*@ loop unroll 16; */
   while (i < 16) {
-    *(o + i) = (long long)*(n + 2 * i) + ((long long)*(n + (2 * i + 1)) << 8);
+    *(o + i) = (i64)*(n + 2 * i) + ((i64)*(n + (2 * i + 1)) << 8);
     i ++;
   }
   *(o + 15) &= (long long)0x7fff;
@@ -1154,29 +1154,29 @@ static void M(i64 o[16], i64 const a[16], i64 const b[16])
   i64 i;
   i64 j;
   i64 t[31];
-  i = (long long)0;
+  i = (i64)0;
   /*@ loop unroll 31; */
   while (i < (i64)31) {
-    t[i] = (long long)0;
+    t[i] = (i64)0;
     i ++;
   }
-  i = (long long)0;
+  i = (i64)0;
   /*@ loop unroll 16; */
   while (i < (i64)16) {
-    j = (long long)0;
+    j = (i64)0;
     while (j < (i64)16) {
       t[i + j] += *(a + i) * *(b + j);
       j ++;
     }
     i ++;
   }
-  i = (long long)0;
+  i = (i64)0;
   /*@ loop unroll 15; */
   while (i < (i64)15) {
     t[i] += (i64)38 * t[i + (i64)16];
     i ++;
   }
-  i = (long long)0;
+  i = (i64)0;
   /*@ loop unroll 16; */
   while (i < (i64)16) {
     *(o + i) = t[i];
@@ -1260,23 +1260,23 @@ int crypto_scalarmult_curve25519_tweet(unsigned char *q,
   gf d;
   gf e;
   gf f;
-  i = (long long)0;
+  i = (i64)0;
   /*@ loop unroll 31; */
   while (i < (i64)31) {
     z[i] = *(n + i);
     i ++;
   }
-  z[31] = (unsigned char)(((int)*(n + 31) & 127) | 64);
-  z[0] = (unsigned char)((int)z[0] & 248);
+  z[31] = (u8)(((int)*(n + 31) & 127) | 64);
+  z[0] = (u8)((int)z[0] & 248);
   unpack25519(x,p);
-  i = (long long)0;
+  i = (i64)0;
   /*@ loop unroll 16; */
   while (i < (i64)16) {
     {
       i64 tmp_0;
       i64 tmp;
       b[i] = x[i];
-      tmp_0 = (long long)0;
+      tmp_0 = (i64)0;
       c[i] = tmp_0;
       tmp = tmp_0;
       a[i] = tmp;
@@ -1284,12 +1284,12 @@ int crypto_scalarmult_curve25519_tweet(unsigned char *q,
     }
     i ++;
   }
-  d[0] = (long long)1;
+  d[0] = (i64)1;
   a[0] = d[0];
-  i = (long long)254;
+  i = (i64)254;
   /*@ loop unroll 255; */
   while (i >= (i64)0) {
-    r = (long long)(((int)z[i >> 3] >> (i & (long long)7)) & 1);
+    r = (i64)(((int)z[i >> 3] >> (i & (long long)7)) & 1);
     sel25519(a,b,(int)r);
     sel25519(c,d,(int)r);
     A(e,(i64 const *)(a),(i64 const *)(c));
@@ -1314,7 +1314,7 @@ int crypto_scalarmult_curve25519_tweet(unsigned char *q,
     sel25519(c,d,(int)r);
     i --;
   }
-  i = (long long)0;
+  i = (i64)0;
   /*@ loop unroll 16; */
   while (i < (i64)16) {
     x[i + (i64)16] = a[i];
@@ -1342,7 +1342,7 @@ int crypto_box_curve25519xsalsa20poly1305_tweet_keypair(unsigned char *y,
                                                         unsigned char *x)
 {
   int tmp;
-  randombytes(x,(unsigned long long)32);
+  randombytes(x,(u64)32);
   tmp = crypto_scalarmult_curve25519_tweet_base(y,(unsigned char const *)x);
   return tmp;
 }
@@ -1653,70 +1653,70 @@ int crypto_hashblocks_sha512_tweet(unsigned char *x, unsigned char const *m,
 }
 
 static u8 const iv[64] =
-  {(unsigned char)0x6a,
-   (unsigned char)0x09,
-   (unsigned char)0xe6,
-   (unsigned char)0x67,
-   (unsigned char)0xf3,
-   (unsigned char)0xbc,
-   (unsigned char)0xc9,
-   (unsigned char)0x08,
-   (unsigned char)0xbb,
-   (unsigned char)0x67,
-   (unsigned char)0xae,
-   (unsigned char)0x85,
-   (unsigned char)0x84,
-   (unsigned char)0xca,
-   (unsigned char)0xa7,
-   (unsigned char)0x3b,
-   (unsigned char)0x3c,
-   (unsigned char)0x6e,
-   (unsigned char)0xf3,
-   (unsigned char)0x72,
-   (unsigned char)0xfe,
-   (unsigned char)0x94,
-   (unsigned char)0xf8,
-   (unsigned char)0x2b,
-   (unsigned char)0xa5,
-   (unsigned char)0x4f,
-   (unsigned char)0xf5,
-   (unsigned char)0x3a,
-   (unsigned char)0x5f,
-   (unsigned char)0x1d,
-   (unsigned char)0x36,
-   (unsigned char)0xf1,
-   (unsigned char)0x51,
-   (unsigned char)0x0e,
-   (unsigned char)0x52,
-   (unsigned char)0x7f,
-   (unsigned char)0xad,
-   (unsigned char)0xe6,
-   (unsigned char)0x82,
-   (unsigned char)0xd1,
-   (unsigned char)0x9b,
-   (unsigned char)0x05,
-   (unsigned char)0x68,
-   (unsigned char)0x8c,
-   (unsigned char)0x2b,
-   (unsigned char)0x3e,
-   (unsigned char)0x6c,
-   (unsigned char)0x1f,
-   (unsigned char)0x1f,
-   (unsigned char)0x83,
-   (unsigned char)0xd9,
-   (unsigned char)0xab,
-   (unsigned char)0xfb,
-   (unsigned char)0x41,
-   (unsigned char)0xbd,
-   (unsigned char)0x6b,
-   (unsigned char)0x5b,
-   (unsigned char)0xe0,
-   (unsigned char)0xcd,
-   (unsigned char)0x19,
-   (unsigned char)0x13,
-   (unsigned char)0x7e,
-   (unsigned char)0x21,
-   (unsigned char)0x79};
+  {(u8)0x6a,
+   (u8)0x09,
+   (u8)0xe6,
+   (u8)0x67,
+   (u8)0xf3,
+   (u8)0xbc,
+   (u8)0xc9,
+   (u8)0x08,
+   (u8)0xbb,
+   (u8)0x67,
+   (u8)0xae,
+   (u8)0x85,
+   (u8)0x84,
+   (u8)0xca,
+   (u8)0xa7,
+   (u8)0x3b,
+   (u8)0x3c,
+   (u8)0x6e,
+   (u8)0xf3,
+   (u8)0x72,
+   (u8)0xfe,
+   (u8)0x94,
+   (u8)0xf8,
+   (u8)0x2b,
+   (u8)0xa5,
+   (u8)0x4f,
+   (u8)0xf5,
+   (u8)0x3a,
+   (u8)0x5f,
+   (u8)0x1d,
+   (u8)0x36,
+   (u8)0xf1,
+   (u8)0x51,
+   (u8)0x0e,
+   (u8)0x52,
+   (u8)0x7f,
+   (u8)0xad,
+   (u8)0xe6,
+   (u8)0x82,
+   (u8)0xd1,
+   (u8)0x9b,
+   (u8)0x05,
+   (u8)0x68,
+   (u8)0x8c,
+   (u8)0x2b,
+   (u8)0x3e,
+   (u8)0x6c,
+   (u8)0x1f,
+   (u8)0x1f,
+   (u8)0x83,
+   (u8)0xd9,
+   (u8)0xab,
+   (u8)0xfb,
+   (u8)0x41,
+   (u8)0xbd,
+   (u8)0x6b,
+   (u8)0x5b,
+   (u8)0xe0,
+   (u8)0xcd,
+   (u8)0x19,
+   (u8)0x13,
+   (u8)0x7e,
+   (u8)0x21,
+   (u8)0x79};
 int crypto_hash_sha512_tweet(unsigned char *out, unsigned char const *m,
                              unsigned long long n)
 {
@@ -1725,7 +1725,7 @@ int crypto_hash_sha512_tweet(unsigned char *out, unsigned char const *m,
   u8 x[256];
   u64 i;
   u64 b = n;
-  i = (unsigned long long)0;
+  i = (u64)0;
   /*@ loop unroll 64; */
   while (i < (u64)64) {
     h[i] = iv[i];
@@ -1735,24 +1735,24 @@ int crypto_hash_sha512_tweet(unsigned char *out, unsigned char const *m,
   m += n;
   n &= (unsigned long long)127;
   m -= n;
-  i = (unsigned long long)0;
+  i = (u64)0;
   /*@ loop unroll 256; */
   while (i < (u64)256) {
-    x[i] = (unsigned char)0;
+    x[i] = (u8)0;
     i ++;
   }
-  i = (unsigned long long)0;
+  i = (u64)0;
   /*@ loop unroll 128; */
   while (i < n) {
     x[i] = *(m + i);
     i ++;
   }
-  x[n] = (unsigned char)128;
+  x[n] = (u8)128;
   n = (unsigned long long)(256 - 128 * (n < (unsigned long long)112));
-  x[n - (unsigned long long)9] = (unsigned char)(b >> 61);
+  x[n - (unsigned long long)9] = (u8)(b >> 61);
   ts64(& x[n] - 8,b << 3);
   crypto_hashblocks_sha512_tweet(h,(unsigned char const *)(x),n);
-  i = (unsigned long long)0;
+  i = (u64)0;
   /*@ loop unroll 64; */
   while (i < (u64)64) {
     *(out + i) = h[i];
@@ -1817,7 +1817,7 @@ static void pack(u8 *r, gf p[4])
   M(ty,(i64 const *)(*(p + 1)),(i64 const *)(zi));
   pack25519(r,(i64 const *)(ty));
   tmp = par25519((i64 const *)(tx));
-  *(r + 31) = (unsigned char)((int)*(r + 31) ^ ((int)tmp << 7));
+  *(r + 31) = (u8)((int)*(r + 31) ^ ((int)tmp << 7));
   return;
 }
 
@@ -1832,7 +1832,7 @@ static void scalarmult(gf p[4], gf q[4], u8 const *s)
   /*@ loop unroll 255; */
   while (i >= 0) {
     {
-      u8 b = (unsigned char)(((int)*(s + i / 8) >> (i & 7)) & 1);
+      u8 b = (u8)(((int)*(s + i / 8) >> (i & 7)) & 1);
       cswap(p,q,b);
       add(q,p);
       add(p,p);
@@ -1860,12 +1860,12 @@ int crypto_sign_ed25519_tweet_keypair(unsigned char *pk, unsigned char *sk)
   u8 d[64];
   gf p[4];
   int i;
-  randombytes(sk,(unsigned long long)32);
+  randombytes(sk,(u64)32);
   crypto_hash_sha512_tweet(d,(unsigned char const *)sk,
                            (unsigned long long)32);
-  d[0] = (unsigned char)((int)d[0] & 248);
-  d[31] = (unsigned char)((int)d[31] & 127);
-  d[31] = (unsigned char)((int)d[31] | 64);
+  d[0] = (u8)((int)d[0] & 248);
+  d[31] = (u8)((int)d[31] & 127);
+  d[31] = (u8)((int)d[31] | 64);
   scalarbase(p,(u8 const *)(d));
   pack(pk,p);
   i = 0;
@@ -1879,81 +1879,80 @@ int crypto_sign_ed25519_tweet_keypair(unsigned char *pk, unsigned char *sk)
 }
 
 static u64 const L[32] =
-  {(unsigned long long)0xed,
-   (unsigned long long)0xd3,
-   (unsigned long long)0xf5,
-   (unsigned long long)0x5c,
-   (unsigned long long)0x1a,
-   (unsigned long long)0x63,
-   (unsigned long long)0x12,
-   (unsigned long long)0x58,
-   (unsigned long long)0xd6,
-   (unsigned long long)0x9c,
-   (unsigned long long)0xf7,
-   (unsigned long long)0xa2,
-   (unsigned long long)0xde,
-   (unsigned long long)0xf9,
-   (unsigned long long)0xde,
-   (unsigned long long)0x14,
-   (unsigned long long)0,
-   (unsigned long long)0,
-   (unsigned long long)0,
-   (unsigned long long)0,
-   (unsigned long long)0,
-   (unsigned long long)0,
-   (unsigned long long)0,
-   (unsigned long long)0,
-   (unsigned long long)0,
-   (unsigned long long)0,
-   (unsigned long long)0,
-   (unsigned long long)0,
-   (unsigned long long)0,
-   (unsigned long long)0,
-   (unsigned long long)0,
-   (unsigned long long)0x10};
+  {(u64)0xed,
+   (u64)0xd3,
+   (u64)0xf5,
+   (u64)0x5c,
+   (u64)0x1a,
+   (u64)0x63,
+   (u64)0x12,
+   (u64)0x58,
+   (u64)0xd6,
+   (u64)0x9c,
+   (u64)0xf7,
+   (u64)0xa2,
+   (u64)0xde,
+   (u64)0xf9,
+   (u64)0xde,
+   (u64)0x14,
+   (u64)0,
+   (u64)0,
+   (u64)0,
+   (u64)0,
+   (u64)0,
+   (u64)0,
+   (u64)0,
+   (u64)0,
+   (u64)0,
+   (u64)0,
+   (u64)0,
+   (u64)0,
+   (u64)0,
+   (u64)0,
+   (u64)0,
+   (u64)0x10};
 static void modL(u8 *r, i64 x[64])
 {
   i64 carry;
   i64 i;
   i64 j;
-  i = (long long)63;
+  i = (i64)63;
   /*@ loop unroll 32; */
   while (i >= (i64)32) {
-    carry = (long long)0;
+    carry = (i64)0;
     j = i - (i64)32;
     /*@ loop unroll 20; */
     while (j < i - (i64)12) {
-      *(x + j) = (long long)((u64)*(x + j) + ((u64)carry - (u64)((i64)16 * *(
-                                                                 x + i)) * L[
-                                                           j - (i - (i64)32)]));
+      *(x + j) = (i64)((u64)*(x + j) + ((u64)carry - (u64)((i64)16 * *(x + i)) * L[
+                                                     j - (i - (i64)32)]));
       carry = (*(x + j) + (i64)128) >> 8;
       *(x + j) -= carry << 8;
       j ++;
     }
     *(x + j) += carry;
-    *(x + i) = (long long)0;
+    *(x + i) = (i64)0;
     i --;
   }
-  carry = (long long)0;
-  j = (long long)0;
+  carry = (i64)0;
+  j = (i64)0;
   /*@ loop unroll 32; */
   while (j < (i64)32) {
-    *(x + j) = (long long)((u64)*(x + j) + ((u64)carry - (u64)(*(x + 31) >> 4) * L[j]));
+    *(x + j) = (i64)((u64)*(x + j) + ((u64)carry - (u64)(*(x + 31) >> 4) * L[j]));
     carry = *(x + j) >> 8;
     *(x + j) &= (long long)255;
     j ++;
   }
-  j = (long long)0;
+  j = (i64)0;
   /*@ loop unroll 32; */
   while (j < (i64)32) {
-    *(x + j) = (long long)((u64)*(x + j) - (u64)carry * L[j]);
+    *(x + j) = (i64)((u64)*(x + j) - (u64)carry * L[j]);
     j ++;
   }
-  i = (long long)0;
+  i = (i64)0;
   /*@ loop unroll 32; */
   while (i < (i64)32) {
     *(x + (i + (i64)1)) += *(x + i) >> 8;
-    *(r + i) = (unsigned char)(*(x + i) & (long long)255);
+    *(r + i) = (u8)(*(x + i) & (long long)255);
     i ++;
   }
   return;
@@ -1963,16 +1962,16 @@ static void reduce(u8 *r)
 {
   i64 x[64];
   i64 i;
-  i = (long long)0;
+  i = (i64)0;
   /*@ loop unroll 64; */
   while (i < (i64)64) {
-    x[i] = (long long)((unsigned long long)*(r + i));
+    x[i] = (i64)((u64)*(r + i));
     i ++;
   }
-  i = (long long)0;
+  i = (i64)0;
   /*@ loop unroll 64; */
   while (i < (i64)64) {
-    *(r + i) = (unsigned char)0;
+    *(r + i) = (u8)0;
     i ++;
   }
   modL(r,x);
@@ -1992,17 +1991,17 @@ int crypto_sign_ed25519_tweet(unsigned char *sm, unsigned long long *smlen,
   i64 x[64];
   gf p[4];
   crypto_hash_sha512_tweet(d,sk,(unsigned long long)32);
-  d[0] = (unsigned char)((int)d[0] & 248);
-  d[31] = (unsigned char)((int)d[31] & 127);
-  d[31] = (unsigned char)((int)d[31] | 64);
+  d[0] = (u8)((int)d[0] & 248);
+  d[31] = (u8)((int)d[31] & 127);
+  d[31] = (u8)((int)d[31] | 64);
   *smlen = n + (unsigned long long)64;
-  i = (long long)0;
+  i = (i64)0;
   /*@ loop unroll 64; */
   while ((unsigned long long)i < n) {
     *(sm + ((i64)64 + i)) = *(m + i);
     i ++;
   }
-  i = (long long)0;
+  i = (i64)0;
   /*@ loop unroll 32; */
   while (i < (i64)32) {
     *(sm + ((i64)32 + i)) = d[(i64)32 + i];
@@ -2013,7 +2012,7 @@ int crypto_sign_ed25519_tweet(unsigned char *sm, unsigned long long *smlen,
   reduce(r);
   scalarbase(p,(u8 const *)(r));
   pack(sm,p);
-  i = (long long)0;
+  i = (i64)0;
   /*@ loop unroll 32; */
   while (i < (i64)32) {
     *(sm + (i + (i64)32)) = *(sk + (i + (i64)32));
@@ -2022,24 +2021,24 @@ int crypto_sign_ed25519_tweet(unsigned char *sm, unsigned long long *smlen,
   crypto_hash_sha512_tweet(h,(unsigned char const *)sm,
                            n + (unsigned long long)64);
   reduce(h);
-  i = (long long)0;
+  i = (i64)0;
   /*@ loop unroll 64; */
   while (i < (i64)64) {
-    x[i] = (long long)0;
+    x[i] = (i64)0;
     i ++;
   }
-  i = (long long)0;
+  i = (i64)0;
   /*@ loop unroll 32; */
   while (i < (i64)32) {
-    x[i] = (long long)((unsigned long long)r[i]);
+    x[i] = (i64)((u64)r[i]);
     i ++;
   }
-  i = (long long)0;
+  i = (i64)0;
   /*@ loop unroll 32; */
   while (i < (i64)32) {
-    j = (long long)0;
+    j = (i64)0;
     while (j < (i64)32) {
-      x[i + j] = (long long)((unsigned long long)x[i + j] + (unsigned long long)h[i] * (unsigned long long)d[j]);
+      x[i + j] = (i64)((u64)x[i + j] + (u64)h[i] * (u64)d[j]);
       j ++;
     }
     i ++;
@@ -2181,7 +2180,7 @@ void randombytes(unsigned char *ptr, unsigned long long length)
   FILE *fh = fopen("/dev/urandom","rb");
   if (fh != (FILE *)0) {
     size_t tmp_0;
-    tmp_0 = fread((void *)ptr,(unsigned int)length,(unsigned int)1,fh);
+    tmp_0 = fread((void *)ptr,(size_t)length,(size_t)1,fh);
     if (tmp_0 == (size_t)0) failed = (char)1;
     fclose(fh);
   }

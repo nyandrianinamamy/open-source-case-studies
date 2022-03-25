@@ -17,19 +17,19 @@ void *alloc(word_t size)
   word_t *curr;
   word_t *tmp;
   word_t i;
-  if (size >= (word_t)1024) size = size; else size = (unsigned long)1024;
+  if (size >= (word_t)1024) size = size; else size = (word_t)1024;
   prev = (word_t *)(& kfree_list);
   curr = kfree_list;
   while (curr) {
-    if (! ((unsigned long)curr & (size - (word_t)1))) {
+    if (! ((word_t)curr & (size - (word_t)1))) {
       tmp = (word_t *)*curr;
-      i = (unsigned long)1;
+      i = (word_t)1;
       while (1) {
         if (tmp) {
           if (! (i < size / (word_t)1024)) break;
         }
         else break;
-        if ((unsigned long)tmp != (unsigned long)curr + (word_t)1024 * i) {
+        if ((word_t)tmp != (word_t)curr + (word_t)1024 * i) {
           tmp = (word_t *)0;
           break;
         }
@@ -37,10 +37,10 @@ void *alloc(word_t size)
         i ++;
       }
       if (tmp) {
-        *prev = (unsigned long)tmp;
-        i = (unsigned long)0;
+        *prev = (word_t)tmp;
+        i = (word_t)0;
         while (i < size / (word_t)sizeof(word_t)) {
-          *(curr + i) = (unsigned long)0;
+          *(curr + i) = (word_t)0;
           i ++;
         }
         __retres = (void *)curr;
@@ -127,22 +127,23 @@ int main(void)
   void *b;
   void *c;
   int n = 10;
-  void *r = malloc((unsigned int)(1024 * (n + 1)));
-  if (((unsigned long)r & (unsigned long)(1024 - 1)) != (unsigned long)0) 
-    r = (void *)(((unsigned long)r & ~ ((unsigned long)(1024 - 1))) + (unsigned long)1024);
+  void *r = malloc((size_t)(1024 * (n + 1)));
+  if (((word_t)r & (unsigned long)(1024 - 1)) != (unsigned long)0) r = (void *)(
+                                                                   ((word_t)r & ~ ((word_t)(
+                                                                    1024 - 1))) + (word_t)1024);
   i = 0;
   /*@ loop unroll 9; */
   while (i < n - 1) {
-    *((word_t *)((unsigned long)r + (unsigned long)(i * 1024))) = (unsigned long)r + (unsigned long)(
-                                                                  (i + 1) * 1024);
+    *((word_t *)((word_t)r + (word_t)(i * 1024))) = (word_t)r + (word_t)(
+                                                    (i + 1) * 1024);
     i ++;
   }
-  *((word_t *)((unsigned long)r + (unsigned long)((n - 1) * 1024))) = (unsigned long)0;
+  *((word_t *)((word_t)r + (word_t)((n - 1) * 1024))) = (word_t)0;
   kfree_list = (word_t *)r;
   print_free_list(kfree_list);
-  a = alloc((unsigned long)1024);
-  b = alloc((unsigned long)2048);
-  c = alloc((unsigned long)65536);
+  a = alloc((word_t)1024);
+  b = alloc((word_t)2048);
+  c = alloc((word_t)65536);
   printf("a=%p b=%p c=%p\n",a,b,c); /* printf_va_4 */
   print_free_list(kfree_list);
   __retres = 0;

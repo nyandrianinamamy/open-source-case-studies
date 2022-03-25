@@ -82,36 +82,35 @@ int main(int m, char **f)
     __retres = 1;
     goto return_label;
   }
-  tmp_0 = fread((void *)(& k['U']),(unsigned long)',',(unsigned long)1,h);
+  tmp_0 = fread((void *)(& k['U']),(size_t)',',(size_t)1,h);
   if (tmp_0) {
     size_t tmp_1;
-    tmp_1 = fread((void *)(& l[16]),(unsigned long)('C' + '='),
-                  (unsigned long)1,h);
+    tmp_1 = fread((void *)(& l[16]),(size_t)('C' + '='),(size_t)1,h);
     if (tmp_1) {
       size_t tmp_2;
-      tmp_2 = fread((void *)(k),(unsigned long)'Q',(unsigned long)1,h);
+      tmp_2 = fread((void *)(k),(size_t)'Q',(size_t)1,h);
       if (tmp_2) tmp_3 = 0; else tmp_3 = 1;
     }
     else tmp_3 = 1;
   }
   else tmp_3 = 1;
-  uint32_t p = (unsigned int)tmp_3;
-  uint32_t w = (unsigned int)0;
+  uint32_t p = (uint32_t)tmp_3;
+  uint32_t w = (uint32_t)0;
   fclose(h);
   if (p) goto memcpy;
   if (m) h = __fc_stdout; else h = __fc_stdin;
-  setvbuf(h,(char *)0,0,(unsigned long)65536);
+  setvbuf(h,(char *)0,0,(size_t)65536);
   if (m) {
     size_t tmp_4;
     f ++;
     ;
     tmp_4 = strlen((char const *)*f);
-    z = (unsigned int)((size_t)6400 * tmp_4);
+    z = (uint32_t)((size_t)6400 * tmp_4);
     z = z;
-    memcpy((void *)(& k['+'] + 'R'),(void const *)(& z),(unsigned long)4);
+    memcpy((void *)(& k['+'] + 'R'),(void const *)(& z),(size_t)4);
     z += (uint32_t)'$';
-    memcpy((void *)(& k['Y']),(void const *)(& z),(unsigned long)4);
-    fwrite((void const *)(& k['U']),(unsigned long)',',(unsigned long)1,h);
+    memcpy((void *)(& k['Y']),(void const *)(& z),(size_t)4);
+    fwrite((void const *)(& k['U']),(size_t)',',(size_t)1,h);
     while (*(*f)) {
       char *tmp_6;
       char *tmp_5;
@@ -120,69 +119,69 @@ int main(int m, char **f)
       ;
       tmp_6 = strchr((char const *)(k),(int)*tmp_5);
       char *c_0 = tmp_6;
-      memset((void *)(l),0,(unsigned long)('F' + ':'));
+      memset((void *)(l),0,(size_t)('F' + ':'));
       if (c_0) {
-        w = (unsigned int)(c_0 - k);
+        w = (uint32_t)(c_0 - k);
         double *n_0 = & l[(w % (unsigned int)4) * (unsigned int)2];
         *n_0 = *(n_0 + 16);
         n_0 = & l[8] + ((w / (uint32_t)4) % (unsigned int)4) * (unsigned int)2;
         *n_0 = *(n_0 + 16);
       }
-      w = (unsigned int)3200;
+      w = (uint32_t)3200;
       while (w) {
         {
           int tmp_7;
           x = (double)0;
-          z = (unsigned int)2;
+          z = (uint32_t)2;
           b = (((double)1 - d[6]) * d[2] + ((double)2 * *(& l[z] + 17)) * *(
                                            & l[z] + 0)) - *(& l[z] + 1) * d[6];
           *(& l[z] + 1) = *(& l[z] + 0);
           *(& l[z] + 0) = b * d[6];
           x += (b * e2) * 49e2;
-          z = (unsigned int)10;
+          z = (uint32_t)10;
           b = (((double)1 - d[6]) * d[2] + ((double)2 * *(& l[z] + 17)) * *(
                                            & l[z] + 0)) - *(& l[z] + 1) * d[6];
           *(& l[z] + 1) = *(& l[z] + 0);
           *(& l[z] + 0) = b * d[6];
           x += (b * e2) * 49e2;
-          z = (unsigned int)6;
+          z = (uint32_t)6;
           b = (((double)1 - d[6]) * d[2] + ((double)2 * *(& l[z] + 17)) * *(
                                            & l[z] + 0)) - *(& l[z] + 1) * d[6];
           *(& l[z] + 1) = *(& l[z] + 0);
           *(& l[z] + 0) = b * d[6];
           x += (b * e2) * 49e2;
-          z = (unsigned int)12;
+          z = (uint32_t)12;
           b = (((double)1 - d[6]) * d[2] + ((double)2 * *(& l[z] + 17)) * *(
                                            & l[z] + 0)) - *(& l[z] + 1) * d[6];
           *(& l[z] + 1) = *(& l[z] + 0);
           *(& l[z] + 0) = b * d[6];
           x += (b * e2) * 49e2;
-          z = (unsigned int)4;
+          z = (uint32_t)4;
           b = (((double)1 - d[6]) * d[2] + ((double)2 * *(& l[z] + 17)) * *(
                                            & l[z] + 0)) - *(& l[z] + 1) * d[6];
           *(& l[z] + 1) = *(& l[z] + 0);
           *(& l[z] + 0) = b * d[6];
           x += (b * e2) * 49e2;
-          z = (unsigned int)8;
+          z = (uint32_t)8;
           b = (((double)1 - d[6]) * d[2] + ((double)2 * *(& l[z] + 17)) * *(
                                            & l[z] + 0)) - *(& l[z] + 1) * d[6];
           *(& l[z] + 1) = *(& l[z] + 0);
           *(& l[z] + 0) = b * d[6];
           x += (b * e2) * 49e2;
-          z = (unsigned int)14;
+          z = (uint32_t)14;
           b = (((double)1 - d[6]) * d[2] + ((double)2 * *(& l[z] + 17)) * *(
                                            & l[z] + 0)) - *(& l[z] + 1) * d[6];
           *(& l[z] + 1) = *(& l[z] + 0);
           *(& l[z] + 0) = b * d[6];
           x += (b * e2) * 49e2;
-          z = (unsigned int)0;
+          z = (uint32_t)0;
           b = (((double)1 - d[6]) * d[2] + ((double)2 * *(& l[z] + 17)) * *(
                                            & l[z] + 0)) - *(& l[z] + 1) * d[6];
           *(& l[z] + 1) = *(& l[z] + 0);
           *(& l[z] + 0) = b * d[6];
           x += (b * e2) * 49e2;
-          r = (short)x;
-          fwrite((void const *)(& r),(unsigned long)2,(unsigned long)1,h);
+          r = (int16_t)x;
+          fwrite((void const *)(& r),(size_t)2,(size_t)1,h);
           if (w > (uint32_t)1300) tmp_7 = 1; else tmp_7 = -1;
           e2 += (double)tmp_7 * 3e-2;
           if (e2 > (double)1) e2 = (double)1;
@@ -192,7 +191,7 @@ int main(int m, char **f)
             e2 = tmp_8;
           }
         }
-        w -= (uint32_t)1;
+        w --;
       }
     }
   }
@@ -200,44 +199,43 @@ int main(int m, char **f)
     size_t tmp_9;
     int tmp_10;
     int tmp_17;
-    tmp_9 = fread((void *)(& k['+'] + 'V'),(unsigned long)',',
-                  (unsigned long)1,h);
+    tmp_9 = fread((void *)(& k['+'] + 'V'),(size_t)',',(size_t)1,h);
     if (! tmp_9) {
       fread: fprintf(__fc_stderr,"%s\n",(char *)(t + 18)); /* fprintf_va_2 */
       __retres = 1;
       goto return_label;
     }
     tmp_10 = memcmp((void const *)(& k['+'] + '^'),(void const *)(& k[']']),
-                    (unsigned long)14);
+                    (size_t)14);
     if (tmp_10) {
       int_16t: fprintf(__fc_stderr,"%s\n",(char *)t); /* fprintf_va_3 */
       __retres = 1;
       goto return_label;
     }
-    memcpy((void *)(& n),(void const *)(& k['+'] + 'n'),(unsigned long)4);
+    memcpy((void *)(& n),(void const *)(& k['+'] + 'n'),(size_t)4);
     c = 16e3 / (double)n;
-    n = (unsigned int)c;
-    if ((double)n != c) n += (uint32_t)1;
+    n = (uint32_t)c;
+    if ((double)n != c) n ++;
     c /= (double)n;
-    memcpy((void *)(& v),(void const *)(& k[43] + 'x'),(unsigned long)2);
-    v = (unsigned short)((int)v / 8);
-    memcpy((void *)(& e),(void const *)(& k['+'] + 'v'),(unsigned long)2);
+    memcpy((void *)(& v),(void const *)(& k[43] + 'x'),(size_t)2);
+    v = (uint16_t)((int)v / 8);
+    memcpy((void *)(& e),(void const *)(& k['+'] + 'v'),(size_t)2);
     if (! e) goto int_16t;
     else 
       if (! v) goto int_16t;
       else 
         if ((int)v > 4) goto int_16t;
-    e = (unsigned short)((int)e - (int)v);
+    e = (uint16_t)((int)e - (int)v);
     while (1) {
       size_t tmp_16;
-      tmp_16 = fread((void *)(& k['Q']),(unsigned long)v,(unsigned long)1,h);
+      tmp_16 = fread((void *)(& k['Q']),(size_t)v,(size_t)1,h);
       if (! tmp_16) break;
-      z = (unsigned int)e;
+      z = (uint32_t)e;
       z = z;
       while (1) {
         uint32_t tmp_11;
         tmp_11 = z;
-        z -= (uint32_t)1;
+        z --;
         ;
         if (tmp_11) {
           int tmp_12;
@@ -247,7 +245,7 @@ int main(int m, char **f)
         else break;
       }
       if ((int)v > 1) {
-        memcpy((void *)(& r),(void const *)(& k[v] + 'O'),(unsigned long)2);
+        memcpy((void *)(& r),(void const *)(& k[v] + 'O'),(size_t)2);
         g = ((double)r / 512.0) / (double)'@';
       }
       else g = (double)((unsigned char)k['Q']) / 128.0 - (double)1;
@@ -272,10 +270,10 @@ int main(int m, char **f)
           d[2 + 2] += tmp_15;
           i += c;
           if (i >= (double)1) {
-            memset((void *)(d),0,(unsigned long)16);
-            memset((void *)(o),0,(unsigned long)8);
+            memset((void *)(d),0,(size_t)16);
+            memset((void *)(o),0,(size_t)8);
             x = (double)0;
-            z = (unsigned int)2;
+            z = (uint32_t)2;
             b = (((double)1 - d[6]) * d[2] + ((double)2 * *(& l[z] + 17)) * *(
                                              & l[z] + 0)) - *(& l[z] + 1) * d[6];
             *(& l[z] + 1) = *(& l[z] + 0);
@@ -288,7 +286,7 @@ int main(int m, char **f)
               o[z / (uint32_t)8] = z / (uint32_t)2;
               d[z / (uint32_t)8] = aa;
             }
-            z = (unsigned int)10;
+            z = (uint32_t)10;
             b = (((double)1 - d[6]) * d[2] + ((double)2 * *(& l[z] + 17)) * *(
                                              & l[z] + 0)) - *(& l[z] + 1) * d[6];
             *(& l[z] + 1) = *(& l[z] + 0);
@@ -301,7 +299,7 @@ int main(int m, char **f)
               o[z / (uint32_t)8] = z / (uint32_t)2;
               d[z / (uint32_t)8] = aa;
             }
-            z = (unsigned int)6;
+            z = (uint32_t)6;
             b = (((double)1 - d[6]) * d[2] + ((double)2 * *(& l[z] + 17)) * *(
                                              & l[z] + 0)) - *(& l[z] + 1) * d[6];
             *(& l[z] + 1) = *(& l[z] + 0);
@@ -314,7 +312,7 @@ int main(int m, char **f)
               o[z / (uint32_t)8] = z / (uint32_t)2;
               d[z / (uint32_t)8] = aa;
             }
-            z = (unsigned int)12;
+            z = (uint32_t)12;
             b = (((double)1 - d[6]) * d[2] + ((double)2 * *(& l[z] + 17)) * *(
                                              & l[z] + 0)) - *(& l[z] + 1) * d[6];
             *(& l[z] + 1) = *(& l[z] + 0);
@@ -327,7 +325,7 @@ int main(int m, char **f)
               o[z / (uint32_t)8] = z / (uint32_t)2;
               d[z / (uint32_t)8] = aa;
             }
-            z = (unsigned int)4;
+            z = (uint32_t)4;
             b = (((double)1 - d[6]) * d[2] + ((double)2 * *(& l[z] + 17)) * *(
                                              & l[z] + 0)) - *(& l[z] + 1) * d[6];
             *(& l[z] + 1) = *(& l[z] + 0);
@@ -340,7 +338,7 @@ int main(int m, char **f)
               o[z / (uint32_t)8] = z / (uint32_t)2;
               d[z / (uint32_t)8] = aa;
             }
-            z = (unsigned int)8;
+            z = (uint32_t)8;
             b = (((double)1 - d[6]) * d[2] + ((double)2 * *(& l[z] + 17)) * *(
                                              & l[z] + 0)) - *(& l[z] + 1) * d[6];
             *(& l[z] + 1) = *(& l[z] + 0);
@@ -353,7 +351,7 @@ int main(int m, char **f)
               o[z / (uint32_t)8] = z / (uint32_t)2;
               d[z / (uint32_t)8] = aa;
             }
-            z = (unsigned int)14;
+            z = (uint32_t)14;
             b = (((double)1 - d[6]) * d[2] + ((double)2 * *(& l[z] + 17)) * *(
                                              & l[z] + 0)) - *(& l[z] + 1) * d[6];
             *(& l[z] + 1) = *(& l[z] + 0);
@@ -366,7 +364,7 @@ int main(int m, char **f)
               o[z / (uint32_t)8] = z / (uint32_t)2;
               d[z / (uint32_t)8] = aa;
             }
-            z = (unsigned int)0;
+            z = (uint32_t)0;
             b = (((double)1 - d[6]) * d[2] + ((double)2 * *(& l[z] + 17)) * *(
                                              & l[z] + 0)) - *(& l[z] + 1) * d[6];
             *(& l[z] + 1) = *(& l[z] + 0);
@@ -379,10 +377,10 @@ int main(int m, char **f)
               o[z / (uint32_t)8] = z / (uint32_t)2;
               d[z / (uint32_t)8] = aa;
             }
-            if (w) r = (short)(x > d[7] * 0.45);
-            else r = (short)(x > d[7] * 0.6);
+            if (w) r = (int16_t)(x > d[7] * 0.45);
+            else r = (int16_t)(x > d[7] * 0.6);
             if (r) {
-              if (! w) memset((void *)(& l[32]),0,(unsigned long)128);
+              if (! w) memset((void *)(& l[32]),0,(size_t)128);
               if (x > d[7]) d[7] = x;
               l[((uint32_t)16 + o[1] * (uint32_t)4) + o[0]] += (double)1;
             }
@@ -391,7 +389,7 @@ int main(int m, char **f)
                 b = (double)(-1);
                 char j = (char)0;
                 x = (double)0;
-                z = (unsigned int)2;
+                z = (uint32_t)2;
                 z = z;
                 if (*(& l[z] + 32) > b) {
                   b = *(& l[z] + 32);
@@ -401,7 +399,7 @@ int main(int m, char **f)
                   b = *(& l[z] + 33);
                   j = k[z + (uint32_t)1];
                 }
-                z = (unsigned int)10;
+                z = (uint32_t)10;
                 z = z;
                 if (*(& l[z] + 32) > b) {
                   b = *(& l[z] + 32);
@@ -411,7 +409,7 @@ int main(int m, char **f)
                   b = *(& l[z] + 33);
                   j = k[z + (uint32_t)1];
                 }
-                z = (unsigned int)6;
+                z = (uint32_t)6;
                 z = z;
                 if (*(& l[z] + 32) > b) {
                   b = *(& l[z] + 32);
@@ -421,7 +419,7 @@ int main(int m, char **f)
                   b = *(& l[z] + 33);
                   j = k[z + (uint32_t)1];
                 }
-                z = (unsigned int)12;
+                z = (uint32_t)12;
                 z = z;
                 if (*(& l[z] + 32) > b) {
                   b = *(& l[z] + 32);
@@ -431,7 +429,7 @@ int main(int m, char **f)
                   b = *(& l[z] + 33);
                   j = k[z + (uint32_t)1];
                 }
-                z = (unsigned int)4;
+                z = (uint32_t)4;
                 z = z;
                 if (*(& l[z] + 32) > b) {
                   b = *(& l[z] + 32);
@@ -441,7 +439,7 @@ int main(int m, char **f)
                   b = *(& l[z] + 33);
                   j = k[z + (uint32_t)1];
                 }
-                z = (unsigned int)8;
+                z = (uint32_t)8;
                 z = z;
                 if (*(& l[z] + 32) > b) {
                   b = *(& l[z] + 32);
@@ -451,7 +449,7 @@ int main(int m, char **f)
                   b = *(& l[z] + 33);
                   j = k[z + (uint32_t)1];
                 }
-                z = (unsigned int)14;
+                z = (uint32_t)14;
                 z = z;
                 if (*(& l[z] + 32) > b) {
                   b = *(& l[z] + 32);
@@ -461,7 +459,7 @@ int main(int m, char **f)
                   b = *(& l[z] + 33);
                   j = k[z + (uint32_t)1];
                 }
-                z = (unsigned int)0;
+                z = (uint32_t)0;
                 z = z;
                 if (*(& l[z] + 32) > b) {
                   b = *(& l[z] + 32);
@@ -473,13 +471,12 @@ int main(int m, char **f)
                 }
                 putchar((int)j);
               }
-            w = (unsigned int)r;
-            memmove((void *)(& d[2]),(void const *)(& d[3]),
-                    (unsigned long)24);
+            w = (uint32_t)r;
+            memmove((void *)(& d[2]),(void const *)(& d[3]),(size_t)24);
             i -= (double)1;
           }
         }
-        p -= (uint32_t)1;
+        p --;
       }
       e2 = g;
     }
@@ -489,7 +486,7 @@ int main(int m, char **f)
       b = (double)(-1);
       char j_0 = (char)0;
       x = (double)0;
-      z = (unsigned int)2;
+      z = (uint32_t)2;
       z = z;
       if (*(& l[z] + 32) > b) {
         b = *(& l[z] + 32);
@@ -499,7 +496,7 @@ int main(int m, char **f)
         b = *(& l[z] + 33);
         j_0 = k[z + (uint32_t)1];
       }
-      z = (unsigned int)10;
+      z = (uint32_t)10;
       z = z;
       if (*(& l[z] + 32) > b) {
         b = *(& l[z] + 32);
@@ -509,7 +506,7 @@ int main(int m, char **f)
         b = *(& l[z] + 33);
         j_0 = k[z + (uint32_t)1];
       }
-      z = (unsigned int)6;
+      z = (uint32_t)6;
       z = z;
       if (*(& l[z] + 32) > b) {
         b = *(& l[z] + 32);
@@ -519,7 +516,7 @@ int main(int m, char **f)
         b = *(& l[z] + 33);
         j_0 = k[z + (uint32_t)1];
       }
-      z = (unsigned int)12;
+      z = (uint32_t)12;
       z = z;
       if (*(& l[z] + 32) > b) {
         b = *(& l[z] + 32);
@@ -529,7 +526,7 @@ int main(int m, char **f)
         b = *(& l[z] + 33);
         j_0 = k[z + (uint32_t)1];
       }
-      z = (unsigned int)4;
+      z = (uint32_t)4;
       z = z;
       if (*(& l[z] + 32) > b) {
         b = *(& l[z] + 32);
@@ -539,7 +536,7 @@ int main(int m, char **f)
         b = *(& l[z] + 33);
         j_0 = k[z + (uint32_t)1];
       }
-      z = (unsigned int)8;
+      z = (uint32_t)8;
       z = z;
       if (*(& l[z] + 32) > b) {
         b = *(& l[z] + 32);
@@ -549,7 +546,7 @@ int main(int m, char **f)
         b = *(& l[z] + 33);
         j_0 = k[z + (uint32_t)1];
       }
-      z = (unsigned int)14;
+      z = (uint32_t)14;
       z = z;
       if (*(& l[z] + 32) > b) {
         b = *(& l[z] + 32);
@@ -559,7 +556,7 @@ int main(int m, char **f)
         b = *(& l[z] + 33);
         j_0 = k[z + (uint32_t)1];
       }
-      z = (unsigned int)0;
+      z = (uint32_t)0;
       z = z;
       if (*(& l[z] + 32) > b) {
         b = *(& l[z] + 32);

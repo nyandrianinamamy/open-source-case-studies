@@ -12,7 +12,7 @@ uintptr_t f(void)
 {
   uintptr_t __retres;
   int a;
-  __retres = (unsigned int)(& a);
+  __retres = (uintptr_t)(& a);
   return __retres;
 }
 
@@ -20,7 +20,7 @@ uintptr_t g(void)
 {
   uintptr_t __retres;
   int a;
-  __retres = (unsigned int)(& a);
+  __retres = (uintptr_t)(& a);
   return __retres;
 }
 

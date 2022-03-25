@@ -270,7 +270,7 @@ directory	file	line	function	property kind	status	property
 .	miniz_tdef.c	913	tdefl_compress_fast	signed_overflow	Unknown	p - (mz_uint16 const *)pCur_dict ≤ 9223372036854775807
 .	miniz_tdef.c	921	tdefl_compress_fast	initialization	Unknown	\initialized(pLZ_flags)
 .	miniz_tdef.c	921	tdefl_compress_fast	mem_access	Unknown	\valid(pLZ_flags)
-.	miniz_tdef.c	922	tdefl_compress_fast	initialization	Unknown	\initialized(&d->m_huff_count[0][(unsigned char)first_trigram])
+.	miniz_tdef.c	922	tdefl_compress_fast	initialization	Unknown	\initialized(&d->m_huff_count[0][(mz_uint8)first_trigram])
 .	miniz_tdef.c	929	tdefl_compress_fast	precondition of __FC_assert	Unknown	nonnull_c: c ≢ 0
 .	miniz_tdef.c	935	tdefl_compress_fast	precondition of memcpy	Unknown	valid_dest: valid_or_empty(dest, n)
 .	miniz_tdef.c	940	tdefl_compress_fast	initialization	Unknown	\initialized(pLZ_flags)
@@ -281,7 +281,7 @@ directory	file	line	function	property kind	status	property
 .	miniz_tdef.c	946	tdefl_compress_fast	index_bound	Unknown	(mz_uint)(cur_match_len - TDEFL_MIN_MATCH_LEN) < 256
 .	miniz_tdef.c	952	tdefl_compress_fast	initialization	Unknown	\initialized(pLZ_flags)
 .	miniz_tdef.c	952	tdefl_compress_fast	mem_access	Unknown	\valid(pLZ_flags)
-.	miniz_tdef.c	953	tdefl_compress_fast	initialization	Unknown	\initialized(&d->m_huff_count[0][(unsigned char)first_trigram])
+.	miniz_tdef.c	953	tdefl_compress_fast	initialization	Unknown	\initialized(&d->m_huff_count[0][(mz_uint8)first_trigram])
 .	miniz_tdef.c	966	tdefl_compress_fast	precondition of __FC_assert	Unknown	nonnull_c: c ≢ 0
 .	miniz_tdef.c	969	tdefl_compress_fast	ptr_comparison	Unknown	\pointer_comparable((void *)pLZ_code_buf, (void *)(&d->m_lz_code_buf[(int)(TDEFL_LZ_CODE_BUF_SIZE - 8)]))
 .	miniz_tdef.c	990	tdefl_compress_fast	initialization	Unknown	\initialized(&d->m_dict[cur_pos])
@@ -449,8 +449,8 @@ directory	file	line	function	property kind	status	property
 .	miniz_tinfl.c	371	tinfl_decompress	signed_overflow	Unknown	-9223372036854775808 ≤ pIn_buf_end - pIn_buf_cur
 .	miniz_tinfl.c	371	tinfl_decompress	signed_overflow	Unknown	pIn_buf_end - pIn_buf_cur ≤ 9223372036854775807
 .	miniz_tinfl.c	371	tinfl_decompress	initialization	Unknown	\initialized(&r->m_tables[2].m_look_up[(unsigned long)(bit_buf & (unsigned long)((int)(TINFL_FAST_LOOKUP_SIZE - 1)))])
-.	miniz_tinfl.c	371	tinfl_decompress	initialization	Unknown	\initialized(&r->m_tables[2].m_tree[(unsigned long)((unsigned long)((int)(~temp)) + (unsigned long)((unsigned long)(bit_buf >> tmp_23) & 1))])
-.	miniz_tinfl.c	371	tinfl_decompress	index_bound	Unknown	(unsigned long)((unsigned long)((int)(~temp)) + (unsigned long)((unsigned long)(bit_buf >> tmp_23) & 1)) < (int)(TINFL_MAX_HUFF_SYMBOLS_0 * 2)
+.	miniz_tinfl.c	371	tinfl_decompress	initialization	Unknown	\initialized(&r->m_tables[2].m_tree[(unsigned long)((unsigned long)((int)(~temp)) + (unsigned long)((tinfl_bit_buf_t)(bit_buf >> tmp_23) & 1))])
+.	miniz_tinfl.c	371	tinfl_decompress	index_bound	Unknown	(unsigned long)((unsigned long)((int)(~temp)) + (unsigned long)((tinfl_bit_buf_t)(bit_buf >> tmp_23) & 1)) < (int)(TINFL_MAX_HUFF_SYMBOLS_0 * 2)
 .	miniz_tinfl.c	371	tinfl_decompress	shift	Unknown	0 ≤ tmp_23 < 64
 .	miniz_tinfl.c	371	tinfl_decompress	ptr_comparison	Unknown	\pointer_comparable((void *)pIn_buf_cur, (void *)pIn_buf_end)
 .	miniz_tinfl.c	371	tinfl_decompress	mem_access	Unknown	\valid_read(tmp_24)
@@ -458,8 +458,8 @@ directory	file	line	function	property kind	status	property
 .	miniz_tinfl.c	371	tinfl_decompress	mem_access	Unknown	\valid_read(pIn_buf_cur + 0)
 .	miniz_tinfl.c	371	tinfl_decompress	mem_access	Unknown	\valid_read(pIn_buf_cur + 1)
 .	miniz_tinfl.c	371	tinfl_decompress	initialization	Unknown	\initialized(&r->m_tables[2].m_look_up[(unsigned long)(bit_buf & (unsigned long)((int)(TINFL_FAST_LOOKUP_SIZE - 1)))])
-.	miniz_tinfl.c	371	tinfl_decompress	initialization	Unknown	\initialized(&r->m_tables[2].m_tree[(unsigned long)((unsigned long)((int)(~temp)) + (unsigned long)((unsigned long)(bit_buf >> tmp_25) & 1))])
-.	miniz_tinfl.c	371	tinfl_decompress	index_bound	Unknown	(unsigned long)((unsigned long)((int)(~temp)) + (unsigned long)((unsigned long)(bit_buf >> tmp_25) & 1)) < (int)(TINFL_MAX_HUFF_SYMBOLS_0 * 2)
+.	miniz_tinfl.c	371	tinfl_decompress	initialization	Unknown	\initialized(&r->m_tables[2].m_tree[(unsigned long)((unsigned long)((int)(~temp)) + (unsigned long)((tinfl_bit_buf_t)(bit_buf >> tmp_25) & 1))])
+.	miniz_tinfl.c	371	tinfl_decompress	index_bound	Unknown	(unsigned long)((unsigned long)((int)(~temp)) + (unsigned long)((tinfl_bit_buf_t)(bit_buf >> tmp_25) & 1)) < (int)(TINFL_MAX_HUFF_SYMBOLS_0 * 2)
 .	miniz_tinfl.c	371	tinfl_decompress	shift	Unknown	0 ≤ tmp_25 < 64
 .	miniz_tinfl.c	371	tinfl_decompress	shift	Unknown	0 ≤ code_len < 64
 .	miniz_tinfl.c	374	tinfl_decompress	index_bound	Unknown	tmp_26 < (int)((int)(TINFL_MAX_HUFF_SYMBOLS_0 + TINFL_MAX_HUFF_SYMBOLS_1) + 137)
@@ -481,8 +481,8 @@ directory	file	line	function	property kind	status	property
 .	miniz_tinfl.c	400	tinfl_decompress	signed_overflow	Unknown	pIn_buf_end - pIn_buf_cur ≤ 9223372036854775807
 .	miniz_tinfl.c	400	tinfl_decompress	signed_overflow	Unknown	-9223372036854775808 ≤ pOut_buf_end - pOut_buf_cur
 .	miniz_tinfl.c	402	tinfl_decompress	initialization	Unknown	\initialized(&r->m_tables[0].m_look_up[(unsigned long)(bit_buf & (unsigned long)((int)(TINFL_FAST_LOOKUP_SIZE - 1)))])
-.	miniz_tinfl.c	402	tinfl_decompress	initialization	Unknown	\initialized(&r->m_tables[0].m_tree[(unsigned long)((unsigned long)((int)(~temp_0)) + (unsigned long)((unsigned long)(bit_buf >> tmp_29) & 1))])
-.	miniz_tinfl.c	402	tinfl_decompress	index_bound	Unknown	(unsigned long)((unsigned long)((int)(~temp_0)) + (unsigned long)((unsigned long)(bit_buf >> tmp_29) & 1)) < (int)(TINFL_MAX_HUFF_SYMBOLS_0 * 2)
+.	miniz_tinfl.c	402	tinfl_decompress	initialization	Unknown	\initialized(&r->m_tables[0].m_tree[(unsigned long)((unsigned long)((int)(~temp_0)) + (unsigned long)((tinfl_bit_buf_t)(bit_buf >> tmp_29) & 1))])
+.	miniz_tinfl.c	402	tinfl_decompress	index_bound	Unknown	(unsigned long)((unsigned long)((int)(~temp_0)) + (unsigned long)((tinfl_bit_buf_t)(bit_buf >> tmp_29) & 1)) < (int)(TINFL_MAX_HUFF_SYMBOLS_0 * 2)
 .	miniz_tinfl.c	402	tinfl_decompress	shift	Unknown	0 ≤ tmp_29 < 64
 .	miniz_tinfl.c	402	tinfl_decompress	ptr_comparison	Unknown	\pointer_comparable((void *)pIn_buf_cur, (void *)pIn_buf_end)
 .	miniz_tinfl.c	402	tinfl_decompress	mem_access	Unknown	\valid_read(tmp_30)
@@ -490,21 +490,21 @@ directory	file	line	function	property kind	status	property
 .	miniz_tinfl.c	402	tinfl_decompress	mem_access	Unknown	\valid_read(pIn_buf_cur + 0)
 .	miniz_tinfl.c	402	tinfl_decompress	mem_access	Unknown	\valid_read(pIn_buf_cur + 1)
 .	miniz_tinfl.c	402	tinfl_decompress	initialization	Unknown	\initialized(&r->m_tables[0].m_look_up[(unsigned long)(bit_buf & (unsigned long)((int)(TINFL_FAST_LOOKUP_SIZE - 1)))])
-.	miniz_tinfl.c	402	tinfl_decompress	initialization	Unknown	\initialized(&r->m_tables[0].m_tree[(unsigned long)((unsigned long)((int)(~temp_0)) + (unsigned long)((unsigned long)(bit_buf >> tmp_31) & 1))])
-.	miniz_tinfl.c	402	tinfl_decompress	index_bound	Unknown	(unsigned long)((unsigned long)((int)(~temp_0)) + (unsigned long)((unsigned long)(bit_buf >> tmp_31) & 1)) < (int)(TINFL_MAX_HUFF_SYMBOLS_0 * 2)
+.	miniz_tinfl.c	402	tinfl_decompress	initialization	Unknown	\initialized(&r->m_tables[0].m_tree[(unsigned long)((unsigned long)((int)(~temp_0)) + (unsigned long)((tinfl_bit_buf_t)(bit_buf >> tmp_31) & 1))])
+.	miniz_tinfl.c	402	tinfl_decompress	index_bound	Unknown	(unsigned long)((unsigned long)((int)(~temp_0)) + (unsigned long)((tinfl_bit_buf_t)(bit_buf >> tmp_31) & 1)) < (int)(TINFL_MAX_HUFF_SYMBOLS_0 * 2)
 .	miniz_tinfl.c	402	tinfl_decompress	shift	Unknown	0 ≤ tmp_31 < 64
 .	miniz_tinfl.c	402	tinfl_decompress	shift	Unknown	0 ≤ code_len_0 < 64
 .	miniz_tinfl.c	405	tinfl_decompress	ptr_comparison	Unknown	\pointer_comparable((void *)pOut_buf_cur, (void *)pOut_buf_end)
 .	miniz_tinfl.c	409	tinfl_decompress	mem_access	Unknown	\valid(tmp_32)
 .	miniz_tinfl.c	418	tinfl_decompress	mem_access	Unknown	\valid_read((mz_uint32 const *)pIn_buf_cur)
 .	miniz_tinfl.c	430	tinfl_decompress	initialization	Unknown	\initialized(&r->m_tables[0].m_look_up[(unsigned long)(bit_buf & (unsigned long)((int)(TINFL_FAST_LOOKUP_SIZE - 1)))])
-.	miniz_tinfl.c	437	tinfl_decompress	initialization	Unknown	\initialized(&r->m_tables[0].m_tree[(unsigned long)((unsigned long)((int)(~sym2)) + (unsigned long)((unsigned long)(bit_buf >> tmp_33) & 1))])
-.	miniz_tinfl.c	437	tinfl_decompress	index_bound	Unknown	(unsigned long)((unsigned long)((int)(~sym2)) + (unsigned long)((unsigned long)(bit_buf >> tmp_33) & 1)) < (int)(TINFL_MAX_HUFF_SYMBOLS_0 * 2)
+.	miniz_tinfl.c	437	tinfl_decompress	initialization	Unknown	\initialized(&r->m_tables[0].m_tree[(unsigned long)((unsigned long)((int)(~sym2)) + (unsigned long)((tinfl_bit_buf_t)(bit_buf >> tmp_33) & 1))])
+.	miniz_tinfl.c	437	tinfl_decompress	index_bound	Unknown	(unsigned long)((unsigned long)((int)(~sym2)) + (unsigned long)((tinfl_bit_buf_t)(bit_buf >> tmp_33) & 1)) < (int)(TINFL_MAX_HUFF_SYMBOLS_0 * 2)
 .	miniz_tinfl.c	437	tinfl_decompress	shift	Unknown	0 ≤ tmp_33 < 64
 .	miniz_tinfl.c	441	tinfl_decompress	shift	Unknown	0 ≤ code_len_1 < 64
 .	miniz_tinfl.c	454	tinfl_decompress	initialization	Unknown	\initialized(&r->m_tables[0].m_look_up[(unsigned long)(bit_buf & (unsigned long)((int)(TINFL_FAST_LOOKUP_SIZE - 1)))])
-.	miniz_tinfl.c	461	tinfl_decompress	initialization	Unknown	\initialized(&r->m_tables[0].m_tree[(unsigned long)((unsigned long)((int)(~sym2)) + (unsigned long)((unsigned long)(bit_buf >> tmp_34) & 1))])
-.	miniz_tinfl.c	461	tinfl_decompress	index_bound	Unknown	(unsigned long)((unsigned long)((int)(~sym2)) + (unsigned long)((unsigned long)(bit_buf >> tmp_34) & 1)) < (int)(TINFL_MAX_HUFF_SYMBOLS_0 * 2)
+.	miniz_tinfl.c	461	tinfl_decompress	initialization	Unknown	\initialized(&r->m_tables[0].m_tree[(unsigned long)((unsigned long)((int)(~sym2)) + (unsigned long)((tinfl_bit_buf_t)(bit_buf >> tmp_34) & 1))])
+.	miniz_tinfl.c	461	tinfl_decompress	index_bound	Unknown	(unsigned long)((unsigned long)((int)(~sym2)) + (unsigned long)((tinfl_bit_buf_t)(bit_buf >> tmp_34) & 1)) < (int)(TINFL_MAX_HUFF_SYMBOLS_0 * 2)
 .	miniz_tinfl.c	461	tinfl_decompress	shift	Unknown	0 ≤ tmp_34 < 64
 .	miniz_tinfl.c	464	tinfl_decompress	shift	Unknown	0 ≤ code_len_1 < 64
 .	miniz_tinfl.c	467	tinfl_decompress	mem_access	Unknown	\valid(pOut_buf_cur + 0)
@@ -516,8 +516,8 @@ directory	file	line	function	property kind	status	property
 .	miniz_tinfl.c	490	tinfl_decompress	signed_overflow	Unknown	-9223372036854775808 ≤ pIn_buf_end - pIn_buf_cur
 .	miniz_tinfl.c	490	tinfl_decompress	signed_overflow	Unknown	pIn_buf_end - pIn_buf_cur ≤ 9223372036854775807
 .	miniz_tinfl.c	490	tinfl_decompress	initialization	Unknown	\initialized(&r->m_tables[1].m_look_up[(unsigned long)(bit_buf & (unsigned long)((int)(TINFL_FAST_LOOKUP_SIZE - 1)))])
-.	miniz_tinfl.c	490	tinfl_decompress	initialization	Unknown	\initialized(&r->m_tables[1].m_tree[(unsigned long)((unsigned long)((int)(~temp_1)) + (unsigned long)((unsigned long)(bit_buf >> tmp_36) & 1))])
-.	miniz_tinfl.c	490	tinfl_decompress	index_bound	Unknown	(unsigned long)((unsigned long)((int)(~temp_1)) + (unsigned long)((unsigned long)(bit_buf >> tmp_36) & 1)) < (int)(TINFL_MAX_HUFF_SYMBOLS_0 * 2)
+.	miniz_tinfl.c	490	tinfl_decompress	initialization	Unknown	\initialized(&r->m_tables[1].m_tree[(unsigned long)((unsigned long)((int)(~temp_1)) + (unsigned long)((tinfl_bit_buf_t)(bit_buf >> tmp_36) & 1))])
+.	miniz_tinfl.c	490	tinfl_decompress	index_bound	Unknown	(unsigned long)((unsigned long)((int)(~temp_1)) + (unsigned long)((tinfl_bit_buf_t)(bit_buf >> tmp_36) & 1)) < (int)(TINFL_MAX_HUFF_SYMBOLS_0 * 2)
 .	miniz_tinfl.c	490	tinfl_decompress	shift	Unknown	0 ≤ tmp_36 < 64
 .	miniz_tinfl.c	490	tinfl_decompress	ptr_comparison	Unknown	\pointer_comparable((void *)pIn_buf_cur, (void *)pIn_buf_end)
 .	miniz_tinfl.c	490	tinfl_decompress	mem_access	Unknown	\valid_read(tmp_37)
@@ -525,8 +525,8 @@ directory	file	line	function	property kind	status	property
 .	miniz_tinfl.c	490	tinfl_decompress	mem_access	Unknown	\valid_read(pIn_buf_cur + 0)
 .	miniz_tinfl.c	490	tinfl_decompress	mem_access	Unknown	\valid_read(pIn_buf_cur + 1)
 .	miniz_tinfl.c	490	tinfl_decompress	initialization	Unknown	\initialized(&r->m_tables[1].m_look_up[(unsigned long)(bit_buf & (unsigned long)((int)(TINFL_FAST_LOOKUP_SIZE - 1)))])
-.	miniz_tinfl.c	490	tinfl_decompress	initialization	Unknown	\initialized(&r->m_tables[1].m_tree[(unsigned long)((unsigned long)((int)(~temp_1)) + (unsigned long)((unsigned long)(bit_buf >> tmp_38) & 1))])
-.	miniz_tinfl.c	490	tinfl_decompress	index_bound	Unknown	(unsigned long)((unsigned long)((int)(~temp_1)) + (unsigned long)((unsigned long)(bit_buf >> tmp_38) & 1)) < (int)(TINFL_MAX_HUFF_SYMBOLS_0 * 2)
+.	miniz_tinfl.c	490	tinfl_decompress	initialization	Unknown	\initialized(&r->m_tables[1].m_tree[(unsigned long)((unsigned long)((int)(~temp_1)) + (unsigned long)((tinfl_bit_buf_t)(bit_buf >> tmp_38) & 1))])
+.	miniz_tinfl.c	490	tinfl_decompress	index_bound	Unknown	(unsigned long)((unsigned long)((int)(~temp_1)) + (unsigned long)((tinfl_bit_buf_t)(bit_buf >> tmp_38) & 1)) < (int)(TINFL_MAX_HUFF_SYMBOLS_0 * 2)
 .	miniz_tinfl.c	490	tinfl_decompress	shift	Unknown	0 ≤ tmp_38 < 64
 .	miniz_tinfl.c	490	tinfl_decompress	shift	Unknown	0 ≤ code_len_2 < 64
 .	miniz_tinfl.c	491	tinfl_decompress	index_bound	Unknown	dist < 32
@@ -537,9 +537,9 @@ directory	file	line	function	property kind	status	property
 .	miniz_tinfl.c	508	tinfl_decompress	ptr_comparison	Unknown	\pointer_comparable((void *)pOut_buf_cur, (void *)pSrc)
 .	miniz_tinfl.c	508	tinfl_decompress	ptr_comparison	Unknown	\pointer_comparable((void *)(tmp_43 + counter), (void *)pOut_buf_end)
 .	miniz_tinfl.c	512	tinfl_decompress	ptr_comparison	Unknown	\pointer_comparable((void *)pOut_buf_cur, (void *)pOut_buf_end)
-.	miniz_tinfl.c	516	tinfl_decompress	initialization	Unknown	\initialized(pOut_buf_start + (unsigned long)((unsigned long)(tmp_41 - (unsigned long)dist) & out_buf_size_mask))
+.	miniz_tinfl.c	516	tinfl_decompress	initialization	Unknown	\initialized(pOut_buf_start + (unsigned long)((size_t)(tmp_41 - (size_t)dist) & out_buf_size_mask))
 .	miniz_tinfl.c	516	tinfl_decompress	mem_access	Unknown	\valid(tmp_40)
-.	miniz_tinfl.c	516	tinfl_decompress	mem_access	Unknown	\valid_read(pOut_buf_start + (unsigned long)((unsigned long)(tmp_41 - (unsigned long)dist) & out_buf_size_mask))
+.	miniz_tinfl.c	516	tinfl_decompress	mem_access	Unknown	\valid_read(pOut_buf_start + (unsigned long)((size_t)(tmp_41 - (size_t)dist) & out_buf_size_mask))
 .	miniz_tinfl.c	527	tinfl_decompress	precondition of memcpy	Unknown	separation: \separated((char *)dest + (0 .. n - 1), (char *)src + (0 .. n - 1))
 .	miniz_tinfl.c	527	tinfl_decompress	precondition of memcpy	Unknown	valid_dest: valid_or_empty(dest, n)
 .	miniz_tinfl.c	527	tinfl_decompress	precondition of memcpy	Unknown	valid_src: valid_read_or_empty(src, n)

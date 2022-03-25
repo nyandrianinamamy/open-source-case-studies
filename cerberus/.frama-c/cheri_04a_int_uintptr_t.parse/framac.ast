@@ -28,7 +28,7 @@ int main(void)
   int __retres;
   int x = 0;
   int *px = & x;
-  uintptr_t ql = (unsigned int)px;
+  uintptr_t ql = (uintptr_t)px;
   int *q = (int *)ql;
   *q = 1;
   printf("x=%i  *px=%i  *q=%i\n",x,*px,*q); /* printf_va_1 */

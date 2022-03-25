@@ -282,7 +282,7 @@ int main(void)
   int tmp_12;
   strcpy(a,"hello");
   printf("%s\n",a); /* printf_va_1 */
-  strncpy(a,"gosh",(unsigned long)2);
+  strncpy(a,"gosh",(size_t)2);
   printf("%s\n",a); /* printf_va_2 */
   tmp = strcmp((char const *)(a),"apple");
   printf("%d\n",tmp > 0); /* printf_va_3 */
@@ -294,13 +294,13 @@ int main(void)
   printf("%zd\n",tmp_2); /* printf_va_6 */
   strcat(a,"!");
   printf("%s\n",a); /* printf_va_7 */
-  tmp_3 = strncmp((char const *)(a),"apple",(unsigned long)2);
+  tmp_3 = strncmp((char const *)(a),"apple",(size_t)2);
   printf("%d\n",tmp_3 > 0); /* printf_va_8 */
-  tmp_4 = strncmp((char const *)(a),"goere",(unsigned long)2);
+  tmp_4 = strncmp((char const *)(a),"goere",(size_t)2);
   printf("%d\n",tmp_4 == 0); /* printf_va_9 */
-  tmp_5 = strncmp((char const *)(a),"goerg",(unsigned long)2);
+  tmp_5 = strncmp((char const *)(a),"goerg",(size_t)2);
   printf("%d\n",tmp_5 == 0); /* printf_va_10 */
-  tmp_6 = strncmp((char const *)(a),"zebra",(unsigned long)2);
+  tmp_6 = strncmp((char const *)(a),"zebra",(size_t)2);
   printf("%d\n",tmp_6 < 0); /* printf_va_11 */
   tmp_7 = strchr((char const *)(a),'o');
   printf("%s\n",tmp_7); /* printf_va_12 */
@@ -308,15 +308,15 @@ int main(void)
   printf("%s\n",tmp_8); /* printf_va_13 */
   tmp_9 = strrchr((char const *)(a),'x');
   printf("%d\n",tmp_9 == (char *)0); /* printf_va_14 */
-  memset((void *)(& a[1]),'r',(unsigned long)4);
+  memset((void *)(& a[1]),'r',(size_t)4);
   printf("%s\n",a); /* printf_va_15 */
-  memcpy((void *)(& a[2]),(void const *)(a),(unsigned long)2);
+  memcpy((void *)(& a[2]),(void const *)(a),(size_t)2);
   printf("%s\n",a); /* printf_va_16 */
-  tmp_10 = memcmp((void const *)(a),(void const *)"apple",(unsigned long)4);
+  tmp_10 = memcmp((void const *)(a),(void const *)"apple",(size_t)4);
   printf("%d\n",tmp_10 > 0); /* printf_va_17 */
-  tmp_11 = memcmp((void const *)(a),(void const *)"grgr",(unsigned long)4);
+  tmp_11 = memcmp((void const *)(a),(void const *)"grgr",(size_t)4);
   printf("%d\n",tmp_11 == 0); /* printf_va_18 */
-  tmp_12 = memcmp((void const *)(a),(void const *)"zebra",(unsigned long)4);
+  tmp_12 = memcmp((void const *)(a),(void const *)"zebra",(size_t)4);
   printf("%d\n",tmp_12 < 0); /* printf_va_19 */
   __retres = 0;
   return __retres;

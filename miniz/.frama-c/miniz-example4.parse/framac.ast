@@ -247,7 +247,7 @@ int eva_main(void)
     int i = 0;
     /*@ loop unroll 5; */
     while (i < 5) {
-      Frama_C_make_unknown(argv[i],(unsigned long)255);
+      Frama_C_make_unknown(argv[i],(size_t)255);
       *(argv[i] + 255) = (char)0;
       i ++;
     }
@@ -380,7 +380,7 @@ static int tinfl_put_buf_func(void const *pBuf, int len, void *pUser)
 {
   int __retres;
   size_t tmp;
-  tmp = fwrite(pBuf,(unsigned long)1,(unsigned long)len,(FILE *)pUser);
+  tmp = fwrite(pBuf,(size_t)1,(size_t)len,(FILE *)pUser);
   ;
   __retres = len == (int)tmp;
   return __retres;
@@ -611,15 +611,14 @@ int main(int argc, char **argv)
         goto return_label;
       }
     }
-  infile_size = (unsigned int)file_loc;
-  pCmp_data = (uint8 *)malloc((unsigned long)infile_size);
+  infile_size = (uint)file_loc;
+  pCmp_data = (uint8 *)malloc((size_t)infile_size);
   if (! pCmp_data) {
     printf("Out of memory!\n"); /* printf_va_7 */
     __retres = 1;
     goto return_label;
   }
-  tmp_0 = fread((void *)pCmp_data,(unsigned long)1,
-                (unsigned long)infile_size,pInfile);
+  tmp_0 = fread((void *)pCmp_data,(size_t)1,(size_t)infile_size,pInfile);
   ;
   if (tmp_0 != (size_t)infile_size) {
     printf("Failed reading input file!\n"); /* printf_va_8 */
@@ -633,7 +632,7 @@ int main(int argc, char **argv)
     goto return_label;
   }
   printf("Input file size: %u\n",infile_size); /* printf_va_10 */
-  in_buf_size = (unsigned long)infile_size;
+  in_buf_size = (size_t)infile_size;
   status = (int)tinfl_decompress_mem_to_callback((void const *)pCmp_data,
                                                  & in_buf_size,
                                                  & tinfl_put_buf_func,
@@ -646,7 +645,7 @@ int main(int argc, char **argv)
     goto return_label;
   }
   tmp_1 = ftell(pOutfile);
-  outfile_size = (unsigned int)tmp_1;
+  outfile_size = (uint)tmp_1;
   fclose(pInfile);
   tmp_2 = fclose(pOutfile);
   if (-1 == tmp_2) {
@@ -654,7 +653,7 @@ int main(int argc, char **argv)
     __retres = 1;
     goto return_label;
   }
-  printf("Total input bytes: %u\n",(unsigned int)in_buf_size); /* printf_va_13 */
+  printf("Total input bytes: %u\n",(uint)in_buf_size); /* printf_va_13 */
   printf("Total output bytes: %u\n",outfile_size); /* printf_va_14 */
   printf("Success.\n"); /* printf_va_15 */
   __retres = 0;
@@ -667,15 +666,15 @@ mz_ulong __attribute__((__visibility__("default"))) mz_adler32(mz_ulong adler,
 {
   mz_ulong __attribute__((__visibility__("default"))) __retres;
   mz_uint32 i;
-  mz_uint32 s1 = (unsigned int)(adler & (unsigned long)0xffff);
-  mz_uint32 s2 = (unsigned int)(adler >> 16);
+  mz_uint32 s1 = (mz_uint32)(adler & (unsigned long)0xffff);
+  mz_uint32 s2 = (mz_uint32)(adler >> 16);
   size_t block_len = buf_len % (unsigned long)5552;
   if (! ptr) {
-    __retres = (unsigned long __attribute__((__visibility__("default"))))1;
+    __retres = (mz_ulong __attribute__((__visibility__("default"))))1;
     goto return_label;
   }
   while (buf_len) {
-    i = (unsigned int)0;
+    i = (mz_uint32)0;
     while ((size_t)(i + (mz_uint32)7) < block_len) {
       s1 += (mz_uint32)*(ptr + 0);
       s2 += s1;
@@ -707,276 +706,275 @@ mz_ulong __attribute__((__visibility__("default"))) mz_adler32(mz_ulong adler,
     s1 %= 65521U;
     s2 %= 65521U;
     buf_len -= block_len;
-    block_len = (unsigned long)5552;
+    block_len = (size_t)5552;
   }
-  __retres = (unsigned long __attribute__((__visibility__("default"))))(
-  (s2 << 16) + s1);
+  __retres = (mz_ulong __attribute__((__visibility__("default"))))((s2 << 16) + s1);
   return_label: return __retres;
 }
 
 static mz_uint32 const mz_crc32_s_crc_table[256] =
-  {(unsigned int)0x00000000,
-   (unsigned int)0x77073096,
+  {(mz_uint32)0x00000000,
+   (mz_uint32)0x77073096,
    0xEE0E612C,
    0x990951BA,
-   (unsigned int)0x076DC419,
-   (unsigned int)0x706AF48F,
+   (mz_uint32)0x076DC419,
+   (mz_uint32)0x706AF48F,
    0xE963A535,
    0x9E6495A3,
-   (unsigned int)0x0EDB8832,
-   (unsigned int)0x79DCB8A4,
+   (mz_uint32)0x0EDB8832,
+   (mz_uint32)0x79DCB8A4,
    0xE0D5E91E,
    0x97D2D988,
-   (unsigned int)0x09B64C2B,
-   (unsigned int)0x7EB17CBD,
+   (mz_uint32)0x09B64C2B,
+   (mz_uint32)0x7EB17CBD,
    0xE7B82D07,
    0x90BF1D91,
-   (unsigned int)0x1DB71064,
-   (unsigned int)0x6AB020F2,
+   (mz_uint32)0x1DB71064,
+   (mz_uint32)0x6AB020F2,
    0xF3B97148,
    0x84BE41DE,
-   (unsigned int)0x1ADAD47D,
-   (unsigned int)0x6DDDE4EB,
+   (mz_uint32)0x1ADAD47D,
+   (mz_uint32)0x6DDDE4EB,
    0xF4D4B551,
    0x83D385C7,
-   (unsigned int)0x136C9856,
-   (unsigned int)0x646BA8C0,
+   (mz_uint32)0x136C9856,
+   (mz_uint32)0x646BA8C0,
    0xFD62F97A,
    0x8A65C9EC,
-   (unsigned int)0x14015C4F,
-   (unsigned int)0x63066CD9,
+   (mz_uint32)0x14015C4F,
+   (mz_uint32)0x63066CD9,
    0xFA0F3D63,
    0x8D080DF5,
-   (unsigned int)0x3B6E20C8,
-   (unsigned int)0x4C69105E,
+   (mz_uint32)0x3B6E20C8,
+   (mz_uint32)0x4C69105E,
    0xD56041E4,
    0xA2677172,
-   (unsigned int)0x3C03E4D1,
-   (unsigned int)0x4B04D447,
+   (mz_uint32)0x3C03E4D1,
+   (mz_uint32)0x4B04D447,
    0xD20D85FD,
    0xA50AB56B,
-   (unsigned int)0x35B5A8FA,
-   (unsigned int)0x42B2986C,
+   (mz_uint32)0x35B5A8FA,
+   (mz_uint32)0x42B2986C,
    0xDBBBC9D6,
    0xACBCF940,
-   (unsigned int)0x32D86CE3,
-   (unsigned int)0x45DF5C75,
+   (mz_uint32)0x32D86CE3,
+   (mz_uint32)0x45DF5C75,
    0xDCD60DCF,
    0xABD13D59,
-   (unsigned int)0x26D930AC,
-   (unsigned int)0x51DE003A,
+   (mz_uint32)0x26D930AC,
+   (mz_uint32)0x51DE003A,
    0xC8D75180,
    0xBFD06116,
-   (unsigned int)0x21B4F4B5,
-   (unsigned int)0x56B3C423,
+   (mz_uint32)0x21B4F4B5,
+   (mz_uint32)0x56B3C423,
    0xCFBA9599,
    0xB8BDA50F,
-   (unsigned int)0x2802B89E,
-   (unsigned int)0x5F058808,
+   (mz_uint32)0x2802B89E,
+   (mz_uint32)0x5F058808,
    0xC60CD9B2,
    0xB10BE924,
-   (unsigned int)0x2F6F7C87,
-   (unsigned int)0x58684C11,
+   (mz_uint32)0x2F6F7C87,
+   (mz_uint32)0x58684C11,
    0xC1611DAB,
    0xB6662D3D,
-   (unsigned int)0x76DC4190,
-   (unsigned int)0x01DB7106,
+   (mz_uint32)0x76DC4190,
+   (mz_uint32)0x01DB7106,
    0x98D220BC,
    0xEFD5102A,
-   (unsigned int)0x71B18589,
-   (unsigned int)0x06B6B51F,
+   (mz_uint32)0x71B18589,
+   (mz_uint32)0x06B6B51F,
    0x9FBFE4A5,
    0xE8B8D433,
-   (unsigned int)0x7807C9A2,
-   (unsigned int)0x0F00F934,
+   (mz_uint32)0x7807C9A2,
+   (mz_uint32)0x0F00F934,
    0x9609A88E,
    0xE10E9818,
-   (unsigned int)0x7F6A0DBB,
-   (unsigned int)0x086D3D2D,
+   (mz_uint32)0x7F6A0DBB,
+   (mz_uint32)0x086D3D2D,
    0x91646C97,
    0xE6635C01,
-   (unsigned int)0x6B6B51F4,
-   (unsigned int)0x1C6C6162,
+   (mz_uint32)0x6B6B51F4,
+   (mz_uint32)0x1C6C6162,
    0x856530D8,
    0xF262004E,
-   (unsigned int)0x6C0695ED,
-   (unsigned int)0x1B01A57B,
+   (mz_uint32)0x6C0695ED,
+   (mz_uint32)0x1B01A57B,
    0x8208F4C1,
    0xF50FC457,
-   (unsigned int)0x65B0D9C6,
-   (unsigned int)0x12B7E950,
+   (mz_uint32)0x65B0D9C6,
+   (mz_uint32)0x12B7E950,
    0x8BBEB8EA,
    0xFCB9887C,
-   (unsigned int)0x62DD1DDF,
-   (unsigned int)0x15DA2D49,
+   (mz_uint32)0x62DD1DDF,
+   (mz_uint32)0x15DA2D49,
    0x8CD37CF3,
    0xFBD44C65,
-   (unsigned int)0x4DB26158,
-   (unsigned int)0x3AB551CE,
+   (mz_uint32)0x4DB26158,
+   (mz_uint32)0x3AB551CE,
    0xA3BC0074,
    0xD4BB30E2,
-   (unsigned int)0x4ADFA541,
-   (unsigned int)0x3DD895D7,
+   (mz_uint32)0x4ADFA541,
+   (mz_uint32)0x3DD895D7,
    0xA4D1C46D,
    0xD3D6F4FB,
-   (unsigned int)0x4369E96A,
-   (unsigned int)0x346ED9FC,
+   (mz_uint32)0x4369E96A,
+   (mz_uint32)0x346ED9FC,
    0xAD678846,
    0xDA60B8D0,
-   (unsigned int)0x44042D73,
-   (unsigned int)0x33031DE5,
+   (mz_uint32)0x44042D73,
+   (mz_uint32)0x33031DE5,
    0xAA0A4C5F,
    0xDD0D7CC9,
-   (unsigned int)0x5005713C,
-   (unsigned int)0x270241AA,
+   (mz_uint32)0x5005713C,
+   (mz_uint32)0x270241AA,
    0xBE0B1010,
    0xC90C2086,
-   (unsigned int)0x5768B525,
-   (unsigned int)0x206F85B3,
+   (mz_uint32)0x5768B525,
+   (mz_uint32)0x206F85B3,
    0xB966D409,
    0xCE61E49F,
-   (unsigned int)0x5EDEF90E,
-   (unsigned int)0x29D9C998,
+   (mz_uint32)0x5EDEF90E,
+   (mz_uint32)0x29D9C998,
    0xB0D09822,
    0xC7D7A8B4,
-   (unsigned int)0x59B33D17,
-   (unsigned int)0x2EB40D81,
+   (mz_uint32)0x59B33D17,
+   (mz_uint32)0x2EB40D81,
    0xB7BD5C3B,
    0xC0BA6CAD,
    0xEDB88320,
    0x9ABFB3B6,
-   (unsigned int)0x03B6E20C,
-   (unsigned int)0x74B1D29A,
+   (mz_uint32)0x03B6E20C,
+   (mz_uint32)0x74B1D29A,
    0xEAD54739,
    0x9DD277AF,
-   (unsigned int)0x04DB2615,
-   (unsigned int)0x73DC1683,
+   (mz_uint32)0x04DB2615,
+   (mz_uint32)0x73DC1683,
    0xE3630B12,
    0x94643B84,
-   (unsigned int)0x0D6D6A3E,
-   (unsigned int)0x7A6A5AA8,
+   (mz_uint32)0x0D6D6A3E,
+   (mz_uint32)0x7A6A5AA8,
    0xE40ECF0B,
    0x9309FF9D,
-   (unsigned int)0x0A00AE27,
-   (unsigned int)0x7D079EB1,
+   (mz_uint32)0x0A00AE27,
+   (mz_uint32)0x7D079EB1,
    0xF00F9344,
    0x8708A3D2,
-   (unsigned int)0x1E01F268,
-   (unsigned int)0x6906C2FE,
+   (mz_uint32)0x1E01F268,
+   (mz_uint32)0x6906C2FE,
    0xF762575D,
    0x806567CB,
-   (unsigned int)0x196C3671,
-   (unsigned int)0x6E6B06E7,
+   (mz_uint32)0x196C3671,
+   (mz_uint32)0x6E6B06E7,
    0xFED41B76,
    0x89D32BE0,
-   (unsigned int)0x10DA7A5A,
-   (unsigned int)0x67DD4ACC,
+   (mz_uint32)0x10DA7A5A,
+   (mz_uint32)0x67DD4ACC,
    0xF9B9DF6F,
    0x8EBEEFF9,
-   (unsigned int)0x17B7BE43,
-   (unsigned int)0x60B08ED5,
+   (mz_uint32)0x17B7BE43,
+   (mz_uint32)0x60B08ED5,
    0xD6D6A3E8,
    0xA1D1937E,
-   (unsigned int)0x38D8C2C4,
-   (unsigned int)0x4FDFF252,
+   (mz_uint32)0x38D8C2C4,
+   (mz_uint32)0x4FDFF252,
    0xD1BB67F1,
    0xA6BC5767,
-   (unsigned int)0x3FB506DD,
-   (unsigned int)0x48B2364B,
+   (mz_uint32)0x3FB506DD,
+   (mz_uint32)0x48B2364B,
    0xD80D2BDA,
    0xAF0A1B4C,
-   (unsigned int)0x36034AF6,
-   (unsigned int)0x41047A60,
+   (mz_uint32)0x36034AF6,
+   (mz_uint32)0x41047A60,
    0xDF60EFC3,
    0xA867DF55,
-   (unsigned int)0x316E8EEF,
-   (unsigned int)0x4669BE79,
+   (mz_uint32)0x316E8EEF,
+   (mz_uint32)0x4669BE79,
    0xCB61B38C,
    0xBC66831A,
-   (unsigned int)0x256FD2A0,
-   (unsigned int)0x5268E236,
+   (mz_uint32)0x256FD2A0,
+   (mz_uint32)0x5268E236,
    0xCC0C7795,
    0xBB0B4703,
-   (unsigned int)0x220216B9,
-   (unsigned int)0x5505262F,
+   (mz_uint32)0x220216B9,
+   (mz_uint32)0x5505262F,
    0xC5BA3BBE,
    0xB2BD0B28,
-   (unsigned int)0x2BB45A92,
-   (unsigned int)0x5CB36A04,
+   (mz_uint32)0x2BB45A92,
+   (mz_uint32)0x5CB36A04,
    0xC2D7FFA7,
    0xB5D0CF31,
-   (unsigned int)0x2CD99E8B,
-   (unsigned int)0x5BDEAE1D,
+   (mz_uint32)0x2CD99E8B,
+   (mz_uint32)0x5BDEAE1D,
    0x9B64C2B0,
    0xEC63F226,
-   (unsigned int)0x756AA39C,
-   (unsigned int)0x026D930A,
+   (mz_uint32)0x756AA39C,
+   (mz_uint32)0x026D930A,
    0x9C0906A9,
    0xEB0E363F,
-   (unsigned int)0x72076785,
-   (unsigned int)0x05005713,
+   (mz_uint32)0x72076785,
+   (mz_uint32)0x05005713,
    0x95BF4A82,
    0xE2B87A14,
-   (unsigned int)0x7BB12BAE,
-   (unsigned int)0x0CB61B38,
+   (mz_uint32)0x7BB12BAE,
+   (mz_uint32)0x0CB61B38,
    0x92D28E9B,
    0xE5D5BE0D,
-   (unsigned int)0x7CDCEFB7,
-   (unsigned int)0x0BDBDF21,
+   (mz_uint32)0x7CDCEFB7,
+   (mz_uint32)0x0BDBDF21,
    0x86D3D2D4,
    0xF1D4E242,
-   (unsigned int)0x68DDB3F8,
-   (unsigned int)0x1FDA836E,
+   (mz_uint32)0x68DDB3F8,
+   (mz_uint32)0x1FDA836E,
    0x81BE16CD,
    0xF6B9265B,
-   (unsigned int)0x6FB077E1,
-   (unsigned int)0x18B74777,
+   (mz_uint32)0x6FB077E1,
+   (mz_uint32)0x18B74777,
    0x88085AE6,
    0xFF0F6A70,
-   (unsigned int)0x66063BCA,
-   (unsigned int)0x11010B5C,
+   (mz_uint32)0x66063BCA,
+   (mz_uint32)0x11010B5C,
    0x8F659EFF,
    0xF862AE69,
-   (unsigned int)0x616BFFD3,
-   (unsigned int)0x166CCF45,
+   (mz_uint32)0x616BFFD3,
+   (mz_uint32)0x166CCF45,
    0xA00AE278,
    0xD70DD2EE,
-   (unsigned int)0x4E048354,
-   (unsigned int)0x3903B3C2,
+   (mz_uint32)0x4E048354,
+   (mz_uint32)0x3903B3C2,
    0xA7672661,
    0xD06016F7,
-   (unsigned int)0x4969474D,
-   (unsigned int)0x3E6E77DB,
+   (mz_uint32)0x4969474D,
+   (mz_uint32)0x3E6E77DB,
    0xAED16A4A,
    0xD9D65ADC,
-   (unsigned int)0x40DF0B66,
-   (unsigned int)0x37D83BF0,
+   (mz_uint32)0x40DF0B66,
+   (mz_uint32)0x37D83BF0,
    0xA9BCAE53,
    0xDEBB9EC5,
-   (unsigned int)0x47B2CF7F,
-   (unsigned int)0x30B5FFE9,
+   (mz_uint32)0x47B2CF7F,
+   (mz_uint32)0x30B5FFE9,
    0xBDBDF21C,
    0xCABAC28A,
-   (unsigned int)0x53B39330,
-   (unsigned int)0x24B4A3A6,
+   (mz_uint32)0x53B39330,
+   (mz_uint32)0x24B4A3A6,
    0xBAD03605,
    0xCDD70693,
-   (unsigned int)0x54DE5729,
-   (unsigned int)0x23D967BF,
+   (mz_uint32)0x54DE5729,
+   (mz_uint32)0x23D967BF,
    0xB3667A2E,
    0xC4614AB8,
-   (unsigned int)0x5D681B02,
-   (unsigned int)0x2A6F2B94,
+   (mz_uint32)0x5D681B02,
+   (mz_uint32)0x2A6F2B94,
    0xB40BBE37,
    0xC30C8EA1,
-   (unsigned int)0x5A05DF1B,
-   (unsigned int)0x2D02EF8D};
+   (mz_uint32)0x5A05DF1B,
+   (mz_uint32)0x2D02EF8D};
 mz_ulong __attribute__((__visibility__("default"))) mz_crc32(mz_ulong crc,
                                                              unsigned char const *ptr,
                                                              size_t buf_len)
 {
   mz_ulong __attribute__((__visibility__("default"))) __retres;
-  mz_uint32 mz_crc32_0 = (unsigned int)crc ^ 0xFFFFFFFF;
+  mz_uint32 mz_crc32_0 = (mz_uint32)crc ^ 0xFFFFFFFF;
   mz_uint8 const *pByte_buf = ptr;
   while (buf_len >= (size_t)4) {
     mz_crc32_0 = (mz_crc32_0 >> 8) ^ mz_crc32_s_crc_table[(mz_crc32_0 ^ (unsigned int)*(
@@ -994,9 +992,9 @@ mz_ulong __attribute__((__visibility__("default"))) mz_crc32(mz_ulong crc,
     mz_crc32_0 = (mz_crc32_0 >> 8) ^ mz_crc32_s_crc_table[(mz_crc32_0 ^ (unsigned int)*(
                                                            pByte_buf + 0)) & (unsigned int)0xFF];
     pByte_buf ++;
-    buf_len -= (size_t)1;
+    buf_len --;
   }
-  __retres = (unsigned long __attribute__((__visibility__("default"))))(~ mz_crc32_0);
+  __retres = (mz_ulong __attribute__((__visibility__("default"))))(~ mz_crc32_0);
   return __retres;
 }
 
@@ -1058,7 +1056,7 @@ int __attribute__((__visibility__("default"))) mz_deflateInit2(mz_streamp pStrea
   tdefl_status __attribute__((__visibility__("default"))) tmp_1;
   tmp = tdefl_create_comp_flags_from_zip_params(level,window_bits,strategy);
   mz_uint comp_flags =
-    (unsigned int)((unsigned int __attribute__((__visibility__("default"))))TDEFL_COMPUTE_ADLER32 | tmp);
+    (mz_uint)((unsigned int __attribute__((__visibility__("default"))))TDEFL_COMPUTE_ADLER32 | tmp);
   if (! pStream) {
     __retres = (int __attribute__((__visibility__("default"))))MZ_STREAM_ERROR;
     goto return_label;
@@ -1084,18 +1082,17 @@ int __attribute__((__visibility__("default"))) mz_deflateInit2(mz_streamp pStrea
             goto return_label;
           }
   pStream->data_type = 0;
-  pStream->adler = (unsigned long)1;
+  pStream->adler = (mz_ulong)1;
   pStream->msg = (char *)0;
-  pStream->reserved = (unsigned long)0;
-  pStream->total_in = (unsigned long)0;
-  pStream->total_out = (unsigned long)0;
+  pStream->reserved = (mz_ulong)0;
+  pStream->total_in = (mz_ulong)0;
+  pStream->total_out = (mz_ulong)0;
   if (! pStream->zalloc) pStream->zalloc = (void *(*)(void *opaque,
                                                       size_t items,
                                                       size_t size))(& miniz_def_alloc_func);
   if (! pStream->zfree) pStream->zfree = (void (*)(void *opaque,
                                                    void *address))(& miniz_def_free_func);
-  pComp = (tdefl_compressor *)(*(pStream->zalloc))(pStream->opaque,
-                                                   (unsigned long)1,
+  pComp = (tdefl_compressor *)(*(pStream->zalloc))(pStream->opaque,(size_t)1,
                                                    sizeof(tdefl_compressor));
   if (! pComp) {
     __retres = (int __attribute__((__visibility__("default"))))MZ_MEM_ERROR;
@@ -1137,7 +1134,7 @@ int __attribute__((__visibility__("default"))) mz_deflateReset(mz_streamp pStrea
           __retres = (int __attribute__((__visibility__("default"))))MZ_STREAM_ERROR;
           goto return_label;
         }
-  tmp = (unsigned long)0;
+  tmp = (mz_ulong)0;
   pStream->total_out = tmp;
   pStream->total_in = tmp;
   tdefl_init((tdefl_compressor *)pStream->state,
@@ -1197,21 +1194,21 @@ int __attribute__((__visibility__("default"))) mz_deflate(mz_streamp pStream,
     tdefl_status defl_status;
     tdefl_status __attribute__((__visibility__("default"))) tmp_0;
     mz_uint32 __attribute__((__visibility__("default"))) tmp_1;
-    in_bytes = (unsigned long)pStream->avail_in;
-    out_bytes = (unsigned long)pStream->avail_out;
+    in_bytes = (size_t)pStream->avail_in;
+    out_bytes = (size_t)pStream->avail_out;
     tmp_0 = tdefl_compress((tdefl_compressor *)pStream->state,
                            (void const *)pStream->next_in,& in_bytes,
                            (void *)pStream->next_out,& out_bytes,
-                           (enum __anonenum_tdefl_flush_10)flush);
-    defl_status = (enum __anonenum_tdefl_status_9)tmp_0;
-    pStream->next_in += (unsigned int)in_bytes;
-    pStream->avail_in -= (unsigned int)in_bytes;
-    pStream->total_in += (mz_ulong)((unsigned int)in_bytes);
+                           (tdefl_flush)flush);
+    defl_status = (tdefl_status)tmp_0;
+    pStream->next_in += (mz_uint)in_bytes;
+    pStream->avail_in -= (mz_uint)in_bytes;
+    pStream->total_in += (mz_ulong)((mz_uint)in_bytes);
     tmp_1 = tdefl_get_adler32((tdefl_compressor *)pStream->state);
-    pStream->adler = (unsigned long)tmp_1;
-    pStream->next_out += (unsigned int)out_bytes;
-    pStream->avail_out -= (unsigned int)out_bytes;
-    pStream->total_out += (mz_ulong)((unsigned int)out_bytes);
+    pStream->adler = (mz_ulong)tmp_1;
+    pStream->next_out += (mz_uint)out_bytes;
+    pStream->avail_out -= (mz_uint)out_bytes;
+    pStream->total_out += (mz_ulong)((mz_uint)out_bytes);
     if (defl_status < 0) {
       mz_status = MZ_STREAM_ERROR;
       break;
@@ -1264,7 +1261,7 @@ mz_ulong __attribute__((__visibility__("default"))) mz_deflateBound(mz_streamp p
     tmp = (mz_ulong)128 + (source_len * (mz_ulong)110) / (mz_ulong)100;
   else tmp = ((mz_ulong)128 + source_len) + (source_len / (mz_ulong)(
                                              31 * 1024) + (mz_ulong)1) * (mz_ulong)5;
-  __retres = (unsigned long __attribute__((__visibility__("default"))))tmp;
+  __retres = (mz_ulong __attribute__((__visibility__("default"))))tmp;
   return __retres;
 }
 
@@ -1284,9 +1281,9 @@ int __attribute__((__visibility__("default"))) mz_compress2(unsigned char *pDest
     goto return_label;
   }
   stream.next_in = pSource;
-  stream.avail_in = (unsigned int)source_len;
+  stream.avail_in = (mz_uint32)source_len;
   stream.next_out = pDest;
-  stream.avail_out = (unsigned int)*pDest_len;
+  stream.avail_out = (mz_uint32)*pDest_len;
   status = (int)mz_deflateInit(& stream,level);
   if (status != MZ_OK) {
     __retres = (int __attribute__((__visibility__("default"))))status;
@@ -1321,7 +1318,7 @@ mz_ulong __attribute__((__visibility__("default"))) mz_compressBound(
                                                                     mz_ulong source_len)
 {
   mz_ulong __attribute__((__visibility__("default"))) tmp;
-  tmp = mz_deflateBound((mz_stream *)0,source_len);
+  tmp = mz_deflateBound((mz_streamp)0,source_len);
   return tmp;
 }
 
@@ -1340,36 +1337,35 @@ int __attribute__((__visibility__("default"))) mz_inflateInit2(mz_streamp pStrea
       goto return_label;
     }
   pStream->data_type = 0;
-  pStream->adler = (unsigned long)0;
+  pStream->adler = (mz_ulong)0;
   pStream->msg = (char *)0;
-  pStream->total_in = (unsigned long)0;
-  pStream->total_out = (unsigned long)0;
-  pStream->reserved = (unsigned long)0;
+  pStream->total_in = (mz_ulong)0;
+  pStream->total_out = (mz_ulong)0;
+  pStream->reserved = (mz_ulong)0;
   if (! pStream->zalloc) pStream->zalloc = (void *(*)(void *opaque,
                                                       size_t items,
                                                       size_t size))(& miniz_def_alloc_func);
   if (! pStream->zfree) pStream->zfree = (void (*)(void *opaque,
                                                    void *address))(& miniz_def_free_func);
-  pDecomp = (inflate_state *)(*(pStream->zalloc))(pStream->opaque,
-                                                  (unsigned long)1,
+  pDecomp = (inflate_state *)(*(pStream->zalloc))(pStream->opaque,(size_t)1,
                                                   sizeof(inflate_state));
   if (! pDecomp) {
     __retres = (int __attribute__((__visibility__("default"))))MZ_MEM_ERROR;
     goto return_label;
   }
   pStream->state = (struct mz_internal_state *)pDecomp;
-  pDecomp->m_decomp.m_state = (unsigned int)0;
-  pDecomp->m_decomp.m_num_bits = (unsigned int)0;
-  pDecomp->m_decomp.m_bit_buf = (unsigned long)0;
-  pDecomp->m_decomp.m_dist = (unsigned int)0;
-  pDecomp->m_decomp.m_counter = (unsigned int)0;
-  pDecomp->m_decomp.m_num_extra = (unsigned int)0;
-  pDecomp->m_decomp.m_dist_from_out_buf_start = (unsigned long)0;
-  pDecomp->m_dict_ofs = (unsigned int)0;
-  pDecomp->m_dict_avail = (unsigned int)0;
+  pDecomp->m_decomp.m_state = (mz_uint32)0;
+  pDecomp->m_decomp.m_num_bits = (mz_uint32)0;
+  pDecomp->m_decomp.m_bit_buf = (tinfl_bit_buf_t)0;
+  pDecomp->m_decomp.m_dist = (mz_uint32)0;
+  pDecomp->m_decomp.m_counter = (mz_uint32)0;
+  pDecomp->m_decomp.m_num_extra = (mz_uint32)0;
+  pDecomp->m_decomp.m_dist_from_out_buf_start = (size_t)0;
+  pDecomp->m_dict_ofs = (mz_uint)0;
+  pDecomp->m_dict_avail = (mz_uint)0;
   pDecomp->m_last_status = TINFL_STATUS_NEEDS_MORE_INPUT;
-  pDecomp->m_first_call = (unsigned int)1;
-  pDecomp->m_has_flushed = (unsigned int)0;
+  pDecomp->m_first_call = (mz_uint)1;
+  pDecomp->m_has_flushed = (mz_uint)0;
   pDecomp->m_window_bits = window_bits;
   __retres = (int __attribute__((__visibility__("default"))))MZ_OK;
   return_label: return __retres;
@@ -1391,24 +1387,24 @@ int __attribute__((__visibility__("default"))) mz_inflateReset(mz_streamp pStrea
     goto return_label;
   }
   pStream->data_type = 0;
-  pStream->adler = (unsigned long)0;
+  pStream->adler = (mz_ulong)0;
   pStream->msg = (char *)0;
-  pStream->total_in = (unsigned long)0;
-  pStream->total_out = (unsigned long)0;
-  pStream->reserved = (unsigned long)0;
+  pStream->total_in = (mz_ulong)0;
+  pStream->total_out = (mz_ulong)0;
+  pStream->reserved = (mz_ulong)0;
   pDecomp = (inflate_state *)pStream->state;
-  pDecomp->m_decomp.m_state = (unsigned int)0;
-  pDecomp->m_decomp.m_num_bits = (unsigned int)0;
-  pDecomp->m_decomp.m_bit_buf = (unsigned long)0;
-  pDecomp->m_decomp.m_dist = (unsigned int)0;
-  pDecomp->m_decomp.m_counter = (unsigned int)0;
-  pDecomp->m_decomp.m_num_extra = (unsigned int)0;
-  pDecomp->m_decomp.m_dist_from_out_buf_start = (unsigned long)0;
-  pDecomp->m_dict_ofs = (unsigned int)0;
-  pDecomp->m_dict_avail = (unsigned int)0;
+  pDecomp->m_decomp.m_state = (mz_uint32)0;
+  pDecomp->m_decomp.m_num_bits = (mz_uint32)0;
+  pDecomp->m_decomp.m_bit_buf = (tinfl_bit_buf_t)0;
+  pDecomp->m_decomp.m_dist = (mz_uint32)0;
+  pDecomp->m_decomp.m_counter = (mz_uint32)0;
+  pDecomp->m_decomp.m_num_extra = (mz_uint32)0;
+  pDecomp->m_decomp.m_dist_from_out_buf_start = (size_t)0;
+  pDecomp->m_dict_ofs = (mz_uint)0;
+  pDecomp->m_dict_avail = (mz_uint)0;
   pDecomp->m_last_status = TINFL_STATUS_NEEDS_MORE_INPUT;
-  pDecomp->m_first_call = (unsigned int)1;
-  pDecomp->m_has_flushed = (unsigned int)0;
+  pDecomp->m_first_call = (mz_uint)1;
+  pDecomp->m_has_flushed = (mz_uint)0;
   __retres = (int __attribute__((__visibility__("default"))))MZ_OK;
   return_label: return __retres;
 }
@@ -1425,7 +1421,7 @@ int __attribute__((__visibility__("default"))) mz_inflate(mz_streamp pStream,
   size_t orig_avail_in;
   tinfl_status status;
   int tmp_3;
-  mz_uint decomp_flags = (unsigned int)TINFL_FLAG_COMPUTE_ADLER32;
+  mz_uint decomp_flags = (mz_uint)TINFL_FLAG_COMPUTE_ADLER32;
   if (! pStream) {
     __retres = (int __attribute__((__visibility__("default"))))MZ_STREAM_ERROR;
     goto return_label;
@@ -1444,9 +1440,9 @@ int __attribute__((__visibility__("default"))) mz_inflate(mz_streamp pStream,
       }
   pState = (inflate_state *)pStream->state;
   if (pState->m_window_bits > 0) decomp_flags |= (unsigned int)TINFL_FLAG_PARSE_ZLIB_HEADER;
-  orig_avail_in = (unsigned long)pStream->avail_in;
+  orig_avail_in = (size_t)pStream->avail_in;
   first_call = pState->m_first_call;
-  pState->m_first_call = (unsigned int)0;
+  pState->m_first_call = (mz_uint)0;
   if (pState->m_last_status < 0) {
     __retres = (int __attribute__((__visibility__("default"))))MZ_DATA_ERROR;
     goto return_label;
@@ -1461,20 +1457,20 @@ int __attribute__((__visibility__("default"))) mz_inflate(mz_streamp pStream,
     if (first_call) {
       tinfl_status __attribute__((__visibility__("default"))) tmp;
       decomp_flags |= (unsigned int)TINFL_FLAG_USING_NON_WRAPPING_OUTPUT_BUF;
-      in_bytes = (unsigned long)pStream->avail_in;
-      out_bytes = (unsigned long)pStream->avail_out;
+      in_bytes = (size_t)pStream->avail_in;
+      out_bytes = (size_t)pStream->avail_out;
       tmp = tinfl_decompress(& pState->m_decomp,pStream->next_in,& in_bytes,
                              pStream->next_out,pStream->next_out,& out_bytes,
                              decomp_flags);
-      status = (enum __anonenum_tinfl_status_13)tmp;
+      status = (tinfl_status)tmp;
       pState->m_last_status = status;
-      pStream->next_in += (unsigned int)in_bytes;
-      pStream->avail_in -= (unsigned int)in_bytes;
-      pStream->total_in += (mz_ulong)((unsigned int)in_bytes);
-      pStream->adler = (unsigned long)pState->m_decomp.m_check_adler32;
-      pStream->next_out += (unsigned int)out_bytes;
-      pStream->avail_out -= (unsigned int)out_bytes;
-      pStream->total_out += (mz_ulong)((unsigned int)out_bytes);
+      pStream->next_in += (mz_uint)in_bytes;
+      pStream->avail_in -= (mz_uint)in_bytes;
+      pStream->total_in += (mz_ulong)((mz_uint)in_bytes);
+      pStream->adler = (mz_ulong)pState->m_decomp.m_check_adler32;
+      pStream->next_out += (mz_uint)out_bytes;
+      pStream->avail_out -= (mz_uint)out_bytes;
+      pStream->total_out += (mz_ulong)((mz_uint)out_bytes);
       if (status < 0) {
         __retres = (int __attribute__((__visibility__("default"))))MZ_DATA_ERROR;
         goto return_label;
@@ -1494,8 +1490,7 @@ int __attribute__((__visibility__("default"))) mz_inflate(mz_streamp pStream,
     if (pState->m_dict_avail < pStream->avail_out) n = pState->m_dict_avail;
     else n = pStream->avail_out;
     memcpy((void *)pStream->next_out,
-           (void const *)(& pState->m_dict[pState->m_dict_ofs]),
-           (unsigned long)n);
+           (void const *)(& pState->m_dict[pState->m_dict_ofs]),(size_t)n);
     pStream->next_out += n;
     pStream->avail_out -= n;
     pStream->total_out += (mz_ulong)n;
@@ -1509,24 +1504,23 @@ int __attribute__((__visibility__("default"))) mz_inflate(mz_streamp pStream,
   }
   while (1) {
     tinfl_status __attribute__((__visibility__("default"))) tmp_1;
-    in_bytes = (unsigned long)pStream->avail_in;
-    out_bytes = (unsigned long)((mz_uint)32768 - pState->m_dict_ofs);
+    in_bytes = (size_t)pStream->avail_in;
+    out_bytes = (size_t)((mz_uint)32768 - pState->m_dict_ofs);
     tmp_1 = tinfl_decompress(& pState->m_decomp,pStream->next_in,& in_bytes,
                              pState->m_dict,
                              & pState->m_dict[pState->m_dict_ofs],
                              & out_bytes,decomp_flags);
-    status = (enum __anonenum_tinfl_status_13)tmp_1;
+    status = (tinfl_status)tmp_1;
     pState->m_last_status = status;
-    pStream->next_in += (unsigned int)in_bytes;
-    pStream->avail_in -= (unsigned int)in_bytes;
-    pStream->total_in += (mz_ulong)((unsigned int)in_bytes);
-    pStream->adler = (unsigned long)pState->m_decomp.m_check_adler32;
-    pState->m_dict_avail = (unsigned int)out_bytes;
+    pStream->next_in += (mz_uint)in_bytes;
+    pStream->avail_in -= (mz_uint)in_bytes;
+    pStream->total_in += (mz_ulong)((mz_uint)in_bytes);
+    pStream->adler = (mz_ulong)pState->m_decomp.m_check_adler32;
+    pState->m_dict_avail = (mz_uint)out_bytes;
     if (pState->m_dict_avail < pStream->avail_out) n = pState->m_dict_avail;
     else n = pStream->avail_out;
     memcpy((void *)pStream->next_out,
-           (void const *)(& pState->m_dict[pState->m_dict_ofs]),
-           (unsigned long)n);
+           (void const *)(& pState->m_dict[pState->m_dict_ofs]),(size_t)n);
     pStream->next_out += n;
     pStream->avail_out -= n;
     pStream->total_out += (mz_ulong)n;
@@ -1607,9 +1601,9 @@ int __attribute__((__visibility__("default"))) mz_uncompress2(unsigned char *pDe
     goto return_label;
   }
   stream.next_in = pSource;
-  stream.avail_in = (unsigned int)*pSource_len;
+  stream.avail_in = (mz_uint32)*pSource_len;
   stream.next_out = pDest;
-  stream.avail_out = (unsigned int)*pDest_len;
+  stream.avail_out = (mz_uint32)*pDest_len;
   status = (int)mz_inflateInit(& stream);
   if (status != MZ_OK) {
     __retres = (int __attribute__((__visibility__("default"))))status;
@@ -1657,7 +1651,7 @@ char const __attribute__((__visibility__("default"))) *mz_error(int err)
 {
   char const __attribute__((__visibility__("default"))) *__retres;
   mz_uint i;
-  i = (unsigned int)0;
+  i = (mz_uint)0;
   while ((unsigned long)i < sizeof(mz_error_s_error_descs) / sizeof(mz_error_s_error_descs[0])) {
     if (mz_error_s_error_descs[i].m_err == err) {
       __retres = (char const __attribute__((__visibility__("default"))) *)mz_error_s_error_descs[i].m_pDesc;
@@ -1798,25 +1792,25 @@ static int const tinfl_decompress_s_dist_extra[32] =
    13,
    13};
 static mz_uint8 const tinfl_decompress_s_length_dezigzag[19] =
-  {(unsigned char)16,
-   (unsigned char)17,
-   (unsigned char)18,
-   (unsigned char)0,
-   (unsigned char)8,
-   (unsigned char)7,
-   (unsigned char)9,
-   (unsigned char)6,
-   (unsigned char)10,
-   (unsigned char)5,
-   (unsigned char)11,
-   (unsigned char)4,
-   (unsigned char)12,
-   (unsigned char)3,
-   (unsigned char)13,
-   (unsigned char)2,
-   (unsigned char)14,
-   (unsigned char)1,
-   (unsigned char)15};
+  {(mz_uint8)16,
+   (mz_uint8)17,
+   (mz_uint8)18,
+   (mz_uint8)0,
+   (mz_uint8)8,
+   (mz_uint8)7,
+   (mz_uint8)9,
+   (mz_uint8)6,
+   (mz_uint8)10,
+   (mz_uint8)5,
+   (mz_uint8)11,
+   (mz_uint8)4,
+   (mz_uint8)12,
+   (mz_uint8)3,
+   (mz_uint8)13,
+   (mz_uint8)2,
+   (mz_uint8)14,
+   (mz_uint8)1,
+   (mz_uint8)15};
 static int const tinfl_decompress_s_min_table_sizes[3] = {257, 1, 4};
 tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
 (tinfl_decompressor *r, mz_uint8 const *pIn_buf_next, size_t *pIn_buf_size,
@@ -1829,7 +1823,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
   mz_uint32 counter;
   mz_uint32 num_extra;
   tinfl_bit_buf_t bit_buf;
-  unsigned long tmp;
+  size_t tmp;
   size_t dist_from_out_buf_start;
   tinfl_status status = TINFL_STATUS_FAILED;
   mz_uint8 const *pIn_buf_cur = pIn_buf_next;
@@ -1837,7 +1831,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
   mz_uint8 *pOut_buf_cur = pOut_buf_next;
   mz_uint8 * const pOut_buf_end = pOut_buf_next + *pOut_buf_size;
   if (decomp_flags & (unsigned int)TINFL_FLAG_USING_NON_WRAPPING_OUTPUT_BUF) 
-    tmp = (unsigned long)(-1);
+    tmp = (size_t)(-1);
   else tmp = ((size_t)(pOut_buf_next - pOut_buf_start) + *pOut_buf_size) - (size_t)1;
   size_t out_buf_size_mask = tmp;
   if ((out_buf_size_mask + (size_t)1) & out_buf_size_mask) goto _LOR;
@@ -1846,7 +1840,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
       _LOR:
       {
         size_t tmp_0;
-        tmp_0 = (unsigned long)0;
+        tmp_0 = (size_t)0;
         *pOut_buf_size = tmp_0;
         *pIn_buf_size = tmp_0;
         __retres = TINFL_STATUS_BAD_PARAM;
@@ -1865,7 +1859,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
     mz_uint32 tmp_3;
     case (mz_uint32)0:
     { /* sequence */
-      tmp_2 = (unsigned int)0;
+      tmp_2 = (mz_uint32)0;
       r->m_zhdr1 = tmp_2;
       tmp_1 = tmp_2;
       r->m_zhdr0 = tmp_1;
@@ -1873,9 +1867,9 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
       counter = num_extra;
       dist = counter;
       num_bits = dist;
-      bit_buf = (unsigned long)num_bits;
+      bit_buf = (tinfl_bit_buf_t)num_bits;
     }
-    tmp_3 = (unsigned int)1;
+    tmp_3 = (mz_uint32)1;
     r->m_check_adler32 = tmp_3;
     r->m_z_adler32 = tmp_3;
     if (decomp_flags & (unsigned int)TINFL_FLAG_PARSE_ZLIB_HEADER) {
@@ -1886,13 +1880,13 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
           if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
             status = TINFL_STATUS_NEEDS_MORE_INPUT;
           else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
-          r->m_state = (unsigned int)1;
+          r->m_state = (mz_uint32)1;
           goto common_exit;
           case (mz_uint32)1: ;
         }
         tmp_4 = pIn_buf_cur;
         pIn_buf_cur ++;
-        r->m_zhdr0 = (unsigned int)*tmp_4;
+        r->m_zhdr0 = (mz_uint32)*tmp_4;
       }
       {
         mz_uint8 const *tmp_5;
@@ -1900,13 +1894,13 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
           if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
             status = TINFL_STATUS_NEEDS_MORE_INPUT;
           else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
-          r->m_state = (unsigned int)2;
+          r->m_state = (mz_uint32)2;
           goto common_exit;
           case (mz_uint32)2: ;
         }
         tmp_5 = pIn_buf_cur;
         pIn_buf_cur ++;
-        r->m_zhdr1 = (unsigned int)*tmp_5;
+        r->m_zhdr1 = (mz_uint32)*tmp_5;
       }
       if ((r->m_zhdr0 * (mz_uint32)256 + r->m_zhdr1) % (unsigned int)31 != (unsigned int)0) 
         tmp_6 = 1;
@@ -1915,13 +1909,12 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
         else 
           if ((r->m_zhdr0 & (unsigned int)15) != (unsigned int)8) tmp_6 = 1;
           else tmp_6 = 0;
-      counter = (unsigned int)tmp_6;
+      counter = (mz_uint32)tmp_6;
       if (! (decomp_flags & (unsigned int)TINFL_FLAG_USING_NON_WRAPPING_OUTPUT_BUF)) {
         int tmp_7;
         if (1U << (8U + (r->m_zhdr0 >> 4)) > 32768U) tmp_7 = 1;
         else 
-          if (out_buf_size_mask + (size_t)1 < (unsigned long)(1U << (
-                                                              8U + (r->m_zhdr0 >> 4)))) 
+          if (out_buf_size_mask + (size_t)1 < (size_t)(1U << (8U + (r->m_zhdr0 >> 4)))) 
             tmp_7 = 1;
           else tmp_7 = 0;
         counter |= (unsigned int)tmp_7;
@@ -1929,13 +1922,13 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
       if (counter) 
         while (1) {
           status = TINFL_STATUS_FAILED;
-          r->m_state = (unsigned int)36;
+          r->m_state = (mz_uint32)36;
           goto common_exit;
           case (mz_uint32)36: ;
         }
     }
     while (1) {
-      if (num_bits < (unsigned int)3) 
+      if (num_bits < (mz_uint)3) 
         while (1) {
           {
             mz_uint c;
@@ -1945,20 +1938,20 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                 if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
                   status = TINFL_STATUS_NEEDS_MORE_INPUT;
                 else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
-                r->m_state = (unsigned int)3;
+                r->m_state = (mz_uint32)3;
                 goto common_exit;
                 case (mz_uint32)3: ;
               }
               tmp_8 = pIn_buf_cur;
               pIn_buf_cur ++;
-              c = (unsigned int)*tmp_8;
+              c = (mz_uint)*tmp_8;
             }
-            bit_buf |= (unsigned long)c << num_bits;
+            bit_buf |= (tinfl_bit_buf_t)c << num_bits;
             num_bits += (mz_uint32)8;
           }
-          if (! (num_bits < (unsigned int)3)) break;
+          if (! (num_bits < (mz_uint)3)) break;
         }
-      r->m_final = (unsigned int)(bit_buf & (unsigned long)((1 << 3) - 1));
+      r->m_final = (mz_uint32)(bit_buf & (unsigned long)((1 << 3) - 1));
       bit_buf >>= 3;
       num_bits -= (mz_uint32)3;
       r->m_type = r->m_final >> 1;
@@ -1973,25 +1966,25 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                   if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
                     status = TINFL_STATUS_NEEDS_MORE_INPUT;
                   else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
-                  r->m_state = (unsigned int)5;
+                  r->m_state = (mz_uint32)5;
                   goto common_exit;
                   case (mz_uint32)5: ;
                 }
                 tmp_9 = pIn_buf_cur;
                 pIn_buf_cur ++;
-                c_0 = (unsigned int)*tmp_9;
+                c_0 = (mz_uint)*tmp_9;
               }
-              bit_buf |= (unsigned long)c_0 << num_bits;
+              bit_buf |= (tinfl_bit_buf_t)c_0 << num_bits;
               num_bits += (mz_uint32)8;
             }
             if (! (num_bits < (num_bits & (unsigned int)7))) break;
           }
         bit_buf >>= num_bits & (unsigned int)7;
         num_bits -= num_bits & (unsigned int)7;
-        counter = (unsigned int)0;
+        counter = (mz_uint32)0;
         while (counter < (mz_uint32)4) {
           if (num_bits) {
-            if (num_bits < (unsigned int)8) 
+            if (num_bits < (mz_uint)8) 
               while (1) {
                 {
                   mz_uint c_1;
@@ -2001,21 +1994,21 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                       if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
                         status = TINFL_STATUS_NEEDS_MORE_INPUT;
                       else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
-                      r->m_state = (unsigned int)6;
+                      r->m_state = (mz_uint32)6;
                       goto common_exit;
                       case (mz_uint32)6: ;
                     }
                     tmp_10 = pIn_buf_cur;
                     pIn_buf_cur ++;
-                    c_1 = (unsigned int)*tmp_10;
+                    c_1 = (mz_uint)*tmp_10;
                   }
-                  bit_buf |= (unsigned long)c_1 << num_bits;
+                  bit_buf |= (tinfl_bit_buf_t)c_1 << num_bits;
                   num_bits += (mz_uint32)8;
                 }
-                if (! (num_bits < (unsigned int)8)) break;
+                if (! (num_bits < (mz_uint)8)) break;
               }
-            r->m_raw_header[counter] = (unsigned char)(bit_buf & (unsigned long)(
-                                                       (1 << 8) - 1));
+            r->m_raw_header[counter] = (mz_uint8)(bit_buf & (unsigned long)(
+                                                  (1 << 8) - 1));
             bit_buf >>= 8;
             num_bits -= (mz_uint32)8;
           }
@@ -2025,7 +2018,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
               if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
                 status = TINFL_STATUS_NEEDS_MORE_INPUT;
               else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
-              r->m_state = (unsigned int)7;
+              r->m_state = (mz_uint32)7;
               goto common_exit;
               case (mz_uint32)7: ;
             }
@@ -2035,13 +2028,13 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
           }
           counter ++;
         }
-        counter = (unsigned int)((int)r->m_raw_header[0] | ((int)r->m_raw_header[1] << 8));
+        counter = (mz_uint32)((int)r->m_raw_header[0] | ((int)r->m_raw_header[1] << 8));
         ;
-        if (counter != (unsigned int)(0xFFFF ^ ((int)r->m_raw_header[2] | (
-                                                (int)r->m_raw_header[3] << 8)))) 
+        if (counter != (mz_uint)(0xFFFF ^ ((int)r->m_raw_header[2] | (
+                                           (int)r->m_raw_header[3] << 8)))) 
           while (1) {
             status = TINFL_STATUS_FAILED;
-            r->m_state = (unsigned int)39;
+            r->m_state = (mz_uint32)39;
             goto common_exit;
             case (mz_uint32)39: ;
           }
@@ -2052,7 +2045,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
           else break;
           {
             mz_uint8 *tmp_13;
-            if (num_bits < (unsigned int)8) 
+            if (num_bits < (mz_uint)8) 
               while (1) {
                 {
                   mz_uint c_2;
@@ -2062,40 +2055,40 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                       if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
                         status = TINFL_STATUS_NEEDS_MORE_INPUT;
                       else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
-                      r->m_state = (unsigned int)51;
+                      r->m_state = (mz_uint32)51;
                       goto common_exit;
                       case (mz_uint32)51: ;
                     }
                     tmp_12 = pIn_buf_cur;
                     pIn_buf_cur ++;
-                    c_2 = (unsigned int)*tmp_12;
+                    c_2 = (mz_uint)*tmp_12;
                   }
-                  bit_buf |= (unsigned long)c_2 << num_bits;
+                  bit_buf |= (tinfl_bit_buf_t)c_2 << num_bits;
                   num_bits += (mz_uint32)8;
                 }
-                if (! (num_bits < (unsigned int)8)) break;
+                if (! (num_bits < (mz_uint)8)) break;
               }
-            dist = (unsigned int)(bit_buf & (unsigned long)((1 << 8) - 1));
+            dist = (mz_uint32)(bit_buf & (unsigned long)((1 << 8) - 1));
             bit_buf >>= 8;
             num_bits -= (mz_uint32)8;
             while (pOut_buf_cur >= pOut_buf_end) {
               status = TINFL_STATUS_HAS_MORE_OUTPUT;
-              r->m_state = (unsigned int)52;
+              r->m_state = (mz_uint32)52;
               goto common_exit;
               case (mz_uint32)52: ;
             }
             tmp_13 = pOut_buf_cur;
             pOut_buf_cur ++;
-            *tmp_13 = (unsigned char)dist;
+            *tmp_13 = (mz_uint8)dist;
             counter --;
           }
         }
         while (counter) {
           size_t n;
-          unsigned long tmp_14;
+          size_t tmp_14;
           while (pOut_buf_cur >= pOut_buf_end) {
             status = TINFL_STATUS_HAS_MORE_OUTPUT;
-            r->m_state = (unsigned int)9;
+            r->m_state = (mz_uint32)9;
             goto common_exit;
             case (mz_uint32)9: ;
           }
@@ -2103,34 +2096,33 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
             if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
               status = TINFL_STATUS_NEEDS_MORE_INPUT;
             else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
-            r->m_state = (unsigned int)38;
+            r->m_state = (mz_uint32)38;
             goto common_exit;
             case (mz_uint32)38: ;
           }
-          if ((unsigned long)(pOut_buf_end - pOut_buf_cur) < (unsigned long)(
-              pIn_buf_end - pIn_buf_cur)) tmp_14 = (unsigned long)(pOut_buf_end - pOut_buf_cur);
-          else tmp_14 = (unsigned long)(pIn_buf_end - pIn_buf_cur);
+          if ((size_t)(pOut_buf_end - pOut_buf_cur) < (size_t)(pIn_buf_end - pIn_buf_cur)) 
+            tmp_14 = (size_t)(pOut_buf_end - pOut_buf_cur);
+          else tmp_14 = (size_t)(pIn_buf_end - pIn_buf_cur);
           ;
-          if (tmp_14 < (unsigned long)counter) {
-            unsigned long tmp_15;
-            if ((unsigned long)(pOut_buf_end - pOut_buf_cur) < (unsigned long)(
-                pIn_buf_end - pIn_buf_cur)) tmp_15 = (unsigned long)(
-                                            pOut_buf_end - pOut_buf_cur);
-            else tmp_15 = (unsigned long)(pIn_buf_end - pIn_buf_cur);
+          if (tmp_14 < (size_t)counter) {
+            size_t tmp_15;
+            if ((size_t)(pOut_buf_end - pOut_buf_cur) < (size_t)(pIn_buf_end - pIn_buf_cur)) 
+              tmp_15 = (size_t)(pOut_buf_end - pOut_buf_cur);
+            else tmp_15 = (size_t)(pIn_buf_end - pIn_buf_cur);
             n = tmp_15;
           }
-          else n = (unsigned long)counter;
+          else n = (size_t)counter;
           memcpy((void *)pOut_buf_cur,(void const *)pIn_buf_cur,n);
           pIn_buf_cur += n;
           pOut_buf_cur += n;
-          counter -= (unsigned int)n;
+          counter -= (mz_uint)n;
         }
       }
       else 
         if (r->m_type == (mz_uint32)3) 
           while (1) {
             status = TINFL_STATUS_FAILED;
-            r->m_state = (unsigned int)10;
+            r->m_state = (mz_uint32)10;
             goto common_exit;
             case (mz_uint32)10: ;
           }
@@ -2138,43 +2130,43 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
           if (r->m_type == (mz_uint32)1) {
             mz_uint i;
             mz_uint8 *p = r->m_tables[0].m_code_size;
-            r->m_table_sizes[0] = (unsigned int)288;
-            r->m_table_sizes[1] = (unsigned int)32;
-            memset((void *)(r->m_tables[1].m_code_size),5,(unsigned long)32);
-            i = (unsigned int)0;
+            r->m_table_sizes[0] = (mz_uint32)288;
+            r->m_table_sizes[1] = (mz_uint32)32;
+            memset((void *)(r->m_tables[1].m_code_size),5,(size_t)32);
+            i = (mz_uint)0;
             while (i <= (mz_uint)143) {
               mz_uint8 *tmp_16;
               tmp_16 = p;
               p ++;
-              *tmp_16 = (unsigned char)8;
+              *tmp_16 = (mz_uint8)8;
               i ++;
             }
             while (i <= (mz_uint)255) {
               mz_uint8 *tmp_17;
               tmp_17 = p;
               p ++;
-              *tmp_17 = (unsigned char)9;
+              *tmp_17 = (mz_uint8)9;
               i ++;
             }
             while (i <= (mz_uint)279) {
               mz_uint8 *tmp_18;
               tmp_18 = p;
               p ++;
-              *tmp_18 = (unsigned char)7;
+              *tmp_18 = (mz_uint8)7;
               i ++;
             }
             while (i <= (mz_uint)287) {
               mz_uint8 *tmp_19;
               tmp_19 = p;
               p ++;
-              *tmp_19 = (unsigned char)8;
+              *tmp_19 = (mz_uint8)8;
               i ++;
             }
           }
           else {
-            counter = (unsigned int)0;
+            counter = (mz_uint32)0;
             while (counter < (mz_uint32)3) {
-              if (num_bits < (unsigned int)*("\005\005\004" + counter)) 
+              if (num_bits < (mz_uint)*("\005\005\004" + counter)) 
                 while (1) {
                   {
                     mz_uint c_3;
@@ -2184,23 +2176,22 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                         if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
                           status = TINFL_STATUS_NEEDS_MORE_INPUT;
                         else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
-                        r->m_state = (unsigned int)11;
+                        r->m_state = (mz_uint32)11;
                         goto common_exit;
                         case (mz_uint32)11: ;
                       }
                       tmp_20 = pIn_buf_cur;
                       pIn_buf_cur ++;
-                      c_3 = (unsigned int)*tmp_20;
+                      c_3 = (mz_uint)*tmp_20;
                     }
-                    bit_buf |= (unsigned long)c_3 << num_bits;
+                    bit_buf |= (tinfl_bit_buf_t)c_3 << num_bits;
                     num_bits += (mz_uint32)8;
                   }
-                  if (! (num_bits < (unsigned int)*("\005\005\004" + counter))) 
+                  if (! (num_bits < (mz_uint)*("\005\005\004" + counter))) 
                     break;
                 }
-              r->m_table_sizes[counter] = (unsigned int)(bit_buf & (unsigned long)(
-                                                         (1 << (int)*(
-                                                          "\005\005\004" + counter)) - 1));
+              r->m_table_sizes[counter] = (mz_uint32)(bit_buf & (unsigned long)(
+                                                      (1 << (int)*("\005\005\004" + counter)) - 1));
               bit_buf >>= (int)*("\005\005\004" + counter);
               num_bits -= (mz_uint32)*("\005\005\004" + counter);
               r->m_table_sizes[counter] += (mz_uint32)tinfl_decompress_s_min_table_sizes[counter];
@@ -2208,11 +2199,11 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
             }
             memset((void *)(& r->m_tables[2].m_code_size),0,
                    sizeof(r->m_tables[2].m_code_size));
-            counter = (unsigned int)0;
+            counter = (mz_uint32)0;
             while (counter < r->m_table_sizes[2]) {
               {
                 mz_uint s;
-                if (num_bits < (unsigned int)3) 
+                if (num_bits < (mz_uint)3) 
                   while (1) {
                     {
                       mz_uint c_4;
@@ -2222,27 +2213,27 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                           if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
                             status = TINFL_STATUS_NEEDS_MORE_INPUT;
                           else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
-                          r->m_state = (unsigned int)14;
+                          r->m_state = (mz_uint32)14;
                           goto common_exit;
                           case (mz_uint32)14: ;
                         }
                         tmp_21 = pIn_buf_cur;
                         pIn_buf_cur ++;
-                        c_4 = (unsigned int)*tmp_21;
+                        c_4 = (mz_uint)*tmp_21;
                       }
-                      bit_buf |= (unsigned long)c_4 << num_bits;
+                      bit_buf |= (tinfl_bit_buf_t)c_4 << num_bits;
                       num_bits += (mz_uint32)8;
                     }
-                    if (! (num_bits < (unsigned int)3)) break;
+                    if (! (num_bits < (mz_uint)3)) break;
                   }
-                s = (unsigned int)(bit_buf & (unsigned long)((1 << 3) - 1));
+                s = (mz_uint)(bit_buf & (unsigned long)((1 << 3) - 1));
                 bit_buf >>= 3;
                 num_bits -= (mz_uint32)3;
-                r->m_tables[2].m_code_size[tinfl_decompress_s_length_dezigzag[counter]] = (unsigned char)s;
+                r->m_tables[2].m_code_size[tinfl_decompress_s_length_dezigzag[counter]] = (mz_uint8)s;
               }
               counter ++;
             }
-            r->m_table_sizes[2] = (unsigned int)19;
+            r->m_table_sizes[2] = (mz_uint32)19;
           }
           while ((int)r->m_type >= 0) {
             {
@@ -2261,16 +2252,16 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
               memset((void *)(& pTable->m_look_up),0,
                      sizeof(pTable->m_look_up));
               memset((void *)(& pTable->m_tree),0,sizeof(pTable->m_tree));
-              i_0 = (unsigned int)0;
+              i_0 = (mz_uint)0;
               while (i_0 < r->m_table_sizes[r->m_type]) {
                 (total_syms[pTable->m_code_size[i_0]]) ++;
                 i_0 ++;
               }
-              used_syms = (unsigned int)0;
-              total = (unsigned int)0;
-              next_code[1] = (unsigned int)0;
+              used_syms = (mz_uint)0;
+              total = (mz_uint)0;
+              next_code[1] = (mz_uint)0;
               next_code[0] = next_code[1];
-              i_0 = (unsigned int)1;
+              i_0 = (mz_uint)1;
               while (i_0 <= (mz_uint)15) {
                 used_syms += total_syms[i_0];
                 total = (total + total_syms[i_0]) << 1;
@@ -2281,20 +2272,20 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                 if (used_syms > (mz_uint)1) 
                   while (1) {
                     status = TINFL_STATUS_FAILED;
-                    r->m_state = (unsigned int)35;
+                    r->m_state = (mz_uint32)35;
                     goto common_exit;
                     case (mz_uint32)35: ;
                   }
               tree_next = -1;
-              sym_index = (unsigned int)0;
+              sym_index = (mz_uint)0;
               while (sym_index < r->m_table_sizes[r->m_type]) {
                 {
                   mz_uint l;
                   mz_uint cur_code;
                   mz_uint tmp_22;
-                  mz_uint rev_code = (unsigned int)0;
+                  mz_uint rev_code = (mz_uint)0;
                   mz_uint code_size =
-                    (unsigned int)pTable->m_code_size[sym_index];
+                    (mz_uint)pTable->m_code_size[sym_index];
                   if (! code_size) goto __Cont;
                   tmp_22 = next_code[code_size];
                   (next_code[code_size]) ++;
@@ -2306,7 +2297,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                     cur_code >>= 1;
                   }
                   if (code_size <= (mz_uint)TINFL_FAST_LOOKUP_BITS) {
-                    mz_int16 k = (short)((code_size << 9) | sym_index);
+                    mz_int16 k = (mz_int16)((code_size << 9) | sym_index);
                     while (rev_code < (mz_uint)TINFL_FAST_LOOKUP_SIZE) {
                       pTable->m_look_up[rev_code] = k;
                       rev_code += (mz_uint)(1 << code_size);
@@ -2316,7 +2307,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                   tree_cur = (int)pTable->m_look_up[rev_code & (unsigned int)(
                                                     TINFL_FAST_LOOKUP_SIZE - 1)];
                   if (0 == tree_cur) {
-                    pTable->m_look_up[rev_code & (unsigned int)(TINFL_FAST_LOOKUP_SIZE - 1)] = (short)tree_next;
+                    pTable->m_look_up[rev_code & (unsigned int)(TINFL_FAST_LOOKUP_SIZE - 1)] = (mz_int16)tree_next;
                     tree_cur = tree_next;
                     tree_next -= 2;
                   }
@@ -2326,7 +2317,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                     rev_code >>= 1;
                     tree_cur = (int)((unsigned int)tree_cur - (rev_code & (unsigned int)1));
                     if (! pTable->m_tree[- tree_cur - 1]) {
-                      pTable->m_tree[- tree_cur - 1] = (short)tree_next;
+                      pTable->m_tree[- tree_cur - 1] = (mz_int16)tree_next;
                       tree_cur = tree_next;
                       tree_next -= 2;
                     }
@@ -2335,12 +2326,12 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                   }
                   rev_code >>= 1;
                   tree_cur = (int)((unsigned int)tree_cur - (rev_code & (unsigned int)1));
-                  pTable->m_tree[- tree_cur - 1] = (short)sym_index;
+                  pTable->m_tree[- tree_cur - 1] = (mz_int16)sym_index;
                 }
                 __Cont: sym_index ++;
               }
               if (r->m_type == (mz_uint32)2) {
-                counter = (unsigned int)0;
+                counter = (mz_uint32)0;
                 while (counter < r->m_table_sizes[0] + r->m_table_sizes[1]) {
                   {
                     mz_uint s_0;
@@ -2355,13 +2346,13 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                             temp = (int)r->m_tables[2].m_look_up[bit_buf & (unsigned long)(
                                                                  TINFL_FAST_LOOKUP_SIZE - 1)];
                             if (temp >= 0) {
-                              code_len = (unsigned int)(temp >> 9);
+                              code_len = (mz_uint)(temp >> 9);
                               if (code_len) 
                                 if (num_bits >= code_len) break;
                             }
                             else 
                               if (num_bits > (mz_uint32)TINFL_FAST_LOOKUP_BITS) {
-                                code_len = (unsigned int)TINFL_FAST_LOOKUP_BITS;
+                                code_len = (mz_uint)TINFL_FAST_LOOKUP_BITS;
                                 while (1) {
                                   {
                                     mz_uint tmp_23;
@@ -2384,21 +2375,21 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                                 if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
                                   status = TINFL_STATUS_NEEDS_MORE_INPUT;
                                 else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
-                                r->m_state = (unsigned int)16;
+                                r->m_state = (mz_uint32)16;
                                 goto common_exit;
                                 case (mz_uint32)16: ;
                               }
                               tmp_24 = pIn_buf_cur;
                               pIn_buf_cur ++;
-                              c_5 = (unsigned int)*tmp_24;
+                              c_5 = (mz_uint)*tmp_24;
                             }
-                            bit_buf |= (unsigned long)c_5 << num_bits;
+                            bit_buf |= (tinfl_bit_buf_t)c_5 << num_bits;
                             num_bits += (mz_uint32)8;
                             if (! (num_bits < (mz_uint32)15)) break;
                           }
                         else {
-                          bit_buf |= ((unsigned long)*(pIn_buf_cur + 0) << num_bits) | (
-                                     (unsigned long)*(pIn_buf_cur + 1) << (
+                          bit_buf |= ((tinfl_bit_buf_t)*(pIn_buf_cur + 0) << num_bits) | (
+                                     (tinfl_bit_buf_t)*(pIn_buf_cur + 1) << (
                                      num_bits + (mz_uint32)8));
                           pIn_buf_cur += 2;
                           num_bits += (mz_uint32)16;
@@ -2406,11 +2397,11 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                       temp = (int)r->m_tables[2].m_look_up[bit_buf & (unsigned long)(
                                                            TINFL_FAST_LOOKUP_SIZE - 1)];
                       if (temp >= 0) {
-                        code_len = (unsigned int)(temp >> 9);
+                        code_len = (mz_uint)(temp >> 9);
                         temp &= 511;
                       }
                       else {
-                        code_len = (unsigned int)TINFL_FAST_LOOKUP_BITS;
+                        code_len = (mz_uint)TINFL_FAST_LOOKUP_BITS;
                         while (1) {
                           {
                             mz_uint tmp_25;
@@ -2422,7 +2413,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                           if (! (temp < 0)) break;
                         }
                       }
-                      dist = (unsigned int)temp;
+                      dist = (mz_uint32)temp;
                       bit_buf >>= code_len;
                       num_bits -= code_len;
                     }
@@ -2430,18 +2421,18 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                       mz_uint32 tmp_26;
                       tmp_26 = counter;
                       counter ++;
-                      r->m_len_codes[tmp_26] = (unsigned char)dist;
+                      r->m_len_codes[tmp_26] = (mz_uint8)dist;
                       goto __Cont_0;
                     }
                     if (dist == (mz_uint32)16) 
                       if (! counter) 
                         while (1) {
                           status = TINFL_STATUS_FAILED;
-                          r->m_state = (unsigned int)17;
+                          r->m_state = (mz_uint32)17;
                           goto common_exit;
                           case (mz_uint32)17: ;
                         }
-                    num_extra = (unsigned int)*("\002\003\a" + (dist - (mz_uint32)16));
+                    num_extra = (mz_uint32)*("\002\003\a" + (dist - (mz_uint32)16));
                     if (num_bits < num_extra) 
                       while (1) {
                         {
@@ -2452,20 +2443,20 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                               if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
                                 status = TINFL_STATUS_NEEDS_MORE_INPUT;
                               else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
-                              r->m_state = (unsigned int)18;
+                              r->m_state = (mz_uint32)18;
                               goto common_exit;
                               case (mz_uint32)18: ;
                             }
                             tmp_27 = pIn_buf_cur;
                             pIn_buf_cur ++;
-                            c_6 = (unsigned int)*tmp_27;
+                            c_6 = (mz_uint)*tmp_27;
                           }
-                          bit_buf |= (unsigned long)c_6 << num_bits;
+                          bit_buf |= (tinfl_bit_buf_t)c_6 << num_bits;
                           num_bits += (mz_uint32)8;
                         }
                         if (! (num_bits < num_extra)) break;
                       }
-                    s_0 = (unsigned int)(bit_buf & (unsigned long)((1 << num_extra) - 1));
+                    s_0 = (mz_uint)(bit_buf & (unsigned long)((1 << num_extra) - 1));
                     bit_buf >>= num_extra;
                     num_bits -= num_extra;
                     s_0 += (mz_uint)*("\003\003\v" + (dist - (mz_uint32)16));
@@ -2475,7 +2466,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                     else tmp_28 = 0;
                     ;
                     memset((void *)(& r->m_len_codes[counter]),tmp_28,
-                           (unsigned long)s_0);
+                           (size_t)s_0);
                     counter += s_0;
                   }
                   __Cont_0: ;
@@ -2483,16 +2474,16 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                 if (r->m_table_sizes[0] + r->m_table_sizes[1] != counter) 
                   while (1) {
                     status = TINFL_STATUS_FAILED;
-                    r->m_state = (unsigned int)21;
+                    r->m_state = (mz_uint32)21;
                     goto common_exit;
                     case (mz_uint32)21: ;
                   }
                 memcpy((void *)(r->m_tables[0].m_code_size),
                        (void const *)(r->m_len_codes),
-                       (unsigned long)r->m_table_sizes[0]);
+                       (size_t)r->m_table_sizes[0]);
                 memcpy((void *)(r->m_tables[1].m_code_size),
                        (void const *)(& r->m_len_codes[r->m_table_sizes[0]]),
-                       (unsigned long)r->m_table_sizes[1]);
+                       (size_t)r->m_table_sizes[1]);
               }
             }
             (r->m_type) --;
@@ -2518,13 +2509,13 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                               temp_0 = (int)r->m_tables[0].m_look_up[
                               bit_buf & (unsigned long)(TINFL_FAST_LOOKUP_SIZE - 1)];
                               if (temp_0 >= 0) {
-                                code_len_0 = (unsigned int)(temp_0 >> 9);
+                                code_len_0 = (mz_uint)(temp_0 >> 9);
                                 if (code_len_0) 
                                   if (num_bits >= code_len_0) break;
                               }
                               else 
                                 if (num_bits > (mz_uint32)TINFL_FAST_LOOKUP_BITS) {
-                                  code_len_0 = (unsigned int)TINFL_FAST_LOOKUP_BITS;
+                                  code_len_0 = (mz_uint)TINFL_FAST_LOOKUP_BITS;
                                   while (1) {
                                     {
                                       mz_uint tmp_29;
@@ -2547,21 +2538,21 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                                   if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
                                     status = TINFL_STATUS_NEEDS_MORE_INPUT;
                                   else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
-                                  r->m_state = (unsigned int)23;
+                                  r->m_state = (mz_uint32)23;
                                   goto common_exit;
                                   case (mz_uint32)23: ;
                                 }
                                 tmp_30 = pIn_buf_cur;
                                 pIn_buf_cur ++;
-                                c_7 = (unsigned int)*tmp_30;
+                                c_7 = (mz_uint)*tmp_30;
                               }
-                              bit_buf |= (unsigned long)c_7 << num_bits;
+                              bit_buf |= (tinfl_bit_buf_t)c_7 << num_bits;
                               num_bits += (mz_uint32)8;
                               if (! (num_bits < (mz_uint32)15)) break;
                             }
                           else {
-                            bit_buf |= ((unsigned long)*(pIn_buf_cur + 0) << num_bits) | (
-                                       (unsigned long)*(pIn_buf_cur + 1) << (
+                            bit_buf |= ((tinfl_bit_buf_t)*(pIn_buf_cur + 0) << num_bits) | (
+                                       (tinfl_bit_buf_t)*(pIn_buf_cur + 1) << (
                                        num_bits + (mz_uint32)8));
                             pIn_buf_cur += 2;
                             num_bits += (mz_uint32)16;
@@ -2569,11 +2560,11 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                         temp_0 = (int)r->m_tables[0].m_look_up[bit_buf & (unsigned long)(
                                                                TINFL_FAST_LOOKUP_SIZE - 1)];
                         if (temp_0 >= 0) {
-                          code_len_0 = (unsigned int)(temp_0 >> 9);
+                          code_len_0 = (mz_uint)(temp_0 >> 9);
                           temp_0 &= 511;
                         }
                         else {
-                          code_len_0 = (unsigned int)TINFL_FAST_LOOKUP_BITS;
+                          code_len_0 = (mz_uint)TINFL_FAST_LOOKUP_BITS;
                           while (1) {
                             {
                               mz_uint tmp_31;
@@ -2585,35 +2576,35 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                             if (! (temp_0 < 0)) break;
                           }
                         }
-                        counter = (unsigned int)temp_0;
+                        counter = (mz_uint32)temp_0;
                         bit_buf >>= code_len_0;
                         num_bits -= code_len_0;
                       }
                       if (counter >= (mz_uint32)256) break;
                       while (pOut_buf_cur >= pOut_buf_end) {
                         status = TINFL_STATUS_HAS_MORE_OUTPUT;
-                        r->m_state = (unsigned int)24;
+                        r->m_state = (mz_uint32)24;
                         goto common_exit;
                         case (mz_uint32)24: ;
                       }
                       tmp_32 = pOut_buf_cur;
                       pOut_buf_cur ++;
-                      *tmp_32 = (unsigned char)counter;
+                      *tmp_32 = (mz_uint8)counter;
                     }
                   }
                   else {
                     int sym2;
                     mz_uint code_len_1;
                     if (num_bits < (mz_uint32)30) {
-                      bit_buf |= (unsigned long)*((mz_uint32 const *)pIn_buf_cur) << num_bits;
+                      bit_buf |= (tinfl_bit_buf_t)*((mz_uint32 const *)pIn_buf_cur) << num_bits;
                       pIn_buf_cur += 4;
                       num_bits += (mz_uint32)32;
                     }
                     sym2 = (int)r->m_tables[0].m_look_up[bit_buf & (unsigned long)(
                                                          TINFL_FAST_LOOKUP_SIZE - 1)];
-                    if (sym2 >= 0) code_len_1 = (unsigned int)(sym2 >> 9);
+                    if (sym2 >= 0) code_len_1 = (mz_uint)(sym2 >> 9);
                     else {
-                      code_len_1 = (unsigned int)TINFL_FAST_LOOKUP_BITS;
+                      code_len_1 = (mz_uint)TINFL_FAST_LOOKUP_BITS;
                       while (1) {
                         {
                           mz_uint tmp_33;
@@ -2625,15 +2616,15 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                         if (! (sym2 < 0)) break;
                       }
                     }
-                    counter = (unsigned int)sym2;
+                    counter = (mz_uint32)sym2;
                     bit_buf >>= code_len_1;
                     num_bits -= code_len_1;
                     if (counter & (unsigned int)256) break;
                     sym2 = (int)r->m_tables[0].m_look_up[bit_buf & (unsigned long)(
                                                          TINFL_FAST_LOOKUP_SIZE - 1)];
-                    if (sym2 >= 0) code_len_1 = (unsigned int)(sym2 >> 9);
+                    if (sym2 >= 0) code_len_1 = (mz_uint)(sym2 >> 9);
                     else {
-                      code_len_1 = (unsigned int)TINFL_FAST_LOOKUP_BITS;
+                      code_len_1 = (mz_uint)TINFL_FAST_LOOKUP_BITS;
                       while (1) {
                         {
                           mz_uint tmp_34;
@@ -2647,21 +2638,20 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                     }
                     bit_buf >>= code_len_1;
                     num_bits -= code_len_1;
-                    *(pOut_buf_cur + 0) = (unsigned char)counter;
+                    *(pOut_buf_cur + 0) = (mz_uint8)counter;
                     if (sym2 & 256) {
                       pOut_buf_cur ++;
-                      counter = (unsigned int)sym2;
+                      counter = (mz_uint32)sym2;
                       break;
                     }
-                    *(pOut_buf_cur + 1) = (unsigned char)sym2;
+                    *(pOut_buf_cur + 1) = (mz_uint8)sym2;
                     pOut_buf_cur += 2;
                   }
               counter &= (unsigned int)511;
               if (counter == (mz_uint32)256) break;
-              num_extra = (unsigned int)tinfl_decompress_s_length_extra[
+              num_extra = (mz_uint32)tinfl_decompress_s_length_extra[
               counter - (mz_uint32)257];
-              counter = (unsigned int)tinfl_decompress_s_length_base[
-              counter - (mz_uint32)257];
+              counter = (mz_uint32)tinfl_decompress_s_length_base[counter - (mz_uint32)257];
               if (num_extra) {
                 mz_uint extra_bits;
                 if (num_bits < num_extra) 
@@ -2674,21 +2664,20 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                           if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
                             status = TINFL_STATUS_NEEDS_MORE_INPUT;
                           else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
-                          r->m_state = (unsigned int)25;
+                          r->m_state = (mz_uint32)25;
                           goto common_exit;
                           case (mz_uint32)25: ;
                         }
                         tmp_35 = pIn_buf_cur;
                         pIn_buf_cur ++;
-                        c_8 = (unsigned int)*tmp_35;
+                        c_8 = (mz_uint)*tmp_35;
                       }
-                      bit_buf |= (unsigned long)c_8 << num_bits;
+                      bit_buf |= (tinfl_bit_buf_t)c_8 << num_bits;
                       num_bits += (mz_uint32)8;
                     }
                     if (! (num_bits < num_extra)) break;
                   }
-                extra_bits = (unsigned int)(bit_buf & (unsigned long)(
-                                            (1 << num_extra) - 1));
+                extra_bits = (mz_uint)(bit_buf & (unsigned long)((1 << num_extra) - 1));
                 bit_buf >>= num_extra;
                 num_bits -= num_extra;
                 counter += extra_bits;
@@ -2703,13 +2692,13 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                       temp_1 = (int)r->m_tables[1].m_look_up[bit_buf & (unsigned long)(
                                                              TINFL_FAST_LOOKUP_SIZE - 1)];
                       if (temp_1 >= 0) {
-                        code_len_2 = (unsigned int)(temp_1 >> 9);
+                        code_len_2 = (mz_uint)(temp_1 >> 9);
                         if (code_len_2) 
                           if (num_bits >= code_len_2) break;
                       }
                       else 
                         if (num_bits > (mz_uint32)TINFL_FAST_LOOKUP_BITS) {
-                          code_len_2 = (unsigned int)TINFL_FAST_LOOKUP_BITS;
+                          code_len_2 = (mz_uint)TINFL_FAST_LOOKUP_BITS;
                           while (1) {
                             {
                               mz_uint tmp_36;
@@ -2732,21 +2721,21 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                           if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
                             status = TINFL_STATUS_NEEDS_MORE_INPUT;
                           else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
-                          r->m_state = (unsigned int)26;
+                          r->m_state = (mz_uint32)26;
                           goto common_exit;
                           case (mz_uint32)26: ;
                         }
                         tmp_37 = pIn_buf_cur;
                         pIn_buf_cur ++;
-                        c_9 = (unsigned int)*tmp_37;
+                        c_9 = (mz_uint)*tmp_37;
                       }
-                      bit_buf |= (unsigned long)c_9 << num_bits;
+                      bit_buf |= (tinfl_bit_buf_t)c_9 << num_bits;
                       num_bits += (mz_uint32)8;
                       if (! (num_bits < (mz_uint32)15)) break;
                     }
                   else {
-                    bit_buf |= ((unsigned long)*(pIn_buf_cur + 0) << num_bits) | (
-                               (unsigned long)*(pIn_buf_cur + 1) << (
+                    bit_buf |= ((tinfl_bit_buf_t)*(pIn_buf_cur + 0) << num_bits) | (
+                               (tinfl_bit_buf_t)*(pIn_buf_cur + 1) << (
                                num_bits + (mz_uint32)8));
                     pIn_buf_cur += 2;
                     num_bits += (mz_uint32)16;
@@ -2754,11 +2743,11 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                 temp_1 = (int)r->m_tables[1].m_look_up[bit_buf & (unsigned long)(
                                                        TINFL_FAST_LOOKUP_SIZE - 1)];
                 if (temp_1 >= 0) {
-                  code_len_2 = (unsigned int)(temp_1 >> 9);
+                  code_len_2 = (mz_uint)(temp_1 >> 9);
                   temp_1 &= 511;
                 }
                 else {
-                  code_len_2 = (unsigned int)TINFL_FAST_LOOKUP_BITS;
+                  code_len_2 = (mz_uint)TINFL_FAST_LOOKUP_BITS;
                   while (1) {
                     {
                       mz_uint tmp_38;
@@ -2770,12 +2759,12 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                     if (! (temp_1 < 0)) break;
                   }
                 }
-                dist = (unsigned int)temp_1;
+                dist = (mz_uint32)temp_1;
                 bit_buf >>= code_len_2;
                 num_bits -= code_len_2;
               }
-              num_extra = (unsigned int)tinfl_decompress_s_dist_extra[dist];
-              dist = (unsigned int)tinfl_decompress_s_dist_base[dist];
+              num_extra = (mz_uint32)tinfl_decompress_s_dist_extra[dist];
+              dist = (mz_uint32)tinfl_decompress_s_dist_base[dist];
               if (num_extra) {
                 mz_uint extra_bits_0;
                 if (num_bits < num_extra) 
@@ -2788,26 +2777,25 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                           if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
                             status = TINFL_STATUS_NEEDS_MORE_INPUT;
                           else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
-                          r->m_state = (unsigned int)27;
+                          r->m_state = (mz_uint32)27;
                           goto common_exit;
                           case (mz_uint32)27: ;
                         }
                         tmp_39 = pIn_buf_cur;
                         pIn_buf_cur ++;
-                        c_10 = (unsigned int)*tmp_39;
+                        c_10 = (mz_uint)*tmp_39;
                       }
-                      bit_buf |= (unsigned long)c_10 << num_bits;
+                      bit_buf |= (tinfl_bit_buf_t)c_10 << num_bits;
                       num_bits += (mz_uint32)8;
                     }
                     if (! (num_bits < num_extra)) break;
                   }
-                extra_bits_0 = (unsigned int)(bit_buf & (unsigned long)(
-                                              (1 << num_extra) - 1));
+                extra_bits_0 = (mz_uint)(bit_buf & (unsigned long)((1 << num_extra) - 1));
                 bit_buf >>= num_extra;
                 num_bits -= num_extra;
                 dist += extra_bits_0;
               }
-              dist_from_out_buf_start = (unsigned long)(pOut_buf_cur - pOut_buf_start);
+              dist_from_out_buf_start = (size_t)(pOut_buf_cur - pOut_buf_start);
               if (dist == (mz_uint32)0) goto _LOR_1;
               else 
                 if ((size_t)dist > dist_from_out_buf_start) goto _LOR_1;
@@ -2817,7 +2805,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                     if (decomp_flags & (unsigned int)TINFL_FLAG_USING_NON_WRAPPING_OUTPUT_BUF) 
                       while (1) {
                         status = TINFL_STATUS_FAILED;
-                        r->m_state = (unsigned int)37;
+                        r->m_state = (mz_uint32)37;
                         goto common_exit;
                         case (mz_uint32)37: ;
                       }
@@ -2838,14 +2826,14 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                     size_t tmp_41;
                     while (pOut_buf_cur >= pOut_buf_end) {
                       status = TINFL_STATUS_HAS_MORE_OUTPUT;
-                      r->m_state = (unsigned int)53;
+                      r->m_state = (mz_uint32)53;
                       goto common_exit;
                       case (mz_uint32)53: ;
                     }
                     tmp_40 = pOut_buf_cur;
                     pOut_buf_cur ++;
                     tmp_41 = dist_from_out_buf_start;
-                    dist_from_out_buf_start += (size_t)1;
+                    dist_from_out_buf_start ++;
                     *tmp_40 = *(pOut_buf_start + ((tmp_41 - (size_t)dist) & out_buf_size_mask));
                   }
                 }
@@ -2904,15 +2892,15 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
               if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
                 status = TINFL_STATUS_NEEDS_MORE_INPUT;
               else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
-              r->m_state = (unsigned int)32;
+              r->m_state = (mz_uint32)32;
               goto common_exit;
               case (mz_uint32)32: ;
             }
             tmp_44 = pIn_buf_cur;
             pIn_buf_cur ++;
-            c_11 = (unsigned int)*tmp_44;
+            c_11 = (mz_uint)*tmp_44;
           }
-          bit_buf |= (unsigned long)c_11 << num_bits;
+          bit_buf |= (tinfl_bit_buf_t)c_11 << num_bits;
           num_bits += (mz_uint32)8;
         }
         if (! (num_bits < (num_bits & (unsigned int)7))) break;
@@ -2927,15 +2915,15 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
       pIn_buf_cur --;
       num_bits -= (mz_uint32)8;
     }
-    bit_buf &= ((unsigned long)1 << num_bits) - (unsigned long)1;
+    bit_buf &= ((mz_uint64)1 << num_bits) - (mz_uint64)1;
     __FC_assert(! num_bits != 0,"miniz_tinfl.c",576,"!num_bits");
     if (decomp_flags & (unsigned int)TINFL_FLAG_PARSE_ZLIB_HEADER) {
-      counter = (unsigned int)0;
+      counter = (mz_uint32)0;
       while (counter < (mz_uint32)4) {
         {
           mz_uint s_1;
           if (num_bits) {
-            if (num_bits < (unsigned int)8) 
+            if (num_bits < (mz_uint)8) 
               while (1) {
                 {
                   mz_uint c_12;
@@ -2945,20 +2933,20 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                       if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
                         status = TINFL_STATUS_NEEDS_MORE_INPUT;
                       else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
-                      r->m_state = (unsigned int)41;
+                      r->m_state = (mz_uint32)41;
                       goto common_exit;
                       case (mz_uint32)41: ;
                     }
                     tmp_45 = pIn_buf_cur;
                     pIn_buf_cur ++;
-                    c_12 = (unsigned int)*tmp_45;
+                    c_12 = (mz_uint)*tmp_45;
                   }
-                  bit_buf |= (unsigned long)c_12 << num_bits;
+                  bit_buf |= (tinfl_bit_buf_t)c_12 << num_bits;
                   num_bits += (mz_uint32)8;
                 }
-                if (! (num_bits < (unsigned int)8)) break;
+                if (! (num_bits < (mz_uint)8)) break;
               }
-            s_1 = (unsigned int)(bit_buf & (unsigned long)((1 << 8) - 1));
+            s_1 = (mz_uint)(bit_buf & (unsigned long)((1 << 8) - 1));
             bit_buf >>= 8;
             num_bits -= (mz_uint32)8;
           }
@@ -2968,13 +2956,13 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
               if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
                 status = TINFL_STATUS_NEEDS_MORE_INPUT;
               else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
-              r->m_state = (unsigned int)42;
+              r->m_state = (mz_uint32)42;
               goto common_exit;
               case (mz_uint32)42: ;
             }
             tmp_46 = pIn_buf_cur;
             pIn_buf_cur ++;
-            s_1 = (unsigned int)*tmp_46;
+            s_1 = (mz_uint)*tmp_46;
           }
           r->m_z_adler32 = (r->m_z_adler32 << 8) | s_1;
         }
@@ -2983,7 +2971,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
     }
     while (1) {
       status = TINFL_STATUS_DONE;
-      r->m_state = (unsigned int)34;
+      r->m_state = (mz_uint32)34;
       goto common_exit;
       case (mz_uint32)34: ;
     }
@@ -3000,13 +2988,13 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
         num_bits -= (mz_uint32)8;
       }
   r->m_num_bits = num_bits;
-  r->m_bit_buf = bit_buf & (((unsigned long)1 << num_bits) - (unsigned long)1);
+  r->m_bit_buf = bit_buf & (((mz_uint64)1 << num_bits) - (mz_uint64)1);
   r->m_dist = dist;
   r->m_counter = counter;
   r->m_num_extra = num_extra;
   r->m_dist_from_out_buf_start = dist_from_out_buf_start;
-  *pIn_buf_size = (unsigned long)(pIn_buf_cur - pIn_buf_next);
-  *pOut_buf_size = (unsigned long)(pOut_buf_cur - pOut_buf_next);
+  *pIn_buf_size = (size_t)(pIn_buf_cur - pIn_buf_next);
+  *pOut_buf_size = (size_t)(pOut_buf_cur - pOut_buf_next);
   if (decomp_flags & (unsigned int)(TINFL_FLAG_PARSE_ZLIB_HEADER | TINFL_FLAG_COMPUTE_ADLER32)) 
     if (status >= 0) {
       mz_uint32 i_1;
@@ -3016,7 +3004,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
       mz_uint32 s2 = r->m_check_adler32 >> 16;
       size_t block_len = buf_len % (unsigned long)5552;
       while (buf_len) {
-        i_1 = (unsigned int)0;
+        i_1 = (mz_uint32)0;
         while ((size_t)(i_1 + (mz_uint32)7) < block_len) {
           s1 += (mz_uint32)*(ptr + 0);
           s2 += s1;
@@ -3048,14 +3036,14 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
         s1 %= 65521U;
         s2 %= 65521U;
         buf_len -= block_len;
-        block_len = (unsigned long)5552;
+        block_len = (size_t)5552;
       }
       r->m_check_adler32 = (s2 << 16) + s1;
       if (status == TINFL_STATUS_DONE) 
         if (decomp_flags & (unsigned int)TINFL_FLAG_PARSE_ZLIB_HEADER) 
           if (r->m_check_adler32 != r->m_z_adler32) status = TINFL_STATUS_ADLER32_MISMATCH;
     }
-  __retres = (enum __anonenum_tinfl_status_13 __attribute__((__visibility__("default"))))status;
+  __retres = (tinfl_status __attribute__((__visibility__("default"))))status;
   return_label: return __retres;
 }
 
@@ -3066,16 +3054,16 @@ void __attribute__((__visibility__("default"))) *tinfl_decompress_mem_to_heap
   tinfl_decompressor decomp;
   void *pNew_buf;
   void *pBuf = (void *)0;
-  size_t src_buf_ofs = (unsigned long)0;
-  size_t out_buf_capacity = (unsigned long)0;
-  *pOut_len = (unsigned long)0;
-  decomp.m_state = (unsigned int)0;
-  decomp.m_num_bits = (unsigned int)0;
-  decomp.m_bit_buf = (unsigned long)0;
-  decomp.m_dist = (unsigned int)0;
-  decomp.m_counter = (unsigned int)0;
-  decomp.m_num_extra = (unsigned int)0;
-  decomp.m_dist_from_out_buf_start = (unsigned long)0;
+  size_t src_buf_ofs = (size_t)0;
+  size_t out_buf_capacity = (size_t)0;
+  *pOut_len = (size_t)0;
+  decomp.m_state = (mz_uint32)0;
+  decomp.m_num_bits = (mz_uint32)0;
+  decomp.m_bit_buf = (tinfl_bit_buf_t)0;
+  decomp.m_dist = (mz_uint32)0;
+  decomp.m_counter = (mz_uint32)0;
+  decomp.m_num_extra = (mz_uint32)0;
+  decomp.m_dist_from_out_buf_start = (size_t)0;
   while (1) {
     size_t new_out_buf_capacity;
     tinfl_status __attribute__((__visibility__("default"))) tmp_0;
@@ -3090,15 +3078,15 @@ void __attribute__((__visibility__("default"))) *tinfl_decompress_mem_to_heap
                              (mz_uint8 const *)pSrc_buf + src_buf_ofs,
                              & src_buf_size,(mz_uint8 *)pBuf,tmp,
                              & dst_buf_size,
-                             (unsigned int)((flags & ~ TINFL_FLAG_HAS_MORE_INPUT) | TINFL_FLAG_USING_NON_WRAPPING_OUTPUT_BUF));
-    tinfl_status status = (enum __anonenum_tinfl_status_13)tmp_0;
+                             (mz_uint32)((flags & ~ TINFL_FLAG_HAS_MORE_INPUT) | TINFL_FLAG_USING_NON_WRAPPING_OUTPUT_BUF));
+    tinfl_status status = (tinfl_status)tmp_0;
     if (status < 0) goto _LOR;
     else 
       if (status == TINFL_STATUS_NEEDS_MORE_INPUT) {
         _LOR:
         {
           free(pBuf);
-          *pOut_len = (unsigned long)0;
+          *pOut_len = (size_t)0;
           __retres = (void __attribute__((__visibility__("default"))) *)0;
           goto return_label;
         }
@@ -3107,11 +3095,11 @@ void __attribute__((__visibility__("default"))) *tinfl_decompress_mem_to_heap
     *pOut_len += dst_buf_size;
     if (status == TINFL_STATUS_DONE) break;
     new_out_buf_capacity = out_buf_capacity * (size_t)2;
-    if (new_out_buf_capacity < (size_t)128) new_out_buf_capacity = (unsigned long)128;
+    if (new_out_buf_capacity < (size_t)128) new_out_buf_capacity = (size_t)128;
     pNew_buf = realloc(pBuf,new_out_buf_capacity);
     if (! pNew_buf) {
       free(pBuf);
-      *pOut_len = (unsigned long)0;
+      *pOut_len = (size_t)0;
       __retres = (void __attribute__((__visibility__("default"))) *)0;
       goto return_label;
     }
@@ -3130,22 +3118,22 @@ size_t __attribute__((__visibility__("default"))) tinfl_decompress_mem_to_mem
   tinfl_decompressor decomp;
   tinfl_status status;
   tinfl_status __attribute__((__visibility__("default"))) tmp;
-  unsigned long tmp_0;
-  decomp.m_state = (unsigned int)0;
-  decomp.m_num_bits = (unsigned int)0;
-  decomp.m_bit_buf = (unsigned long)0;
-  decomp.m_dist = (unsigned int)0;
-  decomp.m_counter = (unsigned int)0;
-  decomp.m_num_extra = (unsigned int)0;
-  decomp.m_dist_from_out_buf_start = (unsigned long)0;
+  size_t tmp_0;
+  decomp.m_state = (mz_uint32)0;
+  decomp.m_num_bits = (mz_uint32)0;
+  decomp.m_bit_buf = (tinfl_bit_buf_t)0;
+  decomp.m_dist = (mz_uint32)0;
+  decomp.m_counter = (mz_uint32)0;
+  decomp.m_num_extra = (mz_uint32)0;
+  decomp.m_dist_from_out_buf_start = (size_t)0;
   tmp = tinfl_decompress(& decomp,(mz_uint8 const *)pSrc_buf,& src_buf_len,
                          (mz_uint8 *)pOut_buf,(mz_uint8 *)pOut_buf,
                          & out_buf_len,
-                         (unsigned int)((flags & ~ TINFL_FLAG_HAS_MORE_INPUT) | TINFL_FLAG_USING_NON_WRAPPING_OUTPUT_BUF));
-  status = (enum __anonenum_tinfl_status_13)tmp;
-  if (status != TINFL_STATUS_DONE) tmp_0 = (unsigned long)(-1);
+                         (mz_uint32)((flags & ~ TINFL_FLAG_HAS_MORE_INPUT) | TINFL_FLAG_USING_NON_WRAPPING_OUTPUT_BUF));
+  status = (tinfl_status)tmp;
+  if (status != TINFL_STATUS_DONE) tmp_0 = (size_t)(-1);
   else tmp_0 = out_buf_len;
-  __retres = (unsigned long __attribute__((__visibility__("default"))))tmp_0;
+  __retres = (size_t __attribute__((__visibility__("default"))))tmp_0;
   return __retres;
 }
 
@@ -3157,20 +3145,20 @@ int __attribute__((__visibility__("default"))) tinfl_decompress_mem_to_callback
   int __attribute__((__visibility__("default"))) __retres;
   tinfl_decompressor decomp;
   int result = 0;
-  mz_uint8 *pDict = malloc((unsigned long)32768);
-  size_t in_buf_ofs = (unsigned long)0;
-  size_t dict_ofs = (unsigned long)0;
+  mz_uint8 *pDict = malloc((size_t)32768);
+  size_t in_buf_ofs = (size_t)0;
+  size_t dict_ofs = (size_t)0;
   if (! pDict) {
     __retres = (int __attribute__((__visibility__("default"))))TINFL_STATUS_FAILED;
     goto return_label;
   }
-  decomp.m_state = (unsigned int)0;
-  decomp.m_num_bits = (unsigned int)0;
-  decomp.m_bit_buf = (unsigned long)0;
-  decomp.m_dist = (unsigned int)0;
-  decomp.m_counter = (unsigned int)0;
-  decomp.m_num_extra = (unsigned int)0;
-  decomp.m_dist_from_out_buf_start = (unsigned long)0;
+  decomp.m_state = (mz_uint32)0;
+  decomp.m_num_bits = (mz_uint32)0;
+  decomp.m_bit_buf = (tinfl_bit_buf_t)0;
+  decomp.m_dist = (mz_uint32)0;
+  decomp.m_counter = (mz_uint32)0;
+  decomp.m_num_extra = (mz_uint32)0;
+  decomp.m_dist_from_out_buf_start = (size_t)0;
   while (1) {
     tinfl_status __attribute__((__visibility__("default"))) tmp_0;
     size_t in_buf_size = *pIn_buf_size - in_buf_ofs;
@@ -3178,8 +3166,8 @@ int __attribute__((__visibility__("default"))) tinfl_decompress_mem_to_callback
     tmp_0 = tinfl_decompress(& decomp,(mz_uint8 const *)pIn_buf + in_buf_ofs,
                              & in_buf_size,pDict,pDict + dict_ofs,
                              & dst_buf_size,
-                             (unsigned int)(flags & ~ (TINFL_FLAG_HAS_MORE_INPUT | TINFL_FLAG_USING_NON_WRAPPING_OUTPUT_BUF)));
-    tinfl_status status = (enum __anonenum_tinfl_status_13)tmp_0;
+                             (mz_uint32)(flags & ~ (TINFL_FLAG_HAS_MORE_INPUT | TINFL_FLAG_USING_NON_WRAPPING_OUTPUT_BUF)));
+    tinfl_status status = (tinfl_status)tmp_0;
     in_buf_ofs += in_buf_size;
     if (dst_buf_size) {
       int tmp_1;
@@ -3205,13 +3193,13 @@ tinfl_decompressor __attribute__((__visibility__("default"))) *tinfl_decompresso
   tinfl_decompressor __attribute__((__visibility__("default"))) *__retres;
   tinfl_decompressor *pDecomp = malloc(sizeof(tinfl_decompressor));
   if (pDecomp) {
-    pDecomp->m_state = (unsigned int)0;
-    pDecomp->m_num_bits = (unsigned int)0;
-    pDecomp->m_bit_buf = (unsigned long)0;
-    pDecomp->m_dist = (unsigned int)0;
-    pDecomp->m_counter = (unsigned int)0;
-    pDecomp->m_num_extra = (unsigned int)0;
-    pDecomp->m_dist_from_out_buf_start = (unsigned long)0;
+    pDecomp->m_state = (mz_uint32)0;
+    pDecomp->m_num_bits = (mz_uint32)0;
+    pDecomp->m_bit_buf = (tinfl_bit_buf_t)0;
+    pDecomp->m_dist = (mz_uint32)0;
+    pDecomp->m_counter = (mz_uint32)0;
+    pDecomp->m_num_extra = (mz_uint32)0;
+    pDecomp->m_dist_from_out_buf_start = (size_t)0;
   }
   __retres = (tinfl_decompressor __attribute__((__visibility__("default"))) *)pDecomp;
   return __retres;

@@ -30,8 +30,8 @@ static int rrextract(u_char *msg, int msglen, u_char *rrp, u_char *dname,
   int tmp_3;
   int tmp_4;
   size_t tmp_5;
-  Frama_C_make_unknown(data,(unsigned long)((2 + 2) - 1));
-  data[2 * 2 - 1] = (char)0;
+  Frama_C_make_unknown(data,(size_t)((2 + 2) - 1));
+  data[2 * 2 - 1] = (u_char)0;
   cp = rrp;
   eom = msg + msglen;
   n = dn_expand((u_char const *)msg,(u_char const *)eom,(u_char const *)cp,
@@ -48,13 +48,13 @@ static int rrextract(u_char *msg, int msglen, u_char *rrp, u_char *dname,
   {
     short tmp;
     tmp = Frama_C_short_interval((short)(-32768),(short)32767);
-    type = (int)tmp;
+    type = (u_int)tmp;
     cp += 2;
   }
   {
     short tmp_0;
     tmp_0 = Frama_C_short_interval((short)(-32768),(short)32767);
-    class = (int)tmp_0;
+    class = (u_int)tmp_0;
     cp += 2;
   }
   if (class > 100) {
@@ -65,14 +65,14 @@ static int rrextract(u_char *msg, int msglen, u_char *rrp, u_char *dname,
     long tmp_1;
     tmp_1 = Frama_C_long_interval(-9223372036854775807L - 1L,
                                   9223372036854775807L);
-    ttl = (int)tmp_1;
+    ttl = (u_int32_t)tmp_1;
     cp += 4;
   }
   if (ttl > 101) ttl = 0;
   {
     short tmp_2;
     tmp_2 = Frama_C_short_interval((short)(-32768),(short)32767);
-    dlen = (int)tmp_2;
+    dlen = (u_int)tmp_2;
     cp += 2;
   }
   if (cp + dlen > eom) {
@@ -105,7 +105,7 @@ static int rrextract(u_char *msg, int msglen, u_char *rrp, u_char *dname,
     __retres = -1;
     goto return_label;
   }
-  memcpy((void *)cp1,(void const *)cp,(unsigned long)n2);
+  memcpy((void *)cp1,(void const *)cp,(size_t)n2);
   __retres = 0;
   return_label: return __retres;
 }
@@ -118,10 +118,10 @@ int main(void)
   u_char *dp;
   u_char name[3];
   u_char msg[(2 + 2) + 10];
-  Frama_C_make_unknown(name,(unsigned long)(3 - 1));
-  name[3 - 1] = (char)0;
-  Frama_C_make_unknown(msg,(unsigned long)(((2 + 2) + 10) - 1));
-  msg[((2 + 2) + 10) - 1] = (char)0;
+  Frama_C_make_unknown(name,(size_t)(3 - 1));
+  name[3 - 1] = (u_char)0;
+  Frama_C_make_unknown(msg,(size_t)(((2 + 2) + 10) - 1));
+  msg[((2 + 2) + 10) - 1] = (u_char)0;
   msglen = 2 + 2;
   dp = msg;
   ret = rrextract(msg,msglen,dp,name,3);
@@ -140,7 +140,7 @@ int dn_expand(u_char const *msg, u_char const *eomorig,
     __retres = -1;
     goto return_label;
   }
-  else *(exp_dn + (length - 1)) = (char)0;
+  else *(exp_dn + (length - 1)) = (u_char)0;
   tmp_0 = strlen(comp_dn);
   __retres = (int)tmp_0;
   return_label: return __retres;

@@ -19,11 +19,11 @@ typedef struct kh_32_s kh_32_t;
 static double const __ac_HASH_UPPER = 0.77;
 __inline static khint_t __ac_X31_hash_string(char const *s)
 {
-  khint_t h = (unsigned int)*s;
+  khint_t h = (khint_t)*s;
   if (h) {
     s ++;
     while (*s) {
-      h = ((h << 5) - h) + (unsigned int)*s;
+      h = ((h << 5) - h) + (khint_t)*s;
       s ++;
     }
   }
@@ -45,7 +45,7 @@ __inline static kh_32_t *kh_init_32(void) __attribute__((__unused__));
 __inline static kh_32_t *kh_init_32(void)
 {
   kh_32_t *tmp;
-  tmp = (kh_32_t *)calloc((unsigned int)1,sizeof(kh_32_t));
+  tmp = (kh_32_t *)calloc((size_t)1,sizeof(kh_32_t));
   return tmp;
 }
 
@@ -68,7 +68,7 @@ __inline static void kh_clear_32(kh_32_t *h)
     if (h->flags) {
       khint_t tmp;
       memset((void *)h->flags,2,h->n_buckets);
-      tmp = (unsigned int)0;
+      tmp = (khint_t)0;
       h->n_occupied = tmp;
       h->size = tmp;
     }
@@ -86,7 +86,7 @@ __inline static khint_t kh_get_32(kh_32_t const *h, khint32_t key)
     khint_t last;
     khint_t mask;
     khint_t tmp;
-    khint_t step = (unsigned int)0;
+    khint_t step = (khint_t)0;
     mask = h->n_buckets - (khint_t)1;
     k = key;
     i = k & mask;
@@ -109,7 +109,7 @@ __inline static khint_t kh_get_32(kh_32_t const *h, khint32_t key)
     goto return_label;
   }
   else {
-    __retres = (unsigned int)0;
+    __retres = (khint_t)0;
     goto return_label;
   }
   return_label: return __retres;
@@ -121,7 +121,7 @@ __inline static int kh_resize_32(kh_32_t *h, khint_t new_n_buckets)
 {
   int __retres;
   khint8_t *new_flags = (khint8_t *)0;
-  khint_t j = (unsigned int)1;
+  khint_t j = (khint_t)1;
   new_n_buckets --;
   new_n_buckets |= new_n_buckets >> 1;
   new_n_buckets |= new_n_buckets >> 2;
@@ -129,9 +129,9 @@ __inline static int kh_resize_32(kh_32_t *h, khint_t new_n_buckets)
   new_n_buckets |= new_n_buckets >> 8;
   new_n_buckets |= new_n_buckets >> 16;
   new_n_buckets ++;
-  if (new_n_buckets < (khint_t)4) new_n_buckets = (unsigned int)32;
-  if (h->size >= (unsigned int)((double)new_n_buckets * __ac_HASH_UPPER + 0.5)) 
-    j = (unsigned int)0;
+  if (new_n_buckets < (khint_t)4) new_n_buckets = (khint_t)32;
+  if (h->size >= (khint_t)((double)new_n_buckets * __ac_HASH_UPPER + 0.5)) 
+    j = (khint_t)0;
   else {
     new_flags = (khint8_t *)malloc(new_n_buckets);
     if (! new_flags) {
@@ -161,7 +161,7 @@ __inline static int kh_resize_32(kh_32_t *h, khint_t new_n_buckets)
     }
   }
   if (j) {
-    j = (unsigned int)0;
+    j = (khint_t)0;
     while (j != h->n_buckets) {
       if (((int)*(h->flags + j) & 3) == 0) {
         char val;
@@ -169,19 +169,19 @@ __inline static int kh_resize_32(kh_32_t *h, khint_t new_n_buckets)
         khint32_t key = *(h->keys + j);
         new_mask = new_n_buckets - (khint_t)1;
         val = *(h->vals + j);
-        *(h->flags + j) = (unsigned char)((int)*(h->flags + j) | 1);
+        *(h->flags + j) = (khint8_t)((int)*(h->flags + j) | 1);
         while (1) {
           {
             khint_t k;
             khint_t i;
-            khint_t step = (unsigned int)0;
+            khint_t step = (khint_t)0;
             k = key;
             i = k & new_mask;
             while (! ((int)*(new_flags + i) & 2)) {
               step ++;
               i = (i + step) & new_mask;
             }
-            *(new_flags + i) = (unsigned char)((int)*(new_flags + i) & ~ 2);
+            *(new_flags + i) = (khint8_t)((int)*(new_flags + i) & ~ 2);
             if (i < h->n_buckets) {
               if (((int)*(h->flags + i) & 3) == 0) {
                 {
@@ -194,7 +194,7 @@ __inline static int kh_resize_32(kh_32_t *h, khint_t new_n_buckets)
                   *(h->vals + i) = val;
                   val = tmp_3;
                 }
-                *(h->flags + i) = (unsigned char)((int)*(h->flags + i) | 1);
+                *(h->flags + i) = (khint8_t)((int)*(h->flags + i) | 1);
               }
               else goto _LAND;
             }
@@ -219,7 +219,7 @@ __inline static int kh_resize_32(kh_32_t *h, khint_t new_n_buckets)
     h->flags = new_flags;
     h->n_buckets = new_n_buckets;
     h->n_occupied = h->size;
-    h->upper_bound = (unsigned int)((double)h->n_buckets * __ac_HASH_UPPER + 0.5);
+    h->upper_bound = (khint_t)((double)h->n_buckets * __ac_HASH_UPPER + 0.5);
   }
   __retres = 0;
   return_label: return __retres;
@@ -256,7 +256,7 @@ __inline static khint_t kh_put_32(kh_32_t *h, khint32_t key, int *ret)
     khint_t site;
     khint_t last;
     khint_t mask = h->n_buckets - (khint_t)1;
-    khint_t step = (unsigned int)0;
+    khint_t step = (khint_t)0;
     site = h->n_buckets;
     x = site;
     k = key;
@@ -286,7 +286,7 @@ __inline static khint_t kh_put_32(kh_32_t *h, khint32_t key, int *ret)
   }
   if ((int)*(h->flags + x) & 2) {
     *(h->keys + x) = key;
-    *(h->flags + x) = (unsigned char)0;
+    *(h->flags + x) = (khint8_t)0;
     (h->size) ++;
     (h->n_occupied) ++;
     *ret = 1;
@@ -294,7 +294,7 @@ __inline static khint_t kh_put_32(kh_32_t *h, khint32_t key, int *ret)
   else 
     if ((int)*(h->flags + x) & 1) {
       *(h->keys + x) = key;
-      *(h->flags + x) = (unsigned char)0;
+      *(h->flags + x) = (khint8_t)0;
       (h->size) ++;
       *ret = 2;
     }
@@ -309,7 +309,7 @@ __inline static void kh_del_32(kh_32_t *h, khint_t x)
 {
   if (x != h->n_buckets) 
     if (! ((int)*(h->flags + x) & 3)) {
-      *(h->flags + x) = (unsigned char)((int)*(h->flags + x) | 1);
+      *(h->flags + x) = (khint8_t)((int)*(h->flags + x) | 1);
       (h->size) --;
     }
   return;
@@ -322,13 +322,13 @@ int main(void)
   int is_missing;
   khiter_t k;
   kh_32_t *h = kh_init_32();
-  k = kh_put_32(h,(unsigned int)5,& ret);
+  k = kh_put_32(h,(khint32_t)5,& ret);
   *(h->vals + k) = (char)10;
-  k = kh_get_32((kh_32_t const *)h,(unsigned int)10);
+  k = kh_get_32((kh_32_t const *)h,(khint32_t)10);
   is_missing = k == h->n_buckets;
-  k = kh_get_32((kh_32_t const *)h,(unsigned int)5);
+  k = kh_get_32((kh_32_t const *)h,(khint32_t)5);
   kh_del_32(h,k);
-  k = (unsigned int)0;
+  k = (khint_t)0;
   /*@ loop unroll 32; */
   while (k != h->n_buckets) {
     if (! ((int)*(h->flags + k) & 3)) *(h->vals + k) = (char)1;

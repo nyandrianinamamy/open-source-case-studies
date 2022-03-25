@@ -105,13 +105,13 @@ static int contains(char const c, char const *matrix, size_t len)
 {
   int __retres;
   size_t x;
-  x = (unsigned int)0;
+  x = (size_t)0;
   while (x < len) {
     if ((int)*(matrix + x) == (int)c) {
       __retres = 1;
       goto return_label;
     }
-    x += (size_t)1;
+    x ++;
   }
   __retres = 0;
   return_label: return __retres;
@@ -125,7 +125,7 @@ static int has_valid_chars(char const *str, char const *matrix)
   size_t mlen;
   len = strlen(str);
   mlen = strlen(matrix);
-  i = (unsigned int)0;
+  i = (size_t)0;
   while (i < len) {
     int tmp;
     tmp = contains(*(str + i),matrix,mlen);
@@ -133,7 +133,7 @@ static int has_valid_chars(char const *str, char const *matrix)
       __retres = 0;
       goto return_label;
     }
-    i += (size_t)1;
+    i ++;
   }
   __retres = 1;
   return_label: return __retres;
@@ -187,12 +187,12 @@ static char *parse_slice(char *buf, char sep)
   }
   tmp = strlen((char const *)pr);
   plen = (int)tmp;
-  part = (char *)calloc((unsigned int)(plen + 1),sizeof(*part));
+  part = (char *)calloc((size_t)(plen + 1),sizeof(*part));
   if (part == (char *)0) {
     __retres = (char *)0;
     goto return_label;
   }
-  memcpy((void *)part,(void const *)(pr + 1),(unsigned int)plen);
+  memcpy((void *)part,(void const *)(pr + 1),(size_t)plen);
   *(part + plen) = (char)'\000';
   *pr = (char)'\000';
   __retres = part;
@@ -248,7 +248,7 @@ int semver_parse_version(char const *str, semver_t *ver)
     else break;
     next = strchr((char const *)slice,(int)*("." + 0));
     if (next == (char *)0) len = strlen((char const *)slice);
-    else len = (unsigned int)(next - slice);
+    else len = (size_t)(next - slice);
     if (len > (size_t)50) {
       __retres = -1;
       goto return_label;
@@ -350,8 +350,7 @@ static int compare_prerelease(char *x, char *y)
         xn = xptr - lastx;
         yn = yptr - lasty;
         if (xn < yn) min = xn; else min = yn;
-        res = strncmp((char const *)lastx,(char const *)lasty,
-                      (unsigned int)min);
+        res = strncmp((char const *)lastx,(char const *)lasty,(size_t)min);
         if (res) {
           int tmp_2;
           if (res < 0) tmp_2 = -1; else tmp_2 = 1;
@@ -685,7 +684,7 @@ int semver_clean(char *s)
   }
   len = strlen((char const *)s);
   mlen = strlen("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-+");
-  i = (unsigned int)0;
+  i = (size_t)0;
   while (i < len) {
     {
       int tmp_0;
@@ -698,11 +697,11 @@ int semver_clean(char *s)
           __retres = -1;
           goto return_label;
         }
-        len -= (size_t)1;
-        i -= (size_t)1;
+        len --;
+        i --;
       }
     }
-    i += (size_t)1;
+    i ++;
   }
   __retres = 0;
   return_label: return __retres;
@@ -717,14 +716,14 @@ static int char_to_int(char const *str)
   buf = 0;
   len = strlen(str);
   mlen = strlen("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-+");
-  i = (unsigned int)0;
+  i = (size_t)0;
   while (i < len) {
     int tmp;
     tmp = contains(*(str + i),
                    "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-+",
                    mlen);
     if (tmp) buf += (int)*(str + i);
-    i += (size_t)1;
+    i ++;
   }
   return buf;
 }
@@ -734,7 +733,7 @@ int semver_numeric(semver_t *x)
   int __retres;
   int num;
   char buf[50 * 3];
-  memset((void *)(& buf),0,(unsigned int)(50 * 3));
+  memset((void *)(& buf),0,(size_t)(50 * 3));
   if (x->major) concat_num(buf,x->major,(char *)0);
   if (x->minor) concat_num(buf,x->minor,(char *)0);
   if (x->patch) concat_num(buf,x->patch,(char *)0);

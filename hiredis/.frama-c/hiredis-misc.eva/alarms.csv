@@ -208,7 +208,7 @@ directory	file	line	function	property kind	status	property
 .	sds.c	235	sdsMakeRoomFor	mem_access	Unknown	\valid(s + (int)(-1))
 .	sds.c	383	sdscatlen	ptr_comparison	Unknown	\pointer_comparable((void *)s, (void *)0)
 .	sds.c	384	sdscatlen	precondition of memcpy	Unknown	valid_dest: valid_or_empty(dest, n)
-.	sds.c	386	sdscatlen	mem_access	Unknown	\valid(s + (unsigned int)(curlen + len))
+.	sds.c	386	sdscatlen	mem_access	Unknown	\valid(s + (size_t)(curlen + len))
 .	sds.c	735	sdsrange	signed_overflow	Unknown	(int)(end - start) + 1 ≤ 2147483647
 .	sds.c	741	sdsrange	signed_overflow	Unknown	(int)(end - start) + 1 ≤ 2147483647
 .	sds.c	746	sdsrange	precondition of memmove	Unknown	valid_dest: valid_or_empty(dest, n)
@@ -338,4 +338,4 @@ FRAMAC_SHARE/libc	strings.h	53	strncasecmp	precondition	Unknown	valid_string_s1:
 FRAMAC_SHARE/libc	unistd.h	725	access	precondition	Unknown	valid_string_path: valid_read_string(path)
 FRAMAC_SHARE/libc/sys	socket.h	334	connect	precondition	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
 FRAMAC_SHARE/libc/sys	socket.h	370	getsockopt	precondition	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
-FRAMAC_SHARE/libc/sys	socket.h	525	setsockopt	precondition	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
+FRAMAC_SHARE/libc/sys	socket.h	540	setsockopt	precondition	Unknown	valid_sockfd: 0 ≤ sockfd < 1024

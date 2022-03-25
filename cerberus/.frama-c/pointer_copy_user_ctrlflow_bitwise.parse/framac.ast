@@ -30,13 +30,13 @@ int main(void)
   uintptr_t j;
   int k;
   int *p = & x;
-  uintptr_t i = (unsigned int)p;
+  uintptr_t i = (uintptr_t)p;
   int uintptr_t_width = (int)(sizeof(uintptr_t) * (unsigned int)8);
-  j = (unsigned int)0;
+  j = (uintptr_t)0;
   k = 0;
   while (k < uintptr_t_width) {
-    bit = (i & ((unsigned int)1 << k)) >> k;
-    if (bit == (uintptr_t)1) j |= (unsigned int)1 << k; else j = j;
+    bit = (i & ((uintptr_t)1 << k)) >> k;
+    if (bit == (uintptr_t)1) j |= (uintptr_t)1 << k; else j = j;
     k ++;
   }
   int *q = (int *)j;

@@ -42,8 +42,8 @@ int printf_va_2(char const * restrict format, int param0, int param1,
 int main(void)
 {
   int __retres;
-  intptr_t ux = (int)(& x);
-  intptr_t uy = (int)(& y);
+  intptr_t ux = (intptr_t)(& x);
+  intptr_t uy = (intptr_t)(& y);
   intptr_t offset = 4;
   printf("Addresses: &x=%i &y=%i\n",ux,uy); /* printf_va_1 */
   int *q = & y;

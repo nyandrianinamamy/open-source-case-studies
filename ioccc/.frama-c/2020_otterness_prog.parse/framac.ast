@@ -24,7 +24,7 @@ u1 *u;
 u2 A(u1 *c)
 {
   u2 __retres;
-  __retres = (unsigned short)((int)*(c + ! (! c)) | ((int)((unsigned short)*c) << l));
+  __retres = (u2)((int)*(c + ! (! c)) | ((int)((u2)*c) << l));
   return __retres;
 }
 
@@ -33,8 +33,8 @@ void B(u1 *c, u2 a)
   u1 *tmp;
   tmp = c;
   c ++;
-  *tmp = (unsigned char)((int)a >> l);
-  *c = (unsigned char)a;
+  *tmp = (u1)((int)a >> l);
+  *c = (u1)a;
   return;
 }
 
@@ -44,12 +44,12 @@ int C(u1 *c, u4 *a)
   u1 b;
   u4 tmp;
   u4 tmp_0;
-  u1 d = (unsigned char)k;
+  u1 d = (u1)k;
   tmp = l;
-  l -= (u4)1;
-  s = (unsigned char)tmp;
+  l --;
+  s = (u1)tmp;
   tmp_0 = k;
-  k += (u4)1;
+  k ++;
   *a = tmp_0;
   while ((int)d < (int)s >> k) {
     b = *(c + d);
@@ -57,14 +57,14 @@ int C(u1 *c, u4 *a)
     if (! ((int)b >> l)) {
       u4 tmp_1;
       tmp_1 = k;
-      k -= (u4)1;
-      d = (unsigned char)((u4)d + tmp_1);
-      l = (unsigned int)s;
+      k --;
+      d = (u1)((u4)d + tmp_1);
+      l = (u4)s;
       __retres = (int)d;
       goto return_label;
     }
     *a <<= l;
-    d = (unsigned char)((int)d + 1);
+    d = (u1)((int)d + 1);
   }
   exit(! k);
   __retres = (int)p;
@@ -76,19 +76,19 @@ u1 D(u4 a)
   u1 __retres;
   u4 tmp;
   tmp = k;
-  k += (u4)1;
-  u1 b = (unsigned char)tmp;
-  u1 c = (unsigned char)(l - k);
+  k ++;
+  u1 b = (u1)tmp;
+  u1 c = (u1)(l - k);
   if (a) {
-    b = (unsigned char)k;
+    b = (u1)k;
     while (1) {
       a >>= k;
       if (! a) break;
-      b = (unsigned char)((int)b + 1);
+      b = (u1)((int)b + 1);
     }
   }
-  if (k) k = (unsigned int)(! k); else k = k;
-  __retres = (unsigned char)((int)b / (int)c + ! (! ((int)b % (int)c)));
+  if (k) k = (u4)(! k); else k = k;
+  __retres = (u1)((int)b / (int)c + ! (! ((int)b % (int)c)));
   return __retres;
 }
 
@@ -98,9 +98,9 @@ int F(u4 a, u1 *c)
   u4 tmp_0;
   u1 b = D(a);
   tmp_0 = l;
-  l -= (u4)1;
-  *c = (unsigned char)((u4)s - tmp_0);
-  r = (unsigned char)((u4)q / n);
+  l --;
+  *c = (u1)((u4)s - tmp_0);
+  r = (u1)((u4)q / n);
   if (! a) {
     __retres = (int)b;
     goto return_label;
@@ -109,11 +109,11 @@ int F(u4 a, u1 *c)
   c += (int)b;
   c --;
   while (a) {
-    *c = (unsigned char)(a & (unsigned int)p);
+    *c = (u1)(a & (unsigned int)p);
     a >>= l;
     c --;
   }
-  l = (unsigned int)s;
+  l = (u4)s;
   __retres = (int)b;
   return_label: return __retres;
 }
@@ -124,9 +124,8 @@ u1 *G(u1 *c, u1 *a)
   u4 d;
   u1 b;
   u1 e;
-  if ((int)m < (int)p) m = (unsigned char)((int)p << (int)q); else m = m;
-  if ((u4)q < n + (u4)o) q = (unsigned char)((int)p >> (int)q); else 
-                                                                  q = q;
+  if ((int)m < (int)p) m = (u1)((int)p << (int)q); else m = m;
+  if ((u4)q < n + (u4)o) q = (u1)((int)p >> (int)q); else q = q;
   e = *c;
   if ((int)e == (int)m) goto _LOR;
   else 
@@ -134,7 +133,7 @@ u1 *G(u1 *c, u1 *a)
       _LOR:
       {
         int tmp;
-        *a = (unsigned char)k;
+        *a = (u1)k;
         c ++;
         tmp = C(c,& d);
         c += tmp;
@@ -144,7 +143,7 @@ u1 *G(u1 *c, u1 *a)
     }
   if ((int)e == ((int)m | (int)p)) {
     int tmp_0;
-    *a = (unsigned char)k;
+    *a = (u1)k;
     c ++;
     c ++;
     tmp_0 = C(c,& d);
@@ -159,14 +158,14 @@ u1 *G(u1 *c, u1 *a)
     *a = b;
   }
   else b = *a;
-  e = (unsigned char)((int)b >> l);
+  e = (u1)((int)b >> l);
   if ((int)e < (int)s) exit((int)n);
   else 
     if ((u4)e > l + (u4)s) exit((int)n);
   if ((u4)e != l + (u4)s) 
     if ((u4)e != l + (u4)o) c ++;
   c ++;
-  l = (unsigned int)s;
+  l = (u4)s;
   __retres = c;
   return_label: return __retres;
 }
@@ -178,16 +177,16 @@ u1 *H(u1 *c, u4 *a)
   u1 *d;
   u2 tmp;
   u2 tmp_0;
-  u4 h = (unsigned int)q;
-  u4 i = (unsigned int)m;
-  u1 f = (unsigned char)k;
+  u4 h = (u4)q;
+  u4 i = (u4)m;
+  u1 f = (u1)k;
   *a = k;
-  q = (unsigned char)((u4)q / n);
-  m = (unsigned char)(((int)p - (int)m) + (int)p / (int)m);
+  q = (u1)((u4)q / n);
+  m = (u1)(((int)p - (int)m) + (int)p / (int)m);
   if ((int)*(c + n) != (int)m) exit((int)q);
   tmp = A(c + (int)q);
   tmp_0 = A(c + ((int)m >> (int)q));
-  b = ((unsigned int)tmp << (int)q * (int)q) | (unsigned int)tmp_0;
+  b = ((u4)tmp << (int)q * (int)q) | (unsigned int)tmp_0;
   c += l;
   d = c + b;
   while (c < d) {
@@ -197,8 +196,8 @@ u1 *H(u1 *c, u4 *a)
     *a += e;
     c = G(c,& f);
   }
-  q = (unsigned char)h;
-  m = (unsigned char)i;
+  q = (u1)h;
+  m = (u1)i;
   return c;
 }
 
@@ -211,7 +210,7 @@ u4 I(u1 *c, u4 a)
   while (e < a) {
     c = H(c,& b);
     if (b > d) d = b;
-    e += (u4)1;
+    e ++;
   }
   return d;
 }
@@ -222,28 +221,28 @@ u1 *J(u1 *c, u4 a, u4 b)
   u1 d;
   u1 e;
   if (l > (u4)o) {
-    s = (unsigned char)((int)s - 1);
-    o = (unsigned char)(((int)s - (int)o) << (int)r);
-    l = (unsigned int)((int)p % ((int)s + (int)o));
-    r = (unsigned char)((u4)o / l);
+    s = (u1)((int)s - 1);
+    o = (u1)(((int)s - (int)o) << (int)r);
+    l = (u4)((int)p % ((int)s + (int)o));
+    r = (u1)((u4)o / l);
     n = l / (u4)r;
-    m = (unsigned char)((u4)o / n);
+    m = (u1)((u4)o / n);
   }
-  d = (unsigned char)(l + (u4)r);
+  d = (u1)(l + (u4)r);
   e = o;
   if (! (a % (unsigned int)m)) {
-    d = (unsigned char)(l - (u4)m);
-    e = (unsigned char)((u4)o + l);
+    d = (u1)(l - (u4)m);
+    e = (u1)((u4)o + l);
   }
   else 
     if (a % (unsigned int)m == (unsigned int)r) {
-      d = (unsigned char)l;
-      e = (unsigned char)(n + (u4)o);
+      d = (u1)l;
+      e = (u1)(n + (u4)o);
     }
   *(t + k) = d;
   *(t + r) = e;
   *u = d;
-  memcpy((void *)c,(void const *)t,(unsigned long)b);
+  memcpy((void *)c,(void const *)t,(size_t)b);
   __retres = c + b;
   return __retres;
 }
@@ -279,104 +278,102 @@ void K(u1 *c, u4 a)
   u1 *tmp_17;
   u1 *tmp_18;
   u4 tmp_19;
-  o = (unsigned char)(n ^ k);
-  m = (unsigned char)l;
-  l = (unsigned int)((int)o << (int)o);
+  o = (u1)(n ^ k);
+  m = (u1)l;
+  l = (u4)((int)o << (int)o);
   f = A((c + l) + (int)o);
   tmp = A(((c + l) + (int)o) + (int)o);
   tmp_0 = k;
-  k -= (u4)1;
-  e = (unsigned short)((int)tmp >> tmp_0);
+  k --;
+  e = (u2)((int)tmp >> tmp_0);
   tmp_1 = k;
-  k += (u4)1;
-  p = (unsigned char)(~ tmp_1);
+  k ++;
+  p = (u1)(~ tmp_1);
   tmp_2 = k;
-  k -= (u4)1;
-  p = (unsigned char)((int)p >> tmp_2);
-  q = (unsigned char)((int)p >> n);
+  k --;
+  p = (u1)((int)p >> tmp_2);
+  q = (u1)((int)p >> n);
   tmp_3 = q;
-  q = (unsigned char)((int)q - 1);
+  q = (u1)((int)q - 1);
   ;
   if ((int)e >> (int)tmp_3) exit((int)(n + (u4)o));
   ;
   tmp_4 = q;
-  q = (unsigned char)((int)q - 1);
+  q = (u1)((int)q - 1);
   ;
-  tmp_5 = I(c + (int)tmp_4,(unsigned int)f);
+  tmp_5 = I(c + (int)tmp_4,(u4)f);
   g = tmp_5 / (u4)e;
-  tmp_6 = D((unsigned int)e);
+  tmp_6 = D((u4)e);
   i = (n + (u4)o) + (u4)tmp_6;
-  t = (u1 *)malloc((unsigned long)i);
+  t = (u1 *)malloc((size_t)i);
   if (! t) exit((int)(n * (u4)o));
   j = g * i + (u4)q;
-  b = (u1 *)malloc((unsigned long)j);
-  l -= (u4)1;
-  r = (unsigned char)l;
-  l += (u4)1;
+  b = (u1 *)malloc((size_t)j);
+  l --;
+  r = (u1)l;
+  l ++;
   if (! b) exit((int)r);
-  *b = (unsigned char)((l << n) | (unsigned int)q);
-  *(b + ! k) = (unsigned char)((int)*b + (int)r);
-  *(b + n) = (unsigned char)((u4)((int)*b << n) + n);
+  *b = (u1)((l << n) | (unsigned int)q);
+  *(b + ! k) = (u1)((int)*b + (int)r);
+  *(b + n) = (u1)((u4)((int)*b << n) + n);
   tmp_7 = r;
-  r = (unsigned char)((int)r - 1);
-  *(b + o) = (unsigned char)((int)*(b + n) + (int)tmp_7);
-  B(b + n * (u4)o,(unsigned short)(j - l));
-  B(b + (int)o * (int)o,(unsigned short)((j - l) >> (u4)o * l));
+  r = (u1)((int)r - 1);
+  *(b + o) = (u1)((int)*(b + n) + (int)tmp_7);
+  B(b + n * (u4)o,(u2)(j - l));
+  B(b + (int)o * (int)o,(u2)((j - l) >> (u4)o * l));
   d = t;
   tmp_8 = d;
   d ++;
-  *tmp_8 = (unsigned char)k;
+  *tmp_8 = (u1)k;
   tmp_9 = d;
   d ++;
-  *tmp_9 = (unsigned char)((int)r * (int)r);
-  m = (unsigned char)((u4)p / (n + (u4)o));
+  *tmp_9 = (u1)((int)r * (int)r);
+  m = (u1)((u4)p / (n + (u4)o));
   tmp_10 = d;
   d ++;
-  *tmp_10 = (unsigned char)(((int)p - (int)m) - (int)o);
-  tmp_11 = F((unsigned int)e,d);
+  *tmp_10 = (u1)(((int)p - (int)m) - (int)o);
+  tmp_11 = F((u4)e,d);
   d += tmp_11;
   u = d;
   tmp_12 = d;
   d ++;
-  *tmp_12 = (unsigned char)((int)r * (int)r);
-  *d = (unsigned char)k;
+  *tmp_12 = (u1)((int)r * (int)r);
+  *d = (u1)k;
   d = b + l;
   tmp_13 = d;
   d ++;
   tmp_14 = k;
-  k += (u4)1;
-  *tmp_13 = (unsigned char)tmp_14;
+  k ++;
+  *tmp_13 = (u1)tmp_14;
   tmp_15 = d;
   d ++;
-  *tmp_15 = (unsigned char)(((int)p + (int)q) + (int)q);
-  memcpy((void *)d,(void const *)(t + k),(unsigned long)(i - k));
+  *tmp_15 = (u1)(((int)p + (int)q) + (int)q);
+  memcpy((void *)d,(void const *)(t + k),(size_t)(i - k));
   d += i - k;
   h = k;
   while (h < g) {
     d = J(d,h,i);
-    h += (u4)1;
+    h ++;
   }
-  l = (unsigned int)(((int)o + (int)m) / (int)s - (int)m);
+  l = (u4)(((int)o + (int)m) / (int)s - (int)m);
   o = r;
   tmp_16 = d;
   d ++;
-  k -= (u4)1;
-  *tmp_16 = (unsigned char)k;
+  k --;
+  *tmp_16 = (u1)k;
   tmp_17 = d;
   d ++;
-  *tmp_17 = (unsigned char)(~ k);
+  *tmp_17 = (u1)(~ k);
   tmp_18 = d;
   d ++;
-  *tmp_18 = (unsigned char)((u4)((int)p / (int)o) - (u4)o * l);
+  *tmp_18 = (u1)((u4)((int)p / (int)o) - (u4)o * l);
   tmp_19 = k;
-  k += (u4)1;
-  *d = (unsigned char)tmp_19;
-  *(c + (l + (u4)p)) = (unsigned char)k;
-  B((c + l) + (int)o,(unsigned short)((u4)f + k));
-  fwrite((void const *)c,(unsigned long)a,(unsigned long)(! (! c)),
-         __fc_stdout);
-  fwrite((void const *)b,(unsigned long)j,(unsigned long)(! (! b)),
-         __fc_stdout);
+  k ++;
+  *d = (u1)tmp_19;
+  *(c + (l + (u4)p)) = (u1)k;
+  B((c + l) + (int)o,(u2)((u4)f + k));
+  fwrite((void const *)c,(size_t)a,(size_t)(! (! c)),__fc_stdout);
+  fwrite((void const *)b,(size_t)j,(size_t)(! (! b)),__fc_stdout);
   return;
 }
 
@@ -387,16 +384,16 @@ int main(void)
   u4 b;
   u1 *c;
   size_t tmp;
-  k = (unsigned int)(! (! __fc_stdin));
+  k = (u4)(! (! __fc_stdin));
   n = (k + k) + k;
   l = k << n;
-  m = (unsigned char)l;
+  m = (u1)l;
   l = (l | (l >> (k + k))) << k;
   b = k << l;
-  c = (u1 *)malloc((unsigned long)b);
+  c = (u1 *)malloc((size_t)b);
   if (! c) exit((int)m);
-  tmp = fread((void *)c,(unsigned long)k,(unsigned long)b,__fc_stdin);
-  a = (unsigned int)tmp;
+  tmp = fread((void *)c,(size_t)k,(size_t)b,__fc_stdin);
+  a = (u4)tmp;
   l = (u4)(((int)m << k) + (int)m) + k;
   if (a >= b) exit((int)(l / n + k));
   if ((u4)*(c + n) != l << (k + k)) exit((int)((u4)((int)m << k) - (n << k)));

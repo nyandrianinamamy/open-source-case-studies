@@ -79,10 +79,10 @@ int main(void)
   int InChar;
   char ShowChar;
   FILE *f = fopen("fred.txt","w");
-  fwrite((void const *)"hello\nhello\n",(unsigned long)1,(unsigned long)12,f);
+  fwrite((void const *)"hello\nhello\n",(size_t)1,(size_t)12,f);
   fclose(f);
   f = fopen("fred.txt","r");
-  tmp_0 = fread((void *)(freddy),(unsigned long)1,(unsigned long)6,f);
+  tmp_0 = fread((void *)(freddy),(size_t)1,(size_t)6,f);
   if (tmp_0 != (size_t)6) printf("couldn\'t read fred.txt\n"); /* printf_va_1 */
   freddy[6] = (char)'\000';
   fclose(f);

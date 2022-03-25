@@ -415,7 +415,7 @@ static Word cwords[78] =
    {.length = sizeof("while") - (unsigned long)1, .word = "while"},
    {.length = sizeof("xor") - (unsigned long)1, .word = "xor"},
    {.length = sizeof("xor_eq") - (unsigned long)1, .word = "xor_eq"},
-   {.length = (unsigned long)0, .word = (char const *)0}};
+   {.length = (size_t)0, .word = (char const *)0}};
 static int xlcount = 0;
 static int xwcount = 0;
 static int xbcount = 0;
@@ -472,16 +472,16 @@ static size_t read_line(char *buf, size_t size)
   int ch;
   size_t length;
   if (buf == (char *)0) {
-    __retres = (unsigned long)0;
+    __retres = (size_t)0;
     goto return_label;
   }
   else 
     if (size == (size_t)0) {
-      __retres = (unsigned long)0;
+      __retres = (size_t)0;
       goto return_label;
     }
-  size -= (size_t)1;
-  length = (unsigned long)0;
+  size --;
+  length = (size_t)0;
   while (length < size) {
     {
       size_t tmp;
@@ -509,11 +509,11 @@ static size_t read_line(char *buf, size_t size)
             xbcount += 2;
             xwcount ++;
             xlcount ++;
-            length -= (size_t)1;
+            length --;
             goto __Cont;
           }
       tmp = length;
-      length += (size_t)1;
+      length ++;
       *(buf + tmp) = (char)ch;
       if (ch == '\n') break;
     }

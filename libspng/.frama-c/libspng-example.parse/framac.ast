@@ -361,7 +361,7 @@ int eva_main(void)
     int i = 0;
     /*@ loop unroll 5; */
     while (i < 5) {
-      Frama_C_make_unknown(argv[i],(unsigned int)255);
+      Frama_C_make_unknown(argv[i],(size_t)255);
       *(argv[i] + 255) = (char)0;
       i ++;
     }
@@ -643,12 +643,12 @@ int main(int argc, char **argv)
   long siz_pngbuf = ftell(png);
   rewind(png);
   if (siz_pngbuf < (long)1) goto err;
-  pngbuf = (char *)malloc((unsigned int)siz_pngbuf);
+  pngbuf = (char *)malloc((size_t)siz_pngbuf);
   if (pngbuf == (char *)0) {
     printf("malloc() failed\n"); /* printf_va_3 */
     goto err;
   }
-  tmp_0 = fread((void *)pngbuf,(unsigned int)siz_pngbuf,(unsigned int)1,png);
+  tmp_0 = fread((void *)pngbuf,(size_t)siz_pngbuf,(size_t)1,png);
   if (tmp_0 != (size_t)1) {
     printf("fread() failed\n"); /* printf_va_4 */
     goto err;
@@ -665,7 +665,7 @@ int main(int argc, char **argv)
     printf("spng_set_crc_action() error: %s\n",(char *)tmp_1); /* printf_va_6 */
     goto err;
   }
-  r = spng_set_png_buffer(ctx,(void const *)pngbuf,(unsigned int)siz_pngbuf);
+  r = spng_set_png_buffer(ctx,(void const *)pngbuf,(size_t)siz_pngbuf);
   if (r) {
     char const *tmp_2;
     tmp_2 = spng_strerror(r);
@@ -766,90 +766,48 @@ unsigned long crc32(unsigned long crc, unsigned char *buf, unsigned int len)
   return_label: return __retres;
 }
 
-static uint32_t const png_u32max = (unsigned int)2147483647;
+static uint32_t const png_u32max = (uint32_t)2147483647;
 static int32_t const png_s32min = -2147483647;
 static uint8_t const type_ihdr[4] =
-  {(unsigned char)73, (unsigned char)72, (unsigned char)68, (unsigned char)82};
+  {(uint8_t)73, (uint8_t)72, (uint8_t)68, (uint8_t)82};
 static uint8_t const type_plte[4] =
-  {(unsigned char)80, (unsigned char)76, (unsigned char)84, (unsigned char)69};
+  {(uint8_t)80, (uint8_t)76, (uint8_t)84, (uint8_t)69};
 static uint8_t const type_idat[4] =
-  {(unsigned char)73, (unsigned char)68, (unsigned char)65, (unsigned char)84};
+  {(uint8_t)73, (uint8_t)68, (uint8_t)65, (uint8_t)84};
 static uint8_t const type_iend[4] =
-  {(unsigned char)73, (unsigned char)69, (unsigned char)78, (unsigned char)68};
+  {(uint8_t)73, (uint8_t)69, (uint8_t)78, (uint8_t)68};
 static uint8_t const type_trns[4] =
-  {(unsigned char)116,
-   (unsigned char)82,
-   (unsigned char)78,
-   (unsigned char)83};
+  {(uint8_t)116, (uint8_t)82, (uint8_t)78, (uint8_t)83};
 static uint8_t const type_chrm[4] =
-  {(unsigned char)99, (unsigned char)72, (unsigned char)82, (unsigned char)77};
+  {(uint8_t)99, (uint8_t)72, (uint8_t)82, (uint8_t)77};
 static uint8_t const type_gama[4] =
-  {(unsigned char)103,
-   (unsigned char)65,
-   (unsigned char)77,
-   (unsigned char)65};
+  {(uint8_t)103, (uint8_t)65, (uint8_t)77, (uint8_t)65};
 static uint8_t const type_iccp[4] =
-  {(unsigned char)105,
-   (unsigned char)67,
-   (unsigned char)67,
-   (unsigned char)80};
+  {(uint8_t)105, (uint8_t)67, (uint8_t)67, (uint8_t)80};
 static uint8_t const type_sbit[4] =
-  {(unsigned char)115,
-   (unsigned char)66,
-   (unsigned char)73,
-   (unsigned char)84};
+  {(uint8_t)115, (uint8_t)66, (uint8_t)73, (uint8_t)84};
 static uint8_t const type_srgb[4] =
-  {(unsigned char)115,
-   (unsigned char)82,
-   (unsigned char)71,
-   (unsigned char)66};
+  {(uint8_t)115, (uint8_t)82, (uint8_t)71, (uint8_t)66};
 static uint8_t const type_text[4] =
-  {(unsigned char)116,
-   (unsigned char)69,
-   (unsigned char)88,
-   (unsigned char)116};
+  {(uint8_t)116, (uint8_t)69, (uint8_t)88, (uint8_t)116};
 static uint8_t const type_ztxt[4] =
-  {(unsigned char)122,
-   (unsigned char)84,
-   (unsigned char)88,
-   (unsigned char)116};
+  {(uint8_t)122, (uint8_t)84, (uint8_t)88, (uint8_t)116};
 static uint8_t const type_itxt[4] =
-  {(unsigned char)105,
-   (unsigned char)84,
-   (unsigned char)88,
-   (unsigned char)116};
+  {(uint8_t)105, (uint8_t)84, (uint8_t)88, (uint8_t)116};
 static uint8_t const type_bkgd[4] =
-  {(unsigned char)98, (unsigned char)75, (unsigned char)71, (unsigned char)68};
+  {(uint8_t)98, (uint8_t)75, (uint8_t)71, (uint8_t)68};
 static uint8_t const type_hist[4] =
-  {(unsigned char)104,
-   (unsigned char)73,
-   (unsigned char)83,
-   (unsigned char)84};
+  {(uint8_t)104, (uint8_t)73, (uint8_t)83, (uint8_t)84};
 static uint8_t const type_phys[4] =
-  {(unsigned char)112,
-   (unsigned char)72,
-   (unsigned char)89,
-   (unsigned char)115};
+  {(uint8_t)112, (uint8_t)72, (uint8_t)89, (uint8_t)115};
 static uint8_t const type_splt[4] =
-  {(unsigned char)115,
-   (unsigned char)80,
-   (unsigned char)76,
-   (unsigned char)84};
+  {(uint8_t)115, (uint8_t)80, (uint8_t)76, (uint8_t)84};
 static uint8_t const type_time[4] =
-  {(unsigned char)116,
-   (unsigned char)73,
-   (unsigned char)77,
-   (unsigned char)69};
+  {(uint8_t)116, (uint8_t)73, (uint8_t)77, (uint8_t)69};
 static uint8_t const type_offs[4] =
-  {(unsigned char)111,
-   (unsigned char)70,
-   (unsigned char)70,
-   (unsigned char)115};
+  {(uint8_t)111, (uint8_t)70, (uint8_t)70, (uint8_t)115};
 static uint8_t const type_exif[4] =
-  {(unsigned char)101,
-   (unsigned char)88,
-   (unsigned char)73,
-   (unsigned char)102};
+  {(uint8_t)101, (uint8_t)88, (uint8_t)73, (uint8_t)102};
 __inline static void *spng__malloc(spng_ctx *ctx, size_t size)
 {
   void *tmp;
@@ -903,8 +861,8 @@ __inline static uint16_t read_u16(void const *_data)
 {
   uint16_t __retres;
   unsigned char const *data = (unsigned char const *)_data;
-  __retres = (unsigned short)((((unsigned int)*(data + 0) & 0xffU) << 8) | (
-                              (unsigned int)*(data + 1) & 0xffU));
+  __retres = (uint16_t)((((unsigned int)*(data + 0) & 0xffU) << 8) | (
+                        (unsigned int)*(data + 1) & 0xffU));
   return __retres;
 }
 
@@ -912,10 +870,10 @@ __inline static uint32_t read_u32(void const *_data)
 {
   uint32_t __retres;
   unsigned char const *data = (unsigned char const *)_data;
-  __retres = (unsigned int)((((((unsigned long)*(data + 0) & 0xffUL) << 24) | (
-                              ((unsigned long)*(data + 1) & 0xffUL) << 16)) | (
-                             ((unsigned long)*(data + 2) & 0xffUL) << 8)) | (
-                            (unsigned long)*(data + 3) & 0xffUL));
+  __retres = (uint32_t)((((((unsigned long)*(data + 0) & 0xffUL) << 24) | (
+                          ((unsigned long)*(data + 1) & 0xffUL) << 16)) | (
+                         ((unsigned long)*(data + 2) & 0xffUL) << 8)) | (
+                        (unsigned long)*(data + 3) & 0xffUL));
   return __retres;
 }
 
@@ -924,11 +882,11 @@ __inline static int32_t read_s32(void const *_data)
   int32_t ret;
   unsigned char const *data = (unsigned char const *)_data;
   uint32_t val =
-    (unsigned int)((((((unsigned long)*(data + 0) & 0xffUL) << 24) | (
-                     ((unsigned long)*(data + 1) & 0xffUL) << 16)) | (
-                    ((unsigned long)*(data + 2) & 0xffUL) << 8)) | ((unsigned long)*(
-                                                                    data + 3) & 0xffUL));
-  memcpy((void *)(& ret),(void const *)(& val),(unsigned int)4);
+    (uint32_t)((((((unsigned long)*(data + 0) & 0xffUL) << 24) | (((unsigned long)*(
+                                                                   data + 1) & 0xffUL) << 16)) | (
+                ((unsigned long)*(data + 2) & 0xffUL) << 8)) | ((unsigned long)*(
+                                                                data + 3) & 0xffUL));
+  memcpy((void *)(& ret),(void const *)(& val),(size_t)4);
   return ret;
 }
 
@@ -993,7 +951,7 @@ __inline static int read_and_check_crc(spng_ctx *ctx)
     __retres = 1;
     goto return_label;
   }
-  ret = read_data(ctx,(unsigned int)4);
+  ret = read_data(ctx,(size_t)4);
   if (ret) {
     __retres = ret;
     goto return_label;
@@ -1034,7 +992,7 @@ __inline static int read_header(spng_ctx *ctx, int *discard)
     goto return_label;
   }
   struct spng_chunk chunk =
-    {.offset = (unsigned int)0,
+    {.offset = (size_t)0,
      .length = 0U,
      .type = {(unsigned char)0,
               (unsigned char)0,
@@ -1050,15 +1008,14 @@ __inline static int read_header(spng_ctx *ctx, int *discard)
       __retres = ret;
       goto return_label;
     }
-  ret = read_data(ctx,(unsigned int)8);
+  ret = read_data(ctx,(size_t)8);
   if (ret) {
     __retres = ret;
     goto return_label;
   }
   chunk.offset = ctx->bytes_read - (size_t)8;
   chunk.length = read_u32((void const *)ctx->data);
-  memcpy((void *)(& chunk.type),(void const *)(ctx->data + 4),
-         (unsigned int)4);
+  memcpy((void *)(& chunk.type),(void const *)(ctx->data + 4),(size_t)4);
   if (chunk.length > png_u32max) {
     __retres = SPNG_ECHUNK_SIZE;
     goto return_label;
@@ -1067,8 +1024,7 @@ __inline static int read_header(spng_ctx *ctx, int *discard)
   ctx->cur_actual_crc = (uint32_t)crc32((unsigned long)0,(unsigned char *)0,
                                         (unsigned int)0);
   ctx->cur_actual_crc = (uint32_t)crc32((unsigned long)ctx->cur_actual_crc,
-                                        (unsigned char *)(chunk.type),
-                                        (unsigned int)4);
+                                        chunk.type,(unsigned int)4);
   memcpy((void *)(& ctx->current_chunk),(void const *)(& chunk),
          sizeof(struct spng_chunk));
   __retres = 0;
@@ -1123,7 +1079,7 @@ static int discard_chunk_bytes(spng_ctx *ctx, uint32_t bytes)
   }
   if (ctx->streaming) 
     while (bytes) {
-      uint32_t len = (unsigned int)8192;
+      uint32_t len = (uint32_t)8192;
       if (len > bytes) len = bytes;
       ret = read_chunk_bytes(ctx,len);
       if (ret) {
@@ -1159,7 +1115,7 @@ static int read_idat_bytes(spng_ctx *ctx, uint32_t *bytes_read)
       goto return_label;
     }
   tmp = memcmp((void const *)(ctx->current_chunk.type),
-               (void const *)(type_idat),(unsigned int)4);
+               (void const *)(type_idat),(size_t)4);
   if (tmp) {
     __retres = SPNG_EIDAT_TOO_SHORT;
     goto return_label;
@@ -1172,14 +1128,14 @@ static int read_idat_bytes(spng_ctx *ctx, uint32_t *bytes_read)
       goto return_label;
     }
     tmp_0 = memcmp((void const *)(ctx->current_chunk.type),
-                   (void const *)(type_idat),(unsigned int)4);
+                   (void const *)(type_idat),(size_t)4);
     if (tmp_0) {
       __retres = SPNG_EIDAT_TOO_SHORT;
       goto return_label;
     }
   }
   if (ctx->streaming) {
-    len = (unsigned int)8192;
+    len = (uint32_t)8192;
     if (len > ctx->current_chunk.length) len = ctx->current_chunk.length;
   }
   else len = ctx->current_chunk.length;
@@ -1256,13 +1212,14 @@ static uint8_t paeth(uint8_t a, uint8_t b, uint8_t c)
   int tmp;
   int tmp_0;
   int tmp_1;
-  int16_t p = (short)(((int)((short)a) + (int)((short)b)) - (int)((short)c));
-  tmp = abs((int)p - (int)((short)a));
-  int16_t pa = (short)tmp;
-  tmp_0 = abs((int)p - (int)((short)b));
-  int16_t pb = (short)tmp_0;
-  tmp_1 = abs((int)p - (int)((short)c));
-  int16_t pc = (short)tmp_1;
+  int16_t p =
+    (int16_t)(((int)((int16_t)a) + (int)((int16_t)b)) - (int)((int16_t)c));
+  tmp = abs((int)p - (int)((int16_t)a));
+  int16_t pa = (int16_t)tmp;
+  tmp_0 = abs((int)p - (int)((int16_t)b));
+  int16_t pb = (int16_t)tmp_0;
+  tmp_1 = abs((int)p - (int)((int16_t)c));
+  int16_t pc = (int16_t)tmp_1;
   if ((int)pa <= (int)pb) {
     if ((int)pa <= (int)pc) {
       __retres = a;
@@ -1310,7 +1267,7 @@ static int defilter_scanline(unsigned char const *prev_scanline,
     __retres = SPNG_EFILTER;
     goto return_label;
   }
-  i = (unsigned int)0;
+  i = (size_t)0;
   while (i < scanline_width) {
     {
       uint8_t x;
@@ -1319,49 +1276,44 @@ static int defilter_scanline(unsigned char const *prev_scanline,
       uint8_t c;
       if (i >= bytes_per_pixel) {
         memcpy((void *)(& a),
-               (void const *)((scanline + i) - bytes_per_pixel),
-               (unsigned int)1);
-        memcpy((void *)(& b),(void const *)(prev_scanline + i),
-               (unsigned int)1);
+               (void const *)((scanline + i) - bytes_per_pixel),(size_t)1);
+        memcpy((void *)(& b),(void const *)(prev_scanline + i),(size_t)1);
         memcpy((void *)(& c),
                (void const *)((prev_scanline + i) - bytes_per_pixel),
-               (unsigned int)1);
+               (size_t)1);
       }
       else {
-        a = (unsigned char)0;
-        memcpy((void *)(& b),(void const *)(prev_scanline + i),
-               (unsigned int)1);
-        c = (unsigned char)0;
+        a = (uint8_t)0;
+        memcpy((void *)(& b),(void const *)(prev_scanline + i),(size_t)1);
+        c = (uint8_t)0;
       }
-      memcpy((void *)(& x),(void const *)(scanline + i),(unsigned int)1);
+      memcpy((void *)(& x),(void const *)(scanline + i),(size_t)1);
       switch (filter) {
-        case (unsigned int)1:
-        {
-          x = (unsigned char)((int)x + (int)a);
-          break;
-        }
-        case (unsigned int)2:
-        {
-          x = (unsigned char)((int)x + (int)b);
-          break;
-        }
+        case (unsigned int)1: {
+                                x = (uint8_t)((int)x + (int)a);
+                                break;
+                              }
+        case (unsigned int)2: {
+                                x = (uint8_t)((int)x + (int)b);
+                                break;
+                              }
         case (unsigned int)3:
         {
-          uint16_t avg = (unsigned short)(((int)a + (int)b) / 2);
-          x = (unsigned char)((int)x + (int)avg);
+          uint16_t avg = (uint16_t)(((int)a + (int)b) / 2);
+          x = (uint8_t)((int)x + (int)avg);
           break;
         }
         case (unsigned int)4:
         {
           uint8_t tmp;
           tmp = paeth(a,b,c);
-          x = (unsigned char)((int)x + (int)tmp);
+          x = (uint8_t)((int)x + (int)tmp);
           break;
         }
       }
-      memcpy((void *)(scanline + i),(void const *)(& x),(unsigned int)1);
+      memcpy((void *)(scanline + i),(void const *)(& x),(size_t)1);
     }
-    i += (size_t)1;
+    i ++;
   }
   __retres = 0;
   return_label: return __retres;
@@ -1377,24 +1329,23 @@ static uint16_t sample_to_target(uint16_t sample, unsigned int bit_depth,
       goto return_label;
     }
   }
-  else sample = (unsigned short)((int)sample >> (bit_depth - sbits));
+  else sample = (uint16_t)((int)sample >> (bit_depth - sbits));
   if (target < sbits) {
-    __retres = (unsigned short)((int)sample >> (sbits - target));
+    __retres = (uint16_t)((int)sample >> (sbits - target));
     goto return_label;
   }
-  int8_t shift_amount = (signed char)(target - sbits);
+  int8_t shift_amount = (int8_t)(target - sbits);
   uint16_t sample_bits = sample;
-  sample = (unsigned short)0;
+  sample = (uint16_t)0;
   while ((int)shift_amount >= 0) {
-    sample = (unsigned short)((int)sample | ((int)sample_bits << (int)shift_amount));
-    shift_amount = (signed char)((unsigned int)shift_amount - sbits);
+    sample = (uint16_t)((int)sample | ((int)sample_bits << (int)shift_amount));
+    shift_amount = (int8_t)((unsigned int)shift_amount - sbits);
   }
-  int8_t partial =
-    (signed char)((int)shift_amount + (int)((signed char)sbits));
+  int8_t partial = (int8_t)((int)shift_amount + (int)((int8_t)sbits));
   if ((int)partial != 0) {
     int tmp;
     tmp = abs((int)shift_amount);
-    sample = (unsigned short)((int)sample | ((int)sample_bits >> tmp));
+    sample = (uint16_t)((int)sample | ((int)sample_bits >> tmp));
   }
   __retres = sample;
   return_label: return __retres;
@@ -1405,36 +1356,34 @@ __inline static void gamma_correct_row(unsigned char *row, uint32_t pixels,
 {
   uint32_t i;
   if (fmt == SPNG_FMT_RGBA8) {
-    i = (unsigned int)0;
+    i = (uint32_t)0;
     while (i < pixels) {
       {
         unsigned char px[4];
-        memcpy((void *)(px),(void const *)(row + i * (uint32_t)4),
-               (unsigned int)4);
+        memcpy((void *)(px),(void const *)(row + i * (uint32_t)4),(size_t)4);
         px[0] = (unsigned char)*(gamma_lut + px[0]);
         px[1] = (unsigned char)*(gamma_lut + px[1]);
         px[2] = (unsigned char)*(gamma_lut + px[2]);
-        memcpy((void *)(row + i * (uint32_t)4),(void const *)(px),
-               (unsigned int)4);
+        memcpy((void *)(row + i * (uint32_t)4),(void const *)(px),(size_t)4);
       }
-      i += (uint32_t)1;
+      i ++;
     }
   }
   else 
     if (fmt == SPNG_FMT_RGBA16) {
-      i = (unsigned int)0;
+      i = (uint32_t)0;
       while (i < pixels) {
         {
           uint16_t px_0[4];
           memcpy((void *)(px_0),(void const *)(row + i * (uint32_t)8),
-                 (unsigned int)8);
+                 (size_t)8);
           px_0[0] = *(gamma_lut + px_0[0]);
           px_0[1] = *(gamma_lut + px_0[1]);
           px_0[2] = *(gamma_lut + px_0[2]);
           memcpy((void *)(row + i * (uint32_t)8),(void const *)(px_0),
-                 (unsigned int)8);
+                 (size_t)8);
         }
-        i += (uint32_t)1;
+        i ++;
       }
     }
   return;
@@ -1450,7 +1399,7 @@ __inline static void trns_row(unsigned char *row,
   unsigned int scanline_stride = (unsigned int)3;
   if (depth == (unsigned int)16) scanline_stride = (unsigned int)6;
   if (fmt == SPNG_FMT_RGBA8) {
-    i = (unsigned int)0;
+    i = (uint32_t)0;
     while (i < pixels) {
       {
         int tmp;
@@ -1458,22 +1407,22 @@ __inline static void trns_row(unsigned char *row,
                      scanline_stride);
         if (! tmp) *(row + 3) = (unsigned char)0;
       }
-      i += (uint32_t)1;
+      i ++;
       scanline += scanline_stride;
       row += 4;
     }
   }
   else 
     if (fmt == SPNG_FMT_RGBA16) {
-      i = (unsigned int)0;
+      i = (uint32_t)0;
       while (i < pixels) {
         {
           int tmp_0;
           tmp_0 = memcmp((void const *)scanline,(void const *)trns,
                          scanline_stride);
-          if (! tmp_0) memset((void *)(row + 6),0,(unsigned int)2);
+          if (! tmp_0) memset((void *)(row + 6),0,(size_t)2);
         }
-        i += (uint32_t)1;
+        i ++;
         scanline += scanline_stride;
         row += 8;
       }
@@ -1487,43 +1436,41 @@ __inline static void scale_row(unsigned char *row, uint32_t pixels, int fmt,
   uint32_t i;
   if (fmt == SPNG_FMT_RGBA8) {
     unsigned char px[4];
-    i = (unsigned int)0;
+    i = (uint32_t)0;
     while (i < pixels) {
       {
         uint16_t tmp;
         uint16_t tmp_0;
         uint16_t tmp_1;
         uint16_t tmp_2;
-        memcpy((void *)(px),(void const *)(row + i * (uint32_t)4),
-               (unsigned int)4);
-        tmp = sample_to_target((unsigned short)px[0],depth,
+        memcpy((void *)(px),(void const *)(row + i * (uint32_t)4),(size_t)4);
+        tmp = sample_to_target((uint16_t)px[0],depth,
                                (unsigned int)sbit->red_bits,(unsigned int)8);
         px[0] = (unsigned char)tmp;
-        tmp_0 = sample_to_target((unsigned short)px[1],depth,
+        tmp_0 = sample_to_target((uint16_t)px[1],depth,
                                  (unsigned int)sbit->green_bits,
                                  (unsigned int)8);
         px[1] = (unsigned char)tmp_0;
-        tmp_1 = sample_to_target((unsigned short)px[2],depth,
+        tmp_1 = sample_to_target((uint16_t)px[2],depth,
                                  (unsigned int)sbit->blue_bits,
                                  (unsigned int)8);
         px[2] = (unsigned char)tmp_1;
-        tmp_2 = sample_to_target((unsigned short)px[3],depth,
+        tmp_2 = sample_to_target((uint16_t)px[3],depth,
                                  (unsigned int)sbit->alpha_bits,
                                  (unsigned int)8);
         px[3] = (unsigned char)tmp_2;
-        memcpy((void *)(row + i * (uint32_t)4),(void const *)(px),
-               (unsigned int)4);
+        memcpy((void *)(row + i * (uint32_t)4),(void const *)(px),(size_t)4);
       }
-      i += (uint32_t)1;
+      i ++;
     }
   }
   else 
     if (fmt == SPNG_FMT_RGBA16) {
       uint16_t px_0[4];
-      i = (unsigned int)0;
+      i = (uint32_t)0;
       while (i < pixels) {
         memcpy((void *)(px_0),(void const *)(row + i * (uint32_t)8),
-               (unsigned int)8);
+               (size_t)8);
         px_0[0] = sample_to_target(px_0[0],depth,
                                    (unsigned int)sbit->red_bits,
                                    (unsigned int)16);
@@ -1537,8 +1484,8 @@ __inline static void scale_row(unsigned char *row, uint32_t pixels, int fmt,
                                    (unsigned int)sbit->alpha_bits,
                                    (unsigned int)16);
         memcpy((void *)(row + i * (uint32_t)8),(void const *)(px_0),
-               (unsigned int)8);
-        i += (uint32_t)1;
+               (size_t)8);
+        i ++;
       }
     }
   return;
@@ -1702,7 +1649,7 @@ static int check_sbit(struct spng_sbit const *sbit,
             __retres = SPNG_ESBIT;
             goto return_label;
           }
-          if ((int)ihdr->color_type == 3) bit_depth = (unsigned char)8;
+          if ((int)ihdr->color_type == 3) bit_depth = (uint8_t)8;
           else bit_depth = ihdr->bit_depth;
           if ((int)sbit->red_bits > (int)bit_depth) {
             __retres = SPNG_ESBIT;
@@ -1931,21 +1878,14 @@ static int check_exif(struct spng_exif const *exif)
     goto return_label;
   }
   uint8_t const exif_le[4] =
-    {(unsigned char)73,
-     (unsigned char)73,
-     (unsigned char)42,
-     (unsigned char)0};
+    {(uint8_t)73, (uint8_t)73, (uint8_t)42, (uint8_t)0};
   uint8_t const exif_be[4] =
-    {(unsigned char)77,
-     (unsigned char)77,
-     (unsigned char)0,
-     (unsigned char)42};
-  tmp = memcmp((void const *)exif->data,(void const *)(exif_le),
-               (unsigned int)4);
+    {(uint8_t)77, (uint8_t)77, (uint8_t)0, (uint8_t)42};
+  tmp = memcmp((void const *)exif->data,(void const *)(exif_le),(size_t)4);
   if (tmp) {
     int tmp_0;
     tmp_0 = memcmp((void const *)exif->data,(void const *)(exif_be),
-                   (unsigned int)4);
+                   (size_t)4);
     if (tmp_0) {
       __retres = 1;
       goto return_label;
@@ -1964,7 +1904,7 @@ static int check_png_keyword(char const str[80])
     __retres = 1;
     goto return_label;
   }
-  char *end = memchr((void const *)str,'\000',(unsigned int)80);
+  char *end = memchr((void const *)str,'\000',(size_t)80);
   if (end == (char *)0) {
     __retres = 1;
     goto return_label;
@@ -1987,7 +1927,7 @@ static int check_png_keyword(char const str[80])
     goto return_label;
   }
   while ((void *)str != (void *)end) {
-    memcpy((void *)(& c),(void const *)str,(unsigned int)1);
+    memcpy((void *)(& c),(void const *)str,(size_t)1);
     if ((int)c >= 32) {
       if ((int)c <= 126) str ++; else goto _LAND;
     }
@@ -2017,17 +1957,17 @@ static int check_png_text(char const *str, size_t len)
       __retres = 1;
       goto return_label;
     }
-  size_t i = (unsigned int)0;
+  size_t i = (size_t)0;
   while (i < len) {
-    memcpy((void *)(& c),(void const *)(str + i),(unsigned int)1);
+    memcpy((void *)(& c),(void const *)(str + i),(size_t)1);
     if ((int)c >= 32) {
-      if ((int)c <= 126) i += (size_t)1; else goto _LAND;
+      if ((int)c <= 126) i ++; else goto _LAND;
     }
     else {
       _LAND: ;
-      if ((int)c >= 161) i += (size_t)1;
+      if ((int)c >= 161) i ++;
       else 
-        if ((int)c == 10) i += (size_t)1;
+        if ((int)c == 10) i ++;
         else {
           __retres = 1;
           goto return_label;
@@ -2090,9 +2030,9 @@ static int read_chunks_before_idat(spng_ctx *ctx)
     goto return_label;
   }
   int discard = 0;
-  chunk.offset = (unsigned int)8;
-  chunk.length = (unsigned int)13;
-  size_t sizeof_sig_ihdr = (unsigned int)29;
+  chunk.offset = (size_t)8;
+  chunk.length = (uint32_t)13;
+  size_t sizeof_sig_ihdr = (size_t)29;
   ret = read_data(ctx,sizeof_sig_ihdr);
   if (ret) {
     __retres = ret;
@@ -2100,14 +2040,14 @@ static int read_chunks_before_idat(spng_ctx *ctx)
   }
   data = ctx->data;
   uint8_t signature[8] =
-    {(unsigned char)137,
-     (unsigned char)80,
-     (unsigned char)78,
-     (unsigned char)71,
-     (unsigned char)13,
-     (unsigned char)10,
-     (unsigned char)26,
-     (unsigned char)10};
+    {(uint8_t)137,
+     (uint8_t)80,
+     (uint8_t)78,
+     (uint8_t)71,
+     (uint8_t)13,
+     (uint8_t)10,
+     (uint8_t)26,
+     (uint8_t)10};
   tmp = memcmp((void const *)data,(void const *)(signature),
                sizeof(signature));
   if (tmp) {
@@ -2115,13 +2055,13 @@ static int read_chunks_before_idat(spng_ctx *ctx)
     goto return_label;
   }
   chunk.length = read_u32((void const *)(data + 8));
-  memcpy((void *)(& chunk.type),(void const *)(data + 12),(unsigned int)4);
+  memcpy((void *)(& chunk.type),(void const *)(data + 12),(size_t)4);
   if (chunk.length != (uint32_t)13) {
     __retres = SPNG_EIHDR_SIZE;
     goto return_label;
   }
   tmp_0 = memcmp((void const *)(chunk.type),(void const *)(type_ihdr),
-                 (unsigned int)4);
+                 (size_t)4);
   if (tmp_0) {
     __retres = SPNG_ENOIHDR;
     goto return_label;
@@ -2133,16 +2073,15 @@ static int read_chunks_before_idat(spng_ctx *ctx)
                                         (unsigned int)17);
   ctx->ihdr.width = read_u32((void const *)(data + 16));
   ctx->ihdr.height = read_u32((void const *)(data + 20));
-  memcpy((void *)(& ctx->ihdr.bit_depth),(void const *)(data + 24),
-         (unsigned int)1);
+  memcpy((void *)(& ctx->ihdr.bit_depth),(void const *)(data + 24),(size_t)1);
   memcpy((void *)(& ctx->ihdr.color_type),(void const *)(data + 25),
-         (unsigned int)1);
+         (size_t)1);
   memcpy((void *)(& ctx->ihdr.compression_method),(void const *)(data + 26),
-         (unsigned int)1);
+         (size_t)1);
   memcpy((void *)(& ctx->ihdr.filter_method),(void const *)(data + 27),
-         (unsigned int)1);
+         (size_t)1);
   memcpy((void *)(& ctx->ihdr.interlace_method),(void const *)(data + 28),
-         (unsigned int)1);
+         (size_t)1);
   if (! ctx->max_width) ctx->max_width = png_u32max;
   if (! ctx->max_height) ctx->max_height = png_u32max;
   ret = check_ihdr((struct spng_ihdr const *)(& ctx->ihdr),ctx->max_width,
@@ -2169,7 +2108,7 @@ static int read_chunks_before_idat(spng_ctx *ctx)
       memcpy((void *)(& chunk),(void const *)(& ctx->current_chunk),
              sizeof(struct spng_chunk));
       tmp_1 = memcmp((void const *)(chunk.type),(void const *)(type_idat),
-                     (unsigned int)4);
+                     (size_t)4);
       if (! tmp_1) {
         memcpy((void *)(& ctx->first_idat),(void const *)(& chunk),
                sizeof(struct spng_chunk));
@@ -2195,15 +2134,15 @@ static int read_chunks_before_idat(spng_ctx *ctx)
       if (tmp_42) {
         int tmp_6;
         tmp_6 = memcmp((void const *)(chunk.type),(void const *)(type_plte),
-                       (unsigned int)4);
+                       (size_t)4);
         if (tmp_6) {
           int tmp_5;
           tmp_5 = memcmp((void const *)(chunk.type),
-                         (void const *)(type_iend),(unsigned int)4);
+                         (void const *)(type_iend),(size_t)4);
           if (tmp_5) {
             int tmp_4;
             tmp_4 = memcmp((void const *)(chunk.type),
-                           (void const *)(type_ihdr),(unsigned int)4);
+                           (void const *)(type_ihdr),(size_t)4);
             if (tmp_4) {
               __retres = SPNG_ECHUNK_UNKNOWN_CRITICAL;
               goto return_label;
@@ -2232,17 +2171,15 @@ static int read_chunks_before_idat(spng_ctx *ctx)
             __retres = SPNG_ECHUNK_SIZE;
             goto return_label;
           }
-          i = (unsigned int)0;
+          i = (size_t)0;
           while (i < ctx->plte.n_entries) {
             memcpy((void *)(& ctx->plte.entries[i].red),
-                   (void const *)(data + i * (size_t)3),(unsigned int)1);
+                   (void const *)(data + i * (size_t)3),(size_t)1);
             memcpy((void *)(& ctx->plte.entries[i].green),
-                   (void const *)((data + i * (size_t)3) + 1),
-                   (unsigned int)1);
+                   (void const *)((data + i * (size_t)3) + 1),(size_t)1);
             memcpy((void *)(& ctx->plte.entries[i].blue),
-                   (void const *)((data + i * (size_t)3) + 2),
-                   (unsigned int)1);
-            i += (size_t)1;
+                   (void const *)((data + i * (size_t)3) + 2),(size_t)1);
+            i ++;
           }
           ctx->plte_offset = chunk.offset;
           ctx->file.plte = (unsigned int)1;
@@ -2251,77 +2188,74 @@ static int read_chunks_before_idat(spng_ctx *ctx)
       else {
         int tmp_41;
         tmp_41 = memcmp((void const *)(chunk.type),(void const *)(type_chrm),
-                        (unsigned int)4);
+                        (size_t)4);
         if (tmp_41) {
           int tmp_40;
           tmp_40 = memcmp((void const *)(chunk.type),
-                          (void const *)(type_gama),(unsigned int)4);
+                          (void const *)(type_gama),(size_t)4);
           if (tmp_40) {
             int tmp_39;
             tmp_39 = memcmp((void const *)(chunk.type),
-                            (void const *)(type_iccp),(unsigned int)4);
+                            (void const *)(type_iccp),(size_t)4);
             if (tmp_39) {
               int tmp_38;
               tmp_38 = memcmp((void const *)(chunk.type),
-                              (void const *)(type_sbit),(unsigned int)4);
+                              (void const *)(type_sbit),(size_t)4);
               if (tmp_38) {
                 int tmp_37;
                 tmp_37 = memcmp((void const *)(chunk.type),
-                                (void const *)(type_srgb),(unsigned int)4);
+                                (void const *)(type_srgb),(size_t)4);
                 if (tmp_37) {
                   int tmp_36;
                   tmp_36 = memcmp((void const *)(chunk.type),
-                                  (void const *)(type_bkgd),(unsigned int)4);
+                                  (void const *)(type_bkgd),(size_t)4);
                   if (tmp_36) {
                     int tmp_35;
                     tmp_35 = memcmp((void const *)(chunk.type),
-                                    (void const *)(type_trns),
-                                    (unsigned int)4);
+                                    (void const *)(type_trns),(size_t)4);
                     if (tmp_35) {
                       int tmp_34;
                       tmp_34 = memcmp((void const *)(chunk.type),
-                                      (void const *)(type_hist),
-                                      (unsigned int)4);
+                                      (void const *)(type_hist),(size_t)4);
                       if (tmp_34) {
                         int tmp_33;
                         tmp_33 = memcmp((void const *)(chunk.type),
-                                        (void const *)(type_phys),
-                                        (unsigned int)4);
+                                        (void const *)(type_phys),(size_t)4);
                         if (tmp_33) {
                           int tmp_32;
                           tmp_32 = memcmp((void const *)(chunk.type),
                                           (void const *)(type_time),
-                                          (unsigned int)4);
+                                          (size_t)4);
                           if (tmp_32) {
                             int tmp_31;
                             tmp_31 = memcmp((void const *)(chunk.type),
                                             (void const *)(type_offs),
-                                            (unsigned int)4);
+                                            (size_t)4);
                             if (tmp_31) {
                               int tmp_30;
                               tmp_30 = memcmp((void const *)(chunk.type),
                                               (void const *)(type_splt),
-                                              (unsigned int)4);
+                                              (size_t)4);
                               if (tmp_30) {
                                 int tmp_27;
                                 tmp_27 = memcmp((void const *)(chunk.type),
                                                 (void const *)(type_text),
-                                                (unsigned int)4);
+                                                (size_t)4);
                                 if (tmp_27) {
                                   int tmp_28;
                                   tmp_28 = memcmp((void const *)(chunk.type),
                                                   (void const *)(type_ztxt),
-                                                  (unsigned int)4);
+                                                  (size_t)4);
                                   if (tmp_28) {
                                     int tmp_29;
                                     tmp_29 = memcmp((void const *)(chunk.type),
                                                     (void const *)(type_itxt),
-                                                    (unsigned int)4);
+                                                    (size_t)4);
                                     if (tmp_29) {
                                       int tmp_26;
                                       tmp_26 = memcmp((void const *)(chunk.type),
                                                       (void const *)(type_exif),
-                                                      (unsigned int)4);
+                                                      (size_t)4);
                                       if (! tmp_26) {
                                         struct spng_exif exif;
                                         int tmp_25;
@@ -2381,17 +2315,16 @@ static int read_chunks_before_idat(spng_ctx *ctx)
                                 }
                                 ctx->file.splt = (unsigned int)1;
                                 if (! ctx->stored.splt) {
-                                  ctx->n_splt = (unsigned int)1;
+                                  ctx->n_splt = (uint32_t)1;
                                   ctx->splt_list = (struct spng_splt *)spng__calloc
-                                  (ctx,(unsigned int)1,
-                                   sizeof(struct spng_splt));
+                                  (ctx,(size_t)1,sizeof(struct spng_splt));
                                   if (ctx->splt_list == (struct spng_splt *)0) {
                                     __retres = SPNG_EMEM;
                                     goto return_label;
                                   }
                                 }
                                 else {
-                                  ctx->n_splt += (uint32_t)1;
+                                  (ctx->n_splt) ++;
                                   if (ctx->n_splt < (uint32_t)1) {
                                     __retres = SPNG_EOVERFLOW;
                                     goto return_label;
@@ -2412,7 +2345,7 @@ static int read_chunks_before_idat(spng_ctx *ctx)
                                          0,sizeof(struct spng_splt));
                                 }
                                 uint32_t i_0 = ctx->n_splt - (uint32_t)1;
-                                if (chunk.length > (uint32_t)80) tmp_21 = (unsigned int)80;
+                                if (chunk.length > (uint32_t)80) tmp_21 = (uint32_t)80;
                                 else tmp_21 = chunk.length;
                                 size_t keyword_len = tmp_21;
                                 char *keyword_nul =
@@ -2438,10 +2371,10 @@ static int read_chunks_before_idat(spng_ctx *ctx)
                                 }
                                 memcpy((void *)(& (ctx->splt_list + i_0)->sample_depth),
                                        (void const *)((data + keyword_len) + 1),
-                                       (unsigned int)1);
+                                       (size_t)1);
                                 if (ctx->n_splt > (uint32_t)1) {
                                   uint32_t j;
-                                  j = (unsigned int)0;
+                                  j = (uint32_t)0;
                                   while (j < i_0) {
                                     {
                                       int tmp_24;
@@ -2454,7 +2387,7 @@ static int read_chunks_before_idat(spng_ctx *ctx)
                                         goto return_label;
                                       }
                                     }
-                                    j += (uint32_t)1;
+                                    j ++;
                                   }
                                 }
                                 if ((int)(ctx->splt_list + i_0)->sample_depth == 16) {
@@ -2497,7 +2430,7 @@ static int read_chunks_before_idat(spng_ctx *ctx)
                                 unsigned char const *splt =
                                   (data + keyword_len) + 2;
                                 if ((int)(ctx->splt_list + i_0)->sample_depth == 16) {
-                                  k_1 = (unsigned int)0;
+                                  k_1 = (size_t)0;
                                   while (k_1 < (ctx->splt_list + i_0)->n_entries) {
                                     ((ctx->splt_list + i_0)->entries + k_1)->red = read_u16
                                     ((void const *)(splt + k_1 * (size_t)10));
@@ -2509,12 +2442,12 @@ static int read_chunks_before_idat(spng_ctx *ctx)
                                     ((void const *)((splt + k_1 * (size_t)10) + 6));
                                     ((ctx->splt_list + i_0)->entries + k_1)->frequency = read_u16
                                     ((void const *)((splt + k_1 * (size_t)10) + 8));
-                                    k_1 += (size_t)1;
+                                    k_1 ++;
                                   }
                                 }
                                 else 
                                   if ((int)(ctx->splt_list + i_0)->sample_depth == 8) {
-                                    k_1 = (unsigned int)0;
+                                    k_1 = (size_t)0;
                                     while (k_1 < (ctx->splt_list + i_0)->n_entries) {
                                       {
                                         uint8_t red;
@@ -2524,27 +2457,27 @@ static int read_chunks_before_idat(spng_ctx *ctx)
                                         memcpy((void *)(& red),
                                                (void const *)(splt + 
                                                               k_1 * (size_t)6),
-                                               (unsigned int)1);
+                                               (size_t)1);
                                         memcpy((void *)(& green),
                                                (void const *)((splt + 
                                                                k_1 * (size_t)6) + 1),
-                                               (unsigned int)1);
+                                               (size_t)1);
                                         memcpy((void *)(& blue),
                                                (void const *)((splt + 
                                                                k_1 * (size_t)6) + 2),
-                                               (unsigned int)1);
+                                               (size_t)1);
                                         memcpy((void *)(& alpha),
                                                (void const *)((splt + 
                                                                k_1 * (size_t)6) + 3),
-                                               (unsigned int)1);
+                                               (size_t)1);
                                         ((ctx->splt_list + i_0)->entries + k_1)->frequency = read_u16
                                         ((void const *)((splt + k_1 * (size_t)6) + 4));
-                                        ((ctx->splt_list + i_0)->entries + k_1)->red = (unsigned short)red;
-                                        ((ctx->splt_list + i_0)->entries + k_1)->green = (unsigned short)green;
-                                        ((ctx->splt_list + i_0)->entries + k_1)->blue = (unsigned short)blue;
-                                        ((ctx->splt_list + i_0)->entries + k_1)->alpha = (unsigned short)alpha;
+                                        ((ctx->splt_list + i_0)->entries + k_1)->red = (uint16_t)red;
+                                        ((ctx->splt_list + i_0)->entries + k_1)->green = (uint16_t)green;
+                                        ((ctx->splt_list + i_0)->entries + k_1)->blue = (uint16_t)blue;
+                                        ((ctx->splt_list + i_0)->entries + k_1)->alpha = (uint16_t)alpha;
                                       }
-                                      k_1 += (size_t)1;
+                                      k_1 ++;
                                     }
                                   }
                                 ctx->stored.splt = (unsigned int)1;
@@ -2563,8 +2496,7 @@ static int read_chunks_before_idat(spng_ctx *ctx)
                               ctx->offs.x = read_s32((void const *)data);
                               ctx->offs.y = read_s32((void const *)(data + 4));
                               memcpy((void *)(& ctx->offs.unit_specifier),
-                                     (void const *)(data + 8),
-                                     (unsigned int)1);
+                                     (void const *)(data + 8),(size_t)1);
                               tmp_19 = check_offs((struct spng_offs const *)(& ctx->offs));
                               if (tmp_19) {
                                 __retres = SPNG_EOFFS;
@@ -2587,15 +2519,15 @@ static int read_chunks_before_idat(spng_ctx *ctx)
                             }
                             time.year = read_u16((void const *)data);
                             memcpy((void *)(& time.month),
-                                   (void const *)(data + 2),(unsigned int)1);
+                                   (void const *)(data + 2),(size_t)1);
                             memcpy((void *)(& time.day),
-                                   (void const *)(data + 3),(unsigned int)1);
+                                   (void const *)(data + 3),(size_t)1);
                             memcpy((void *)(& time.hour),
-                                   (void const *)(data + 4),(unsigned int)1);
+                                   (void const *)(data + 4),(size_t)1);
                             memcpy((void *)(& time.minute),
-                                   (void const *)(data + 5),(unsigned int)1);
+                                   (void const *)(data + 5),(size_t)1);
                             memcpy((void *)(& time.second),
-                                   (void const *)(data + 6),(unsigned int)1);
+                                   (void const *)(data + 6),(size_t)1);
                             tmp_18 = check_time((struct spng_time const *)(& time));
                             if (tmp_18) {
                               __retres = SPNG_ETIME;
@@ -2621,7 +2553,7 @@ static int read_chunks_before_idat(spng_ctx *ctx)
                           ctx->phys.ppu_x = read_u32((void const *)data);
                           ctx->phys.ppu_y = read_u32((void const *)(data + 4));
                           memcpy((void *)(& ctx->phys.unit_specifier),
-                                 (void const *)(data + 8),(unsigned int)1);
+                                 (void const *)(data + 8),(size_t)1);
                           tmp_17 = check_phys((struct spng_phys const *)(& ctx->phys));
                           if (tmp_17) {
                             __retres = SPNG_EPHYS;
@@ -2649,12 +2581,12 @@ static int read_chunks_before_idat(spng_ctx *ctx)
                           __retres = SPNG_ECHUNK_SIZE;
                           goto return_label;
                         }
-                        k_0 = (unsigned int)0;
+                        k_0 = (size_t)0;
                         while (k_0 < chunk.length / (uint32_t)2) {
                           ctx->hist.frequency[k_0] = read_u16((void const *)(
                                                               data + 
                                                               k_0 * (size_t)2));
-                          k_0 += (size_t)1;
+                          k_0 ++;
                         }
                         ctx->file.hist = (unsigned int)1;
                         ctx->stored.hist = (unsigned int)1;
@@ -2674,8 +2606,8 @@ static int read_chunks_before_idat(spng_ctx *ctx)
                         __retres = SPNG_ECHUNK_SIZE;
                         goto return_label;
                       }
-                      uint16_t mask_0 = (unsigned short)(~ 0);
-                      if ((int)ctx->ihdr.bit_depth < 16) mask_0 = (unsigned short)(
+                      uint16_t mask_0 = (uint16_t)(~ 0);
+                      if ((int)ctx->ihdr.bit_depth < 16) mask_0 = (uint16_t)(
                                                          (1 << (int)ctx->ihdr.bit_depth) - 1);
                       if ((int)ctx->ihdr.color_type == 0) {
                         uint16_t tmp_13;
@@ -2684,7 +2616,7 @@ static int read_chunks_before_idat(spng_ctx *ctx)
                           goto return_label;
                         }
                         tmp_13 = read_u16((void const *)data);
-                        ctx->trns.gray = (unsigned short)((int)tmp_13 & (int)mask_0);
+                        ctx->trns.gray = (uint16_t)((int)tmp_13 & (int)mask_0);
                       }
                       else 
                         if ((int)ctx->ihdr.color_type == 2) {
@@ -2696,11 +2628,11 @@ static int read_chunks_before_idat(spng_ctx *ctx)
                             goto return_label;
                           }
                           tmp_14 = read_u16((void const *)data);
-                          ctx->trns.red = (unsigned short)((int)tmp_14 & (int)mask_0);
+                          ctx->trns.red = (uint16_t)((int)tmp_14 & (int)mask_0);
                           tmp_15 = read_u16((void const *)(data + 2));
-                          ctx->trns.green = (unsigned short)((int)tmp_15 & (int)mask_0);
+                          ctx->trns.green = (uint16_t)((int)tmp_15 & (int)mask_0);
                           tmp_16 = read_u16((void const *)(data + 4));
-                          ctx->trns.blue = (unsigned short)((int)tmp_16 & (int)mask_0);
+                          ctx->trns.blue = (uint16_t)((int)tmp_16 & (int)mask_0);
                         }
                         else 
                           if ((int)ctx->ihdr.color_type == 3) {
@@ -2713,12 +2645,11 @@ static int read_chunks_before_idat(spng_ctx *ctx)
                               __retres = SPNG_ETRNS_NO_PLTE;
                               goto return_label;
                             }
-                            k = (unsigned int)0;
+                            k = (size_t)0;
                             while (k < chunk.length) {
                               memcpy((void *)(& ctx->trns.type3_alpha[k]),
-                                     (void const *)(data + k),
-                                     (unsigned int)1);
-                              k += (size_t)1;
+                                     (void const *)(data + k),(size_t)1);
+                              k ++;
                             }
                             ctx->trns.n_type3_entries = chunk.length;
                           }
@@ -2740,8 +2671,8 @@ static int read_chunks_before_idat(spng_ctx *ctx)
                       __retres = SPNG_EDUP_BKGD;
                       goto return_label;
                     }
-                    uint16_t mask = (unsigned short)(~ 0);
-                    if ((int)ctx->ihdr.bit_depth < 16) mask = (unsigned short)(
+                    uint16_t mask = (uint16_t)(~ 0);
+                    if ((int)ctx->ihdr.bit_depth < 16) mask = (uint16_t)(
                                                        (1 << (int)ctx->ihdr.bit_depth) - 1);
                     if ((int)ctx->ihdr.color_type == 0) goto _LOR_1;
                     else 
@@ -2754,7 +2685,7 @@ static int read_chunks_before_idat(spng_ctx *ctx)
                             goto return_label;
                           }
                           tmp_9 = read_u16((void const *)data);
-                          ctx->bkgd.gray = (unsigned short)((int)tmp_9 & (int)mask);
+                          ctx->bkgd.gray = (uint16_t)((int)tmp_9 & (int)mask);
                         }
                       }
                       else 
@@ -2771,11 +2702,11 @@ static int read_chunks_before_idat(spng_ctx *ctx)
                                 goto return_label;
                               }
                               tmp_10 = read_u16((void const *)data);
-                              ctx->bkgd.red = (unsigned short)((int)tmp_10 & (int)mask);
+                              ctx->bkgd.red = (uint16_t)((int)tmp_10 & (int)mask);
                               tmp_11 = read_u16((void const *)(data + 2));
-                              ctx->bkgd.green = (unsigned short)((int)tmp_11 & (int)mask);
+                              ctx->bkgd.green = (uint16_t)((int)tmp_11 & (int)mask);
                               tmp_12 = read_u16((void const *)(data + 4));
-                              ctx->bkgd.blue = (unsigned short)((int)tmp_12 & (int)mask);
+                              ctx->bkgd.blue = (uint16_t)((int)tmp_12 & (int)mask);
                             }
                           }
                           else 
@@ -2789,7 +2720,7 @@ static int read_chunks_before_idat(spng_ctx *ctx)
                                 goto return_label;
                               }
                               memcpy((void *)(& ctx->bkgd.plte_index),
-                                     (void const *)data,(unsigned int)1);
+                                     (void const *)data,(size_t)1);
                               if ((uint32_t)ctx->bkgd.plte_index >= ctx->plte.n_entries) {
                                 __retres = SPNG_EBKGD_PLTE_IDX;
                                 goto return_label;
@@ -2814,7 +2745,7 @@ static int read_chunks_before_idat(spng_ctx *ctx)
                     goto return_label;
                   }
                   memcpy((void *)(& ctx->srgb_rendering_intent),
-                         (void const *)data,(unsigned int)1);
+                         (void const *)data,(size_t)1);
                   if ((int)ctx->srgb_rendering_intent > 3) {
                     __retres = SPNG_ESRGB;
                     goto return_label;
@@ -2840,7 +2771,7 @@ static int read_chunks_before_idat(spng_ctx *ctx)
                     goto return_label;
                   }
                   memcpy((void *)(& ctx->sbit.grayscale_bits),
-                         (void const *)data,(unsigned int)1);
+                         (void const *)data,(size_t)1);
                 }
                 else 
                   if ((int)ctx->ihdr.color_type == 2) goto _LOR;
@@ -2853,11 +2784,11 @@ static int read_chunks_before_idat(spng_ctx *ctx)
                           goto return_label;
                         }
                         memcpy((void *)(& ctx->sbit.red_bits),
-                               (void const *)data,(unsigned int)1);
+                               (void const *)data,(size_t)1);
                         memcpy((void *)(& ctx->sbit.green_bits),
-                               (void const *)(data + 1),(unsigned int)1);
+                               (void const *)(data + 1),(size_t)1);
                         memcpy((void *)(& ctx->sbit.blue_bits),
-                               (void const *)(data + 2),(unsigned int)1);
+                               (void const *)(data + 2),(size_t)1);
                       }
                     }
                     else 
@@ -2867,9 +2798,9 @@ static int read_chunks_before_idat(spng_ctx *ctx)
                           goto return_label;
                         }
                         memcpy((void *)(& ctx->sbit.grayscale_bits),
-                               (void const *)data,(unsigned int)1);
+                               (void const *)data,(size_t)1);
                         memcpy((void *)(& ctx->sbit.alpha_bits),
-                               (void const *)(data + 1),(unsigned int)1);
+                               (void const *)(data + 1),(size_t)1);
                       }
                       else 
                         if ((int)ctx->ihdr.color_type == 6) {
@@ -2878,13 +2809,13 @@ static int read_chunks_before_idat(spng_ctx *ctx)
                             goto return_label;
                           }
                           memcpy((void *)(& ctx->sbit.red_bits),
-                                 (void const *)data,(unsigned int)1);
+                                 (void const *)data,(size_t)1);
                           memcpy((void *)(& ctx->sbit.green_bits),
-                                 (void const *)(data + 1),(unsigned int)1);
+                                 (void const *)(data + 1),(size_t)1);
                           memcpy((void *)(& ctx->sbit.blue_bits),
-                                 (void const *)(data + 2),(unsigned int)1);
+                                 (void const *)(data + 2),(size_t)1);
                           memcpy((void *)(& ctx->sbit.alpha_bits),
-                                 (void const *)(data + 3),(unsigned int)1);
+                                 (void const *)(data + 3),(size_t)1);
                         }
                 tmp_8 = check_sbit((struct spng_sbit const *)(& ctx->sbit),
                                    (struct spng_ihdr const *)(& ctx->ihdr));
@@ -3012,11 +2943,11 @@ static int read_chunks_after_idat(spng_ctx *ctx)
       if (tmp_1) {
         int tmp_0;
         tmp_0 = memcmp((void const *)(chunk.type),(void const *)(type_iend),
-                       (unsigned int)4);
+                       (size_t)4);
         if (tmp_0) {
           int tmp;
           tmp = memcmp((void const *)(chunk.type),(void const *)(type_idat),
-                       (unsigned int)4);
+                       (size_t)4);
           if (tmp) {
             __retres = SPNG_ECHUNK_POS;
             goto return_label;
@@ -3063,76 +2994,73 @@ static int read_chunks_after_idat(spng_ctx *ctx)
       data = ctx->data;
       prev_was_idat = 0;
       tmp_20 = memcmp((void const *)(chunk.type),(void const *)(type_chrm),
-                      (unsigned int)4);
+                      (size_t)4);
       if (tmp_20) {
         int tmp_19;
         tmp_19 = memcmp((void const *)(chunk.type),(void const *)(type_gama),
-                        (unsigned int)4);
+                        (size_t)4);
         if (tmp_19) {
           int tmp_18;
           tmp_18 = memcmp((void const *)(chunk.type),
-                          (void const *)(type_iccp),(unsigned int)4);
+                          (void const *)(type_iccp),(size_t)4);
           if (tmp_18) {
             int tmp_17;
             tmp_17 = memcmp((void const *)(chunk.type),
-                            (void const *)(type_sbit),(unsigned int)4);
+                            (void const *)(type_sbit),(size_t)4);
             if (tmp_17) {
               int tmp_16;
               tmp_16 = memcmp((void const *)(chunk.type),
-                              (void const *)(type_srgb),(unsigned int)4);
+                              (void const *)(type_srgb),(size_t)4);
               if (tmp_16) {
                 int tmp_15;
                 tmp_15 = memcmp((void const *)(chunk.type),
-                                (void const *)(type_bkgd),(unsigned int)4);
+                                (void const *)(type_bkgd),(size_t)4);
                 if (tmp_15) {
                   int tmp_14;
                   tmp_14 = memcmp((void const *)(chunk.type),
-                                  (void const *)(type_hist),(unsigned int)4);
+                                  (void const *)(type_hist),(size_t)4);
                   if (tmp_14) {
                     int tmp_13;
                     tmp_13 = memcmp((void const *)(chunk.type),
-                                    (void const *)(type_trns),
-                                    (unsigned int)4);
+                                    (void const *)(type_trns),(size_t)4);
                     if (tmp_13) {
                       int tmp_12;
                       tmp_12 = memcmp((void const *)(chunk.type),
-                                      (void const *)(type_phys),
-                                      (unsigned int)4);
+                                      (void const *)(type_phys),(size_t)4);
                       if (tmp_12) {
                         int tmp_11;
                         tmp_11 = memcmp((void const *)(chunk.type),
-                                        (void const *)(type_splt),
-                                        (unsigned int)4);
+                                        (void const *)(type_splt),(size_t)4);
                         if (tmp_11) {
                           int tmp_10;
                           tmp_10 = memcmp((void const *)(chunk.type),
                                           (void const *)(type_offs),
-                                          (unsigned int)4);
+                                          (size_t)4);
                           if (tmp_10) {
                             int tmp_9;
                             tmp_9 = memcmp((void const *)(chunk.type),
                                            (void const *)(type_time),
-                                           (unsigned int)4);
+                                           (size_t)4);
                             if (tmp_9) {
                               int tmp_8;
                               tmp_8 = memcmp((void const *)(chunk.type),
                                              (void const *)(type_exif),
-                                             (unsigned int)4);
+                                             (size_t)4);
                               if (tmp_8) {
                                 int tmp_5;
                                 tmp_5 = memcmp((void const *)(chunk.type),
                                                (void const *)(type_text),
-                                               (unsigned int)4);
+                                               (size_t)4);
                                 if (tmp_5) {
                                   int tmp_6;
                                   tmp_6 = memcmp((void const *)(chunk.type),
                                                  (void const *)(type_ztxt),
-                                                 (unsigned int)4);
+                                                 (size_t)4);
                                   if (tmp_6) {
                                     int tmp_7;
                                     tmp_7 = memcmp((void const *)(chunk.type),
                                                    (void const *)(type_itxt),
-                                                   (unsigned int)4);
+                                                   (size_t)4);
                                     if (! tmp_7) {
                                       _LOR:
                                       {
@@ -3192,20 +3120,15 @@ static int read_chunks_after_idat(spng_ctx *ctx)
                               }
                               time.year = read_u16((void const *)data);
                               memcpy((void *)(& time.month),
-                                     (void const *)(data + 2),
-                                     (unsigned int)1);
+                                     (void const *)(data + 2),(size_t)1);
                               memcpy((void *)(& time.day),
-                                     (void const *)(data + 3),
-                                     (unsigned int)1);
+                                     (void const *)(data + 3),(size_t)1);
                               memcpy((void *)(& time.hour),
-                                     (void const *)(data + 4),
-                                     (unsigned int)1);
+                                     (void const *)(data + 4),(size_t)1);
                               memcpy((void *)(& time.minute),
-                                     (void const *)(data + 5),
-                                     (unsigned int)1);
+                                     (void const *)(data + 5),(size_t)1);
                               memcpy((void *)(& time.second),
-                                     (void const *)(data + 6),
-                                     (unsigned int)1);
+                                     (void const *)(data + 6),(size_t)1);
                               tmp_3 = check_time((struct spng_time const *)(& time));
                               if (tmp_3) {
                                 __retres = SPNG_ETIME;
@@ -3314,7 +3237,7 @@ static int calculate_subimages(struct spng_subimage sub[7],
     (sub + 0)->width = ihdr->width;
     (sub + 0)->height = ihdr->height;
   }
-  size_t widest = (unsigned int)0;
+  size_t widest = (size_t)0;
   i = 0;
   while (i < 7) {
     if ((sub + i)->width == (uint32_t)0) goto __Cont;
@@ -3420,16 +3343,16 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
     goto return_label;
   }
   out_width = out_size_required / ctx->ihdr.height;
-  uint8_t channels = (unsigned char)1;
-  if ((int)ctx->ihdr.color_type == SPNG_COLOR_TYPE_TRUECOLOR) channels = (unsigned char)3;
+  uint8_t channels = (uint8_t)1;
+  if ((int)ctx->ihdr.color_type == SPNG_COLOR_TYPE_TRUECOLOR) channels = (uint8_t)3;
   else 
     if ((int)ctx->ihdr.color_type == SPNG_COLOR_TYPE_GRAYSCALE_ALPHA) 
-      channels = (unsigned char)2;
+      channels = (uint8_t)2;
     else 
       if ((int)ctx->ihdr.color_type == SPNG_COLOR_TYPE_TRUECOLOR_ALPHA) 
-        channels = (unsigned char)4;
-  if ((int)ctx->ihdr.bit_depth < 8) bytes_per_pixel = (unsigned char)1;
-  else bytes_per_pixel = (unsigned char)((int)channels * ((int)ctx->ihdr.bit_depth / 8));
+        channels = (uint8_t)4;
+  if ((int)ctx->ihdr.bit_depth < 8) bytes_per_pixel = (uint8_t)1;
+  else bytes_per_pixel = (uint8_t)((int)channels * ((int)ctx->ihdr.bit_depth / 8));
   stream.zalloc = & spng__zalloc;
   stream.zfree = & spng__zfree;
   stream.opaque = (void *)ctx;
@@ -3453,32 +3376,30 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
   if (indexed) do_scaling = 0;
   int interlaced = 0;
   if (ctx->ihdr.interlace_method) interlaced = 1;
-  uint8_t filter = (unsigned char)0;
-  uint8_t next_filter = (unsigned char)0;
-  r_8 = (unsigned char)0;
-  g_8 = (unsigned char)0;
-  b_8 = (unsigned char)0;
-  a_8 = (unsigned char)0;
-  gray_8 = (unsigned char)0;
-  r_16 = (unsigned short)0;
-  g_16 = (unsigned short)0;
-  b_16 = (unsigned short)0;
-  a_16 = (unsigned short)0;
-  gray_16 = (unsigned short)0;
-  uint8_t const samples_per_byte =
-    (unsigned char)(8 / (int)ctx->ihdr.bit_depth);
+  uint8_t filter = (uint8_t)0;
+  uint8_t next_filter = (uint8_t)0;
+  r_8 = (uint8_t)0;
+  g_8 = (uint8_t)0;
+  b_8 = (uint8_t)0;
+  a_8 = (uint8_t)0;
+  gray_8 = (uint8_t)0;
+  r_16 = (uint16_t)0;
+  g_16 = (uint16_t)0;
+  b_16 = (uint16_t)0;
+  a_16 = (uint16_t)0;
+  gray_16 = (uint16_t)0;
+  uint8_t const samples_per_byte = (uint8_t)(8 / (int)ctx->ihdr.bit_depth);
   uint8_t const mask =
-    (unsigned char)((int)((unsigned short)(1 << (int)ctx->ihdr.bit_depth)) - 1);
-  uint8_t const initial_shift =
-    (unsigned char)(8 - (int)ctx->ihdr.bit_depth);
-  size_t pixel_size = (unsigned int)4;
-  size_t pixel_offset = (unsigned int)0;
+    (uint8_t)((int)((uint16_t)(1 << (int)ctx->ihdr.bit_depth)) - 1);
+  uint8_t const initial_shift = (uint8_t)(8 - (int)ctx->ihdr.bit_depth);
+  size_t pixel_size = (size_t)4;
+  size_t pixel_offset = (size_t)0;
   unsigned int depth_target = (unsigned int)8;
   unsigned int processing_depth = (unsigned int)ctx->ihdr.bit_depth;
   if (indexed) processing_depth = (unsigned int)8;
   if (fmt == SPNG_FMT_RGBA16) {
     depth_target = (unsigned int)16;
-    pixel_size = (unsigned int)8;
+    pixel_size = (size_t)8;
   }
   memset((void *)(sub),0,sizeof(struct spng_subimage) * (unsigned int)7);
   ret = calculate_subimages(sub,& scanline_width,& ctx->ihdr,
@@ -3509,12 +3430,12 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
     int tmp_4;
     float file_gamma = (float)ctx->gama / 100000.0f;
     if (fmt == SPNG_FMT_RGBA8) {
-      lut_entries = (unsigned int)256;
+      lut_entries = (uint32_t)256;
       max = 255.0f;
       gamma_lut = ctx->gamma_lut8;
     }
     else {
-      lut_entries = (unsigned int)65536;
+      lut_entries = (uint32_t)65536;
       max = 65535.0f;
       ctx->gamma_lut = (uint16_t *)spng__malloc(ctx,
                                                 lut_entries * sizeof(uint16_t));
@@ -3533,7 +3454,7 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
       goto decode_err;
     }
     exponent = 1.0f / exponent;
-    i = (unsigned int)0;
+    i = (uint32_t)0;
     while (i < lut_entries) {
       {
         double tmp_5;
@@ -3542,16 +3463,16 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
         float c = (float)(tmp_5 * (double)max);
         tmp_6 = fmin((double)c,(double)max);
         c = (float)tmp_6;
-        *(gamma_lut + i) = (unsigned short)c;
+        *(gamma_lut + i) = (uint16_t)c;
       }
-      i += (uint32_t)1;
+      i ++;
     }
   }
-  sb.red_bits = (unsigned char)processing_depth;
-  sb.green_bits = (unsigned char)processing_depth;
-  sb.blue_bits = (unsigned char)processing_depth;
-  sb.alpha_bits = (unsigned char)processing_depth;
-  sb.grayscale_bits = (unsigned char)processing_depth;
+  sb.red_bits = (uint8_t)processing_depth;
+  sb.green_bits = (uint8_t)processing_depth;
+  sb.blue_bits = (uint8_t)processing_depth;
+  sb.alpha_bits = (uint8_t)processing_depth;
+  sb.grayscale_bits = (uint8_t)processing_depth;
   if (use_sbit) 
     if ((int)ctx->ihdr.color_type == 0) {
       sb.grayscale_bits = ctx->sbit.grayscale_bits;
@@ -3582,11 +3503,11 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
           }
   if ((int)ctx->ihdr.bit_depth == 16) 
     if (fmt == SPNG_FMT_RGBA8) {
-      sb.red_bits = (unsigned char)((int)sb.red_bits - 8);
-      sb.green_bits = (unsigned char)((int)sb.green_bits - 8);
-      sb.blue_bits = (unsigned char)((int)sb.blue_bits - 8);
-      sb.alpha_bits = (unsigned char)((int)sb.alpha_bits - 8);
-      sb.grayscale_bits = (unsigned char)((int)sb.grayscale_bits - 8);
+      sb.red_bits = (uint8_t)((int)sb.red_bits - 8);
+      sb.green_bits = (uint8_t)((int)sb.green_bits - 8);
+      sb.blue_bits = (uint8_t)((int)sb.blue_bits - 8);
+      sb.alpha_bits = (uint8_t)((int)sb.alpha_bits - 8);
+      sb.grayscale_bits = (uint8_t)((int)sb.grayscale_bits - 8);
       processing_depth = (unsigned int)8;
     }
   if (! depth_target) goto _LOR_1;
@@ -3629,25 +3550,25 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
         if ((unsigned int)sb.alpha_bits == processing_depth) 
           if (processing_depth == depth_target) do_scaling = 0;
   if (indexed) {
-    i = (unsigned int)0;
+    i = (uint32_t)0;
     /*@ loop unroll 256; */
     while (i < (uint32_t)256) {
       if (apply_trns) 
         if (i < ctx->trns.n_type3_entries) ctx->plte.entries[i].alpha = ctx->trns.type3_alpha[i];
-        else ctx->plte.entries[i].alpha = (unsigned char)255;
-      else ctx->plte.entries[i].alpha = (unsigned char)255;
-      plte[i].red = sample_to_target((unsigned short)ctx->plte.entries[i].red,
+        else ctx->plte.entries[i].alpha = (uint8_t)255;
+      else ctx->plte.entries[i].alpha = (uint8_t)255;
+      plte[i].red = sample_to_target((uint16_t)ctx->plte.entries[i].red,
                                      (unsigned int)8,
                                      (unsigned int)sb.red_bits,depth_target);
-      plte[i].green = sample_to_target((unsigned short)ctx->plte.entries[i].green,
+      plte[i].green = sample_to_target((uint16_t)ctx->plte.entries[i].green,
                                        (unsigned int)8,
                                        (unsigned int)sb.green_bits,
                                        depth_target);
-      plte[i].blue = sample_to_target((unsigned short)ctx->plte.entries[i].blue,
+      plte[i].blue = sample_to_target((uint16_t)ctx->plte.entries[i].blue,
                                       (unsigned int)8,
                                       (unsigned int)sb.blue_bits,
                                       depth_target);
-      plte[i].alpha = sample_to_target((unsigned short)ctx->plte.entries[i].alpha,
+      plte[i].alpha = sample_to_target((uint16_t)ctx->plte.entries[i].alpha,
                                        (unsigned int)8,
                                        (unsigned int)sb.alpha_bits,
                                        depth_target);
@@ -3656,7 +3577,7 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
         plte[i].green = *(gamma_lut + plte[i].green);
         plte[i].blue = *(gamma_lut + plte[i].blue);
       }
-      i += (uint32_t)1;
+      i ++;
     }
     apply_trns = 0;
     apply_gamma = 0;
@@ -3664,12 +3585,11 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
   if (apply_trns) 
     if ((int)ctx->ihdr.color_type == SPNG_COLOR_TYPE_TRUECOLOR) 
       if ((int)ctx->ihdr.bit_depth == 16) {
-        memcpy((void *)(trns_px),(void const *)(& ctx->trns.red),
-               (unsigned int)2);
+        memcpy((void *)(trns_px),(void const *)(& ctx->trns.red),(size_t)2);
         memcpy((void *)(& trns_px[2]),(void const *)(& ctx->trns.green),
-               (unsigned int)2);
+               (size_t)2);
         memcpy((void *)(& trns_px[4]),(void const *)(& ctx->trns.blue),
-               (unsigned int)2);
+               (size_t)2);
       }
       else {
         trns_px[0] = (unsigned char)ctx->trns.red;
@@ -3685,10 +3605,9 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
       if (sub[pass].height == (uint32_t)0) goto __Cont;
     scanline_width = sub[pass].scanline_width;
     memset((void *)prev_scanline,0,scanline_width);
-    ret = read_scanline_bytes(ctx,& stream,(unsigned char *)(& filter),
-                              (unsigned int)1);
+    ret = read_scanline_bytes(ctx,& stream,& filter,(size_t)1);
     if (ret) goto decode_err;
-    scanline_idx = (unsigned int)0;
+    scanline_idx = (uint32_t)0;
     while (scanline_idx < sub[pass].height) {
       {
         if (scanline_idx == sub[pass].height - (uint32_t)1) ret = read_scanline_bytes
@@ -3698,18 +3617,17 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
         else ret = read_scanline_bytes(ctx,& stream,scanline,scanline_width);
         if (ret) goto decode_err;
         memcpy((void *)(& next_filter),
-               (void const *)((scanline + scanline_width) - 1),
-               (unsigned int)1);
+               (void const *)((scanline + scanline_width) - 1),(size_t)1);
         ret = defilter_scanline((unsigned char const *)prev_scanline,
                                 scanline,scanline_width - (size_t)1,
                                 (unsigned int)bytes_per_pixel,
                                 (unsigned int)filter);
         if (ret) goto decode_err;
         filter = next_filter;
-        pixel_offset = (unsigned int)0;
+        pixel_offset = (size_t)0;
         width = sub[pass].width;
         uint8_t shift_amount = initial_shift;
-        k = (unsigned int)0;
+        k = (uint32_t)0;
         while (k < width) {
           pixel = row + pixel_offset;
           pixel_offset += pixel_size;
@@ -3718,41 +3636,39 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
               r_16 = read_u16((void const *)(scanline + k * (uint32_t)6));
               g_16 = read_u16((void const *)((scanline + k * (uint32_t)6) + 2));
               b_16 = read_u16((void const *)((scanline + k * (uint32_t)6) + 4));
-              a_16 = (unsigned short)65535;
+              a_16 = (uint16_t)65535;
             }
             else {
               if (fmt == SPNG_FMT_RGBA8) {
                 memcpy((void *)pixel,
-                       (void const *)(scanline + k * (uint32_t)3),
-                       (unsigned int)3);
+                       (void const *)(scanline + k * (uint32_t)3),(size_t)3);
                 *(pixel + 3) = (unsigned char)255;
                 goto __Cont_0;
               }
               memcpy((void *)(& r_8),
-                     (void const *)(scanline + k * (uint32_t)3),
-                     (unsigned int)1);
+                     (void const *)(scanline + k * (uint32_t)3),(size_t)1);
               memcpy((void *)(& g_8),
                      (void const *)((scanline + k * (uint32_t)3) + 1),
-                     (unsigned int)1);
+                     (size_t)1);
               memcpy((void *)(& b_8),
                      (void const *)((scanline + k * (uint32_t)3) + 2),
-                     (unsigned int)1);
-              a_8 = (unsigned char)255;
+                     (size_t)1);
+              a_8 = (uint8_t)255;
             }
           else 
             if ((int)ctx->ihdr.color_type == SPNG_COLOR_TYPE_INDEXED) {
-              uint8_t entry = (unsigned char)0;
+              uint8_t entry = (uint8_t)0;
               if ((int)ctx->ihdr.bit_depth == 8) memcpy((void *)(& entry),
                                                         (void const *)(
                                                         scanline + k),
-                                                        (unsigned int)1);
+                                                        (size_t)1);
               else {
                 memcpy((void *)(& entry),
                        (void const *)(scanline + k / (uint32_t)samples_per_byte),
-                       (unsigned int)1);
+                       (size_t)1);
                 if ((int)shift_amount > 8) shift_amount = initial_shift;
-                entry = (unsigned char)(((int)entry >> (int)shift_amount) & (int)mask);
-                shift_amount = (unsigned char)((int)shift_amount - (int)ctx->ihdr.bit_depth);
+                entry = (uint8_t)(((int)entry >> (int)shift_amount) & (int)mask);
+                shift_amount = (uint8_t)((int)shift_amount - (int)ctx->ihdr.bit_depth);
               }
               if (fmt == SPNG_FMT_RGBA8) {
                 *(pixel + 0) = (unsigned char)plte[entry].red;
@@ -3766,13 +3682,10 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
                 g_16 = plte[entry].green;
                 b_16 = plte[entry].blue;
                 a_16 = plte[entry].alpha;
-                memcpy((void *)pixel,(void const *)(& r_16),(unsigned int)2);
-                memcpy((void *)(pixel + 2),(void const *)(& g_16),
-                       (unsigned int)2);
-                memcpy((void *)(pixel + 4),(void const *)(& b_16),
-                       (unsigned int)2);
-                memcpy((void *)(pixel + 6),(void const *)(& a_16),
-                       (unsigned int)2);
+                memcpy((void *)pixel,(void const *)(& r_16),(size_t)2);
+                memcpy((void *)(pixel + 2),(void const *)(& g_16),(size_t)2);
+                memcpy((void *)(pixel + 4),(void const *)(& b_16),(size_t)2);
+                memcpy((void *)(pixel + 6),(void const *)(& a_16),(size_t)2);
                 goto __Cont_0;
               }
             }
@@ -3792,25 +3705,25 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
                   }
                   memcpy((void *)(& r_8),
                          (void const *)(scanline + k * (uint32_t)4),
-                         (unsigned int)1);
+                         (size_t)1);
                   memcpy((void *)(& g_8),
                          (void const *)((scanline + k * (uint32_t)4) + 1),
-                         (unsigned int)1);
+                         (size_t)1);
                   memcpy((void *)(& b_8),
                          (void const *)((scanline + k * (uint32_t)4) + 2),
-                         (unsigned int)1);
+                         (size_t)1);
                   memcpy((void *)(& a_8),
                          (void const *)((scanline + k * (uint32_t)4) + 3),
-                         (unsigned int)1);
+                         (size_t)1);
                 }
               else 
                 if ((int)ctx->ihdr.color_type == SPNG_COLOR_TYPE_GRAYSCALE) 
                   if ((int)ctx->ihdr.bit_depth == 16) {
                     gray_16 = read_u16((void const *)(scanline + k * (uint32_t)2));
                     if (apply_trns) 
-                      if ((int)ctx->trns.gray == (int)gray_16) a_16 = (unsigned short)0;
-                      else a_16 = (unsigned short)65535;
-                    else a_16 = (unsigned short)65535;
+                      if ((int)ctx->trns.gray == (int)gray_16) a_16 = (uint16_t)0;
+                      else a_16 = (uint16_t)65535;
+                    else a_16 = (uint16_t)65535;
                     r_16 = gray_16;
                     g_16 = gray_16;
                     b_16 = gray_16;
@@ -3818,14 +3731,14 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
                   else {
                     memcpy((void *)(& gray_8),
                            (void const *)(scanline + k / (uint32_t)samples_per_byte),
-                           (unsigned int)1);
+                           (size_t)1);
                     if ((int)shift_amount > 8) shift_amount = initial_shift;
-                    gray_8 = (unsigned char)(((int)gray_8 >> (int)shift_amount) & (int)mask);
-                    shift_amount = (unsigned char)((int)shift_amount - (int)ctx->ihdr.bit_depth);
+                    gray_8 = (uint8_t)(((int)gray_8 >> (int)shift_amount) & (int)mask);
+                    shift_amount = (uint8_t)((int)shift_amount - (int)ctx->ihdr.bit_depth);
                     if (apply_trns) 
-                      if ((int)ctx->trns.gray == (int)gray_8) a_8 = (unsigned char)0;
-                      else a_8 = (unsigned char)255;
-                    else a_8 = (unsigned char)255;
+                      if ((int)ctx->trns.gray == (int)gray_8) a_8 = (uint8_t)0;
+                      else a_8 = (uint8_t)255;
+                    else a_8 = (uint8_t)255;
                     r_8 = gray_8;
                     g_8 = gray_8;
                     b_8 = gray_8;
@@ -3842,43 +3755,40 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
                     else {
                       memcpy((void *)(& gray_8),
                              (void const *)(scanline + k * (uint32_t)2),
-                             (unsigned int)1);
+                             (size_t)1);
                       memcpy((void *)(& a_8),
                              (void const *)((scanline + k * (uint32_t)2) + 1),
-                             (unsigned int)1);
+                             (size_t)1);
                       r_8 = gray_8;
                       g_8 = gray_8;
                       b_8 = gray_8;
                     }
           if (fmt == SPNG_FMT_RGBA8) {
             if ((int)ctx->ihdr.bit_depth == 16) {
-              r_8 = (unsigned char)((int)r_16 >> 8);
-              g_8 = (unsigned char)((int)g_16 >> 8);
-              b_8 = (unsigned char)((int)b_16 >> 8);
-              a_8 = (unsigned char)((int)a_16 >> 8);
+              r_8 = (uint8_t)((int)r_16 >> 8);
+              g_8 = (uint8_t)((int)g_16 >> 8);
+              b_8 = (uint8_t)((int)b_16 >> 8);
+              a_8 = (uint8_t)((int)a_16 >> 8);
             }
-            memcpy((void *)pixel,(void const *)(& r_8),(unsigned int)1);
-            memcpy((void *)(pixel + 1),(void const *)(& g_8),(unsigned int)1);
-            memcpy((void *)(pixel + 2),(void const *)(& b_8),(unsigned int)1);
-            memcpy((void *)(pixel + 3),(void const *)(& a_8),(unsigned int)1);
+            memcpy((void *)pixel,(void const *)(& r_8),(size_t)1);
+            memcpy((void *)(pixel + 1),(void const *)(& g_8),(size_t)1);
+            memcpy((void *)(pixel + 2),(void const *)(& b_8),(size_t)1);
+            memcpy((void *)(pixel + 3),(void const *)(& a_8),(size_t)1);
           }
           else 
             if (fmt == SPNG_FMT_RGBA16) {
               if ((int)ctx->ihdr.bit_depth != 16) {
-                r_16 = (unsigned short)r_8;
-                g_16 = (unsigned short)g_8;
-                b_16 = (unsigned short)b_8;
-                a_16 = (unsigned short)a_8;
+                r_16 = (uint16_t)r_8;
+                g_16 = (uint16_t)g_8;
+                b_16 = (uint16_t)b_8;
+                a_16 = (uint16_t)a_8;
               }
-              memcpy((void *)pixel,(void const *)(& r_16),(unsigned int)2);
-              memcpy((void *)(pixel + 2),(void const *)(& g_16),
-                     (unsigned int)2);
-              memcpy((void *)(pixel + 4),(void const *)(& b_16),
-                     (unsigned int)2);
-              memcpy((void *)(pixel + 6),(void const *)(& a_16),
-                     (unsigned int)2);
+              memcpy((void *)pixel,(void const *)(& r_16),(size_t)2);
+              memcpy((void *)(pixel + 2),(void const *)(& g_16),(size_t)2);
+              memcpy((void *)(pixel + 4),(void const *)(& b_16),(size_t)2);
+              memcpy((void *)(pixel + 6),(void const *)(& a_16),(size_t)2);
             }
-          __Cont_0: k += (uint32_t)1;
+          __Cont_0: k ++;
         }
         if (apply_trns) trns_row(row,(unsigned char const *)scanline,
                                  (unsigned char const *)(trns_px),width,fmt,
@@ -3923,7 +3833,7 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
              (unsigned int)4,
              (unsigned int)2,
              (unsigned int)2};
-          k = (unsigned int)0;
+          k = (uint32_t)0;
           while (k < width) {
             {
               size_t ioffset =
@@ -3932,13 +3842,13 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
               memcpy((void *)(out + ioffset),
                      (void const *)(row + k * pixel_size),pixel_size);
             }
-            k += (uint32_t)1;
+            k ++;
           }
         }
         else 
           if (scanline_idx != sub[pass].height - (uint32_t)1) row += out_width;
       }
-      scanline_idx += (uint32_t)1;
+      scanline_idx ++;
     }
     __Cont: pass ++;
   }
@@ -4011,7 +3921,7 @@ spng_ctx *spng_ctx_new2(struct spng_alloc *alloc, int flags)
     __retres = (spng_ctx *)0;
     goto return_label;
   }
-  tmp = (spng_ctx *)(*(alloc->calloc_fn))((unsigned int)1,sizeof(spng_ctx));
+  tmp = (spng_ctx *)(*(alloc->calloc_fn))((size_t)1,sizeof(spng_ctx));
   spng_ctx *ctx = tmp;
   if (ctx == (spng_ctx *)0) {
     __retres = (spng_ctx *)0;
@@ -4040,18 +3950,18 @@ void spng_ctx_free(spng_ctx *ctx)
   if (ctx->splt_list != (struct spng_splt *)0) 
     if (! ctx->user.splt) {
       uint32_t i;
-      i = (unsigned int)0;
+      i = (uint32_t)0;
       while (i < ctx->n_splt) {
         if ((ctx->splt_list + i)->entries != (struct spng_splt_entry *)0) 
           spng__free(ctx,(void *)(ctx->splt_list + i)->entries);
-        i += (uint32_t)1;
+        i ++;
       }
       spng__free(ctx,(void *)ctx->splt_list);
     }
   if (ctx->text_list != (struct spng_text *)0) 
     if (! ctx->user.text) {
       uint32_t i_0;
-      i_0 = (unsigned int)0;
+      i_0 = (uint32_t)0;
       while (i_0 < ctx->n_text) {
         if ((ctx->text_list + i_0)->text != (char *)0) spng__free(ctx,
                                                                   (void *)(
@@ -4062,7 +3972,7 @@ void spng_ctx_free(spng_ctx *ctx)
                                                                 ctx->text_list + i_0)->language_tag);
         if ((ctx->text_list + i_0)->translated_keyword != (char *)0) 
           spng__free(ctx,(void *)(ctx->text_list + i_0)->translated_keyword);
-        i_0 += (uint32_t)1;
+        i_0 ++;
       }
       spng__free(ctx,(void *)ctx->text_list);
     }
@@ -4143,13 +4053,13 @@ int spng_set_png_stream(spng_ctx *ctx, spng_read_fn *read_func, void *user)
     __retres = SPNG_EBUF_SET;
     goto return_label;
   }
-  ctx->stream_buf = (unsigned char *)spng__malloc(ctx,(unsigned int)8192);
+  ctx->stream_buf = (unsigned char *)spng__malloc(ctx,(size_t)8192);
   if (ctx->stream_buf == (unsigned char *)0) {
     __retres = SPNG_EMEM;
     goto return_label;
   }
   ctx->data = (unsigned char const *)ctx->stream_buf;
-  ctx->data_size = (unsigned int)8192;
+  ctx->data_size = (size_t)8192;
   ctx->read_fn = read_func;
   ctx->read_user_ptr = user;
   ctx->streaming = (unsigned int)1;
@@ -4888,14 +4798,14 @@ int spng_set_trns(spng_ctx *ctx, struct spng_trns *trns)
     __retres = 1;
     goto return_label;
   }
-  uint16_t mask = (unsigned short)(~ 0);
-  if ((int)ctx->ihdr.bit_depth < 16) mask = (unsigned short)((1 << (int)ctx->ihdr.bit_depth) - 1);
-  if ((int)ctx->ihdr.color_type == 0) trns->gray = (unsigned short)((int)trns->gray & (int)mask);
+  uint16_t mask = (uint16_t)(~ 0);
+  if ((int)ctx->ihdr.bit_depth < 16) mask = (uint16_t)((1 << (int)ctx->ihdr.bit_depth) - 1);
+  if ((int)ctx->ihdr.color_type == 0) trns->gray = (uint16_t)((int)trns->gray & (int)mask);
   else 
     if ((int)ctx->ihdr.color_type == 2) {
-      trns->red = (unsigned short)((int)trns->red & (int)mask);
-      trns->green = (unsigned short)((int)trns->green & (int)mask);
-      trns->blue = (unsigned short)((int)trns->blue & (int)mask);
+      trns->red = (uint16_t)((int)trns->red & (int)mask);
+      trns->green = (uint16_t)((int)trns->green & (int)mask);
+      trns->blue = (uint16_t)((int)trns->blue & (int)mask);
     }
     else 
       if ((int)ctx->ihdr.color_type == 3) {
@@ -4934,14 +4844,14 @@ int spng_set_chrm(spng_ctx *ctx, struct spng_chrm *chrm)
     __retres = ret;
     goto return_label;
   }
-  chrm_int.white_point_x = (unsigned int)(chrm->white_point_x * 100000.0);
-  chrm_int.white_point_y = (unsigned int)(chrm->white_point_y * 100000.0);
-  chrm_int.red_x = (unsigned int)(chrm->red_x * 100000.0);
-  chrm_int.red_y = (unsigned int)(chrm->red_y * 100000.0);
-  chrm_int.green_x = (unsigned int)(chrm->green_x * 100000.0);
-  chrm_int.green_y = (unsigned int)(chrm->green_y * 100000.0);
-  chrm_int.blue_x = (unsigned int)(chrm->blue_x * 100000.0);
-  chrm_int.blue_y = (unsigned int)(chrm->blue_y * 100000.0);
+  chrm_int.white_point_x = (uint32_t)(chrm->white_point_x * 100000.0);
+  chrm_int.white_point_y = (uint32_t)(chrm->white_point_y * 100000.0);
+  chrm_int.red_x = (uint32_t)(chrm->red_x * 100000.0);
+  chrm_int.red_y = (uint32_t)(chrm->red_y * 100000.0);
+  chrm_int.green_x = (uint32_t)(chrm->green_x * 100000.0);
+  chrm_int.green_y = (uint32_t)(chrm->green_y * 100000.0);
+  chrm_int.blue_x = (uint32_t)(chrm->blue_x * 100000.0);
+  chrm_int.blue_y = (uint32_t)(chrm->blue_y * 100000.0);
   tmp_0 = check_chrm_int((struct spng_chrm_int const *)(& chrm_int));
   if (tmp_0) {
     __retres = SPNG_ECHRM;
@@ -5003,7 +4913,7 @@ int spng_set_gama(spng_ctx *ctx, double gamma)
     __retres = ret;
     goto return_label;
   }
-  uint32_t gama = (unsigned int)(gamma * 100000.0);
+  uint32_t gama = (uint32_t)(gamma * 100000.0);
   if (! gama) {
     __retres = 1;
     goto return_label;
@@ -5141,7 +5051,7 @@ int spng_set_text(spng_ctx *ctx, struct spng_text *text, uint32_t n_text)
     __retres = ret;
     goto return_label;
   }
-  i = (unsigned int)0;
+  i = (uint32_t)0;
   while (i < n_text) {
     {
       int tmp_0;
@@ -5205,11 +5115,11 @@ int spng_set_text(spng_ctx *ctx, struct spng_text *text, uint32_t n_text)
             goto return_label;
           }
     }
-    i += (uint32_t)1;
+    i ++;
   }
   if (ctx->text_list != (struct spng_text *)0) 
     if (! ctx->user.text) {
-      i = (unsigned int)0;
+      i = (uint32_t)0;
       while (i < ctx->n_text) {
         if ((ctx->text_list + i)->text != (char *)0) spng__free(ctx,
                                                                 (void *)(
@@ -5222,7 +5132,7 @@ int spng_set_text(spng_ctx *ctx, struct spng_text *text, uint32_t n_text)
                                                                    (ctx,
                                                                     (void *)(
                                                                     ctx->text_list + i)->translated_keyword);
-        i += (uint32_t)1;
+        i ++;
       }
       spng__free(ctx,(void *)ctx->text_list);
     }
@@ -5255,22 +5165,21 @@ int spng_set_bkgd(spng_ctx *ctx, struct spng_bkgd *bkgd)
     __retres = 1;
     goto return_label;
   }
-  uint16_t mask = (unsigned short)(~ 0);
-  if ((int)ctx->ihdr.bit_depth < 16) mask = (unsigned short)((1 << (int)ctx->ihdr.bit_depth) - 1);
+  uint16_t mask = (uint16_t)(~ 0);
+  if ((int)ctx->ihdr.bit_depth < 16) mask = (uint16_t)((1 << (int)ctx->ihdr.bit_depth) - 1);
   if ((int)ctx->ihdr.color_type == 0) goto _LOR_0;
   else 
     if ((int)ctx->ihdr.color_type == 4) _LOR_0:
-                                        bkgd->gray = (unsigned short)(
-                                        (int)bkgd->gray & (int)mask);
+                                        bkgd->gray = (uint16_t)((int)bkgd->gray & (int)mask);
     else 
       if ((int)ctx->ihdr.color_type == 2) goto _LOR;
       else 
         if ((int)ctx->ihdr.color_type == 6) {
           _LOR:
           {
-            bkgd->red = (unsigned short)((int)bkgd->red & (int)mask);
-            bkgd->green = (unsigned short)((int)bkgd->green & (int)mask);
-            bkgd->blue = (unsigned short)((int)bkgd->blue & (int)mask);
+            bkgd->red = (uint16_t)((int)bkgd->red & (int)mask);
+            bkgd->green = (uint16_t)((int)bkgd->green & (int)mask);
+            bkgd->blue = (uint16_t)((int)bkgd->blue & (int)mask);
           }
         }
         else 
@@ -5372,7 +5281,7 @@ int spng_set_splt(spng_ctx *ctx, struct spng_splt *splt, uint32_t n_splt)
     __retres = ret;
     goto return_label;
   }
-  i = (unsigned int)0;
+  i = (uint32_t)0;
   while (i < n_splt) {
     {
       int tmp_0;
@@ -5387,15 +5296,15 @@ int spng_set_splt(spng_ctx *ctx, struct spng_splt *splt, uint32_t n_splt)
           goto return_label;
         }
     }
-    i += (uint32_t)1;
+    i ++;
   }
   if (ctx->stored.splt) 
     if (! ctx->user.splt) {
-      i = (unsigned int)0;
+      i = (uint32_t)0;
       while (i < ctx->n_splt) {
         if ((ctx->splt_list + i)->entries != (struct spng_splt_entry *)0) 
           spng__free(ctx,(void *)(ctx->splt_list + i)->entries);
-        i += (uint32_t)1;
+        i ++;
       }
       spng__free(ctx,(void *)ctx->splt_list);
     }

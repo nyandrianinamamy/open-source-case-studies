@@ -93,13 +93,13 @@ int main(void)
   int y = 2;
   int *p = & x;
   int *q = & y;
-  uintptr_t i = (unsigned int)p;
-  uintptr_t j = (unsigned int)q;
+  uintptr_t i = (uintptr_t)p;
+  uintptr_t j = (uintptr_t)q;
   FILE *f = fopen("pointer_from_int_6.tmp","w+b");
   printf("Addresses: i=%u j=%u\n",i,j); /* printf_va_1 */
   fprintf(f,"%u\n",j); /* fprintf_va_1 */
   rewind(f);
-  int n = fscanf_va_1(f,"%u\n",(unsigned int *)(& k));
+  int n = fscanf_va_1(f,"%u\n",& k);
   if (n == 1) {
     int tmp_1;
     char const *tmp_2;

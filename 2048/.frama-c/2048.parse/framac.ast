@@ -11,8 +11,8 @@
 #include "termios.h"
 #include "time.h"
 #include "unistd.h"
-uint32_t score = (unsigned int)0;
-uint8_t scheme = (unsigned char)0;
+uint32_t score = (uint32_t)0;
+uint8_t scheme = (uint8_t)0;
 /*@ requires valid_read_string(format);
     requires
       \valid(s + (0 .. n - 1)) ∨
@@ -30,104 +30,104 @@ int snprintf_va_1(char * restrict s, size_t n, char const * restrict format,
 void getColor(uint8_t value, char *color, size_t length)
 {
   uint8_t original[32] =
-    {(unsigned char)8,
-     (unsigned char)255,
-     (unsigned char)1,
-     (unsigned char)255,
-     (unsigned char)2,
-     (unsigned char)255,
-     (unsigned char)3,
-     (unsigned char)255,
-     (unsigned char)4,
-     (unsigned char)255,
-     (unsigned char)5,
-     (unsigned char)255,
-     (unsigned char)6,
-     (unsigned char)255,
-     (unsigned char)7,
-     (unsigned char)255,
-     (unsigned char)9,
-     (unsigned char)0,
-     (unsigned char)10,
-     (unsigned char)0,
-     (unsigned char)11,
-     (unsigned char)0,
-     (unsigned char)12,
-     (unsigned char)0,
-     (unsigned char)13,
-     (unsigned char)0,
-     (unsigned char)14,
-     (unsigned char)0,
-     (unsigned char)255,
-     (unsigned char)0,
-     (unsigned char)255,
-     (unsigned char)0};
+    {(uint8_t)8,
+     (uint8_t)255,
+     (uint8_t)1,
+     (uint8_t)255,
+     (uint8_t)2,
+     (uint8_t)255,
+     (uint8_t)3,
+     (uint8_t)255,
+     (uint8_t)4,
+     (uint8_t)255,
+     (uint8_t)5,
+     (uint8_t)255,
+     (uint8_t)6,
+     (uint8_t)255,
+     (uint8_t)7,
+     (uint8_t)255,
+     (uint8_t)9,
+     (uint8_t)0,
+     (uint8_t)10,
+     (uint8_t)0,
+     (uint8_t)11,
+     (uint8_t)0,
+     (uint8_t)12,
+     (uint8_t)0,
+     (uint8_t)13,
+     (uint8_t)0,
+     (uint8_t)14,
+     (uint8_t)0,
+     (uint8_t)255,
+     (uint8_t)0,
+     (uint8_t)255,
+     (uint8_t)0};
   uint8_t blackwhite[32] =
-    {(unsigned char)232,
-     (unsigned char)255,
-     (unsigned char)234,
-     (unsigned char)255,
-     (unsigned char)236,
-     (unsigned char)255,
-     (unsigned char)238,
-     (unsigned char)255,
-     (unsigned char)240,
-     (unsigned char)255,
-     (unsigned char)242,
-     (unsigned char)255,
-     (unsigned char)244,
-     (unsigned char)255,
-     (unsigned char)246,
-     (unsigned char)0,
-     (unsigned char)248,
-     (unsigned char)0,
-     (unsigned char)249,
-     (unsigned char)0,
-     (unsigned char)250,
-     (unsigned char)0,
-     (unsigned char)251,
-     (unsigned char)0,
-     (unsigned char)252,
-     (unsigned char)0,
-     (unsigned char)253,
-     (unsigned char)0,
-     (unsigned char)254,
-     (unsigned char)0,
-     (unsigned char)255,
-     (unsigned char)0};
+    {(uint8_t)232,
+     (uint8_t)255,
+     (uint8_t)234,
+     (uint8_t)255,
+     (uint8_t)236,
+     (uint8_t)255,
+     (uint8_t)238,
+     (uint8_t)255,
+     (uint8_t)240,
+     (uint8_t)255,
+     (uint8_t)242,
+     (uint8_t)255,
+     (uint8_t)244,
+     (uint8_t)255,
+     (uint8_t)246,
+     (uint8_t)0,
+     (uint8_t)248,
+     (uint8_t)0,
+     (uint8_t)249,
+     (uint8_t)0,
+     (uint8_t)250,
+     (uint8_t)0,
+     (uint8_t)251,
+     (uint8_t)0,
+     (uint8_t)252,
+     (uint8_t)0,
+     (uint8_t)253,
+     (uint8_t)0,
+     (uint8_t)254,
+     (uint8_t)0,
+     (uint8_t)255,
+     (uint8_t)0};
   uint8_t bluered[32] =
-    {(unsigned char)235,
-     (unsigned char)255,
-     (unsigned char)63,
-     (unsigned char)255,
-     (unsigned char)57,
-     (unsigned char)255,
-     (unsigned char)93,
-     (unsigned char)255,
-     (unsigned char)129,
-     (unsigned char)255,
-     (unsigned char)165,
-     (unsigned char)255,
-     (unsigned char)201,
-     (unsigned char)255,
-     (unsigned char)200,
-     (unsigned char)255,
-     (unsigned char)199,
-     (unsigned char)255,
-     (unsigned char)198,
-     (unsigned char)255,
-     (unsigned char)197,
-     (unsigned char)255,
-     (unsigned char)196,
-     (unsigned char)255,
-     (unsigned char)196,
-     (unsigned char)255,
-     (unsigned char)196,
-     (unsigned char)255,
-     (unsigned char)196,
-     (unsigned char)255,
-     (unsigned char)196,
-     (unsigned char)255};
+    {(uint8_t)235,
+     (uint8_t)255,
+     (uint8_t)63,
+     (uint8_t)255,
+     (uint8_t)57,
+     (uint8_t)255,
+     (uint8_t)93,
+     (uint8_t)255,
+     (uint8_t)129,
+     (uint8_t)255,
+     (uint8_t)165,
+     (uint8_t)255,
+     (uint8_t)201,
+     (uint8_t)255,
+     (uint8_t)200,
+     (uint8_t)255,
+     (uint8_t)199,
+     (uint8_t)255,
+     (uint8_t)198,
+     (uint8_t)255,
+     (uint8_t)197,
+     (uint8_t)255,
+     (uint8_t)196,
+     (uint8_t)255,
+     (uint8_t)196,
+     (uint8_t)255,
+     (uint8_t)196,
+     (uint8_t)255,
+     (uint8_t)196,
+     (uint8_t)255,
+     (uint8_t)196,
+     (uint8_t)255};
   uint8_t *schemes[3] = {original, blackwhite, bluered};
   uint8_t *background = schemes[scheme] + 0;
   uint8_t *foreground = schemes[scheme] + 1;
@@ -135,7 +135,7 @@ void getColor(uint8_t value, char *color, size_t length)
     while (1) {
       uint8_t tmp;
       tmp = value;
-      value = (unsigned char)((int)value - 1);
+      value = (uint8_t)((int)value - 1);
       ;
       if (! tmp) break;
       if (background + 2 < schemes[scheme] + sizeof(original)) {
@@ -407,46 +407,45 @@ void drawBoard(uint8_t board[4][4])
   char reset[4] = {(char)'\033', (char)'[', (char)'m', (char)'\000'};
   printf("\033[H"); /* printf_va_1 */
   printf("2048.c %17d pts\n\n",(int)score); /* printf_va_2 */
-  y = (unsigned char)0;
+  y = (uint8_t)0;
   while ((int)y < 4) {
-    x = (unsigned char)0;
+    x = (uint8_t)0;
     while ((int)x < 4) {
-      getColor((*(board + x))[y],color,(unsigned int)40);
+      getColor((*(board + x))[y],color,(size_t)40);
       printf("%s",color); /* printf_va_3 */
       printf("       "); /* printf_va_4 */
       printf("%s",reset); /* printf_va_5 */
-      x = (unsigned char)((int)x + 1);
+      x = (uint8_t)((int)x + 1);
     }
     printf("\n"); /* printf_va_6 */
-    x = (unsigned char)0;
+    x = (uint8_t)0;
     while ((int)x < 4) {
-      getColor((*(board + x))[y],color,(unsigned int)40);
+      getColor((*(board + x))[y],color,(size_t)40);
       printf("%s",color); /* printf_va_7 */
       if ((int)(*(board + x))[y] != 0) {
         char s[8];
         size_t tmp;
-        snprintf(s,(unsigned int)8,"%u",
-                 (unsigned int)1 << (int)(*(board + x))[y]); /* snprintf_va_2 */
+        snprintf(s,(size_t)8,"%u",(uint32_t)1 << (int)(*(board + x))[y]); /* snprintf_va_2 */
         tmp = strlen((char const *)(s));
-        uint8_t t = (unsigned char)((size_t)7 - tmp);
+        uint8_t t = (uint8_t)((size_t)7 - tmp);
         printf("%*s%s%*s",(int)t - (int)t / 2,(char *)"",s,(int)t / 2,
                (char *)""); /* printf_va_8 */
       }
       else printf("   \302\267   "); /* printf_va_9 */
       printf("%s",reset); /* printf_va_10 */
-      x = (unsigned char)((int)x + 1);
+      x = (uint8_t)((int)x + 1);
     }
     printf("\n"); /* printf_va_11 */
-    x = (unsigned char)0;
+    x = (uint8_t)0;
     while ((int)x < 4) {
-      getColor((*(board + x))[y],color,(unsigned int)40);
+      getColor((*(board + x))[y],color,(size_t)40);
       printf("%s",color); /* printf_va_12 */
       printf("       "); /* printf_va_13 */
       printf("%s",reset); /* printf_va_14 */
-      x = (unsigned char)((int)x + 1);
+      x = (uint8_t)((int)x + 1);
     }
     printf("\n"); /* printf_va_15 */
-    y = (unsigned char)((int)y + 1);
+    y = (uint8_t)((int)y + 1);
   }
   printf("\n"); /* printf_va_16 */
   printf("        \342\206\220,\342\206\221,\342\206\222,\342\206\223 or q        \n"); /* printf_va_17 */
@@ -462,11 +461,11 @@ uint8_t findTarget(uint8_t array[4], uint8_t x, uint8_t stop)
     __retres = x;
     goto return_label;
   }
-  t = (unsigned char)((int)x - 1);
+  t = (uint8_t)((int)x - 1);
   while ((int)t >= 0) {
     if ((int)*(array + t) != 0) {
       if ((int)*(array + t) != (int)*(array + x)) {
-        __retres = (unsigned char)((int)t + 1);
+        __retres = (uint8_t)((int)t + 1);
         goto return_label;
       }
       __retres = t;
@@ -477,7 +476,7 @@ uint8_t findTarget(uint8_t array[4], uint8_t x, uint8_t stop)
         __retres = t;
         goto return_label;
       }
-    t = (unsigned char)((int)t - 1);
+    t = (uint8_t)((int)t - 1);
   }
   __retres = x;
   return_label: return __retres;
@@ -488,8 +487,8 @@ _Bool slideArray(uint8_t array[4])
   uint8_t x;
   uint8_t t;
   _Bool success = (_Bool)0;
-  uint8_t stop = (unsigned char)0;
-  x = (unsigned char)0;
+  uint8_t stop = (uint8_t)0;
+  x = (uint8_t)0;
   while ((int)x < 4) {
     if ((int)*(array + x) != 0) {
       t = findTarget(array,x,stop);
@@ -497,15 +496,15 @@ _Bool slideArray(uint8_t array[4])
         if ((int)*(array + t) == 0) *(array + t) = *(array + x);
         else 
           if ((int)*(array + t) == (int)*(array + x)) {
-            *(array + t) = (unsigned char)((int)*(array + t) + 1);
-            score += (unsigned int)1 << (int)*(array + t);
-            stop = (unsigned char)((int)t + 1);
+            *(array + t) = (uint8_t)((int)*(array + t) + 1);
+            score += (uint32_t)1 << (int)*(array + t);
+            stop = (uint8_t)((int)t + 1);
           }
-        *(array + x) = (unsigned char)0;
+        *(array + x) = (uint8_t)0;
         success = (_Bool)1;
       }
     }
-    x = (unsigned char)((int)x + 1);
+    x = (uint8_t)((int)x + 1);
   }
   return success;
 }
@@ -515,8 +514,8 @@ void rotateBoard(uint8_t board[4][4])
   uint8_t i;
   uint8_t j;
   uint8_t tmp;
-  uint8_t n = (unsigned char)4;
-  i = (unsigned char)0;
+  uint8_t n = (uint8_t)4;
+  i = (uint8_t)0;
   while ((int)i < (int)n / 2) {
     j = i;
     while ((int)j < ((int)n - (int)i) - 1) {
@@ -527,9 +526,9 @@ void rotateBoard(uint8_t board[4][4])
       (*(board + (((int)n - (int)i) - 1)))[((int)n - (int)j) - 1] = (*(
       board + (((int)n - (int)j) - 1)))[i];
       (*(board + (((int)n - (int)j) - 1)))[i] = tmp;
-      j = (unsigned char)((int)j + 1);
+      j = (uint8_t)((int)j + 1);
     }
-    i = (unsigned char)((int)i + 1);
+    i = (uint8_t)((int)i + 1);
   }
   return;
 }
@@ -538,14 +537,14 @@ _Bool moveUp(uint8_t board[4][4])
 {
   uint8_t x;
   _Bool success = (_Bool)0;
-  x = (unsigned char)0;
+  x = (uint8_t)0;
   while ((int)x < 4) {
     {
       _Bool tmp;
       tmp = slideArray(*(board + x));
       success = (_Bool)(((int)success | (int)tmp) != 0);
     }
-    x = (unsigned char)((int)x + 1);
+    x = (uint8_t)((int)x + 1);
   }
   return success;
 }
@@ -589,17 +588,17 @@ _Bool findPairDown(uint8_t board[4][4])
   uint8_t x;
   uint8_t y;
   _Bool success = (_Bool)0;
-  x = (unsigned char)0;
+  x = (uint8_t)0;
   while ((int)x < 4) {
-    y = (unsigned char)0;
+    y = (uint8_t)0;
     while ((int)y < 4 - 1) {
       if ((int)(*(board + x))[y] == (int)(*(board + x))[(int)y + 1]) {
         __retres = (_Bool)1;
         goto return_label;
       }
-      y = (unsigned char)((int)y + 1);
+      y = (uint8_t)((int)y + 1);
     }
-    x = (unsigned char)((int)x + 1);
+    x = (uint8_t)((int)x + 1);
   }
   __retres = success;
   return_label: return __retres;
@@ -609,15 +608,15 @@ uint8_t countEmpty(uint8_t board[4][4])
 {
   uint8_t x;
   uint8_t y;
-  uint8_t count = (unsigned char)0;
-  x = (unsigned char)0;
+  uint8_t count = (uint8_t)0;
+  x = (uint8_t)0;
   while ((int)x < 4) {
-    y = (unsigned char)0;
+    y = (uint8_t)0;
     while ((int)y < 4) {
-      if ((int)(*(board + x))[y] == 0) count = (unsigned char)((int)count + 1);
-      y = (unsigned char)((int)y + 1);
+      if ((int)(*(board + x))[y] == 0) count = (uint8_t)((int)count + 1);
+      y = (uint8_t)((int)y + 1);
     }
-    x = (unsigned char)((int)x + 1);
+    x = (uint8_t)((int)x + 1);
   }
   return count;
 }
@@ -659,37 +658,37 @@ void addRandom(uint8_t board[4][4])
   uint8_t r;
   uint8_t n;
   uint8_t list[4 * 4][2];
-  uint8_t len = (unsigned char)0;
+  uint8_t len = (uint8_t)0;
   if (! addRandom_initialized) {
     time_t tmp;
     tmp = time((time_t *)0);
     srand((unsigned int)tmp);
     addRandom_initialized = (_Bool)1;
   }
-  x = (unsigned char)0;
+  x = (uint8_t)0;
   /*@ loop unroll 4; */
   while ((int)x < 4) {
-    y = (unsigned char)0;
+    y = (uint8_t)0;
     /*@ loop unroll 4; */
     while ((int)y < 4) {
       if ((int)(*(board + x))[y] == 0) {
         list[len][0] = x;
         list[len][1] = y;
-        len = (unsigned char)((int)len + 1);
+        len = (uint8_t)((int)len + 1);
       }
-      y = (unsigned char)((int)y + 1);
+      y = (uint8_t)((int)y + 1);
     }
-    x = (unsigned char)((int)x + 1);
+    x = (uint8_t)((int)x + 1);
   }
   if ((int)len > 0) {
     int tmp_0;
     int tmp_1;
     tmp_0 = rand();
-    r = (unsigned char)(tmp_0 % (int)len);
+    r = (uint8_t)(tmp_0 % (int)len);
     x = list[r][0];
     y = list[r][1];
     tmp_1 = rand();
-    n = (unsigned char)((tmp_1 % 10) / 9 + 1);
+    n = (uint8_t)((tmp_1 % 10) / 9 + 1);
     (*(board + x))[y] = n;
   }
   return;
@@ -699,21 +698,21 @@ void initBoard(uint8_t board[4][4])
 {
   uint8_t x;
   uint8_t y;
-  x = (unsigned char)0;
+  x = (uint8_t)0;
   /*@ loop unroll 4; */
   while ((int)x < 4) {
-    y = (unsigned char)0;
+    y = (uint8_t)0;
     /*@ loop unroll 4; */
     while ((int)y < 4) {
-      (*(board + x))[y] = (unsigned char)0;
-      y = (unsigned char)((int)y + 1);
+      (*(board + x))[y] = (uint8_t)0;
+      y = (uint8_t)((int)y + 1);
     }
-    x = (unsigned char)((int)x + 1);
+    x = (uint8_t)((int)x + 1);
   }
   addRandom(board);
   addRandom(board);
   drawBoard(board);
-  score = (unsigned int)0;
+  score = (uint32_t)0;
   return;
 }
 
@@ -867,157 +866,156 @@ int test(void)
   uint8_t tests;
   uint8_t i;
   uint8_t data[104] =
-    {(unsigned char)0,
-     (unsigned char)0,
-     (unsigned char)0,
-     (unsigned char)1,
-     (unsigned char)1,
-     (unsigned char)0,
-     (unsigned char)0,
-     (unsigned char)0,
-     (unsigned char)0,
-     (unsigned char)0,
-     (unsigned char)1,
-     (unsigned char)1,
-     (unsigned char)2,
-     (unsigned char)0,
-     (unsigned char)0,
-     (unsigned char)0,
-     (unsigned char)0,
-     (unsigned char)1,
-     (unsigned char)0,
-     (unsigned char)1,
-     (unsigned char)2,
-     (unsigned char)0,
-     (unsigned char)0,
-     (unsigned char)0,
-     (unsigned char)1,
-     (unsigned char)0,
-     (unsigned char)0,
-     (unsigned char)1,
-     (unsigned char)2,
-     (unsigned char)0,
-     (unsigned char)0,
-     (unsigned char)0,
-     (unsigned char)1,
-     (unsigned char)0,
-     (unsigned char)1,
-     (unsigned char)0,
-     (unsigned char)2,
-     (unsigned char)0,
-     (unsigned char)0,
-     (unsigned char)0,
-     (unsigned char)1,
-     (unsigned char)1,
-     (unsigned char)1,
-     (unsigned char)0,
-     (unsigned char)2,
-     (unsigned char)1,
-     (unsigned char)0,
-     (unsigned char)0,
-     (unsigned char)1,
-     (unsigned char)0,
-     (unsigned char)1,
-     (unsigned char)1,
-     (unsigned char)2,
-     (unsigned char)1,
-     (unsigned char)0,
-     (unsigned char)0,
-     (unsigned char)1,
-     (unsigned char)1,
-     (unsigned char)0,
-     (unsigned char)1,
-     (unsigned char)2,
-     (unsigned char)1,
-     (unsigned char)0,
-     (unsigned char)0,
-     (unsigned char)1,
-     (unsigned char)1,
-     (unsigned char)1,
-     (unsigned char)1,
-     (unsigned char)2,
-     (unsigned char)2,
-     (unsigned char)0,
-     (unsigned char)0,
-     (unsigned char)2,
-     (unsigned char)2,
-     (unsigned char)1,
-     (unsigned char)1,
-     (unsigned char)3,
-     (unsigned char)2,
-     (unsigned char)0,
-     (unsigned char)0,
-     (unsigned char)1,
-     (unsigned char)1,
-     (unsigned char)2,
-     (unsigned char)2,
-     (unsigned char)2,
-     (unsigned char)3,
-     (unsigned char)0,
-     (unsigned char)0,
-     (unsigned char)3,
-     (unsigned char)0,
-     (unsigned char)1,
-     (unsigned char)1,
-     (unsigned char)3,
-     (unsigned char)2,
-     (unsigned char)0,
-     (unsigned char)0,
-     (unsigned char)2,
-     (unsigned char)0,
-     (unsigned char)1,
-     (unsigned char)1,
-     (unsigned char)2,
-     (unsigned char)2,
-     (unsigned char)0,
-     (unsigned char)0};
+    {(uint8_t)0,
+     (uint8_t)0,
+     (uint8_t)0,
+     (uint8_t)1,
+     (uint8_t)1,
+     (uint8_t)0,
+     (uint8_t)0,
+     (uint8_t)0,
+     (uint8_t)0,
+     (uint8_t)0,
+     (uint8_t)1,
+     (uint8_t)1,
+     (uint8_t)2,
+     (uint8_t)0,
+     (uint8_t)0,
+     (uint8_t)0,
+     (uint8_t)0,
+     (uint8_t)1,
+     (uint8_t)0,
+     (uint8_t)1,
+     (uint8_t)2,
+     (uint8_t)0,
+     (uint8_t)0,
+     (uint8_t)0,
+     (uint8_t)1,
+     (uint8_t)0,
+     (uint8_t)0,
+     (uint8_t)1,
+     (uint8_t)2,
+     (uint8_t)0,
+     (uint8_t)0,
+     (uint8_t)0,
+     (uint8_t)1,
+     (uint8_t)0,
+     (uint8_t)1,
+     (uint8_t)0,
+     (uint8_t)2,
+     (uint8_t)0,
+     (uint8_t)0,
+     (uint8_t)0,
+     (uint8_t)1,
+     (uint8_t)1,
+     (uint8_t)1,
+     (uint8_t)0,
+     (uint8_t)2,
+     (uint8_t)1,
+     (uint8_t)0,
+     (uint8_t)0,
+     (uint8_t)1,
+     (uint8_t)0,
+     (uint8_t)1,
+     (uint8_t)1,
+     (uint8_t)2,
+     (uint8_t)1,
+     (uint8_t)0,
+     (uint8_t)0,
+     (uint8_t)1,
+     (uint8_t)1,
+     (uint8_t)0,
+     (uint8_t)1,
+     (uint8_t)2,
+     (uint8_t)1,
+     (uint8_t)0,
+     (uint8_t)0,
+     (uint8_t)1,
+     (uint8_t)1,
+     (uint8_t)1,
+     (uint8_t)1,
+     (uint8_t)2,
+     (uint8_t)2,
+     (uint8_t)0,
+     (uint8_t)0,
+     (uint8_t)2,
+     (uint8_t)2,
+     (uint8_t)1,
+     (uint8_t)1,
+     (uint8_t)3,
+     (uint8_t)2,
+     (uint8_t)0,
+     (uint8_t)0,
+     (uint8_t)1,
+     (uint8_t)1,
+     (uint8_t)2,
+     (uint8_t)2,
+     (uint8_t)2,
+     (uint8_t)3,
+     (uint8_t)0,
+     (uint8_t)0,
+     (uint8_t)3,
+     (uint8_t)0,
+     (uint8_t)1,
+     (uint8_t)1,
+     (uint8_t)3,
+     (uint8_t)2,
+     (uint8_t)0,
+     (uint8_t)0,
+     (uint8_t)2,
+     (uint8_t)0,
+     (uint8_t)1,
+     (uint8_t)1,
+     (uint8_t)2,
+     (uint8_t)2,
+     (uint8_t)0,
+     (uint8_t)0};
   _Bool success = (_Bool)1;
-  tests = (unsigned char)((sizeof(data) / sizeof(data[0])) / (unsigned int)(
-                          2 * 4));
-  t = (unsigned char)0;
+  tests = (uint8_t)((sizeof(data) / sizeof(data[0])) / (unsigned int)(2 * 4));
+  t = (uint8_t)0;
   while ((int)t < (int)tests) {
     in = & data[((int)t * 2) * 4];
     out = in + 4;
-    i = (unsigned char)0;
+    i = (uint8_t)0;
     while ((int)i < 4) {
       array[i] = *(in + i);
-      i = (unsigned char)((int)i + 1);
+      i = (uint8_t)((int)i + 1);
     }
     slideArray(array);
-    i = (unsigned char)0;
+    i = (uint8_t)0;
     /*@ loop unroll 4; */
     while ((int)i < 4) {
       if ((int)array[i] != (int)*(out + i)) success = (_Bool)0;
-      i = (unsigned char)((int)i + 1);
+      i = (uint8_t)((int)i + 1);
     }
     if ((int)success == 0) {
-      i = (unsigned char)0;
+      i = (uint8_t)0;
       while ((int)i < 4) {
         printf("%d ",(int)*(in + i)); /* printf_va_19 */
-        i = (unsigned char)((int)i + 1);
+        i = (uint8_t)((int)i + 1);
       }
       printf("=> "); /* printf_va_20 */
-      i = (unsigned char)0;
+      i = (uint8_t)0;
       while ((int)i < 4) {
         printf("%d ",(int)array[i]); /* printf_va_21 */
-        i = (unsigned char)((int)i + 1);
+        i = (uint8_t)((int)i + 1);
       }
       printf("expected "); /* printf_va_22 */
-      i = (unsigned char)0;
+      i = (uint8_t)0;
       while ((int)i < 4) {
         printf("%d ",(int)*(in + i)); /* printf_va_23 */
-        i = (unsigned char)((int)i + 1);
+        i = (uint8_t)((int)i + 1);
       }
       printf("=> "); /* printf_va_24 */
-      i = (unsigned char)0;
+      i = (uint8_t)0;
       while ((int)i < 4) {
         printf("%d ",(int)*(out + i)); /* printf_va_25 */
-        i = (unsigned char)((int)i + 1);
+        i = (uint8_t)((int)i + 1);
       }
       printf("\n"); /* printf_va_26 */
       break;
     }
-    t = (unsigned char)((int)t + 1);
+    t = (uint8_t)((int)t + 1);
   }
   if (success) printf("All %hhu tests executed successfully\n",(int)tests); /* printf_va_27 */
   __retres = ! success;
@@ -1146,7 +1144,7 @@ int main(int argc, char **argv)
       if (success) {
         _Bool tmp_0;
         drawBoard(board);
-        usleep((unsigned int)150000);
+        usleep((useconds_t)150000);
         addRandom(board);
         drawBoard(board);
         tmp_0 = gameEnded(board);

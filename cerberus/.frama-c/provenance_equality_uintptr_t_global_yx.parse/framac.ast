@@ -43,8 +43,8 @@ int main(void)
 {
   int __retres;
   char const *tmp;
-  uintptr_t p = (unsigned int)(& x + 1);
-  uintptr_t q = (unsigned int)(& y);
+  uintptr_t p = (uintptr_t)(& x + 1);
+  uintptr_t q = (uintptr_t)(& y);
   printf("Addresses: p=%x q=%x\n",p,q); /* printf_va_1 */
   _Bool b = (_Bool)(p == q);
   if (b) tmp = "true"; else tmp = "false";

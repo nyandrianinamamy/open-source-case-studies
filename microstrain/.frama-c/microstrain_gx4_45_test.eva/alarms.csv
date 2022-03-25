@@ -12,15 +12,15 @@ FRAMAC_SHARE/libc	stdio.h	211	printf_va_26	precondition	Unknown	valid_read_strin
 FRAMAC_SHARE/libc	stdio.h	211	printf_va_27	precondition	Unknown	valid_read_string(param0)
 FRAMAC_SHARE/libc	stdio.h	211	printf_va_28	precondition	Unknown	valid_read_string(param0)
 FRAMAC_SHARE/libc	stdio.h	211	printf_va_29	precondition	Unknown	valid_read_string(param0)
-FRAMAC_SHARE/libc	stdlib.h	564	abs	precondition	Unknown	abs_representable: j > -2147483647 - 1
+FRAMAC_SHARE/libc	stdlib.h	599	abs	precondition	Unknown	abs_representable: j > -2147483647 - 1
 FRAMAC_SHARE/libc	string.h	95	memcpy	precondition	Unknown	valid_dest: valid_or_empty(dest, n)
 FRAMAC_SHARE/libc	string.h	96	memcpy	precondition	Unknown	valid_src: valid_read_or_empty(src, n)
 FRAMAC_SHARE/libc	string.h	368	strcpy	precondition	Invalid or unreachable	room_string: \valid(dest + (0 .. strlen(src)))
 FRAMAC_SHARE/libc	string.h	426	strcat	precondition	Unknown	room_string: \valid(dest + (0 .. strlen(dest) + strlen(src)))
-FRAMAC_SHARE/libc	unistd.h	993	read	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
-FRAMAC_SHARE/libc	unistd.h	994	read	precondition	Unknown	buf_has_room: \valid((char *)buf + (0 .. count - 1))
-FRAMAC_SHARE/libc	unistd.h	1126	write	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
-FRAMAC_SHARE/libc	unistd.h	1127	write	precondition	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))
+FRAMAC_SHARE/libc	unistd.h	1007	read	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
+FRAMAC_SHARE/libc	unistd.h	1008	read	precondition	Unknown	buf_has_room: \valid((char *)buf + (0 .. count - 1))
+FRAMAC_SHARE/libc	unistd.h	1140	write	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
+FRAMAC_SHARE/libc	unistd.h	1141	write	precondition	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))
 MIPSDK/C/Examples/Linux/GX4-45/GX4_45_Test	GX4-45_Test.c	258	main	precondition of printf_va_25	Unknown	valid_read_string(param0)
 MIPSDK/C/Examples/Linux/GX4-45/GX4_45_Test	GX4-45_Test.c	261	main	precondition of printf_va_26	Unknown	valid_read_string(param0)
 MIPSDK/C/Examples/Linux/GX4-45/GX4_45_Test	GX4-45_Test.c	264	main	precondition of printf_va_27	Unknown	valid_read_string(param0)
@@ -539,11 +539,11 @@ MIPSDK/C/Library/Source	mip.c	477	mip_get_next_field	signed_overflow	Unknown	(in
 MIPSDK/C/Library/Source	mip.c	477	mip_get_next_field	signed_overflow	Unknown	-2147483648 ≤ (int)*field_offset + (int)(*field_header)->size
 MIPSDK/C/Library/Source	mip.c	635	mip_is_checksum_valid	mem_access	Unknown	\valid_read(mip_buffer + (int)((int)checksum_offset + 1))
 MIPSDK/C/Library/Source	mip.c	635	mip_is_checksum_valid	mem_access	Unknown	\valid_read(mip_buffer + checksum_offset)
-MIPSDK/C/Library/Source	mip.c	635	mip_is_checksum_valid	signed_overflow	Unknown	(int)((int)((unsigned short)*(mip_buffer + checksum_offset)) << 8) + (int)((unsigned short)*(mip_buffer + (int)((int)checksum_offset + 1))) ≤ 2147483647
-MIPSDK/C/Library/Source	mip.c	635	mip_is_checksum_valid	signed_overflow	Unknown	-2147483648 ≤ (int)((int)((unsigned short)*(mip_buffer + checksum_offset)) << 8) + (int)((unsigned short)*(mip_buffer + (int)((int)checksum_offset + 1)))
-MIPSDK/C/Library/Source	mip.c	635	mip_is_checksum_valid	signed_overflow	Unknown	(int)((unsigned short)*(mip_buffer + checksum_offset)) << 8 ≤ 2147483647
-MIPSDK/C/Library/Source	mip.c	635	mip_is_checksum_valid	signed_overflow	Unknown	-2147483648 ≤ (int)((unsigned short)*(mip_buffer + checksum_offset)) << 8
-MIPSDK/C/Library/Source	mip.c	635	mip_is_checksum_valid	shift	Unknown	0 ≤ (int)((unsigned short)*(mip_buffer + checksum_offset))
+MIPSDK/C/Library/Source	mip.c	635	mip_is_checksum_valid	signed_overflow	Unknown	(int)((int)((u16)*(mip_buffer + checksum_offset)) << 8) + (int)((u16)*(mip_buffer + (int)((int)checksum_offset + 1))) ≤ 2147483647
+MIPSDK/C/Library/Source	mip.c	635	mip_is_checksum_valid	signed_overflow	Unknown	-2147483648 ≤ (int)((int)((u16)*(mip_buffer + checksum_offset)) << 8) + (int)((u16)*(mip_buffer + (int)((int)checksum_offset + 1)))
+MIPSDK/C/Library/Source	mip.c	635	mip_is_checksum_valid	signed_overflow	Unknown	(int)((u16)*(mip_buffer + checksum_offset)) << 8 ≤ 2147483647
+MIPSDK/C/Library/Source	mip.c	635	mip_is_checksum_valid	signed_overflow	Unknown	-2147483648 ≤ (int)((u16)*(mip_buffer + checksum_offset)) << 8
+MIPSDK/C/Library/Source	mip.c	635	mip_is_checksum_valid	shift	Unknown	0 ≤ (int)((u16)*(mip_buffer + checksum_offset))
 MIPSDK/C/Library/Source	mip.c	635	mip_is_checksum_valid	signed_overflow	Unknown	(int)checksum_offset + 1 ≤ 2147483647
 MIPSDK/C/Library/Source	mip.c	635	mip_is_checksum_valid	signed_overflow	Unknown	-2147483648 ≤ (int)checksum_offset + 1
 MIPSDK/C/Library/Source	mip.c	691	mip_calculate_checksum	initialization	Unknown	\initialized(mip_buffer + i)
@@ -552,11 +552,11 @@ MIPSDK/C/Library/Source	mip.c	691	mip_calculate_checksum	signed_overflow	Unknown
 MIPSDK/C/Library/Source	mip.c	691	mip_calculate_checksum	signed_overflow	Unknown	-2147483648 ≤ (int)checksum_byte1 + (int)*(mip_buffer + i)
 MIPSDK/C/Library/Source	mip.c	692	mip_calculate_checksum	signed_overflow	Unknown	(int)checksum_byte2 + (int)checksum_byte1 ≤ 2147483647
 MIPSDK/C/Library/Source	mip.c	692	mip_calculate_checksum	signed_overflow	Unknown	-2147483648 ≤ (int)checksum_byte2 + (int)checksum_byte1
-MIPSDK/C/Library/Source	mip.c	696	mip_calculate_checksum	signed_overflow	Unknown	(int)((int)((unsigned short)checksum_byte1) << 8) + (int)((unsigned short)checksum_byte2) ≤ 2147483647
-MIPSDK/C/Library/Source	mip.c	696	mip_calculate_checksum	signed_overflow	Unknown	-2147483648 ≤ (int)((int)((unsigned short)checksum_byte1) << 8) + (int)((unsigned short)checksum_byte2)
-MIPSDK/C/Library/Source	mip.c	696	mip_calculate_checksum	signed_overflow	Unknown	(int)((unsigned short)checksum_byte1) << 8 ≤ 2147483647
-MIPSDK/C/Library/Source	mip.c	696	mip_calculate_checksum	signed_overflow	Unknown	-2147483648 ≤ (int)((unsigned short)checksum_byte1) << 8
-MIPSDK/C/Library/Source	mip.c	696	mip_calculate_checksum	shift	Unknown	0 ≤ (int)((unsigned short)checksum_byte1)
+MIPSDK/C/Library/Source	mip.c	696	mip_calculate_checksum	signed_overflow	Unknown	(int)((int)((u16)checksum_byte1) << 8) + (int)((u16)checksum_byte2) ≤ 2147483647
+MIPSDK/C/Library/Source	mip.c	696	mip_calculate_checksum	signed_overflow	Unknown	-2147483648 ≤ (int)((int)((u16)checksum_byte1) << 8) + (int)((u16)checksum_byte2)
+MIPSDK/C/Library/Source	mip.c	696	mip_calculate_checksum	signed_overflow	Unknown	(int)((u16)checksum_byte1) << 8 ≤ 2147483647
+MIPSDK/C/Library/Source	mip.c	696	mip_calculate_checksum	signed_overflow	Unknown	-2147483648 ≤ (int)((u16)checksum_byte1) << 8
+MIPSDK/C/Library/Source	mip.c	696	mip_calculate_checksum	shift	Unknown	0 ≤ (int)((u16)checksum_byte1)
 MIPSDK/C/Library/Source	mip_sdk_3dm.c	92	mip_3dm_cmd_poll_ahrs	initialization	Unknown	\initialized(descriptor_list + i)
 MIPSDK/C/Library/Source	mip_sdk_3dm.c	92	mip_3dm_cmd_poll_ahrs	mem_access	Unknown	\valid_read(descriptor_list + i)
 MIPSDK/C/Library/Source	mip_sdk_3dm.c	103	mip_3dm_cmd_poll_ahrs	signed_overflow	Unknown	(int)num_descriptors * 3 ≤ 2147483647

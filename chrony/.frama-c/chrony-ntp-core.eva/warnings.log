@@ -7081,7 +7081,7 @@ stack: get_tz_leap :: reference.c:781 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-reference.c:659:[eva:alarm] warning: signed overflow. assert (long)(t - when) + 10 ≤ 9223372036854775807;
+reference.c:659:[eva:alarm] warning: signed overflow. assert (time_t)(t - when) + 10 ≤ 9223372036854775807;
 stack: get_tz_leap :: reference.c:781 <-
        update_leap_status :: reference.c:1054 <-
        REF_SetReference :: sources.c:1094 <-
@@ -7095,8 +7095,8 @@ stack: get_tz_leap :: reference.c:781 <-
        eva_main
 reference.c:757:[eva:alarm] warning: signed overflow.
 assert
-(long)((long)(now / (long)((int)(24 * 3600))) + 1) * (long)((int)(24 * 3600))
-≤ 9223372036854775807;
+(time_t)((time_t)(now / (time_t)((int)(24 * 3600))) + 1) *
+(time_t)((int)(24 * 3600)) ≤ 9223372036854775807;
 stack: set_leap_timeout :: reference.c:812 <-
        update_leap_status :: reference.c:1054 <-
        REF_SetReference :: sources.c:1094 <-
@@ -7725,7 +7725,7 @@ stack: strlen :: FRAMAC_SHARE/libc/string.c:198 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:200:[eva:alarm] warning: out of bounds write. assert \valid(dest + (unsigned long)(n + i));
+FRAMAC_SHARE/libc/string.c:200:[eva:alarm] warning: out of bounds write. assert \valid(dest + (size_t)(n + i));
 stack: strcat :: reference.c:348 <-
        update_drift_file :: reference.c:1083 <-
        REF_SetReference :: sources.c:1094 <-
@@ -7749,7 +7749,7 @@ stack: strcat :: reference.c:348 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:202:[eva:alarm] warning: out of bounds write. assert \valid(dest + (unsigned long)(n + i));
+FRAMAC_SHARE/libc/string.c:202:[eva:alarm] warning: out of bounds write. assert \valid(dest + (size_t)(n + i));
 stack: strcat :: reference.c:348 <-
        update_drift_file :: reference.c:1083 <-
        REF_SetReference :: sources.c:1094 <-

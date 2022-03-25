@@ -61,11 +61,11 @@ int main(void)
   int z = 3;
   int y = 2;
   int x = 1;
-  intptr_t ux = (int)(& x);
-  intptr_t uy = (int)(& y);
+  intptr_t ux = (intptr_t)(& x);
+  intptr_t uy = (intptr_t)(& y);
   intptr_t offsetxy = uy - ux;
-  intptr_t uz = (int)(& z);
-  intptr_t uw = (int)(& w);
+  intptr_t uz = (intptr_t)(& z);
+  intptr_t uw = (intptr_t)(& w);
   intptr_t offsetzw = uw - uz;
   printf("Addresses: &x=%i &y=%i offsetxy=%i \n",ux,uy,offsetxy); /* printf_va_1 */
   printf("Addresses: &z=%i &w=%i offsetzw=%i \n",uz,uw,offsetzw); /* printf_va_2 */

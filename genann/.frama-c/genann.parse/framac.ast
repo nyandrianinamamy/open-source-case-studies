@@ -131,7 +131,7 @@ double genann_act_sigmoid_cached(genann const *ann __attribute__((__unused__)),
     __retres = lookup[4096 - 1];
     goto return_label;
   }
-  size_t j = (unsigned long)((a - sigmoid_dom_min) * interval + 0.5);
+  size_t j = (size_t)((a - sigmoid_dom_min) * interval + 0.5);
   if ((long)(! (! (j >= (size_t)4096)))) {
     __retres = lookup[4096 - 1];
     goto return_label;
@@ -187,7 +187,7 @@ genann *genann_init(int inputs, int hidden_layers, int hidden, int outputs)
   int const size =
     (int)(sizeof(genann) + sizeof(double) * (unsigned long)((total_weights + total_neurons) + (
                                                             total_neurons - inputs)));
-  genann *ret = malloc((unsigned long)size);
+  genann *ret = malloc((size_t)size);
   if (! ret) {
     __retres = (genann *)0;
     goto return_label;
@@ -309,12 +309,12 @@ genann *genann_copy(genann const *ann)
   int const size =
     (int)(sizeof(genann) + sizeof(double) * (unsigned long)((ann->total_weights + ann->total_neurons) + (
                                                             ann->total_neurons - ann->inputs)));
-  genann *ret = malloc((unsigned long)size);
+  genann *ret = malloc((size_t)size);
   if (! ret) {
     __retres = (genann *)0;
     goto return_label;
   }
-  memcpy((void *)ret,(void const *)ann,(unsigned long)size);
+  memcpy((void *)ret,(void const *)ann,(size_t)size);
   ret->weight = (double *)((char *)ret + sizeof(genann));
   ret->output = ret->weight + ret->total_weights;
   ret->delta = ret->output + ret->total_neurons;
@@ -2271,7 +2271,7 @@ int main(int argc, char **argv)
     ;
     printf("pass:%2d   fail:%2d   %4dms\n",(ltests - ts) - (lfails - fs),
            lfails - fs,
-           (int)((long)((tmp_0 - start) * (clock_t)1000) / (long)1000000)); /* printf_va_41 */
+           (int)((time_t)((tmp_0 - start) * (clock_t)1000) / (time_t)1000000)); /* printf_va_41 */
   }
   {
     clock_t tmp_2;
@@ -2286,7 +2286,7 @@ int main(int argc, char **argv)
     ;
     printf("pass:%2d   fail:%2d   %4dms\n",(ltests - ts_0) - (lfails - fs_0),
            lfails - fs_0,
-           (int)((long)((tmp_2 - start_0) * (clock_t)1000) / (long)1000000)); /* printf_va_43 */
+           (int)((time_t)((tmp_2 - start_0) * (clock_t)1000) / (time_t)1000000)); /* printf_va_43 */
   }
   {
     clock_t tmp_4;
@@ -2301,7 +2301,7 @@ int main(int argc, char **argv)
     ;
     printf("pass:%2d   fail:%2d   %4dms\n",(ltests - ts_1) - (lfails - fs_1),
            lfails - fs_1,
-           (int)((long)((tmp_4 - start_1) * (clock_t)1000) / (long)1000000)); /* printf_va_45 */
+           (int)((time_t)((tmp_4 - start_1) * (clock_t)1000) / (time_t)1000000)); /* printf_va_45 */
   }
   {
     clock_t tmp_6;
@@ -2316,7 +2316,7 @@ int main(int argc, char **argv)
     ;
     printf("pass:%2d   fail:%2d   %4dms\n",(ltests - ts_2) - (lfails - fs_2),
            lfails - fs_2,
-           (int)((long)((tmp_6 - start_2) * (clock_t)1000) / (long)1000000)); /* printf_va_47 */
+           (int)((time_t)((tmp_6 - start_2) * (clock_t)1000) / (time_t)1000000)); /* printf_va_47 */
   }
   {
     clock_t tmp_8;
@@ -2331,7 +2331,7 @@ int main(int argc, char **argv)
     ;
     printf("pass:%2d   fail:%2d   %4dms\n",(ltests - ts_3) - (lfails - fs_3),
            lfails - fs_3,
-           (int)((long)((tmp_8 - start_3) * (clock_t)1000) / (long)1000000)); /* printf_va_49 */
+           (int)((time_t)((tmp_8 - start_3) * (clock_t)1000) / (time_t)1000000)); /* printf_va_49 */
   }
   {
     clock_t tmp_10;
@@ -2346,7 +2346,7 @@ int main(int argc, char **argv)
     ;
     printf("pass:%2d   fail:%2d   %4dms\n",(ltests - ts_4) - (lfails - fs_4),
            lfails - fs_4,
-           (int)((long)((tmp_10 - start_4) * (clock_t)1000) / (long)1000000)); /* printf_va_51 */
+           (int)((time_t)((tmp_10 - start_4) * (clock_t)1000) / (time_t)1000000)); /* printf_va_51 */
   }
   {
     clock_t tmp_12;
@@ -2361,7 +2361,7 @@ int main(int argc, char **argv)
     ;
     printf("pass:%2d   fail:%2d   %4dms\n",(ltests - ts_5) - (lfails - fs_5),
            lfails - fs_5,
-           (int)((long)((tmp_12 - start_5) * (clock_t)1000) / (long)1000000)); /* printf_va_53 */
+           (int)((time_t)((tmp_12 - start_5) * (clock_t)1000) / (time_t)1000000)); /* printf_va_53 */
   }
   {
     clock_t tmp_14;
@@ -2376,7 +2376,7 @@ int main(int argc, char **argv)
     ;
     printf("pass:%2d   fail:%2d   %4dms\n",(ltests - ts_6) - (lfails - fs_6),
            lfails - fs_6,
-           (int)((long)((tmp_14 - start_6) * (clock_t)1000) / (long)1000000)); /* printf_va_55 */
+           (int)((time_t)((tmp_14 - start_6) * (clock_t)1000) / (time_t)1000000)); /* printf_va_55 */
   }
   {
     clock_t tmp_16;
@@ -2391,7 +2391,7 @@ int main(int argc, char **argv)
     ;
     printf("pass:%2d   fail:%2d   %4dms\n",(ltests - ts_7) - (lfails - fs_7),
            lfails - fs_7,
-           (int)((long)((tmp_16 - start_7) * (clock_t)1000) / (long)1000000)); /* printf_va_57 */
+           (int)((time_t)((tmp_16 - start_7) * (clock_t)1000) / (time_t)1000000)); /* printf_va_57 */
   }
   if (lfails == 0) printf("ALL TESTS PASSED (%d/%d)\n",ltests,ltests); /* printf_va_58 */
   else printf("SOME TESTS FAILED (%d/%d)\n",ltests - lfails,ltests); /* printf_va_59 */

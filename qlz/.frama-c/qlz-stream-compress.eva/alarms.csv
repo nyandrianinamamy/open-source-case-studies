@@ -6,7 +6,7 @@ directory	file	line	function	property kind	status	property
 .	quicklz.c	167	fast_write	mem_access	Unknown	\valid((ui16 *)dst)
 .	quicklz.c	268	qlz_compress_core	ptr_comparison	Unknown	\pointer_comparable((void *)src, (void *)last_matchstart)
 .	quicklz.c	271	qlz_compress_core	ptr_comparison	Unknown	\pointer_comparable((void *)src, (void *)last_matchstart)
-.	quicklz.c	276	qlz_compress_core	ptr_comparison	Unknown	\pointer_comparable((void *)src, (void *)(source + (unsigned int)(size >> 1)))
+.	quicklz.c	276	qlz_compress_core	ptr_comparison	Unknown	\pointer_comparable((void *)src, (void *)(source + (size_t)(size >> 1)))
 .	quicklz.c	276	qlz_compress_core	differing_blocks	Unknown	\base_addr(src) ≡ \base_addr(source)
 .	quicklz.c	276	qlz_compress_core	signed_overflow	Unknown	(int)(src - source) - (int)((int)(src - source) >> 5) ≤ 2147483647
 .	quicklz.c	276	qlz_compress_core	signed_overflow	Unknown	-2147483648 ≤ (int)(src - source) - (int)((int)(src - source) >> 5)

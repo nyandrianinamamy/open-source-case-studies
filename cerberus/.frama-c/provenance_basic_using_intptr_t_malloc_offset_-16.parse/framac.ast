@@ -46,7 +46,7 @@ int main(void)
   int *yp = malloc(sizeof(int));
   *xp = 1;
   *yp = 2;
-  int *p = (int *)((unsigned int)xp - (unsigned int)16);
+  int *p = (int *)((uintptr_t)xp - (uintptr_t)16);
   int *q = yp;
   printf("Addresses: xp=%p p=%p q=%p\n",(void *)xp,(void *)p,(void *)q); /* printf_va_1 */
   tmp_1 = memcmp((void const *)(& p),(void const *)(& q),sizeof(p));

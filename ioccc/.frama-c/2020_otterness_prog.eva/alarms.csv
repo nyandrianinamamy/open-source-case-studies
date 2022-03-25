@@ -4,7 +4,7 @@ directory	file	line	function	property kind	status	property
 2020/otterness	prog.c	12	A	mem_access	Unknown	\valid_read(c + (int)(!(c ≢ \null)? 0: 1))
 2020/otterness	prog.c	12	A	mem_access	Unknown	\valid_read(c)
 2020/otterness	prog.c	12	A	ptr_comparison	Unknown	\pointer_comparable((void *)0, (void *)c)
-2020/otterness	prog.c	12	A	signed_overflow	Unknown	(int)((unsigned short)*c) << l ≤ 2147483647
+2020/otterness	prog.c	12	A	signed_overflow	Unknown	(int)((u2)*c) << l ≤ 2147483647
 2020/otterness	prog.c	15	B	mem_access	Unknown	\valid(tmp)
 2020/otterness	prog.c	15	B	shift	Unknown	0 ≤ l < 32
 2020/otterness	prog.c	16	B	mem_access	Unknown	\valid(c)
@@ -20,7 +20,7 @@ directory	file	line	function	property kind	status	property
 2020/otterness	prog.c	68	G	shift	Unknown	0 ≤ (int)q < 32
 2020/otterness	prog.c	70	G	initialization	Unknown	\initialized(c)
 2020/otterness	prog.c	70	G	mem_access	Unknown	\valid_read(c)
-2020/otterness	prog.c	84	G	division_by_zero	Unknown	(unsigned int)o ≢ 0
+2020/otterness	prog.c	84	G	division_by_zero	Unknown	(u4)o ≢ 0
 2020/otterness	prog.c	85	G	shift	Unknown	0 ≤ (int)q < 32
 2020/otterness	prog.c	104	H	division_by_zero	Unknown	n ≢ 0
 2020/otterness	prog.c	105	H	division_by_zero	Unknown	(int)m ≢ 0
@@ -34,7 +34,7 @@ directory	file	line	function	property kind	status	property
 2020/otterness	prog.c	132	J	shift	Unknown	0 ≤ (int)r < 32
 2020/otterness	prog.c	133	J	division_by_zero	Unknown	(int)((int)s + (int)o) ≢ 0
 2020/otterness	prog.c	134	J	division_by_zero	Unknown	l ≢ 0
-2020/otterness	prog.c	135	J	division_by_zero	Unknown	(unsigned int)r ≢ 0
+2020/otterness	prog.c	135	J	division_by_zero	Unknown	(u4)r ≢ 0
 2020/otterness	prog.c	136	J	division_by_zero	Unknown	n ≢ 0
 2020/otterness	prog.c	140	J	division_by_zero	Unknown	(unsigned int)m ≢ 0
 2020/otterness	prog.c	147	J	mem_access	Unknown	\valid(t + k)
@@ -43,7 +43,7 @@ directory	file	line	function	property kind	status	property
 2020/otterness	prog.c	150	J	precondition of memcpy	Unknown	valid_dest: valid_or_empty(dest, n)
 2020/otterness	prog.c	150	J	precondition of memcpy	Unknown	valid_src: valid_read_or_empty(src, n)
 2020/otterness	prog.c	166	K	shift	Unknown	0 ≤ (int)tmp_3 < 32
-2020/otterness	prog.c	167	K	division_by_zero	Unknown	(unsigned int)e ≢ 0
+2020/otterness	prog.c	167	K	division_by_zero	Unknown	(u4)e ≢ 0
 2020/otterness	prog.c	175	K	mem_access	Unknown	\valid(b)
 2020/otterness	prog.c	176	K	mem_access	Unknown	\valid(b + (int)(k ≢ 0? 0: 1))
 2020/otterness	prog.c	176	K	mem_access	Unknown	\valid_read(b)
@@ -51,10 +51,10 @@ directory	file	line	function	property kind	status	property
 2020/otterness	prog.c	178	K	initialization	Unknown	\initialized(b + n)
 2020/otterness	prog.c	178	K	mem_access	Unknown	\valid(b + o)
 2020/otterness	prog.c	178	K	mem_access	Unknown	\valid_read(b + n)
-2020/otterness	prog.c	180	K	shift	Unknown	0 ≤ (unsigned int)((unsigned int)o * l) < 32
+2020/otterness	prog.c	180	K	shift	Unknown	0 ≤ (u4)((u4)o * l) < 32
 2020/otterness	prog.c	182	K	mem_access	Unknown	\valid(tmp_8)
 2020/otterness	prog.c	183	K	mem_access	Unknown	\valid(tmp_9)
-2020/otterness	prog.c	184	K	division_by_zero	Unknown	(unsigned int)(n + (unsigned int)o) ≢ 0
+2020/otterness	prog.c	184	K	division_by_zero	Unknown	(u4)(n + (u4)o) ≢ 0
 2020/otterness	prog.c	185	K	mem_access	Unknown	\valid(tmp_10)
 2020/otterness	prog.c	188	K	mem_access	Unknown	\valid(tmp_12)
 2020/otterness	prog.c	189	K	mem_access	Unknown	\valid(d)
@@ -67,7 +67,7 @@ directory	file	line	function	property kind	status	property
 2020/otterness	prog.c	199	K	mem_access	Unknown	\valid(tmp_17)
 2020/otterness	prog.c	200	K	mem_access	Unknown	\valid(tmp_18)
 2020/otterness	prog.c	201	K	mem_access	Unknown	\valid(d)
-2020/otterness	prog.c	202	K	mem_access	Unknown	\valid(c + (unsigned int)(l + (unsigned int)p))
+2020/otterness	prog.c	202	K	mem_access	Unknown	\valid(c + (u4)(l + (u4)p))
 2020/otterness	prog.c	204	K	precondition of fwrite	Unknown	valid_ptr_block: \valid_read((char *)ptr + (0 .. nmemb * size - 1))
 2020/otterness	prog.c	204	K	precondition of fwrite	Unknown	valid_stream: \valid(stream)
 2020/otterness	prog.c	205	K	precondition of fwrite	Unknown	valid_ptr_block: \valid_read((char *)ptr + (0 .. nmemb * size - 1))
@@ -77,8 +77,8 @@ directory	file	line	function	property kind	status	property
 2020/otterness	prog.c	221	main	division_by_zero	Unknown	n ≢ 0
 2020/otterness	prog.c	222	main	initialization	Unknown	\initialized(c + n)
 2020/otterness	prog.c	222	main	mem_access	Unknown	\valid_read(c + n)
-2020/otterness	prog.c	222	main	initialization	Unknown	\initialized(c + (unsigned int)((unsigned int)m - k))
-2020/otterness	prog.c	222	main	mem_access	Unknown	\valid_read(c + (unsigned int)((unsigned int)m - k))
+2020/otterness	prog.c	222	main	initialization	Unknown	\initialized(c + (u4)((u4)m - k))
+2020/otterness	prog.c	222	main	mem_access	Unknown	\valid_read(c + (u4)((u4)m - k))
 FRAMAC_SHARE/libc	stdio.h	351	fread	precondition	Unknown	valid_ptr_block: \valid((char *)ptr + (0 .. nmemb * size - 1))
 FRAMAC_SHARE/libc	stdio.h	352	fread	precondition	Unknown	valid_stream: \valid(stream)
 FRAMAC_SHARE/libc	stdio.h	364	fwrite	precondition	Unknown	valid_ptr_block: \valid_read((char *)ptr + (0 .. nmemb * size - 1))

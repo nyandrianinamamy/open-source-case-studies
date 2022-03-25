@@ -50,7 +50,7 @@ int main(void)
   un u;
   int tmp;
   int *px = & x;
-  uintptr_t i = (unsigned int)px;
+  uintptr_t i = (uintptr_t)px;
   i += sizeof(int);
   u.ui = i;
   int *p = u.p;

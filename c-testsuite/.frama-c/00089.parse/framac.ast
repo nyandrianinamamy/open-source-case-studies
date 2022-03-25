@@ -21,7 +21,7 @@ struct S *anon(void)
 fty go(void)
 {
   fty __retres;
-  __retres = (struct S *(*)())(& anon);
+  __retres = (fty)(& anon);
   return __retres;
 }
 

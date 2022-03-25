@@ -395,8 +395,8 @@ directory	file	line	function	property kind	status	property
 .	kilo.c	771	editorDelChar	signed_overflow	Unknown	E.cx - 1 ≤ 2147483647
 .	kilo.c	773	editorDelChar	ptr_comparison	Unknown	\pointer_comparable((void *)0, (void *)row)
 .	kilo.c	774	editorDelChar	signed_overflow	Unknown	E.dirty + 1 ≤ 2147483647
-.	kilo.c	799	editorOpen	initialization	Unknown	\initialized(line + (int)(linelen - 1))
-.	kilo.c	799	editorOpen	mem_access	Unknown	\valid_read(line + (int)(linelen - 1))
+.	kilo.c	799	editorOpen	initialization	Unknown	\initialized(line + (ssize_t)(linelen - 1))
+.	kilo.c	799	editorOpen	mem_access	Unknown	\valid_read(line + (ssize_t)(linelen - 1))
 .	kilo.c	800	editorOpen	mem_access	Unknown	\valid(line + linelen)
 .	kilo.c	813	editorSave	precondition of __va_open_mode_t	Unknown	valid_filename: valid_read_string(filename)
 .	kilo.c	819	editorSave	precondition of write	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))
@@ -568,8 +568,8 @@ FRAMAC_SHARE/libc	string.c	169	memcmp	mem_access	Unknown	\valid_read(p1 + i)
 FRAMAC_SHARE/libc	string.c	169	memcmp	mem_access	Unknown	\valid_read(p2 + i)
 FRAMAC_SHARE/libc	string.c	290	strstr	initialization	Unknown	\initialized(haystack + i)
 FRAMAC_SHARE/libc	string.c	290	strstr	mem_access	Unknown	\valid_read(haystack + i)
-FRAMAC_SHARE/libc	string.c	292	strstr	initialization	Unknown	\initialized(haystack + (unsigned int)(i + j))
-FRAMAC_SHARE/libc	string.c	292	strstr	mem_access	Unknown	\valid_read(haystack + (unsigned int)(i + j))
+FRAMAC_SHARE/libc	string.c	292	strstr	initialization	Unknown	\initialized(haystack + (size_t)(i + j))
+FRAMAC_SHARE/libc	string.c	292	strstr	mem_access	Unknown	\valid_read(haystack + (size_t)(i + j))
 FRAMAC_SHARE/libc	string.c	293	strstr	mem_access	Unknown	\valid_read(needle + j)
 FRAMAC_SHARE/libc	string.c	295	strstr	mem_access	Unknown	\valid_read(needle + j)
 FRAMAC_SHARE/libc	string.c	324	strdup	precondition of memcpy	Unknown	valid_dest: valid_or_empty(dest, n)
@@ -582,4 +582,4 @@ FRAMAC_SHARE/libc	string.h	131	memset	precondition	Unknown	valid_s: valid_or_emp
 FRAMAC_SHARE/libc	string.h	141	strlen	precondition	Unknown	valid_string_s: valid_read_string(s)
 FRAMAC_SHARE/libc	unistd.h	853	ftruncate	assigns clause	Unknown	assigns \nothing;
 FRAMAC_SHARE/libc	unistd.h	853	ftruncate	from clause	Unknown	assigns \result \from __x0, __x1;
-FRAMAC_SHARE/libc	unistd.h	1127	write	precondition	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))
+FRAMAC_SHARE/libc	unistd.h	1141	write	precondition	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))

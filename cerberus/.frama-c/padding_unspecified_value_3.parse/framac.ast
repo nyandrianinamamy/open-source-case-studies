@@ -35,7 +35,7 @@ int main(void)
               "offsetof(st,u)>offset_padding");
   unsigned char *p = (unsigned char *)(& s) + offset_padding;
   *p = (unsigned char)'B';
-  st __constr_expr_0 = {.c = (char)'E', .u = (unsigned short)1};
+  st __constr_expr_0 = {.c = (char)'E', .u = (uint16_t)1};
   s = __constr_expr_0;
   unsigned char c = *p;
   printf("c=0x%x\n",(unsigned int)((int)c)); /* printf_va_1 */

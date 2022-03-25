@@ -42,8 +42,8 @@ int main(void)
 {
   int __retres;
   int tmp;
-  uintptr_t b = (unsigned int)(& x);
-  uintptr_t a = (unsigned int)0x60102C;
+  uintptr_t b = (uintptr_t)(& x);
+  uintptr_t a = (uintptr_t)0x60102C;
   printf("Addresses: b=0x%X a=0x%X\n",b,a); /* printf_va_1 */
   tmp = memcmp((void const *)(& b),(void const *)(& a),sizeof(b));
   if (tmp == 0) {

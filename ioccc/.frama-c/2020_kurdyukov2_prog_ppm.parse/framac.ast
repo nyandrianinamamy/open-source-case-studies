@@ -60,14 +60,14 @@ int main(int c, char **V)
     intptr_t z;
     int tmp_8;
     uint16_t tmp_44;
-    int64_t U = (long)1;
+    int64_t U = (int64_t)1;
     V ++;
     ;
     tmp = atoi((char const *)*V);
-    intptr_t n = (long)tmp;
-    intptr_t b = (long)3;
-    intptr_t i = (long)0;
-    intptr_t x = (long)0;
+    intptr_t n = (intptr_t)tmp;
+    intptr_t b = (intptr_t)3;
+    intptr_t i = (intptr_t)0;
+    intptr_t x = (intptr_t)0;
     V ++;
     ;
     F = (void *)fopen((char const *)*V,"rb");
@@ -75,17 +75,17 @@ int main(int c, char **V)
     tmp_8 = fgetc((FILE *)F);
     if (tmp_8 == 'P') {
       int tmp_7;
-      k = (long)0;
-      i = (long)(-0);
+      k = (intptr_t)0;
+      i = (intptr_t)(-0);
       while (! k) {
         while (1) {
           int tmp_3;
           int tmp_6;
           intptr_t tmp_4;
           tmp_3 = fgetc((FILE *)F);
-          z = (long)tmp_3;
+          z = (intptr_t)tmp_3;
           tmp_4 = k;
-          k += (intptr_t)1;
+          k ++;
           ;
           if (tmp_4) {
             int tmp_5;
@@ -104,24 +104,24 @@ int main(int c, char **V)
                 if (z - (intptr_t)(-1)) {
                   intptr_t tmp_1;
                   if (z < (intptr_t)'0') {
-                    i = (long)(-1);
+                    i = (intptr_t)(-1);
                     tmp_1 = i;
                   }
                   else 
                     if (z > (intptr_t)'9') {
-                      i = (long)(-1);
+                      i = (intptr_t)(-1);
                       tmp_1 = i;
                     }
                     else {
                       intptr_t tmp_0;
-                      if (i < (intptr_t)0) tmp_0 = (long)0;
+                      if (i < (intptr_t)0) tmp_0 = (intptr_t)0;
                       else tmp_0 = i * (intptr_t)10;
                       i = (tmp_0 + z) - (intptr_t)'0';
                       if (i >> 15) {
-                        i = (long)(-1);
+                        i = (intptr_t)(-1);
                         tmp_1 = i;
                       }
-                      else tmp_1 = (long)0;
+                      else tmp_1 = (intptr_t)0;
                     }
                   k = tmp_1;
                 }
@@ -139,7 +139,7 @@ int main(int c, char **V)
           if (i >= (intptr_t)0) tmp_2 = 1;
           else 
             if (z >> 8) tmp_2 = 1; else tmp_2 = 0;
-          k = (long)tmp_2;
+          k = (intptr_t)tmp_2;
         }
       }
       if (i - (intptr_t)3) 
@@ -147,17 +147,17 @@ int main(int c, char **V)
       else tmp_7 = 0;
       if (tmp_7) break;
     }
-    k = (long)0;
-    w = (long)(-1);
+    k = (intptr_t)0;
+    w = (intptr_t)(-1);
     while (! k) {
       while (1) {
         int tmp_12;
         int tmp_15;
         intptr_t tmp_13;
         tmp_12 = fgetc((FILE *)F);
-        z = (long)tmp_12;
+        z = (intptr_t)tmp_12;
         tmp_13 = k;
-        k += (intptr_t)1;
+        k ++;
         ;
         if (tmp_13) {
           int tmp_14;
@@ -176,24 +176,24 @@ int main(int c, char **V)
               if (z - (intptr_t)(-1)) {
                 intptr_t tmp_10;
                 if (z < (intptr_t)'0') {
-                  w = (long)(-1);
+                  w = (intptr_t)(-1);
                   tmp_10 = w;
                 }
                 else 
                   if (z > (intptr_t)'9') {
-                    w = (long)(-1);
+                    w = (intptr_t)(-1);
                     tmp_10 = w;
                   }
                   else {
                     intptr_t tmp_9;
-                    if (w < (intptr_t)0) tmp_9 = (long)0;
+                    if (w < (intptr_t)0) tmp_9 = (intptr_t)0;
                     else tmp_9 = w * (intptr_t)10;
                     w = (tmp_9 + z) - (intptr_t)'0';
                     if (w >> 15) {
-                      w = (long)(-1);
+                      w = (intptr_t)(-1);
                       tmp_10 = w;
                     }
-                    else tmp_10 = (long)0;
+                    else tmp_10 = (intptr_t)0;
                   }
                 k = tmp_10;
               }
@@ -211,21 +211,21 @@ int main(int c, char **V)
         if (w >= (intptr_t)0) tmp_11 = 1;
         else 
           if (z >> 8) tmp_11 = 1; else tmp_11 = 0;
-        k = (long)tmp_11;
+        k = (intptr_t)tmp_11;
       }
     }
     if (w < (intptr_t)1) break;
-    k = (long)0;
-    h = (long)(-1);
+    k = (intptr_t)0;
+    h = (intptr_t)(-1);
     while (! k) {
       while (1) {
         int tmp_20;
         int tmp_23;
         intptr_t tmp_21;
         tmp_20 = fgetc((FILE *)F);
-        z = (long)tmp_20;
+        z = (intptr_t)tmp_20;
         tmp_21 = k;
-        k += (intptr_t)1;
+        k ++;
         ;
         if (tmp_21) {
           int tmp_22;
@@ -244,24 +244,24 @@ int main(int c, char **V)
               if (z - (intptr_t)(-1)) {
                 intptr_t tmp_18;
                 if (z < (intptr_t)'0') {
-                  h = (long)(-1);
+                  h = (intptr_t)(-1);
                   tmp_18 = h;
                 }
                 else 
                   if (z > (intptr_t)'9') {
-                    h = (long)(-1);
+                    h = (intptr_t)(-1);
                     tmp_18 = h;
                   }
                   else {
                     intptr_t tmp_17;
-                    if (h < (intptr_t)0) tmp_17 = (long)0;
+                    if (h < (intptr_t)0) tmp_17 = (intptr_t)0;
                     else tmp_17 = h * (intptr_t)10;
                     h = (tmp_17 + z) - (intptr_t)'0';
                     if (h >> 15) {
-                      h = (long)(-1);
+                      h = (intptr_t)(-1);
                       tmp_18 = h;
                     }
-                    else tmp_18 = (long)0;
+                    else tmp_18 = (intptr_t)0;
                   }
                 k = tmp_18;
               }
@@ -279,21 +279,21 @@ int main(int c, char **V)
         if (h >= (intptr_t)0) tmp_19 = 1;
         else 
           if (z >> 8) tmp_19 = 1; else tmp_19 = 0;
-        k = (long)tmp_19;
+        k = (intptr_t)tmp_19;
       }
     }
     if (h < (intptr_t)1) break;
-    k = (long)0;
-    y = (long)(-1);
+    k = (intptr_t)0;
+    y = (intptr_t)(-1);
     while (! k) {
       while (1) {
         int tmp_28;
         int tmp_31;
         intptr_t tmp_29;
         tmp_28 = fgetc((FILE *)F);
-        z = (long)tmp_28;
+        z = (intptr_t)tmp_28;
         tmp_29 = k;
-        k += (intptr_t)1;
+        k ++;
         ;
         if (tmp_29) {
           int tmp_30;
@@ -312,24 +312,24 @@ int main(int c, char **V)
               if (z - (intptr_t)(-1)) {
                 intptr_t tmp_26;
                 if (z < (intptr_t)'0') {
-                  y = (long)(-1);
+                  y = (intptr_t)(-1);
                   tmp_26 = y;
                 }
                 else 
                   if (z > (intptr_t)'9') {
-                    y = (long)(-1);
+                    y = (intptr_t)(-1);
                     tmp_26 = y;
                   }
                   else {
                     intptr_t tmp_25;
-                    if (y < (intptr_t)0) tmp_25 = (long)0;
+                    if (y < (intptr_t)0) tmp_25 = (intptr_t)0;
                     else tmp_25 = y * (intptr_t)10;
                     y = (tmp_25 + z) - (intptr_t)'0';
                     if (y >> 15) {
-                      y = (long)(-1);
+                      y = (intptr_t)(-1);
                       tmp_26 = y;
                     }
-                    else tmp_26 = (long)0;
+                    else tmp_26 = (intptr_t)0;
                   }
                 k = tmp_26;
               }
@@ -347,11 +347,11 @@ int main(int c, char **V)
         if (y >= (intptr_t)0) tmp_27 = 1;
         else 
           if (z >> 8) tmp_27 = 1; else tmp_27 = 0;
-        k = (long)tmp_27;
+        k = (intptr_t)tmp_27;
       }
     }
     if (y - (intptr_t)255) break;
-    if (n < (intptr_t)1) n = (long)1;
+    if (n < (intptr_t)1) n = (intptr_t)1;
     else {
       intptr_t tmp_33;
       if (n > w * h) tmp_33 = w * h; else tmp_33 = n;
@@ -362,12 +362,12 @@ int main(int c, char **V)
     S = s + b;
     K = S;
     u = K * h + K;
-    K = (long)(sizeof(*X) * (unsigned long)L + (unsigned long)(u * (int64_t)9));
-    L = (long)((unsigned long)K);
+    K = (int64_t)(sizeof(*X) * (unsigned long)L + (unsigned long)(u * (int64_t)9));
+    L = (int64_t)((size_t)K);
     ;
     if (K - L) break;
     else {
-      t = (int64_t *)malloc((unsigned long)K);
+      t = (int64_t *)malloc((size_t)K);
       if (! t) break;
     }
     O = (void *)(t + u);
@@ -378,17 +378,17 @@ int main(int c, char **V)
     if (i < (intptr_t)4) 
       while (x < s * h) {
         intptr_t tmp_41;
-        k = (long)0;
-        i = (long)(-1);
+        k = (intptr_t)0;
+        i = (intptr_t)(-1);
         while (! k) {
           while (1) {
             int tmp_37;
             int tmp_40;
             intptr_t tmp_38;
             tmp_37 = fgetc((FILE *)F);
-            z = (long)tmp_37;
+            z = (intptr_t)tmp_37;
             tmp_38 = k;
-            k += (intptr_t)1;
+            k ++;
             ;
             if (tmp_38) {
               int tmp_39;
@@ -407,24 +407,24 @@ int main(int c, char **V)
                   if (z - (intptr_t)(-1)) {
                     intptr_t tmp_35;
                     if (z < (intptr_t)'0') {
-                      i = (long)(-1);
+                      i = (intptr_t)(-1);
                       tmp_35 = i;
                     }
                     else 
                       if (z > (intptr_t)'9') {
-                        i = (long)(-1);
+                        i = (intptr_t)(-1);
                         tmp_35 = i;
                       }
                       else {
                         intptr_t tmp_34;
-                        if (i < (intptr_t)0) tmp_34 = (long)0;
+                        if (i < (intptr_t)0) tmp_34 = (intptr_t)0;
                         else tmp_34 = i * (intptr_t)10;
                         i = (tmp_34 + z) - (intptr_t)'0';
                         if (i >> 15) {
-                          i = (long)(-1);
+                          i = (intptr_t)(-1);
                           tmp_35 = i;
                         }
-                        else tmp_35 = (long)0;
+                        else tmp_35 = (intptr_t)0;
                       }
                     k = tmp_35;
                   }
@@ -442,24 +442,24 @@ int main(int c, char **V)
             if (i >= (intptr_t)0) tmp_36 = 1;
             else 
               if (z >> 8) tmp_36 = 1; else tmp_36 = 0;
-            k = (long)tmp_36;
+            k = (intptr_t)tmp_36;
           }
         }
         tmp_41 = x;
-        x += (intptr_t)1;
-        *(d + tmp_41) = (unsigned char)i;
+        x ++;
+        *(d + tmp_41) = (uint8_t)i;
         i >>= 8;
         if (i) break;
       }
     else {
       size_t tmp_43;
-      tmp_43 = fread((void *)d,(unsigned long)s,(unsigned long)h,(FILE *)F);
-      i = (long)((size_t)h - tmp_43);
+      tmp_43 = fread((void *)d,(size_t)s,(size_t)h,(FILE *)F);
+      i = (intptr_t)((size_t)h - tmp_43);
     }
     fclose((FILE *)F);
     if (i) break;
-    j = (long)0;
-    tmp_44 = (unsigned short)j;
+    j = (intptr_t)0;
+    tmp_44 = (uint16_t)j;
     X->y = tmp_44;
     X->x = tmp_44;
     while (j < b) {
@@ -467,13 +467,13 @@ int main(int c, char **V)
       z = j - b;
       while (x < S * h) {
         if (x < (intptr_t)0) {
-          y = (long)0;
+          y = (intptr_t)0;
           *(t + (x + S)) = y;
         }
         else {
           intptr_t tmp_45;
           tmp_45 = y;
-          y -= (intptr_t)1;
+          y --;
           ;
           if (tmp_45) {
             z += b;
@@ -481,16 +481,16 @@ int main(int c, char **V)
           }
           else {
             y = w;
-            u = (long)0;
+            u = (int64_t)0;
           }
           *(t + (x + S)) = *(t + x) + u;
         }
         x += b;
       }
-      j += (intptr_t)1;
+      j ++;
     }
-    X->w = (unsigned short)w;
-    X->h = (unsigned short)h;
+    X->w = (uint16_t)w;
+    X->h = (uint16_t)h;
     {
       int x_0;
       int Z = (int)X->x;
@@ -498,8 +498,8 @@ int main(int c, char **V)
       int w_0 = (int)X->w;
       int h_0 = (int)X->h;
       p = (t + (intptr_t)Z * b) + (intptr_t)y_0 * S;
-      l = (long)(w_0 * h_0);
-      j = (long)0;
+      l = (intptr_t)(w_0 * h_0);
+      j = (intptr_t)0;
       u = j;
       while (1) {
         intptr_t tmp_46;
@@ -508,12 +508,11 @@ int main(int c, char **V)
         }
         else break;
         tmp_46 = j;
-        j += (intptr_t)1;
-        X->c[tmp_46] = (unsigned char)(((((*(p + ((intptr_t)w_0 * b + 
-                                                  (intptr_t)h_0 * S)) - *(
-                                           p + (intptr_t)w_0 * b)) - *(
-                                          p + (intptr_t)h_0 * S)) + *p) + 
-                                        l / (intptr_t)2) / l);
+        j ++;
+        X->c[tmp_46] = (uint8_t)(((((*(p + ((intptr_t)w_0 * b + (intptr_t)h_0 * S)) - *(
+                                     p + (intptr_t)w_0 * b)) - *(p + 
+                                                                 (intptr_t)h_0 * S)) + *p) + 
+                                  l / (intptr_t)2) / l);
         p ++;
       }
       while (1) {
@@ -524,11 +523,11 @@ int main(int c, char **V)
         if (! tmp_47) break;
         x_0 = Z;
         while (x_0 < w_0 + Z) {
-          j = (long)0;
+          j = (intptr_t)0;
           while (j < b) {
-            z = (long)((int)*(d + (((intptr_t)y_0 * s + (intptr_t)x_0 * b) + j)) - (int)X->c[j]);
+            z = (intptr_t)((int)*(d + (((intptr_t)y_0 * s + (intptr_t)x_0 * b) + j)) - (int)X->c[j]);
             u += z * z;
-            j += (intptr_t)1;
+            j ++;
           }
           x_0 ++;
         }
@@ -541,18 +540,18 @@ int main(int c, char **V)
       X = P;
       N = X;
       if (U) {
-        i += (intptr_t)1;
+        i ++;
         ;
         if (i < n) tmp_59 = 1; else tmp_59 = 0;
       }
       else tmp_59 = 0;
       if (! tmp_59) break;
-      j = (long)0;
+      j = (intptr_t)0;
       U = j;
       while (1) {
         intptr_t tmp_48;
         tmp_48 = j;
-        j += (intptr_t)1;
+        j ++;
         ;
         if (! (tmp_48 < i)) break;
         if (X->d > U) {
@@ -563,18 +562,18 @@ int main(int c, char **V)
         X ++;
       }
       o = *N;
-      v = (long)o.w;
-      q = (long)o.h;
-      x = (long)o.x;
-      y = (long)o.y;
-      k = (long)0;
+      v = (intptr_t)o.w;
+      q = (intptr_t)o.h;
+      x = (intptr_t)o.x;
+      y = (intptr_t)o.y;
+      k = (intptr_t)0;
       z = k;
       e = z;
       while (1) {
-        z += (intptr_t)1;
+        z ++;
         ;
         if (! (z < v)) break;
-        j = (long)0;
+        j = (intptr_t)0;
         u = j;
         while (1) {
           int64_t tmp_49;
@@ -589,7 +588,7 @@ int main(int c, char **V)
           u += tmp_49;
           if (K < (int64_t)0) tmp_50 = - K; else tmp_50 = K;
           u += tmp_50;
-          j += (intptr_t)1;
+          j ++;
         }
         if (u > e) {
           e = u;
@@ -597,14 +596,14 @@ int main(int c, char **V)
           intptr_t tmp_16 = k;
         }
       }
-      l = (long)0;
+      l = (intptr_t)0;
       z = l;
       f = z;
       while (1) {
-        z += (intptr_t)1;
+        z ++;
         ;
         if (! (z < q)) break;
-        j = (long)0;
+        j = (intptr_t)0;
         u = j;
         while (1) {
           int64_t tmp_51;
@@ -619,7 +618,7 @@ int main(int c, char **V)
           u += tmp_51;
           if (K < (int64_t)0) tmp_52 = - K; else tmp_52 = K;
           u += tmp_52;
-          j += (intptr_t)1;
+          j ++;
         }
         if (u > f) {
           f = u;
@@ -629,18 +628,18 @@ int main(int c, char **V)
       }
       if (e < f) {
         uint16_t tmp_53;
-        tmp_53 = (unsigned short)l;
+        tmp_53 = (uint16_t)l;
         N->h = tmp_53;
-        o.y = (unsigned short)((int)o.y + (int)tmp_53);
-        o.h = (unsigned short)((intptr_t)o.h - l);
+        o.y = (uint16_t)((int)o.y + (int)tmp_53);
+        o.h = (uint16_t)((intptr_t)o.h - l);
         uint16_t tmp_32 = o.h;
       }
       else {
         uint16_t tmp_54;
-        tmp_54 = (unsigned short)k;
+        tmp_54 = (uint16_t)k;
         N->w = tmp_54;
-        o.x = (unsigned short)((int)o.x + (int)tmp_54);
-        o.w = (unsigned short)((intptr_t)o.w - k);
+        o.x = (uint16_t)((int)o.x + (int)tmp_54);
+        o.w = (uint16_t)((intptr_t)o.w - k);
         uint16_t tmp_42 = o.w;
       }
       *X = o;
@@ -651,8 +650,8 @@ int main(int c, char **V)
         int w_1 = (int)X->w;
         int h_1 = (int)X->h;
         p = (t + (intptr_t)Z_0 * b) + (intptr_t)y_1 * S;
-        l = (long)(w_1 * h_1);
-        j = (long)0;
+        l = (intptr_t)(w_1 * h_1);
+        j = (intptr_t)0;
         u = j;
         while (1) {
           intptr_t tmp_55;
@@ -661,12 +660,11 @@ int main(int c, char **V)
           }
           else break;
           tmp_55 = j;
-          j += (intptr_t)1;
-          X->c[tmp_55] = (unsigned char)(((((*(p + ((intptr_t)w_1 * b + 
-                                                    (intptr_t)h_1 * S)) - *(
-                                             p + (intptr_t)w_1 * b)) - *(
-                                            p + (intptr_t)h_1 * S)) + *p) + 
-                                          l / (intptr_t)2) / l);
+          j ++;
+          X->c[tmp_55] = (uint8_t)(((((*(p + ((intptr_t)w_1 * b + (intptr_t)h_1 * S)) - *(
+                                       p + (intptr_t)w_1 * b)) - *(p + 
+                                                                   (intptr_t)h_1 * S)) + *p) + 
+                                    l / (intptr_t)2) / l);
           p ++;
         }
         while (1) {
@@ -677,11 +675,11 @@ int main(int c, char **V)
           if (! tmp_56) break;
           x_1 = Z_0;
           while (x_1 < w_1 + Z_0) {
-            j = (long)0;
+            j = (intptr_t)0;
             while (j < b) {
-              z = (long)((int)*(d + (((intptr_t)y_1 * s + (intptr_t)x_1 * b) + j)) - (int)X->c[j]);
+              z = (intptr_t)((int)*(d + (((intptr_t)y_1 * s + (intptr_t)x_1 * b) + j)) - (int)X->c[j]);
               u += z * z;
-              j += (intptr_t)1;
+              j ++;
             }
             x_1 ++;
           }
@@ -697,8 +695,8 @@ int main(int c, char **V)
         int w_2 = (int)X->w;
         int h_2 = (int)X->h;
         p = (t + (intptr_t)Z_1 * b) + (intptr_t)y_2 * S;
-        l = (long)(w_2 * h_2);
-        j = (long)0;
+        l = (intptr_t)(w_2 * h_2);
+        j = (intptr_t)0;
         u = j;
         while (1) {
           intptr_t tmp_57;
@@ -707,12 +705,11 @@ int main(int c, char **V)
           }
           else break;
           tmp_57 = j;
-          j += (intptr_t)1;
-          X->c[tmp_57] = (unsigned char)(((((*(p + ((intptr_t)w_2 * b + 
-                                                    (intptr_t)h_2 * S)) - *(
-                                             p + (intptr_t)w_2 * b)) - *(
-                                            p + (intptr_t)h_2 * S)) + *p) + 
-                                          l / (intptr_t)2) / l);
+          j ++;
+          X->c[tmp_57] = (uint8_t)(((((*(p + ((intptr_t)w_2 * b + (intptr_t)h_2 * S)) - *(
+                                       p + (intptr_t)w_2 * b)) - *(p + 
+                                                                   (intptr_t)h_2 * S)) + *p) + 
+                                    l / (intptr_t)2) / l);
           p ++;
         }
         while (1) {
@@ -723,11 +720,11 @@ int main(int c, char **V)
           if (! tmp_58) break;
           x_2 = Z_1;
           while (x_2 < w_2 + Z_1) {
-            j = (long)0;
+            j = (intptr_t)0;
             while (j < b) {
-              z = (long)((int)*(d + (((intptr_t)y_2 * s + (intptr_t)x_2 * b) + j)) - (int)X->c[j]);
+              z = (intptr_t)((int)*(d + (((intptr_t)y_2 * s + (intptr_t)x_2 * b) + j)) - (int)X->c[j]);
               u += z * z;
-              j += (intptr_t)1;
+              j ++;
             }
             x_2 ++;
           }
@@ -739,7 +736,7 @@ int main(int c, char **V)
     while (1) {
       intptr_t tmp_62;
       tmp_62 = i;
-      i -= (intptr_t)1;
+      i --;
       ;
       if (! tmp_62) break;
       {
@@ -756,13 +753,13 @@ int main(int c, char **V)
           if (! tmp_61) break;
           x_3 = Z_2;
           while (x_3 < w_3 + Z_2) {
-            j = (long)0;
+            j = (intptr_t)0;
             while (j < b) {
               uint8_t tmp_60;
               tmp_60 = X->c[j];
               *(d + (((intptr_t)y_3 * s + (intptr_t)x_3 * b) + j)) = tmp_60;
-              z = (long)tmp_60;
-              j += (intptr_t)1;
+              z = (intptr_t)tmp_60;
+              j ++;
             }
             x_3 ++;
           }
@@ -779,7 +776,7 @@ int main(int c, char **V)
     c = (int)w;
     ;
     fprintf((FILE *)F,"P6\n%i %i\n255\n",c,(int)h); /* fprintf_va_1 */
-    fwrite((void const *)d,(unsigned long)s,(unsigned long)h,(FILE *)F);
+    fwrite((void const *)d,(size_t)s,(size_t)h,(FILE *)F);
     fclose((FILE *)F);
     free((void *)t);
     __retres = 0;

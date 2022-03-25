@@ -23,7 +23,7 @@ int main(int c, char **V)
   uint32_t *h;
   uint32_t a;
   uint32_t t[512];
-  uint64_t S = (unsigned long)5;
+  uint64_t S = (uint64_t)5;
   while (1) {
     int tmp_14;
     tmp_14 = c;
@@ -37,7 +37,7 @@ int main(int c, char **V)
       x = atoi((char const *)*(V + 2));
       y = atoi((char const *)*(V + 3));
       tmp = atoi((char const *)*(V + 4));
-      s = (unsigned long)tmp;
+      s = (uint64_t)tmp;
       if (x >> 20) break;
       else 
         if ((y - 1) >> 7) break;
@@ -60,11 +60,10 @@ int main(int c, char **V)
                 tmp_2 = fseek((FILE *)F,(long)0,0);
                 if (tmp_2) break;
                 else {
-                  m = (uint8_t *)malloc((unsigned long)(n + y));
+                  m = (uint8_t *)malloc((size_t)(n + y));
                   if (m) {
                     size_t tmp_3;
-                    tmp_3 = fread((void *)m,(unsigned long)1,
-                                  (unsigned long)n,(FILE *)F);
+                    tmp_3 = fread((void *)m,(size_t)1,(size_t)n,(FILE *)F);
                     ;
                     if (tmp_3 - (size_t)n) break;
                     else 
@@ -86,10 +85,10 @@ int main(int c, char **V)
         int tmp_6;
         tmp_6 = i;
         i ++;
-        a = (unsigned int)*(m + tmp_6);
+        a = (uint32_t)*(m + tmp_6);
         if ((uint32_t)'_' - a) {
           if (a == (uint32_t)'<') {
-            a = (unsigned int)' ';
+            a = (uint32_t)' ';
             while (1) 
               if (i < n) {
                 int tmp_4;
@@ -111,7 +110,7 @@ int main(int c, char **V)
           }
           else {
             _LAND_1: { /* sequence */
-                       a = (unsigned int)' ';
+                       a = (uint32_t)' ';
                        ;
                      }
             if ((uint32_t)k - a) {
@@ -121,28 +120,28 @@ int main(int c, char **V)
                 tmp_5 = l;
                 l ++;
                 k = (int)a;
-                *(m + tmp_5) = (unsigned char)k;
+                *(m + tmp_5) = (uint8_t)k;
               }
             }
           }
         }
       }
       n = l;
-      memcpy((void *)(m + l),(void const *)m,(unsigned long)y);
+      memcpy((void *)(m + l),(void const *)m,(size_t)y);
       while (l * 3 > q) q += q;
-      h = (uint32_t *)malloc((unsigned long)(4 * q));
+      h = (uint32_t *)malloc((size_t)(4 * q));
       if (h) {
         int tmp_7;
         tmp_7 = q;
         q --;
         ;
         ;
-        memset((void *)h,-1,(unsigned long)(4 * tmp_7));
+        memset((void *)h,-1,(size_t)(4 * tmp_7));
         k = 0;
         while (k < l) {
           int tmp_8;
           i = 0;
-          a = (unsigned int)i;
+          a = (uint32_t)i;
           while (i < y) {
             int tmp_9;
             tmp_9 = i;
@@ -152,15 +151,15 @@ int main(int c, char **V)
           while (1) {
             i = (int)*(h + (a & (unsigned int)q));
             if (! (i ^ -1)) break;
-            a += (uint32_t)1;
+            a ++;
           }
           tmp_8 = k;
           k ++;
-          *(h + (a & (unsigned int)q)) = (unsigned int)tmp_8;
+          *(h + (a & (unsigned int)q)) = (uint32_t)tmp_8;
         }
         s *= S;
-        a = (unsigned int)(s >> 31);
-        z = (unsigned long)a;
+        a = (uint32_t)(s >> 31);
+        z = (uint64_t)a;
         p = (int)(z * (uint64_t)n >> 32);
         while (1) {
           int tmp_13;
@@ -169,9 +168,9 @@ int main(int c, char **V)
           ;
           if (! tmp_13) break;
           n = 0;
-          memset((void *)(t),n,(unsigned long)(8 << 8));
+          memset((void *)(t),n,(size_t)(8 << 8));
           i = 0;
-          a = (unsigned int)i;
+          a = (uint32_t)i;
           while (i < y) {
             int tmp_10;
             tmp_10 = i;
@@ -183,21 +182,21 @@ int main(int c, char **V)
             i = (int)*(h + (a & (unsigned int)q));
             if (! (i ^ -1)) break;
             tmp_12 = memcmp((void const *)(m + p),(void const *)(m + i),
-                            (unsigned long)y);
+                            (size_t)y);
             if (! tmp_12) {
               int tmp_11;
               k = (int)*(m + (i + y)) * 2;
               tmp_11 = k;
               k ++;
-              t[tmp_11] += (uint32_t)1;
+              (t[tmp_11]) ++;
               n ++;
-              t[k] = (unsigned int)i;
+              t[k] = (uint32_t)i;
             }
-            a += (uint32_t)1;
+            a ++;
           }
           s *= S;
-          a = (unsigned int)(s >> 31);
-          z = (unsigned long)a;
+          a = (uint32_t)(s >> 31);
+          z = (uint64_t)a;
           n = (int)(z * (uint64_t)n >> 32);
           k = -1;
           while (n >= 0) {

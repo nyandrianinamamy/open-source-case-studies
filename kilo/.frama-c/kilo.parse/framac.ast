@@ -160,8 +160,8 @@ int enableRawMode(int fd)
   raw.c_oflag &= (unsigned int)(~ 0000001);
   raw.c_cflag |= (unsigned int)0000060;
   raw.c_lflag &= (unsigned int)(~ (((0000010 | 0000002) | 0001000) | 0000001));
-  raw.c_cc[6] = (unsigned char)0;
-  raw.c_cc[5] = (unsigned char)1;
+  raw.c_cc[6] = (cc_t)0;
+  raw.c_cc[5] = (cc_t)1;
   tmp_1 = tcsetattr(fd,2,& raw);
   if (tmp_1 < 0) goto fatal;
   E.rawmode = 1;
@@ -179,7 +179,7 @@ int editorReadKey(int fd)
   char c;
   char seq[3];
   while (1) {
-    nread = read(fd,(void *)(& c),(unsigned int)1);
+    nread = read(fd,(void *)(& c),(size_t)1);
     if (! (nread == 0)) break;
   }
   if (nread == -1) exit(1);
@@ -187,12 +187,12 @@ int editorReadKey(int fd)
     switch ((int)c) {
       ssize_t tmp;
       ssize_t tmp_0;
-      case ESC: tmp = read(fd,(void *)(seq),(unsigned int)1);
+      case ESC: tmp = read(fd,(void *)(seq),(size_t)1);
       if (tmp == 0) {
         __retres = ESC;
         goto return_label;
       }
-      tmp_0 = read(fd,(void *)(& seq[1]),(unsigned int)1);
+      tmp_0 = read(fd,(void *)(& seq[1]),(size_t)1);
       if (tmp_0 == 0) {
         __retres = ESC;
         goto return_label;
@@ -201,7 +201,7 @@ int editorReadKey(int fd)
         if ((int)seq[1] >= '0') {
           if ((int)seq[1] <= '9') {
             ssize_t tmp_1;
-            tmp_1 = read(fd,(void *)(& seq[2]),(unsigned int)1);
+            tmp_1 = read(fd,(void *)(& seq[2]),(size_t)1);
             if (tmp_1 == 0) {
               __retres = ESC;
               goto return_label;
@@ -274,14 +274,14 @@ int getCursorPosition(int ifd, int ofd, int *rows, int *cols)
   ssize_t tmp;
   int tmp_1;
   unsigned int i = (unsigned int)0;
-  tmp = write(ofd,(void const *)"\033[6n",(unsigned int)4);
+  tmp = write(ofd,(void const *)"\033[6n",(size_t)4);
   if (tmp != 4) {
     __retres = -1;
     goto return_label;
   }
   while (i < sizeof(buf) - (unsigned int)1) {
     ssize_t tmp_0;
-    tmp_0 = read(ifd,(void *)(& buf[i]),(unsigned int)1);
+    tmp_0 = read(ifd,(void *)(& buf[i]),(size_t)1);
     if (tmp_0 != 1) break;
     if ((int)buf[i] == 'R') break;
     i ++;
@@ -339,11 +339,11 @@ int getWindowSize(int ifd, int ofd, int *rows, int *cols)
         size_t tmp_0;
         retval = getCursorPosition(ifd,ofd,& orig_row,& orig_col);
         if (retval == -1) goto failed;
-        tmp = write(ofd,(void const *)"\033[999C\033[999B",(unsigned int)12);
+        tmp = write(ofd,(void const *)"\033[999C\033[999B",(size_t)12);
         if (tmp != 12) goto failed;
         retval = getCursorPosition(ifd,ofd,rows,cols);
         if (retval == -1) goto failed;
-        snprintf(seq,(unsigned int)32,"\033[%d;%dH",orig_row,orig_col); /* snprintf_va_1 */
+        snprintf(seq,(size_t)32,"\033[%d;%dH",orig_row,orig_col); /* snprintf_va_1 */
         tmp_0 = strlen((char const *)(seq));
         ;
         tmp_1 = write(ofd,(void const *)(seq),tmp_0);
@@ -410,9 +410,8 @@ void editorUpdateSyntax(erow *row)
   int in_string;
   int in_comment;
   char *p;
-  row->hl = (unsigned char *)realloc((void *)row->hl,
-                                     (unsigned int)row->rsize);
-  memset((void *)row->hl,0,(unsigned int)row->rsize);
+  row->hl = (unsigned char *)realloc((void *)row->hl,(size_t)row->rsize);
+  memset((void *)row->hl,0,(size_t)row->rsize);
   if (E.syntax == (struct editorSyntax *)0) goto return_label;
   char **keywords = (E.syntax)->keywords;
   char *scs = (E.syntax)->singleline_comment_start;
@@ -444,7 +443,7 @@ void editorUpdateSyntax(erow *row)
     if (prev_sep) 
       if ((int)*p == (int)*(scs + 0)) 
         if ((int)*(p + 1) == (int)*(scs + 1)) {
-          memset((void *)(row->hl + i),2,(unsigned int)(row->size - i));
+          memset((void *)(row->hl + i),2,(size_t)(row->size - i));
           goto return_label;
         }
     if (in_comment) {
@@ -549,7 +548,7 @@ void editorUpdateSyntax(erow *row)
           int kw2 = (int)*(*(keywords + j) + (klen - 1)) == '|';
           if (kw2) klen --;
           tmp_5 = memcmp((void const *)p,(void const *)*(keywords + j),
-                         (unsigned int)klen);
+                         (size_t)klen);
           if (! tmp_5) {
             int tmp_6;
             tmp_6 = is_separator((int)*(p + klen));
@@ -558,7 +557,7 @@ void editorUpdateSyntax(erow *row)
               ;
               if (kw2) tmp_4 = 5; else tmp_4 = 4;
               ;
-              memset((void *)(row->hl + i),tmp_4,(unsigned int)klen);
+              memset((void *)(row->hl + i),tmp_4,(size_t)klen);
               p += klen;
               i += klen;
               break;
@@ -645,8 +644,7 @@ void editorUpdateRow(erow *row)
     if ((int)*(row->chars + j) == TAB) tabs ++;
     j ++;
   }
-  row->render = (char *)malloc((unsigned int)(((row->size + tabs * 8) + 
-                                               nonprint * 9) + 1));
+  row->render = (char *)malloc((size_t)(((row->size + tabs * 8) + nonprint * 9) + 1));
   idx = 0;
   j = 0;
   while (j < row->size) {
@@ -747,12 +745,12 @@ char *editorRowsToString(int *buflen)
   }
   *buflen = totlen;
   totlen ++;
-  buf = (char *)malloc((unsigned int)totlen);
+  buf = (char *)malloc((size_t)totlen);
   p = buf;
   j = 0;
   while (j < E.numrows) {
     memcpy((void *)p,(void const *)(E.row + j)->chars,
-           (unsigned int)(E.row + j)->size);
+           (size_t)(E.row + j)->size);
     p += (E.row + j)->size;
     *p = (char)'\n';
     p ++;
@@ -767,16 +765,15 @@ void editorRowInsertChar(erow *row, int at, int c)
   if (at > row->size) {
     int padlen = at - row->size;
     row->chars = (char *)realloc((void *)row->chars,
-                                 (unsigned int)((row->size + padlen) + 2));
-    memset((void *)(row->chars + row->size),' ',(unsigned int)padlen);
+                                 (size_t)((row->size + padlen) + 2));
+    memset((void *)(row->chars + row->size),' ',(size_t)padlen);
     *(row->chars + ((row->size + padlen) + 1)) = (char)'\000';
     row->size += padlen + 1;
   }
   else {
-    row->chars = (char *)realloc((void *)row->chars,
-                                 (unsigned int)(row->size + 2));
+    row->chars = (char *)realloc((void *)row->chars,(size_t)(row->size + 2));
     memmove((void *)((row->chars + at) + 1),(void const *)(row->chars + at),
-            (unsigned int)((row->size - at) + 1));
+            (size_t)((row->size - at) + 1));
     (row->size) ++;
   }
   *(row->chars + at) = (char)c;
@@ -801,7 +798,7 @@ void editorRowDelChar(erow *row, int at)
 {
   if (row->size <= at) goto return_label;
   memmove((void *)(row->chars + at),(void const *)((row->chars + at) + 1),
-          (unsigned int)(row->size - at));
+          (size_t)(row->size - at));
   editorUpdateRow(row);
   (row->size) --;
   (E.dirty) ++;
@@ -817,7 +814,7 @@ void editorInsertChar(int c)
   erow *row = tmp;
   if (! row) 
     while (E.numrows <= filerow) editorInsertRow(E.numrows,(char *)"",
-                                                 (unsigned int)0);
+                                                 (size_t)0);
   row = E.row + filerow;
   editorRowInsertChar(row,filecol,c);
   if (E.cx == E.screencols - 1) (E.coloff) ++; else (E.cx) ++;
@@ -834,16 +831,16 @@ void editorInsertNewline(void)
   erow *row = tmp;
   if (! row) {
     if (filerow == E.numrows) {
-      editorInsertRow(filerow,(char *)"",(unsigned int)0);
+      editorInsertRow(filerow,(char *)"",(size_t)0);
       goto fixcursor;
     }
     goto return_label;
   }
   if (filecol >= row->size) filecol = row->size;
-  if (filecol == 0) editorInsertRow(filerow,(char *)"",(unsigned int)0);
+  if (filecol == 0) editorInsertRow(filerow,(char *)"",(size_t)0);
   else {
     editorInsertRow(filerow + 1,row->chars + filecol,
-                    (unsigned int)(row->size - filecol));
+                    (size_t)(row->size - filecol));
     row = E.row + filerow;
     *(row->chars + filecol) = (char)'\000';
     row->size = filecol;
@@ -869,8 +866,7 @@ void editorDelChar(void)
       if (filerow == 0) goto return_label;
   if (filecol == 0) {
     filecol = (E.row + (filerow - 1))->size;
-    editorRowAppendString(E.row + (filerow - 1),row->chars,
-                          (unsigned int)row->size);
+    editorRowAppendString(E.row + (filerow - 1),row->chars,(size_t)row->size);
     editorDelRow(filerow);
     row = (erow *)0;
     if (E.cy == 0) (E.rowoff) --; else (E.cy) --;
@@ -910,7 +906,7 @@ int editorOpen(char *filename)
     goto return_label;
   }
   char *line = (char *)0;
-  size_t linecap = (unsigned int)0;
+  size_t linecap = (size_t)0;
   while (1) {
     linelen = getline(& line,& linecap,fp);
     if (! (linelen != -1)) break;
@@ -924,7 +920,7 @@ int editorOpen(char *filename)
             *(line + linelen) = (char)'\000';
           }
         }
-    editorInsertRow(E.numrows,line,(unsigned int)linelen);
+    editorInsertRow(E.numrows,line,(size_t)linelen);
   }
   free((void *)line);
   fclose(fp);
@@ -943,9 +939,9 @@ int editorSave(void)
   char *buf = editorRowsToString(& len);
   int fd = __va_open_mode_t((char const *)E.filename,2 | 0x40,(mode_t)0644);
   if (fd == -1) goto writeerr;
-  tmp_1 = ftruncate(fd,(long)len);
+  tmp_1 = ftruncate(fd,(off_t)len);
   if (tmp_1 == -1) goto writeerr;
-  tmp_2 = write(fd,(void const *)buf,(unsigned int)len);
+  tmp_2 = write(fd,(void const *)buf,(size_t)len);
   ;
   if (tmp_2 != len) goto writeerr;
   close(fd);
@@ -974,9 +970,9 @@ int editorSave(void)
 
 void abAppend(struct abuf *ab, char const *s, int len)
 {
-  char *new = realloc((void *)ab->b,(unsigned int)(ab->len + len));
+  char *new = realloc((void *)ab->b,(size_t)(ab->len + len));
   if (new == (char *)0) goto return_label;
-  memcpy((void *)(new + ab->len),(void const *)s,(unsigned int)len);
+  memcpy((void *)(new + ab->len),(void const *)s,(size_t)len);
   ab->b = new;
   ab->len += len;
   return_label: return;
@@ -1211,7 +1207,7 @@ void editorRefreshScreen(void)
   tmp_10 = strlen((char const *)(buf));
   abAppend(& ab,(char const *)(buf),(int)tmp_10);
   abAppend(& ab,"\033[?25h",6);
-  write(1,(void const *)ab.b,(unsigned int)ab.len);
+  write(1,(void const *)ab.b,(size_t)ab.len);
   abFree(& ab);
   return;
 }
@@ -1276,7 +1272,7 @@ void editorFind(int fd)
                   if (saved_hl) {
                     memcpy((void *)(E.row + saved_hl_line)->hl,
                            (void const *)saved_hl,
-                           (unsigned int)(E.row + saved_hl_line)->rsize);
+                           (size_t)(E.row + saved_hl_line)->rsize);
                     saved_hl = (char *)0;
                   }
                   {
@@ -1330,7 +1326,7 @@ void editorFind(int fd)
         find_next = 0;
         if (saved_hl) {
           memcpy((void *)(E.row + saved_hl_line)->hl,(void const *)saved_hl,
-                 (unsigned int)(E.row + saved_hl_line)->rsize);
+                 (size_t)(E.row + saved_hl_line)->rsize);
           saved_hl = (char *)0;
         }
         if (match) {
@@ -1338,10 +1334,9 @@ void editorFind(int fd)
           last_match = current;
           if (row->hl) {
             saved_hl_line = current;
-            saved_hl = (char *)malloc((unsigned int)row->rsize);
-            memcpy((void *)saved_hl,(void const *)row->hl,
-                   (unsigned int)row->rsize);
-            memset((void *)(row->hl + match_offset),8,(unsigned int)qlen);
+            saved_hl = (char *)malloc((size_t)row->rsize);
+            memcpy((void *)saved_hl,(void const *)row->hl,(size_t)row->rsize);
+            memset((void *)(row->hl + match_offset),8,(size_t)qlen);
           }
           E.cy = 0;
           E.cx = match_offset;
@@ -1596,14 +1591,14 @@ ssize_t getdelim(char **lineptr, size_t *n, int delim, FILE *stream)
   /*@ assert \valid(n); */ ;
   /*@ assert (lineptr ≡ \null ∧ *n ≡ 0) ∨ \freeable(lineptr); */ ;
   if (*lineptr == (char *)0) {
-    *lineptr = (char *)malloc((unsigned int)128);
+    *lineptr = (char *)malloc((size_t)128);
     if (! *lineptr) {
       __retres = -1;
       goto return_label;
     }
-    *n = (unsigned int)128;
+    *n = (size_t)128;
   }
-  i = (unsigned int)0;
+  i = (size_t)0;
   tmp = getc(stream);
   c = (char)tmp;
   while ((int)c != -1) {
@@ -1621,13 +1616,13 @@ ssize_t getdelim(char **lineptr, size_t *n, int delim, FILE *stream)
       *n += (size_t)128;
     }
     *(*lineptr + i) = c;
-    i += (size_t)1;
+    i ++;
     if ((int)c == delim) break;
     tmp_0 = getc(stream);
     c = (char)tmp_0;
   }
   if (i == *n) {
-    *n += (size_t)1;
+    (*n) ++;
     *lineptr = (char *)realloc((void *)*lineptr,*n);
     if (*lineptr == (char *)0) {
       __retres = -1;
@@ -1636,9 +1631,9 @@ ssize_t getdelim(char **lineptr, size_t *n, int delim, FILE *stream)
   }
   *(*lineptr + i) = (char)0;
   if ((int)c == -1) 
-    if (i == (size_t)0) tmp_1 = (unsigned int)(-1); else tmp_1 = i;
+    if (i == (size_t)0) tmp_1 = (size_t)(-1); else tmp_1 = i;
   else tmp_1 = i;
-  __retres = (int)tmp_1;
+  __retres = (ssize_t)tmp_1;
   return_label: return __retres;
 }
 
@@ -1656,7 +1651,7 @@ int eva_main(void)
     int i = 0;
     /*@ loop unroll 5; */
     while (i < 5) {
-      Frama_C_make_unknown(argv[i],(unsigned int)255);
+      Frama_C_make_unknown(argv[i],(size_t)255);
       *(argv[i] + 255) = (char)0;
       i ++;
     }

@@ -44,8 +44,8 @@ int main(void)
 {
   int __retres;
   int tmp;
-  intptr_t ux = (int)(& x);
-  intptr_t uy = (int)(& y);
+  intptr_t ux = (intptr_t)(& x);
+  intptr_t uy = (intptr_t)(& y);
   intptr_t offset = 4;
   int *p = (int *)(ux + offset);
   int *q = & y;

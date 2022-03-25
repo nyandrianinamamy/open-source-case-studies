@@ -27,7 +27,7 @@ int main(void)
 {
   int __retres;
   int *p = & x;
-  intptr_t i = (int)p;
+  intptr_t i = (intptr_t)p;
   int *q = (int *)i;
   *q = 11;
   printf("*p=%d  *q=%d\n",*p,*q); /* printf_va_1 */

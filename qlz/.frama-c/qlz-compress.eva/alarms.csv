@@ -14,7 +14,7 @@ directory	file	line	function	property kind	status	property
 .	quicklz.c	167	fast_write	mem_access	Unknown	\valid((ui16 *)dst)
 .	quicklz.c	268	qlz_compress_core	ptr_comparison	Unknown	\pointer_comparable((void *)src, (void *)last_matchstart)
 .	quicklz.c	271	qlz_compress_core	ptr_comparison	Unknown	\pointer_comparable((void *)src, (void *)last_matchstart)
-.	quicklz.c	276	qlz_compress_core	ptr_comparison	Unknown	\pointer_comparable((void *)src, (void *)(source + (unsigned int)(size >> 1)))
+.	quicklz.c	276	qlz_compress_core	ptr_comparison	Unknown	\pointer_comparable((void *)src, (void *)(source + (size_t)(size >> 1)))
 .	quicklz.c	276	qlz_compress_core	signed_overflow	Unknown	dst - destination ≤ 2147483647
 .	quicklz.c	276	qlz_compress_core	signed_overflow	Unknown	src - source ≤ 2147483647
 .	quicklz.c	292	qlz_compress_core	initialization	Unknown	\initialized(&state->hash[hash].cache)

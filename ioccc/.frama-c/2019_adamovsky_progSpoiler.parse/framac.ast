@@ -33,7 +33,7 @@ void F(void)
 
 __inline static Argument *Reference(Argument *f)
 {
-  (f + (5 - 1))->n += (size_t)1;
+  ((f + (5 - 1))->n) ++;
   return f;
 }
 
@@ -78,7 +78,7 @@ Argument *rE(Argument *f, Argument *x);
 __inline static void Dereference(Argument *f)
 {
   if (f) {
-    (f + (5 - 1))->n -= (size_t)1;
+    ((f + (5 - 1))->n) --;
     if (! (f + (5 - 1))->n) {
       if ((f + 0)->call != & fW) 
         if ((f + 0)->call != & fCh) Dereference((f + 1)->a);

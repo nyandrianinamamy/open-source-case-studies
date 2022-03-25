@@ -47,7 +47,7 @@ int main(void)
   int __retres;
   un u;
   int *px = & x;
-  uintptr_t i = (unsigned int)px;
+  uintptr_t i = (uintptr_t)px;
   u.ui = i;
   int *p = u.p;
   printf("Addresses: p=%p &x=%p\n",(void *)p,(void *)(& x)); /* printf_va_1 */

@@ -28,7 +28,7 @@ int main(void)
   int __retres;
   int x = 0;
   int *px = & x;
-  uintptr_t ql = (unsigned int)px;
+  uintptr_t ql = (uintptr_t)px;
   ql += (uintptr_t)287343;
   ql -= (uintptr_t)287343;
   int *q = (int *)ql;

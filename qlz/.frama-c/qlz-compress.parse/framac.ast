@@ -57,13 +57,13 @@ int main(int argc, char **argv)
   ofile = fopen((char const *)*(argv + 2),"wb");
   fseek(ifile,(long)0,2);
   tmp_0 = ftell(ifile);
-  len = (unsigned int)tmp_0;
+  len = (size_t)tmp_0;
   fseek(ifile,(long)0,0);
   src = (char *)malloc(len);
-  fread((void *)src,(unsigned int)1,len,ifile);
+  fread((void *)src,(size_t)1,len,ifile);
   dst = (char *)malloc(len + (size_t)400);
   len2 = qlz_compress((void const *)src,dst,len,state_compress);
-  fwrite((void const *)dst,len2,(unsigned int)1,ofile);
+  fwrite((void const *)dst,len2,(size_t)1,ofile);
   fclose(ifile);
   fclose(ofile);
   __retres = 0;
@@ -103,7 +103,7 @@ static int same(unsigned char const *src, size_t n)
       if (! ((int)*(src + n) == (int)*src)) break;
     }
     else break;
-    n -= (size_t)1;
+    n --;
   }
   if (n == (size_t)0) tmp = 1; else tmp = 0;
   return tmp;
@@ -143,11 +143,11 @@ __inline static ui32 fast_read(void const *src, ui32 bytes)
       goto return_label;
     }
     else {
-      __retres = (unsigned int)0;
+      __retres = (ui32)0;
       goto return_label;
     }
   else {
-    __retres = (unsigned int)0;
+    __retres = (ui32)0;
     goto return_label;
   }
   return_label: return __retres;
@@ -157,7 +157,7 @@ __inline static ui32 hashat(unsigned char const *src)
 {
   ui32 fetch;
   ui32 hash;
-  fetch = fast_read((void const *)src,(unsigned int)3);
+  fetch = fast_read((void const *)src,(ui32)3);
   hash = hash_func(fetch);
   return hash;
 }
@@ -169,7 +169,7 @@ __inline static void fast_write(ui32 f, void *dst, size_t bytes)
     goto return_label;
     case (size_t)3: *((ui32 *)dst) = f;
     goto return_label;
-    case (size_t)2: *((ui16 *)dst) = (unsigned short)f;
+    case (size_t)2: *((ui16 *)dst) = (ui16)f;
     goto return_label;
     case (size_t)1: *((unsigned char *)dst) = (unsigned char)f;
     goto return_label;
@@ -181,7 +181,7 @@ size_t qlz_size_decompressed(char const *source)
 {
   ui32 n;
   ui32 r;
-  if (((int)*source & 2) == 2) n = (unsigned int)4; else n = (unsigned int)1;
+  if (((int)*source & 2) == 2) n = (ui32)4; else n = (ui32)1;
   r = fast_read((void const *)((source + 1) + n),n);
   r &= 0xffffffff >> ((ui32)4 - n) * (ui32)8;
   return r;
@@ -191,7 +191,7 @@ size_t qlz_size_compressed(char const *source)
 {
   ui32 n;
   ui32 r;
-  if (((int)*source & 2) == 2) n = (unsigned int)4; else n = (unsigned int)1;
+  if (((int)*source & 2) == 2) n = (ui32)4; else n = (ui32)1;
   r = fast_read((void const *)(source + 1),n);
   r &= 0xffffffff >> ((ui32)4 - n) * (ui32)8;
   return r;
@@ -201,14 +201,14 @@ size_t qlz_size_header(char const *source)
 {
   int tmp;
   if (((int)*source & 2) == 2) tmp = 4; else tmp = 1;
-  size_t n = (unsigned int)(2 * tmp + 1);
+  size_t n = (size_t)(2 * tmp + 1);
   return n;
 }
 
 __inline static void memcpy_up(unsigned char *dst, unsigned char const *src,
                                ui32 n)
 {
-  ui32 f = (unsigned int)0;
+  ui32 f = (ui32)0;
   while (1) {
     *((ui32 *)(dst + f)) = *((ui32 *)(src + f));
     f += (ui32)(2 + 1);
@@ -249,24 +249,22 @@ static size_t qlz_compress_core(unsigned char const *source,
   unsigned char *dst = destination + 4;
   ui32 cword_val = 1U << 31;
   unsigned char const *last_matchstart = (last_byte - 6) - 4;
-  ui32 fetch = (unsigned int)0;
+  ui32 fetch = (ui32)0;
   unsigned int lits = (unsigned int)0;
   unsigned int tmp = lits;
-  if (src <= last_matchstart) fetch = fast_read((void const *)src,
-                                                (unsigned int)3);
+  if (src <= last_matchstart) fetch = fast_read((void const *)src,(ui32)3);
   while (src <= last_matchstart) {
     if ((cword_val & (unsigned int)1) == (unsigned int)1) {
       if (src > source + (size >> 1)) 
         if (dst - destination > (src - source) - ((src - source) >> 5)) {
-          __retres = (unsigned int)0;
+          __retres = (size_t)0;
           goto return_label;
         }
-      fast_write((cword_val >> 1) | (1U << 31),(void *)cword_ptr,
-                 (unsigned int)4);
+      fast_write((cword_val >> 1) | (1U << 31),(void *)cword_ptr,(size_t)4);
       cword_ptr = dst;
       dst += 4;
       cword_val = 1U << 31;
-      fetch = fast_read((void const *)src,(unsigned int)3);
+      fetch = fast_read((void const *)src,(ui32)3);
     }
     {
       unsigned char const *o;
@@ -285,7 +283,7 @@ static size_t qlz_compress_core(unsigned char const *source,
               if (lits >= (unsigned int)3) {
                 if (src > source + 3) {
                   int tmp_0_0;
-                  tmp_0_0 = same(src - 3,(unsigned int)6);
+                  tmp_0_0 = same(src - 3,(size_t)6);
                   if (tmp_0_0) {
                     _LOR:
                     {
@@ -293,7 +291,7 @@ static size_t qlz_compress_core(unsigned char const *source,
                         hash <<= 4;
                         cword_val = (cword_val >> 1) | (1U << 31);
                         fast_write((unsigned int)(3 - 2) | hash,(void *)dst,
-                                   (unsigned int)2);
+                                   (size_t)2);
                         src += 3;
                         dst += 2;
                       }
@@ -308,14 +306,14 @@ static size_t qlz_compress_core(unsigned char const *source,
                           if ((int)*(o + (src - old_src)) == (int)*src) {
                             size_t tmp_0;
                             size_t q =
-                              (unsigned int)(((last_byte - 4) - (src - 5)) + 1);
-                            if (q > (size_t)255) tmp_0 = (unsigned int)255;
+                              (size_t)(((last_byte - 4) - (src - 5)) + 1);
+                            if (q > (size_t)255) tmp_0 = (size_t)255;
                             else tmp_0 = q;
                             size_t remaining = tmp_0;
                             src ++;
                             while (1) {
                               if ((int)*(o + (src - old_src)) == (int)*src) {
-                                if (! ((unsigned int)(src - old_src) < remaining)) 
+                                if (! ((size_t)(src - old_src) < remaining)) 
                                   break;
                               }
                               else break;
@@ -323,19 +321,19 @@ static size_t qlz_compress_core(unsigned char const *source,
                             }
                           }
                         }
-                        matchlen = (unsigned int)(src - old_src);
+                        matchlen = (size_t)(src - old_src);
                         if (matchlen < (size_t)18) {
                           fast_write((matchlen - (size_t)2) | hash,
-                                     (void *)dst,(unsigned int)2);
+                                     (void *)dst,(size_t)2);
                           dst += 2;
                         }
                         else {
                           fast_write((matchlen << 16) | hash,(void *)dst,
-                                     (unsigned int)3);
+                                     (size_t)3);
                           dst += 3;
                         }
                       }
-                      fetch = fast_read((void const *)src,(unsigned int)3);
+                      fetch = fast_read((void const *)src,(ui32)3);
                       lits = (unsigned int)0;
                     }
                   }
@@ -357,15 +355,14 @@ static size_t qlz_compress_core(unsigned char const *source,
           src ++;
           dst ++;
           cword_val >>= 1;
-          fetch = fast_read((void const *)src,(unsigned int)3);
+          fetch = fast_read((void const *)src,(ui32)3);
         }
       }
     }
   }
   while (src <= last_byte) {
     if ((cword_val & (unsigned int)1) == (unsigned int)1) {
-      fast_write((cword_val >> 1) | (1U << 31),(void *)cword_ptr,
-                 (unsigned int)4);
+      fast_write((cword_val >> 1) | (1U << 31),(void *)cword_ptr,(size_t)4);
       cword_ptr = dst;
       dst += 4;
       cword_val = 1U << 31;
@@ -373,7 +370,7 @@ static size_t qlz_compress_core(unsigned char const *source,
     if (src <= last_byte - 3) {
       ui32 hash_0;
       ui32 fetch_0;
-      fetch_0 = fast_read((void const *)src,(unsigned int)3);
+      fetch_0 = fast_read((void const *)src,(ui32)3);
       hash_0 = hash_func(fetch_0);
       state->hash[hash_0].offset = src - 0;
       state->hash[hash_0].cache = fetch_0;
@@ -384,9 +381,9 @@ static size_t qlz_compress_core(unsigned char const *source,
     cword_val >>= 1;
   }
   while ((cword_val & (unsigned int)1) != (unsigned int)1) cword_val >>= 1;
-  fast_write((cword_val >> 1) | (1U << 31),(void *)cword_ptr,(unsigned int)4);
+  fast_write((cword_val >> 1) | (1U << 31),(void *)cword_ptr,(size_t)4);
   if (dst - destination < 9) tmp_1 = 9; else tmp_1 = dst - destination;
-  __retres = (unsigned int)tmp_1;
+  __retres = (size_t)tmp_1;
   return_label: return __retres;
 }
 
@@ -396,22 +393,22 @@ static size_t qlz_decompress_core(unsigned char const *source,
                                   unsigned char const *history);
 
 static ui32 const qlz_decompress_core_bitlut[16] =
-  {(unsigned int)4,
-   (unsigned int)0,
-   (unsigned int)1,
-   (unsigned int)0,
-   (unsigned int)2,
-   (unsigned int)0,
-   (unsigned int)1,
-   (unsigned int)0,
-   (unsigned int)3,
-   (unsigned int)0,
-   (unsigned int)1,
-   (unsigned int)0,
-   (unsigned int)2,
-   (unsigned int)0,
-   (unsigned int)1,
-   (unsigned int)0};
+  {(ui32)4,
+   (ui32)0,
+   (ui32)1,
+   (ui32)0,
+   (ui32)2,
+   (ui32)0,
+   (ui32)1,
+   (ui32)0,
+   (ui32)3,
+   (ui32)0,
+   (ui32)1,
+   (ui32)0,
+   (ui32)2,
+   (ui32)0,
+   (ui32)1,
+   (ui32)0};
 static size_t qlz_decompress_core(unsigned char const *source,
                                   unsigned char *destination, size_t size,
                                   qlz_state_decompress *state,
@@ -425,7 +422,7 @@ static size_t qlz_decompress_core(unsigned char const *source,
   unsigned char *dst = destination;
   unsigned char const *last_destination_byte =
     (unsigned char const *)((destination + size) - 1);
-  ui32 cword_val = (unsigned int)1;
+  ui32 cword_val = (ui32)1;
   unsigned char const *last_matchstart = (last_destination_byte - 6) - 4;
   unsigned char *last_hashed = destination - 1;
   tmp_0 = qlz_size_compressed((char const *)source);
@@ -435,10 +432,10 @@ static size_t qlz_decompress_core(unsigned char const *source,
   while (1) {
     ui32 fetch;
     if (cword_val == (ui32)1) {
-      cword_val = fast_read((void const *)src,(unsigned int)4);
+      cword_val = fast_read((void const *)src,(ui32)4);
       src += 4;
     }
-    fetch = fast_read((void const *)src,(unsigned int)4);
+    fetch = fast_read((void const *)src,(ui32)4);
     if ((cword_val & (unsigned int)1) == (unsigned int)1) {
       ui32 matchlen;
       unsigned char const *offset2;
@@ -451,7 +448,7 @@ static size_t qlz_decompress_core(unsigned char const *source,
         src += 2;
       }
       else {
-        matchlen = (unsigned int)*(src + 2);
+        matchlen = (ui32)*(src + 2);
         src += 3;
       }
       memcpy_up(dst,offset2,matchlen);
@@ -499,16 +496,15 @@ size_t qlz_compress(void const *source, char *destination, size_t size,
   size_t base;
   int tmp_0;
   if (size == (size_t)0) {
-    __retres = (unsigned int)0;
+    __retres = (size_t)0;
     goto return_label;
   }
   else 
     if (size > 0xffffffff - (unsigned int)400) {
-      __retres = (unsigned int)0;
+      __retres = (size_t)0;
       goto return_label;
     }
-  if (size < (size_t)216) base = (unsigned int)3;
-  else base = (unsigned int)9;
+  if (size < (size_t)216) base = (size_t)3; else base = (size_t)9;
   {
     size_t tmp;
     reset_table_compress(state);
@@ -518,10 +514,10 @@ size_t qlz_compress(void const *source, char *destination, size_t size,
     if (r == base) {
       memcpy((void *)(destination + base),source,size);
       r = size + base;
-      compressed = (unsigned int)0;
+      compressed = (ui32)0;
     }
-    else compressed = (unsigned int)1;
-    state->stream_counter = (unsigned int)0;
+    else compressed = (ui32)1;
+    state->stream_counter = (size_t)0;
   }
   if (base == (size_t)3) {
     *destination = (char)((unsigned char)((unsigned int)0 | compressed));
@@ -530,8 +526,8 @@ size_t qlz_compress(void const *source, char *destination, size_t size,
   }
   else {
     *destination = (char)((unsigned char)((unsigned int)2 | compressed));
-    fast_write(r,(void *)(destination + 1),(unsigned int)4);
-    fast_write(size,(void *)(destination + 5),(unsigned int)4);
+    fast_write(r,(void *)(destination + 1),(size_t)4);
+    fast_write(size,(void *)(destination + 5),(size_t)4);
   }
   *destination = (char)((int)*destination | (1 << 2));
   *destination = (char)((int)*destination | (1 << 6));
@@ -559,7 +555,7 @@ size_t qlz_decompress(char const *source, void *destination,
     ;
     memcpy(destination,(void const *)(source + tmp_0),dsiz);
   }
-  state->stream_counter = (unsigned int)0;
+  state->stream_counter = (size_t)0;
   reset_table_decompress(state);
   return dsiz;
 }
@@ -578,7 +574,7 @@ int eva_main(void)
     int i = 0;
     /*@ loop unroll 5; */
     while (i < 5) {
-      Frama_C_make_unknown(argv[i],(unsigned int)255);
+      Frama_C_make_unknown(argv[i],(size_t)255);
       *(argv[i] + 255) = (char)0;
       i ++;
     }

@@ -66,7 +66,7 @@ int main(void)
   size_t offset_padding = 2U + sizeof(char);
   __FC_assert((sizeof(st) > offset_padding) != 0,"padding_struct_copy_2.c",9,
               "sizeof(st)>offset_padding");
-  st s1 = {.u = (unsigned short)0x1234, .c = (char)'A'};
+  st s1 = {.u = (uint16_t)0x1234, .c = (char)'A'};
   unsigned char *padding1 = (unsigned char *)(& s1) + offset_padding;
   *padding1 = (unsigned char)0xBA;
   printf("*padding1=0x%x\n",(unsigned int)((int)*padding1)); /* printf_va_1 */

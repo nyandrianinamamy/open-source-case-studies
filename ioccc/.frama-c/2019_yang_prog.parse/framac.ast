@@ -128,7 +128,7 @@ void a(void)
   if (H + 2 > t) {
     void *tmp;
     t *= 2;
-    tmp = realloc((void *)U,(unsigned long)(t * 24));
+    tmp = realloc((void *)U,(size_t)(t * 24));
     U = (b *)tmp;
   }
   (U + H)->x = x;

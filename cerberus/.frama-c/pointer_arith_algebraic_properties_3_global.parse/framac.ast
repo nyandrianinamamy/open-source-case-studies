@@ -27,8 +27,7 @@ int printf_va_1(char const * restrict format, int param0, int param1);
 int main(void)
 {
   int __retres;
-  int *p =
-    (int *)(((unsigned int)(x) + (unsigned int)(& y[1])) - (unsigned int)(y));
+  int *p = (int *)(((uintptr_t)(x) + (uintptr_t)(& y[1])) - (uintptr_t)(y));
   *p = 11;
   printf("x[1]=%d *p=%d\n",x[1],*p); /* printf_va_1 */
   __retres = 0;

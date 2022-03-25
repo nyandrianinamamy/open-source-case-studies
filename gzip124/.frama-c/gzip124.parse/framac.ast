@@ -28,6 +28,7 @@ struct option {
    int val ;
 };
 typedef struct dirent dir_type;
+typedef ush Pos;
 typedef unsigned int IPos;
 struct config {
    ush good_length ;
@@ -70,6 +71,7 @@ struct huft {
 };
 typedef unsigned char char_type;
 typedef long code_int;
+typedef unsigned long cmp_code_int;
 enum __anonenum_ordering_1 {
     REQUIRE_ORDER = 0,
     PERMUTE = 1,
@@ -613,11 +615,11 @@ int main(int argc, char **argv)
   if (tmp_2 != SIG_IGN) signal(15,(void (*)(int ))(& abort_gzip));
   tmp_3 = signal(1,SIG_IGN);
   if (tmp_3 != SIG_IGN) signal(1,(void (*)(int ))(& abort_gzip));
-  tmp_6 = strncmp((char const *)progname,"un",(unsigned int)2);
+  tmp_6 = strncmp((char const *)progname,"un",(size_t)2);
   if (tmp_6 == 0) goto _LOR_0;
   else {
     int tmp_7;
-    tmp_7 = strncmp((char const *)progname,"gun",(unsigned int)3);
+    tmp_7 = strncmp((char const *)progname,"gun",(size_t)3);
     if (tmp_7 == 0) _LOR_0: decompress = 1;
     else {
       int tmp_4;
@@ -1724,13 +1726,11 @@ static int get_method(int in)
   part_nb ++;
   header_bytes = (long)0;
   last_member = 0;
-  tmp_61 = memcmp((void const *)(magic),(void const *)"\037\213",
-                  (unsigned int)2);
+  tmp_61 = memcmp((void const *)(magic),(void const *)"\037\213",(size_t)2);
   if (tmp_61 == 0) goto _LOR_0;
   else {
     int tmp_62;
-    tmp_62 = memcmp((void const *)(magic),(void const *)"\037\236",
-                    (unsigned int)2);
+    tmp_62 = memcmp((void const *)(magic),(void const *)"\037\236",(size_t)2);
     if (tmp_62 == 0) {
       _LOR_0:
       {
@@ -1764,7 +1764,7 @@ static int get_method(int in)
           tmp_16 = (int)inbuf[tmp_14];
         }
         else tmp_16 = fill_inbuf(0);
-        flags_0 = (unsigned char)tmp_16;
+        flags_0 = (uch)tmp_16;
         if (((int)flags_0 & 0x20) != 0) {
           fprintf(__fc_stderr,
                   "%s: %s is encrypted -- get newer version of gzip\n",
@@ -1800,7 +1800,7 @@ static int get_method(int in)
           tmp_19 = (int)inbuf[tmp_17];
         }
         else tmp_19 = fill_inbuf(0);
-        stamp = (unsigned long)tmp_19;
+        stamp = (ulg)tmp_19;
         if (inptr < insize) {
           unsigned int tmp_20;
           tmp_20 = inptr;
@@ -1808,7 +1808,7 @@ static int get_method(int in)
           tmp_22 = (int)inbuf[tmp_20];
         }
         else tmp_22 = fill_inbuf(0);
-        stamp |= (unsigned long)tmp_22 << 8;
+        stamp |= (ulg)tmp_22 << 8;
         if (inptr < insize) {
           unsigned int tmp_23;
           tmp_23 = inptr;
@@ -1816,7 +1816,7 @@ static int get_method(int in)
           tmp_25 = (int)inbuf[tmp_23];
         }
         else tmp_25 = fill_inbuf(0);
-        stamp |= (unsigned long)tmp_25 << 16;
+        stamp |= (ulg)tmp_25 << 16;
         if (inptr < insize) {
           unsigned int tmp_26;
           tmp_26 = inptr;
@@ -1824,7 +1824,7 @@ static int get_method(int in)
           tmp_28 = (int)inbuf[tmp_26];
         }
         else tmp_28 = fill_inbuf(0);
-        stamp |= (unsigned long)tmp_28 << 24;
+        stamp |= (ulg)tmp_28 << 24;
         if (stamp != (ulg)0) 
           if (! no_time) time_stamp = (long)stamp;
         if (inptr < insize) {
@@ -1970,12 +1970,12 @@ static int get_method(int in)
     else {
       int tmp_59;
       tmp_59 = memcmp((void const *)(magic),(void const *)"PK\003\004",
-                      (unsigned int)2);
+                      (size_t)2);
       if (tmp_59 == 0) {
         if (inptr == (unsigned int)2) {
           int tmp_60;
           tmp_60 = memcmp((void const *)(inbuf),(void const *)"PK\003\004",
-                          (unsigned int)4);
+                          (size_t)4);
           if (tmp_60 == 0) {
             int tmp_55;
             inptr = (unsigned int)0;
@@ -1995,7 +1995,7 @@ static int get_method(int in)
         int tmp_58;
         _LAND_2:
         tmp_58 = memcmp((void const *)(magic),(void const *)"\037\036",
-                        (unsigned int)2);
+                        (size_t)2);
         if (tmp_58 == 0) {
           work = & unpack;
           method = 2;
@@ -2003,7 +2003,7 @@ static int get_method(int in)
         else {
           int tmp_57;
           tmp_57 = memcmp((void const *)(magic),(void const *)"\037\235",
-                          (unsigned int)2);
+                          (size_t)2);
           if (tmp_57 == 0) {
             work = & unlzw;
             method = 1;
@@ -2012,7 +2012,7 @@ static int get_method(int in)
           else {
             int tmp_56;
             tmp_56 = memcmp((void const *)(magic),(void const *)"\037\240",
-                            (unsigned int)2);
+                            (size_t)2);
             if (tmp_56 == 0) {
               work = & unlzh;
               method = 3;
@@ -2204,25 +2204,24 @@ static void do_list(int ifd_0, int method_0)
       goto return_label;
     }
   }
-  crc_0 = (unsigned long)(~ 0);
+  crc_0 = (ulg)(~ 0);
   bytes_out = -1L;
   bytes_in = ifile_size;
   if (method_0 == 8) 
     if (! last_member) {
-      bytes_in = lseek(ifd_0,(long)(-8),2);
+      bytes_in = lseek(ifd_0,(off_t)(-8),2);
       if (bytes_in != -1L) {
         uch buf[8];
         ssize_t tmp_0;
         bytes_in += 8L;
         tmp_0 = read(ifd_0,(void *)(buf),sizeof(buf));
         if ((unsigned int)tmp_0 != sizeof(buf)) read_error();
-        crc_0 = (unsigned long)((int)((unsigned short)buf[0]) | ((int)((unsigned short)buf[1]) << 8)) | (
-                (unsigned long)((int)((unsigned short)*(& buf[2] + 0)) | (
-                                (int)((unsigned short)*(& buf[2] + 1)) << 8)) << 16);
-        bytes_out = (long)((unsigned long)((int)((unsigned short)*(& buf[4] + 0)) | (
-                                           (int)((unsigned short)*(& buf[4] + 1)) << 8)) | (
-                           (unsigned long)((int)((unsigned short)*((& buf[4] + 2) + 0)) | (
-                                           (int)((unsigned short)*((& buf[4] + 2) + 1)) << 8)) << 16));
+        crc_0 = (ulg)((int)((ush)buf[0]) | ((int)((ush)buf[1]) << 8)) | (
+                (ulg)((int)((ush)*(& buf[2] + 0)) | ((int)((ush)*(& buf[2] + 1)) << 8)) << 16);
+        bytes_out = (long)((ulg)((int)((ush)*(& buf[4] + 0)) | ((int)((ush)*(
+                                                                & buf[4] + 1)) << 8)) | (
+                           (ulg)((int)((ush)*((& buf[4] + 2) + 0)) | (
+                                 (int)((ush)*((& buf[4] + 2) + 1)) << 8)) << 16));
       }
     }
   tmp_1 = ctime((time_t const *)(& time_stamp));
@@ -2519,7 +2518,7 @@ static int check_ofname(void)
       goto return_label;
     }
   }
-  chmod((char const *)(ofname),(unsigned int)0777);
+  chmod((char const *)(ofname),(mode_t)0777);
   tmp_9 = unlink((char const *)(ofname));
   if (tmp_9) {
     fprintf(__fc_stderr,"%s: ",progname); /* fprintf_va_44 */
@@ -2573,7 +2572,7 @@ static void copy_stat(struct stat *ifstat)
   }
   chown((char const *)(ofname),ifstat->st_uid,ifstat->st_gid);
   remove_ofname = 0;
-  chmod((char const *)(ifname),(unsigned int)0777);
+  chmod((char const *)(ifname),(mode_t)0777);
   tmp_0 = unlink((char const *)(ifname));
   if (tmp_0) {
     if (! quiet) fprintf(__fc_stderr,"%s: ",progname); /* fprintf_va_46 */
@@ -2705,9 +2704,9 @@ int zip(int in, int out) __attribute__((__FC_OLDSTYLEPROTO__));
 int zip(int in, int out)
 {
   int __retres;
-  uch flags_0 = (unsigned char)0;
-  ush attr = (unsigned short)0;
-  ush deflate_flags = (unsigned short)0;
+  uch flags_0 = (uch)0;
+  ush attr = (ush)0;
+  ush deflate_flags = (ush)0;
   ifd = in;
   ofd = out;
   outcnt = (unsigned int)0;
@@ -2716,24 +2715,24 @@ int zip(int in, int out)
     unsigned int tmp;
     tmp = outcnt;
     outcnt ++;
-    outbuf[tmp] = (unsigned char)*("\037\213" + 0);
+    outbuf[tmp] = (uch)*("\037\213" + 0);
     if (outcnt == (unsigned int)16384) flush_outbuf();
   }
   {
     unsigned int tmp_0;
     tmp_0 = outcnt;
     outcnt ++;
-    outbuf[tmp_0] = (unsigned char)*("\037\213" + 1);
+    outbuf[tmp_0] = (uch)*("\037\213" + 1);
     if (outcnt == (unsigned int)16384) flush_outbuf();
   }
   {
     unsigned int tmp_1;
     tmp_1 = outcnt;
     outcnt ++;
-    outbuf[tmp_1] = (unsigned char)8;
+    outbuf[tmp_1] = (uch)8;
     if (outcnt == (unsigned int)16384) flush_outbuf();
   }
-  if (save_orig_name) flags_0 = (unsigned char)((int)flags_0 | 0x08);
+  if (save_orig_name) flags_0 = (uch)((int)flags_0 | 0x08);
   {
     unsigned int tmp_2;
     tmp_2 = outcnt;
@@ -2746,24 +2745,24 @@ int zip(int in, int out)
     unsigned int tmp_4;
     tmp_3 = outcnt;
     outcnt ++;
-    outbuf[tmp_3] = (unsigned char)((time_stamp & (long)0xffff) & (long)0xff);
+    outbuf[tmp_3] = (uch)((time_stamp & (long)0xffff) & (long)0xff);
     tmp_4 = outcnt;
     outcnt ++;
-    outbuf[tmp_4] = (unsigned char)((int)((unsigned short)(time_stamp & (long)0xffff)) >> 8);
+    outbuf[tmp_4] = (uch)((int)((ush)(time_stamp & (long)0xffff)) >> 8);
   }
   else {
     {
       unsigned int tmp_5;
       tmp_5 = outcnt;
       outcnt ++;
-      outbuf[tmp_5] = (unsigned char)((time_stamp & (long)0xffff) & (long)0xff);
+      outbuf[tmp_5] = (uch)((time_stamp & (long)0xffff) & (long)0xff);
       if (outcnt == (unsigned int)16384) flush_outbuf();
     }
     {
       unsigned int tmp_6;
       tmp_6 = outcnt;
       outcnt ++;
-      outbuf[tmp_6] = (unsigned char)((int)((unsigned short)(time_stamp & (long)0xffff)) >> 8);
+      outbuf[tmp_6] = (uch)((int)((ush)(time_stamp & (long)0xffff)) >> 8);
       if (outcnt == (unsigned int)16384) flush_outbuf();
     }
   }
@@ -2772,24 +2771,24 @@ int zip(int in, int out)
     unsigned int tmp_8;
     tmp_7 = outcnt;
     outcnt ++;
-    outbuf[tmp_7] = (unsigned char)(((unsigned long)time_stamp >> 16) & (unsigned long)0xff);
+    outbuf[tmp_7] = (uch)(((ulg)time_stamp >> 16) & (unsigned long)0xff);
     tmp_8 = outcnt;
     outcnt ++;
-    outbuf[tmp_8] = (unsigned char)((int)((unsigned short)((unsigned long)time_stamp >> 16)) >> 8);
+    outbuf[tmp_8] = (uch)((int)((ush)((ulg)time_stamp >> 16)) >> 8);
   }
   else {
     {
       unsigned int tmp_9;
       tmp_9 = outcnt;
       outcnt ++;
-      outbuf[tmp_9] = (unsigned char)(((unsigned long)time_stamp >> 16) & (unsigned long)0xff);
+      outbuf[tmp_9] = (uch)(((ulg)time_stamp >> 16) & (unsigned long)0xff);
       if (outcnt == (unsigned int)16384) flush_outbuf();
     }
     {
       unsigned int tmp_10;
       tmp_10 = outcnt;
       outcnt ++;
-      outbuf[tmp_10] = (unsigned char)((int)((unsigned short)((unsigned long)time_stamp >> 16)) >> 8);
+      outbuf[tmp_10] = (uch)((int)((ush)((ulg)time_stamp >> 16)) >> 8);
       if (outcnt == (unsigned int)16384) flush_outbuf();
     }
   }
@@ -2801,14 +2800,14 @@ int zip(int in, int out)
     unsigned int tmp_11;
     tmp_11 = outcnt;
     outcnt ++;
-    outbuf[tmp_11] = (unsigned char)deflate_flags;
+    outbuf[tmp_11] = (uch)deflate_flags;
     if (outcnt == (unsigned int)16384) flush_outbuf();
   }
   {
     unsigned int tmp_12;
     tmp_12 = outcnt;
     outcnt ++;
-    outbuf[tmp_12] = (unsigned char)0x03;
+    outbuf[tmp_12] = (uch)0x03;
     if (outcnt == (unsigned int)16384) flush_outbuf();
   }
   if (save_orig_name) {
@@ -2819,7 +2818,7 @@ int zip(int in, int out)
         unsigned int tmp_14;
         tmp_14 = outcnt;
         outcnt ++;
-        outbuf[tmp_14] = (unsigned char)*p;
+        outbuf[tmp_14] = (uch)*p;
         if (outcnt == (unsigned int)16384) flush_outbuf();
       }
       tmp_15 = p;
@@ -2835,24 +2834,24 @@ int zip(int in, int out)
     unsigned int tmp_17;
     tmp_16 = outcnt;
     outcnt ++;
-    outbuf[tmp_16] = (unsigned char)((crc & (unsigned long)0xffff) & (unsigned long)0xff);
+    outbuf[tmp_16] = (uch)((crc & (unsigned long)0xffff) & (unsigned long)0xff);
     tmp_17 = outcnt;
     outcnt ++;
-    outbuf[tmp_17] = (unsigned char)((int)((unsigned short)(crc & (unsigned long)0xffff)) >> 8);
+    outbuf[tmp_17] = (uch)((int)((ush)(crc & (unsigned long)0xffff)) >> 8);
   }
   else {
     {
       unsigned int tmp_18;
       tmp_18 = outcnt;
       outcnt ++;
-      outbuf[tmp_18] = (unsigned char)((crc & (unsigned long)0xffff) & (unsigned long)0xff);
+      outbuf[tmp_18] = (uch)((crc & (unsigned long)0xffff) & (unsigned long)0xff);
       if (outcnt == (unsigned int)16384) flush_outbuf();
     }
     {
       unsigned int tmp_19;
       tmp_19 = outcnt;
       outcnt ++;
-      outbuf[tmp_19] = (unsigned char)((int)((unsigned short)(crc & (unsigned long)0xffff)) >> 8);
+      outbuf[tmp_19] = (uch)((int)((ush)(crc & (unsigned long)0xffff)) >> 8);
       if (outcnt == (unsigned int)16384) flush_outbuf();
     }
   }
@@ -2861,24 +2860,24 @@ int zip(int in, int out)
     unsigned int tmp_21;
     tmp_20 = outcnt;
     outcnt ++;
-    outbuf[tmp_20] = (unsigned char)((crc >> 16) & (unsigned long)0xff);
+    outbuf[tmp_20] = (uch)((crc >> 16) & (unsigned long)0xff);
     tmp_21 = outcnt;
     outcnt ++;
-    outbuf[tmp_21] = (unsigned char)((int)((unsigned short)(crc >> 16)) >> 8);
+    outbuf[tmp_21] = (uch)((int)((ush)(crc >> 16)) >> 8);
   }
   else {
     {
       unsigned int tmp_22;
       tmp_22 = outcnt;
       outcnt ++;
-      outbuf[tmp_22] = (unsigned char)((crc >> 16) & (unsigned long)0xff);
+      outbuf[tmp_22] = (uch)((crc >> 16) & (unsigned long)0xff);
       if (outcnt == (unsigned int)16384) flush_outbuf();
     }
     {
       unsigned int tmp_23;
       tmp_23 = outcnt;
       outcnt ++;
-      outbuf[tmp_23] = (unsigned char)((int)((unsigned short)(crc >> 16)) >> 8);
+      outbuf[tmp_23] = (uch)((int)((ush)(crc >> 16)) >> 8);
       if (outcnt == (unsigned int)16384) flush_outbuf();
     }
   }
@@ -2887,24 +2886,24 @@ int zip(int in, int out)
     unsigned int tmp_25;
     tmp_24 = outcnt;
     outcnt ++;
-    outbuf[tmp_24] = (unsigned char)((bytes_in & (long)0xffff) & (long)0xff);
+    outbuf[tmp_24] = (uch)((bytes_in & (long)0xffff) & (long)0xff);
     tmp_25 = outcnt;
     outcnt ++;
-    outbuf[tmp_25] = (unsigned char)((int)((unsigned short)(bytes_in & (long)0xffff)) >> 8);
+    outbuf[tmp_25] = (uch)((int)((ush)(bytes_in & (long)0xffff)) >> 8);
   }
   else {
     {
       unsigned int tmp_26;
       tmp_26 = outcnt;
       outcnt ++;
-      outbuf[tmp_26] = (unsigned char)((bytes_in & (long)0xffff) & (long)0xff);
+      outbuf[tmp_26] = (uch)((bytes_in & (long)0xffff) & (long)0xff);
       if (outcnt == (unsigned int)16384) flush_outbuf();
     }
     {
       unsigned int tmp_27;
       tmp_27 = outcnt;
       outcnt ++;
-      outbuf[tmp_27] = (unsigned char)((int)((unsigned short)(bytes_in & (long)0xffff)) >> 8);
+      outbuf[tmp_27] = (uch)((int)((ush)(bytes_in & (long)0xffff)) >> 8);
       if (outcnt == (unsigned int)16384) flush_outbuf();
     }
   }
@@ -2913,24 +2912,24 @@ int zip(int in, int out)
     unsigned int tmp_29;
     tmp_28 = outcnt;
     outcnt ++;
-    outbuf[tmp_28] = (unsigned char)(((unsigned long)bytes_in >> 16) & (unsigned long)0xff);
+    outbuf[tmp_28] = (uch)(((ulg)bytes_in >> 16) & (unsigned long)0xff);
     tmp_29 = outcnt;
     outcnt ++;
-    outbuf[tmp_29] = (unsigned char)((int)((unsigned short)((unsigned long)bytes_in >> 16)) >> 8);
+    outbuf[tmp_29] = (uch)((int)((ush)((ulg)bytes_in >> 16)) >> 8);
   }
   else {
     {
       unsigned int tmp_30;
       tmp_30 = outcnt;
       outcnt ++;
-      outbuf[tmp_30] = (unsigned char)(((unsigned long)bytes_in >> 16) & (unsigned long)0xff);
+      outbuf[tmp_30] = (uch)(((ulg)bytes_in >> 16) & (unsigned long)0xff);
       if (outcnt == (unsigned int)16384) flush_outbuf();
     }
     {
       unsigned int tmp_31;
       tmp_31 = outcnt;
       outcnt ++;
-      outbuf[tmp_31] = (unsigned char)((int)((unsigned short)((unsigned long)bytes_in >> 16)) >> 8);
+      outbuf[tmp_31] = (uch)((int)((ush)((ulg)bytes_in >> 16)) >> 8);
       if (outcnt == (unsigned int)16384) flush_outbuf();
     }
   }
@@ -2959,12 +2958,12 @@ int file_read(char *buf, unsigned int size)
       goto return_label;
     }
   crc = updcrc((uch *)buf,len);
-  bytes_in = (long)((unsigned long)bytes_in + (unsigned long)len);
+  bytes_in = (long)((ulg)bytes_in + (ulg)len);
   __retres = (int)len;
   return_label: return __retres;
 }
 
-ulg window_size = (unsigned long)2 * (unsigned long)0x8000;
+ulg window_size = (ulg)2 * (ulg)0x8000;
 long block_start;
 static unsigned int ins_h;
 unsigned int prev_length;
@@ -2978,46 +2977,46 @@ static int compr_level;
 unsigned int good_match;
 int nice_match;
 static config configuration_table[10] =
-  {{.good_length = (unsigned short)0,
-    .max_lazy = (unsigned short)0,
-    .nice_length = (unsigned short)0,
-    .max_chain = (unsigned short)0},
-   {.good_length = (unsigned short)4,
-    .max_lazy = (unsigned short)4,
-    .nice_length = (unsigned short)8,
-    .max_chain = (unsigned short)4},
-   {.good_length = (unsigned short)4,
-    .max_lazy = (unsigned short)5,
-    .nice_length = (unsigned short)16,
-    .max_chain = (unsigned short)8},
-   {.good_length = (unsigned short)4,
-    .max_lazy = (unsigned short)6,
-    .nice_length = (unsigned short)32,
-    .max_chain = (unsigned short)32},
-   {.good_length = (unsigned short)4,
-    .max_lazy = (unsigned short)4,
-    .nice_length = (unsigned short)16,
-    .max_chain = (unsigned short)16},
-   {.good_length = (unsigned short)8,
-    .max_lazy = (unsigned short)16,
-    .nice_length = (unsigned short)32,
-    .max_chain = (unsigned short)32},
-   {.good_length = (unsigned short)8,
-    .max_lazy = (unsigned short)16,
-    .nice_length = (unsigned short)128,
-    .max_chain = (unsigned short)128},
-   {.good_length = (unsigned short)8,
-    .max_lazy = (unsigned short)32,
-    .nice_length = (unsigned short)128,
-    .max_chain = (unsigned short)256},
-   {.good_length = (unsigned short)32,
-    .max_lazy = (unsigned short)128,
-    .nice_length = (unsigned short)258,
-    .max_chain = (unsigned short)1024},
-   {.good_length = (unsigned short)32,
-    .max_lazy = (unsigned short)258,
-    .nice_length = (unsigned short)258,
-    .max_chain = (unsigned short)4096}};
+  {{.good_length = (ush)0,
+    .max_lazy = (ush)0,
+    .nice_length = (ush)0,
+    .max_chain = (ush)0},
+   {.good_length = (ush)4,
+    .max_lazy = (ush)4,
+    .nice_length = (ush)8,
+    .max_chain = (ush)4},
+   {.good_length = (ush)4,
+    .max_lazy = (ush)5,
+    .nice_length = (ush)16,
+    .max_chain = (ush)8},
+   {.good_length = (ush)4,
+    .max_lazy = (ush)6,
+    .nice_length = (ush)32,
+    .max_chain = (ush)32},
+   {.good_length = (ush)4,
+    .max_lazy = (ush)4,
+    .nice_length = (ush)16,
+    .max_chain = (ush)16},
+   {.good_length = (ush)8,
+    .max_lazy = (ush)16,
+    .nice_length = (ush)32,
+    .max_chain = (ush)32},
+   {.good_length = (ush)8,
+    .max_lazy = (ush)16,
+    .nice_length = (ush)128,
+    .max_chain = (ush)128},
+   {.good_length = (ush)8,
+    .max_lazy = (ush)32,
+    .nice_length = (ush)128,
+    .max_chain = (ush)256},
+   {.good_length = (ush)32,
+    .max_lazy = (ush)128,
+    .nice_length = (ush)258,
+    .max_chain = (ush)1024},
+   {.good_length = (ush)32,
+    .max_lazy = (ush)258,
+    .nice_length = (ush)258,
+    .max_chain = (ush)4096}};
 static void fill_window(void);
 
 static ulg deflate_fast(void);
@@ -3034,15 +3033,15 @@ void lm_init(int pack_level, ush *flags_0)
   else 
     if (pack_level > 9) error((char *)"bad pack level");
   compr_level = pack_level;
-  memset((void *)(& prev[0x8000]),0,
+  memset((voidp)(& prev[0x8000]),0,
          (unsigned int)(1 << 15) * sizeof(prev[0x8000]));
   max_lazy_match = (unsigned int)configuration_table[pack_level].max_lazy;
   good_match = (unsigned int)configuration_table[pack_level].good_length;
   nice_match = (int)configuration_table[pack_level].nice_length;
   max_chain_length = (unsigned int)configuration_table[pack_level].max_chain;
-  if (pack_level == 1) *flags_0 = (unsigned short)((int)*flags_0 | 4);
+  if (pack_level == 1) *flags_0 = (ush)((int)*flags_0 | 4);
   else 
-    if (pack_level == 9) *flags_0 = (unsigned short)((int)*flags_0 | 2);
+    if (pack_level == 9) *flags_0 = (ush)((int)*flags_0 | 2);
   strstart = (unsigned int)0;
   block_start = 0L;
   if (sizeof(int) <= (unsigned int)2) tmp = (unsigned int)0x8000;
@@ -3085,9 +3084,8 @@ int longest_match(IPos cur_match)
   unsigned int chain_length = max_chain_length;
   register uch *scan = & window[strstart];
   int best_len = (int)prev_length;
-  if (strstart > (unsigned int)(0x8000 - ((258 + 3) + 1))) tmp = strstart - (unsigned int)(
-                                                                 0x8000 - (
-                                                                 (258 + 3) + 1));
+  if (strstart > (IPos)(0x8000 - ((258 + 3) + 1))) tmp = strstart - (IPos)(
+                                                         0x8000 - ((258 + 3) + 1));
   else tmp = (unsigned int)0;
   IPos limit = tmp;
   register uch *strend = & window[strstart] + 258;
@@ -3170,7 +3168,7 @@ int longest_match(IPos cur_match)
     }
     __Cont:
     { /* sequence */
-      cur_match = (unsigned int)prev[cur_match & (unsigned int)(0x8000 - 1)];
+      cur_match = (IPos)prev[cur_match & (unsigned int)(0x8000 - 1)];
       ;
     }
     if (cur_match > limit) {
@@ -3187,7 +3185,7 @@ static void fill_window(void)
   register unsigned int n;
   register unsigned int m;
   unsigned int more =
-    (unsigned int)((window_size - (unsigned long)lookahead) - (unsigned long)strstart);
+    (unsigned int)((window_size - (ulg)lookahead) - (ulg)strstart);
   if (more == (unsigned int)(-1)) more --;
   else 
     if (strstart >= (unsigned int)(0x8000 + (0x8000 - ((258 + 3) + 1)))) {
@@ -3203,7 +3201,7 @@ static void fill_window(void)
           m = (unsigned int)*(& prev[0x8000] + n);
           if (m >= (unsigned int)0x8000) tmp = m - (unsigned int)0x8000;
           else tmp = (unsigned int)0;
-          *(& prev[0x8000] + n) = (unsigned short)tmp;
+          *(& prev[0x8000] + n) = (Pos)tmp;
         }
         n ++;
       }
@@ -3214,7 +3212,7 @@ static void fill_window(void)
           m = (unsigned int)prev[n];
           if (m >= (unsigned int)0x8000) tmp_0 = m - (unsigned int)0x8000;
           else tmp_0 = (unsigned int)0;
-          prev[n] = (unsigned short)tmp_0;
+          prev[n] = (Pos)tmp_0;
         }
         n ++;
       }
@@ -3242,9 +3240,9 @@ static ulg deflate_fast(void)
   while (lookahead != (unsigned int)0) {
     ins_h = ((ins_h << ((15 + 3) - 1) / 3) ^ (unsigned int)window[(strstart + (unsigned int)3) - (unsigned int)1]) & (
             (unsigned int)(1 << 15) - (unsigned int)1);
-    hash_head = (unsigned int)*(& prev[0x8000] + ins_h);
-    prev[strstart & (unsigned int)(0x8000 - 1)] = (unsigned short)hash_head;
-    *(& prev[0x8000] + ins_h) = (unsigned short)strstart;
+    hash_head = (IPos)*(& prev[0x8000] + ins_h);
+    prev[strstart & (unsigned int)(0x8000 - 1)] = (ush)hash_head;
+    *(& prev[0x8000] + ins_h) = (ush)strstart;
     if (hash_head != (IPos)0) 
       if (strstart - hash_head <= (unsigned int)(0x8000 - ((258 + 3) + 1))) {
         int tmp;
@@ -3263,9 +3261,9 @@ static ulg deflate_fast(void)
           ins_h = ((ins_h << ((15 + 3) - 1) / 3) ^ (unsigned int)window[
                    (strstart + (unsigned int)3) - (unsigned int)1]) & (
                   (unsigned int)(1 << 15) - (unsigned int)1);
-          hash_head = (unsigned int)*(& prev[0x8000] + ins_h);
-          prev[strstart & (unsigned int)(0x8000 - 1)] = (unsigned short)hash_head;
-          *(& prev[0x8000] + ins_h) = (unsigned short)strstart;
+          hash_head = (IPos)*(& prev[0x8000] + ins_h);
+          prev[strstart & (unsigned int)(0x8000 - 1)] = (ush)hash_head;
+          *(& prev[0x8000] + ins_h) = (ush)strstart;
           match_length --;
           if (! (match_length != (unsigned int)0)) break;
         }
@@ -3289,7 +3287,7 @@ static ulg deflate_fast(void)
       ;
       if (block_start >= 0L) tmp_0 = (char *)(& window[(unsigned int)block_start]);
       else tmp_0 = (char *)0;
-      flush_block(tmp_0,(unsigned long)((long)strstart - block_start),0);
+      flush_block(tmp_0,(ulg)((long)strstart - block_start),0);
       block_start = (long)strstart;
     }
     while (1) {
@@ -3303,7 +3301,7 @@ static ulg deflate_fast(void)
   ;
   if (block_start >= 0L) tmp_1 = (char *)(& window[(unsigned int)block_start]);
   else tmp_1 = (char *)0;
-  tmp_2 = flush_block(tmp_1,(unsigned long)((long)strstart - block_start),1);
+  tmp_2 = flush_block(tmp_1,(ulg)((long)strstart - block_start),1);
   return tmp_2;
 }
 
@@ -3326,9 +3324,9 @@ ulg deflate(void)
   while (lookahead != (unsigned int)0) {
     ins_h = ((ins_h << ((15 + 3) - 1) / 3) ^ (unsigned int)window[(strstart + (unsigned int)3) - (unsigned int)1]) & (
             (unsigned int)(1 << 15) - (unsigned int)1);
-    hash_head = (unsigned int)*(& prev[0x8000] + ins_h);
-    prev[strstart & (unsigned int)(0x8000 - 1)] = (unsigned short)hash_head;
-    *(& prev[0x8000] + ins_h) = (unsigned short)strstart;
+    hash_head = (IPos)*(& prev[0x8000] + ins_h);
+    prev[strstart & (unsigned int)(0x8000 - 1)] = (ush)hash_head;
+    *(& prev[0x8000] + ins_h) = (ush)strstart;
     prev_length = match_length;
     prev_match = match_start;
     match_length = (unsigned int)(3 - 1);
@@ -3353,9 +3351,9 @@ ulg deflate(void)
           ins_h = ((ins_h << ((15 + 3) - 1) / 3) ^ (unsigned int)window[
                    (strstart + (unsigned int)3) - (unsigned int)1]) & (
                   (unsigned int)(1 << 15) - (unsigned int)1);
-          hash_head = (unsigned int)*(& prev[0x8000] + ins_h);
-          prev[strstart & (unsigned int)(0x8000 - 1)] = (unsigned short)hash_head;
-          *(& prev[0x8000] + ins_h) = (unsigned short)strstart;
+          hash_head = (IPos)*(& prev[0x8000] + ins_h);
+          prev[strstart & (unsigned int)(0x8000 - 1)] = (ush)hash_head;
+          *(& prev[0x8000] + ins_h) = (ush)strstart;
           prev_length --;
           if (! (prev_length != (unsigned int)0)) break;
         }
@@ -3367,7 +3365,7 @@ ulg deflate(void)
           ;
           if (block_start >= 0L) tmp_1 = (char *)(& window[(unsigned int)block_start]);
           else tmp_1 = (char *)0;
-          flush_block(tmp_1,(unsigned long)((long)strstart - block_start),0);
+          flush_block(tmp_1,(ulg)((long)strstart - block_start),0);
           block_start = (long)strstart;
         }
       }
@@ -3383,7 +3381,7 @@ ulg deflate(void)
           ;
           if (block_start >= 0L) tmp_2 = (char *)(& window[(unsigned int)block_start]);
           else tmp_2 = (char *)0;
-          flush_block(tmp_2,(unsigned long)((long)strstart - block_start),0);
+          flush_block(tmp_2,(ulg)((long)strstart - block_start),0);
           block_start = (long)strstart;
         }
         strstart ++;
@@ -3407,7 +3405,7 @@ ulg deflate(void)
   ;
   if (block_start >= 0L) tmp_4 = (char *)(& window[(unsigned int)block_start]);
   else tmp_4 = (char *)0;
-  tmp_5 = flush_block(tmp_4,(unsigned long)((long)strstart - block_start),1);
+  tmp_5 = flush_block(tmp_4,(ulg)((long)strstart - block_start),1);
   __retres = tmp_5;
   return_label: return __retres;
 }
@@ -3506,25 +3504,25 @@ static tree_desc bl_desc =
    .max_code = 0};
 static ush bl_count[15 + 1];
 static uch bl_order[19] =
-  {(unsigned char)16,
-   (unsigned char)17,
-   (unsigned char)18,
-   (unsigned char)0,
-   (unsigned char)8,
-   (unsigned char)7,
-   (unsigned char)9,
-   (unsigned char)6,
-   (unsigned char)10,
-   (unsigned char)5,
-   (unsigned char)11,
-   (unsigned char)4,
-   (unsigned char)12,
-   (unsigned char)3,
-   (unsigned char)13,
-   (unsigned char)2,
-   (unsigned char)14,
-   (unsigned char)1,
-   (unsigned char)15};
+  {(uch)16,
+   (uch)17,
+   (uch)18,
+   (uch)0,
+   (uch)8,
+   (uch)7,
+   (uch)9,
+   (uch)6,
+   (uch)10,
+   (uch)5,
+   (uch)11,
+   (uch)4,
+   (uch)12,
+   (uch)3,
+   (uch)13,
+   (uch)2,
+   (uch)14,
+   (uch)1,
+   (uch)15};
 static int heap[2 * ((256 + 1) + 29) + 1];
 static int heap_len;
 static int heap_max;
@@ -3579,7 +3577,7 @@ void ct_init(ush *attr, int *methodp)
   int dist;
   file_type = attr;
   file_method = methodp;
-  input_len = (unsigned long)0L;
+  input_len = (ulg)0L;
   compressed_len = input_len;
   if ((int)static_dtree[0].dl.len != 0) goto return_label;
   length = 0;
@@ -3592,13 +3590,13 @@ void ct_init(ush *attr, int *methodp)
         int tmp;
         tmp = length;
         length ++;
-        length_code[tmp] = (unsigned char)code;
+        length_code[tmp] = (uch)code;
       }
       n ++;
     }
     code ++;
   }
-  length_code[length - 1] = (unsigned char)code;
+  length_code[length - 1] = (uch)code;
   dist = 0;
   code = 0;
   while (code < 16) {
@@ -3609,7 +3607,7 @@ void ct_init(ush *attr, int *methodp)
         int tmp_0;
         tmp_0 = dist;
         dist ++;
-        dist_code[tmp_0] = (unsigned char)code;
+        dist_code[tmp_0] = (uch)code;
       }
       n ++;
     }
@@ -3624,7 +3622,7 @@ void ct_init(ush *attr, int *methodp)
         int tmp_1;
         tmp_1 = dist;
         dist ++;
-        dist_code[256 + tmp_1] = (unsigned char)code;
+        dist_code[256 + tmp_1] = (uch)code;
       }
       n ++;
     }
@@ -3632,7 +3630,7 @@ void ct_init(ush *attr, int *methodp)
   }
   bits = 0;
   while (bits <= 15) {
-    bl_count[bits] = (unsigned short)0;
+    bl_count[bits] = (ush)0;
     bits ++;
   }
   n = 0;
@@ -3640,38 +3638,38 @@ void ct_init(ush *attr, int *methodp)
     int tmp_2;
     tmp_2 = n;
     n ++;
-    static_ltree[tmp_2].dl.len = (unsigned short)8;
-    bl_count[8] = (unsigned short)((int)bl_count[8] + 1);
+    static_ltree[tmp_2].dl.len = (ush)8;
+    bl_count[8] = (ush)((int)bl_count[8] + 1);
   }
   while (n <= 255) {
     int tmp_3;
     tmp_3 = n;
     n ++;
-    static_ltree[tmp_3].dl.len = (unsigned short)9;
-    bl_count[9] = (unsigned short)((int)bl_count[9] + 1);
+    static_ltree[tmp_3].dl.len = (ush)9;
+    bl_count[9] = (ush)((int)bl_count[9] + 1);
   }
   while (n <= 279) {
     int tmp_4;
     tmp_4 = n;
     n ++;
-    static_ltree[tmp_4].dl.len = (unsigned short)7;
-    bl_count[7] = (unsigned short)((int)bl_count[7] + 1);
+    static_ltree[tmp_4].dl.len = (ush)7;
+    bl_count[7] = (ush)((int)bl_count[7] + 1);
   }
   while (n <= 287) {
     int tmp_5;
     tmp_5 = n;
     n ++;
-    static_ltree[tmp_5].dl.len = (unsigned short)8;
-    bl_count[8] = (unsigned short)((int)bl_count[8] + 1);
+    static_ltree[tmp_5].dl.len = (ush)8;
+    bl_count[8] = (ush)((int)bl_count[8] + 1);
   }
   gen_codes(static_ltree,((256 + 1) + 29) + 1);
   n = 0;
   while (n < 30) {
     {
       unsigned int tmp_6;
-      static_dtree[n].dl.len = (unsigned short)5;
+      static_dtree[n].dl.len = (ush)5;
       tmp_6 = bi_reverse((unsigned int)n,5);
-      static_dtree[n].fc.code = (unsigned short)tmp_6;
+      static_dtree[n].fc.code = (ush)tmp_6;
     }
     n ++;
   }
@@ -3684,27 +3682,27 @@ static void init_block(void)
   int n;
   n = 0;
   while (n < (256 + 1) + 29) {
-    dyn_ltree[n].fc.freq = (unsigned short)0;
+    dyn_ltree[n].fc.freq = (ush)0;
     n ++;
   }
   n = 0;
   while (n < 30) {
-    dyn_dtree[n].fc.freq = (unsigned short)0;
+    dyn_dtree[n].fc.freq = (ush)0;
     n ++;
   }
   n = 0;
   while (n < 19) {
-    bl_tree[n].fc.freq = (unsigned short)0;
+    bl_tree[n].fc.freq = (ush)0;
     n ++;
   }
-  dyn_ltree[256].fc.freq = (unsigned short)1;
-  static_len = (unsigned long)0L;
+  dyn_ltree[256].fc.freq = (ush)1;
+  static_len = (ulg)0L;
   opt_len = static_len;
   last_flags = (unsigned int)0;
   last_dist = last_flags;
   last_lit = last_dist;
-  flags = (unsigned char)0;
-  flag_bit = (unsigned char)1;
+  flags = (uch)0;
+  flag_bit = (uch)1;
   return;
 }
 
@@ -3751,10 +3749,10 @@ static void gen_bitlen(tree_desc *desc)
   int overflow = 0;
   bits = 0;
   while (bits <= 15) {
-    bl_count[bits] = (unsigned short)0;
+    bl_count[bits] = (ush)0;
     bits ++;
   }
-  (tree + heap[heap_max])->dl.len = (unsigned short)0;
+  (tree + heap[heap_max])->dl.len = (ush)0;
   h = heap_max + 1;
   while (h < 2 * ((256 + 1) + 29) + 1) {
     n = heap[h];
@@ -3763,24 +3761,23 @@ static void gen_bitlen(tree_desc *desc)
       bits = max_length;
       overflow ++;
     }
-    (tree + n)->dl.len = (unsigned short)bits;
+    (tree + n)->dl.len = (ush)bits;
     if (n > max_code) goto __Cont;
-    bl_count[bits] = (unsigned short)((int)bl_count[bits] + 1);
+    bl_count[bits] = (ush)((int)bl_count[bits] + 1);
     xbits = 0;
     if (n >= base) xbits = *(extra + (n - base));
     f = (tree + n)->fc.freq;
-    opt_len += (unsigned long)f * (unsigned long)(bits + xbits);
-    if (stree) static_len += (unsigned long)f * (unsigned long)((int)(
-                                                                stree + n)->dl.len + xbits);
+    opt_len += (ulg)f * (ulg)(bits + xbits);
+    if (stree) static_len += (ulg)f * (ulg)((int)(stree + n)->dl.len + xbits);
     __Cont: h ++;
   }
   if (overflow == 0) goto return_label;
   while (1) {
     bits = max_length - 1;
     while ((int)bl_count[bits] == 0) bits --;
-    bl_count[bits] = (unsigned short)((int)bl_count[bits] - 1);
-    bl_count[bits + 1] = (unsigned short)((int)bl_count[bits + 1] + 2);
-    bl_count[max_length] = (unsigned short)((int)bl_count[max_length] - 1);
+    bl_count[bits] = (ush)((int)bl_count[bits] - 1);
+    bl_count[bits + 1] = (ush)((int)bl_count[bits + 1] + 2);
+    bl_count[max_length] = (ush)((int)bl_count[max_length] - 1);
     overflow -= 2;
     if (! (overflow > 0)) break;
   }
@@ -3794,7 +3791,7 @@ static void gen_bitlen(tree_desc *desc)
       if ((unsigned int)(tree + m)->dl.len != (unsigned int)bits) {
         opt_len += (ulg)(((long)bits - (long)(tree + m)->dl.len) * (long)(
                          tree + m)->fc.freq);
-        (tree + m)->dl.len = (unsigned short)bits;
+        (tree + m)->dl.len = (ush)bits;
       }
       n --;
     }
@@ -3809,10 +3806,10 @@ static void gen_codes(ct_data *tree, int max_code)
   ush next_code[15 + 1];
   int bits;
   int n;
-  ush code = (unsigned short)0;
+  ush code = (ush)0;
   bits = 1;
   while (bits <= 15) {
-    code = (unsigned short)(((int)code + (int)bl_count[bits - 1]) << 1);
+    code = (ush)(((int)code + (int)bl_count[bits - 1]) << 1);
     next_code[bits] = code;
     bits ++;
   }
@@ -3825,10 +3822,10 @@ static void gen_codes(ct_data *tree, int max_code)
       if (len == 0) goto __Cont;
       ;
       tmp = next_code[len];
-      next_code[len] = (unsigned short)((int)next_code[len] + 1);
+      next_code[len] = (ush)((int)next_code[len] + 1);
       ;
       tmp_0 = bi_reverse((unsigned int)tmp,len);
-      (tree + n)->fc.code = (unsigned short)tmp_0;
+      (tree + n)->fc.code = (ush)tmp_0;
     }
     __Cont: n ++;
   }
@@ -3853,9 +3850,9 @@ static void build_tree(tree_desc *desc)
       heap_len ++;
       max_code = n;
       heap[heap_len] = max_code;
-      depth[n] = (unsigned char)0;
+      depth[n] = (uch)0;
     }
-    else (tree + n)->dl.len = (unsigned short)0;
+    else (tree + n)->dl.len = (ush)0;
     n ++;
   }
   while (heap_len < 2) {
@@ -3868,8 +3865,8 @@ static void build_tree(tree_desc *desc)
     else tmp = 0;
     heap[heap_len] = tmp;
     int new = tmp;
-    (tree + new)->fc.freq = (unsigned short)1;
-    depth[new] = (unsigned char)0;
+    (tree + new)->fc.freq = (ush)1;
+    depth[new] = (uch)0;
     opt_len --;
     if (stree) static_len -= (ulg)(stree + new)->dl.len;
   }
@@ -3897,12 +3894,12 @@ static void build_tree(tree_desc *desc)
       heap[heap_max] = n;
       heap_max --;
       heap[heap_max] = m;
-      (tree + node)->fc.freq = (unsigned short)((int)(tree + n)->fc.freq + (int)(
-                                                tree + m)->fc.freq);
+      (tree + node)->fc.freq = (ush)((int)(tree + n)->fc.freq + (int)(
+                                     tree + m)->fc.freq);
       if ((int)depth[n] >= (int)depth[m]) tmp_1 = (int)depth[n];
       else tmp_1 = (int)depth[m];
-      depth[node] = (unsigned char)(tmp_1 + 1);
-      tmp_2 = (unsigned short)node;
+      depth[node] = (uch)(tmp_1 + 1);
+      tmp_2 = (ush)node;
       (tree + m)->dl.dad = tmp_2;
       (tree + n)->dl.dad = tmp_2;
       tmp_3 = node;
@@ -3933,7 +3930,7 @@ static void scan_tree(ct_data *tree, int max_code)
     max_count = 138;
     min_count = 3;
   }
-  (tree + (max_code + 1))->dl.len = (unsigned short)0xffff;
+  (tree + (max_code + 1))->dl.len = (ush)0xffff;
   n = 0;
   while (n <= max_code) {
     curlen = nextlen;
@@ -3945,17 +3942,15 @@ static void scan_tree(ct_data *tree, int max_code)
     }
     else {
       _LAND: ;
-      if (count < min_count) bl_tree[curlen].fc.freq = (unsigned short)(
-                             (int)bl_tree[curlen].fc.freq + count);
+      if (count < min_count) bl_tree[curlen].fc.freq = (ush)((int)bl_tree[curlen].fc.freq + count);
       else 
         if (curlen != 0) {
-          if (curlen != prevlen) bl_tree[curlen].fc.freq = (unsigned short)(
-                                 (int)bl_tree[curlen].fc.freq + 1);
-          bl_tree[16].fc.freq = (unsigned short)((int)bl_tree[16].fc.freq + 1);
+          if (curlen != prevlen) bl_tree[curlen].fc.freq = (ush)((int)bl_tree[curlen].fc.freq + 1);
+          bl_tree[16].fc.freq = (ush)((int)bl_tree[16].fc.freq + 1);
         }
         else 
-          if (count <= 10) bl_tree[17].fc.freq = (unsigned short)((int)bl_tree[17].fc.freq + 1);
-          else bl_tree[18].fc.freq = (unsigned short)((int)bl_tree[18].fc.freq + 1);
+          if (count <= 10) bl_tree[17].fc.freq = (ush)((int)bl_tree[17].fc.freq + 1);
+          else bl_tree[18].fc.freq = (ush)((int)bl_tree[18].fc.freq + 1);
     }
     count = 0;
     prevlen = curlen;
@@ -4089,7 +4084,7 @@ ulg flush_block(char *buf, ulg stored_len, int eof)
   ulg static_lenb;
   int max_blindex;
   flag_buf[last_flags] = flags;
-  if ((int)*file_type == (int)((unsigned short)0xffff)) set_file_type();
+  if ((int)*file_type == (int)((ush)0xffff)) set_file_type();
   build_tree(& l_desc);
   build_tree(& d_desc);
   max_blindex = build_bl_tree();
@@ -4147,40 +4142,39 @@ int ct_tally(int dist, int lc)
   int tmp_3;
   tmp = last_lit;
   last_lit ++;
-  inbuf[tmp] = (unsigned char)lc;
-  if (dist == 0) dyn_ltree[lc].fc.freq = (unsigned short)((int)dyn_ltree[lc].fc.freq + 1);
+  inbuf[tmp] = (uch)lc;
+  if (dist == 0) dyn_ltree[lc].fc.freq = (ush)((int)dyn_ltree[lc].fc.freq + 1);
   else {
     int tmp_0;
     unsigned int tmp_1;
     dist --;
-    dyn_ltree[((int)length_code[lc] + 256) + 1].fc.freq = (unsigned short)(
-    (int)dyn_ltree[((int)length_code[lc] + 256) + 1].fc.freq + 1);
+    dyn_ltree[((int)length_code[lc] + 256) + 1].fc.freq = (ush)((int)dyn_ltree[
+                                                                ((int)length_code[lc] + 256) + 1].fc.freq + 1);
     if (dist < 256) tmp_0 = (int)dist_code[dist];
     else tmp_0 = (int)dist_code[256 + (dist >> 7)];
-    dyn_dtree[tmp_0].fc.freq = (unsigned short)((int)dyn_dtree[tmp_0].fc.freq + 1);
+    dyn_dtree[tmp_0].fc.freq = (ush)((int)dyn_dtree[tmp_0].fc.freq + 1);
     tmp_1 = last_dist;
     last_dist ++;
-    d_buf[tmp_1] = (unsigned short)dist;
-    flags = (unsigned char)((int)flags | (int)flag_bit);
+    d_buf[tmp_1] = (ush)dist;
+    flags = (uch)((int)flags | (int)flag_bit);
   }
-  flag_bit = (unsigned char)((int)flag_bit << 1);
+  flag_bit = (uch)((int)flag_bit << 1);
   if ((last_lit & (unsigned int)7) == (unsigned int)0) {
     unsigned int tmp_2;
     tmp_2 = last_flags;
     last_flags ++;
     flag_buf[tmp_2] = flags;
-    flags = (unsigned char)0;
-    flag_bit = (unsigned char)1;
+    flags = (uch)0;
+    flag_bit = (uch)1;
   }
   if (level > 2) 
     if ((last_lit & (unsigned int)0xfff) == (unsigned int)0) {
       int dcode;
-      ulg out_length = (unsigned long)last_lit * (unsigned long)8L;
-      ulg in_length = (unsigned long)strstart - (unsigned long)block_start;
+      ulg out_length = (ulg)last_lit * (ulg)8L;
+      ulg in_length = (ulg)strstart - (ulg)block_start;
       dcode = 0;
       while (dcode < 30) {
-        out_length += (unsigned long)dyn_dtree[dcode].fc.freq * (unsigned long)(
-                      5L + (long)extra_dbits[dcode]);
+        out_length += (ulg)dyn_dtree[dcode].fc.freq * (ulg)(5L + (long)extra_dbits[dcode]);
         dcode ++;
       }
       out_length >>= 3;
@@ -4208,7 +4202,7 @@ static void compress_block(ct_data *ltree, ct_data *dtree)
   unsigned int lx = (unsigned int)0;
   unsigned int dx = (unsigned int)0;
   unsigned int fx = (unsigned int)0;
-  uch flag = (unsigned char)0;
+  uch flag = (uch)0;
   if (last_lit != (unsigned int)0) 
     while (1) {
       {
@@ -4246,7 +4240,7 @@ static void compress_block(ct_data *ltree, ct_data *dtree)
             send_bits((int)dist,extra);
           }
         }
-        flag = (unsigned char)((int)flag >> 1);
+        flag = (uch)((int)flag >> 1);
       }
       if (! (lx < last_lit)) break;
     }
@@ -4277,8 +4271,8 @@ static void set_file_type(void)
     n ++;
     bin_freq += (unsigned int)dyn_ltree[tmp_1].fc.freq;
   }
-  if (bin_freq > ascii_freq >> 2) *file_type = (unsigned short)0;
-  else *file_type = (unsigned short)1;
+  if (bin_freq > ascii_freq >> 2) *file_type = (ush)0;
+  else *file_type = (ush)1;
   if ((int)*file_type == 0) ;
   return;
 }
@@ -4307,29 +4301,28 @@ void send_bits(int value, int length)
       unsigned int tmp_0;
       tmp = outcnt;
       outcnt ++;
-      outbuf[tmp] = (unsigned char)((int)bi_buf & 0xff);
+      outbuf[tmp] = (uch)((int)bi_buf & 0xff);
       tmp_0 = outcnt;
       outcnt ++;
-      outbuf[tmp_0] = (unsigned char)((int)bi_buf >> 8);
+      outbuf[tmp_0] = (uch)((int)bi_buf >> 8);
     }
     else {
       {
         unsigned int tmp_1;
         tmp_1 = outcnt;
         outcnt ++;
-        outbuf[tmp_1] = (unsigned char)((int)bi_buf & 0xff);
+        outbuf[tmp_1] = (uch)((int)bi_buf & 0xff);
         if (outcnt == (unsigned int)16384) flush_outbuf();
       }
       {
         unsigned int tmp_2;
         tmp_2 = outcnt;
         outcnt ++;
-        outbuf[tmp_2] = (unsigned char)((int)bi_buf >> 8);
+        outbuf[tmp_2] = (uch)((int)bi_buf >> 8);
         if (outcnt == (unsigned int)16384) flush_outbuf();
       }
     }
-    bi_buf = (unsigned short)((int)((unsigned short)value) >> ((unsigned int)(
-                                                               8 * 2) * sizeof(char) - (unsigned int)bi_valid));
+    bi_buf = (unsigned short)((int)((ush)value) >> ((unsigned int)(8 * 2) * sizeof(char) - (unsigned int)bi_valid));
     bi_valid = (int)((unsigned int)bi_valid + ((unsigned int)length - 
                                                (unsigned int)(8 * 2) * sizeof(char)));
   }
@@ -4364,24 +4357,24 @@ void bi_windup(void)
       unsigned int tmp_0;
       tmp = outcnt;
       outcnt ++;
-      outbuf[tmp] = (unsigned char)((int)bi_buf & 0xff);
+      outbuf[tmp] = (uch)((int)bi_buf & 0xff);
       tmp_0 = outcnt;
       outcnt ++;
-      outbuf[tmp_0] = (unsigned char)((int)bi_buf >> 8);
+      outbuf[tmp_0] = (uch)((int)bi_buf >> 8);
     }
     else {
       {
         unsigned int tmp_1;
         tmp_1 = outcnt;
         outcnt ++;
-        outbuf[tmp_1] = (unsigned char)((int)bi_buf & 0xff);
+        outbuf[tmp_1] = (uch)((int)bi_buf & 0xff);
         if (outcnt == (unsigned int)16384) flush_outbuf();
       }
       {
         unsigned int tmp_2;
         tmp_2 = outcnt;
         outcnt ++;
-        outbuf[tmp_2] = (unsigned char)((int)bi_buf >> 8);
+        outbuf[tmp_2] = (uch)((int)bi_buf >> 8);
         if (outcnt == (unsigned int)16384) flush_outbuf();
       }
     }
@@ -4391,7 +4384,7 @@ void bi_windup(void)
         unsigned int tmp_3;
         tmp_3 = outcnt;
         outcnt ++;
-        outbuf[tmp_3] = (unsigned char)bi_buf;
+        outbuf[tmp_3] = (uch)bi_buf;
         if (outcnt == (unsigned int)16384) flush_outbuf();
       }
     }
@@ -4411,24 +4404,24 @@ void copy_block(char *buf, unsigned int len, int header)
       unsigned int tmp_0;
       tmp = outcnt;
       outcnt ++;
-      outbuf[tmp] = (unsigned char)((int)((unsigned short)len) & 0xff);
+      outbuf[tmp] = (uch)((int)((ush)len) & 0xff);
       tmp_0 = outcnt;
       outcnt ++;
-      outbuf[tmp_0] = (unsigned char)((int)((unsigned short)len) >> 8);
+      outbuf[tmp_0] = (uch)((int)((ush)len) >> 8);
     }
     else {
       {
         unsigned int tmp_1;
         tmp_1 = outcnt;
         outcnt ++;
-        outbuf[tmp_1] = (unsigned char)((int)((unsigned short)len) & 0xff);
+        outbuf[tmp_1] = (uch)((int)((ush)len) & 0xff);
         if (outcnt == (unsigned int)16384) flush_outbuf();
       }
       {
         unsigned int tmp_2;
         tmp_2 = outcnt;
         outcnt ++;
-        outbuf[tmp_2] = (unsigned char)((int)((unsigned short)len) >> 8);
+        outbuf[tmp_2] = (uch)((int)((ush)len) >> 8);
         if (outcnt == (unsigned int)16384) flush_outbuf();
       }
     }
@@ -4437,24 +4430,24 @@ void copy_block(char *buf, unsigned int len, int header)
       unsigned int tmp_4;
       tmp_3 = outcnt;
       outcnt ++;
-      outbuf[tmp_3] = (unsigned char)((int)((unsigned short)(~ len)) & 0xff);
+      outbuf[tmp_3] = (uch)((int)((ush)(~ len)) & 0xff);
       tmp_4 = outcnt;
       outcnt ++;
-      outbuf[tmp_4] = (unsigned char)((int)((unsigned short)(~ len)) >> 8);
+      outbuf[tmp_4] = (uch)((int)((ush)(~ len)) >> 8);
     }
     else {
       {
         unsigned int tmp_5;
         tmp_5 = outcnt;
         outcnt ++;
-        outbuf[tmp_5] = (unsigned char)((int)((unsigned short)(~ len)) & 0xff);
+        outbuf[tmp_5] = (uch)((int)((ush)(~ len)) & 0xff);
         if (outcnt == (unsigned int)16384) flush_outbuf();
       }
       {
         unsigned int tmp_6;
         tmp_6 = outcnt;
         outcnt ++;
-        outbuf[tmp_6] = (unsigned char)((int)((unsigned short)(~ len)) >> 8);
+        outbuf[tmp_6] = (uch)((int)((ush)(~ len)) >> 8);
         if (outcnt == (unsigned int)16384) flush_outbuf();
       }
     }
@@ -4472,7 +4465,7 @@ void copy_block(char *buf, unsigned int len, int header)
       outcnt ++;
       tmp_8 = buf;
       buf ++;
-      outbuf[tmp_7] = (unsigned char)*tmp_8;
+      outbuf[tmp_7] = (uch)*tmp_8;
       if (outcnt == (unsigned int)16384) flush_outbuf();
     }
   }
@@ -4540,17 +4533,14 @@ int check_zipfile(int in)
   int __retres;
   uch *h = & inbuf[inptr];
   ifd = in;
-  inptr += (unsigned int)((30 + ((int)((unsigned short)*((h + 26) + 0)) | (
-                                 (int)((unsigned short)*((h + 26) + 1)) << 8))) + (
-                          (int)((unsigned short)*((h + 28) + 0)) | ((int)((unsigned short)*(
-                                                                    (
-                                                                    h + 28) + 1)) << 8)));
+  inptr += (unsigned int)((30 + ((int)((ush)*((h + 26) + 0)) | ((int)((ush)*(
+                                                                (h + 26) + 1)) << 8))) + (
+                          (int)((ush)*((h + 28) + 0)) | ((int)((ush)*(
+                                                         (h + 28) + 1)) << 8)));
   if (inptr > insize) goto _LOR;
   else 
-    if (((unsigned long)((int)((unsigned short)*(h + 0)) | ((int)((unsigned short)*(
-                                                            h + 1)) << 8)) | (
-         (unsigned long)((int)((unsigned short)*((h + 2) + 0)) | ((int)((unsigned short)*(
-                                                                  (h + 2) + 1)) << 8)) << 16)) != (unsigned long)0x04034b50L) {
+    if (((ulg)((int)((ush)*(h + 0)) | ((int)((ush)*(h + 1)) << 8)) | (
+         (ulg)((int)((ush)*((h + 2) + 0)) | ((int)((ush)*((h + 2) + 1)) << 8)) << 16)) != (unsigned long)0x04034b50L) {
       _LOR:
       {
         fprintf(__fc_stderr,"\n%s: %s: not a valid zip file\n",progname,
@@ -4639,21 +4629,21 @@ int unzip(int in, int out)
   int n;
   uch buf[16];
   ulg tmp_12;
-  ulg orig_crc = (unsigned long)0;
-  ulg orig_len_0 = (unsigned long)0;
+  ulg orig_crc = (ulg)0;
+  ulg orig_len_0 = (ulg)0;
   ifd = in;
   ofd = out;
   updcrc((uch *)0,(unsigned int)0);
   if (pkzip) 
     if (! ext_header) {
-      orig_crc = (unsigned long)((int)((unsigned short)*(& inbuf[14] + 0)) | (
-                                 (int)((unsigned short)*(& inbuf[14] + 1)) << 8)) | (
-                 (unsigned long)((int)((unsigned short)*((& inbuf[14] + 2) + 0)) | (
-                                 (int)((unsigned short)*((& inbuf[14] + 2) + 1)) << 8)) << 16);
-      orig_len_0 = (unsigned long)((int)((unsigned short)*(& inbuf[22] + 0)) | (
-                                   (int)((unsigned short)*(& inbuf[22] + 1)) << 8)) | (
-                   (unsigned long)((int)((unsigned short)*((& inbuf[22] + 2) + 0)) | (
-                                   (int)((unsigned short)*((& inbuf[22] + 2) + 1)) << 8)) << 16);
+      orig_crc = (ulg)((int)((ush)*(& inbuf[14] + 0)) | ((int)((ush)*(
+                                                         & inbuf[14] + 1)) << 8)) | (
+                 (ulg)((int)((ush)*((& inbuf[14] + 2) + 0)) | ((int)((ush)*(
+                                                               (& inbuf[14] + 2) + 1)) << 8)) << 16);
+      orig_len_0 = (ulg)((int)((ush)*(& inbuf[22] + 0)) | ((int)((ush)*(
+                                                           & inbuf[22] + 1)) << 8)) | (
+                   (ulg)((int)((ush)*((& inbuf[22] + 2) + 0)) | ((int)((ush)*(
+                                                                 (& inbuf[22] + 2) + 1)) << 8)) << 16);
     }
   if (method == 8) {
     int res = inflate();
@@ -4666,21 +4656,20 @@ int unzip(int in, int out)
       if (method == 0) {
         int tmp_0;
         register ulg n_0 =
-          (unsigned long)((int)((unsigned short)*(& inbuf[22] + 0)) | (
-                          (int)((unsigned short)*(& inbuf[22] + 1)) << 8)) | (
-          (unsigned long)((int)((unsigned short)*((& inbuf[22] + 2) + 0)) | (
-                          (int)((unsigned short)*((& inbuf[22] + 2) + 1)) << 8)) << 16);
+          (ulg)((int)((ush)*(& inbuf[22] + 0)) | ((int)((ush)*(& inbuf[22] + 1)) << 8)) | (
+          (ulg)((int)((ush)*((& inbuf[22] + 2) + 0)) | ((int)((ush)*(
+                                                        (& inbuf[22] + 2) + 1)) << 8)) << 16);
         if (decrypt) tmp_0 = 12; else tmp_0 = 0;
         ;
-        if (n_0 != ((unsigned long)((int)((unsigned short)*(& inbuf[18] + 0)) | (
-                                    (int)((unsigned short)*(& inbuf[18] + 1)) << 8)) | (
-                    (unsigned long)((int)((unsigned short)*((& inbuf[18] + 2) + 0)) | (
-                                    (int)((unsigned short)*((& inbuf[18] + 2) + 1)) << 8)) << 16)) - (unsigned long)tmp_0) {
+        if (n_0 != ((ulg)((int)((ush)*(& inbuf[18] + 0)) | ((int)((ush)*(
+                                                            & inbuf[18] + 1)) << 8)) | (
+                    (ulg)((int)((ush)*((& inbuf[18] + 2) + 0)) | ((int)((ush)*(
+                                                                  (& inbuf[18] + 2) + 1)) << 8)) << 16)) - (unsigned long)tmp_0) {
           fprintf(__fc_stderr,"len %ld, siz %ld\n",(long)n_0,
-                  (long)((unsigned long)((int)((unsigned short)*(& inbuf[18] + 0)) | (
-                                         (int)((unsigned short)*(& inbuf[18] + 1)) << 8)) | (
-                         (unsigned long)((int)((unsigned short)*((& inbuf[18] + 2) + 0)) | (
-                                         (int)((unsigned short)*((& inbuf[18] + 2) + 1)) << 8)) << 16))); /* fprintf_va_52 */
+                  (long)((ulg)((int)((ush)*(& inbuf[18] + 0)) | ((int)((ush)*(
+                                                                 & inbuf[18] + 1)) << 8)) | (
+                         (ulg)((int)((ush)*((& inbuf[18] + 2) + 0)) | (
+                               (int)((ush)*((& inbuf[18] + 2) + 1)) << 8)) << 16))); /* fprintf_va_52 */
           error((char *)"invalid compressed data--length mismatch");
         }
         while (1) {
@@ -4698,7 +4687,7 @@ int unzip(int in, int out)
               tmp_3 = (int)inbuf[tmp_1];
             }
             else tmp_3 = fill_inbuf(0);
-            uch c = (unsigned char)tmp_3;
+            uch c = (uch)tmp_3;
             {
               unsigned int tmp_4;
               tmp_4 = outcnt;
@@ -4725,17 +4714,15 @@ int unzip(int in, int out)
           tmp_8 = (int)inbuf[tmp_6];
         }
         else tmp_8 = fill_inbuf(0);
-        buf[n] = (unsigned char)tmp_8;
+        buf[n] = (uch)tmp_8;
       }
       n ++;
     }
-    orig_crc = (unsigned long)((int)((unsigned short)buf[0]) | ((int)((unsigned short)buf[1]) << 8)) | (
-               (unsigned long)((int)((unsigned short)*(& buf[2] + 0)) | (
-                               (int)((unsigned short)*(& buf[2] + 1)) << 8)) << 16);
-    orig_len_0 = (unsigned long)((int)((unsigned short)*(& buf[4] + 0)) | (
-                                 (int)((unsigned short)*(& buf[4] + 1)) << 8)) | (
-                 (unsigned long)((int)((unsigned short)*((& buf[4] + 2) + 0)) | (
-                                 (int)((unsigned short)*((& buf[4] + 2) + 1)) << 8)) << 16);
+    orig_crc = (ulg)((int)((ush)buf[0]) | ((int)((ush)buf[1]) << 8)) | (
+               (ulg)((int)((ush)*(& buf[2] + 0)) | ((int)((ush)*(& buf[2] + 1)) << 8)) << 16);
+    orig_len_0 = (ulg)((int)((ush)*(& buf[4] + 0)) | ((int)((ush)*(& buf[4] + 1)) << 8)) | (
+                 (ulg)((int)((ush)*((& buf[4] + 2) + 0)) | ((int)((ush)*(
+                                                            (& buf[4] + 2) + 1)) << 8)) << 16);
   }
   else 
     if (ext_header) {
@@ -4750,29 +4737,27 @@ int unzip(int in, int out)
             tmp_11 = (int)inbuf[tmp_9];
           }
           else tmp_11 = fill_inbuf(0);
-          buf[n] = (unsigned char)tmp_11;
+          buf[n] = (uch)tmp_11;
         }
         n ++;
       }
-      orig_crc = (unsigned long)((int)((unsigned short)*(& buf[4] + 0)) | (
-                                 (int)((unsigned short)*(& buf[4] + 1)) << 8)) | (
-                 (unsigned long)((int)((unsigned short)*((& buf[4] + 2) + 0)) | (
-                                 (int)((unsigned short)*((& buf[4] + 2) + 1)) << 8)) << 16);
-      orig_len_0 = (unsigned long)((int)((unsigned short)*(& buf[12] + 0)) | (
-                                   (int)((unsigned short)*(& buf[12] + 1)) << 8)) | (
-                   (unsigned long)((int)((unsigned short)*((& buf[12] + 2) + 0)) | (
-                                   (int)((unsigned short)*((& buf[12] + 2) + 1)) << 8)) << 16);
+      orig_crc = (ulg)((int)((ush)*(& buf[4] + 0)) | ((int)((ush)*(& buf[4] + 1)) << 8)) | (
+                 (ulg)((int)((ush)*((& buf[4] + 2) + 0)) | ((int)((ush)*(
+                                                            (& buf[4] + 2) + 1)) << 8)) << 16);
+      orig_len_0 = (ulg)((int)((ush)*(& buf[12] + 0)) | ((int)((ush)*(
+                                                         & buf[12] + 1)) << 8)) | (
+                   (ulg)((int)((ush)*((& buf[12] + 2) + 0)) | ((int)((ush)*(
+                                                               (& buf[12] + 2) + 1)) << 8)) << 16);
     }
   tmp_12 = updcrc(outbuf,(unsigned int)0);
   ;
   if (orig_crc != tmp_12) error((char *)"invalid compressed data--crc error");
-  if (orig_len_0 != (unsigned long)bytes_out) error((char *)"invalid compressed data--length error");
+  if (orig_len_0 != (ulg)bytes_out) error((char *)"invalid compressed data--length error");
   if (pkzip) 
     if (inptr + (unsigned int)4 < insize) 
-      if (((unsigned long)((int)((unsigned short)*(& inbuf[inptr] + 0)) | (
-                           (int)((unsigned short)*(& inbuf[inptr] + 1)) << 8)) | (
-           (unsigned long)((int)((unsigned short)*((& inbuf[inptr] + 2) + 0)) | (
-                           (int)((unsigned short)*((& inbuf[inptr] + 2) + 1)) << 8)) << 16)) == (unsigned long)0x04034b50L) 
+      if (((ulg)((int)((ush)*(& inbuf[inptr] + 0)) | ((int)((ush)*(& inbuf[inptr] + 1)) << 8)) | (
+           (ulg)((int)((ush)*((& inbuf[inptr] + 2) + 0)) | ((int)((ush)*(
+                                                            (& inbuf[inptr] + 2) + 1)) << 8)) << 16)) == (unsigned long)0x04034b50L) 
         if (to_stdout) {
           if (! quiet) fprintf(__fc_stderr,
                                "%s: %s has more than one entry--rest ignored\n",
@@ -4832,151 +4817,151 @@ static unsigned int border[19] =
    (unsigned int)1,
    (unsigned int)15};
 static ush cplens[31] =
-  {(unsigned short)3,
-   (unsigned short)4,
-   (unsigned short)5,
-   (unsigned short)6,
-   (unsigned short)7,
-   (unsigned short)8,
-   (unsigned short)9,
-   (unsigned short)10,
-   (unsigned short)11,
-   (unsigned short)13,
-   (unsigned short)15,
-   (unsigned short)17,
-   (unsigned short)19,
-   (unsigned short)23,
-   (unsigned short)27,
-   (unsigned short)31,
-   (unsigned short)35,
-   (unsigned short)43,
-   (unsigned short)51,
-   (unsigned short)59,
-   (unsigned short)67,
-   (unsigned short)83,
-   (unsigned short)99,
-   (unsigned short)115,
-   (unsigned short)131,
-   (unsigned short)163,
-   (unsigned short)195,
-   (unsigned short)227,
-   (unsigned short)258,
-   (unsigned short)0,
-   (unsigned short)0};
+  {(ush)3,
+   (ush)4,
+   (ush)5,
+   (ush)6,
+   (ush)7,
+   (ush)8,
+   (ush)9,
+   (ush)10,
+   (ush)11,
+   (ush)13,
+   (ush)15,
+   (ush)17,
+   (ush)19,
+   (ush)23,
+   (ush)27,
+   (ush)31,
+   (ush)35,
+   (ush)43,
+   (ush)51,
+   (ush)59,
+   (ush)67,
+   (ush)83,
+   (ush)99,
+   (ush)115,
+   (ush)131,
+   (ush)163,
+   (ush)195,
+   (ush)227,
+   (ush)258,
+   (ush)0,
+   (ush)0};
 static ush cplext[31] =
-  {(unsigned short)0,
-   (unsigned short)0,
-   (unsigned short)0,
-   (unsigned short)0,
-   (unsigned short)0,
-   (unsigned short)0,
-   (unsigned short)0,
-   (unsigned short)0,
-   (unsigned short)1,
-   (unsigned short)1,
-   (unsigned short)1,
-   (unsigned short)1,
-   (unsigned short)2,
-   (unsigned short)2,
-   (unsigned short)2,
-   (unsigned short)2,
-   (unsigned short)3,
-   (unsigned short)3,
-   (unsigned short)3,
-   (unsigned short)3,
-   (unsigned short)4,
-   (unsigned short)4,
-   (unsigned short)4,
-   (unsigned short)4,
-   (unsigned short)5,
-   (unsigned short)5,
-   (unsigned short)5,
-   (unsigned short)5,
-   (unsigned short)0,
-   (unsigned short)99,
-   (unsigned short)99};
+  {(ush)0,
+   (ush)0,
+   (ush)0,
+   (ush)0,
+   (ush)0,
+   (ush)0,
+   (ush)0,
+   (ush)0,
+   (ush)1,
+   (ush)1,
+   (ush)1,
+   (ush)1,
+   (ush)2,
+   (ush)2,
+   (ush)2,
+   (ush)2,
+   (ush)3,
+   (ush)3,
+   (ush)3,
+   (ush)3,
+   (ush)4,
+   (ush)4,
+   (ush)4,
+   (ush)4,
+   (ush)5,
+   (ush)5,
+   (ush)5,
+   (ush)5,
+   (ush)0,
+   (ush)99,
+   (ush)99};
 static ush cpdist[30] =
-  {(unsigned short)1,
-   (unsigned short)2,
-   (unsigned short)3,
-   (unsigned short)4,
-   (unsigned short)5,
-   (unsigned short)7,
-   (unsigned short)9,
-   (unsigned short)13,
-   (unsigned short)17,
-   (unsigned short)25,
-   (unsigned short)33,
-   (unsigned short)49,
-   (unsigned short)65,
-   (unsigned short)97,
-   (unsigned short)129,
-   (unsigned short)193,
-   (unsigned short)257,
-   (unsigned short)385,
-   (unsigned short)513,
-   (unsigned short)769,
-   (unsigned short)1025,
-   (unsigned short)1537,
-   (unsigned short)2049,
-   (unsigned short)3073,
-   (unsigned short)4097,
-   (unsigned short)6145,
-   (unsigned short)8193,
-   (unsigned short)12289,
-   (unsigned short)16385,
-   (unsigned short)24577};
+  {(ush)1,
+   (ush)2,
+   (ush)3,
+   (ush)4,
+   (ush)5,
+   (ush)7,
+   (ush)9,
+   (ush)13,
+   (ush)17,
+   (ush)25,
+   (ush)33,
+   (ush)49,
+   (ush)65,
+   (ush)97,
+   (ush)129,
+   (ush)193,
+   (ush)257,
+   (ush)385,
+   (ush)513,
+   (ush)769,
+   (ush)1025,
+   (ush)1537,
+   (ush)2049,
+   (ush)3073,
+   (ush)4097,
+   (ush)6145,
+   (ush)8193,
+   (ush)12289,
+   (ush)16385,
+   (ush)24577};
 static ush cpdext[30] =
-  {(unsigned short)0,
-   (unsigned short)0,
-   (unsigned short)0,
-   (unsigned short)0,
-   (unsigned short)1,
-   (unsigned short)1,
-   (unsigned short)2,
-   (unsigned short)2,
-   (unsigned short)3,
-   (unsigned short)3,
-   (unsigned short)4,
-   (unsigned short)4,
-   (unsigned short)5,
-   (unsigned short)5,
-   (unsigned short)6,
-   (unsigned short)6,
-   (unsigned short)7,
-   (unsigned short)7,
-   (unsigned short)8,
-   (unsigned short)8,
-   (unsigned short)9,
-   (unsigned short)9,
-   (unsigned short)10,
-   (unsigned short)10,
-   (unsigned short)11,
-   (unsigned short)11,
-   (unsigned short)12,
-   (unsigned short)12,
-   (unsigned short)13,
-   (unsigned short)13};
+  {(ush)0,
+   (ush)0,
+   (ush)0,
+   (ush)0,
+   (ush)1,
+   (ush)1,
+   (ush)2,
+   (ush)2,
+   (ush)3,
+   (ush)3,
+   (ush)4,
+   (ush)4,
+   (ush)5,
+   (ush)5,
+   (ush)6,
+   (ush)6,
+   (ush)7,
+   (ush)7,
+   (ush)8,
+   (ush)8,
+   (ush)9,
+   (ush)9,
+   (ush)10,
+   (ush)10,
+   (ush)11,
+   (ush)11,
+   (ush)12,
+   (ush)12,
+   (ush)13,
+   (ush)13};
 ulg bb;
 unsigned int bk;
 ush mask_bits[17] =
-  {(unsigned short)0x0000,
-   (unsigned short)0x0001,
-   (unsigned short)0x0003,
-   (unsigned short)0x0007,
-   (unsigned short)0x000f,
-   (unsigned short)0x001f,
-   (unsigned short)0x003f,
-   (unsigned short)0x007f,
-   (unsigned short)0x00ff,
-   (unsigned short)0x01ff,
-   (unsigned short)0x03ff,
-   (unsigned short)0x07ff,
-   (unsigned short)0x0fff,
-   (unsigned short)0x1fff,
-   (unsigned short)0x3fff,
-   (unsigned short)0x7fff,
-   (unsigned short)0xffff};
+  {(ush)0x0000,
+   (ush)0x0001,
+   (ush)0x0003,
+   (ush)0x0007,
+   (ush)0x000f,
+   (ush)0x001f,
+   (ush)0x003f,
+   (ush)0x007f,
+   (ush)0x00ff,
+   (ush)0x01ff,
+   (ush)0x03ff,
+   (ush)0x07ff,
+   (ush)0x0fff,
+   (ush)0x1fff,
+   (ush)0x3fff,
+   (ush)0x7fff,
+   (ush)0xffff};
 int lbits = 9;
 int dbits = 6;
 unsigned int hufts;
@@ -5006,7 +4991,7 @@ int huft_build(unsigned int *b, unsigned int n, unsigned int s, ush *d,
   int y;
   unsigned int z;
   int tmp_7;
-  memset((void *)(c),0,sizeof(c));
+  memset((voidp)(c),0,sizeof(c));
   p = b;
   i = n;
   while (1) {
@@ -5144,26 +5129,26 @@ int huft_build(unsigned int *b, unsigned int n, unsigned int s, ush *d,
         u[h] = q;
         if (h) {
           x[h] = i;
-          r.b = (unsigned char)l;
-          r.e = (unsigned char)((unsigned int)16 + j_0);
+          r.b = (uch)l;
+          r.e = (uch)((unsigned int)16 + j_0);
           r.v.t = q;
           j_0 = i >> (w - l);
           *(u[h - 1] + j_0) = r;
         }
       }
-      r.b = (unsigned char)(k - w);
-      if (p >= & v[n]) r.e = (unsigned char)99;
+      r.b = (uch)(k - w);
+      if (p >= & v[n]) r.e = (uch)99;
       else 
         if (*p < s) {
           int tmp_4;
           if (*p < (unsigned int)256) tmp_4 = 16; else tmp_4 = 15;
-          r.e = (unsigned char)tmp_4;
-          r.v.n = (unsigned short)*p;
+          r.e = (uch)tmp_4;
+          r.v.n = (ush)*p;
           p ++;
         }
         else {
           unsigned int *tmp_5;
-          r.e = (unsigned char)*(e + (*p - s));
+          r.e = (uch)*(e + (*p - s));
           tmp_5 = p;
           p ++;
           r.v.n = *(d + (*tmp_5 - s));
@@ -5240,7 +5225,7 @@ int inflate_codes(struct huft *tl, struct huft *td, int bl, int bd)
         tmp_1 = (int)inbuf[tmp];
       }
       else tmp_1 = fill_inbuf(0);
-      b |= (unsigned long)((unsigned char)tmp_1) << k;
+      b |= (ulg)((uch)tmp_1) << k;
       k += (unsigned int)8;
     }
     t = tl + ((unsigned int)b & ml);
@@ -5263,7 +5248,7 @@ int inflate_codes(struct huft *tl, struct huft *td, int bl, int bd)
             tmp_4 = (int)inbuf[tmp_2];
           }
           else tmp_4 = fill_inbuf(0);
-          b |= (unsigned long)((unsigned char)tmp_4) << k;
+          b |= (ulg)((uch)tmp_4) << k;
           k += (unsigned int)8;
         }
         t = t->v.t + ((unsigned int)b & (unsigned int)mask_bits[e]);
@@ -5276,7 +5261,7 @@ int inflate_codes(struct huft *tl, struct huft *td, int bl, int bd)
       unsigned int tmp_5;
       tmp_5 = w;
       w ++;
-      window[tmp_5] = (unsigned char)t->v.n;
+      window[tmp_5] = (uch)t->v.n;
       if (w == (unsigned int)0x8000) {
         outcnt = w;
         flush_window();
@@ -5294,7 +5279,7 @@ int inflate_codes(struct huft *tl, struct huft *td, int bl, int bd)
           tmp_8 = (int)inbuf[tmp_6];
         }
         else tmp_8 = fill_inbuf(0);
-        b |= (unsigned long)((unsigned char)tmp_8) << k;
+        b |= (ulg)((uch)tmp_8) << k;
         k += (unsigned int)8;
       }
       n = (unsigned int)t->v.n + ((unsigned int)b & (unsigned int)mask_bits[e]);
@@ -5309,7 +5294,7 @@ int inflate_codes(struct huft *tl, struct huft *td, int bl, int bd)
           tmp_11 = (int)inbuf[tmp_9];
         }
         else tmp_11 = fill_inbuf(0);
-        b |= (unsigned long)((unsigned char)tmp_11) << k;
+        b |= (ulg)((uch)tmp_11) << k;
         k += (unsigned int)8;
       }
       t = td + ((unsigned int)b & md);
@@ -5332,7 +5317,7 @@ int inflate_codes(struct huft *tl, struct huft *td, int bl, int bd)
               tmp_14 = (int)inbuf[tmp_12];
             }
             else tmp_14 = fill_inbuf(0);
-            b |= (unsigned long)((unsigned char)tmp_14) << k;
+            b |= (ulg)((uch)tmp_14) << k;
             k += (unsigned int)8;
           }
           t = t->v.t + ((unsigned int)b & (unsigned int)mask_bits[e]);
@@ -5350,7 +5335,7 @@ int inflate_codes(struct huft *tl, struct huft *td, int bl, int bd)
           tmp_17 = (int)inbuf[tmp_15];
         }
         else tmp_17 = fill_inbuf(0);
-        b |= (unsigned long)((unsigned char)tmp_17) << k;
+        b |= (ulg)((uch)tmp_17) << k;
         k += (unsigned int)8;
       }
       d = (w - (unsigned int)t->v.n) - ((unsigned int)b & (unsigned int)mask_bits[e]);
@@ -5423,7 +5408,7 @@ int inflate_stored(void)
       tmp_1 = (int)inbuf[tmp];
     }
     else tmp_1 = fill_inbuf(0);
-    b |= (unsigned long)((unsigned char)tmp_1) << k;
+    b |= (ulg)((uch)tmp_1) << k;
     k += (unsigned int)8;
   }
   n = (unsigned int)b & (unsigned int)0xffff;
@@ -5438,7 +5423,7 @@ int inflate_stored(void)
       tmp_4 = (int)inbuf[tmp_2];
     }
     else tmp_4 = fill_inbuf(0);
-    b |= (unsigned long)((unsigned char)tmp_4) << k;
+    b |= (ulg)((uch)tmp_4) << k;
     k += (unsigned int)8;
   }
   if (n != (unsigned int)(~ b & (unsigned long)0xffff)) {
@@ -5464,12 +5449,12 @@ int inflate_stored(void)
           tmp_7 = (int)inbuf[tmp_5];
         }
         else tmp_7 = fill_inbuf(0);
-        b |= (unsigned long)((unsigned char)tmp_7) << k;
+        b |= (ulg)((uch)tmp_7) << k;
         k += (unsigned int)8;
       }
       tmp_8 = w;
       w ++;
-      window[tmp_8] = (unsigned char)b;
+      window[tmp_8] = (uch)b;
       if (w == (unsigned int)0x8000) {
         outcnt = w;
         flush_window();
@@ -5597,7 +5582,7 @@ int inflate_dynamic(void)
       tmp_1 = (int)inbuf[tmp];
     }
     else tmp_1 = fill_inbuf(0);
-    b |= (unsigned long)((unsigned char)tmp_1) << k;
+    b |= (ulg)((uch)tmp_1) << k;
     k += (unsigned int)8;
   }
   nl = (unsigned int)257 + ((unsigned int)b & (unsigned int)0x1f);
@@ -5612,7 +5597,7 @@ int inflate_dynamic(void)
       tmp_4 = (int)inbuf[tmp_2];
     }
     else tmp_4 = fill_inbuf(0);
-    b |= (unsigned long)((unsigned char)tmp_4) << k;
+    b |= (ulg)((uch)tmp_4) << k;
     k += (unsigned int)8;
   }
   nd = (unsigned int)1 + ((unsigned int)b & (unsigned int)0x1f);
@@ -5627,7 +5612,7 @@ int inflate_dynamic(void)
       tmp_7 = (int)inbuf[tmp_5];
     }
     else tmp_7 = fill_inbuf(0);
-    b |= (unsigned long)((unsigned char)tmp_7) << k;
+    b |= (ulg)((uch)tmp_7) << k;
     k += (unsigned int)8;
   }
   nb = (unsigned int)4 + ((unsigned int)b & (unsigned int)0xf);
@@ -5653,7 +5638,7 @@ int inflate_dynamic(void)
         tmp_10 = (int)inbuf[tmp_8];
       }
       else tmp_10 = fill_inbuf(0);
-      b |= (unsigned long)((unsigned char)tmp_10) << k;
+      b |= (ulg)((uch)tmp_10) << k;
       k += (unsigned int)8;
     }
     ll[border[j_0]] = (unsigned int)b & (unsigned int)7;
@@ -5687,7 +5672,7 @@ int inflate_dynamic(void)
         tmp_13 = (int)inbuf[tmp_11];
       }
       else tmp_13 = fill_inbuf(0);
-      b |= (unsigned long)((unsigned char)tmp_13) << k;
+      b |= (ulg)((uch)tmp_13) << k;
       k += (unsigned int)8;
     }
     td = tl + ((unsigned int)b & m);
@@ -5713,7 +5698,7 @@ int inflate_dynamic(void)
             tmp_17 = (int)inbuf[tmp_15];
           }
           else tmp_17 = fill_inbuf(0);
-          b |= (unsigned long)((unsigned char)tmp_17) << k;
+          b |= (ulg)((uch)tmp_17) << k;
           k += (unsigned int)8;
         }
         j_0 = (unsigned int)3 + ((unsigned int)b & (unsigned int)3);
@@ -5746,7 +5731,7 @@ int inflate_dynamic(void)
               tmp_22 = (int)inbuf[tmp_20];
             }
             else tmp_22 = fill_inbuf(0);
-            b |= (unsigned long)((unsigned char)tmp_22) << k;
+            b |= (ulg)((uch)tmp_22) << k;
             k += (unsigned int)8;
           }
           j_0 = (unsigned int)3 + ((unsigned int)b & (unsigned int)7);
@@ -5779,7 +5764,7 @@ int inflate_dynamic(void)
               tmp_27 = (int)inbuf[tmp_25];
             }
             else tmp_27 = fill_inbuf(0);
-            b |= (unsigned long)((unsigned char)tmp_27) << k;
+            b |= (ulg)((uch)tmp_27) << k;
             k += (unsigned int)8;
           }
           j_0 = (unsigned int)11 + ((unsigned int)b & (unsigned int)0x7f);
@@ -5856,7 +5841,7 @@ int inflate_block(int *e)
       tmp_1 = (int)inbuf[tmp];
     }
     else tmp_1 = fill_inbuf(0);
-    b |= (unsigned long)((unsigned char)tmp_1) << k;
+    b |= (ulg)((uch)tmp_1) << k;
     k += (unsigned int)8;
   }
   *e = (int)b & 1;
@@ -5871,7 +5856,7 @@ int inflate_block(int *e)
       tmp_4 = (int)inbuf[tmp_2];
     }
     else tmp_4 = fill_inbuf(0);
-    b |= (unsigned long)((unsigned char)tmp_4) << k;
+    b |= (ulg)((uch)tmp_4) << k;
     k += (unsigned int)8;
   }
   t = (unsigned int)b & (unsigned int)3;
@@ -5909,7 +5894,7 @@ int inflate(void)
   unsigned int h;
   outcnt = (unsigned int)0;
   bk = (unsigned int)0;
-  bb = (unsigned long)0;
+  bb = (ulg)0;
   h = (unsigned int)0;
   while (1) {
     hufts = (unsigned int)0;
@@ -5945,9 +5930,9 @@ int copy(int in, int out)
     else break;
     {
       ssize_t tmp;
-      write_buf(out,(void *)(inbuf),insize);
+      write_buf(out,(voidp)(inbuf),insize);
       bytes_out = (long)((unsigned long)bytes_out + (unsigned long)insize);
-      tmp = read(in,(void *)(inbuf),(unsigned int)0x8000);
+      tmp = read(in,(void *)(inbuf),(size_t)0x8000);
       insize = (unsigned int)tmp;
     }
   }
@@ -6017,7 +6002,7 @@ int fill_inbuf(int eof_ok)
     }
     read_error();
   }
-  bytes_in = (long)((unsigned long)bytes_in + (unsigned long)insize);
+  bytes_in = (long)((ulg)bytes_in + (ulg)insize);
   inptr = (unsigned int)1;
   __retres = (int)inbuf[0];
   return_label: return __retres;
@@ -6026,8 +6011,8 @@ int fill_inbuf(int eof_ok)
 void flush_outbuf(void)
 {
   if (outcnt == (unsigned int)0) goto return_label;
-  write_buf(ofd,(void *)(outbuf),outcnt);
-  bytes_out = (long)((unsigned long)bytes_out + (unsigned long)outcnt);
+  write_buf(ofd,(voidp)(outbuf),outcnt);
+  bytes_out = (long)((ulg)bytes_out + (ulg)outcnt);
   outcnt = (unsigned int)0;
   return_label: return;
 }
@@ -6036,8 +6021,8 @@ void flush_window(void)
 {
   if (outcnt == (unsigned int)0) goto return_label;
   updcrc(window,outcnt);
-  if (! test) write_buf(ofd,(void *)(window),outcnt);
-  bytes_out = (long)((unsigned long)bytes_out + (unsigned long)outcnt);
+  if (! test) write_buf(ofd,(voidp)(window),outcnt);
+  bytes_out = (long)((ulg)bytes_out + (ulg)outcnt);
   outcnt = (unsigned int)0;
   return_label: return;
 }
@@ -6054,7 +6039,7 @@ void write_buf(int fd, voidp buf, unsigned int cnt)
     if (! (n != cnt)) break;
     if (n == (unsigned int)(-1)) write_error();
     cnt -= n;
-    buf = (void *)((char *)buf + n);
+    buf = (voidp)((char *)buf + n);
   }
   return;
 }
@@ -6147,7 +6132,7 @@ char *add_envopt(int *argcp, char ***argvp, char *env_0)
     goto return_label;
   }
   *argcp += nargc;
-  nargv = (char **)calloc((unsigned int)(*argcp + 1),sizeof(char *));
+  nargv = (char **)calloc((size_t)(*argcp + 1),sizeof(char *));
   if (nargv == (char **)0) error((char *)"out of memory");
   oargv = *argvp;
   *argvp = nargv;
@@ -6353,262 +6338,262 @@ voidp xmalloc(unsigned int size)
 }
 
 ulg crc_32_tab[256] =
-  {(unsigned long)0x00000000L,
-   (unsigned long)0x77073096L,
+  {(ulg)0x00000000L,
+   (ulg)0x77073096L,
    0xee0e612cL,
    0x990951baL,
-   (unsigned long)0x076dc419L,
-   (unsigned long)0x706af48fL,
+   (ulg)0x076dc419L,
+   (ulg)0x706af48fL,
    0xe963a535L,
    0x9e6495a3L,
-   (unsigned long)0x0edb8832L,
-   (unsigned long)0x79dcb8a4L,
+   (ulg)0x0edb8832L,
+   (ulg)0x79dcb8a4L,
    0xe0d5e91eL,
    0x97d2d988L,
-   (unsigned long)0x09b64c2bL,
-   (unsigned long)0x7eb17cbdL,
+   (ulg)0x09b64c2bL,
+   (ulg)0x7eb17cbdL,
    0xe7b82d07L,
    0x90bf1d91L,
-   (unsigned long)0x1db71064L,
-   (unsigned long)0x6ab020f2L,
+   (ulg)0x1db71064L,
+   (ulg)0x6ab020f2L,
    0xf3b97148L,
    0x84be41deL,
-   (unsigned long)0x1adad47dL,
-   (unsigned long)0x6ddde4ebL,
+   (ulg)0x1adad47dL,
+   (ulg)0x6ddde4ebL,
    0xf4d4b551L,
    0x83d385c7L,
-   (unsigned long)0x136c9856L,
-   (unsigned long)0x646ba8c0L,
+   (ulg)0x136c9856L,
+   (ulg)0x646ba8c0L,
    0xfd62f97aL,
    0x8a65c9ecL,
-   (unsigned long)0x14015c4fL,
-   (unsigned long)0x63066cd9L,
+   (ulg)0x14015c4fL,
+   (ulg)0x63066cd9L,
    0xfa0f3d63L,
    0x8d080df5L,
-   (unsigned long)0x3b6e20c8L,
-   (unsigned long)0x4c69105eL,
+   (ulg)0x3b6e20c8L,
+   (ulg)0x4c69105eL,
    0xd56041e4L,
    0xa2677172L,
-   (unsigned long)0x3c03e4d1L,
-   (unsigned long)0x4b04d447L,
+   (ulg)0x3c03e4d1L,
+   (ulg)0x4b04d447L,
    0xd20d85fdL,
    0xa50ab56bL,
-   (unsigned long)0x35b5a8faL,
-   (unsigned long)0x42b2986cL,
+   (ulg)0x35b5a8faL,
+   (ulg)0x42b2986cL,
    0xdbbbc9d6L,
    0xacbcf940L,
-   (unsigned long)0x32d86ce3L,
-   (unsigned long)0x45df5c75L,
+   (ulg)0x32d86ce3L,
+   (ulg)0x45df5c75L,
    0xdcd60dcfL,
    0xabd13d59L,
-   (unsigned long)0x26d930acL,
-   (unsigned long)0x51de003aL,
+   (ulg)0x26d930acL,
+   (ulg)0x51de003aL,
    0xc8d75180L,
    0xbfd06116L,
-   (unsigned long)0x21b4f4b5L,
-   (unsigned long)0x56b3c423L,
+   (ulg)0x21b4f4b5L,
+   (ulg)0x56b3c423L,
    0xcfba9599L,
    0xb8bda50fL,
-   (unsigned long)0x2802b89eL,
-   (unsigned long)0x5f058808L,
+   (ulg)0x2802b89eL,
+   (ulg)0x5f058808L,
    0xc60cd9b2L,
    0xb10be924L,
-   (unsigned long)0x2f6f7c87L,
-   (unsigned long)0x58684c11L,
+   (ulg)0x2f6f7c87L,
+   (ulg)0x58684c11L,
    0xc1611dabL,
    0xb6662d3dL,
-   (unsigned long)0x76dc4190L,
-   (unsigned long)0x01db7106L,
+   (ulg)0x76dc4190L,
+   (ulg)0x01db7106L,
    0x98d220bcL,
    0xefd5102aL,
-   (unsigned long)0x71b18589L,
-   (unsigned long)0x06b6b51fL,
+   (ulg)0x71b18589L,
+   (ulg)0x06b6b51fL,
    0x9fbfe4a5L,
    0xe8b8d433L,
-   (unsigned long)0x7807c9a2L,
-   (unsigned long)0x0f00f934L,
+   (ulg)0x7807c9a2L,
+   (ulg)0x0f00f934L,
    0x9609a88eL,
    0xe10e9818L,
-   (unsigned long)0x7f6a0dbbL,
-   (unsigned long)0x086d3d2dL,
+   (ulg)0x7f6a0dbbL,
+   (ulg)0x086d3d2dL,
    0x91646c97L,
    0xe6635c01L,
-   (unsigned long)0x6b6b51f4L,
-   (unsigned long)0x1c6c6162L,
+   (ulg)0x6b6b51f4L,
+   (ulg)0x1c6c6162L,
    0x856530d8L,
    0xf262004eL,
-   (unsigned long)0x6c0695edL,
-   (unsigned long)0x1b01a57bL,
+   (ulg)0x6c0695edL,
+   (ulg)0x1b01a57bL,
    0x8208f4c1L,
    0xf50fc457L,
-   (unsigned long)0x65b0d9c6L,
-   (unsigned long)0x12b7e950L,
+   (ulg)0x65b0d9c6L,
+   (ulg)0x12b7e950L,
    0x8bbeb8eaL,
    0xfcb9887cL,
-   (unsigned long)0x62dd1ddfL,
-   (unsigned long)0x15da2d49L,
+   (ulg)0x62dd1ddfL,
+   (ulg)0x15da2d49L,
    0x8cd37cf3L,
    0xfbd44c65L,
-   (unsigned long)0x4db26158L,
-   (unsigned long)0x3ab551ceL,
+   (ulg)0x4db26158L,
+   (ulg)0x3ab551ceL,
    0xa3bc0074L,
    0xd4bb30e2L,
-   (unsigned long)0x4adfa541L,
-   (unsigned long)0x3dd895d7L,
+   (ulg)0x4adfa541L,
+   (ulg)0x3dd895d7L,
    0xa4d1c46dL,
    0xd3d6f4fbL,
-   (unsigned long)0x4369e96aL,
-   (unsigned long)0x346ed9fcL,
+   (ulg)0x4369e96aL,
+   (ulg)0x346ed9fcL,
    0xad678846L,
    0xda60b8d0L,
-   (unsigned long)0x44042d73L,
-   (unsigned long)0x33031de5L,
+   (ulg)0x44042d73L,
+   (ulg)0x33031de5L,
    0xaa0a4c5fL,
    0xdd0d7cc9L,
-   (unsigned long)0x5005713cL,
-   (unsigned long)0x270241aaL,
+   (ulg)0x5005713cL,
+   (ulg)0x270241aaL,
    0xbe0b1010L,
    0xc90c2086L,
-   (unsigned long)0x5768b525L,
-   (unsigned long)0x206f85b3L,
+   (ulg)0x5768b525L,
+   (ulg)0x206f85b3L,
    0xb966d409L,
    0xce61e49fL,
-   (unsigned long)0x5edef90eL,
-   (unsigned long)0x29d9c998L,
+   (ulg)0x5edef90eL,
+   (ulg)0x29d9c998L,
    0xb0d09822L,
    0xc7d7a8b4L,
-   (unsigned long)0x59b33d17L,
-   (unsigned long)0x2eb40d81L,
+   (ulg)0x59b33d17L,
+   (ulg)0x2eb40d81L,
    0xb7bd5c3bL,
    0xc0ba6cadL,
    0xedb88320L,
    0x9abfb3b6L,
-   (unsigned long)0x03b6e20cL,
-   (unsigned long)0x74b1d29aL,
+   (ulg)0x03b6e20cL,
+   (ulg)0x74b1d29aL,
    0xead54739L,
    0x9dd277afL,
-   (unsigned long)0x04db2615L,
-   (unsigned long)0x73dc1683L,
+   (ulg)0x04db2615L,
+   (ulg)0x73dc1683L,
    0xe3630b12L,
    0x94643b84L,
-   (unsigned long)0x0d6d6a3eL,
-   (unsigned long)0x7a6a5aa8L,
+   (ulg)0x0d6d6a3eL,
+   (ulg)0x7a6a5aa8L,
    0xe40ecf0bL,
    0x9309ff9dL,
-   (unsigned long)0x0a00ae27L,
-   (unsigned long)0x7d079eb1L,
+   (ulg)0x0a00ae27L,
+   (ulg)0x7d079eb1L,
    0xf00f9344L,
    0x8708a3d2L,
-   (unsigned long)0x1e01f268L,
-   (unsigned long)0x6906c2feL,
+   (ulg)0x1e01f268L,
+   (ulg)0x6906c2feL,
    0xf762575dL,
    0x806567cbL,
-   (unsigned long)0x196c3671L,
-   (unsigned long)0x6e6b06e7L,
+   (ulg)0x196c3671L,
+   (ulg)0x6e6b06e7L,
    0xfed41b76L,
    0x89d32be0L,
-   (unsigned long)0x10da7a5aL,
-   (unsigned long)0x67dd4accL,
+   (ulg)0x10da7a5aL,
+   (ulg)0x67dd4accL,
    0xf9b9df6fL,
    0x8ebeeff9L,
-   (unsigned long)0x17b7be43L,
-   (unsigned long)0x60b08ed5L,
+   (ulg)0x17b7be43L,
+   (ulg)0x60b08ed5L,
    0xd6d6a3e8L,
    0xa1d1937eL,
-   (unsigned long)0x38d8c2c4L,
-   (unsigned long)0x4fdff252L,
+   (ulg)0x38d8c2c4L,
+   (ulg)0x4fdff252L,
    0xd1bb67f1L,
    0xa6bc5767L,
-   (unsigned long)0x3fb506ddL,
-   (unsigned long)0x48b2364bL,
+   (ulg)0x3fb506ddL,
+   (ulg)0x48b2364bL,
    0xd80d2bdaL,
    0xaf0a1b4cL,
-   (unsigned long)0x36034af6L,
-   (unsigned long)0x41047a60L,
+   (ulg)0x36034af6L,
+   (ulg)0x41047a60L,
    0xdf60efc3L,
    0xa867df55L,
-   (unsigned long)0x316e8eefL,
-   (unsigned long)0x4669be79L,
+   (ulg)0x316e8eefL,
+   (ulg)0x4669be79L,
    0xcb61b38cL,
    0xbc66831aL,
-   (unsigned long)0x256fd2a0L,
-   (unsigned long)0x5268e236L,
+   (ulg)0x256fd2a0L,
+   (ulg)0x5268e236L,
    0xcc0c7795L,
    0xbb0b4703L,
-   (unsigned long)0x220216b9L,
-   (unsigned long)0x5505262fL,
+   (ulg)0x220216b9L,
+   (ulg)0x5505262fL,
    0xc5ba3bbeL,
    0xb2bd0b28L,
-   (unsigned long)0x2bb45a92L,
-   (unsigned long)0x5cb36a04L,
+   (ulg)0x2bb45a92L,
+   (ulg)0x5cb36a04L,
    0xc2d7ffa7L,
    0xb5d0cf31L,
-   (unsigned long)0x2cd99e8bL,
-   (unsigned long)0x5bdeae1dL,
+   (ulg)0x2cd99e8bL,
+   (ulg)0x5bdeae1dL,
    0x9b64c2b0L,
    0xec63f226L,
-   (unsigned long)0x756aa39cL,
-   (unsigned long)0x026d930aL,
+   (ulg)0x756aa39cL,
+   (ulg)0x026d930aL,
    0x9c0906a9L,
    0xeb0e363fL,
-   (unsigned long)0x72076785L,
-   (unsigned long)0x05005713L,
+   (ulg)0x72076785L,
+   (ulg)0x05005713L,
    0x95bf4a82L,
    0xe2b87a14L,
-   (unsigned long)0x7bb12baeL,
-   (unsigned long)0x0cb61b38L,
+   (ulg)0x7bb12baeL,
+   (ulg)0x0cb61b38L,
    0x92d28e9bL,
    0xe5d5be0dL,
-   (unsigned long)0x7cdcefb7L,
-   (unsigned long)0x0bdbdf21L,
+   (ulg)0x7cdcefb7L,
+   (ulg)0x0bdbdf21L,
    0x86d3d2d4L,
    0xf1d4e242L,
-   (unsigned long)0x68ddb3f8L,
-   (unsigned long)0x1fda836eL,
+   (ulg)0x68ddb3f8L,
+   (ulg)0x1fda836eL,
    0x81be16cdL,
    0xf6b9265bL,
-   (unsigned long)0x6fb077e1L,
-   (unsigned long)0x18b74777L,
+   (ulg)0x6fb077e1L,
+   (ulg)0x18b74777L,
    0x88085ae6L,
    0xff0f6a70L,
-   (unsigned long)0x66063bcaL,
-   (unsigned long)0x11010b5cL,
+   (ulg)0x66063bcaL,
+   (ulg)0x11010b5cL,
    0x8f659effL,
    0xf862ae69L,
-   (unsigned long)0x616bffd3L,
-   (unsigned long)0x166ccf45L,
+   (ulg)0x616bffd3L,
+   (ulg)0x166ccf45L,
    0xa00ae278L,
    0xd70dd2eeL,
-   (unsigned long)0x4e048354L,
-   (unsigned long)0x3903b3c2L,
+   (ulg)0x4e048354L,
+   (ulg)0x3903b3c2L,
    0xa7672661L,
    0xd06016f7L,
-   (unsigned long)0x4969474dL,
-   (unsigned long)0x3e6e77dbL,
+   (ulg)0x4969474dL,
+   (ulg)0x3e6e77dbL,
    0xaed16a4aL,
    0xd9d65adcL,
-   (unsigned long)0x40df0b66L,
-   (unsigned long)0x37d83bf0L,
+   (ulg)0x40df0b66L,
+   (ulg)0x37d83bf0L,
    0xa9bcae53L,
    0xdebb9ec5L,
-   (unsigned long)0x47b2cf7fL,
-   (unsigned long)0x30b5ffe9L,
+   (ulg)0x47b2cf7fL,
+   (ulg)0x30b5ffe9L,
    0xbdbdf21cL,
    0xcabac28aL,
-   (unsigned long)0x53b39330L,
-   (unsigned long)0x24b4a3a6L,
+   (ulg)0x53b39330L,
+   (ulg)0x24b4a3a6L,
    0xbad03605L,
    0xcdd70693L,
-   (unsigned long)0x54de5729L,
-   (unsigned long)0x23d967bfL,
+   (ulg)0x54de5729L,
+   (ulg)0x23d967bfL,
    0xb3667a2eL,
    0xc4614ab8L,
-   (unsigned long)0x5d681b02L,
-   (unsigned long)0x2a6f2b94L,
+   (ulg)0x5d681b02L,
+   (ulg)0x2a6f2b94L,
    0xb40bbe37L,
    0xc30c8ea1L,
-   (unsigned long)0x5a05df1bL,
-   (unsigned long)0x2d02ef8dL};
+   (ulg)0x5a05df1bL,
+   (ulg)0x2d02ef8dL};
 static int msg_done = 0;
 /*@ requires valid_read_string(format);
     assigns \result, stream->__fc_FILE_data;
@@ -6719,15 +6704,16 @@ int unlzw(int in, int out)
   n_bits = 9;
   maxcode = (1L << n_bits) - (long)1;
   bitmask = (unsigned int)((1 << n_bits) - 1);
-  oldcode = (long)(-1);
+  oldcode = (code_int)(-1);
   finchar = 0;
   outpos = 0;
   posbits = (long)(inptr << 3);
-  if (block_mode) free_ent = (long)(256 + 1); else free_ent = (long)256;
-  memset((void *)(prev),0,(unsigned int)256);
-  code = (long)255;
+  if (block_mode) free_ent = (code_int)(256 + 1);
+  else free_ent = (code_int)256;
+  memset((voidp)(prev),0,(size_t)256);
+  code = (code_int)255;
   while (code >= (code_int)0) {
-    window[code] = (unsigned char)code;
+    window[code] = (char_type)code;
     code --;
   }
   while (1) {
@@ -6748,11 +6734,10 @@ int unlzw(int in, int out)
       insize = (unsigned int)e;
       posbits = (long)0;
       if (insize < (unsigned int)64) {
-        rsize = read(in,(void *)((char *)(inbuf) + insize),
-                     (unsigned int)0x8000);
+        rsize = read(in,(void *)((char *)(inbuf) + insize),(size_t)0x8000);
         if (rsize == -1) read_error();
         insize += (unsigned int)rsize;
-        bytes_in = (long)((unsigned long)bytes_in + (unsigned long)rsize);
+        bytes_in = (long)((ulg)bytes_in + (ulg)rsize);
       }
       if (rsize != 0) inbits = (long)(((unsigned long)((long)insize) - (unsigned long)(
                                        insize % (unsigned int)n_bits)) << 3);
@@ -6770,8 +6755,10 @@ int unlzw(int in, int out)
         }
         {
           register char_type *p = & inbuf[posbits >> 3];
-          code = (long)((unsigned long)((((long)*(p + 0) | ((long)*(p + 1) << 8)) | (
-                                         (long)*(p + 2) << 16)) >> (posbits & (long)0x7)) & (unsigned long)bitmask);
+          code = (code_int)((unsigned long)((((long)*(p + 0) | ((long)*(
+                                                                p + 1) << 8)) | (
+                                             (long)*(p + 2) << 16)) >> (
+                                            posbits & (long)0x7)) & (unsigned long)bitmask);
           posbits += (long)n_bits;
         }
         if (oldcode == (code_int)(-1)) {
@@ -6781,13 +6768,13 @@ int unlzw(int in, int out)
           outpos ++;
           oldcode = code;
           finchar = (int)oldcode;
-          outbuf[tmp_1] = (unsigned char)finchar;
+          outbuf[tmp_1] = (char_type)finchar;
           continue;
         }
         if (code == (code_int)256) 
           if (block_mode) {
-            memset((void *)(prev),0,(unsigned int)256);
-            free_ent = (long)((256 + 1) - 1);
+            memset((voidp)(prev),0,(size_t)256);
+            free_ent = (code_int)((256 + 1) - 1);
             posbits = (posbits - (long)1) + ((long)(n_bits << 3) - ((
                                                                     posbits - (long)1) + (long)(
                                                                     n_bits << 3)) % (long)(
@@ -6804,25 +6791,25 @@ int unlzw(int in, int out)
             char const *tmp_2;
             if (! test) 
               if (outpos > 0) {
-                write_buf(out,(void *)(outbuf),(unsigned int)outpos);
-                bytes_out = (long)((unsigned long)bytes_out + (unsigned long)outpos);
+                write_buf(out,(voidp)(outbuf),(unsigned int)outpos);
+                bytes_out = (long)((ulg)bytes_out + (ulg)outpos);
               }
             if (to_stdout) tmp_2 = "corrupt input.";
             else tmp_2 = "corrupt input. Use zcat to recover some data.";
             error((char *)tmp_2);
           }
           stackp --;
-          *stackp = (unsigned char)finchar;
+          *stackp = (char_type)finchar;
           code = oldcode;
         }
-        while ((unsigned long)code >= (unsigned long)256) {
+        while ((cmp_code_int)code >= (cmp_code_int)256) {
           stackp --;
           *stackp = window[code];
-          code = (long)prev[code];
+          code = (code_int)prev[code];
         }
         stackp --;
         finchar = (int)window[code];
-        *stackp = (unsigned char)finchar;
+        *stackp = (char_type)finchar;
         {
           register int i_0;
           i_0 = (char_type *)(& d_buf[0x8000 - 1]) - stackp;
@@ -6832,13 +6819,13 @@ int unlzw(int in, int out)
               if (i_0 > 16384 - outpos) i_0 = 16384 - outpos;
               if (i_0 > 0) {
                 memcpy((void *)(& outbuf[outpos]),(void const *)stackp,
-                       (unsigned int)i_0);
+                       (size_t)i_0);
                 outpos += i_0;
               }
               if (outpos >= 16384) {
                 if (! test) {
-                  write_buf(out,(void *)(outbuf),(unsigned int)outpos);
-                  bytes_out = (long)((unsigned long)bytes_out + (unsigned long)outpos);
+                  write_buf(out,(voidp)(outbuf),(unsigned int)outpos);
+                  bytes_out = (long)((ulg)bytes_out + (ulg)outpos);
                 }
                 outpos = 0;
               }
@@ -6848,7 +6835,7 @@ int unlzw(int in, int out)
             }
           else {
             memcpy((void *)(& outbuf[outpos]),(void const *)stackp,
-                   (unsigned int)i_0);
+                   (size_t)i_0);
             outpos += i_0;
           }
         }
@@ -6856,7 +6843,7 @@ int unlzw(int in, int out)
         ;
         if (code < maxmaxcode) {
           prev[code] = (unsigned short)oldcode;
-          window[code] = (unsigned char)finchar;
+          window[code] = (char_type)finchar;
           free_ent = code + (code_int)1;
         }
         oldcode = incode;
@@ -6866,8 +6853,8 @@ int unlzw(int in, int out)
   }
   if (! test) 
     if (outpos > 0) {
-      write_buf(out,(void *)(outbuf),(unsigned int)outpos);
-      bytes_out = (long)((unsigned long)bytes_out + (unsigned long)outpos);
+      write_buf(out,(voidp)(outbuf),(unsigned int)outpos);
+      bytes_out = (long)((ulg)bytes_out + (ulg)outpos);
     }
   __retres = 0;
   return_label: return __retres;
@@ -6892,7 +6879,7 @@ static void read_tree(void)
   int base;
   int n;
   int tmp_4;
-  orig_len = (unsigned long)0;
+  orig_len = (ulg)0;
   n = 1;
   while (n <= 4) {
     int tmp_1;
@@ -6903,7 +6890,7 @@ static void read_tree(void)
       tmp_1 = (int)inbuf[tmp];
     }
     else tmp_1 = fill_inbuf(0);
-    orig_len = (orig_len << 8) | (unsigned long)tmp_1;
+    orig_len = (orig_len << 8) | (ulg)tmp_1;
     n ++;
   }
   if (inptr < insize) {
@@ -6952,7 +6939,7 @@ static void read_tree(void)
           tmp_11 = (int)inbuf[tmp_9];
         }
         else tmp_11 = fill_inbuf(0);
-        literal[tmp_8] = (unsigned char)tmp_11;
+        literal[tmp_8] = (uch)tmp_11;
       }
       n --;
     }
@@ -6988,14 +6975,14 @@ static void build_tree_0(void)
         ;
         if (! tmp) break;
         prefixp --;
-        *prefixp = (unsigned char)len;
+        *prefixp = (uch)len;
       }
     }
     len ++;
   }
   while (prefixp > outbuf) {
     prefixp --;
-    *prefixp = (unsigned char)0;
+    *prefixp = (uch)0;
   }
   return;
 }
@@ -7013,7 +7000,7 @@ int unpack(int in, int out)
   read_tree();
   build_tree_0();
   valid = 0;
-  bitbuf = (unsigned long)0;
+  bitbuf = (ulg)0;
   peek_mask = (unsigned int)((1 << peek_bits) - 1);
   eob = (unsigned int)(leaves[max_len] - 1);
   while (1) {
@@ -7026,14 +7013,14 @@ int unpack(int in, int out)
         tmp_1 = (int)inbuf[tmp];
       }
       else tmp_1 = fill_inbuf(0);
-      bitbuf = (bitbuf << 8) | (unsigned long)tmp_1;
+      bitbuf = (bitbuf << 8) | (ulg)tmp_1;
       valid += 8;
     }
     peek = (unsigned int)((bitbuf >> (valid - peek_bits)) & (unsigned long)peek_mask);
     len = (int)outbuf[peek];
     if (len > 0) peek >>= peek_bits - len;
     else {
-      ulg mask = (unsigned long)peek_mask;
+      ulg mask = (ulg)peek_mask;
       len = peek_bits;
       while (1) {
         len ++;
@@ -7047,7 +7034,7 @@ int unpack(int in, int out)
             tmp_4 = (int)inbuf[tmp_2];
           }
           else tmp_4 = fill_inbuf(0);
-          bitbuf = (bitbuf << 8) | (unsigned long)tmp_4;
+          bitbuf = (bitbuf << 8) | (ulg)tmp_4;
           valid += 8;
         }
         peek = (unsigned int)((bitbuf >> (valid - len)) & mask);
@@ -7066,7 +7053,7 @@ int unpack(int in, int out)
     valid -= len;
   }
   flush_window();
-  if (orig_len != (unsigned long)bytes_out) error((char *)"invalid compressed data--length error");
+  if (orig_len != (ulg)bytes_out) error((char *)"invalid compressed data--length error");
   __retres = 0;
   return __retres;
 }
@@ -7105,11 +7092,11 @@ static int bitcount;
 static void fillbuf(int n) __attribute__((__FC_OLDSTYLEPROTO__));
 static void fillbuf(int n)
 {
-  bitbuf_0 = (unsigned short)((int)bitbuf_0 << n);
+  bitbuf_0 = (ush)((int)bitbuf_0 << n);
   while (n > bitcount) {
     int tmp_1;
     n -= bitcount;
-    bitbuf_0 = (unsigned short)((unsigned int)bitbuf_0 | (subbitbuf << n));
+    bitbuf_0 = (ush)((unsigned int)bitbuf_0 | (subbitbuf << n));
     if (inptr < insize) {
       unsigned int tmp;
       tmp = inptr;
@@ -7122,7 +7109,7 @@ static void fillbuf(int n)
     bitcount = 8;
   }
   bitcount -= n;
-  bitbuf_0 = (unsigned short)((unsigned int)bitbuf_0 | (subbitbuf >> bitcount));
+  bitbuf_0 = (ush)((unsigned int)bitbuf_0 | (subbitbuf >> bitcount));
   return;
 }
 
@@ -7137,7 +7124,7 @@ static unsigned int getbits(int n)
 
 static void init_getbits(void)
 {
-  bitbuf_0 = (unsigned short)0;
+  bitbuf_0 = (ush)0;
   subbitbuf = (unsigned int)0;
   bitcount = 0;
   fillbuf((int)((unsigned int)(8 * 2) * sizeof(char)));
@@ -7162,31 +7149,31 @@ static void make_table(int nchar, uch *bitlen, int tablebits, ush *table)
   unsigned int mask;
   i = (unsigned int)1;
   while (i <= (unsigned int)16) {
-    count[i] = (unsigned short)0;
+    count[i] = (ush)0;
     i ++;
   }
   i = (unsigned int)0;
   while (i < (unsigned int)nchar) {
-    count[*(bitlen + i)] = (unsigned short)((int)count[*(bitlen + i)] + 1);
+    count[*(bitlen + i)] = (ush)((int)count[*(bitlen + i)] + 1);
     i ++;
   }
-  start[1] = (unsigned short)0;
+  start[1] = (ush)0;
   i = (unsigned int)1;
   while (i <= (unsigned int)16) {
-    start[i + (unsigned int)1] = (unsigned short)((int)start[i] + ((int)count[i] << (
-                                                                   (unsigned int)16 - i)));
+    start[i + (unsigned int)1] = (ush)((int)start[i] + ((int)count[i] << (
+                                                        (unsigned int)16 - i)));
     i ++;
   }
   if (((int)start[17] & 0xffff) != 0) error((char *)"Bad table\n");
   jutbits = (unsigned int)(16 - tablebits);
   i = (unsigned int)1;
   while (i <= (unsigned int)tablebits) {
-    start[i] = (unsigned short)((int)start[i] >> jutbits);
-    weight[i] = (unsigned short)((unsigned int)1 << ((unsigned int)tablebits - i));
+    start[i] = (ush)((int)start[i] >> jutbits);
+    weight[i] = (ush)((unsigned int)1 << ((unsigned int)tablebits - i));
     i ++;
   }
   while (i <= (unsigned int)16) {
-    weight[i] = (unsigned short)((unsigned int)1 << ((unsigned int)16 - i));
+    weight[i] = (ush)((unsigned int)1 << ((unsigned int)16 - i));
     i ++;
   }
   i = (unsigned int)((int)start[tablebits + 1] >> jutbits);
@@ -7196,7 +7183,7 @@ static void make_table(int nchar, uch *bitlen, int tablebits, ush *table)
       unsigned int tmp;
       tmp = i;
       i ++;
-      *(table + tmp) = (unsigned short)0;
+      *(table + tmp) = (ush)0;
     }
   }
   avail = (unsigned int)nchar;
@@ -7209,7 +7196,7 @@ static void make_table(int nchar, uch *bitlen, int tablebits, ush *table)
     if (len <= (unsigned int)tablebits) {
       i = (unsigned int)start[len];
       while (i < nextcode) {
-        *(table + i) = (unsigned short)ch;
+        *(table + i) = (ush)ch;
         i ++;
       }
     }
@@ -7221,20 +7208,20 @@ static void make_table(int nchar, uch *bitlen, int tablebits, ush *table)
         if ((int)*p == 0) {
           ush tmp_0;
           unsigned int tmp_1;
-          tmp_0 = (unsigned short)0;
+          tmp_0 = (ush)0;
           prev[avail] = tmp_0;
           *(& prev[0x8000] + avail) = tmp_0;
           tmp_1 = avail;
           avail ++;
-          *p = (unsigned short)tmp_1;
+          *p = (ush)tmp_1;
         }
         if (k & mask) p = & prev[0x8000] + *p; else p = & prev[*p];
         k <<= 1;
         i --;
       }
-      *p = (unsigned short)ch;
+      *p = (ush)ch;
     }
-    start[len] = (unsigned short)nextcode;
+    start[len] = (ush)nextcode;
     __Cont: ch ++;
   }
   return;
@@ -7257,12 +7244,12 @@ static void read_pt_len(int nn, int nbit, int i_special)
     c = (int)tmp_0;
     i = 0;
     while (i < nn) {
-      pt_len[i] = (unsigned char)0;
+      pt_len[i] = (uch)0;
       i ++;
     }
     i = 0;
     while (i < 256) {
-      pt_table[i] = (unsigned short)c;
+      pt_table[i] = (ush)c;
       i ++;
     }
   }
@@ -7283,7 +7270,7 @@ static void read_pt_len(int nn, int nbit, int i_special)
       fillbuf(tmp_1);
       tmp_2 = i;
       i ++;
-      pt_len[tmp_2] = (unsigned char)c;
+      pt_len[tmp_2] = (uch)c;
       if (i == i_special) {
         unsigned int tmp_3;
         tmp_3 = getbits(2);
@@ -7294,7 +7281,7 @@ static void read_pt_len(int nn, int nbit, int i_special)
           if (! (c >= 0)) break;
           tmp_4 = i;
           i ++;
-          pt_len[tmp_4] = (unsigned char)0;
+          pt_len[tmp_4] = (uch)0;
         }
       }
     }
@@ -7302,7 +7289,7 @@ static void read_pt_len(int nn, int nbit, int i_special)
       int tmp_5;
       tmp_5 = i;
       i ++;
-      pt_len[tmp_5] = (unsigned char)0;
+      pt_len[tmp_5] = (uch)0;
     }
     make_table(nn,pt_len,8,pt_table);
   }
@@ -7324,12 +7311,12 @@ static void read_c_len(void)
     c = (int)tmp_0;
     i = 0;
     while (i < ((255 + 256) + 2) - 3) {
-      outbuf[i] = (unsigned char)0;
+      outbuf[i] = (uch)0;
       i ++;
     }
     i = 0;
     while (i < 4096) {
-      d_buf[i] = (unsigned short)c;
+      d_buf[i] = (ush)c;
       i ++;
     }
   }
@@ -7366,21 +7353,21 @@ static void read_c_len(void)
           if (! (c >= 0)) break;
           tmp_3 = i;
           i ++;
-          outbuf[tmp_3] = (unsigned char)0;
+          outbuf[tmp_3] = (uch)0;
         }
       }
       else {
         int tmp_4;
         tmp_4 = i;
         i ++;
-        outbuf[tmp_4] = (unsigned char)(c - 2);
+        outbuf[tmp_4] = (uch)(c - 2);
       }
     }
     while (i < ((255 + 256) + 2) - 3) {
       int tmp_5;
       tmp_5 = i;
       i ++;
-      outbuf[tmp_5] = (unsigned char)0;
+      outbuf[tmp_5] = (uch)0;
     }
     make_table(((255 + 256) + 2) - 3,outbuf,12,d_buf);
   }
@@ -7487,7 +7474,7 @@ static unsigned int decode(unsigned int count, uch *buffer)
       goto return_label;
     }
     if (c <= (unsigned int)255) {
-      *(buffer + r) = (unsigned char)c;
+      *(buffer + r) = (uch)c;
       r ++;
       ;
       if (r == count) {
@@ -7528,7 +7515,7 @@ int unlzh(int in, int out)
   while (! done) {
     n = decode((unsigned int)1 << 13,window);
     if (! test) 
-      if (n > (unsigned int)0) write_buf(out,(void *)(window),n);
+      if (n > (unsigned int)0) write_buf(out,(voidp)(window),n);
   }
   __retres = 0;
   return __retres;
@@ -7864,7 +7851,7 @@ int _getopt_internal(int argc, char * const *argv, char const *optstring,
             while (p->name) {
               int tmp_4;
               tmp_4 = strncmp(p->name,(char const *)nextchar,
-                              (unsigned int)(s - nextchar));
+                              (size_t)(s - nextchar));
               if (! tmp_4) {
                 int tmp_3;
                 tmp_3 = my_strlen(p->name);
@@ -8062,7 +8049,7 @@ int eva_main(void)
     int i = 0;
     /*@ loop unroll 5; */
     while (i < 5) {
-      Frama_C_make_unknown(argv[i],(unsigned int)255);
+      Frama_C_make_unknown(argv[i],(size_t)255);
       *(argv[i] + 255) = (char)0;
       i ++;
     }
