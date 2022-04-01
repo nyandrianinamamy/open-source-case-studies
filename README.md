@@ -66,6 +66,9 @@ Other generated targets:
 
 # Notes
 
+A summary of the case studies, with a brief description, URL, number of Eva
+targets, etc, is available at [summary.md](summary.md).
+
 ## Source code modifications
 
 We attempt to minimize changes to each case study, to keep the code close to
