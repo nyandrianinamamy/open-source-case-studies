@@ -582,4 +582,4 @@ FRAMAC_SHARE/libc	string.h	131	memset	precondition	Unknown	valid_s: valid_or_emp
 FRAMAC_SHARE/libc	string.h	141	strlen	precondition	Unknown	valid_string_s: valid_read_string(s)
 FRAMAC_SHARE/libc	unistd.h	853	ftruncate	assigns clause	Unknown	assigns \nothing;
 FRAMAC_SHARE/libc	unistd.h	853	ftruncate	from clause	Unknown	assigns \result \from __x0, __x1;
-FRAMAC_SHARE/libc	unistd.h	1141	write	precondition	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))
+FRAMAC_SHARE/libc	unistd.h	1153	write	precondition	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))

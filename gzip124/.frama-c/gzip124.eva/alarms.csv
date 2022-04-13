@@ -243,14 +243,6 @@ directory	file	line	function	property kind	status	property
 .	gzip.c	1353	do_list	signed_overflow	Unknown	total_in - header_bytes ≤ 2147483647
 .	gzip.c	1372	do_list	precondition of lseek	Unknown	valid_fd: 0 ≤ fd < 1024
 .	gzip.c	1375	do_list	signed_overflow	Unknown	bytes_in + 8L ≤ 2147483647
-.	gzip.c	1379	do_list	initialization	Unknown	\initialized(&buf[1])
-.	gzip.c	1379	do_list	initialization	Unknown	\initialized(&buf[2] + 0)
-.	gzip.c	1379	do_list	initialization	Unknown	\initialized(&buf[2] + 1)
-.	gzip.c	1379	do_list	initialization	Unknown	\initialized((uch *)buf)
-.	gzip.c	1380	do_list	initialization	Unknown	\initialized(&buf[4] + 0)
-.	gzip.c	1380	do_list	initialization	Unknown	\initialized(&buf[4] + 1)
-.	gzip.c	1380	do_list	initialization	Unknown	\initialized((&buf[4] + 2) + 0)
-.	gzip.c	1380	do_list	initialization	Unknown	\initialized((&buf[4] + 2) + 1)
 .	gzip.c	1387	do_list	index_bound	Unknown	method_0 < 9
 .	gzip.c	1394	do_list	signed_overflow	Unknown	total_in + bytes_in ≤ 2147483647
 .	gzip.c	1400	do_list	signed_overflow	Unknown	total_out + bytes_out ≤ 2147483647
@@ -679,9 +671,9 @@ FRAMAC_SHARE/libc	unistd.h	769	close	precondition	Unknown	valid_fd: 0 ≤ fd < 1
 FRAMAC_SHARE/libc	unistd.h	968	lseek	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
 FRAMAC_SHARE/libc	unistd.h	1007	read	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
 FRAMAC_SHARE/libc	unistd.h	1008	read	precondition	Unknown	buf_has_room: \valid((char *)buf + (0 .. count - 1))
-FRAMAC_SHARE/libc	unistd.h	1124	unlink	precondition	Unknown	valid_string_path: valid_read_string(path)
-FRAMAC_SHARE/libc	unistd.h	1140	write	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
-FRAMAC_SHARE/libc	unistd.h	1141	write	precondition	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))
+FRAMAC_SHARE/libc	unistd.h	1136	unlink	precondition	Unknown	valid_string_path: valid_read_string(path)
+FRAMAC_SHARE/libc	unistd.h	1152	write	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
+FRAMAC_SHARE/libc	unistd.h	1153	write	precondition	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))
 FRAMAC_SHARE/libc/sys	stat.h	32	chmod	assigns clause	Unknown	assigns \nothing;
 FRAMAC_SHARE/libc/sys	stat.h	32	chmod	from clause	Unknown	assigns \result \from *(__x0 + (0 ..)), __x1;
 FRAMAC_SHARE/libc/sys	stat.h	35	fstat	assigns clause	Unknown	assigns \result, *__x1;
