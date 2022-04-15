@@ -34,7 +34,10 @@ go(int n, int x, int y)
                 N++;
                 return 0;
         }
+        //@ slevel 0;
+        //@ loop unroll 0;
         for (; y<8; y++) {
+                //@ loop unroll 0;
                 for (; x<8; x++)
                         if (chk(x, y) == 0) {
                                 t[x + 8*y]++;

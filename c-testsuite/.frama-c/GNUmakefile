@@ -23,6 +23,7 @@ FCFLAGS     += \
 ## Eva-specific flags
 EVAFLAGS    += \
   -eva-precision 3 \
+  -eva-unroll-recursive-calls 10 \
 
 # Note: -eva-precision >3 (including 11) does not change anything
 
