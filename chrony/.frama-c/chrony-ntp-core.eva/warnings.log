@@ -7830,7 +7830,18 @@ stack: update_drift_file :: reference.c:1083 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-reference.c:372:[kernel:annot:missing-spec] warning: Neither code nor specification for function chmod, generating default assigns from the prototype
+reference.c:372:[eva:alarm] warning: function chmod: precondition 'valid_path' got status unknown.
+stack: chmod :: reference.c:372 <-
+       update_drift_file :: reference.c:1083 <-
+       REF_SetReference :: sources.c:1094 <-
+       SRC_SelectSource :: ntp_core.c:1507 <-
+       process_sample :: ntp_core.c:1834 <-
+       receive_packet :: ntp_core.c:2070 <-
+       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+       process_response :: test/unit/ntp_core.c:393 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
 reference.c:380:[eva:alarm] warning: function rename: precondition 'valid_old_name' got status unknown.
 stack: rename :: reference.c:380 <-
        update_drift_file :: reference.c:1083 <-
@@ -8355,6 +8366,18 @@ stack: chown :: reference.c:371 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
+reference.c:372:[eva:alarm] warning: function chmod: precondition 'valid_path' got status unknown.
+stack: chmod :: reference.c:372 <-
+       update_drift_file :: reference.c:1083 <-
+       REF_SetReference :: sources.c:1094 <-
+       SRC_SelectSource :: ntp_core.c:1507 <-
+       process_sample :: ntp_core.c:1834 <-
+       receive_packet :: ntp_core.c:2070 <-
+       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+       process_response :: test/unit/ntp_core.c:399 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
 reference.c:380:[eva:alarm] warning: function rename: precondition 'valid_old_name' got status unknown.
 stack: rename :: reference.c:380 <-
        update_drift_file :: reference.c:1083 <-
@@ -8787,6 +8810,18 @@ stack: chown :: reference.c:371 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
+reference.c:372:[eva:alarm] warning: function chmod: precondition 'valid_path' got status unknown.
+stack: chmod :: reference.c:372 <-
+       update_drift_file :: reference.c:1083 <-
+       REF_SetReference :: sources.c:1094 <-
+       SRC_SelectSource :: ntp_core.c:1507 <-
+       process_sample :: ntp_core.c:1834 <-
+       receive_packet :: ntp_core.c:2070 <-
+       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+       process_response :: test/unit/ntp_core.c:405 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
 reference.c:380:[eva:alarm] warning: function rename: precondition 'valid_old_name' got status unknown.
 stack: rename :: reference.c:380 <-
        update_drift_file :: reference.c:1083 <-
@@ -9197,6 +9232,18 @@ stack: chown :: reference.c:371 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
+reference.c:372:[eva:alarm] warning: function chmod: precondition 'valid_path' got status unknown.
+stack: chmod :: reference.c:372 <-
+       update_drift_file :: reference.c:1083 <-
+       REF_SetReference :: sources.c:1094 <-
+       SRC_SelectSource :: ntp_core.c:1507 <-
+       process_sample :: ntp_core.c:1834 <-
+       receive_packet :: ntp_core.c:2070 <-
+       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+       process_response :: test/unit/ntp_core.c:381 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
 reference.c:380:[eva:alarm] warning: function rename: precondition 'valid_old_name' got status unknown.
 stack: rename :: reference.c:380 <-
        update_drift_file :: reference.c:1083 <-
@@ -9410,6 +9457,18 @@ stack: chown :: reference.c:371 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
+reference.c:372:[eva:alarm] warning: function chmod: precondition 'valid_path' got status unknown.
+stack: chmod :: reference.c:372 <-
+       update_drift_file :: reference.c:1083 <-
+       REF_SetReference :: sources.c:1094 <-
+       SRC_SelectSource :: ntp_core.c:1507 <-
+       process_sample :: ntp_core.c:1834 <-
+       receive_packet :: ntp_core.c:2070 <-
+       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+       process_response :: test/unit/ntp_core.c:386 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
 reference.c:380:[eva:alarm] warning: function rename: precondition 'valid_old_name' got status unknown.
 stack: rename :: reference.c:380 <-
        update_drift_file :: reference.c:1083 <-
@@ -9593,6 +9652,18 @@ stack: stat :: reference.c:370 <-
        eva_main
 reference.c:371:[eva:alarm] warning: function chown: precondition 'valid_string_path' got status unknown.
 stack: chown :: reference.c:371 <-
+       update_drift_file :: reference.c:1083 <-
+       REF_SetReference :: sources.c:1094 <-
+       SRC_SelectSource :: ntp_core.c:1507 <-
+       process_sample :: ntp_core.c:1834 <-
+       receive_packet :: ntp_core.c:2070 <-
+       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+       process_response :: test/unit/ntp_core.c:391 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+reference.c:372:[eva:alarm] warning: function chmod: precondition 'valid_path' got status unknown.
+stack: chmod :: reference.c:372 <-
        update_drift_file :: reference.c:1083 <-
        REF_SetReference :: sources.c:1094 <-
        SRC_SelectSource :: ntp_core.c:1507 <-
@@ -10450,6 +10521,19 @@ stack: chown :: reference.c:371 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
+reference.c:372:[eva:alarm] warning: function chmod: precondition 'valid_path' got status unknown.
+stack: chmod :: reference.c:372 <-
+       update_drift_file :: reference.c:1083 <-
+       REF_SetReference :: sources.c:1094 <-
+       SRC_SelectSource :: ntp_core.c:1507 <-
+       process_sample :: ntp_core.c:1834 <-
+       receive_packet :: ntp_core.c:2070 <-
+       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+       process_response :: test/unit/ntp_core.c:292 <-
+       process_replay :: test/unit/ntp_core.c:480 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
 reference.c:380:[eva:alarm] warning: function rename: precondition 'valid_old_name' got status unknown.
 stack: rename :: reference.c:380 <-
        update_drift_file :: reference.c:1083 <-
@@ -10868,6 +10952,19 @@ stack: chown :: reference.c:371 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
+reference.c:372:[eva:alarm] warning: function chmod: precondition 'valid_path' got status unknown.
+stack: chmod :: reference.c:372 <-
+       update_drift_file :: reference.c:1083 <-
+       REF_SetReference :: sources.c:1094 <-
+       SRC_SelectSource :: ntp_core.c:1507 <-
+       process_sample :: ntp_core.c:1834 <-
+       receive_packet :: ntp_core.c:2070 <-
+       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+       process_response :: test/unit/ntp_core.c:292 <-
+       process_replay :: test/unit/ntp_core.c:482 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
 reference.c:380:[eva:alarm] warning: function rename: precondition 'valid_old_name' got status unknown.
 stack: rename :: reference.c:380 <-
        update_drift_file :: reference.c:1083 <-
@@ -11122,6 +11219,18 @@ stack: chown :: reference.c:371 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
+reference.c:372:[eva:alarm] warning: function chmod: precondition 'valid_path' got status unknown.
+stack: chmod :: reference.c:372 <-
+       update_drift_file :: reference.c:1083 <-
+       REF_SetReference :: sources.c:1094 <-
+       SRC_SelectSource :: ntp_core.c:1507 <-
+       process_sample :: ntp_core.c:1834 <-
+       receive_packet :: ntp_core.c:2070 <-
+       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+       process_response :: test/unit/ntp_core.c:452 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
 reference.c:380:[eva:alarm] warning: function rename: precondition 'valid_old_name' got status unknown.
 stack: rename :: reference.c:380 <-
        update_drift_file :: reference.c:1083 <-
@@ -11324,6 +11433,19 @@ stack: chown :: reference.c:371 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
+reference.c:372:[eva:alarm] warning: function chmod: precondition 'valid_path' got status unknown.
+stack: chmod :: reference.c:372 <-
+       update_drift_file :: reference.c:1083 <-
+       REF_SetReference :: sources.c:1094 <-
+       SRC_SelectSource :: ntp_core.c:1507 <-
+       process_sample :: ntp_core.c:1834 <-
+       receive_packet :: ntp_core.c:2070 <-
+       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+       process_response :: test/unit/ntp_core.c:292 <-
+       process_replay :: test/unit/ntp_core.c:459 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
 reference.c:380:[eva:alarm] warning: function rename: precondition 'valid_old_name' got status unknown.
 stack: rename :: reference.c:380 <-
        update_drift_file :: reference.c:1083 <-
@@ -11516,6 +11638,19 @@ stack: stat :: reference.c:370 <-
        eva_main
 reference.c:371:[eva:alarm] warning: function chown: precondition 'valid_string_path' got status unknown.
 stack: chown :: reference.c:371 <-
+       update_drift_file :: reference.c:1083 <-
+       REF_SetReference :: sources.c:1094 <-
+       SRC_SelectSource :: ntp_core.c:1507 <-
+       process_sample :: ntp_core.c:1834 <-
+       receive_packet :: ntp_core.c:2070 <-
+       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+       process_response :: test/unit/ntp_core.c:292 <-
+       process_replay :: test/unit/ntp_core.c:461 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+reference.c:372:[eva:alarm] warning: function chmod: precondition 'valid_path' got status unknown.
+stack: chmod :: reference.c:372 <-
        update_drift_file :: reference.c:1083 <-
        REF_SetReference :: sources.c:1094 <-
        SRC_SelectSource :: ntp_core.c:1507 <-
@@ -11745,6 +11880,18 @@ stack: stat :: reference.c:370 <-
        eva_main
 reference.c:371:[eva:alarm] warning: function chown: precondition 'valid_string_path' got status unknown.
 stack: chown :: reference.c:371 <-
+       update_drift_file :: reference.c:1083 <-
+       REF_SetReference :: sources.c:1094 <-
+       SRC_SelectSource :: ntp_core.c:1507 <-
+       process_sample :: ntp_core.c:1834 <-
+       receive_packet :: ntp_core.c:2070 <-
+       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+       process_response :: test/unit/ntp_core.c:473 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+reference.c:372:[eva:alarm] warning: function chmod: precondition 'valid_path' got status unknown.
+stack: chmod :: reference.c:372 <-
        update_drift_file :: reference.c:1083 <-
        REF_SetReference :: sources.c:1094 <-
        SRC_SelectSource :: ntp_core.c:1507 <-
@@ -12120,6 +12267,17 @@ stack: stat :: reference.c:370 <-
        eva_main
 reference.c:371:[eva:alarm] warning: function chown: precondition 'valid_string_path' got status unknown.
 stack: chown :: reference.c:371 <-
+       update_drift_file :: reference.c:1083 <-
+       REF_SetReference :: sources.c:1094 <-
+       SRC_SelectSource :: sources.c:1110 <-
+       SRC_ReselectSource :: sources.c:284 <-
+       SRC_DestroyInstance :: ntp_core.c:653 <-
+       NCR_DestroyInstance :: test/unit/ntp_core.c:488 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+reference.c:372:[eva:alarm] warning: function chmod: precondition 'valid_path' got status unknown.
+stack: chmod :: reference.c:372 <-
        update_drift_file :: reference.c:1083 <-
        REF_SetReference :: sources.c:1094 <-
        SRC_SelectSource :: sources.c:1110 <-
@@ -13724,6 +13882,18 @@ stack: chown :: reference.c:371 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
+reference.c:372:[eva:alarm] warning: function chmod: precondition 'valid_path' got status unknown.
+stack: chmod :: reference.c:372 <-
+       update_drift_file :: reference.c:1083 <-
+       REF_SetReference :: sources.c:1094 <-
+       SRC_SelectSource :: ntp_core.c:1507 <-
+       process_sample :: ntp_core.c:1834 <-
+       receive_packet :: ntp_core.c:2070 <-
+       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+       process_response :: test/unit/ntp_core.c:423 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
 reference.c:380:[eva:alarm] warning: function rename: precondition 'valid_old_name' got status unknown.
 stack: rename :: reference.c:380 <-
        update_drift_file :: reference.c:1083 <-
@@ -14022,6 +14192,13 @@ stack: stat :: reference.c:370 <-
        eva_main
 reference.c:371:[eva:alarm] warning: function chown: precondition 'valid_string_path' got status unknown.
 stack: chown :: reference.c:371 <-
+       update_drift_file :: reference.c:289 <-
+       REF_Finalise :: test/unit/ntp_core.c:493 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+reference.c:372:[eva:alarm] warning: function chmod: precondition 'valid_path' got status unknown.
+stack: chmod :: reference.c:372 <-
        update_drift_file :: reference.c:289 <-
        REF_Finalise :: test/unit/ntp_core.c:493 <-
        test_unit :: test/unit/test.c:70 <-

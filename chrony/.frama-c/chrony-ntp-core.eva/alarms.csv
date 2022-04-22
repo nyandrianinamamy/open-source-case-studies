@@ -364,6 +364,7 @@ directory	file	line	function	property kind	status	property
 .	reference.c	371	update_drift_file	initialization	Unknown	\initialized(&buf.st_uid)
 .	reference.c	371	update_drift_file	precondition of chown	Unknown	valid_string_path: valid_read_string(path)
 .	reference.c	372	update_drift_file	initialization	Unknown	\initialized(&buf.st_mode)
+.	reference.c	372	update_drift_file	precondition of chmod	Unknown	valid_path: valid_read_string(path)
 .	reference.c	380	update_drift_file	precondition of rename	Unknown	valid_new_name: valid_read_string(new_name)
 .	reference.c	380	update_drift_file	precondition of rename	Unknown	valid_old_name: valid_read_string(old_name)
 .	reference.c	381	update_drift_file	precondition of unlink	Unknown	valid_string_path: valid_read_string(path)
@@ -856,9 +857,8 @@ FRAMAC_SHARE/libc	string.h	141	strlen	precondition	Unknown	valid_string_s: valid
 FRAMAC_SHARE/libc	string.h	173	strchr	precondition	Unknown	valid_string_s: valid_read_string(s)
 FRAMAC_SHARE/libc	unistd.h	761	chown	precondition	Unknown	valid_string_path: valid_read_string(path)
 FRAMAC_SHARE/libc	unistd.h	1136	unlink	precondition	Unknown	valid_string_path: valid_read_string(path)
-FRAMAC_SHARE/libc/sys	stat.h	32	chmod	assigns clause	Unknown	assigns \nothing;
-FRAMAC_SHARE/libc/sys	stat.h	32	chmod	from clause	Unknown	assigns \result \from *(__x0 + (0 ..)), __x1;
-FRAMAC_SHARE/libc/sys	stat.h	87	stat	precondition	Unknown	valid_pathname: valid_read_string(pathname)
+FRAMAC_SHARE/libc/sys	stat.h	35	chmod	precondition	Unknown	valid_path: valid_read_string(path)
+FRAMAC_SHARE/libc/sys	stat.h	147	stat	precondition	Unknown	valid_pathname: valid_read_string(pathname)
 test/unit	ntp_core.c	179	send_response	precondition of __FC_assert	Invalid or unreachable	nonnull_c: c ≢ 0
 test/unit	ntp_core.c	186	send_response	precondition of __FC_assert	Unknown	nonnull_c: c ≢ 0
 test/unit	ntp_core.c	192	send_response	precondition of __FC_assert	Invalid or unreachable	nonnull_c: c ≢ 0

@@ -290,12 +290,15 @@ directory	file	line	function	property kind	status	property
 .	gzip.c	1571	check_ofname	precondition of fgets	Unknown	valid_stream: \valid(stream)
 .	gzip.c	1573	check_ofname	initialization	Unknown	\initialized((char *)response)
 .	gzip.c	1573	check_ofname	precondition of isupper	Unknown	c_uchar_or_eof: (0 ≤ c ≤ 255) ∨ c ≡ -1
+.	gzip.c	1579	check_ofname	precondition of chmod	Unknown	valid_path: valid_read_string(path)
 .	gzip.c	1580	check_ofname	precondition of unlink	Unknown	valid_string_path: valid_read_string(path)
 .	gzip.c	1581	check_ofname	precondition of fprintf_va_44	Unknown	valid_read_string(param0)
 .	gzip.c	1582	check_ofname	precondition of perror	Unknown	valid_string_s: valid_read_string(s)
+.	gzip.c	1630	copy_stat	precondition of chmod	Unknown	valid_path: valid_read_string(path)
 .	gzip.c	1631	copy_stat	precondition of fprintf_va_45	Unknown	valid_read_string(param0)
 .	gzip.c	1632	copy_stat	precondition of perror	Unknown	valid_string_s: valid_read_string(s)
 .	gzip.c	1635	copy_stat	precondition of chown	Unknown	valid_string_path: valid_read_string(path)
+.	gzip.c	1639	copy_stat	precondition of chmod	Unknown	valid_path: valid_read_string(path)
 .	gzip.c	1640	copy_stat	precondition of unlink	Unknown	valid_string_path: valid_read_string(path)
 .	gzip.c	1641	copy_stat	precondition of fprintf_va_46	Unknown	valid_read_string(param0)
 .	gzip.c	1642	copy_stat	precondition of perror	Unknown	valid_string_s: valid_read_string(s)
@@ -674,10 +677,6 @@ FRAMAC_SHARE/libc	unistd.h	1008	read	precondition	Unknown	buf_has_room: \valid((
 FRAMAC_SHARE/libc	unistd.h	1136	unlink	precondition	Unknown	valid_string_path: valid_read_string(path)
 FRAMAC_SHARE/libc	unistd.h	1152	write	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
 FRAMAC_SHARE/libc	unistd.h	1153	write	precondition	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))
-FRAMAC_SHARE/libc/sys	stat.h	32	chmod	assigns clause	Unknown	assigns \nothing;
-FRAMAC_SHARE/libc/sys	stat.h	32	chmod	from clause	Unknown	assigns \result \from *(__x0 + (0 ..)), __x1;
-FRAMAC_SHARE/libc/sys	stat.h	35	fstat	assigns clause	Unknown	assigns \result, *__x1;
-FRAMAC_SHARE/libc/sys	stat.h	35	fstat	from clause	Unknown	assigns *__x1 \from *__x1, __x0;
-FRAMAC_SHARE/libc/sys	stat.h	35	fstat	from clause	Unknown	assigns \result \from *__x1, __x0;
-FRAMAC_SHARE/libc/sys	stat.h	43	lstat	precondition	Unknown	valid_path: valid_read_string(path)
-FRAMAC_SHARE/libc/sys	stat.h	87	stat	precondition	Unknown	valid_pathname: valid_read_string(pathname)
+FRAMAC_SHARE/libc/sys	stat.h	35	chmod	precondition	Unknown	valid_path: valid_read_string(path)
+FRAMAC_SHARE/libc/sys	stat.h	103	lstat	precondition	Unknown	valid_path: valid_read_string(path)
+FRAMAC_SHARE/libc/sys	stat.h	147	stat	precondition	Unknown	valid_pathname: valid_read_string(pathname)
