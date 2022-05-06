@@ -30,7 +30,7 @@ IMPRECISE_TARGETS = cwe20.eva cwe20-2.eva cwe119.eva cwe190.eva cwe416.eva cwe58
 
 PRECISE_TARGETS = $(subst .eva,-precise.eva,$(IMPRECISE_TARGETS))
 
-OTHER_TARGETS = cwe190-unsigned.parse
+OTHER_TARGETS = cwe190-unsigned.eva
 
 TARGETS = $(IMPRECISE_TARGETS) $(PRECISE_TARGETS) $(OTHER_TARGETS)
 
