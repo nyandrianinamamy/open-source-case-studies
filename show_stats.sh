@@ -12,7 +12,7 @@ shift
 LC_ALL=C
 
 for target in "$@"; do
-    secs=$(grep '^user_time=' $target/stats.txt | cut -d= -f2-)
-    maxmem=$(grep '^memory=' $target/stats.txt | cut -d= -f2-)
+    secs=$(grep '^user_time=' $dir/.frama-c/$target/stats.txt | cut -d= -f2-)
+    maxmem=$(grep '^memory=' $dir/.frama-c/$target/stats.txt | cut -d= -f2-)
     printf "$dir/$target: user time %.2fs, memory %d KiB\n" $secs $maxmem
 done
