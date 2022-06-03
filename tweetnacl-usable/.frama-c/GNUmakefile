@@ -25,6 +25,7 @@ EVAFLAGS    += \
   -eva-warn-key builtins:missing-spec=abort \
   -eva-no-alloc-returns-null \
   -no-warn-signed-overflow \
+  -eva-auto-loop-unroll 64 \
 
 ## GUI-only flags
 FCGUIFLAGS += \
