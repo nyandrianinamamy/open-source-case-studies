@@ -196,6 +196,7 @@ int crypto_onetimeauth(u8 *out,const u8 *m,u64 n,const u8 *k)
   r[12]&=252;
   r[15]&=15;
 
+  //@ loop unroll 5;
   while (n > 0) {
     FOR(j,17) c[j] = 0;
     for (j = 0;(j < 16) && (j < n);++j) c[j] = m[j];
