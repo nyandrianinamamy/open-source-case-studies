@@ -12,12 +12,10 @@ directory	file	line	function	property kind	status	property
 2019/yang	prog.c	22	m	mem_access	Unknown	\valid_read(U + x)
 2019/yang	prog.c	22	m	mem_access	Unknown	\valid(U + x)
 2019/yang	prog.c	22	m	mem_access	Unknown	\valid_read(U + y)
-2019/yang	prog.c	22	m	overlap	Unknown	U + x ≡ U + y ∨ \separated(U + x, U + y)
 2019/yang	prog.c	22	m	mem_access	Unknown	\valid(U + y)
 2019/yang	prog.c	22	m	mem_access	Unknown	\valid_read(U + x)
 2019/yang	prog.c	22	m	mem_access	Unknown	\valid(U + x)
 2019/yang	prog.c	22	m	mem_access	Unknown	\valid_read(U + y)
-2019/yang	prog.c	22	m	overlap	Unknown	U + x ≡ U + y ∨ \separated(U + x, U + y)
 2019/yang	prog.c	22	m	mem_access	Unknown	\valid(U + y)
 2019/yang	prog.c	22	v	signed_overflow	Unknown	l + I[tmp] ≤ 2147483647
 2019/yang	prog.c	22	v	signed_overflow	Unknown	o + I[i] ≤ 2147483647
@@ -70,7 +68,6 @@ directory	file	line	function	property kind	status	property
 2019/yang	prog.c	22	main	mem_access	Unknown	\valid_read(U + x)
 2019/yang	prog.c	22	main	mem_access	Unknown	\valid(U + x)
 2019/yang	prog.c	22	main	mem_access	Unknown	\valid_read(U + y)
-2019/yang	prog.c	22	main	overlap	Unknown	U + x ≡ U + y ∨ \separated(U + x, U + y)
 2019/yang	prog.c	22	main	mem_access	Unknown	\valid(U + y)
 2019/yang	prog.c	22	main	division_by_zero	Unknown	(int)(-((int)(~x))) ≢ 0
 2019/yang	prog.c	22	main	mem_access	Unknown	\valid_read(Z)
