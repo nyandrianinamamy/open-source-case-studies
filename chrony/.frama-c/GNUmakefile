@@ -90,7 +90,7 @@ chrony-regress.parse: \
   $(filter-out ../regress.c,$(TEST_COMMON_SRCS)) \
   ../test/unit/regress.c \
 
-chrony-regress.eva: EVAFLAGS += -main eva_main
+chrony-regress.eva: EVAFLAGS += -main eva_main -eva-domains octagon
 
 ### Epilogue. Do not modify this block. #######################################
 include $(shell $(FRAMAC)-config -print-share-path)/analysis-scripts/epilogue.mk

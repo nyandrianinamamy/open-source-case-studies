@@ -443,11 +443,6 @@ stack: RGR_FindBestRobustRegression :: test/unit/regress.c:72 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-regress.c:277:[eva:alarm] warning: accessing out of bounds index. assert 0 ≤ (int)(i - resid_start);
-stack: RGR_FindBestRegression :: test/unit/regress.c:110 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
 regress.c:277:[eva:alarm] warning: out of bounds read. assert \valid_read(y + i);
 stack: RGR_FindBestRegression :: test/unit/regress.c:110 <-
        test_unit :: test/unit/test.c:70 <-
@@ -466,32 +461,9 @@ stack: find_ordered_entry_with_flags :: regress.c:425 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-regress.c:367:[eva:alarm] warning: out of bounds read. assert \valid_read(x + u);
-stack: find_ordered_entry_with_flags :: regress.c:425 <-
-       find_median :: regress.c:472 <-
-       eval_robust_residual :: regress.c:595 <-
-       RGR_FindBestRobustRegression :: test/unit/regress.c:72 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
 regress.c:243:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
 stack: __FC_assert :: regress.c:243 <-
        RGR_FindBestRegression :: test/unit/regress.c:110 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-regress.c:283:[eva:alarm] warning: accessing out of bounds index. assert 0 ≤ (int)(n - resid_start);
-stack: RGR_FindBestRegression :: test/unit/regress.c:55 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-regress.c:272:[eva:alarm] warning: signed overflow. assert -2147483648 ≤ (int)(n - start) * 2;
-stack: RGR_FindBestRegression :: test/unit/regress.c:55 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-regress.c:272:[eva:alarm] warning: signed overflow. assert n - (int)((int)(n - start) * 2) ≤ 2147483647;
-stack: RGR_FindBestRegression :: test/unit/regress.c:55 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
@@ -545,6 +517,14 @@ stack: find_ordered_entry_with_flags :: regress.c:425 <-
        main :: fc_stubs.c:37 <-
        eva_main
 regress.c:363:[eva:alarm] warning: out of bounds read. assert \valid_read(flags + v);
+stack: find_ordered_entry_with_flags :: regress.c:425 <-
+       find_median :: regress.c:472 <-
+       eval_robust_residual :: regress.c:595 <-
+       RGR_FindBestRobustRegression :: test/unit/regress.c:72 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+regress.c:367:[eva:alarm] warning: out of bounds read. assert \valid_read(x + u);
 stack: find_ordered_entry_with_flags :: regress.c:425 <-
        find_median :: regress.c:472 <-
        eval_robust_residual :: regress.c:595 <-
@@ -668,11 +648,6 @@ stack: RGR_FindBestRegression :: test/unit/regress.c:110 <-
        main :: fc_stubs.c:37 <-
        eva_main
 regress.c:264:[eva:alarm] warning: out of bounds read. assert \valid_read(y + i);
-stack: RGR_FindBestRegression :: test/unit/regress.c:110 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-regress.c:277:[eva:alarm] warning: signed overflow. assert -2147483648 ≤ i - resid_start;
 stack: RGR_FindBestRegression :: test/unit/regress.c:110 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-

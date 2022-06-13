@@ -25,15 +25,10 @@ directory	file	line	function	property kind	status	property
 .	regress.c	263	RGR_FindBestRegression	initialization	Unknown	\initialized(w + i)
 .	regress.c	263	RGR_FindBestRegression	initialization	Unknown	\initialized(y + i)
 .	regress.c	263	RGR_FindBestRegression	mem_access	Unknown	\valid_read(y + i)
-.	regress.c	272	RGR_FindBestRegression	signed_overflow	Unknown	n - (int)((int)(n - start) * 2) ≤ 2147483647
-.	regress.c	272	RGR_FindBestRegression	signed_overflow	Unknown	-2147483648 ≤ (int)(n - start) * 2
-.	regress.c	277	RGR_FindBestRegression	index_bound	Unknown	0 ≤ (int)(i - resid_start)
-.	regress.c	277	RGR_FindBestRegression	signed_overflow	Unknown	-2147483648 ≤ i - resid_start
 .	regress.c	277	RGR_FindBestRegression	initialization	Unknown	\initialized(x + i)
 .	regress.c	277	RGR_FindBestRegression	initialization	Unknown	\initialized(y + i)
 .	regress.c	277	RGR_FindBestRegression	mem_access	Unknown	\valid_read(x + i)
 .	regress.c	277	RGR_FindBestRegression	mem_access	Unknown	\valid_read(y + i)
-.	regress.c	283	RGR_FindBestRegression	index_bound	Unknown	0 ≤ (int)(n - resid_start)
 .	regress.c	304	RGR_FindBestRegression	initialization	Unknown	\initialized(&resid[(int)(i - resid_start)])
 .	regress.c	304	RGR_FindBestRegression	initialization	Unknown	\initialized(w + i)
 .	regress.c	304	RGR_FindBestRegression	index_bound	Unknown	0 ≤ (int)(i - resid_start)
