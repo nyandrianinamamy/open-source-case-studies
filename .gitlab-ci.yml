@@ -14,7 +14,7 @@ variables:
     - make $TARGET.sarif
   artifacts:
     paths:
-    - "*/.frama-c/*.sarif"
+    - "$TARGET/.frama-c/*.sarif"
 
 _2048:
   variables:
