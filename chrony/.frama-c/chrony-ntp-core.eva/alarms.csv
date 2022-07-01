@@ -414,7 +414,6 @@ directory	file	line	function	property kind	status	property
 .	regress.c	184	n_runs_from_residuals	mem_access	Unknown	\valid_read(resid + i)
 .	regress.c	242	RGR_FindBestRegression	precondition of __FC_assert	Unknown	nonnull_c: c ≢ 0
 .	regress.c	243	RGR_FindBestRegression	precondition of __FC_assert	Unknown	nonnull_c: c ≢ 0
-.	regress.c	243	RGR_FindBestRegression	signed_overflow	Unknown	-2147483648 ≤ n * 2
 .	regress.c	254	RGR_FindBestRegression	initialization	Unknown	\initialized(w + i)
 .	regress.c	254	RGR_FindBestRegression	initialization	Unknown	\initialized(x + i)
 .	regress.c	254	RGR_FindBestRegression	mem_access	Unknown	\valid_read(x + i)
@@ -425,7 +424,6 @@ directory	file	line	function	property kind	status	property
 .	regress.c	263	RGR_FindBestRegression	mem_access	Unknown	\valid_read(y + i)
 .	regress.c	272	RGR_FindBestRegression	signed_overflow	Unknown	n - (int)((int)(n - start) * 2) ≤ 2147483647
 .	regress.c	272	RGR_FindBestRegression	signed_overflow	Unknown	-2147483648 ≤ (int)(n - start) * 2
-.	regress.c	273	RGR_FindBestRegression	signed_overflow	Unknown	-m ≤ 2147483647
 .	regress.c	277	RGR_FindBestRegression	index_bound	Unknown	(int)(i - resid_start) < (int)(64 * 2)
 .	regress.c	277	RGR_FindBestRegression	index_bound	Unknown	0 ≤ (int)(i - resid_start)
 .	regress.c	277	RGR_FindBestRegression	signed_overflow	Unknown	-2147483648 ≤ i - resid_start
@@ -435,7 +433,6 @@ directory	file	line	function	property kind	status	property
 .	regress.c	277	RGR_FindBestRegression	mem_access	Unknown	\valid_read(y + i)
 .	regress.c	283	RGR_FindBestRegression	index_bound	Unknown	(int)(n - resid_start) < 130
 .	regress.c	283	RGR_FindBestRegression	index_bound	Unknown	0 ≤ (int)(n - resid_start)
-.	regress.c	288	RGR_FindBestRegression	signed_overflow	Unknown	start - resid_start ≤ 2147483647
 .	regress.c	304	RGR_FindBestRegression	initialization	Unknown	\initialized(&resid[(int)(i - resid_start)])
 .	regress.c	304	RGR_FindBestRegression	initialization	Unknown	\initialized(w + i)
 .	regress.c	304	RGR_FindBestRegression	index_bound	Unknown	(int)(i - resid_start) < (int)(64 * 2)
@@ -555,10 +552,7 @@ directory	file	line	function	property kind	status	property
 .	sources.c	1094	SRC_SelectSource	initialization	Unknown	\initialized(&(*(sources + selected_source_index))->sel_info.stratum)
 .	sourcestats.c	280	prune_register	initialization	Unknown	\initialized(&inst->n_samples)
 .	sourcestats.c	280	prune_register	precondition of __FC_assert	Unknown	nonnull_c: c ≢ 0
-.	sourcestats.c	281	prune_register	signed_overflow	Unknown	-2147483648 ≤ inst->n_samples - new_oldest
 .	sourcestats.c	282	prune_register	initialization	Unknown	\initialized(&inst->runs_samples)
-.	sourcestats.c	282	prune_register	signed_overflow	Unknown	inst->runs_samples + new_oldest ≤ 2147483647
-.	sourcestats.c	286	prune_register	signed_overflow	Unknown	-2147483648 ≤ inst->n_samples + inst->runs_samples
 .	sourcestats.c	299	SST_AccumulateSample	initialization	Unknown	\initialized(&inst->n_samples)
 .	sourcestats.c	300	SST_AccumulateSample	initialization	Unknown	\initialized(&inst->max_samples)
 .	sourcestats.c	305	SST_AccumulateSample	initialization	Unknown	\initialized(&inst->n_samples)
@@ -579,17 +573,10 @@ directory	file	line	function	property kind	status	property
 .	sourcestats.c	331	SST_AccumulateSample	initialization	Unknown	\initialized(&inst->peer_delays[inst->min_delay_sample])
 .	sourcestats.c	344	get_runsbuf_index	initialization	Unknown	\initialized(&inst->last_sample)
 .	sourcestats.c	344	get_runsbuf_index	initialization	Unknown	\initialized(&inst->n_samples)
-.	sourcestats.c	344	get_runsbuf_index	signed_overflow	Unknown	(int)((int)((int)(inst->last_sample + (int)((int)(2 * 64) * 2)) - inst->n_samples) + i) + 1 ≤ 2147483647
-.	sourcestats.c	344	get_runsbuf_index	signed_overflow	Unknown	(int)((int)(inst->last_sample + (int)((int)(2 * 64) * 2)) - inst->n_samples) + i ≤ 2147483647
-.	sourcestats.c	344	get_runsbuf_index	signed_overflow	Unknown	(int)(inst->last_sample + (int)((int)(2 * 64) * 2)) - inst->n_samples ≤ 2147483647
 .	sourcestats.c	354	get_buf_index	initialization	Unknown	\initialized(&inst->last_sample)
 .	sourcestats.c	354	get_buf_index	initialization	Unknown	\initialized(&inst->n_samples)
-.	sourcestats.c	354	get_buf_index	signed_overflow	Unknown	(int)((int)((int)(inst->last_sample + (int)(64 * 2)) - inst->n_samples) + i) + 1 ≤ 2147483647
-.	sourcestats.c	354	get_buf_index	signed_overflow	Unknown	(int)((int)(inst->last_sample + (int)(64 * 2)) - inst->n_samples) + i ≤ 2147483647
-.	sourcestats.c	354	get_buf_index	signed_overflow	Unknown	(int)(inst->last_sample + (int)(64 * 2)) - inst->n_samples ≤ 2147483647
 .	sourcestats.c	369	convert_to_intervals	initialization	Unknown	\initialized(&inst->last_sample)
 .	sourcestats.c	370	convert_to_intervals	initialization	Unknown	\initialized(&inst->runs_samples)
-.	sourcestats.c	370	convert_to_intervals	signed_overflow	Unknown	-inst->runs_samples ≤ 2147483647
 .	sourcestats.c	370	convert_to_intervals	initialization	Unknown	\initialized(&inst->n_samples)
 .	sourcestats.c	372	convert_to_intervals	mem_access	Unknown	\valid(times_back + i)
 .	sourcestats.c	388	find_best_sample_index	initialization	Unknown	\initialized(&inst->n_samples)
@@ -601,8 +588,6 @@ directory	file	line	function	property kind	status	property
 .	sourcestats.c	400	find_best_sample_index	initialization	Unknown	\initialized(&inst->skew)
 .	sourcestats.c	407	find_best_sample_index	precondition of __FC_assert	Unknown	nonnull_c: c ≢ 0
 .	sourcestats.c	418	find_min_delay_sample	initialization	Unknown	\initialized(&inst->runs_samples)
-.	sourcestats.c	418	find_min_delay_sample	signed_overflow	Unknown	-inst->runs_samples ≤ 2147483647
-.	sourcestats.c	420	find_min_delay_sample	signed_overflow	Unknown	(int)(-inst->runs_samples) + 1 ≤ 2147483647
 .	sourcestats.c	420	find_min_delay_sample	initialization	Unknown	\initialized(&inst->n_samples)
 .	sourcestats.c	422	find_min_delay_sample	initialization	Unknown	\initialized(&inst->peer_delays[index_0])
 .	sourcestats.c	422	find_min_delay_sample	initialization	Unknown	\initialized(&inst->peer_delays[inst->min_delay_sample])
@@ -611,21 +596,15 @@ directory	file	line	function	property kind	status	property
 .	sourcestats.c	472	correct_asymmetry	initialization	Unknown	\initialized(&inst->fixed_asymmetry)
 .	sourcestats.c	476	correct_asymmetry	initialization	Unknown	\initialized(&inst->n_samples)
 .	sourcestats.c	476	correct_asymmetry	initialization	Unknown	\initialized(&inst->runs_samples)
-.	sourcestats.c	476	correct_asymmetry	signed_overflow	Unknown	-2147483648 ≤ inst->runs_samples + inst->n_samples
-.	sourcestats.c	476	correct_asymmetry	signed_overflow	Unknown	inst->runs_samples + inst->n_samples ≤ 2147483647
 .	sourcestats.c	479	correct_asymmetry	index_bound	Unknown	i < (int)(64 * 2)
 .	sourcestats.c	479	correct_asymmetry	initialization	Unknown	\initialized(&inst->peer_delays[tmp])
-.	sourcestats.c	479	correct_asymmetry	signed_overflow	Unknown	i - inst->runs_samples ≤ 2147483647
 .	sourcestats.c	492	correct_asymmetry	initialization	Unknown	\initialized(&delays[i])
 .	sourcestats.c	492	correct_asymmetry	initialization	Unknown	\initialized(&inst->asymmetry)
 .	sourcestats.c	492	correct_asymmetry	initialization	Unknown	\initialized(offsets + i)
 .	sourcestats.c	527	SST_DoNewRegression	initialization	Unknown	\initialized(&inst->runs_samples)
 .	sourcestats.c	529	SST_DoNewRegression	initialization	Unknown	\initialized(&inst->n_samples)
-.	sourcestats.c	530	SST_DoNewRegression	signed_overflow	Unknown	-inst->runs_samples ≤ 2147483647
 .	sourcestats.c	531	SST_DoNewRegression	index_bound	Unknown	(int)(i + inst->runs_samples) < (int)(64 * 2)
 .	sourcestats.c	531	SST_DoNewRegression	index_bound	Unknown	0 ≤ (int)(i + inst->runs_samples)
-.	sourcestats.c	531	SST_DoNewRegression	signed_overflow	Unknown	-2147483648 ≤ i + inst->runs_samples
-.	sourcestats.c	531	SST_DoNewRegression	signed_overflow	Unknown	i + inst->runs_samples ≤ 2147483647
 .	sourcestats.c	531	SST_DoNewRegression	initialization	Unknown	\initialized(&inst->offsets[tmp])
 .	sourcestats.c	536	SST_DoNewRegression	initialization	Unknown	\initialized(&inst->peer_delays[tmp_0])
 .	sourcestats.c	536	SST_DoNewRegression	initialization	Unknown	\initialized(&inst->peer_dispersions[j])
@@ -646,7 +625,6 @@ directory	file	line	function	property kind	status	property
 .	sourcestats.c	594	SST_DoNewRegression	initialization	Unknown	\initialized(&inst->offset_time.tv_sec)
 .	sourcestats.c	595	SST_DoNewRegression	dangling_pointer	Unknown	¬\dangling(&inst->ip_addr)
 .	sourcestats.c	595	SST_DoNewRegression	initialization	Unknown	\initialized(&inst->ip_addr)
-.	sourcestats.c	603	SST_DoNewRegression	signed_overflow	Unknown	inst->runs_samples + best_start ≤ 2147483647
 .	sourcestats.c	626	SST_GetFrequencyRange	initialization	Unknown	\initialized(&inst->estimated_frequency)
 .	sourcestats.c	627	SST_GetFrequencyRange	initialization	Unknown	\initialized(&inst->skew)
 .	sourcestats.c	656	SST_GetSelectionData	initialization	Unknown	\initialized(&inst->n_samples)
@@ -659,7 +637,6 @@ directory	file	line	function	property kind	status	property
 .	sourcestats.c	670	SST_GetSelectionData	initialization	Unknown	\initialized(&inst->root_delays[j])
 .	sourcestats.c	670	SST_GetSelectionData	initialization	Unknown	\initialized(&inst->root_dispersions[j])
 .	sourcestats.c	670	SST_GetSelectionData	initialization	Unknown	\initialized(&inst->skew)
-.	sourcestats.c	692	SST_GetSelectionData	signed_overflow	Unknown	-2147483648 ≤ inst->n_samples - 1
 .	sourcestats.c	695	SST_GetSelectionData	initialization	Unknown	\initialized(&inst->regression_ok)
 .	sourcestats.c	713	SST_GetTrackingData	initialization	Unknown	\initialized(&inst->n_samples)
 .	sourcestats.c	713	SST_GetTrackingData	precondition of __FC_assert	Unknown	nonnull_c: c ≢ 0
@@ -673,7 +650,6 @@ directory	file	line	function	property kind	status	property
 .	sourcestats.c	727	SST_GetTrackingData	initialization	Unknown	\initialized(&inst->root_dispersions[j])
 .	sourcestats.c	744	SST_SlewSamples	initialization	Unknown	\initialized(&inst->n_samples)
 .	sourcestats.c	747	SST_SlewSamples	initialization	Unknown	\initialized(&inst->runs_samples)
-.	sourcestats.c	747	SST_SlewSamples	signed_overflow	Unknown	-inst->runs_samples ≤ 2147483647
 .	sourcestats.c	752	SST_SlewSamples	initialization	Unknown	\initialized(&inst->offsets[i])
 .	sourcestats.c	757	SST_SlewSamples	initialization	Unknown	\initialized(&inst->estimated_offset)
 .	sourcestats.c	758	SST_SlewSamples	initialization	Unknown	\initialized(&inst->estimated_frequency)

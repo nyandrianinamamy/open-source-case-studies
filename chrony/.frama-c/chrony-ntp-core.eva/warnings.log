@@ -8614,51 +8614,6 @@ stack: __FC_assert :: sourcestats.c:280 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-sourcestats.c:286:[eva:alarm] warning: signed overflow. assert -2147483648 ≤ inst->n_samples + inst->runs_samples;
-stack: prune_register :: sourcestats.c:604 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:405 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:344:[eva:alarm] warning: signed overflow.
-assert
-(int)((int)(inst->last_sample + (int)((int)(2 * 64) * 2)) - inst->n_samples)
-+ i ≤ 2147483647;
-stack: get_runsbuf_index :: sourcestats.c:418 <-
-       find_min_delay_sample :: sourcestats.c:288 <-
-       prune_register :: sourcestats.c:604 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:405 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:344:[eva:alarm] warning: signed overflow.
-assert
-(int)((int)((int)(inst->last_sample + (int)((int)(2 * 64) * 2)) -
-            inst->n_samples)
-      + i)
-+ 1 ≤ 2147483647;
-stack: get_runsbuf_index :: sourcestats.c:418 <-
-       find_min_delay_sample :: sourcestats.c:288 <-
-       prune_register :: sourcestats.c:604 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:405 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
 sourcestats.c:397:[eva:alarm] warning: out of bounds read. assert \valid_read(times_back + i);
 stack: find_best_sample_index :: sourcestats.c:612 <-
        SST_DoNewRegression :: sources.c:350 <-
@@ -9019,31 +8974,9 @@ stack: snprintf_va_10 :: util.c:310 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-sourcestats.c:476:[eva:alarm] warning: signed overflow. assert -2147483648 ≤ inst->runs_samples + inst->n_samples;
-stack: correct_asymmetry :: sourcestats.c:560 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
 regress.c:242:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
 stack: __FC_assert :: regress.c:242 <-
        RGR_FindBestRegression :: sourcestats.c:562 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-regress.c:243:[eva:alarm] warning: signed overflow. assert -2147483648 ≤ n * 2;
-stack: RGR_FindBestRegression :: sourcestats.c:562 <-
        SST_DoNewRegression :: sources.c:350 <-
        SRC_AccumulateSample :: ntp_core.c:1506 <-
        process_sample :: ntp_core.c:1834 <-
@@ -9067,45 +9000,6 @@ stack: __FC_assert :: regress.c:243 <-
        eva_main
 sourcestats.c:280:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
 stack: __FC_assert :: sourcestats.c:280 <-
-       prune_register :: sourcestats.c:604 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:281:[eva:alarm] warning: signed overflow. assert -2147483648 ≤ inst->n_samples - new_oldest;
-stack: prune_register :: sourcestats.c:604 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:418:[eva:alarm] warning: signed overflow. assert -inst->runs_samples ≤ 2147483647;
-stack: find_min_delay_sample :: sourcestats.c:288 <-
-       prune_register :: sourcestats.c:604 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:344:[eva:alarm] warning: signed overflow.
-assert
-(int)(inst->last_sample + (int)((int)(2 * 64) * 2)) - inst->n_samples ≤
-2147483647;
-stack: get_runsbuf_index :: sourcestats.c:418 <-
-       find_min_delay_sample :: sourcestats.c:288 <-
        prune_register :: sourcestats.c:604 <-
        SST_DoNewRegression :: sources.c:350 <-
        SRC_AccumulateSample :: ntp_core.c:1506 <-
@@ -12575,17 +12469,6 @@ stack: __FC_assert :: sourcestats.c:280 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-sourcestats.c:281:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->n_samples);
-stack: prune_register :: sourcestats.c:301 <-
-       SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
 sourcestats.c:282:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->runs_samples);
 stack: prune_register :: sourcestats.c:301 <-
        SST_AccumulateSample :: sources.c:349 <-
@@ -13025,30 +12908,6 @@ stack: SST_DoNewRegression :: sources.c:350 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-sourcestats.c:420:[eva:alarm] warning: signed overflow. assert -inst->runs_samples ≤ 2147483647;
-stack: find_min_delay_sample :: sourcestats.c:288 <-
-       prune_register :: sourcestats.c:604 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:420:[eva:alarm] warning: signed overflow. assert (int)(-inst->runs_samples) + 1 ≤ 2147483647;
-stack: find_min_delay_sample :: sourcestats.c:288 <-
-       prune_register :: sourcestats.c:604 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
 sourcestats.c:388:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->n_samples);
 stack: find_best_sample_index :: sourcestats.c:612 <-
        SST_DoNewRegression :: sources.c:350 <-
@@ -13071,52 +12930,8 @@ stack: find_best_sample_index :: sourcestats.c:612 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-sourcestats.c:354:[eva:alarm] warning: signed overflow.
-assert
-(int)(inst->last_sample + (int)(64 * 2)) - inst->n_samples ≤ 2147483647;
-stack: get_buf_index :: sourcestats.c:395 <-
-       find_best_sample_index :: sourcestats.c:612 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:354:[eva:alarm] warning: signed overflow.
-assert
-(int)((int)((int)(inst->last_sample + (int)(64 * 2)) - inst->n_samples) + i)
-+ 1 ≤ 2147483647;
-stack: get_buf_index :: sourcestats.c:395 <-
-       find_best_sample_index :: sourcestats.c:612 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
 sourcestats.c:400:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->skew);
 stack: find_best_sample_index :: sourcestats.c:612 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:354:[eva:alarm] warning: signed overflow.
-assert
-(int)((int)(inst->last_sample + (int)(64 * 2)) - inst->n_samples) + i ≤
-2147483647;
-stack: get_buf_index :: sourcestats.c:395 <-
-       find_best_sample_index :: sourcestats.c:612 <-
        SST_DoNewRegression :: sources.c:350 <-
        SRC_AccumulateSample :: ntp_core.c:1506 <-
        process_sample :: ntp_core.c:1834 <-
@@ -13209,16 +13024,6 @@ stack: SST_GetSelectionData :: sources.c:648 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-sourcestats.c:692:[eva:alarm] warning: signed overflow. assert -2147483648 ≤ inst->n_samples - 1;
-stack: SST_GetSelectionData :: sources.c:648 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
 sourcestats.c:695:[eva:alarm] warning: accessing uninitialized left-value.
 assert \initialized(&inst->regression_ok);
 stack: SST_GetSelectionData :: sources.c:648 <-
@@ -13246,21 +13051,6 @@ stack: SST_SlewSamples :: sources.c:1142 <-
        main :: fc_stubs.c:37 <-
        eva_main
 sourcestats.c:747:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->runs_samples);
-stack: SST_SlewSamples :: sources.c:1142 <-
-       slew_sources :: local.c:295 <-
-       invoke_parameter_change_handlers :: local.c:475 <-
-       LCL_SetAbsoluteFrequency :: reference.c:478 <-
-       schedule_fb_drift :: reference.c:1144 <-
-       REF_SetUnsynchronised :: sources.c:868 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:747:[eva:alarm] warning: signed overflow. assert -inst->runs_samples ≤ 2147483647;
 stack: SST_SlewSamples :: sources.c:1142 <-
        slew_sources :: local.c:295 <-
        invoke_parameter_change_handlers :: local.c:475 <-
@@ -13438,8 +13228,11 @@ stack: __FC_assert :: sourcestats.c:280 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-sourcestats.c:370:[eva:alarm] warning: signed overflow. assert -inst->runs_samples ≤ 2147483647;
-stack: convert_to_intervals :: sourcestats.c:527 <-
+util.c:310:[eva:alarm] warning: function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
+                                      \valid(s +
+                                             (0 .. format_length(format) - 1)) got status unknown.
+stack: snprintf_va_10 :: util.c:310 <-
+       UTI_IPToString :: sourcestats.c:595 <-
        SST_DoNewRegression :: sources.c:350 <-
        SRC_AccumulateSample :: ntp_core.c:1506 <-
        process_sample :: ntp_core.c:1834 <-
@@ -13449,13 +13242,41 @@ stack: convert_to_intervals :: sourcestats.c:527 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-sourcestats.c:530:[eva:alarm] warning: signed overflow. assert -inst->runs_samples ≤ 2147483647;
-stack: SST_DoNewRegression :: sources.c:350 <-
+sourcestats.c:280:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
+stack: __FC_assert :: sourcestats.c:280 <-
+       prune_register :: sourcestats.c:301 <-
+       SST_AccumulateSample :: sources.c:349 <-
        SRC_AccumulateSample :: ntp_core.c:1506 <-
        process_sample :: ntp_core.c:1834 <-
        receive_packet :: ntp_core.c:2070 <-
        NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:386 <-
+       process_response :: test/unit/ntp_core.c:391 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+util.c:310:[eva:alarm] warning: function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
+                                      \valid(s +
+                                             (0 .. format_length(format) - 1)) got status unknown.
+stack: snprintf_va_10 :: util.c:310 <-
+       UTI_IPToString :: sourcestats.c:595 <-
+       SST_DoNewRegression :: sources.c:350 <-
+       SRC_AccumulateSample :: ntp_core.c:1506 <-
+       process_sample :: ntp_core.c:1834 <-
+       receive_packet :: ntp_core.c:2070 <-
+       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+       process_response :: test/unit/ntp_core.c:391 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+sourcestats.c:280:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
+stack: __FC_assert :: sourcestats.c:280 <-
+       prune_register :: sourcestats.c:301 <-
+       SST_AccumulateSample :: sources.c:349 <-
+       SRC_AccumulateSample :: ntp_core.c:1506 <-
+       process_sample :: ntp_core.c:1834 <-
+       receive_packet :: ntp_core.c:2070 <-
+       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+       process_response :: test/unit/ntp_core.c:393 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
@@ -13466,150 +13287,13 @@ stack: SST_DoNewRegression :: sources.c:350 <-
        process_sample :: ntp_core.c:1834 <-
        receive_packet :: ntp_core.c:2070 <-
        NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:386 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:531:[eva:alarm] warning: signed overflow. assert -2147483648 ≤ i + inst->runs_samples;
-stack: SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:386 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:479:[eva:alarm] warning: signed overflow. assert i - inst->runs_samples ≤ 2147483647;
-stack: correct_asymmetry :: sourcestats.c:560 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:386 <-
+       process_response :: test/unit/ntp_core.c:393 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
 sourcestats.c:479:[eva:alarm] warning: accessing out of bounds index. assert i < (int)(64 * 2);
 stack: correct_asymmetry :: sourcestats.c:560 <-
        SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:386 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-regress.c:273:[eva:alarm] warning: signed overflow. assert -m ≤ 2147483647;
-stack: RGR_FindBestRegression :: sourcestats.c:562 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:386 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-regress.c:288:[eva:alarm] warning: signed overflow. assert start - resid_start ≤ 2147483647;
-stack: RGR_FindBestRegression :: sourcestats.c:562 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:386 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-util.c:310:[eva:alarm] warning: function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
-                                      \valid(s +
-                                             (0 .. format_length(format) - 1)) got status unknown.
-stack: snprintf_va_10 :: util.c:310 <-
-       UTI_IPToString :: sourcestats.c:595 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:386 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:603:[eva:alarm] warning: signed overflow. assert inst->runs_samples + best_start ≤ 2147483647;
-stack: SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:386 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:282:[eva:alarm] warning: signed overflow. assert inst->runs_samples + new_oldest ≤ 2147483647;
-stack: prune_register :: sourcestats.c:604 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:386 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:280:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
-stack: __FC_assert :: sourcestats.c:280 <-
-       prune_register :: sourcestats.c:301 <-
-       SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:391 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:531:[eva:alarm] warning: signed overflow. assert i + inst->runs_samples ≤ 2147483647;
-stack: SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:391 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:476:[eva:alarm] warning: signed overflow. assert inst->runs_samples + inst->n_samples ≤ 2147483647;
-stack: correct_asymmetry :: sourcestats.c:560 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:391 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-util.c:310:[eva:alarm] warning: function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
-                                      \valid(s +
-                                             (0 .. format_length(format) - 1)) got status unknown.
-stack: snprintf_va_10 :: util.c:310 <-
-       UTI_IPToString :: sourcestats.c:595 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:391 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:280:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
-stack: __FC_assert :: sourcestats.c:280 <-
-       prune_register :: sourcestats.c:301 <-
-       SST_AccumulateSample :: sources.c:349 <-
        SRC_AccumulateSample :: ntp_core.c:1506 <-
        process_sample :: ntp_core.c:1834 <-
        receive_packet :: ntp_core.c:2070 <-
@@ -13730,30 +13414,6 @@ sourcestats.c:280:[eva:alarm] warning: function __FC_assert: precondition 'nonnu
 stack: __FC_assert :: sourcestats.c:280 <-
        prune_register :: sourcestats.c:301 <-
        SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:423 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-regress.c:242:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
-stack: __FC_assert :: regress.c:242 <-
-       RGR_FindBestRegression :: sourcestats.c:562 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:423 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-regress.c:243:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
-stack: __FC_assert :: regress.c:243 <-
-       RGR_FindBestRegression :: sourcestats.c:562 <-
-       SST_DoNewRegression :: sources.c:350 <-
        SRC_AccumulateSample :: ntp_core.c:1506 <-
        process_sample :: ntp_core.c:1834 <-
        receive_packet :: ntp_core.c:2070 <-
