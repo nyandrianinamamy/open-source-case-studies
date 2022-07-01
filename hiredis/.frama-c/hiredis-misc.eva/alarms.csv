@@ -49,7 +49,6 @@ directory	file	line	function	property kind	status	property
 .	hiredis.c	696	redisFree	mem_access	Unknown	\valid_read(&(c->funcs)->free_privdata)
 .	net.c	208	redisSetTcpNoDelay	precondition of setsockopt	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
 .	net.c	275	redisCheckConnectDone	precondition of connect	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
-.	net.c	298	redisCheckSocketError	precondition of getsockopt	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
 .	net.c	402	_redisContextConnectTcp	initialization	Unknown	\initialized(&p->ai_next)
 .	net.c	404	_redisContextConnectTcp	initialization	Unknown	\initialized(&p->ai_family)
 .	net.c	404	_redisContextConnectTcp	initialization	Unknown	\initialized(&p->ai_protocol)
@@ -337,5 +336,4 @@ FRAMAC_SHARE/libc	string.h	528	strerror_r	from clause	Unknown	assigns \result \f
 FRAMAC_SHARE/libc	strings.h	53	strncasecmp	precondition	Unknown	valid_string_s1: valid_read_nstring(s1, n)
 FRAMAC_SHARE/libc	unistd.h	725	access	precondition	Unknown	valid_string_path: valid_read_string(path)
 FRAMAC_SHARE/libc/sys	socket.h	334	connect	precondition	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
-FRAMAC_SHARE/libc/sys	socket.h	370	getsockopt	precondition	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
 FRAMAC_SHARE/libc/sys	socket.h	540	setsockopt	precondition	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
