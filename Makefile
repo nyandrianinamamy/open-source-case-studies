@@ -33,19 +33,16 @@ framac: frama-c/build/bin/frama-c
 # a submodule, it does not have a `.git` directory.
 # also, such dependency would prevent usage with FRAMAC=path/to/other/framac
 frama-c/build/bin/frama-c:
-	@echo "Compiling and installing local Frama-C..."
+	@echo "Compiling and (re)installing local Frama-C..."
 	mkdir -p frama-c/build
 	{
 	  cd frama-c
-	  echo "*** running autoconf..."
-	  autoconf -f >/dev/null 2>/dev/null
-	  echo "*** running configure..."
-	  ./configure --prefix=`pwd`/build --quiet >/dev/null
+	  echo "*** cleaning previous builds..."
 	  $(MAKE) clean >/dev/null
 	  echo "*** running make..."
 	  $(MAKE) -j --quiet >/dev/null
 	  echo "*** running make install..."
-	  $(MAKE) install >/dev/null
+	  $(MAKE) install INSTALLDIR=$(PWD)/build >/dev/null
 	};
 	echo "Local Frama-C (re-)installed."
 
