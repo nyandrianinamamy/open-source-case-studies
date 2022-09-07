@@ -14,7 +14,7 @@ A few contain sets of tests, benchmarks or tutorials.
 # Requirements
 
 - GNU Make >= 4.0;
-- (optional, for some scripts) Python >= 3.6.
+- (optional, for some scripts) Python >= 3.7.
 
 # Basic usage
 
@@ -165,3 +165,33 @@ when available. We also summarize the license of each directory below.
 - `tweetnacl-usable`: public domain, see `LICENSE.txt`
 - `verisec`: several, according to each app
 - `x509-parser` : GPLv2 / BSD, see `LICENSE`
+
+
+# Troubleshooting / Debugging
+
+(This section is mainly for Frama-C/plug-in developers who want to test OSCS
+with specific versions of Frama-C)
+
+OSCS can work in different modes:
+
+1. With a local Frama-C, installed via the Git submodule 'frama-c'
+   (after running `make framac`);
+2. With another, locally-installed Frama-C;
+3. With Frama-C installed in the PATH.
+
+This behavior is defined in `path.mk`. This file is included (as a symbolic
+link) in the `.frama-c` directory for each case study. Changing this file will
+change the behavior of all case studies.
+
+- Mode 1 (by default) is enabled as soon as `make framac` is executed.
+- To enable mode 2, modify the `FRAMAC_DIR=` line in `path.mk` to point to the
+  `bin` directory of your locally installed Frama-C.
+- To enable mode 3, simply comment the `FRAMAC_DIR=` line.
+
+If the value of `FRAMAC_DIR` is invalid (does not point to an existing
+directory), an error will be raised.
+
+If you need help debugging, consider adding messages such as
+`$(info FRAMAC_DIR is: $(FRAMAC_DIR))` to `path.mk`.
+When running one of the `make` targets, these messages might help understand
+if the path has been properly set.
