@@ -3165,6 +3165,12 @@ static int parse_x509_AlgorithmIdentifier(u8 const *buf, u16 len,
   /*@ assert \valid_read(talg); */ ;
   buf += (int)oid_len;
   param_len = (u16)((int)data_len - (int)oid_len);
+  /*@
+  assert
+  talg->parse_algoid_params ∈
+  {&parse_algoid_params_generic, &parse_algoid_params_ecdsa_with,
+   &parse_algoid_params_ecPublicKey, &parse_algoid_params_rsa}; */
+  ;
   /*@ calls parse_algoid_params_generic, parse_algoid_params_ecdsa_with,
             parse_algoid_params_ecPublicKey, parse_algoid_params_rsa;
   */
@@ -3483,8 +3489,7 @@ static int check_visible_string(u8 const *buf, u16 len)
     ensures \old(buf) ≡ \null ⇒ \result < 0;
     assigns \nothing;
  */
-static int check_teletex_string(u8 const *buf __attribute__((__unused__)),
-                                u16 len __attribute__((__unused__)))
+static int check_teletex_string(u8 const *buf, u16 len)
 {
   int __retres;
   __retres = -2790;
@@ -3498,8 +3503,7 @@ static int check_teletex_string(u8 const *buf __attribute__((__unused__)),
     ensures \old(buf) ≡ \null ⇒ \result < 0;
     assigns \nothing;
  */
-static int check_universal_string(u8 const *buf __attribute__((__unused__)),
-                                  u16 len __attribute__((__unused__)))
+static int check_universal_string(u8 const *buf, u16 len)
 {
   int __retres;
   __retres = -2805;
@@ -3513,8 +3517,7 @@ static int check_universal_string(u8 const *buf __attribute__((__unused__)),
     ensures \old(buf) ≡ \null ⇒ \result < 0;
     assigns \nothing;
  */
-static int check_bmp_string(u8 const *buf __attribute__((__unused__)),
-                            u16 len __attribute__((__unused__)))
+static int check_bmp_string(u8 const *buf, u16 len)
 {
   int __retres;
   __retres = -2820;
@@ -4142,6 +4145,14 @@ static int parse_AttributeTypeAndValue(u8 const *buf, u16 len, u16 *eaten)
   }
   data_len = (u16)((int)data_len - (int)oid_len);
   buf += (int)oid_len;
+  /*@
+  assert
+  cur->parse_rdn_val ∈
+  {&parse_rdn_val_cn, &parse_rdn_val_org, &parse_rdn_val_org_unit,
+   &parse_rdn_val_title, &parse_rdn_val_dn_qual, &parse_rdn_val_pseudo,
+   &parse_rdn_val_dc, &parse_rdn_val_x520name, &parse_rdn_val_serial,
+   &parse_rdn_val_country, &parse_rdn_val_locality, &parse_rdn_val_state}; */
+  ;
   /*@ calls parse_rdn_val_cn, parse_rdn_val_x520name, parse_rdn_val_serial,
             parse_rdn_val_country, parse_rdn_val_locality,
             parse_rdn_val_state, parse_rdn_val_org, parse_rdn_val_org_unit,
@@ -4178,7 +4189,7 @@ static int parse_RelativeDistinguishedName(u8 const *buf, u16 len, u16 *eaten)
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -3640;
+              ret = -3641;
               goto out;
             }
     }
@@ -4226,7 +4237,7 @@ static int parse_x509_Name(u8 const *buf, u16 len, u16 *eaten, int *empty)
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -3774;
+              ret = -3775;
               goto out;
             }
     }
@@ -4302,23 +4313,23 @@ static int parse_UTCTime(u8 const *buf, u16 len, u16 *eaten, u16 *year,
   u8 tmp;
   u8 tmp_0;
   u8 const c_zero = (u8)'0';
-  int ret = -3858;
+  int ret = -3859;
   if (buf == (u8 const *)0) {
-    ret = -3862;
+    ret = -3863;
     goto out;
   }
   if ((int)len < 15) {
-    ret = -3875;
+    ret = -3876;
     goto out;
   }
   time_type = *(buf + 0);
   if ((int)time_type != ASN1_TYPE_UTCTime) {
-    ret = -3882;
+    ret = -3883;
     goto out;
   }
   time_len = (u16)*(buf + 1);
   if ((int)time_len != (int)((u8)13)) {
-    ret = -3889;
+    ret = -3890;
     goto out;
   }
   buf += 2;
@@ -4331,18 +4342,18 @@ static int parse_UTCTime(u8 const *buf, u16 len, u16 *eaten, u16 *year,
   */
   while ((int)i < 12) {
     if ((int)c_zero > (int)*(buf + i)) {
-      ret = -3908;
+      ret = -3909;
       goto out;
     }
     if ((int)*(buf + i) - (int)c_zero > 9) {
-      ret = -3913;
+      ret = -3914;
       goto out;
     }
     /*@ assert 0 ≤ *(buf + i) - c_zero ≤ 9; */ ;
     i = (u8)((int)i + 1);
   }
   if ((int)*(buf + 12) != 'Z') {
-    ret = -3920;
+    ret = -3921;
     goto out;
   }
   /*@ assert c_zero ≡ 0x30; */ ;
@@ -4363,7 +4374,7 @@ static int parse_UTCTime(u8 const *buf, u16 len, u16 *eaten, u16 *year,
   tmp = (u8)((int)tmp | ((int)mm > 59));
   tmp = (u8)((int)tmp | ((int)ss > 59));
   if (tmp) {
-    ret = -3952;
+    ret = -3953;
     goto out;
   }
   *year = yyyy;
@@ -4427,23 +4438,23 @@ static int parse_generalizedTime(u8 const *buf, u16 len, u16 *eaten,
   u8 i;
   u8 tmp;
   u8 const c_zero = (u8)'0';
-  int ret = -4024;
+  int ret = -4025;
   if (buf == (u8 const *)0) {
-    ret = -4028;
+    ret = -4029;
     goto out;
   }
   if ((int)len < 17) {
-    ret = -4041;
+    ret = -4042;
     goto out;
   }
   time_type = *(buf + 0);
   if ((int)time_type != ASN1_TYPE_GeneralizedTime) {
-    ret = -4048;
+    ret = -4049;
     goto out;
   }
   time_len = (u16)*(buf + 1);
   if ((int)time_len != 15) {
-    ret = -4055;
+    ret = -4056;
     goto out;
   }
   buf += 2;
@@ -4455,17 +4466,17 @@ static int parse_generalizedTime(u8 const *buf, u16 len, u16 *eaten,
   */
   while ((int)i < 14) {
     if ((int)c_zero > (int)*(buf + i)) {
-      ret = -4074;
+      ret = -4075;
       goto out;
     }
     if ((int)*(buf + i) - (int)c_zero > 9) {
-      ret = -4079;
+      ret = -4080;
       goto out;
     }
     i = (u8)((int)i + 1);
   }
   if ((int)*(buf + 14) != 'Z') {
-    ret = -4085;
+    ret = -4086;
     goto out;
   }
   /*@ assert c_zero ≡ 0x30; */ ;
@@ -4484,7 +4495,7 @@ static int parse_generalizedTime(u8 const *buf, u16 len, u16 *eaten,
   tmp = (u8)((int)tmp | ((int)mm > 59));
   tmp = (u8)((int)tmp | ((int)ss > 59));
   if (tmp) {
-    ret = -4112;
+    ret = -4113;
     goto out;
   }
   *year = yyyy;
@@ -4521,17 +4532,17 @@ static int parse_Time(u8 const *buf, u16 len, u8 *t_type, u16 *eaten,
                       u8 *sec)
 {
   u8 time_type;
-  int ret = -4164;
+  int ret = -4165;
   if (buf == (u8 const *)0) goto _LOR;
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -4167;
+              ret = -4168;
               goto out;
             }
     }
   if ((int)len < 2) {
-    ret = -4173;
+    ret = -4174;
     goto out;
   }
   time_type = *(buf + 0);
@@ -4544,7 +4555,7 @@ static int parse_Time(u8 const *buf, u16 len, u8 *t_type, u16 *eaten,
     ret = parse_generalizedTime(buf,len,eaten,year,month,day,hour,min,sec);
     if (ret) ;
     break;
-    default: ret = -4195;
+    default: ret = -4196;
     break;
   }
   *t_type = time_type;
@@ -4559,10 +4570,10 @@ static int _verify_correct_time_use(u8 time_type, u16 yyyy)
 {
   int ret;
   switch ((int)time_type) {
-    case ASN1_TYPE_UTCTime: if ((int)yyyy <= 2049) ret = 0; else ret = -4226;
+    case ASN1_TYPE_UTCTime: if ((int)yyyy <= 2049) ret = 0; else ret = -4227;
     break;
     case ASN1_TYPE_GeneralizedTime:
-    if ((int)yyyy >= 2050) ret = 0; else ret = -4229;
+    if ((int)yyyy >= 2050) ret = 0; else ret = -4230;
     break;
     default: ret = -1;
     break;
@@ -4605,7 +4616,7 @@ static int parse_x509_Validity(u8 const *buf, u16 len, u16 *eaten)
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -4270;
+              ret = -4271;
               goto out;
             }
     }
@@ -4628,11 +4639,11 @@ static int parse_x509_Validity(u8 const *buf, u16 len, u16 *eaten)
   if (ret) goto out;
   remain = (u16)((int)remain - (int)na_len);
   if (remain) {
-    ret = -4321;
+    ret = -4322;
     goto out;
   }
   if ((int)na_year < (int)nb_year) {
-    ret = -4328;
+    ret = -4329;
     goto out;
   }
   else 
@@ -4652,7 +4663,7 @@ static int parse_x509_Validity(u8 const *buf, u16 len, u16 *eaten)
       nb_rem_secs += (u32)((int)nb_min * 60);
       nb_rem_secs += (u32)nb_sec;
       if (na_rem_secs <= nb_rem_secs) {
-        ret = -4354;
+        ret = -4355;
         goto out;
       }
     }
@@ -4685,7 +4696,7 @@ static int parse_x509_subjectPublicKeyInfo(u8 const *buf, u16 len, u16 *eaten)
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -4394;
+              ret = -4395;
               goto out;
             }
     }
@@ -4701,15 +4712,20 @@ static int parse_x509_subjectPublicKeyInfo(u8 const *buf, u16 len, u16 *eaten)
   ret = parse_x509_AlgorithmIdentifier(buf,remain,& alg,& param,& parsed);
   if (ret) goto out;
   if ((int)alg->alg_type != ALG_PUBKEY) {
-    ret = -4424;
+    ret = -4425;
     goto out;
   }
   buf += (int)parsed;
   remain = (u16)((int)remain - (int)parsed);
   if (! alg->parse_subjectpubkey) {
-    ret = -4437;
+    ret = -4438;
     goto out;
   }
+  /*@
+  assert
+  alg->parse_subjectpubkey ∈
+  {&parse_subjectpubkey_ec, &parse_subjectpubkey_rsa}; */
+  ;
   /*@ calls parse_subjectpubkey_ec, parse_subjectpubkey_rsa; */
   ret = (*(alg->parse_subjectpubkey))(buf,remain,& param);
   if (ret) goto out;
@@ -4742,18 +4758,18 @@ static int parse_GeneralName(u8 const *buf, u16 len, u16 *eaten, int *empty)
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -4586;
+              ret = -4588;
               goto out;
             }
     }
   if ((int)len < 2) {
-    ret = -4592;
+    ret = -4594;
     goto out;
   }
   remain = len;
   name_type = *(buf + 0);
   if (! ((int)name_type & 0x80)) {
-    ret = -4605;
+    ret = -4607;
     goto out;
   }
   switch ((int)name_type) {
@@ -4764,7 +4780,7 @@ static int parse_GeneralName(u8 const *buf, u16 len, u16 *eaten, int *empty)
     buf += (int)grabbed;
     remain = (u16)((int)remain - (int)grabbed);
     if ((int)name_len > (int)remain) {
-      ret = -4626;
+      ret = -4628;
       goto out;
     }
     ret = check_ia5_string(buf,name_len);
@@ -4788,7 +4804,7 @@ static int parse_GeneralName(u8 const *buf, u16 len, u16 *eaten, int *empty)
     buf += (int)grabbed;
     remain = (u16)((int)remain - (int)grabbed);
     if ((int)name_len > (int)remain) {
-      ret = -4683;
+      ret = -4685;
       goto out;
     }
     remain = (u16)((int)remain - (int)name_len);
@@ -4797,10 +4813,10 @@ static int parse_GeneralName(u8 const *buf, u16 len, u16 *eaten, int *empty)
     *empty = ! name_len;
     /*@ assert *eaten > 1; */ ;
     break;
-    case 0xa0: ret = -4699;
+    case 0xa0: ret = -4701;
     goto out;
     break;
-    case 0xa3: ret = -4706;
+    case 0xa3: ret = -4708;
     goto out;
     break;
     case 0xa4:
@@ -4814,19 +4830,19 @@ static int parse_GeneralName(u8 const *buf, u16 len, u16 *eaten, int *empty)
     buf += (int)grabbed;
     remain = (u16)((int)remain - (int)grabbed);
     if (remain) {
-      ret = -4732;
+      ret = -4734;
       goto out;
     }
     *eaten = (u16)((int)name_hdr_len + (int)name_len);
     /*@ assert *eaten > 1; */ ;
     break;
-    case 0xa5: ret = -4743;
+    case 0xa5: ret = -4745;
     goto out;
     break;
-    case 0x88: ret = -4750;
+    case 0x88: ret = -4752;
     goto out;
     break;
-    default: ret = -4756;
+    default: ret = -4758;
     goto out;
     break;
   }
@@ -4859,7 +4875,7 @@ static int parse_GeneralNames(u8 const *buf, u16 len, tag_class exp_class,
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -4788;
+              ret = -4790;
               goto out;
             }
     }
@@ -4929,7 +4945,7 @@ static int parse_AccessDescription(u8 const *buf, u16 len, u16 *eaten)
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -4848;
+              ret = -4850;
               goto out;
             }
     }
@@ -4961,7 +4977,7 @@ static int parse_AccessDescription(u8 const *buf, u16 len, u16 *eaten)
       found = tmp_2;
     }
   if (! found) {
-    ret = -4891;
+    ret = -4893;
     goto out;
   }
   buf += (int)oid_len;
@@ -4975,7 +4991,7 @@ static int parse_AccessDescription(u8 const *buf, u16 len, u16 *eaten)
   remain = (u16)((int)remain - (int)al_len);
   data_len = (u16)((int)data_len - (int)al_len);
   if (data_len) {
-    ret = -4920;
+    ret = -4922;
     goto out;
   }
   *eaten = saved_ad_len;
@@ -4996,7 +5012,7 @@ static int parse_AccessDescription(u8 const *buf, u16 len, u16 *eaten)
     assigns \nothing;
  */
 static int parse_ext_AIA(u8 const *buf, u16 len, int critical,
-                         cert_parsing_ctx *ctx __attribute__((__unused__)))
+                         cert_parsing_ctx *ctx)
 {
   u16 remain;
   int ret;
@@ -5006,12 +5022,12 @@ static int parse_ext_AIA(u8 const *buf, u16 len, int critical,
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -4997;
+              ret = -4999;
               goto out;
             }
     }
   if (critical) {
-    ret = -5007;
+    ret = -5009;
     goto out;
   }
   remain = len;
@@ -5021,11 +5037,11 @@ static int parse_ext_AIA(u8 const *buf, u16 len, int critical,
   buf += (int)hdr_len;
   remain = (u16)((int)remain - (int)hdr_len);
   if ((int)remain != (int)data_len) {
-    ret = -5027;
+    ret = -5029;
     goto out;
   }
   if (! remain) {
-    ret = -5037;
+    ret = -5039;
     goto out;
   }
   /*@ loop invariant \valid_read(buf + (0 .. remain - 1));
@@ -5036,7 +5052,7 @@ static int parse_ext_AIA(u8 const *buf, u16 len, int critical,
     u16 parsed = (u16)0;
     ret = parse_AccessDescription(buf,remain,& parsed);
     if (ret) {
-      ret = -5057;
+      ret = -5059;
       goto out;
     }
     remain = (u16)((int)remain - (int)parsed);
@@ -5071,12 +5087,12 @@ static int parse_ext_AKI(u8 const *buf, u16 len, int critical,
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -5105;
+              ret = -5107;
               goto out;
             }
     }
   if (critical) {
-    ret = -5115;
+    ret = -5117;
     goto out;
   }
   ret = parse_id_len(buf,len,CLASS_UNIVERSAL,(u32)ASN1_TYPE_SEQUENCE,
@@ -5085,14 +5101,14 @@ static int parse_ext_AKI(u8 const *buf, u16 len, int critical,
   buf += (int)hdr_len;
   remain = data_len;
   if ((int)len != (int)hdr_len + (int)data_len) {
-    ret = -5132;
+    ret = -5134;
     goto out;
   }
   ret = parse_id_len(buf,remain,CLASS_CONTEXT_SPECIFIC,(u32)0,
                      & key_id_hdr_len,& key_id_data_len);
   if (! ret) {
     if (! key_id_data_len) {
-      ret = -5150;
+      ret = -5152;
       goto out;
     }
     buf += (int)key_id_hdr_len + (int)key_id_data_len;
@@ -5111,7 +5127,7 @@ static int parse_ext_AKI(u8 const *buf, u16 len, int critical,
     remain = (u16)((int)remain - (int)cert_serial_len);
   }
   if (remain) {
-    ret = -5188;
+    ret = -5190;
     goto out;
   }
   ctx->aki_has_keyIdentifier = has_keyIdentifier;
@@ -5140,29 +5156,29 @@ static int parse_ext_SKI(u8 const *buf, u16 len, int critical,
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -5223;
+              ret = -5225;
               goto out;
             }
     }
   remain = len;
   if (critical) {
-    ret = -5235;
+    ret = -5237;
     goto out;
   }
   ret = parse_id_len(buf,remain,CLASS_UNIVERSAL,(u32)ASN1_TYPE_OCTET_STRING,
                      & key_id_hdr_len,& key_id_data_len);
   if (ret) goto out;
   if ((int)len != (int)key_id_hdr_len + (int)key_id_data_len) {
-    ret = -5248;
+    ret = -5250;
     goto out;
   }
   if (! key_id_data_len) {
-    ret = -5255;
+    ret = -5257;
     goto out;
   }
   remain = (u16)((int)remain - ((int)key_id_hdr_len + (int)key_id_data_len));
   if (remain) {
-    ret = -5262;
+    ret = -5264;
     goto out;
   }
   ctx->has_ski = 1;
@@ -5188,28 +5204,28 @@ static int parse_nine_bit_named_bit_list(u8 const *buf, u16 len, u16 *val)
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -5308;
+              ret = -5310;
               goto out;
             }
     }
   if ((int)*(buf + 0) & 0xf8) {
-    ret = -5315;
+    ret = -5317;
     goto out;
   }
   switch ((int)len) {
     case 1: ;
     if ((int)*(buf + 0) != 0) {
-      ret = -5333;
+      ret = -5335;
       goto out;
     }
     else {
-      ret = -5345;
+      ret = -5347;
       goto out;
     }
     break;
     case 2: ;
     if ((int)*(buf + 1) == 0) {
-      ret = -5361;
+      ret = -5363;
       goto out;
     }
     non_signif = (u8)0;
@@ -5224,7 +5240,7 @@ static int parse_nine_bit_named_bit_list(u8 const *buf, u16 len, u16 *val)
       k = (u8)((int)k + 1);
     }
     if ((int)*(buf + 0) != (int)non_signif) {
-      ret = -5397;
+      ret = -5399;
       goto out;
     }
     *val = (u16)0;
@@ -5244,7 +5260,7 @@ static int parse_nine_bit_named_bit_list(u8 const *buf, u16 len, u16 *val)
     else 
       if ((int)*(buf + 2) != 0x80) {
         _LOR_0: {
-                  ret = -5425;
+                  ret = -5427;
                   goto out;
                 }
       }
@@ -5261,7 +5277,7 @@ static int parse_nine_bit_named_bit_list(u8 const *buf, u16 len, u16 *val)
     }
     *val = (u16)((int)*val | ((int)*(buf + 2) >> 7));
     break;
-    default: ret = -5448;
+    default: ret = -5450;
     goto out;
   }
   ret = 0;
@@ -5278,8 +5294,7 @@ static int parse_nine_bit_named_bit_list(u8 const *buf, u16 len, u16 *val)
     ensures \old(buf) ≡ \null ⇒ \result < 0;
     assigns *ctx;
  */
-static int parse_ext_keyUsage(u8 const *buf, u16 len,
-                              int critical __attribute__((__unused__)),
+static int parse_ext_keyUsage(u8 const *buf, u16 len, int critical,
                               cert_parsing_ctx *ctx)
 {
   int ret;
@@ -5290,7 +5305,7 @@ static int parse_ext_keyUsage(u8 const *buf, u16 len,
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -5511;
+              ret = -5513;
               goto out;
             }
     }
@@ -5298,7 +5313,7 @@ static int parse_ext_keyUsage(u8 const *buf, u16 len,
                      & hdr_len,& data_len);
   if (ret) goto out;
   if ((int)len != (int)hdr_len + (int)data_len) {
-    ret = -5532;
+    ret = -5534;
     goto out;
   }
   buf += (int)hdr_len;
@@ -5307,12 +5322,12 @@ static int parse_ext_keyUsage(u8 const *buf, u16 len,
   if (ret) goto out;
   if ((int)val & 0x0100) 
     if (! ((int)val & 0x0010)) {
-      ret = -5557;
+      ret = -5559;
       goto out;
     }
   if ((int)val & 0x0080) 
     if (! ((int)val & 0x0010)) {
-      ret = -5568;
+      ret = -5570;
       goto out;
     }
   ctx->has_keyUsage = 1;
@@ -5340,7 +5355,7 @@ static int parse_CPSuri(u8 const *buf, u16 len, u16 *eaten)
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -5600;
+              ret = -5602;
               goto out;
             }
     }
@@ -5372,7 +5387,7 @@ static int parse_DisplayText(u8 const *buf, u16 len, u16 *eaten)
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -5644;
+              ret = -5646;
               goto out;
             }
     }
@@ -5396,13 +5411,13 @@ static int parse_DisplayText(u8 const *buf, u16 len, u16 *eaten)
       case 30: ret = check_bmp_string(buf,data_len);
       if (ret) goto out;
       break;
-      default: ret = -5695;
+      default: ret = -5697;
       goto out;
       break;
     }
     *eaten = (u16)((int)hdr_len + (int)data_len);
     break;
-    default: ret = -5705;
+    default: ret = -5707;
     goto out;
     break;
   }
@@ -5432,7 +5447,7 @@ static int parse_NoticeReference(u8 const *buf, u16 len, u16 *eaten)
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -5744;
+              ret = -5746;
               goto out;
             }
     }
@@ -5453,7 +5468,7 @@ static int parse_NoticeReference(u8 const *buf, u16 len, u16 *eaten)
   remain = (u16)((int)remain - (int)hdr_len);
   buf += (int)hdr_len;
   if ((int)remain != (int)data_len) {
-    ret = -5792;
+    ret = -5794;
     goto out;
   }
   /*@ loop invariant \valid_read(buf + (0 .. remain - 1));
@@ -5494,7 +5509,7 @@ static int parse_UserNotice(u8 const *buf, u16 len, u16 *eaten)
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -5858;
+              ret = -5860;
               goto out;
             }
     }
@@ -5505,7 +5520,7 @@ static int parse_UserNotice(u8 const *buf, u16 len, u16 *eaten)
   remain = (u16)((int)remain - (int)hdr_len);
   buf += (int)hdr_len;
   if (! data_len) {
-    ret = -5878;
+    ret = -5880;
     goto out;
   }
   ret = parse_NoticeReference(buf,remain,& parsed);
@@ -5519,7 +5534,7 @@ static int parse_UserNotice(u8 const *buf, u16 len, u16 *eaten)
     buf += (int)parsed;
   }
   if (remain) {
-    ret = -5898;
+    ret = -5900;
     goto out;
   }
   *eaten = (u16)((int)hdr_len + (int)data_len);
@@ -5571,7 +5586,7 @@ static int parse_policyQualifierInfo(u8 const *buf, u16 len, u16 *eaten)
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -5945;
+              ret = -5947;
               goto out;
             }
     }
@@ -5614,7 +5629,7 @@ static int parse_policyQualifierInfo(u8 const *buf, u16 len, u16 *eaten)
     }
     else {
       _LAND: {
-               ret = -6004;
+               ret = -6006;
                goto out;
              }
     }
@@ -5647,7 +5662,7 @@ static int parse_PolicyInformation(u8 const *buf, u16 len, u16 *eaten)
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -6040;
+              ret = -6042;
               goto out;
             }
     }
@@ -5668,7 +5683,7 @@ static int parse_PolicyInformation(u8 const *buf, u16 len, u16 *eaten)
     remain = (u16)((int)remain - (int)hdr_len);
     buf += (int)hdr_len;
     if ((int)remain != (int)data_len) {
-      ret = -6083;
+      ret = -6085;
       goto out;
     }
     /*@ loop invariant \valid_read(buf + (0 .. remain - 1));
@@ -5698,10 +5713,8 @@ static int parse_PolicyInformation(u8 const *buf, u16 len, u16 *eaten)
     ensures \old(buf) ≡ \null ⇒ \result < 0;
     assigns \nothing;
  */
-static int parse_ext_certPolicies(u8 const *buf, u16 len,
-                                  int critical __attribute__((__unused__)),
-                                  cert_parsing_ctx *ctx __attribute__((
-                                  __unused__)))
+static int parse_ext_certPolicies(u8 const *buf, u16 len, int critical,
+                                  cert_parsing_ctx *ctx)
 {
   int ret;
   u16 remain = (u16)0;
@@ -5712,7 +5725,7 @@ static int parse_ext_certPolicies(u8 const *buf, u16 len,
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -6192;
+              ret = -6194;
               goto out;
             }
     }
@@ -5722,7 +5735,7 @@ static int parse_ext_certPolicies(u8 const *buf, u16 len,
   buf += (int)hdr_len;
   remain = data_len;
   if ((int)len != (int)hdr_len + (int)data_len) {
-    ret = -6224;
+    ret = -6226;
     goto out;
   }
   /*@ loop invariant \valid_read(buf + (0 .. remain - 1));
@@ -5750,8 +5763,7 @@ static int parse_ext_certPolicies(u8 const *buf, u16 len,
     assigns \nothing;
  */
 static int parse_ext_policyMapping(u8 const *buf, u16 len, int critical,
-                                   cert_parsing_ctx *ctx __attribute__((
-                                   __unused__)))
+                                   cert_parsing_ctx *ctx)
 {
   int ret;
   u16 remain = (u16)0;
@@ -5762,12 +5774,12 @@ static int parse_ext_policyMapping(u8 const *buf, u16 len, int critical,
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -6281;
+              ret = -6283;
               goto out;
             }
     }
   if (! critical) {
-    ret = -6291;
+    ret = -6293;
     goto out;
   }
   ret = parse_id_len(buf,len,CLASS_UNIVERSAL,(u32)ASN1_TYPE_SEQUENCE,
@@ -5776,7 +5788,7 @@ static int parse_ext_policyMapping(u8 const *buf, u16 len, int critical,
   buf += (int)hdr_len;
   remain = data_len;
   if ((int)len != (int)hdr_len + (int)data_len) {
-    ret = -6308;
+    ret = -6310;
     goto out;
   }
   /*@ loop invariant \valid_read(buf + (0 .. remain - 1));
@@ -5798,7 +5810,7 @@ static int parse_ext_policyMapping(u8 const *buf, u16 len, int critical,
     if (ret) goto out;
     data_len = (u16)((int)data_len - (int)eaten);
     if (data_len) {
-      ret = -6355;
+      ret = -6357;
       goto out;
     }
     buf += (int)eaten;
@@ -5832,7 +5844,7 @@ static int parse_ext_SAN(u8 const *buf, u16 len, int critical,
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -6415;
+              ret = -6417;
               goto out;
             }
     }
@@ -5840,13 +5852,13 @@ static int parse_ext_SAN(u8 const *buf, u16 len, int critical,
                      & hdr_len,& data_len);
   if (ret) goto out;
   if (! data_len) {
-    ret = -6433;
+    ret = -6435;
     goto out;
   }
   buf += (int)hdr_len;
   remain = data_len;
   if ((int)len != (int)hdr_len + (int)data_len) {
-    ret = -6442;
+    ret = -6444;
     goto out;
   }
   san_empty = (int)remain == 0;
@@ -5859,14 +5871,14 @@ static int parse_ext_SAN(u8 const *buf, u16 len, int critical,
     ret = parse_GeneralName(buf,remain,& eaten,& empty_gen_name);
     if (ret) goto out;
     if (empty_gen_name) {
-      ret = -6468;
+      ret = -6470;
       goto out;
     }
     if ((int)*(buf + 0) == 0x87) 
       switch ((int)eaten) {
         case 6: break;
         case 18: break;
-        default: ret = -6491;
+        default: ret = -6493;
         goto out;
         break;
       }
@@ -5889,9 +5901,8 @@ static int parse_ext_SAN(u8 const *buf, u16 len, int critical,
     ensures \old(buf) ≡ \null ⇒ \result < 0;
     assigns \nothing;
  */
-static int parse_ext_IAN(u8 const *buf, u16 len,
-                         int critical __attribute__((__unused__)),
-                         cert_parsing_ctx *ctx __attribute__((__unused__)))
+static int parse_ext_IAN(u8 const *buf, u16 len, int critical,
+                         cert_parsing_ctx *ctx)
 {
   int ret;
   u16 data_len = (u16)0;
@@ -5903,7 +5914,7 @@ static int parse_ext_IAN(u8 const *buf, u16 len,
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -6533;
+              ret = -6535;
               goto out;
             }
     }
@@ -5911,13 +5922,13 @@ static int parse_ext_IAN(u8 const *buf, u16 len,
                      & hdr_len,& data_len);
   if (ret) goto out;
   if (! data_len) {
-    ret = -6566;
+    ret = -6568;
     goto out;
   }
   buf += (int)hdr_len;
   remain = data_len;
   if ((int)len != (int)hdr_len + (int)data_len) {
-    ret = -6575;
+    ret = -6577;
     goto out;
   }
   /*@ loop invariant \valid_read(buf + (0 .. remain - 1));
@@ -5945,8 +5956,7 @@ static int parse_ext_IAN(u8 const *buf, u16 len,
     assigns \nothing;
  */
 static int parse_ext_subjectDirAttr(u8 const *buf, u16 len, int critical,
-                                    cert_parsing_ctx *ctx __attribute__((
-                                    __unused__)))
+                                    cert_parsing_ctx *ctx)
 {
   int ret;
   u16 hdr_len = (u16)0;
@@ -5957,12 +5967,12 @@ static int parse_ext_subjectDirAttr(u8 const *buf, u16 len, int critical,
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -6637;
+              ret = -6639;
               goto out;
             }
     }
   if (critical) {
-    ret = -6647;
+    ret = -6649;
     goto out;
   }
   ret = parse_id_len(buf,len,CLASS_UNIVERSAL,(u32)ASN1_TYPE_SEQUENCE,
@@ -5971,7 +5981,7 @@ static int parse_ext_subjectDirAttr(u8 const *buf, u16 len, int critical,
   buf += (int)hdr_len;
   remain = data_len;
   if ((int)len != (int)hdr_len + (int)data_len) {
-    ret = -6664;
+    ret = -6666;
     goto out;
   }
   /*@ loop invariant \valid_read(buf + (0 .. remain - 1));
@@ -6016,7 +6026,7 @@ static int parse_ext_basicConstraints(u8 const *buf, u16 len, int critical,
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -6734;
+              ret = -6736;
               goto out;
             }
     }
@@ -6026,7 +6036,7 @@ static int parse_ext_basicConstraints(u8 const *buf, u16 len, int critical,
   if (ret) goto out;
   buf += (int)hdr_len;
   if ((int)len != (int)hdr_len + (int)data_len) {
-    ret = -6753;
+    ret = -6755;
     goto out;
   }
   switch ((int)data_len) {
@@ -6034,24 +6044,24 @@ static int parse_ext_basicConstraints(u8 const *buf, u16 len, int critical,
     break;
     case 3: ret = bufs_differ(buf,ca_true_wo_plc,(u16)3);
     if (ret) {
-      ret = -6784;
+      ret = -6786;
       goto out;
     }
     ctx->ca_true = 1;
     break;
     case 6: ret = bufs_differ(buf,ca_true_w_plc,(u16)5);
     if (ret) {
-      ret = -6793;
+      ret = -6795;
       goto out;
     }
     if ((int)*(buf + 5) & 0x80) {
-      ret = -6805;
+      ret = -6807;
       goto out;
     }
     ctx->ca_true = 1;
     ctx->pathLenConstraint_set = 1;
     break;
-    default: ret = -6813;
+    default: ret = -6815;
     break;
   }
   out: ;
@@ -6077,7 +6087,7 @@ static int parse_GeneralSubtrees(u8 const *buf, u16 len)
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -6849;
+              ret = -6851;
               goto out;
             }
     }
@@ -6093,17 +6103,17 @@ static int parse_GeneralSubtrees(u8 const *buf, u16 len)
   ret = parse_id_len(buf,remain,CLASS_CONTEXT_SPECIFIC,(u32)0,& hdr_len,
                      & data_len);
   if (! ret) {
-    ret = -6888;
+    ret = -6890;
     goto out;
   }
   ret = parse_id_len(buf,remain,CLASS_CONTEXT_SPECIFIC,(u32)1,& hdr_len,
                      & data_len);
   if (! ret) {
-    ret = -6897;
+    ret = -6899;
     goto out;
   }
   if (remain) {
-    ret = -6904;
+    ret = -6906;
     goto out;
   }
   ret = 0;
@@ -6131,12 +6141,12 @@ static int parse_ext_nameConstraints(u8 const *buf, u16 len, int critical,
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -6933;
+              ret = -6935;
               goto out;
             }
     }
   if (! critical) {
-    ret = -6943;
+    ret = -6945;
     goto out;
   }
   ret = parse_id_len(buf,len,CLASS_UNIVERSAL,(u32)ASN1_TYPE_SEQUENCE,
@@ -6144,7 +6154,7 @@ static int parse_ext_nameConstraints(u8 const *buf, u16 len, int critical,
   if (ret) goto out;
   buf += (int)hdr_len;
   if (! remain) {
-    ret = -6963;
+    ret = -6965;
     goto out;
   }
   ret = parse_id_len(buf,remain,CLASS_CONTEXT_SPECIFIC,(u32)0,& hdr_len,
@@ -6168,7 +6178,7 @@ static int parse_ext_nameConstraints(u8 const *buf, u16 len, int critical,
     remain = (u16)((int)remain - (int)data_len);
   }
   if (remain) {
-    ret = -7003;
+    ret = -7005;
     goto out;
   }
   ctx->has_name_constraints = 1;
@@ -6187,8 +6197,7 @@ static int parse_ext_nameConstraints(u8 const *buf, u16 len, int critical,
     assigns \nothing;
  */
 static int parse_ext_policyConstraints(u8 const *buf, u16 len, int critical,
-                                       cert_parsing_ctx *ctx __attribute__((
-                                       __unused__)))
+                                       cert_parsing_ctx *ctx)
 {
   int ret;
   u16 data_len = (u16)0;
@@ -6199,22 +6208,22 @@ static int parse_ext_policyConstraints(u8 const *buf, u16 len, int critical,
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -7045;
+              ret = -7047;
               goto out;
             }
     }
   if (! critical) {
-    ret = -7055;
+    ret = -7057;
     goto out;
   }
   ret = parse_id_len(buf,len,CLASS_UNIVERSAL,(u32)ASN1_TYPE_SEQUENCE,
                      & hdr_len,& data_len);
   if (ret) {
-    ret = -7064;
+    ret = -7066;
     goto out;
   }
   if ((int)data_len == 0) {
-    ret = -7074;
+    ret = -7076;
     goto out;
   }
   buf += (int)hdr_len;
@@ -6222,7 +6231,7 @@ static int parse_ext_policyConstraints(u8 const *buf, u16 len, int critical,
   ret = parse_integer(buf,remain,CLASS_CONTEXT_SPECIFIC,(u32)0,& parsed);
   if (! ret) {
     if ((int)parsed != 3) {
-      ret = -7092;
+      ret = -7094;
       goto out;
     }
     buf += (int)parsed;
@@ -6231,14 +6240,14 @@ static int parse_ext_policyConstraints(u8 const *buf, u16 len, int critical,
   ret = parse_integer(buf,remain,CLASS_CONTEXT_SPECIFIC,(u32)1,& parsed);
   if (! ret) {
     if ((int)parsed != 3) {
-      ret = -7111;
+      ret = -7113;
       goto out;
     }
     buf += (int)parsed;
     remain = (u16)((int)remain - (int)parsed);
   }
   if (remain) {
-    ret = -7121;
+    ret = -7123;
     goto out;
   }
   ret = 0;
@@ -6391,7 +6400,7 @@ static _kp_oid const *find_kp_by_oid(u8 const *buf, u16 len)
     assigns \nothing;
  */
 static int parse_ext_EKU(u8 const *buf, u16 len, int critical,
-                         cert_parsing_ctx *ctx __attribute__((__unused__)))
+                         cert_parsing_ctx *ctx)
 {
   int ret;
   u16 remain = (u16)0;
@@ -6403,7 +6412,7 @@ static int parse_ext_EKU(u8 const *buf, u16 len, int critical,
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -7260;
+              ret = -7262;
               goto out;
             }
     }
@@ -6413,14 +6422,14 @@ static int parse_ext_EKU(u8 const *buf, u16 len, int critical,
   else 
     if ((int)data_len == 0) {
       _LOR_0: {
-                ret = -7268;
+                ret = -7270;
                 goto out;
               }
     }
   buf += (int)hdr_len;
   remain = data_len;
   if ((int)len != (int)hdr_len + (int)data_len) {
-    ret = -7277;
+    ret = -7279;
     goto out;
   }
   /*@ loop invariant \valid_read(buf + (0 .. remain - 1));
@@ -6432,12 +6441,12 @@ static int parse_ext_EKU(u8 const *buf, u16 len, int critical,
     if (ret) goto out;
     kp = find_kp_by_oid(buf,oid_len);
     if (kp == (_kp_oid const *)0) {
-      ret = -7297;
+      ret = -7299;
       goto out;
     }
     if (kp->oid == _id_kp_anyEKU) 
       if (critical) {
-        ret = -7308;
+        ret = -7310;
         goto out;
       }
     buf += (int)oid_len;
@@ -6468,7 +6477,7 @@ static int parse_crldp_reasons(u8 const *buf, u16 len, u16 *eaten)
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -7353;
+              ret = -7355;
               goto out;
             }
     }
@@ -6511,14 +6520,14 @@ static int parse_DistributionPoint(u8 const *buf, u16 len, u16 *eaten,
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -7424;
+              ret = -7426;
               goto out;
             }
     }
   ret = parse_id_len(buf,len,CLASS_UNIVERSAL,(u32)ASN1_TYPE_SEQUENCE,
                      & hdr_len,& data_len);
   if (ret) {
-    ret = -7434;
+    ret = -7436;
     goto out;
   }
   total_len = (u16)((int)hdr_len + (int)data_len);
@@ -6535,7 +6544,7 @@ static int parse_DistributionPoint(u8 const *buf, u16 len, u16 *eaten,
     remain = (u16)((int)remain - (int)hdr_len);
     dpn_remain = data_len;
     if ((int)data_len == 0) {
-      ret = -7458;
+      ret = -7460;
       goto out;
     }
     dpn_type = *(buf + 0);
@@ -6547,15 +6556,15 @@ static int parse_DistributionPoint(u8 const *buf, u16 len, u16 *eaten,
       dpn_remain = (u16)((int)dpn_remain - (int)dpn_eaten);
       buf += (int)dpn_eaten;
       break;
-      case 0xa1: ret = -7491;
+      case 0xa1: ret = -7493;
       goto out;
       break;
-      default: ret = -7496;
+      default: ret = -7498;
       goto out;
       break;
     }
     if (dpn_remain) {
-      ret = -7502;
+      ret = -7504;
       goto out;
     }
     dp_or_issuer_present |= 1;
@@ -6577,11 +6586,11 @@ static int parse_DistributionPoint(u8 const *buf, u16 len, u16 *eaten,
     remain = (u16)((int)remain - (int)parsed);
   }
   if (remain) {
-    ret = -7545;
+    ret = -7547;
     goto out;
   }
   if (! dp_or_issuer_present) {
-    ret = -7556;
+    ret = -7558;
     goto out;
   }
   *eaten = total_len;
@@ -6612,12 +6621,12 @@ static int parse_ext_CRLDP(u8 const *buf, u16 len, int critical,
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -7602;
+              ret = -7604;
               goto out;
             }
     }
   if (critical) {
-    ret = -7609;
+    ret = -7611;
     goto out;
   }
   ret = parse_id_len(buf,len,CLASS_UNIVERSAL,(u32)ASN1_TYPE_SEQUENCE,
@@ -6626,7 +6635,7 @@ static int parse_ext_CRLDP(u8 const *buf, u16 len, int critical,
   buf += (int)hdr_len;
   remain = data_len;
   if ((int)len != (int)hdr_len + (int)data_len) {
-    ret = -7627;
+    ret = -7629;
     goto out;
   }
   ctx->has_crldp = 1;
@@ -6657,8 +6666,7 @@ static int parse_ext_CRLDP(u8 const *buf, u16 len, int critical,
     assigns \nothing;
  */
 static int parse_ext_inhibitAnyPolicy(u8 const *buf, u16 len, int critical,
-                                      cert_parsing_ctx *ctx __attribute__((
-                                      __unused__)))
+                                      cert_parsing_ctx *ctx)
 {
   int ret;
   u16 eaten = (u16)0;
@@ -6666,33 +6674,33 @@ static int parse_ext_inhibitAnyPolicy(u8 const *buf, u16 len, int critical,
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -7685;
+              ret = -7687;
               goto out;
             }
     }
   if (! critical) {
-    ret = -7695;
+    ret = -7697;
     goto out;
   }
   ret = parse_integer(buf,len,CLASS_UNIVERSAL,(u32)ASN1_TYPE_INTEGER,& eaten);
   if (ret) {
-    ret = -7703;
+    ret = -7705;
     goto out;
   }
   if ((int)eaten != 3) {
-    ret = -7713;
+    ret = -7715;
     goto out;
   }
   if ((int)*(buf + 2) & 0x80) goto _LOR_0;
   else 
     if ((int)*(buf + 2) > 64) {
       _LOR_0: {
-                ret = -7719;
+                ret = -7721;
                 goto out;
               }
     }
   if ((int)eaten != (int)len) {
-    ret = -7725;
+    ret = -7727;
     goto out;
   }
   ret = 0;
@@ -6748,16 +6756,15 @@ static u8 const _ext_oid_inhibitAnyPolicy[5] =
     ensures \result ≤ 0;
     assigns \nothing;
  */
-static int parse_ext_bad_oid(u8 const *buf, u16 len,
-                             int critical __attribute__((__unused__)),
-                             cert_parsing_ctx *ctx __attribute__((__unused__)))
+static int parse_ext_bad_oid(u8 const *buf, u16 len, int critical,
+                             cert_parsing_ctx *ctx)
 {
   int ret;
   if (buf == (u8 const *)0) goto _LOR;
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -7771;
+              ret = -7773;
               goto out;
             }
     }
@@ -7076,13 +7083,13 @@ static int check_record_ext_unknown(_ext_oid const *ext,
       break;
     }
     if (ext == *(parsed_oid_list + pos)) {
-      ret = -8132;
+      ret = -8134;
       goto out;
     }
     pos = (u16)((int)pos + 1);
   }
   if ((unsigned long)pos >= sizeof(known_ext_oids) / sizeof(known_ext_oids[0])) {
-    ret = -8144;
+    ret = -8146;
     goto out;
   }
   ret = 0;
@@ -7152,7 +7159,7 @@ static int parse_x509_Extension(u8 const *buf, u16 len,
   ;
   ext = find_ext_by_oid(buf,oid_len);
   if (ext == (_ext_oid const *)0) {
-    ret = -8224;
+    ret = -8226;
     goto out;
   }
   /*@
@@ -7171,7 +7178,7 @@ static int parse_x509_Extension(u8 const *buf, u16 len,
     else 
       if ((int)*(buf + 2) == 0x00) {
         _LOR: {
-                ret = -8275;
+                ret = -8277;
                 goto out;
               }
       }
@@ -7185,9 +7192,18 @@ static int parse_x509_Extension(u8 const *buf, u16 len,
   buf += (int)hdr_len;
   ext_data_len = (u16)((int)ext_data_len - (int)hdr_len);
   if ((int)data_len != (int)ext_data_len) {
-    ret = -8307;
+    ret = -8309;
     goto out;
   }
+  /*@
+  assert
+  ext->parse_ext_params ∈
+  {&parse_ext_AIA, &parse_ext_AKI, &parse_ext_SKI, &parse_ext_keyUsage,
+   &parse_ext_certPolicies, &parse_ext_policyMapping, &parse_ext_SAN,
+   &parse_ext_IAN, &parse_ext_subjectDirAttr, &parse_ext_basicConstraints,
+   &parse_ext_nameConstraints, &parse_ext_policyConstraints, &parse_ext_EKU,
+   &parse_ext_CRLDP, &parse_ext_inhibitAnyPolicy, &parse_ext_bad_oid}; */
+  ;
   /*@ calls parse_ext_AIA, parse_ext_AKI, parse_ext_SKI, parse_ext_keyUsage,
             parse_ext_certPolicies, parse_ext_policyMapping, parse_ext_SAN,
             parse_ext_IAN, parse_ext_subjectDirAttr,
@@ -7228,7 +7244,7 @@ static int parse_x509_Extensions(u8 const *buf, u16 len, u16 *eaten,
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -8366;
+              ret = -8369;
               goto out;
             }
     }
@@ -7242,7 +7258,7 @@ static int parse_x509_Extensions(u8 const *buf, u16 len, u16 *eaten,
   /*@ assert saved_len ≤ len; */ ;
   /*@ assert data_len ≤ saved_len; */ ;
   if ((int)data_len == 0) {
-    ret = -8393;
+    ret = -8396;
     goto out;
   }
   i = (u16)0;
@@ -7284,11 +7300,11 @@ static int parse_x509_Extensions(u8 const *buf, u16 len, u16 *eaten,
   }
   if (ctx->empty_subject) {
     if (ctx->san_empty) {
-      ret = -8436;
+      ret = -8439;
       goto out;
     }
     if (! ctx->san_critical) {
-      ret = -8441;
+      ret = -8444;
       goto out;
     }
   }
@@ -7329,7 +7345,7 @@ static int parse_x509_tbsCertificate(u8 const *buf, u16 len,
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -8506;
+              ret = -8509;
               goto out;
             }
     }
@@ -7365,7 +7381,7 @@ static int parse_x509_tbsCertificate(u8 const *buf, u16 len,
   ret = parse_x509_AlgorithmIdentifier(buf,remain,& alg,& param,& parsed);
   if (ret) goto out;
   if ((int)alg->alg_type != ALG_SIG) {
-    ret = -8583;
+    ret = -8586;
     goto out;
   }
   buf += (int)parsed;
@@ -7374,7 +7390,7 @@ static int parse_x509_tbsCertificate(u8 const *buf, u16 len,
   if (ret) goto out;
   /*@ assert empty_issuer ≡ 0 ∨ empty_issuer ≡ 1; */ ;
   if (empty_issuer) {
-    ret = -8604;
+    ret = -8607;
     goto out;
   }
   issuer_ptr = buf;
@@ -7410,12 +7426,12 @@ static int parse_x509_tbsCertificate(u8 const *buf, u16 len,
     remain = (u16)((int)remain - (int)parsed);
   }
   if ((int)remain != 0) {
-    ret = -8698;
+    ret = -8701;
     goto out;
   }
   if (ctx.ca_true) 
     if (! ctx.has_ski) {
-      ret = -8710;
+      ret = -8713;
       goto out;
     }
   if (ctx.keyCertSign_set) 
@@ -7423,13 +7439,13 @@ static int parse_x509_tbsCertificate(u8 const *buf, u16 len,
     else 
       if (! ctx.bc_critical) {
         _LOR_0: {
-                  ret = -8734;
+                  ret = -8737;
                   goto out;
                 }
       }
   if (ctx.cRLSign_set) 
     if (ctx.empty_subject) {
-      ret = -8747;
+      ret = -8750;
       goto out;
     }
   if (ctx.pathLenConstraint_set) 
@@ -7437,24 +7453,24 @@ static int parse_x509_tbsCertificate(u8 const *buf, u16 len,
     else 
       if (! ctx.keyCertSign_set) {
         _LOR_1: {
-                  ret = -8759;
+                  ret = -8762;
                   goto out;
                 }
       }
   if (ctx.has_name_constraints) 
     if (! ctx.ca_true) {
-      ret = -8769;
+      ret = -8772;
       goto out;
     }
   if (ctx.ca_true) 
     if (ctx.has_crldp) 
       if (! ctx.one_crldp_has_all_reasons) {
-        ret = -8781;
+        ret = -8784;
         goto out;
       }
   if (! ctx.self_signed) 
     if (! ctx.aki_has_keyIdentifier) {
-      ret = -8795;
+      ret = -8798;
       goto out;
     }
   /*@ assert 1 < tbs_hdr_len + tbs_data_len ≤ len; */ ;
@@ -7487,20 +7503,20 @@ static int parse_x509_signatureAlgorithm(u8 const *buf, u16 len,
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -8830;
+              ret = -8833;
               goto out;
             }
     }
   ret = parse_x509_AlgorithmIdentifier(buf,len,& alg,& param,& parsed);
   if (ret) goto out;
   if ((int)alg->alg_type != ALG_SIG) {
-    ret = -8843;
+    ret = -8846;
     goto out;
   }
   buf += (int)parsed;
   len = (u16)((int)len - (int)parsed);
   if (alg != exp_sig_alg) {
-    ret = -8857;
+    ret = -8860;
     goto out;
   }
   *eaten = parsed;
@@ -7528,7 +7544,7 @@ static int parse_sig_generic(u8 const *buf, u16 len, u16 *eaten)
                      & bs_hdr_len,& bs_data_len);
   if (ret) goto out;
   if ((int)bs_data_len == 0) {
-    ret = -8901;
+    ret = -8904;
     goto out;
   }
   *eaten = (u16)((int)bs_hdr_len + (int)bs_data_len);
@@ -7561,7 +7577,7 @@ static int parse_sig_ecdsa(u8 const *buf, u16 len, u16 *eaten)
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -8933;
+              ret = -8936;
               goto out;
             }
     }
@@ -7572,11 +7588,11 @@ static int parse_sig_ecdsa(u8 const *buf, u16 len, u16 *eaten)
   /*@ assert saved_sig_len ≤ len; */ ;
   buf += (int)bs_hdr_len;
   if ((int)bs_data_len == 0) {
-    ret = -8955;
+    ret = -8958;
     goto out;
   }
   if ((int)*(buf + 0) != 0) {
-    ret = -8984;
+    ret = -8987;
     goto out;
   }
   buf ++;
@@ -7597,7 +7613,7 @@ static int parse_sig_ecdsa(u8 const *buf, u16 len, u16 *eaten)
   remain = (u16)((int)remain - ((int)hdr_len + (int)data_len));
   buf += (int)hdr_len + (int)data_len;
   if ((int)remain != 0) {
-    ret = -9033;
+    ret = -9036;
     goto out;
   }
   /*@ assert saved_sig_len ≤ len; */ ;
@@ -7627,18 +7643,21 @@ static int parse_x509_signatureValue(u8 const *buf, u16 len,
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -9065;
+              ret = -9068;
               goto out;
             }
     }
   if (! sig_alg) {
-    ret = -9071;
+    ret = -9074;
     goto out;
   }
   if (! sig_alg->parse_sig) {
-    ret = -9077;
+    ret = -9080;
     goto out;
   }
+  /*@ assert sig_alg->parse_sig ∈ {&parse_sig_ecdsa, &parse_sig_generic};
+   */
+  ;
   /*@ calls parse_sig_ecdsa, parse_sig_generic; */
   ret = (*(sig_alg->parse_sig))(buf,len,eaten);
   if (ret) goto out;
@@ -7664,7 +7683,7 @@ int parse_x509_cert(u8 const *buf, u16 len)
   else 
     if ((int)len == 0) {
       _LOR: {
-              ret = -9110;
+              ret = -9114;
               goto out;
             }
     }
@@ -7674,7 +7693,7 @@ int parse_x509_cert(u8 const *buf, u16 len)
   len = (u16)((int)len - (int)eaten);
   buf += (int)eaten;
   if ((int)seq_data_len != (int)len) {
-    ret = -9134;
+    ret = -9138;
     goto out;
   }
   ret = parse_x509_tbsCertificate(buf,len,& sig_alg,& eaten);
@@ -7688,7 +7707,7 @@ int parse_x509_cert(u8 const *buf, u16 len)
   ret = parse_x509_signatureValue(buf,len,sig_alg,& eaten);
   if (ret) goto out;
   if ((int)len != (int)eaten) {
-    ret = -9168;
+    ret = -9172;
     goto out;
   }
   ret = 0;
