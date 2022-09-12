@@ -20,12 +20,30 @@ FCFLAGS     += \
   -add-symbolic-path=..:. \
   -kernel-warn-key annot:missing-spec=abort \
   -kernel-warn-key typing:implicit-function-declaration=abort \
+  -warn-left-shift-negative \
+  -warn-right-shift-negative \
+  -warn-signed-downcast \
+  -warn-signed-overflow \
+  -warn-unsigned-downcast \
+  -warn-unsigned-overflow \
+
+# Note: -eva-precision 5 does not terminate in 30 minutes
 
 ## Eva-specific flags
 EVAFLAGS    += \
   -eva-warn-key builtins:missing-spec=abort \
-  -eva-precision 1 \
-  -eva-slevel-function parse_x509_AlgorithmIdentifier:12 \
+  -eva-warn-undefined-pointer-comparison none \
+  -eva-precision 2 \
+
+
+## WP-specific flags
+# Tested with these tools:
+# - Why3 1.5.0
+# - Alt-Ergo 2.4.2
+WPFLAGS += \
+  -wp-par 12 \
+  -wp-timeout 15 \
+  -wp-no-init-const \
 
 ## GUI-only flags
 FCGUIFLAGS += \
@@ -36,6 +54,10 @@ TARGETS = x509-parser.eva
 ### Each target <t>.eva needs a rule <t>.parse with source files as prerequisites
 x509-parser.parse: \
   ../src/x509-parser.c \
+
+## We want WP to run after Eva, so we chain them by loading the result of the
+## Eva analysis before running WP.
+x509-parser.wp: PARSE_RESULT = x509-parser.eva
 
 ## The following E-ACSL target relies on some errors deliberately introduced
 ## in the code, and triggered at runtime. Note that, depending on your
