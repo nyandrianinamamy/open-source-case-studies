@@ -1442,18 +1442,6 @@ stack: DNS_Name2IPAddress :: conf.c:905 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_3' as weak
-stack: realloc :: memory.c:50 <-
-       Realloc :: memory.c:80 <-
-       Realloc2 :: array.c:80 <-
-       realloc_array :: array.c:87 <-
-       ARR_GetNewElement :: array.c:115 <-
-       ARR_AppendElement :: conf.c:906 <-
-       parse_initstepslew :: conf.c:488 <-
-       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
 array.c:94:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
 stack: __FC_assert :: array.c:94 <-
        ARR_GetElement :: array.c:88 <-
@@ -1474,6 +1462,18 @@ stack: memcpy :: array.c:116 <-
        eva_main
 array.c:69:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
 stack: __FC_assert :: array.c:69 <-
+       realloc_array :: array.c:87 <-
+       ARR_GetNewElement :: array.c:115 <-
+       ARR_AppendElement :: conf.c:906 <-
+       parse_initstepslew :: conf.c:488 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_4' as weak
+stack: realloc :: memory.c:50 <-
+       Realloc :: memory.c:80 <-
+       Realloc2 :: array.c:80 <-
        realloc_array :: array.c:87 <-
        ARR_GetNewElement :: array.c:115 <-
        ARR_AppendElement :: conf.c:906 <-
@@ -1974,54 +1974,6 @@ stack: sscanf_va_22 :: conf.c:601 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_6' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
-       strdup :: memory.c:88 <-
-       Strdup :: conf.c:591 <-
-       parse_string :: conf.c:573 <-
-       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_7' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
-       strdup :: memory.c:88 <-
-       Strdup :: conf.c:1263 <-
-       parse_tempcomp :: conf.c:571 <-
-       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_8' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
-       strdup :: memory.c:88 <-
-       Strdup :: conf.c:1274 <-
-       parse_tempcomp :: conf.c:571 <-
-       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_9' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
-       strdup :: memory.c:88 <-
-       Strdup :: conf.c:645 <-
-       parse_source :: conf.c:565 <-
-       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80' as weak
-stack: realloc :: memory.c:50 <-
-       Realloc :: memory.c:80 <-
-       Realloc2 :: array.c:80 <-
-       realloc_array :: array.c:87 <-
-       ARR_GetNewElement :: array.c:115 <-
-       ARR_AppendElement :: conf.c:646 <-
-       parse_source :: conf.c:565 <-
-       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
 array.c:94:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
 stack: __FC_assert :: array.c:94 <-
        ARR_GetElement :: array.c:88 <-
@@ -2036,53 +1988,6 @@ array.c:116:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got 
 stack: memcpy :: array.c:116 <-
        ARR_AppendElement :: conf.c:646 <-
        parse_source :: conf.c:565 <-
-       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_10' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
-       strdup :: memory.c:88 <-
-       Strdup :: conf.c:591 <-
-       parse_string :: conf.c:557 <-
-       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_11' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
-       strdup :: memory.c:88 <-
-       Strdup :: conf.c:591 <-
-       parse_string :: conf.c:555 <-
-       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_12' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
-       strdup :: memory.c:88 <-
-       Strdup :: conf.c:723 <-
-       parse_refclock :: conf.c:549 <-
-       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_13' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
-       strdup :: memory.c:88 <-
-       Strdup :: conf.c:727 <-
-       parse_refclock :: conf.c:549 <-
-       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_0' as weak
-stack: realloc :: memory.c:50 <-
-       Realloc :: memory.c:80 <-
-       Realloc2 :: array.c:80 <-
-       realloc_array :: array.c:87 <-
-       ARR_GetNewElement :: conf.c:812 <-
-       parse_refclock :: conf.c:549 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
@@ -2216,20 +2121,9 @@ stack: parse_refclock :: conf.c:549 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_14' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
-       strdup :: memory.c:88 <-
-       Strdup :: conf.c:645 <-
-       parse_source :: conf.c:542 <-
-       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_1' as weak
-stack: realloc :: memory.c:50 <-
-       Realloc :: memory.c:80 <-
-       Realloc2 :: array.c:80 <-
-       realloc_array :: array.c:87 <-
+array.c:94:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
+stack: __FC_assert :: array.c:94 <-
+       ARR_GetElement :: array.c:88 <-
        ARR_GetNewElement :: array.c:115 <-
        ARR_AppendElement :: conf.c:646 <-
        parse_source :: conf.c:542 <-
@@ -2245,29 +2139,9 @@ stack: memcpy :: array.c:116 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_15' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
-       strdup :: memory.c:88 <-
-       Strdup :: conf.c:591 <-
-       parse_string :: conf.c:540 <-
-       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_16' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
-       strdup :: memory.c:88 <-
-       Strdup :: conf.c:645 <-
-       parse_source :: conf.c:538 <-
-       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_2' as weak
-stack: realloc :: memory.c:50 <-
-       Realloc :: memory.c:80 <-
-       Realloc2 :: array.c:80 <-
-       realloc_array :: array.c:87 <-
+array.c:94:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
+stack: __FC_assert :: array.c:94 <-
+       ARR_GetElement :: array.c:88 <-
        ARR_GetNewElement :: array.c:115 <-
        ARR_AppendElement :: conf.c:646 <-
        parse_source :: conf.c:538 <-
@@ -2279,62 +2153,6 @@ array.c:116:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got 
 stack: memcpy :: array.c:116 <-
        ARR_AppendElement :: conf.c:646 <-
        parse_source :: conf.c:538 <-
-       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_17' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
-       strdup :: memory.c:88 <-
-       Strdup :: conf.c:591 <-
-       parse_string :: conf.c:536 <-
-       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_18' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
-       strdup :: memory.c:88 <-
-       Strdup :: conf.c:993 <-
-       parse_mailonchange :: conf.c:508 <-
-       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_19' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
-       strdup :: memory.c:88 <-
-       Strdup :: conf.c:591 <-
-       parse_string :: conf.c:506 <-
-       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_20' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
-       strdup :: memory.c:88 <-
-       Strdup :: conf.c:591 <-
-       parse_string :: conf.c:494 <-
-       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_21' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
-       strdup :: memory.c:88 <-
-       Strdup :: conf.c:591 <-
-       parse_string :: conf.c:490 <-
-       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_4' as weak
-stack: realloc :: memory.c:50 <-
-       Realloc :: memory.c:80 <-
-       Realloc2 :: array.c:80 <-
-       realloc_array :: array.c:87 <-
-       ARR_GetNewElement :: conf.c:1294 <-
-       parse_hwtimestamp :: conf.c:484 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
@@ -2343,15 +2161,6 @@ array.c:94:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' g
 stack: __FC_assert :: array.c:94 <-
        ARR_GetElement :: array.c:88 <-
        ARR_GetNewElement :: conf.c:1294 <-
-       parse_hwtimestamp :: conf.c:484 <-
-       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_22' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
-       strdup :: memory.c:88 <-
-       Strdup :: conf.c:1295 <-
        parse_hwtimestamp :: conf.c:484 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
        test_unit :: test/unit/test.c:70 <-
@@ -2477,44 +2286,6 @@ stack: sscanf_va_59 :: conf.c:1309 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_23' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
-       strdup :: memory.c:88 <-
-       Strdup :: conf.c:591 <-
-       parse_string :: conf.c:482 <-
-       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_24' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
-       strdup :: memory.c:88 <-
-       Strdup :: conf.c:591 <-
-       parse_string :: conf.c:476 <-
-       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_25' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
-       strdup :: memory.c:88 <-
-       Strdup :: conf.c:591 <-
-       parse_string :: conf.c:474 <-
-       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_5' as weak
-stack: realloc :: memory.c:50 <-
-       Realloc :: memory.c:80 <-
-       Realloc2 :: array.c:80 <-
-       realloc_array :: array.c:87 <-
-       ARR_GetNewElement :: conf.c:1020 <-
-       parse_allow_deny :: conf.c:472 <-
-       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
 array.c:94:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
 stack: __FC_assert :: array.c:94 <-
        ARR_GetElement :: array.c:88 <-
@@ -2548,11 +2319,9 @@ stack: parse_allow_deny :: conf.c:472 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_6' as weak
-stack: realloc :: memory.c:50 <-
-       Realloc :: memory.c:80 <-
-       Realloc2 :: array.c:80 <-
-       realloc_array :: array.c:87 <-
+array.c:94:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
+stack: __FC_assert :: array.c:94 <-
+       ARR_GetElement :: array.c:88 <-
        ARR_GetNewElement :: conf.c:1037 <-
        parse_allow_deny :: conf.c:472 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
@@ -2643,11 +2412,9 @@ stack: parse_allow_deny :: conf.c:472 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_7' as weak
-stack: realloc :: memory.c:50 <-
-       Realloc :: memory.c:80 <-
-       Realloc2 :: array.c:80 <-
-       realloc_array :: array.c:87 <-
+array.c:94:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
+stack: __FC_assert :: array.c:94 <-
+       ARR_GetElement :: array.c:88 <-
        ARR_GetNewElement :: conf.c:1089 <-
        parse_allow_deny :: conf.c:472 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
@@ -2678,17 +2445,6 @@ stack: parse_allow_deny :: conf.c:472 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_8' as weak
-stack: realloc :: memory.c:50 <-
-       Realloc :: memory.c:80 <-
-       Realloc2 :: array.c:80 <-
-       realloc_array :: array.c:87 <-
-       ARR_GetNewElement :: conf.c:1020 <-
-       parse_allow_deny :: conf.c:461 <-
-       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
 array.c:94:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
 stack: __FC_assert :: array.c:94 <-
        ARR_GetElement :: array.c:88 <-
@@ -2698,68 +2454,47 @@ stack: __FC_assert :: array.c:94 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_9' as weak
-stack: realloc :: memory.c:50 <-
-       Realloc :: memory.c:80 <-
-       Realloc2 :: array.c:80 <-
-       realloc_array :: array.c:87 <-
+array.c:94:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
+stack: __FC_assert :: array.c:94 <-
+       ARR_GetElement :: array.c:88 <-
        ARR_GetNewElement :: conf.c:1037 <-
        parse_allow_deny :: conf.c:461 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_10' as weak
-stack: realloc :: memory.c:50 <-
-       Realloc :: memory.c:80 <-
-       Realloc2 :: array.c:80 <-
-       realloc_array :: array.c:87 <-
+array.c:94:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
+stack: __FC_assert :: array.c:94 <-
+       ARR_GetElement :: array.c:88 <-
        ARR_GetNewElement :: conf.c:1089 <-
        parse_allow_deny :: conf.c:461 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_11' as weak
-stack: realloc :: memory.c:50 <-
-       Realloc :: memory.c:80 <-
-       Realloc2 :: array.c:80 <-
-       realloc_array :: array.c:87 <-
+array.c:94:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
+stack: __FC_assert :: array.c:94 <-
+       ARR_GetElement :: array.c:88 <-
        ARR_GetNewElement :: conf.c:1020 <-
        parse_allow_deny :: conf.c:459 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_12' as weak
-stack: realloc :: memory.c:50 <-
-       Realloc :: memory.c:80 <-
-       Realloc2 :: array.c:80 <-
-       realloc_array :: array.c:87 <-
+array.c:94:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
+stack: __FC_assert :: array.c:94 <-
+       ARR_GetElement :: array.c:88 <-
        ARR_GetNewElement :: conf.c:1037 <-
        parse_allow_deny :: conf.c:459 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_13' as weak
-stack: realloc :: memory.c:50 <-
-       Realloc :: memory.c:80 <-
-       Realloc2 :: array.c:80 <-
-       realloc_array :: array.c:87 <-
+array.c:94:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
+stack: __FC_assert :: array.c:94 <-
+       ARR_GetElement :: array.c:88 <-
        ARR_GetNewElement :: conf.c:1089 <-
        parse_allow_deny :: conf.c:459 <-
-       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_14' as weak
-stack: realloc :: memory.c:50 <-
-       Realloc :: memory.c:80 <-
-       Realloc2 :: array.c:80 <-
-       realloc_array :: array.c:87 <-
-       ARR_GetNewElement :: conf.c:1206 <-
-       parse_broadcast :: conf.c:455 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
@@ -2791,45 +2526,65 @@ stack: parse_broadcast :: conf.c:455 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_26' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
-       strdup :: memory.c:88 <-
-       Strdup :: conf.c:591 <-
-       parse_string :: conf.c:1151 <-
-       parse_bindcmdaddress :: conf.c:453 <-
-       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_15' as weak
-stack: realloc :: memory.c:50 <-
-       Realloc :: memory.c:80 <-
-       Realloc2 :: array.c:80 <-
-       realloc_array :: array.c:87 <-
+array.c:94:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
+stack: __FC_assert :: array.c:94 <-
+       ARR_GetElement :: array.c:88 <-
        ARR_GetNewElement :: conf.c:1020 <-
        parse_allow_deny :: conf.c:447 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_16' as weak
-stack: realloc :: memory.c:50 <-
-       Realloc :: memory.c:80 <-
-       Realloc2 :: array.c:80 <-
-       realloc_array :: array.c:87 <-
+array.c:94:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
+stack: __FC_assert :: array.c:94 <-
+       ARR_GetElement :: array.c:88 <-
        ARR_GetNewElement :: conf.c:1037 <-
        parse_allow_deny :: conf.c:447 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_17' as weak
-stack: realloc :: memory.c:50 <-
-       Realloc :: memory.c:80 <-
-       Realloc2 :: array.c:80 <-
-       realloc_array :: array.c:87 <-
+array.c:94:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
+stack: __FC_assert :: array.c:94 <-
+       ARR_GetElement :: array.c:88 <-
        ARR_GetNewElement :: conf.c:1089 <-
        parse_allow_deny :: conf.c:447 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_27' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
+       strdup :: memory.c:88 <-
+       Strdup :: conf.c:591 <-
+       parse_string :: conf.c:573 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_28' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
+       strdup :: memory.c:88 <-
+       Strdup :: conf.c:1263 <-
+       parse_tempcomp :: conf.c:571 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_29' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
+       strdup :: memory.c:88 <-
+       Strdup :: conf.c:1274 <-
+       parse_tempcomp :: conf.c:571 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_30' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
+       strdup :: memory.c:88 <-
+       Strdup :: conf.c:645 <-
+       parse_source :: conf.c:565 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
@@ -2844,11 +2599,79 @@ stack: __FC_assert :: array.c:69 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
+memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_19' as weak
+stack: realloc :: memory.c:50 <-
+       Realloc :: memory.c:80 <-
+       Realloc2 :: array.c:80 <-
+       realloc_array :: array.c:87 <-
+       ARR_GetNewElement :: array.c:115 <-
+       ARR_AppendElement :: conf.c:646 <-
+       parse_source :: conf.c:565 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_31' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
+       strdup :: memory.c:88 <-
+       Strdup :: conf.c:591 <-
+       parse_string :: conf.c:557 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_32' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
+       strdup :: memory.c:88 <-
+       Strdup :: conf.c:591 <-
+       parse_string :: conf.c:555 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_33' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
+       strdup :: memory.c:88 <-
+       Strdup :: conf.c:723 <-
+       parse_refclock :: conf.c:549 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_34' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
+       strdup :: memory.c:88 <-
+       Strdup :: conf.c:727 <-
+       parse_refclock :: conf.c:549 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
 array.c:69:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
 stack: __FC_assert :: array.c:69 <-
        realloc_array :: array.c:87 <-
        ARR_GetNewElement :: conf.c:812 <-
        parse_refclock :: conf.c:549 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_20' as weak
+stack: realloc :: memory.c:50 <-
+       Realloc :: memory.c:80 <-
+       Realloc2 :: array.c:80 <-
+       realloc_array :: array.c:87 <-
+       ARR_GetNewElement :: conf.c:812 <-
+       parse_refclock :: conf.c:549 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_35' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
+       strdup :: memory.c:88 <-
+       Strdup :: conf.c:645 <-
+       parse_source :: conf.c:542 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
@@ -2863,6 +2686,36 @@ stack: __FC_assert :: array.c:69 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
+memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_21' as weak
+stack: realloc :: memory.c:50 <-
+       Realloc :: memory.c:80 <-
+       Realloc2 :: array.c:80 <-
+       realloc_array :: array.c:87 <-
+       ARR_GetNewElement :: array.c:115 <-
+       ARR_AppendElement :: conf.c:646 <-
+       parse_source :: conf.c:542 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_36' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
+       strdup :: memory.c:88 <-
+       Strdup :: conf.c:591 <-
+       parse_string :: conf.c:540 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_37' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
+       strdup :: memory.c:88 <-
+       Strdup :: conf.c:645 <-
+       parse_source :: conf.c:538 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
 array.c:69:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
 stack: __FC_assert :: array.c:69 <-
        realloc_array :: array.c:87 <-
@@ -2873,13 +2726,59 @@ stack: __FC_assert :: array.c:69 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_18' as weak
+memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_22' as weak
 stack: realloc :: memory.c:50 <-
        Realloc :: memory.c:80 <-
        Realloc2 :: array.c:80 <-
-       realloc_array :: array.c:122 <-
-       ARR_SetSize :: conf.c:893 <-
-       parse_initstepslew :: conf.c:488 <-
+       realloc_array :: array.c:87 <-
+       ARR_GetNewElement :: array.c:115 <-
+       ARR_AppendElement :: conf.c:646 <-
+       parse_source :: conf.c:538 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_38' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
+       strdup :: memory.c:88 <-
+       Strdup :: conf.c:591 <-
+       parse_string :: conf.c:536 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_39' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
+       strdup :: memory.c:88 <-
+       Strdup :: conf.c:993 <-
+       parse_mailonchange :: conf.c:508 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_40' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
+       strdup :: memory.c:88 <-
+       Strdup :: conf.c:591 <-
+       parse_string :: conf.c:506 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_41' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
+       strdup :: memory.c:88 <-
+       Strdup :: conf.c:591 <-
+       parse_string :: conf.c:494 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_42' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
+       strdup :: memory.c:88 <-
+       Strdup :: conf.c:591 <-
+       parse_string :: conf.c:490 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
@@ -2893,6 +2792,53 @@ stack: __FC_assert :: array.c:69 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
+memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_24' as weak
+stack: realloc :: memory.c:50 <-
+       Realloc :: memory.c:80 <-
+       Realloc2 :: array.c:80 <-
+       realloc_array :: array.c:87 <-
+       ARR_GetNewElement :: conf.c:1294 <-
+       parse_hwtimestamp :: conf.c:484 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_43' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
+       strdup :: memory.c:88 <-
+       Strdup :: conf.c:1295 <-
+       parse_hwtimestamp :: conf.c:484 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_44' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
+       strdup :: memory.c:88 <-
+       Strdup :: conf.c:591 <-
+       parse_string :: conf.c:482 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_45' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
+       strdup :: memory.c:88 <-
+       Strdup :: conf.c:591 <-
+       parse_string :: conf.c:476 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_46' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
+       strdup :: memory.c:88 <-
+       Strdup :: conf.c:591 <-
+       parse_string :: conf.c:474 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
 array.c:69:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
 stack: __FC_assert :: array.c:69 <-
        realloc_array :: array.c:87 <-
@@ -2902,8 +2848,30 @@ stack: __FC_assert :: array.c:69 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
+memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_25' as weak
+stack: realloc :: memory.c:50 <-
+       Realloc :: memory.c:80 <-
+       Realloc2 :: array.c:80 <-
+       realloc_array :: array.c:87 <-
+       ARR_GetNewElement :: conf.c:1020 <-
+       parse_allow_deny :: conf.c:472 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
 array.c:69:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
 stack: __FC_assert :: array.c:69 <-
+       realloc_array :: array.c:87 <-
+       ARR_GetNewElement :: conf.c:1037 <-
+       parse_allow_deny :: conf.c:472 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_26' as weak
+stack: realloc :: memory.c:50 <-
+       Realloc :: memory.c:80 <-
+       Realloc2 :: array.c:80 <-
        realloc_array :: array.c:87 <-
        ARR_GetNewElement :: conf.c:1037 <-
        parse_allow_deny :: conf.c:472 <-
@@ -2920,6 +2888,17 @@ stack: __FC_assert :: array.c:69 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
+memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_27' as weak
+stack: realloc :: memory.c:50 <-
+       Realloc :: memory.c:80 <-
+       Realloc2 :: array.c:80 <-
+       realloc_array :: array.c:87 <-
+       ARR_GetNewElement :: conf.c:1089 <-
+       parse_allow_deny :: conf.c:472 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
 array.c:69:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
 stack: __FC_assert :: array.c:69 <-
        realloc_array :: array.c:87 <-
@@ -2929,8 +2908,30 @@ stack: __FC_assert :: array.c:69 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
+memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_28' as weak
+stack: realloc :: memory.c:50 <-
+       Realloc :: memory.c:80 <-
+       Realloc2 :: array.c:80 <-
+       realloc_array :: array.c:87 <-
+       ARR_GetNewElement :: conf.c:1020 <-
+       parse_allow_deny :: conf.c:461 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
 array.c:69:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
 stack: __FC_assert :: array.c:69 <-
+       realloc_array :: array.c:87 <-
+       ARR_GetNewElement :: conf.c:1037 <-
+       parse_allow_deny :: conf.c:461 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_29' as weak
+stack: realloc :: memory.c:50 <-
+       Realloc :: memory.c:80 <-
+       Realloc2 :: array.c:80 <-
        realloc_array :: array.c:87 <-
        ARR_GetNewElement :: conf.c:1037 <-
        parse_allow_deny :: conf.c:461 <-
@@ -2947,8 +2948,30 @@ stack: __FC_assert :: array.c:69 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
+memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_30' as weak
+stack: realloc :: memory.c:50 <-
+       Realloc :: memory.c:80 <-
+       Realloc2 :: array.c:80 <-
+       realloc_array :: array.c:87 <-
+       ARR_GetNewElement :: conf.c:1089 <-
+       parse_allow_deny :: conf.c:461 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
 array.c:69:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
 stack: __FC_assert :: array.c:69 <-
+       realloc_array :: array.c:87 <-
+       ARR_GetNewElement :: conf.c:1020 <-
+       parse_allow_deny :: conf.c:459 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_31' as weak
+stack: realloc :: memory.c:50 <-
+       Realloc :: memory.c:80 <-
+       Realloc2 :: array.c:80 <-
        realloc_array :: array.c:87 <-
        ARR_GetNewElement :: conf.c:1020 <-
        parse_allow_deny :: conf.c:459 <-
@@ -2965,8 +2988,30 @@ stack: __FC_assert :: array.c:69 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
+memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_32' as weak
+stack: realloc :: memory.c:50 <-
+       Realloc :: memory.c:80 <-
+       Realloc2 :: array.c:80 <-
+       realloc_array :: array.c:87 <-
+       ARR_GetNewElement :: conf.c:1037 <-
+       parse_allow_deny :: conf.c:459 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
 array.c:69:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
 stack: __FC_assert :: array.c:69 <-
+       realloc_array :: array.c:87 <-
+       ARR_GetNewElement :: conf.c:1089 <-
+       parse_allow_deny :: conf.c:459 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_33' as weak
+stack: realloc :: memory.c:50 <-
+       Realloc :: memory.c:80 <-
+       Realloc2 :: array.c:80 <-
        realloc_array :: array.c:87 <-
        ARR_GetNewElement :: conf.c:1089 <-
        parse_allow_deny :: conf.c:459 <-
@@ -2983,8 +3028,40 @@ stack: __FC_assert :: array.c:69 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
+memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_34' as weak
+stack: realloc :: memory.c:50 <-
+       Realloc :: memory.c:80 <-
+       Realloc2 :: array.c:80 <-
+       realloc_array :: array.c:87 <-
+       ARR_GetNewElement :: conf.c:1206 <-
+       parse_broadcast :: conf.c:455 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_47' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
+       strdup :: memory.c:88 <-
+       Strdup :: conf.c:591 <-
+       parse_string :: conf.c:1151 <-
+       parse_bindcmdaddress :: conf.c:453 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
 array.c:69:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
 stack: __FC_assert :: array.c:69 <-
+       realloc_array :: array.c:87 <-
+       ARR_GetNewElement :: conf.c:1020 <-
+       parse_allow_deny :: conf.c:447 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_35' as weak
+stack: realloc :: memory.c:50 <-
+       Realloc :: memory.c:80 <-
+       Realloc2 :: array.c:80 <-
        realloc_array :: array.c:87 <-
        ARR_GetNewElement :: conf.c:1020 <-
        parse_allow_deny :: conf.c:447 <-
@@ -3001,11 +3078,44 @@ stack: __FC_assert :: array.c:69 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
+memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_36' as weak
+stack: realloc :: memory.c:50 <-
+       Realloc :: memory.c:80 <-
+       Realloc2 :: array.c:80 <-
+       realloc_array :: array.c:87 <-
+       ARR_GetNewElement :: conf.c:1037 <-
+       parse_allow_deny :: conf.c:447 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
 array.c:69:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
 stack: __FC_assert :: array.c:69 <-
        realloc_array :: array.c:87 <-
        ARR_GetNewElement :: conf.c:1089 <-
        parse_allow_deny :: conf.c:447 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_37' as weak
+stack: realloc :: memory.c:50 <-
+       Realloc :: memory.c:80 <-
+       Realloc2 :: array.c:80 <-
+       realloc_array :: array.c:87 <-
+       ARR_GetNewElement :: conf.c:1089 <-
+       parse_allow_deny :: conf.c:447 <-
+       CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_38' as weak
+stack: realloc :: memory.c:50 <-
+       Realloc :: memory.c:80 <-
+       Realloc2 :: array.c:80 <-
+       realloc_array :: array.c:122 <-
+       ARR_SetSize :: conf.c:893 <-
+       parse_initstepslew :: conf.c:488 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
@@ -3097,18 +3207,6 @@ stack: prepare_socket :: ntp_io.c:406 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_21' as weak
-stack: realloc :: memory.c:50 <-
-       Realloc :: memory.c:80 <-
-       Realloc2 :: array.c:80 <-
-       realloc_array :: array.c:87 <-
-       ARR_GetNewElement :: sched.c:170 <-
-       SCH_AddFileHandler :: ntp_io.c:273 <-
-       prepare_socket :: ntp_io.c:406 <-
-       NIO_Initialise :: test/unit/ntp_core.c:323 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
 array.c:94:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
 stack: __FC_assert :: array.c:94 <-
        ARR_GetElement :: array.c:88 <-
@@ -3142,6 +3240,18 @@ stack: SCH_AddFileHandler :: ntp_io.c:273 <-
        eva_main
 array.c:69:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
 stack: __FC_assert :: array.c:69 <-
+       realloc_array :: array.c:87 <-
+       ARR_GetNewElement :: sched.c:170 <-
+       SCH_AddFileHandler :: ntp_io.c:273 <-
+       prepare_socket :: ntp_io.c:406 <-
+       NIO_Initialise :: test/unit/ntp_core.c:323 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_42' as weak
+stack: realloc :: memory.c:50 <-
+       Realloc :: memory.c:80 <-
+       Realloc2 :: array.c:80 <-
        realloc_array :: array.c:87 <-
        ARR_GetNewElement :: sched.c:170 <-
        SCH_AddFileHandler :: ntp_io.c:273 <-
@@ -3214,7 +3324,7 @@ stack: __FC_assert :: array.c:94 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_22' as weak
+memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_44' as weak
 stack: realloc :: memory.c:50 <-
        Realloc :: memory.c:80 <-
        Realloc2 :: array.c:80 <-
@@ -3251,7 +3361,7 @@ stack: __FC_assert :: sched.c:181 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_23' as weak
+memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_46' as weak
 stack: realloc :: memory.c:50 <-
        Realloc :: memory.c:80 <-
        Realloc2 :: array.c:80 <-
@@ -3703,27 +3813,6 @@ stack: memcpy :: keys.c:236 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_KEY_Reload_l235' as weak
-stack: malloc :: memory.c:38 <-
-       Malloc :: memory.c:74 <-
-       Malloc2 :: keys.c:235 <-
-       KEY_Reload :: keys.c:80 <-
-       KEY_Initialise :: test/unit/ntp_core.c:328 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_24' as weak
-stack: realloc :: memory.c:50 <-
-       Realloc :: memory.c:80 <-
-       Realloc2 :: array.c:80 <-
-       realloc_array :: array.c:87 <-
-       ARR_GetNewElement :: array.c:115 <-
-       ARR_AppendElement :: keys.c:237 <-
-       KEY_Reload :: keys.c:80 <-
-       KEY_Initialise :: test/unit/ntp_core.c:328 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
 array.c:94:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
 stack: __FC_assert :: array.c:94 <-
        ARR_GetElement :: array.c:88 <-
@@ -3742,8 +3831,29 @@ stack: memcpy :: array.c:116 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
+memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_KEY_Reload_l235_0' as weak
+stack: malloc :: memory.c:38 <-
+       Malloc :: memory.c:74 <-
+       Malloc2 :: keys.c:235 <-
+       KEY_Reload :: keys.c:80 <-
+       KEY_Initialise :: test/unit/ntp_core.c:328 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
 array.c:69:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
 stack: __FC_assert :: array.c:69 <-
+       realloc_array :: array.c:87 <-
+       ARR_GetNewElement :: array.c:115 <-
+       ARR_AppendElement :: keys.c:237 <-
+       KEY_Reload :: keys.c:80 <-
+       KEY_Initialise :: test/unit/ntp_core.c:328 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+memory.c:50:[eva:malloc:weak] warning: marking variable `__realloc_realloc_array_l80_48' as weak
+stack: realloc :: memory.c:50 <-
+       Realloc :: memory.c:80 <-
+       Realloc2 :: array.c:80 <-
        realloc_array :: array.c:87 <-
        ARR_GetNewElement :: array.c:115 <-
        ARR_AppendElement :: keys.c:237 <-
@@ -4112,19 +4222,6 @@ stack: open_node :: addrfilt.c:179 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_open_node_l137' as weak
-stack: malloc :: memory.c:38 <-
-       Malloc :: memory.c:74 <-
-       Malloc2 :: addrfilt.c:137 <-
-       open_node :: addrfilt.c:179 <-
-       set_subnet :: addrfilt.c:244 <-
-       set_subnet_ :: addrfilt.c:278 <-
-       ADF_AllowAll :: ntp_core.c:2518 <-
-       NCR_AddAccessRestriction :: conf.c:1795 <-
-       CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
 addrfilt.c:141:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&node->extended);
 stack: open_node :: addrfilt.c:179 <-
        set_subnet :: addrfilt.c:244 <-
@@ -4156,6 +4253,19 @@ stack: set_subnet :: addrfilt.c:244 <-
        eva_main
 addrfilt.c:178:[eva:alarm] warning: out of bounds read. assert \valid_read(&node->extended);
 stack: set_subnet :: addrfilt.c:244 <-
+       set_subnet_ :: addrfilt.c:278 <-
+       ADF_AllowAll :: ntp_core.c:2518 <-
+       NCR_AddAccessRestriction :: conf.c:1795 <-
+       CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_open_node_l137_0' as weak
+stack: malloc :: memory.c:38 <-
+       Malloc :: memory.c:74 <-
+       Malloc2 :: addrfilt.c:137 <-
+       open_node :: addrfilt.c:179 <-
+       set_subnet :: addrfilt.c:244 <-
        set_subnet_ :: addrfilt.c:278 <-
        ADF_AllowAll :: ntp_core.c:2518 <-
        NCR_AddAccessRestriction :: conf.c:1795 <-
@@ -4222,19 +4332,6 @@ stack: set_subnet :: addrfilt.c:244 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_open_node_l137_0' as weak
-stack: malloc :: memory.c:38 <-
-       Malloc :: memory.c:74 <-
-       Malloc2 :: addrfilt.c:137 <-
-       open_node :: addrfilt.c:199 <-
-       set_subnet :: addrfilt.c:244 <-
-       set_subnet_ :: addrfilt.c:278 <-
-       ADF_AllowAll :: ntp_core.c:2518 <-
-       NCR_AddAccessRestriction :: conf.c:1795 <-
-       CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
 addrfilt.c:201:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&node->extended);
 stack: set_subnet :: addrfilt.c:244 <-
        set_subnet_ :: addrfilt.c:278 <-
@@ -4246,6 +4343,19 @@ stack: set_subnet :: addrfilt.c:244 <-
        eva_main
 addrfilt.c:198:[eva:alarm] warning: out of bounds read. assert \valid_read(&node->extended);
 stack: set_subnet :: addrfilt.c:244 <-
+       set_subnet_ :: addrfilt.c:278 <-
+       ADF_AllowAll :: ntp_core.c:2518 <-
+       NCR_AddAccessRestriction :: conf.c:1795 <-
+       CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_open_node_l137_2' as weak
+stack: malloc :: memory.c:38 <-
+       Malloc :: memory.c:74 <-
+       Malloc2 :: addrfilt.c:137 <-
+       open_node :: addrfilt.c:199 <-
+       set_subnet :: addrfilt.c:244 <-
        set_subnet_ :: addrfilt.c:278 <-
        ADF_AllowAll :: ntp_core.c:2518 <-
        NCR_AddAccessRestriction :: conf.c:1795 <-
@@ -4353,7 +4463,7 @@ stack: close_node :: addrfilt.c:220 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_open_node_l137_2' as weak
+memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_open_node_l137_5' as weak
 stack: malloc :: memory.c:38 <-
        Malloc :: memory.c:74 <-
        Malloc2 :: addrfilt.c:137 <-
@@ -4375,7 +4485,7 @@ stack: set_subnet :: addrfilt.c:244 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_open_node_l137_3' as weak
+memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_open_node_l137_7' as weak
 stack: malloc :: memory.c:38 <-
        Malloc :: memory.c:74 <-
        Malloc2 :: addrfilt.c:137 <-
@@ -4407,7 +4517,7 @@ stack: set_subnet :: addrfilt.c:244 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_open_node_l137_5' as weak
+memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_open_node_l137_10' as weak
 stack: malloc :: memory.c:38 <-
        Malloc :: memory.c:74 <-
        Malloc2 :: addrfilt.c:137 <-
@@ -4420,7 +4530,7 @@ stack: malloc :: memory.c:38 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_open_node_l137_6' as weak
+memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_open_node_l137_12' as weak
 stack: malloc :: memory.c:38 <-
        Malloc :: memory.c:74 <-
        Malloc2 :: addrfilt.c:137 <-
@@ -4443,7 +4553,7 @@ stack: __FC_assert :: addrfilt.c:210 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_open_node_l137_8' as weak
+memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_open_node_l137_15' as weak
 stack: malloc :: memory.c:38 <-
        Malloc :: memory.c:74 <-
        Malloc2 :: addrfilt.c:137 <-
@@ -4456,7 +4566,7 @@ stack: malloc :: memory.c:38 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_open_node_l137_9' as weak
+memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_open_node_l137_17' as weak
 stack: malloc :: memory.c:38 <-
        Malloc :: memory.c:74 <-
        Malloc2 :: addrfilt.c:137 <-
@@ -4605,58 +4715,6 @@ stack: set_subnet :: addrfilt.c:244 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_open_node_l137_1' as weak
-stack: malloc :: memory.c:38 <-
-       Malloc :: memory.c:74 <-
-       Malloc2 :: addrfilt.c:137 <-
-       open_node :: addrfilt.c:213 <-
-       set_subnet :: addrfilt.c:244 <-
-       set_subnet_ :: addrfilt.c:278 <-
-       ADF_AllowAll :: ntp_core.c:2518 <-
-       NCR_AddAccessRestriction :: conf.c:1795 <-
-       CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_open_node_l137_4' as weak
-stack: malloc :: memory.c:38 <-
-       Malloc :: memory.c:74 <-
-       Malloc2 :: addrfilt.c:137 <-
-       open_node :: addrfilt.c:213 <-
-       set_subnet :: addrfilt.c:244 <-
-       set_subnet_ :: addrfilt.c:267 <-
-       ADF_Allow :: ntp_core.c:2520 <-
-       NCR_AddAccessRestriction :: conf.c:1795 <-
-       CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_open_node_l137_7' as weak
-stack: malloc :: memory.c:38 <-
-       Malloc :: memory.c:74 <-
-       Malloc2 :: addrfilt.c:137 <-
-       open_node :: addrfilt.c:213 <-
-       set_subnet :: addrfilt.c:244 <-
-       set_subnet_ :: addrfilt.c:298 <-
-       ADF_DenyAll :: ntp_core.c:2524 <-
-       NCR_AddAccessRestriction :: conf.c:1795 <-
-       CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_open_node_l137_10' as weak
-stack: malloc :: memory.c:38 <-
-       Malloc :: memory.c:74 <-
-       Malloc2 :: addrfilt.c:137 <-
-       open_node :: addrfilt.c:213 <-
-       set_subnet :: addrfilt.c:244 <-
-       set_subnet_ :: addrfilt.c:288 <-
-       ADF_Deny :: ntp_core.c:2526 <-
-       NCR_AddAccessRestriction :: conf.c:1795 <-
-       CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
 util.c:291:[eva:alarm] warning: out of bounds read. assert \valid_read(&addr->family);
 stack: UTI_IPToString :: conf.c:1797 <-
        CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
@@ -4671,6 +4729,58 @@ stack: UTI_IPToString :: conf.c:1797 <-
        eva_main
 conf.c:1797:[eva:alarm] warning: out of bounds read. assert \valid_read(&node->subnet_bits);
 stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_open_node_l137_19' as weak
+stack: malloc :: memory.c:38 <-
+       Malloc :: memory.c:74 <-
+       Malloc2 :: addrfilt.c:137 <-
+       open_node :: addrfilt.c:213 <-
+       set_subnet :: addrfilt.c:244 <-
+       set_subnet_ :: addrfilt.c:278 <-
+       ADF_AllowAll :: ntp_core.c:2518 <-
+       NCR_AddAccessRestriction :: conf.c:1795 <-
+       CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_open_node_l137_20' as weak
+stack: malloc :: memory.c:38 <-
+       Malloc :: memory.c:74 <-
+       Malloc2 :: addrfilt.c:137 <-
+       open_node :: addrfilt.c:213 <-
+       set_subnet :: addrfilt.c:244 <-
+       set_subnet_ :: addrfilt.c:267 <-
+       ADF_Allow :: ntp_core.c:2520 <-
+       NCR_AddAccessRestriction :: conf.c:1795 <-
+       CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_open_node_l137_21' as weak
+stack: malloc :: memory.c:38 <-
+       Malloc :: memory.c:74 <-
+       Malloc2 :: addrfilt.c:137 <-
+       open_node :: addrfilt.c:213 <-
+       set_subnet :: addrfilt.c:244 <-
+       set_subnet_ :: addrfilt.c:298 <-
+       ADF_DenyAll :: ntp_core.c:2524 <-
+       NCR_AddAccessRestriction :: conf.c:1795 <-
+       CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_open_node_l137_22' as weak
+stack: malloc :: memory.c:38 <-
+       Malloc :: memory.c:74 <-
+       Malloc2 :: addrfilt.c:137 <-
+       open_node :: addrfilt.c:213 <-
+       set_subnet :: addrfilt.c:244 <-
+       set_subnet_ :: addrfilt.c:288 <-
+       ADF_Deny :: ntp_core.c:2526 <-
+       NCR_AddAccessRestriction :: conf.c:1795 <-
+       CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
@@ -12263,1525 +12373,6 @@ stack: SRC_SelectSource :: ntp_core.c:1507 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_SST_CreateInstance_l215' as weak
-stack: malloc :: memory.c:38 <-
-       Malloc :: sourcestats.c:215 <-
-       SST_CreateInstance :: sources.c:230 <-
-       SRC_CreateNewInstance :: ntp_core.c:601 <-
-       NCR_GetInstance :: test/unit/ntp_core.c:354 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:626:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&inst->estimated_frequency);
-stack: SST_GetFrequencyRange :: ntp_core.c:1678 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:627:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->skew);
-stack: SST_GetFrequencyRange :: ntp_core.c:1678 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:829:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->n_samples);
-stack: SST_GetDelayTestData :: ntp_core.c:1416 <-
-       check_delay_ratio :: ntp_core.c:1712 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:833:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&inst->estimated_offset);
-stack: SST_GetDelayTestData :: ntp_core.c:1416 <-
-       check_delay_ratio :: ntp_core.c:1712 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:833:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&inst->estimated_frequency);
-stack: SST_GetDelayTestData :: ntp_core.c:1416 <-
-       check_delay_ratio :: ntp_core.c:1712 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:813:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&inst->fixed_min_delay);
-stack: SST_MinRoundTripDelay :: sourcestats.c:835 <-
-       SST_GetDelayTestData :: ntp_core.c:1416 <-
-       check_delay_ratio :: ntp_core.c:1712 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:814:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&inst->fixed_min_delay);
-stack: SST_MinRoundTripDelay :: sourcestats.c:835 <-
-       SST_GetDelayTestData :: ntp_core.c:1416 <-
-       check_delay_ratio :: ntp_core.c:1712 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:816:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->n_samples);
-stack: SST_MinRoundTripDelay :: sourcestats.c:835 <-
-       SST_GetDelayTestData :: ntp_core.c:1416 <-
-       check_delay_ratio :: ntp_core.c:1712 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:819:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&inst->min_delay_sample);
-stack: SST_MinRoundTripDelay :: sourcestats.c:835 <-
-       SST_GetDelayTestData :: ntp_core.c:1416 <-
-       check_delay_ratio :: ntp_core.c:1712 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:836:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->skew);
-stack: SST_GetDelayTestData :: ntp_core.c:1416 <-
-       check_delay_ratio :: ntp_core.c:1712 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:837:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->std_dev);
-stack: SST_GetDelayTestData :: ntp_core.c:1416 <-
-       check_delay_ratio :: ntp_core.c:1712 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:792:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->n_samples);
-stack: SST_PredictOffset :: ntp_core.c:1502 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:796:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->n_samples);
-stack: SST_PredictOffset :: ntp_core.c:1502 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:797:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->last_sample);
-stack: SST_PredictOffset :: ntp_core.c:1502 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:803:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&inst->estimated_offset);
-stack: SST_PredictOffset :: ntp_core.c:1502 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:803:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&inst->estimated_frequency);
-stack: SST_PredictOffset :: ntp_core.c:1502 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:299:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->n_samples);
-stack: SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:300:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->max_samples);
-stack: SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:280:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->n_samples);
-stack: prune_register :: sourcestats.c:301 <-
-       SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:280:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
-stack: __FC_assert :: sourcestats.c:280 <-
-       prune_register :: sourcestats.c:301 <-
-       SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:282:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->runs_samples);
-stack: prune_register :: sourcestats.c:301 <-
-       SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:418:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->runs_samples);
-stack: find_min_delay_sample :: sourcestats.c:288 <-
-       prune_register :: sourcestats.c:301 <-
-       SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:344:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->last_sample);
-stack: get_runsbuf_index :: sourcestats.c:418 <-
-       find_min_delay_sample :: sourcestats.c:288 <-
-       prune_register :: sourcestats.c:301 <-
-       SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:344:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->n_samples);
-stack: get_runsbuf_index :: sourcestats.c:418 <-
-       find_min_delay_sample :: sourcestats.c:288 <-
-       prune_register :: sourcestats.c:301 <-
-       SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:420:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->runs_samples);
-stack: find_min_delay_sample :: sourcestats.c:288 <-
-       prune_register :: sourcestats.c:301 <-
-       SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:420:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->n_samples);
-stack: find_min_delay_sample :: sourcestats.c:288 <-
-       prune_register :: sourcestats.c:301 <-
-       SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:305:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->n_samples);
-stack: SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:306:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->last_sample);
-stack: SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:307:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->ip_addr);
-stack: SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:307:[eva:alarm] warning: accessing left-value that contains escaping addresses.
-assert ¬\dangling(&inst->ip_addr);
-stack: SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:312:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->last_sample);
-stack: SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:328:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&inst->fixed_min_delay);
-stack: SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:331:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->n_samples);
-stack: SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:331:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&inst->min_delay_sample);
-stack: SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:527:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->runs_samples);
-stack: SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:369:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->last_sample);
-stack: convert_to_intervals :: sourcestats.c:527 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:370:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->runs_samples);
-stack: convert_to_intervals :: sourcestats.c:527 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:370:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->n_samples);
-stack: convert_to_intervals :: sourcestats.c:527 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:529:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->n_samples);
-stack: SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:530:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->runs_samples);
-stack: SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:354:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->last_sample);
-stack: get_buf_index :: sourcestats.c:535 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:354:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->n_samples);
-stack: get_buf_index :: sourcestats.c:535 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:472:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&inst->fixed_asymmetry);
-stack: correct_asymmetry :: sourcestats.c:560 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:476:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->runs_samples);
-stack: correct_asymmetry :: sourcestats.c:560 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:476:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->n_samples);
-stack: correct_asymmetry :: sourcestats.c:560 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:479:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->runs_samples);
-stack: correct_asymmetry :: sourcestats.c:560 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:482:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&inst->fixed_asymmetry);
-stack: correct_asymmetry :: sourcestats.c:560 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:483:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&inst->fixed_asymmetry);
-stack: correct_asymmetry :: sourcestats.c:560 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:444:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(asymmetry_run);
-stack: estimate_asymmetry :: sourcestats.c:485 <-
-       correct_asymmetry :: sourcestats.c:560 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:492:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->asymmetry);
-stack: correct_asymmetry :: sourcestats.c:560 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:562:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->min_samples);
-stack: SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:562:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->runs_samples);
-stack: SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:572:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->skew);
-stack: SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:573:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&inst->estimated_frequency);
-stack: SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:579:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->last_sample);
-stack: SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:595:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->ip_addr);
-stack: SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:595:[eva:alarm] warning: accessing left-value that contains escaping addresses.
-assert ¬\dangling(&inst->ip_addr);
-stack: SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-util.c:310:[eva:alarm] warning: function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
-                                      \valid(s +
-                                             (0 .. format_length(format) - 1)) got status unknown.
-stack: snprintf_va_10 :: util.c:310 <-
-       UTI_IPToString :: sourcestats.c:595 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:593:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->asymmetry);
-stack: SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:603:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->runs_samples);
-stack: SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:388:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->n_samples);
-stack: find_best_sample_index :: sourcestats.c:612 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:394:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->n_samples);
-stack: find_best_sample_index :: sourcestats.c:612 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:400:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->skew);
-stack: find_best_sample_index :: sourcestats.c:612 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:656:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->n_samples);
-stack: SST_GetSelectionData :: sources.c:648 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:661:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&inst->best_single_sample);
-stack: SST_GetSelectionData :: sources.c:648 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:662:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&inst->best_single_sample);
-stack: SST_GetSelectionData :: sources.c:648 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:665:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->leap);
-stack: SST_GetSelectionData :: sources.c:648 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:666:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->std_dev);
-stack: SST_GetSelectionData :: sources.c:648 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:669:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&inst->estimated_frequency);
-stack: SST_GetSelectionData :: sources.c:648 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:670:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->skew);
-stack: SST_GetSelectionData :: sources.c:648 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:692:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->n_samples);
-stack: SST_GetSelectionData :: sources.c:648 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:695:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&inst->regression_ok);
-stack: SST_GetSelectionData :: sources.c:648 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:744:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->n_samples);
-stack: SST_SlewSamples :: sources.c:1142 <-
-       slew_sources :: local.c:295 <-
-       invoke_parameter_change_handlers :: local.c:475 <-
-       LCL_SetAbsoluteFrequency :: reference.c:478 <-
-       schedule_fb_drift :: reference.c:1144 <-
-       REF_SetUnsynchronised :: sources.c:868 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:747:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->runs_samples);
-stack: SST_SlewSamples :: sources.c:1142 <-
-       slew_sources :: local.c:295 <-
-       invoke_parameter_change_handlers :: local.c:475 <-
-       LCL_SetAbsoluteFrequency :: reference.c:478 <-
-       schedule_fb_drift :: reference.c:1144 <-
-       REF_SetUnsynchronised :: sources.c:868 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:747:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->n_samples);
-stack: SST_SlewSamples :: sources.c:1142 <-
-       slew_sources :: local.c:295 <-
-       invoke_parameter_change_handlers :: local.c:475 <-
-       LCL_SetAbsoluteFrequency :: reference.c:478 <-
-       schedule_fb_drift :: reference.c:1144 <-
-       REF_SetUnsynchronised :: sources.c:868 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:757:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&inst->estimated_offset);
-stack: SST_SlewSamples :: sources.c:1142 <-
-       slew_sources :: local.c:295 <-
-       invoke_parameter_change_handlers :: local.c:475 <-
-       LCL_SetAbsoluteFrequency :: reference.c:478 <-
-       schedule_fb_drift :: reference.c:1144 <-
-       REF_SetUnsynchronised :: sources.c:868 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:758:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&inst->estimated_frequency);
-stack: SST_SlewSamples :: sources.c:1142 <-
-       slew_sources :: local.c:295 <-
-       invoke_parameter_change_handlers :: local.c:475 <-
-       LCL_SetAbsoluteFrequency :: reference.c:478 <-
-       schedule_fb_drift :: reference.c:1144 <-
-       REF_SetUnsynchronised :: sources.c:868 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:713:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->n_samples);
-stack: SST_GetTrackingData :: sources.c:1086 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:715:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&inst->best_single_sample);
-stack: SST_GetTrackingData :: sources.c:1086 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:716:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&inst->best_single_sample);
-stack: SST_GetTrackingData :: sources.c:1086 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:719:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&inst->estimated_offset);
-stack: SST_GetTrackingData :: sources.c:1086 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:720:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&inst->estimated_offset_sd);
-stack: SST_GetTrackingData :: sources.c:1086 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:721:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&inst->estimated_frequency);
-stack: SST_GetTrackingData :: sources.c:1086 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:722:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&inst->estimated_frequency_sd);
-stack: SST_GetTrackingData :: sources.c:1086 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:723:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->skew);
-stack: SST_GetTrackingData :: sources.c:1086 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:986:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->n_samples);
-stack: SST_Samples :: ntp_core.c:786 <-
-       get_poll_adj :: ntp_core.c:1509 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:1037:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&inst->asymmetry);
-stack: SST_GetJitterAsymmetry :: ntp_core.c:1905 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:381 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:280:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
-stack: __FC_assert :: sourcestats.c:280 <-
-       prune_register :: sourcestats.c:301 <-
-       SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:386 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-util.c:310:[eva:alarm] warning: function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
-                                      \valid(s +
-                                             (0 .. format_length(format) - 1)) got status unknown.
-stack: snprintf_va_10 :: util.c:310 <-
-       UTI_IPToString :: sourcestats.c:595 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:386 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:280:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
-stack: __FC_assert :: sourcestats.c:280 <-
-       prune_register :: sourcestats.c:301 <-
-       SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:391 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-util.c:310:[eva:alarm] warning: function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
-                                      \valid(s +
-                                             (0 .. format_length(format) - 1)) got status unknown.
-stack: snprintf_va_10 :: util.c:310 <-
-       UTI_IPToString :: sourcestats.c:595 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:391 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:280:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
-stack: __FC_assert :: sourcestats.c:280 <-
-       prune_register :: sourcestats.c:301 <-
-       SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:393 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:531:[eva:alarm] warning: accessing out of bounds index.
-assert (int)(i + inst->runs_samples) < (int)(64 * 2);
-stack: SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:393 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:479:[eva:alarm] warning: accessing out of bounds index. assert i < (int)(64 * 2);
-stack: correct_asymmetry :: sourcestats.c:560 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:393 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-util.c:310:[eva:alarm] warning: function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
-                                      \valid(s +
-                                             (0 .. format_length(format) - 1)) got status unknown.
-stack: snprintf_va_10 :: util.c:310 <-
-       UTI_IPToString :: sourcestats.c:595 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:393 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:280:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
-stack: __FC_assert :: sourcestats.c:280 <-
-       prune_register :: sourcestats.c:301 <-
-       SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:399 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-util.c:310:[eva:alarm] warning: function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
-                                      \valid(s +
-                                             (0 .. format_length(format) - 1)) got status unknown.
-stack: snprintf_va_10 :: util.c:310 <-
-       UTI_IPToString :: sourcestats.c:595 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:399 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:280:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
-stack: __FC_assert :: sourcestats.c:280 <-
-       prune_register :: sourcestats.c:301 <-
-       SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:405 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-util.c:310:[eva:alarm] warning: function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
-                                      \valid(s +
-                                             (0 .. format_length(format) - 1)) got status unknown.
-stack: snprintf_va_10 :: util.c:310 <-
-       UTI_IPToString :: sourcestats.c:595 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:405 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-regress.c:277:[eva:alarm] warning: accessing out of bounds index. assert (int)(i - resid_start) < (int)(64 * 2);
-stack: RGR_FindBestRegression :: sourcestats.c:562 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:386 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-regress.c:304:[eva:alarm] warning: accessing out of bounds index. assert (int)(i - resid_start) < (int)(64 * 2);
-stack: RGR_FindBestRegression :: sourcestats.c:562 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:386 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-regress.c:283:[eva:alarm] warning: accessing out of bounds index. assert (int)(n - resid_start) < 130;
-stack: RGR_FindBestRegression :: sourcestats.c:562 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:391 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_SST_CreateInstance_l215_0' as weak
-stack: malloc :: memory.c:38 <-
-       Malloc :: sourcestats.c:215 <-
-       SST_CreateInstance :: sources.c:230 <-
-       SRC_CreateNewInstance :: ntp_core.c:601 <-
-       NCR_GetInstance :: test/unit/ntp_core.c:410 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:280:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
-stack: __FC_assert :: sourcestats.c:280 <-
-       prune_register :: sourcestats.c:301 <-
-       SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:423 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-util.c:310:[eva:alarm] warning: function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
-                                      \valid(s +
-                                             (0 .. format_length(format) - 1)) got status unknown.
-stack: snprintf_va_10 :: util.c:310 <-
-       UTI_IPToString :: sourcestats.c:595 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:423 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sources.c:960:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
-stack: __FC_assert :: sources.c:960 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:423 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sources.c:1033:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
-stack: __FC_assert :: sources.c:1033 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:423 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-util.c:310:[eva:alarm] warning: function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
-                                      \valid(s +
-                                             (0 .. format_length(format) - 1)) got status unknown.
-stack: snprintf_va_10 :: util.c:310 <-
-       UTI_IPToString :: sources.c:472 <-
-       source_to_string :: sources.c:1052 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:423 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:713:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
-stack: __FC_assert :: sourcestats.c:713 <-
-       SST_GetTrackingData :: sources.c:1086 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:423 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-reference.c:341:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: reference.c:341 <-
-       update_drift_file :: reference.c:1083 <-
-       REF_SetReference :: sources.c:1094 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:423 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-FRAMAC_SHARE/libc/string.c:198:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:198 <-
-       strcat :: reference.c:348 <-
-       update_drift_file :: reference.c:1083 <-
-       REF_SetReference :: sources.c:1094 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:423 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-reference.c:350:[eva:alarm] warning: function fopen: precondition 'valid_filename' got status unknown.
-stack: fopen :: reference.c:350 <-
-       update_drift_file :: reference.c:1083 <-
-       REF_SetReference :: sources.c:1094 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:423 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-reference.c:370:[eva:alarm] warning: function stat: precondition 'valid_pathname' got status unknown.
-stack: stat :: reference.c:370 <-
-       update_drift_file :: reference.c:1083 <-
-       REF_SetReference :: sources.c:1094 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:423 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-reference.c:371:[eva:alarm] warning: function chown: precondition 'valid_string_path' got status unknown.
-stack: chown :: reference.c:371 <-
-       update_drift_file :: reference.c:1083 <-
-       REF_SetReference :: sources.c:1094 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:423 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-reference.c:372:[eva:alarm] warning: function chmod: precondition 'valid_path' got status unknown.
-stack: chmod :: reference.c:372 <-
-       update_drift_file :: reference.c:1083 <-
-       REF_SetReference :: sources.c:1094 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:423 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-reference.c:380:[eva:alarm] warning: function rename: precondition 'valid_old_name' got status unknown.
-stack: rename :: reference.c:380 <-
-       update_drift_file :: reference.c:1083 <-
-       REF_SetReference :: sources.c:1094 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:423 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-reference.c:380:[eva:alarm] warning: function rename: precondition 'valid_new_name' got status unknown.
-stack: rename :: reference.c:380 <-
-       update_drift_file :: reference.c:1083 <-
-       REF_SetReference :: sources.c:1094 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:423 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-reference.c:381:[eva:alarm] warning: function unlink: precondition 'valid_string_path' got status unknown.
-stack: unlink :: reference.c:381 <-
-       update_drift_file :: reference.c:1083 <-
-       REF_SetReference :: sources.c:1094 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:423 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sources.c:634:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
-stack: __FC_assert :: sources.c:634 <-
-       SRC_SelectSource :: ntp_core.c:1507 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:423 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_SST_CreateInstance_l215_1' as weak
-stack: malloc :: memory.c:38 <-
-       Malloc :: sourcestats.c:215 <-
-       SST_CreateInstance :: sources.c:230 <-
-       SRC_CreateNewInstance :: ntp_core.c:601 <-
-       NCR_GetInstance :: test/unit/ntp_core.c:429 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_SST_CreateInstance_l215_2' as weak
-stack: malloc :: memory.c:38 <-
-       Malloc :: sourcestats.c:215 <-
-       SST_CreateInstance :: sources.c:230 <-
-       SRC_CreateNewInstance :: ntp_core.c:601 <-
-       NCR_GetInstance :: test/unit/ntp_core.c:431 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:280:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
-stack: __FC_assert :: sourcestats.c:280 <-
-       prune_register :: sourcestats.c:301 <-
-       SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:452 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-util.c:310:[eva:alarm] warning: function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
-                                      \valid(s +
-                                             (0 .. format_length(format) - 1)) got status unknown.
-stack: snprintf_va_10 :: util.c:310 <-
-       UTI_IPToString :: sourcestats.c:595 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:452 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:280:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
-stack: __FC_assert :: sourcestats.c:280 <-
-       prune_register :: sourcestats.c:301 <-
-       SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:292 <-
-       process_replay :: test/unit/ntp_core.c:459 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-util.c:310:[eva:alarm] warning: function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
-                                      \valid(s +
-                                             (0 .. format_length(format) - 1)) got status unknown.
-stack: snprintf_va_10 :: util.c:310 <-
-       UTI_IPToString :: sourcestats.c:595 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:292 <-
-       process_replay :: test/unit/ntp_core.c:459 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:280:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
-stack: __FC_assert :: sourcestats.c:280 <-
-       prune_register :: sourcestats.c:301 <-
-       SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:292 <-
-       process_replay :: test/unit/ntp_core.c:461 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-util.c:310:[eva:alarm] warning: function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
-                                      \valid(s +
-                                             (0 .. format_length(format) - 1)) got status unknown.
-stack: snprintf_va_10 :: util.c:310 <-
-       UTI_IPToString :: sourcestats.c:595 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:292 <-
-       process_replay :: test/unit/ntp_core.c:461 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:280:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
-stack: __FC_assert :: sourcestats.c:280 <-
-       prune_register :: sourcestats.c:301 <-
-       SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:473 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-util.c:310:[eva:alarm] warning: function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
-                                      \valid(s +
-                                             (0 .. format_length(format) - 1)) got status unknown.
-stack: snprintf_va_10 :: util.c:310 <-
-       UTI_IPToString :: sourcestats.c:595 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:473 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:280:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
-stack: __FC_assert :: sourcestats.c:280 <-
-       prune_register :: sourcestats.c:301 <-
-       SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:292 <-
-       process_replay :: test/unit/ntp_core.c:480 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-util.c:310:[eva:alarm] warning: function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
-                                      \valid(s +
-                                             (0 .. format_length(format) - 1)) got status unknown.
-stack: snprintf_va_10 :: util.c:310 <-
-       UTI_IPToString :: sourcestats.c:595 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:292 <-
-       process_replay :: test/unit/ntp_core.c:480 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-sourcestats.c:280:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
-stack: __FC_assert :: sourcestats.c:280 <-
-       prune_register :: sourcestats.c:301 <-
-       SST_AccumulateSample :: sources.c:349 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:292 <-
-       process_replay :: test/unit/ntp_core.c:482 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-util.c:310:[eva:alarm] warning: function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
-                                      \valid(s +
-                                             (0 .. format_length(format) - 1)) got status unknown.
-stack: snprintf_va_10 :: util.c:310 <-
-       UTI_IPToString :: sourcestats.c:595 <-
-       SST_DoNewRegression :: sources.c:350 <-
-       SRC_AccumulateSample :: ntp_core.c:1506 <-
-       process_sample :: ntp_core.c:1834 <-
-       receive_packet :: ntp_core.c:2070 <-
-       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-       process_response :: test/unit/ntp_core.c:292 <-
-       process_replay :: test/unit/ntp_core.c:482 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
 array.c:94:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
 stack: __FC_assert :: array.c:94 <-
        ARR_GetElement :: keys.c:67 <-
@@ -14091,67 +12682,330 @@ test/unit/test.c:70:[eva:locals-escaping] warning: locals {conf} escaping the sc
 test/unit/test.c:72:[kernel:annot:missing-spec] warning: Neither code nor specification for function LOG_Finalise, generating default assigns from the prototype
 [eva:garbled-mix] warning: Garbled mix generated during analysis:
 {{ garbled mix of &{read_from_socket} (origin: Merge {sched.c:185}) }}
-{{ garbled mix of &{__malloc_w_KEY_Reload_l235}
+{{ garbled mix of &{__malloc_KEY_Reload_l235; __malloc_w_KEY_Reload_l235_0}
   (origin: Misaligned {array.c:116}) }}
-{{ garbled mix of &{__realloc_w_realloc_array_l80_24}
+{{ garbled mix of &{__realloc_realloc_array_l80_47;
+                    __realloc_w_realloc_array_l80_48}
   (origin: Misaligned {keys.c:249}) }}
-{{ garbled mix of &{__realloc_w_realloc_array_l80_24}
+{{ garbled mix of &{__realloc_realloc_array_l80_47;
+                    __realloc_w_realloc_array_l80_48}
   (origin: Misaligned {keys.c:250}) }}
-{{ garbled mix of &{__realloc_w_realloc_array_l80_24}
+{{ garbled mix of &{__realloc_realloc_array_l80_47;
+                    __realloc_w_realloc_array_l80_48}
   (origin: Misaligned {keys.c:257}) }}
-{{ garbled mix of &{__realloc_w_realloc_array_l80_24}
+{{ garbled mix of &{__realloc_realloc_array_l80_47;
+                    __realloc_w_realloc_array_l80_48}
   (origin: Misaligned {keys.c:115}) }}
 {{ garbled mix of &{__malloc_SRC_CreateNewInstance_l229}
   (origin: Misaligned {addrfilt.c:82}) }}
-{{ garbled mix of &{__malloc_w_open_node_l137; __malloc_w_open_node_l137_0;
-                    __malloc_w_open_node_l137_1; __malloc_w_open_node_l137_2;
-                    __malloc_w_open_node_l137_3; __malloc_w_open_node_l137_4;
-                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_6;
-                    __malloc_w_open_node_l137_7; __malloc_w_open_node_l137_8;
-                    __malloc_w_open_node_l137_9;
-                    __malloc_w_open_node_l137_10}
+{{ garbled mix of &{__malloc_open_node_l137; __malloc_w_open_node_l137_0;
+                    __malloc_open_node_l137_1; __malloc_w_open_node_l137_2;
+                    __malloc_open_node_l137_3; __malloc_open_node_l137_4;
+                    __malloc_w_open_node_l137_5; __malloc_open_node_l137_6;
+                    __malloc_w_open_node_l137_7; __malloc_open_node_l137_8;
+                    __malloc_open_node_l137_9; __malloc_w_open_node_l137_10;
+                    __malloc_open_node_l137_11; __malloc_w_open_node_l137_12;
+                    __malloc_open_node_l137_13; __malloc_open_node_l137_14;
+                    __malloc_w_open_node_l137_15; __malloc_open_node_l137_16;
+                    __malloc_w_open_node_l137_17; __malloc_open_node_l137_18;
+                    __malloc_w_open_node_l137_19;
+                    __malloc_w_open_node_l137_20;
+                    __malloc_w_open_node_l137_21;
+                    __malloc_w_open_node_l137_22}
   (origin: Arithmetic {addrfilt.c:331}) }}
-{{ garbled mix of &{__malloc_w_open_node_l137; __malloc_w_open_node_l137_0;
-                    __malloc_w_open_node_l137_1; __malloc_w_open_node_l137_2;
-                    __malloc_w_open_node_l137_3; __malloc_w_open_node_l137_4;
-                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_6;
-                    __malloc_w_open_node_l137_7; __malloc_w_open_node_l137_8;
-                    __malloc_w_open_node_l137_9;
-                    __malloc_w_open_node_l137_10}
+{{ garbled mix of &{__malloc_open_node_l137; __malloc_w_open_node_l137_0;
+                    __malloc_open_node_l137_1; __malloc_w_open_node_l137_2;
+                    __malloc_open_node_l137_3; __malloc_open_node_l137_4;
+                    __malloc_w_open_node_l137_5; __malloc_open_node_l137_6;
+                    __malloc_w_open_node_l137_7; __malloc_open_node_l137_8;
+                    __malloc_open_node_l137_9; __malloc_w_open_node_l137_10;
+                    __malloc_open_node_l137_11; __malloc_w_open_node_l137_12;
+                    __malloc_open_node_l137_13; __malloc_open_node_l137_14;
+                    __malloc_w_open_node_l137_15; __malloc_open_node_l137_16;
+                    __malloc_w_open_node_l137_17; __malloc_open_node_l137_18;
+                    __malloc_w_open_node_l137_19;
+                    __malloc_w_open_node_l137_20;
+                    __malloc_w_open_node_l137_21;
+                    __malloc_w_open_node_l137_22}
+  (origin: Misaligned {addrfilt.c:326}) }}
+{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
+                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
+                    __malloc_w_open_node_l137_10;
+                    __malloc_w_open_node_l137_12;
+                    __malloc_w_open_node_l137_15;
+                    __malloc_w_open_node_l137_17;
+                    __malloc_w_open_node_l137_19;
+                    __malloc_w_open_node_l137_20;
+                    __malloc_w_open_node_l137_21;
+                    __malloc_w_open_node_l137_22}
+  (origin: Misaligned {addrfilt.c:326}) }}
+{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
+                    __malloc_open_node_l137_3; __malloc_w_open_node_l137_5;
+                    __malloc_w_open_node_l137_7;
+                    __malloc_w_open_node_l137_10;
+                    __malloc_w_open_node_l137_12;
+                    __malloc_w_open_node_l137_15;
+                    __malloc_w_open_node_l137_17;
+                    __malloc_w_open_node_l137_19;
+                    __malloc_w_open_node_l137_20;
+                    __malloc_w_open_node_l137_21;
+                    __malloc_w_open_node_l137_22}
+  (origin: Misaligned {addrfilt.c:326}) }}
+{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
+                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
+                    __malloc_open_node_l137_8; __malloc_w_open_node_l137_10;
+                    __malloc_w_open_node_l137_12;
+                    __malloc_w_open_node_l137_15;
+                    __malloc_w_open_node_l137_17;
+                    __malloc_w_open_node_l137_19;
+                    __malloc_w_open_node_l137_20;
+                    __malloc_w_open_node_l137_21;
+                    __malloc_w_open_node_l137_22}
+  (origin: Misaligned {addrfilt.c:326}) }}
+{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
+                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
+                    __malloc_w_open_node_l137_10;
+                    __malloc_w_open_node_l137_12; __malloc_open_node_l137_13;
+                    __malloc_w_open_node_l137_15;
+                    __malloc_w_open_node_l137_17;
+                    __malloc_w_open_node_l137_19;
+                    __malloc_w_open_node_l137_20;
+                    __malloc_w_open_node_l137_21;
+                    __malloc_w_open_node_l137_22}
+  (origin: Misaligned {addrfilt.c:326}) }}
+{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
+                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
+                    __malloc_w_open_node_l137_10;
+                    __malloc_w_open_node_l137_12;
+                    __malloc_w_open_node_l137_15;
+                    __malloc_w_open_node_l137_17; __malloc_open_node_l137_18;
+                    __malloc_w_open_node_l137_19;
+                    __malloc_w_open_node_l137_20;
+                    __malloc_w_open_node_l137_21;
+                    __malloc_w_open_node_l137_22}
   (origin: Misaligned {addrfilt.c:326}) }}
 {{ garbled mix of &{__malloc_NCR_GetInstance_l520}
   (origin: Misaligned {addrfilt.c:326}) }}
-{{ garbled mix of &{__malloc_w_SST_CreateInstance_l215}
+{{ garbled mix of &{__malloc_SST_CreateInstance_l215}
   (origin: Misaligned {addrfilt.c:326}) }}
-{{ garbled mix of &{__malloc_w_open_node_l137; __malloc_w_open_node_l137_0;
-                    __malloc_w_open_node_l137_1; __malloc_w_open_node_l137_2;
-                    __malloc_w_open_node_l137_3; __malloc_w_open_node_l137_4;
-                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_6;
-                    __malloc_w_open_node_l137_7; __malloc_w_open_node_l137_8;
-                    __malloc_w_open_node_l137_9;
-                    __malloc_w_open_node_l137_10}
+{{ garbled mix of &{__malloc_open_node_l137; __malloc_w_open_node_l137_0;
+                    __malloc_open_node_l137_1; __malloc_w_open_node_l137_2;
+                    __malloc_open_node_l137_3; __malloc_open_node_l137_4;
+                    __malloc_w_open_node_l137_5; __malloc_open_node_l137_6;
+                    __malloc_w_open_node_l137_7; __malloc_open_node_l137_8;
+                    __malloc_open_node_l137_9; __malloc_w_open_node_l137_10;
+                    __malloc_open_node_l137_11; __malloc_w_open_node_l137_12;
+                    __malloc_open_node_l137_13; __malloc_open_node_l137_14;
+                    __malloc_w_open_node_l137_15; __malloc_open_node_l137_16;
+                    __malloc_w_open_node_l137_17; __malloc_open_node_l137_18;
+                    __malloc_w_open_node_l137_19;
+                    __malloc_w_open_node_l137_20;
+                    __malloc_w_open_node_l137_21;
+                    __malloc_w_open_node_l137_22}
+  (origin: Misaligned {addrfilt.c:327}) }}
+{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
+                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
+                    __malloc_w_open_node_l137_10;
+                    __malloc_w_open_node_l137_12;
+                    __malloc_w_open_node_l137_15;
+                    __malloc_w_open_node_l137_17;
+                    __malloc_w_open_node_l137_19;
+                    __malloc_w_open_node_l137_20;
+                    __malloc_w_open_node_l137_21;
+                    __malloc_w_open_node_l137_22}
+  (origin: Misaligned {addrfilt.c:327}) }}
+{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
+                    __malloc_open_node_l137_3; __malloc_w_open_node_l137_5;
+                    __malloc_w_open_node_l137_7;
+                    __malloc_w_open_node_l137_10;
+                    __malloc_w_open_node_l137_12;
+                    __malloc_w_open_node_l137_15;
+                    __malloc_w_open_node_l137_17;
+                    __malloc_w_open_node_l137_19;
+                    __malloc_w_open_node_l137_20;
+                    __malloc_w_open_node_l137_21;
+                    __malloc_w_open_node_l137_22}
+  (origin: Misaligned {addrfilt.c:327}) }}
+{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
+                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
+                    __malloc_open_node_l137_8; __malloc_w_open_node_l137_10;
+                    __malloc_w_open_node_l137_12;
+                    __malloc_w_open_node_l137_15;
+                    __malloc_w_open_node_l137_17;
+                    __malloc_w_open_node_l137_19;
+                    __malloc_w_open_node_l137_20;
+                    __malloc_w_open_node_l137_21;
+                    __malloc_w_open_node_l137_22}
+  (origin: Misaligned {addrfilt.c:327}) }}
+{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
+                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
+                    __malloc_w_open_node_l137_10;
+                    __malloc_w_open_node_l137_12; __malloc_open_node_l137_13;
+                    __malloc_w_open_node_l137_15;
+                    __malloc_w_open_node_l137_17;
+                    __malloc_w_open_node_l137_19;
+                    __malloc_w_open_node_l137_20;
+                    __malloc_w_open_node_l137_21;
+                    __malloc_w_open_node_l137_22}
+  (origin: Misaligned {addrfilt.c:327}) }}
+{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
+                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
+                    __malloc_w_open_node_l137_10;
+                    __malloc_w_open_node_l137_12;
+                    __malloc_w_open_node_l137_15;
+                    __malloc_w_open_node_l137_17; __malloc_open_node_l137_18;
+                    __malloc_w_open_node_l137_19;
+                    __malloc_w_open_node_l137_20;
+                    __malloc_w_open_node_l137_21;
+                    __malloc_w_open_node_l137_22}
   (origin: Misaligned {addrfilt.c:327}) }}
 {{ garbled mix of &{__malloc_NCR_GetInstance_l520}
   (origin: Misaligned {addrfilt.c:327}) }}
-{{ garbled mix of &{__malloc_w_SST_CreateInstance_l215}
+{{ garbled mix of &{__malloc_SST_CreateInstance_l215}
   (origin: Misaligned {addrfilt.c:327}) }}
-{{ garbled mix of &{__malloc_w_open_node_l137; __malloc_w_open_node_l137_0;
-                    __malloc_w_open_node_l137_1; __malloc_w_open_node_l137_2;
-                    __malloc_w_open_node_l137_3; __malloc_w_open_node_l137_4;
-                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_6;
-                    __malloc_w_open_node_l137_7; __malloc_w_open_node_l137_8;
-                    __malloc_w_open_node_l137_9;
-                    __malloc_w_open_node_l137_10}
+{{ garbled mix of &{__malloc_open_node_l137; __malloc_w_open_node_l137_0;
+                    __malloc_open_node_l137_1; __malloc_w_open_node_l137_2;
+                    __malloc_open_node_l137_3; __malloc_open_node_l137_4;
+                    __malloc_w_open_node_l137_5; __malloc_open_node_l137_6;
+                    __malloc_w_open_node_l137_7; __malloc_open_node_l137_8;
+                    __malloc_open_node_l137_9; __malloc_w_open_node_l137_10;
+                    __malloc_open_node_l137_11; __malloc_w_open_node_l137_12;
+                    __malloc_open_node_l137_13; __malloc_open_node_l137_14;
+                    __malloc_w_open_node_l137_15; __malloc_open_node_l137_16;
+                    __malloc_w_open_node_l137_17; __malloc_open_node_l137_18;
+                    __malloc_w_open_node_l137_19;
+                    __malloc_w_open_node_l137_20;
+                    __malloc_w_open_node_l137_21;
+                    __malloc_w_open_node_l137_22}
+  (origin: Misaligned {addrfilt.c:329}) }}
+{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
+                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
+                    __malloc_w_open_node_l137_10;
+                    __malloc_w_open_node_l137_12;
+                    __malloc_w_open_node_l137_15;
+                    __malloc_w_open_node_l137_17;
+                    __malloc_w_open_node_l137_19;
+                    __malloc_w_open_node_l137_20;
+                    __malloc_w_open_node_l137_21;
+                    __malloc_w_open_node_l137_22}
+  (origin: Misaligned {addrfilt.c:329}) }}
+{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
+                    __malloc_open_node_l137_3; __malloc_w_open_node_l137_5;
+                    __malloc_w_open_node_l137_7;
+                    __malloc_w_open_node_l137_10;
+                    __malloc_w_open_node_l137_12;
+                    __malloc_w_open_node_l137_15;
+                    __malloc_w_open_node_l137_17;
+                    __malloc_w_open_node_l137_19;
+                    __malloc_w_open_node_l137_20;
+                    __malloc_w_open_node_l137_21;
+                    __malloc_w_open_node_l137_22}
+  (origin: Misaligned {addrfilt.c:329}) }}
+{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
+                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
+                    __malloc_open_node_l137_8; __malloc_w_open_node_l137_10;
+                    __malloc_w_open_node_l137_12;
+                    __malloc_w_open_node_l137_15;
+                    __malloc_w_open_node_l137_17;
+                    __malloc_w_open_node_l137_19;
+                    __malloc_w_open_node_l137_20;
+                    __malloc_w_open_node_l137_21;
+                    __malloc_w_open_node_l137_22}
+  (origin: Misaligned {addrfilt.c:329}) }}
+{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
+                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
+                    __malloc_w_open_node_l137_10;
+                    __malloc_w_open_node_l137_12; __malloc_open_node_l137_13;
+                    __malloc_w_open_node_l137_15;
+                    __malloc_w_open_node_l137_17;
+                    __malloc_w_open_node_l137_19;
+                    __malloc_w_open_node_l137_20;
+                    __malloc_w_open_node_l137_21;
+                    __malloc_w_open_node_l137_22}
+  (origin: Misaligned {addrfilt.c:329}) }}
+{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
+                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
+                    __malloc_w_open_node_l137_10;
+                    __malloc_w_open_node_l137_12;
+                    __malloc_w_open_node_l137_15;
+                    __malloc_w_open_node_l137_17; __malloc_open_node_l137_18;
+                    __malloc_w_open_node_l137_19;
+                    __malloc_w_open_node_l137_20;
+                    __malloc_w_open_node_l137_21;
+                    __malloc_w_open_node_l137_22}
   (origin: Misaligned {addrfilt.c:329}) }}
 {{ garbled mix of &{__malloc_NCR_GetInstance_l520}
   (origin: Misaligned {addrfilt.c:329}) }}
-{{ garbled mix of &{__malloc_w_open_node_l137; __malloc_w_open_node_l137_0;
-                    __malloc_w_open_node_l137_1; __malloc_w_open_node_l137_2;
-                    __malloc_w_open_node_l137_3; __malloc_w_open_node_l137_4;
-                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_6;
-                    __malloc_w_open_node_l137_7; __malloc_w_open_node_l137_8;
-                    __malloc_w_open_node_l137_9;
-                    __malloc_w_open_node_l137_10}
+{{ garbled mix of &{__malloc_open_node_l137; __malloc_w_open_node_l137_0;
+                    __malloc_open_node_l137_1; __malloc_w_open_node_l137_2;
+                    __malloc_open_node_l137_3; __malloc_open_node_l137_4;
+                    __malloc_w_open_node_l137_5; __malloc_open_node_l137_6;
+                    __malloc_w_open_node_l137_7; __malloc_open_node_l137_8;
+                    __malloc_open_node_l137_9; __malloc_w_open_node_l137_10;
+                    __malloc_open_node_l137_11; __malloc_w_open_node_l137_12;
+                    __malloc_open_node_l137_13; __malloc_open_node_l137_14;
+                    __malloc_w_open_node_l137_15; __malloc_open_node_l137_16;
+                    __malloc_w_open_node_l137_17; __malloc_open_node_l137_18;
+                    __malloc_w_open_node_l137_19;
+                    __malloc_w_open_node_l137_20;
+                    __malloc_w_open_node_l137_21;
+                    __malloc_w_open_node_l137_22}
+  (origin: Misaligned {addrfilt.c:331}) }}
+{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
+                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
+                    __malloc_w_open_node_l137_10;
+                    __malloc_w_open_node_l137_12;
+                    __malloc_w_open_node_l137_15;
+                    __malloc_w_open_node_l137_17;
+                    __malloc_w_open_node_l137_19;
+                    __malloc_w_open_node_l137_20;
+                    __malloc_w_open_node_l137_21;
+                    __malloc_w_open_node_l137_22}
+  (origin: Misaligned {addrfilt.c:331}) }}
+{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
+                    __malloc_open_node_l137_3; __malloc_w_open_node_l137_5;
+                    __malloc_w_open_node_l137_7;
+                    __malloc_w_open_node_l137_10;
+                    __malloc_w_open_node_l137_12;
+                    __malloc_w_open_node_l137_15;
+                    __malloc_w_open_node_l137_17;
+                    __malloc_w_open_node_l137_19;
+                    __malloc_w_open_node_l137_20;
+                    __malloc_w_open_node_l137_21;
+                    __malloc_w_open_node_l137_22}
+  (origin: Misaligned {addrfilt.c:331}) }}
+{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
+                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
+                    __malloc_open_node_l137_8; __malloc_w_open_node_l137_10;
+                    __malloc_w_open_node_l137_12;
+                    __malloc_w_open_node_l137_15;
+                    __malloc_w_open_node_l137_17;
+                    __malloc_w_open_node_l137_19;
+                    __malloc_w_open_node_l137_20;
+                    __malloc_w_open_node_l137_21;
+                    __malloc_w_open_node_l137_22}
+  (origin: Misaligned {addrfilt.c:331}) }}
+{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
+                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
+                    __malloc_w_open_node_l137_10;
+                    __malloc_w_open_node_l137_12; __malloc_open_node_l137_13;
+                    __malloc_w_open_node_l137_15;
+                    __malloc_w_open_node_l137_17;
+                    __malloc_w_open_node_l137_19;
+                    __malloc_w_open_node_l137_20;
+                    __malloc_w_open_node_l137_21;
+                    __malloc_w_open_node_l137_22}
+  (origin: Misaligned {addrfilt.c:331}) }}
+{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
+                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
+                    __malloc_w_open_node_l137_10;
+                    __malloc_w_open_node_l137_12;
+                    __malloc_w_open_node_l137_15;
+                    __malloc_w_open_node_l137_17; __malloc_open_node_l137_18;
+                    __malloc_w_open_node_l137_19;
+                    __malloc_w_open_node_l137_20;
+                    __malloc_w_open_node_l137_21;
+                    __malloc_w_open_node_l137_22}
   (origin: Misaligned {addrfilt.c:331}) }}
 {{ garbled mix of &{__malloc_NCR_GetInstance_l520}
   (origin: Misaligned {addrfilt.c:331}) }}
@@ -14167,11 +13021,11 @@ test/unit/test.c:72:[kernel:annot:missing-spec] warning: Neither code nor specif
   (origin: Misaligned {addrfilt.c:82}) }}
 {{ garbled mix of &{__malloc_NCR_GetInstance_l520_0}
   (origin: Misaligned {addrfilt.c:326}) }}
-{{ garbled mix of &{__malloc_w_SST_CreateInstance_l215_0}
+{{ garbled mix of &{__malloc_SST_CreateInstance_l215_0}
   (origin: Misaligned {addrfilt.c:326}) }}
 {{ garbled mix of &{__malloc_NCR_GetInstance_l520_0}
   (origin: Misaligned {addrfilt.c:327}) }}
-{{ garbled mix of &{__malloc_w_SST_CreateInstance_l215_0}
+{{ garbled mix of &{__malloc_SST_CreateInstance_l215_0}
   (origin: Misaligned {addrfilt.c:327}) }}
 {{ garbled mix of &{__malloc_NCR_GetInstance_l520_0}
   (origin: Misaligned {addrfilt.c:329}) }}
@@ -14189,11 +13043,11 @@ test/unit/test.c:72:[kernel:annot:missing-spec] warning: Neither code nor specif
   (origin: Misaligned {addrfilt.c:82}) }}
 {{ garbled mix of &{__malloc_NCR_GetInstance_l520_2}
   (origin: Misaligned {addrfilt.c:326}) }}
-{{ garbled mix of &{__malloc_w_SST_CreateInstance_l215_2}
+{{ garbled mix of &{__malloc_SST_CreateInstance_l215_2}
   (origin: Misaligned {addrfilt.c:326}) }}
 {{ garbled mix of &{__malloc_NCR_GetInstance_l520_2}
   (origin: Misaligned {addrfilt.c:327}) }}
-{{ garbled mix of &{__malloc_w_SST_CreateInstance_l215_2}
+{{ garbled mix of &{__malloc_SST_CreateInstance_l215_2}
   (origin: Misaligned {addrfilt.c:327}) }}
 {{ garbled mix of &{__malloc_NCR_GetInstance_l520_2}
   (origin: Misaligned {addrfilt.c:329}) }}
@@ -14211,11 +13065,11 @@ test/unit/test.c:72:[kernel:annot:missing-spec] warning: Neither code nor specif
   (origin: Misaligned {addrfilt.c:82}) }}
 {{ garbled mix of &{__malloc_NCR_GetInstance_l520_1}
   (origin: Misaligned {addrfilt.c:326}) }}
-{{ garbled mix of &{__malloc_w_SST_CreateInstance_l215_1}
+{{ garbled mix of &{__malloc_SST_CreateInstance_l215_1}
   (origin: Misaligned {addrfilt.c:326}) }}
 {{ garbled mix of &{__malloc_NCR_GetInstance_l520_1}
   (origin: Misaligned {addrfilt.c:327}) }}
-{{ garbled mix of &{__malloc_w_SST_CreateInstance_l215_1}
+{{ garbled mix of &{__malloc_SST_CreateInstance_l215_1}
   (origin: Misaligned {addrfilt.c:327}) }}
 {{ garbled mix of &{__malloc_NCR_GetInstance_l520_1}
   (origin: Misaligned {addrfilt.c:329}) }}
@@ -14229,3 +13083,19 @@ test/unit/test.c:72:[kernel:annot:missing-spec] warning: Neither code nor specif
   (origin: Misaligned {addrfilt.c:329}) }}
 {{ garbled mix of &{__malloc_SRC_CreateNewInstance_l229_1}
   (origin: Misaligned {addrfilt.c:331}) }}
+{{ garbled mix of &{__malloc_SST_CreateInstance_l215_3}
+  (origin: Misaligned {addrfilt.c:326}) }}
+{{ garbled mix of &{__malloc_SST_CreateInstance_l215_3}
+  (origin: Misaligned {addrfilt.c:327}) }}
+{{ garbled mix of &{__malloc_SST_CreateInstance_l215_4}
+  (origin: Misaligned {addrfilt.c:326}) }}
+{{ garbled mix of &{__malloc_SST_CreateInstance_l215_4}
+  (origin: Misaligned {addrfilt.c:327}) }}
+{{ garbled mix of &{__malloc_SST_CreateInstance_l215_6}
+  (origin: Misaligned {addrfilt.c:326}) }}
+{{ garbled mix of &{__malloc_SST_CreateInstance_l215_6}
+  (origin: Misaligned {addrfilt.c:327}) }}
+{{ garbled mix of &{__malloc_SST_CreateInstance_l215_5}
+  (origin: Misaligned {addrfilt.c:326}) }}
+{{ garbled mix of &{__malloc_SST_CreateInstance_l215_5}
+  (origin: Misaligned {addrfilt.c:327}) }}

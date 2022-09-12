@@ -26,6 +26,7 @@ FCFLAGS     += \
 
 ## Eva-specific flags
 EVAFLAGS    += \
+  -eva-mlevel 1 \
   -eva-use-spec atoi,malloc,free,calloc,Transform,parse_include,SCH_AddTimeout \
   -eva-warn-key=alarm \
   -eva-malloc-functions malloc,realloc,Malloc,Malloc2,Realloc,Realloc2 \
