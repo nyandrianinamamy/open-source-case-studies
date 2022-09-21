@@ -4,7 +4,7 @@
 ### Prologue. Do not modify this block. #######################################
 -include path.mk
 FRAMAC ?= frama-c
-include $(shell $(FRAMAC)-config -print-share-path)/analysis-scripts/prologue.mk
+include $(shell $(FRAMAC)-config -print-lib-path)/analysis-scripts/prologue.mk
 ###############################################################################
 
 # Edit below as needed. MACHDEP is mandatory. Suggested flags are optional.
@@ -192,7 +192,7 @@ NOT_HANDLED=\
 2019_yang_violet.parse: ../2019/yang/violet.c
 
 ### Epilogue. Do not modify this block. #######################################
-include $(shell $(FRAMAC)-config -print-share-path)/analysis-scripts/epilogue.mk
+include $(shell $(FRAMAC)-config -print-lib-path)/analysis-scripts/epilogue.mk
 ###############################################################################
 
 # optional, for OSCS

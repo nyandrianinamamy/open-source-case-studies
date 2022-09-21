@@ -4,8 +4,7 @@
 ### Prologue. Do not modify this block. #######################################
 -include path.mk
 FRAMAC ?= frama-c
-FRAMAC_SHARE=$(shell $(FRAMAC)-config -print-share-path)
-include $(FRAMAC_SHARE)/analysis-scripts/prologue.mk
+include $(shell $(FRAMAC)-config -print-lib-path)/analysis-scripts/prologue.mk
 ###############################################################################
 
 # Edit below as needed. Suggested flags are optional.
@@ -68,7 +67,7 @@ cwe787-precise.eva:  EVAFLAGS += -eva-precision 2
 cwe190-unsigned.eva:  EVAFLAGS += -warn-unsigned-overflow
 
 ### Epilogue. Do not modify this block. #######################################
-include $(FRAMAC_SHARE)/analysis-scripts/epilogue.mk
+include $(shell $(FRAMAC)-config -print-lib-path)/analysis-scripts/epilogue.mk
 ###############################################################################
 
 # optional, for OSCS
