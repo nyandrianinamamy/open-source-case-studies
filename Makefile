@@ -125,6 +125,11 @@ display-targets:
 	        $(addprefix $(target)/,\
 	          $(shell $(MAKE) --quiet -C $(target)/.frama-c display-targets)))
 
+%.eva: .FORCE
+	$(MAKE) -C $(dir $@) $(notdir $@)
+
+.FORCE:
+
 .PHONY: $(TARGETS) frama-c/build/bin/frama-c clean-all help stats-all
 
 # for continuous integration: runs all tests, then uses git status and
