@@ -32,9 +32,8 @@ sys.path.append(str(frama_c_lib / "analysis-scripts"))
 
 import frama_c_results as fcres
 
-
-def create_csv(file, rows):
-    with open("comparison.csv", "w", newline="", encoding="utf-8", errors="ignore"):
+def create_csv(f, rows):
+    with open("comparison.csv", "w", newline="", encoding="utf-8", errors="ignore") as file:
         fieldnames = ["name", "user_time_standard", "user_time_ast_diff", "gain"]
         writer = csv.DictWriter(file, fieldnames=fieldnames, extrasaction="ignore")
         writer.writeheader()
