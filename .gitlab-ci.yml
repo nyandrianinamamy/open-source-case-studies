@@ -10,6 +10,9 @@ variables:
   script:
     - make -C $TARGET/.frama-c clean
     - make $TARGET
+    # note: the command below is needed due to recent git releases, which
+    #       enforce stricter permission controls w.r.t to ownership of '.git'.
+    - git config --global --add safe.directory $PWD
     - git diff --exit-code $TARGET
     - make $TARGET.sarif
   artifacts:

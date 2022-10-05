@@ -4,7 +4,7 @@
 ### Prologue. Do not modify this block. #######################################
 -include path.mk
 FRAMAC ?= frama-c
-include $(shell $(FRAMAC)-config -print-share-path)/analysis-scripts/prologue.mk
+include $(shell $(FRAMAC)-config -print-lib-path)/analysis-scripts/prologue.mk
 ###############################################################################
 
 # Edit below as needed. Suggested flags are optional.
@@ -431,7 +431,7 @@ unspecified_value_union_1.parse: ../unspecified_value_union_1.c
 write_union_same_prefix_visible.parse: ../write_union_same_prefix_visible.c
 
 ### Epilogue. Do not modify this block. #######################################
-include $(shell $(FRAMAC)-config -print-share-path)/analysis-scripts/epilogue.mk
+include $(shell $(FRAMAC)-config -print-lib-path)/analysis-scripts/epilogue.mk
 ###############################################################################
 
 # optional, for OSCS
