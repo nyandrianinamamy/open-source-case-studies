@@ -3840,7 +3840,7 @@ void CNF_Initialise(int r, int client_only)
   }
   else {
     bind_cmd_path = Strdup("/var/run/chrony/chronyd.sock");
-    pidfile = Strdup("/var/run/chronyd.pid");
+    pidfile = Strdup("/var/run/chrony/chronyd.pid");
   }
   return;
 }
@@ -8356,7 +8356,7 @@ DNS_Status DNS_Name2IPAddress(char const *name, IPAddr *ip_addrs,
     __retres = DNS_Success;
     goto return_label;
   }
-  __retres = DNS_TryAgain;
+  __retres = DNS_Failure;
   return_label: return __retres;
 }
 
