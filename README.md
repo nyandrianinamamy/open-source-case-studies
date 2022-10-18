@@ -86,6 +86,9 @@ the original. Here are the most common kinds of changes:
   as before when not using Frama-C. Note that this is not always the case.
 - Some unnecessary files for the analysis (e.g. documentation, project setups
   for IDEs, non-code resources) are removed.
+- Some Makefiles were renamed `Makefile.original`, and a simplified
+  OSCS-related `Makefile` has been added. This enables compiling some targets
+  in a way that is useful for certain build tools.
 
 In case studies related to benchmarking, examples or test suites, we often
 apply modifications more liberally.

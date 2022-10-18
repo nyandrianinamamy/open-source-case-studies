@@ -116,7 +116,7 @@ void* mythread(void * data);
 
 
 /* Global variable which will be shared */
-int x=0;
+static int x=0;
 
 void race_condition_004()
 {
