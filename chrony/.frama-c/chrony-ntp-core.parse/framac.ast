@@ -15218,10 +15218,10 @@ void UTI_Ntp64ToTimespec(NTP_int64 *src, struct timespec *dest)
   }
   ntp_sec = ntohl(src->hi);
   ntp_frac = ntohl(src->lo);
-  dest->tv_sec = (time_t)(ntp_sec - (uint32_t)((unsigned long long)(1516643532LL - (long long)(
+  dest->tv_sec = (time_t)(ntp_sec - (uint32_t)((unsigned long long)(1640995200LL - (long long)(
                                                                     (
-                                                                    18250 * 24) * 3600)) + (unsigned long long)0x83aa7e80UL)) + (time_t)(
-                 1516643532LL - (long long)((18250 * 24) * 3600));
+                                                                    0 * 24) * 3600)) + (unsigned long long)0x83aa7e80UL)) + (time_t)(
+                 1640995200LL - (long long)((0 * 24) * 3600));
   dest->tv_nsec = (long)((double)ntp_frac / 4.294967296);
   return_label: return;
 }
@@ -15247,12 +15247,12 @@ int UTI_IsTimeOffsetSane(struct timespec *ts, double offset)
     __retres = 0;
     goto return_label;
   }
-  if (t < (double)(1516643532LL - (long long)((18250 * 24) * 3600))) {
+  if (t < (double)(1640995200LL - (long long)((0 * 24) * 3600))) {
     __retres = 0;
     goto return_label;
   }
   else 
-    if (t > (double)((1516643532LL - (long long)((18250 * 24) * 3600)) + (
+    if (t > (double)((1640995200LL - (long long)((0 * 24) * 3600)) + (
                      1LL << 32))) {
       __retres = 0;
       goto return_label;
@@ -16023,16 +16023,16 @@ static void do_time_checks(void)
   int tmp;
   time_t warning_advance = (time_t)(((3600 * 24) * 365) * 10);
   struct timespec ts1 =
-    {.tv_sec = (long)(1516643532LL - (long long)((18250 * 24) * 3600)),
+    {.tv_sec = (long)(1640995200LL - (long long)((0 * 24) * 3600)),
      .tv_nsec = (long)1};
   struct timespec ts2 =
-    {.tv_sec = (long)((1516643532LL - (long long)((18250 * 24) * 3600)) - (long long)1),
+    {.tv_sec = (long)((1640995200LL - (long long)((0 * 24) * 3600)) - (long long)1),
      .tv_nsec = (long)1};
   UTI_TimespecToNtp64(& ts1,& nts1,(NTP_int64 *)0);
   UTI_TimespecToNtp64(& ts2,& nts2,(NTP_int64 *)0);
   UTI_Ntp64ToTimespec(& nts1,& ts1);
   UTI_Ntp64ToTimespec(& nts2,& ts2);
-  if ((long long)ts1.tv_sec == 1516643532LL - (long long)((18250 * 24) * 3600)) 
+  if ((long long)ts1.tv_sec == 1640995200LL - (long long)((0 * 24) * 3600)) 
     if (((unsigned long long)ts1.tv_sec + (1ULL << 32)) - (unsigned long long)1 == (unsigned long long)ts2.tv_sec) 
       tmp = 1;
     else tmp = 0;

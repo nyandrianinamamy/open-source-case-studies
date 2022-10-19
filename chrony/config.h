@@ -4,7 +4,7 @@
 #define FEAT_NTP 1
 #define FEAT_REFCLOCK 1
 #define HAVE_LONG_TIME_T 1
-#define NTP_ERA_SPLIT (1516643532LL - 18250 * 24 * 3600)
+#define NTP_ERA_SPLIT (1640995200LL - 0 * 24 * 3600)
 #define HAVE_CLOCK_GETTIME 1
 #define DEFAULT_CONF_FILE "/etc/chrony.conf"
 #define DEFAULT_HWCLOCK_FILE ""
