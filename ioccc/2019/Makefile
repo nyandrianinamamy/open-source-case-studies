@@ -38,8 +38,13 @@ CC= cc
 # IOCCC winners
 ###############
 #
-WINNERS= giles diels-grabsch1 poikola lynn burton dogon karns mills ciura diels-grabsch2 endoh yang duble adamovsky
+WINNERS= giles diels-grabsch1 poikola lynn burton dogon karns ciura diels-grabsch2 endoh yang adamovsky
 
+# Notes for OSCS:
+# - adamovsky only partially compiles with GCC 12; its Makefile was modified
+#   to disable the problematic programs
+# - duble no longer compiles with GCC 12; it has been removed from WINNERS
+# - mills had some large files removed; it has been removed from WINNERS
 
 ###################
 # build all entries

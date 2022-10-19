@@ -380,7 +380,7 @@ MAY_NEED_GCC= gcc
 #
 OBJ= prog.o prog.clean.o
 DATA=
-TARGET= prog prog.clean correct remarks
+TARGET= prog prog.clean correct
 #
 ALT_OBJ=
 ALT_TARGET=
@@ -399,10 +399,10 @@ prog: prog.c
 prog.clean: prog.clean.c
 	${CC} ${CSTD} ${ARCH} ${CDEFINE} ${CINCLUDE} ${OPT} $< -o $@ ${LIBS}
 
-remarks: remarks.markdown
-	${CP} $? $@
+#remarks: remarks.markdown
+#	${CP} $? $@
 
-correct: newlines remarks 256 check
+correct: newlines 256 check
 	@env out=${CAT} ${SHELL} ./check ${WC} > $@
 
 test: prog prog.clean correct check

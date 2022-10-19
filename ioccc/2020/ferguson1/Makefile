@@ -421,10 +421,10 @@ MAY_NEED_GCC= gcc
 ##############################
 #
 OBJ= prog.o termcaps.o
-DATA= COMPILING HACKING bugs.markdown cannibalism.log \
-    chocolate-cake.markdown crazy.log gameplay.markdown \
-    judges.markdown snake-colours.sh snake.1 spoilers.markdown \
-    termcaps.c terminals.markdown troubleshooting.markdown
+DATA= COMPILING HACKING cannibalism.log \
+    crazy.log \
+    snake-colours.sh snake.1 \
+    termcaps.c
 TARGET= prog snake snake-colours play snake-colours termcaps ${ALT_TARGET}
 #
 ALT_OBJ=
