@@ -3,6 +3,32 @@
 #ifdef __FRAMAC__
 // These signatures and redefinitions are incompatible with Frama-C's libc
 #error "This file is incompatible with Frama-C's libc"
+#else
+static volatile char nd_char;
+static volatile int nd_int;
+static volatile long nd_long;
+static volatile unsigned char nd_uchar;
+static volatile short nd_short;
+
+char nondet_char(void) {
+  return nd_char;
+}
+
+int nondet_int(void) {
+  return nd_int;
+}
+
+long nondet_long(void) {
+  return nd_long;
+}
+
+unsigned char nondet_unsigned_char(void) {
+  return nd_uchar;
+}
+
+short nondet_short(void){
+  return nd_short;
+}
 #endif
 
 /*
@@ -110,6 +136,7 @@ char *r_strcpy (char *dest, const char *src)
  *
  ***************************************************************************/
 
+#ifndef __OSCS__
 
 char *strcat(char *dest, const char *src)
 {
@@ -302,6 +329,8 @@ int isspace (int c)
       || c == ' ');
 }
 
+#endif //ifndef __OSCS__
+
 /*****************************************************************
  *
  * Functions which are like the functions in libc, but return indexes
@@ -388,10 +417,14 @@ int istrstr(const char *haystack, const char *needle)
       return i;
   }
 
+#ifdef __OSCS__
+  return -1;
+#else
   return NULL;
+#endif
 }
 
-typedef struct modem;
+struct modem;
 int put_command( struct modem *mdm, char* command, int clen, char* answer,
                  int max, int timeout,char* expect) {
   strcpy(answer,"ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ\
@@ -402,3 +435,20 @@ ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
 ABCDEF+CMGR:");
   return 0;
 }
+
+#ifdef __OSCS__
+
+// Function used by crackaddr
+void printbuf(const char *buf, size_t size) {
+  for (size_t i = 0; i < size; i++) {
+    putchar(buf[i]);
+  }
+}
+
+// Functions used by realpath-linkpath
+
+//void delay_signaling(void) {}
+//void enable_signaling(void) {}
+void disable_signaling(void) {}
+
+#endif //ifdef __OSCS__
