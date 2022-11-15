@@ -118,11 +118,6 @@ clean: $(addsuffix .clean,$(TARGETS))
 
 parse: $(addsuffix .parse,$(TARGETS))
 
-%.stats:
-	$(MAKE) -C $*/.frama-c stats
-
-stats: $(addsuffix .stats,$(TARGETS))
-
 %.sarif:
 	$(MAKE) -C $*/.frama-c sarif
 
@@ -162,12 +157,4 @@ icpc.build.clean:
 
 .FORCE:
 
-.PHONY: $(TARGETS) frama-c/build/bin/frama-c clean-all help stats-all
-
-# for continuous integration: runs all tests, then uses git status and
-# git diff to check for unexpected differences
-ci-tests: all stats-all
-	git status --porcelain
-	git diff --exit-code
-
-ci-tests: export FCFLAGS=-value-verbose 0 -kernel-verbose 0
+.PHONY: $(TARGETS) frama-c/build/bin/frama-c help
