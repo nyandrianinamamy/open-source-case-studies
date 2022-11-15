@@ -378,9 +378,9 @@ MAY_NEED_GCC= gcc
 # Special flags for this entry
 ##############################
 #
-OBJ= prog.o iocccsize_2018.o prog2.o
+OBJ= prog.o iocccsize_2018.o
 DATA=
-TARGET= prog iocccsize_2018 prog2 identify.unl
+TARGET= prog iocccsize_2018
 #
 ALT_OBJ=
 ALT_TARGET=

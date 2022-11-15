@@ -10,7 +10,9 @@ endif
 
 test: semver.c semver_test.c
 	@$(CC) $(CFLAGS) -o $@ $^
-	@./$@
+
+#disabled for OSCS
+#	@./$@
 
 unittest: semver_unit.c
 	@$(CC) $(CFLAGS) -o $@ $^

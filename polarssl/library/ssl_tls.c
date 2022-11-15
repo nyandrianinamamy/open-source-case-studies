@@ -45,7 +45,9 @@
 #include <stdlib.h>
 #include <time.h>
 
+#ifdef __FRAMAC__
 #include ".frama-c/fc_stubs.h"
+#endif
 
 #if defined _MSC_VER && !defined strcasecmp
 #define strcasecmp _stricmp

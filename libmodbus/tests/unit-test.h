@@ -1,3 +1,4 @@
+/* tests/unit-test.h.  Generated from unit-test.h.in by configure.  */
 /*
  * Copyright © 2008-2014 Stéphane Raimbault <stephane.raimbault@gmail.com>
  *

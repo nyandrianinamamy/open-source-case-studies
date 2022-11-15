@@ -95,39 +95,39 @@ library	ssl_srv.c	632	ssl_write_server_key_exchange	mem_access	Unknown	\valid(ss
 library	ssl_srv.c	633	ssl_write_server_key_exchange	mem_access	Unknown	\valid(ssl->out_msg + (size_t)(5 + n))
 library	ssl_srv.c	823	ssl_parse_client_key_exchange	initialization	Unknown	\initialized(&ssl->premaster[0])
 library	ssl_srv.c	824	ssl_parse_client_key_exchange	initialization	Unknown	\initialized(&ssl->premaster[1])
-library	ssl_tls.c	72	tls1_prf	user assertion	Unknown	secret ≤ S2 ≤ secret + slen / 2
-library	ssl_tls.c	459	ssl_mac_md5	precondition of md5_finish	Unknown	\valid(output + (0 .. 15))
-library	ssl_tls.c	557	ssl_encrypt_buf	precondition of arc4_crypt	Unknown	\valid(output + (0 .. length - 1))
-library	ssl_tls.c	557	ssl_encrypt_buf	precondition of arc4_crypt	Unknown	\valid_read(input + (0 .. length - 1))
-library	ssl_tls.c	575	ssl_encrypt_buf	mem_access	Unknown	\valid(ssl->out_msg + (size_t)(ssl->out_msglen + i))
-library	ssl_tls.c	598	ssl_encrypt_buf	precondition of memmove	Unknown	valid_dest: valid_or_empty(dest, n)
-library	ssl_tls.c	598	ssl_encrypt_buf	precondition of memmove	Unknown	valid_src: valid_read_or_empty(src, n)
-library	ssl_tls.c	620	ssl_encrypt_buf	precondition of des3_crypt_cbc	Unknown	\initialized(input + (0 .. length - 1))
-library	ssl_tls.c	620	ssl_encrypt_buf	precondition of des3_crypt_cbc	Unknown	\valid_read(input + (0 .. length - 1))
-library	ssl_tls.c	633	ssl_encrypt_buf	precondition of aes_crypt_cbc	Unknown	\valid(output + (0 .. length - 1))
-library	ssl_tls.c	633	ssl_encrypt_buf	precondition of aes_crypt_cbc	Unknown	\valid_read(input + (0 .. length - 1))
-library	ssl_tls.c	633	ssl_encrypt_buf	precondition of aes_crypt_cbc	Unknown	length % 16 ≡ 0
-library	ssl_tls.c	646	ssl_encrypt_buf	precondition of camellia_crypt_cbc	Unknown	\valid(output + (0 .. length - 1))
-library	ssl_tls.c	646	ssl_encrypt_buf	precondition of camellia_crypt_cbc	Unknown	\valid_read(input + (0 .. length - 1))
-library	ssl_tls.c	646	ssl_encrypt_buf	precondition of camellia_crypt_cbc	Unknown	length % 16 ≡ 0
-library	ssl_tls.c	681	ssl_decrypt_buf	precondition of arc4_crypt	Unknown	\valid(output + (0 .. length - 1))
-library	ssl_tls.c	681	ssl_decrypt_buf	precondition of arc4_crypt	Unknown	\valid_read(input + (0 .. length - 1))
-library	ssl_tls.c	741	ssl_decrypt_buf	precondition of des3_crypt_cbc	Unknown	\initialized(input + (0 .. length - 1))
-library	ssl_tls.c	741	ssl_decrypt_buf	precondition of des3_crypt_cbc	Unknown	\valid_read(input + (0 .. length - 1))
-library	ssl_tls.c	754	ssl_decrypt_buf	precondition of aes_crypt_cbc	Unknown	\valid(output + (0 .. length - 1))
-library	ssl_tls.c	754	ssl_decrypt_buf	precondition of aes_crypt_cbc	Unknown	\valid_read(input + (0 .. length - 1))
-library	ssl_tls.c	754	ssl_decrypt_buf	precondition of aes_crypt_cbc	Unknown	length % 16 ≡ 0
-library	ssl_tls.c	767	ssl_decrypt_buf	precondition of camellia_crypt_cbc	Unknown	\valid(output + (0 .. length - 1))
-library	ssl_tls.c	767	ssl_decrypt_buf	precondition of camellia_crypt_cbc	Unknown	\valid_read(input + (0 .. length - 1))
-library	ssl_tls.c	767	ssl_decrypt_buf	precondition of camellia_crypt_cbc	Unknown	length % 16 ≡ 0
-library	ssl_tls.c	778	ssl_decrypt_buf	user assertion	Unknown	ssl->in_msglen > 0
-library	ssl_tls.c	779	ssl_decrypt_buf	mem_access	Unknown	\valid_read(ssl->in_msg + (size_t)(ssl->in_msglen - 1))
-library	ssl_tls.c	814	ssl_decrypt_buf	mem_access	Unknown	\valid_read(ssl->in_msg + (size_t)(padding_idx + i))
-library	ssl_tls.c	818	ssl_decrypt_buf	mem_access	Unknown	\valid_read(ssl->in_msg + (size_t)(padding_idx + i))
-library	ssl_tls.c	837	ssl_decrypt_buf	user assertion	Unknown	0 ≤ ssl->in_msglen ≤ 16384
-library	ssl_tls.c	927	ssl_decrypt_buf	signed_overflow	Unknown	ssl->nb_zero + 1 ≤ 2147483647
-library	ssl_tls.c	1090	ssl_read_record	precondition of memmove	Unknown	valid_dest: valid_or_empty(dest, n)
-library	ssl_tls.c	1090	ssl_read_record	precondition of memmove	Unknown	valid_src: valid_read_or_empty(src, n)
-library	ssl_tls.c	1351	ssl_write_certificate	precondition of memcpy	Unknown	valid_src: valid_read_or_empty(src, n)
-library	ssl_tls.c	2325	ssl_write	precondition of memcpy	Unknown	valid_src: valid_read_or_empty(src, n)
+library	ssl_tls.c	74	tls1_prf	user assertion	Unknown	secret ≤ S2 ≤ secret + slen / 2
+library	ssl_tls.c	461	ssl_mac_md5	precondition of md5_finish	Unknown	\valid(output + (0 .. 15))
+library	ssl_tls.c	559	ssl_encrypt_buf	precondition of arc4_crypt	Unknown	\valid(output + (0 .. length - 1))
+library	ssl_tls.c	559	ssl_encrypt_buf	precondition of arc4_crypt	Unknown	\valid_read(input + (0 .. length - 1))
+library	ssl_tls.c	577	ssl_encrypt_buf	mem_access	Unknown	\valid(ssl->out_msg + (size_t)(ssl->out_msglen + i))
+library	ssl_tls.c	600	ssl_encrypt_buf	precondition of memmove	Unknown	valid_dest: valid_or_empty(dest, n)
+library	ssl_tls.c	600	ssl_encrypt_buf	precondition of memmove	Unknown	valid_src: valid_read_or_empty(src, n)
+library	ssl_tls.c	622	ssl_encrypt_buf	precondition of des3_crypt_cbc	Unknown	\initialized(input + (0 .. length - 1))
+library	ssl_tls.c	622	ssl_encrypt_buf	precondition of des3_crypt_cbc	Unknown	\valid_read(input + (0 .. length - 1))
+library	ssl_tls.c	635	ssl_encrypt_buf	precondition of aes_crypt_cbc	Unknown	\valid(output + (0 .. length - 1))
+library	ssl_tls.c	635	ssl_encrypt_buf	precondition of aes_crypt_cbc	Unknown	\valid_read(input + (0 .. length - 1))
+library	ssl_tls.c	635	ssl_encrypt_buf	precondition of aes_crypt_cbc	Unknown	length % 16 ≡ 0
+library	ssl_tls.c	648	ssl_encrypt_buf	precondition of camellia_crypt_cbc	Unknown	\valid(output + (0 .. length - 1))
+library	ssl_tls.c	648	ssl_encrypt_buf	precondition of camellia_crypt_cbc	Unknown	\valid_read(input + (0 .. length - 1))
+library	ssl_tls.c	648	ssl_encrypt_buf	precondition of camellia_crypt_cbc	Unknown	length % 16 ≡ 0
+library	ssl_tls.c	683	ssl_decrypt_buf	precondition of arc4_crypt	Unknown	\valid(output + (0 .. length - 1))
+library	ssl_tls.c	683	ssl_decrypt_buf	precondition of arc4_crypt	Unknown	\valid_read(input + (0 .. length - 1))
+library	ssl_tls.c	743	ssl_decrypt_buf	precondition of des3_crypt_cbc	Unknown	\initialized(input + (0 .. length - 1))
+library	ssl_tls.c	743	ssl_decrypt_buf	precondition of des3_crypt_cbc	Unknown	\valid_read(input + (0 .. length - 1))
+library	ssl_tls.c	756	ssl_decrypt_buf	precondition of aes_crypt_cbc	Unknown	\valid(output + (0 .. length - 1))
+library	ssl_tls.c	756	ssl_decrypt_buf	precondition of aes_crypt_cbc	Unknown	\valid_read(input + (0 .. length - 1))
+library	ssl_tls.c	756	ssl_decrypt_buf	precondition of aes_crypt_cbc	Unknown	length % 16 ≡ 0
+library	ssl_tls.c	769	ssl_decrypt_buf	precondition of camellia_crypt_cbc	Unknown	\valid(output + (0 .. length - 1))
+library	ssl_tls.c	769	ssl_decrypt_buf	precondition of camellia_crypt_cbc	Unknown	\valid_read(input + (0 .. length - 1))
+library	ssl_tls.c	769	ssl_decrypt_buf	precondition of camellia_crypt_cbc	Unknown	length % 16 ≡ 0
+library	ssl_tls.c	780	ssl_decrypt_buf	user assertion	Unknown	ssl->in_msglen > 0
+library	ssl_tls.c	781	ssl_decrypt_buf	mem_access	Unknown	\valid_read(ssl->in_msg + (size_t)(ssl->in_msglen - 1))
+library	ssl_tls.c	816	ssl_decrypt_buf	mem_access	Unknown	\valid_read(ssl->in_msg + (size_t)(padding_idx + i))
+library	ssl_tls.c	820	ssl_decrypt_buf	mem_access	Unknown	\valid_read(ssl->in_msg + (size_t)(padding_idx + i))
+library	ssl_tls.c	839	ssl_decrypt_buf	user assertion	Unknown	0 ≤ ssl->in_msglen ≤ 16384
+library	ssl_tls.c	929	ssl_decrypt_buf	signed_overflow	Unknown	ssl->nb_zero + 1 ≤ 2147483647
+library	ssl_tls.c	1092	ssl_read_record	precondition of memmove	Unknown	valid_dest: valid_or_empty(dest, n)
+library	ssl_tls.c	1092	ssl_read_record	precondition of memmove	Unknown	valid_src: valid_read_or_empty(src, n)
+library	ssl_tls.c	1353	ssl_write_certificate	precondition of memcpy	Unknown	valid_src: valid_read_or_empty(src, n)
+library	ssl_tls.c	2327	ssl_write	precondition of memcpy	Unknown	valid_src: valid_read_or_empty(src, n)
 programs/ssl	ssl_server.c	133	my_get_session	postcondition	Unknown	\result ≡ 0 ∨ \result ≡ 1

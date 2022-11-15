@@ -132,7 +132,7 @@ void memory_allocation_failure_004 ()
 * Type of defect: memory_allocation_failure - Memory could not be allocated / insufficient memory
 * Complexity: When using a void pointer  int based on value of global variable inside a switch case statement
 */
-void *vptr;
+static void *vptr;
 int memory_allocation_failure_005_func_001 (int flag)
 {
 	switch (flag)

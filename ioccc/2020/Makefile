@@ -63,8 +63,16 @@ CC= cc
 ###############
 #
 WINNERS= burton carlini endoh1 endoh2 endoh3 ferguson1 ferguson2 giles \
-	 kurdyukov1 kurdyukov2 kurdyukov3 kurdyukov4 otterness tsoj yang
+	 kurdyukov1 kurdyukov2 kurdyukov3 otterness tsoj yang
 
+# Notes for OSCS:
+# - kurdyukov4 removed from WINNERS due to requiring Internet connection
+
+# OSCS: bear disabled to avoid regenerating compile_commands.json files with
+#       absolute paths.
+BEAR=
+# Uncomment line below to re-enable bear
+#BEAR=bear
 
 ###################
 # build all entries
@@ -72,16 +80,16 @@ WINNERS= burton carlini endoh1 endoh2 endoh3 ferguson1 ferguson2 giles \
 #
 all:
 	@for i in ${WINNERS} ; do \
-	    ${ECHO} "(cd $$i && bear $(MAKE) X11_LIBDIR=${X11_LIBDIR} X11_INCDIR=${X11_INCDIR} $@)"; \
-	    (cd $$i && bear $(MAKE) "X11_LIBDIR=${X11_LIBDIR}" "X11_INCDIR=${X11_INCDIR}" $@); \
+	    ${ECHO} "(cd $$i && $(BEAR) $(MAKE) X11_LIBDIR=${X11_LIBDIR} X11_INCDIR=${X11_INCDIR} $@)"; \
+	    (cd $$i && $(BEAR) $(MAKE) "X11_LIBDIR=${X11_LIBDIR}" "X11_INCDIR=${X11_INCDIR}" $@); \
 	done
 
 # alternative executable
 #
 alt:
 	@for i in ${WINNERS} ; do \
-	    ${ECHO} "(cd $$i && bear $(MAKE) X11_LIBDIR=${X11_LIBDIR} X11_INCDIR=${X11_INCDIR} $@)"; \
-	    (cd $$i && bear $(MAKE) "X11_LIBDIR=${X11_LIBDIR}" "X11_INCDIR=${X11_INCDIR}" $@); \
+	    ${ECHO} "(cd $$i && $(BEAR) $(MAKE) X11_LIBDIR=${X11_LIBDIR} X11_INCDIR=${X11_INCDIR} $@)"; \
+	    (cd $$i && $(BEAR) $(MAKE) "X11_LIBDIR=${X11_LIBDIR}" "X11_INCDIR=${X11_INCDIR}" $@); \
 	done
 
 
@@ -93,26 +101,26 @@ everything: all alt
 
 clean:
 	@for i in ${WINNERS} ; do \
-	    ${ECHO} "(cd $$i && bear $(MAKE) $@)"; \
-	    (cd $$i && $bear (MAKE) $@); \
+	    ${ECHO} "(cd $$i && $(BEAR) $(MAKE) $@)"; \
+	    (cd $$i && $(BEAR) $(MAKE) $@); \
 	done
 
 clobber:
 	@for i in ${WINNERS} ; do \
-	    ${ECHO} "(cd $$i && bear $(MAKE) $@)"; \
-	    (cd $$i && bear $(MAKE) $@); \
+	    ${ECHO} "(cd $$i && $(BEAR) $(MAKE) $@)"; \
+	    (cd $$i && $(BEAR) $(MAKE) $@); \
 	done
 
 nuke: clobber
 	@for i in ${WINNERS} ; do \
-	    ${ECHO} "(cd $$i && bear $(MAKE) $@)"; \
-	    (cd $$i && bear $(MAKE) $@); \
+	    ${ECHO} "(cd $$i && $(BEAR) $(MAKE) $@)"; \
+	    (cd $$i && $(BEAR) $(MAKE) $@); \
 	done
 
 install:
 	@for i in ${WINNERS} ; do \
-	    ${ECHO} "(cd $$i && bear $(MAKE) $@)"; \
-	    (cd $$i && bear $(MAKE) $@); \
+	    ${ECHO} "(cd $$i && $(BEAR) $(MAKE) $@)"; \
+	    (cd $$i && $(BEAR) $(MAKE) $@); \
 	done
 
 
@@ -122,44 +130,44 @@ install:
 #
 love:
 	@for i in ${WINNERS} ; do \
-	    ${ECHO} "(cd $$i && bear $(MAKE) $@)"; \
-	    (cd $$i && bear $(MAKE) $@); \
+	    ${ECHO} "(cd $$i && $(BEAR) $(MAKE) $@)"; \
+	    (cd $$i && $(BEAR) $(MAKE) $@); \
 	done
 
 haste:
 	@for i in ${WINNERS} ; do \
-	    ${ECHO} "(cd $$i && bear $(MAKE) $@)"; \
-	    (cd $$i && bear $(MAKE) $@); \
+	    ${ECHO} "(cd $$i && $(BEAR) $(MAKE) $@)"; \
+	    (cd $$i && $(BEAR) $(MAKE) $@); \
 	done
 
 waste:
 	@for i in ${WINNERS} ; do \
-	    ${ECHO} "(cd $$i && bear $(MAKE) $@)"; \
-	    (cd $$i && bear $(MAKE) $@); \
+	    ${ECHO} "(cd $$i && $(BEAR) $(MAKE) $@)"; \
+	    (cd $$i && $(BEAR) $(MAKE) $@); \
 	done
 
 make:
 	@for i in ${WINNERS} ; do \
-	    ${ECHO} "(cd $$i && bear $(MAKE) $@)"; \
-	    (cd $$i && bear $(MAKE) $@); \
+	    ${ECHO} "(cd $$i && $(BEAR) $(MAKE) $@)"; \
+	    (cd $$i && $(BEAR) $(MAKE) $@); \
 	done
 
 easter_egg:
 	@for i in ${WINNERS} ; do \
-	    ${ECHO} "(cd $$i && bear $(MAKE) $@)"; \
-	    (cd $$i && bear $(MAKE) $@); \
+	    ${ECHO} "(cd $$i && $(BEAR) $(MAKE) $@)"; \
+	    (cd $$i && $(BEAR) $(MAKE) $@); \
 	done
 
 fabricate fashion form frame manufacture produce:
 	@for i in ${WINNERS} ; do \
-	    ${ECHO} "(cd $$i && bear $(MAKE) $@)"; \
-	    (cd $$i && bear $(MAKE) $@); \
+	    ${ECHO} "(cd $$i && $(BEAR) $(MAKE) $@)"; \
+	    (cd $$i && $(BEAR) $(MAKE) $@); \
 	done
 
 sandwich:
 	@for i in ${WINNERS} ; do \
-	    ${ECHO} "(cd $$i && bear $(MAKE) $@)"; \
-	    (cd $$i && bear $(MAKE) $@); \
+	    ${ECHO} "(cd $$i && $(BEAR) $(MAKE) $@)"; \
+	    (cd $$i && $(BEAR) $(MAKE) $@); \
 	done
 
 
@@ -167,12 +175,12 @@ sandwich:
 #
 charon: supernova
 	@for i in ${WINNERS} ; do \
-	    ${ECHO} "(cd $$i && bear $(MAKE) $@)"; \
-	    (cd $$i && bear $(MAKE) $@); \
+	    ${ECHO} "(cd $$i && $(BEAR) $(MAKE) $@)"; \
+	    (cd $$i && $(BEAR) $(MAKE) $@); \
 	done
 
 pluto: supernova
 	@for i in ${WINNERS} ; do \
-	    ${ECHO} "(cd $$i && bear $(MAKE) $@)"; \
-	    (cd $$i && bear $(MAKE) $@); \
+	    ${ECHO} "(cd $$i && $(BEAR) $(MAKE) $@)"; \
+	    (cd $$i && $(BEAR) $(MAKE) $@); \
 	done

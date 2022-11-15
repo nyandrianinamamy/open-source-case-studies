@@ -222,11 +222,12 @@ try_lockmem=0
 feat_asyncdns=1
 feat_forcednsretry=1
 try_clock_gettime=1
-try_recvmmsg=1
+try_recvmmsg=0
 feat_timestamping=1
 try_timestamping=0
 feat_ntp_signd=0
-ntp_era_split=""
+#deterministic value for ntp_era_split for OSCS, set to 2022-01-01
+ntp_era_split="1640995200"
 default_user="root"
 default_hwclockfile=""
 default_pidfile="/var/run/chrony/chronyd.pid"
@@ -401,7 +402,8 @@ case $OPERATINGSYSTEM in
         [ $try_seccomp != "0" ] && try_seccomp=1
         try_timestamping=1
         try_setsched=1
-        try_lockmem=1
+        #disabled for OSCS
+        #try_lockmem=1
         try_phc=1
         add_def LINUX
         echo "Configuring for " $SYSTEM
@@ -599,7 +601,9 @@ if test_code 'struct in_pktinfo' 'sys/socket.h netinet/in.h' '' '' '
   struct in_pktinfo ipi;
   return sizeof (ipi.ipi_spec_dst.s_addr) + IP_PKTINFO;'
 then
-  add_def HAVE_IN_PKTINFO
+  #disabled for OSCS
+  #add_def HAVE_IN_PKTINFO
+  true
 fi
 
 if [ $feat_ipv6 = "1" ] && \
@@ -642,7 +646,9 @@ fi
 if test_code 'getaddrinfo()' 'sys/types.h sys/socket.h netdb.h' '' "$EXTRA_LIBS" \
   'return getaddrinfo(0, 0, 0, 0);'
 then
-  add_def HAVE_GETADDRINFO
+  #disabled for OSCS
+  #add_def HAVE_GETADDRINFO
+  true
 fi
 
 if [ $feat_asyncdns = "1" ] && \
@@ -661,7 +667,9 @@ fi
 
 if test_code 'getrandom()' 'stdlib.h sys/random.h' '' '' \
     'return getrandom(NULL, 256, 0);'; then
-  add_def HAVE_GETRANDOM
+  #disabled for OSCS
+  #add_def HAVE_GETRANDOM
+  true
 fi
 
 RECVMMSG_CODE='
@@ -792,7 +800,9 @@ if [ $try_setsched = "1" ] && \
      sched_get_priority_max(SCHED_FIFO);
      sched_setscheduler(0, SCHED_FIFO, &sched);'
 then
-  add_def HAVE_SCHED_SETSCHEDULER
+  #disabled for OSCS
+  #add_def HAVE_SCHED_SETSCHEDULER
+  true
 fi
 
 if [ $try_lockmem = "1" ] && \

@@ -3654,7 +3654,7 @@ void CNF_Initialise(int r, int client_only)
   }
   else {
     bind_cmd_path = Strdup("/var/run/chrony/chronyd.sock");
-    pidfile = Strdup("/var/run/chronyd.pid");
+    pidfile = Strdup("/var/run/chrony/chronyd.pid");
   }
   return;
 }
@@ -8170,7 +8170,7 @@ DNS_Status DNS_Name2IPAddress(char const *name, IPAddr *ip_addrs,
     __retres = DNS_Success;
     goto return_label;
   }
-  __retres = DNS_TryAgain;
+  __retres = DNS_Failure;
   return_label: return __retres;
 }
 
@@ -14245,10 +14245,10 @@ void UTI_Ntp64ToTimespec(NTP_int64 *src, struct timespec *dest)
   }
   ntp_sec = ntohl(src->hi);
   ntp_frac = ntohl(src->lo);
-  dest->tv_sec = (time_t)(ntp_sec - (uint32_t)((unsigned long long)(1516643532LL - (long long)(
+  dest->tv_sec = (time_t)(ntp_sec - (uint32_t)((unsigned long long)(1640995200LL - (long long)(
                                                                     (
-                                                                    18250 * 24) * 3600)) + (unsigned long long)0x83aa7e80UL)) + (time_t)(
-                 1516643532LL - (long long)((18250 * 24) * 3600));
+                                                                    0 * 24) * 3600)) + (unsigned long long)0x83aa7e80UL)) + (time_t)(
+                 1640995200LL - (long long)((0 * 24) * 3600));
   dest->tv_nsec = (long)((double)ntp_frac / 4.294967296);
   return_label: return;
 }
@@ -14274,12 +14274,12 @@ int UTI_IsTimeOffsetSane(struct timespec *ts, double offset)
     __retres = 0;
     goto return_label;
   }
-  if (t < (double)(1516643532LL - (long long)((18250 * 24) * 3600))) {
+  if (t < (double)(1640995200LL - (long long)((0 * 24) * 3600))) {
     __retres = 0;
     goto return_label;
   }
   else 
-    if (t > (double)((1516643532LL - (long long)((18250 * 24) * 3600)) + (
+    if (t > (double)((1640995200LL - (long long)((0 * 24) * 3600)) + (
                      1LL << 32))) {
       __retres = 0;
       goto return_label;

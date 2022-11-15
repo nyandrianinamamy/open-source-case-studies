@@ -16,6 +16,14 @@ help::
 	@echo ""
 	@echo "*** USAGE WITH FRAMA-C INSTALLED IN THE PATH"
 	@echo "- delete 'path.mk' or comment its lines"
+	@echo ""
+	@echo "*** NON-FRAMA-C BUILD TARGETS"
+	@echo "- 'make build': build each case study, using its own Makefile,"
+	@echo "  CMake, Meson, etc. You can set BUILD_WRAPPER to a command"
+	@echo "  which will wrap the calls to the build tool."
+	@echo "  Note: this is highly system-dependent and requires several"
+	@echo "  libraries and tools. This target is only provided for "
+	@echo "  convenience, and cannot be relied upon for CI runs."
 
 # Note: if the user runs `make framac` before `make submodules`, the latter
 # will fail.
@@ -127,6 +135,30 @@ display-targets:
 
 %.eva: .FORCE
 	$(MAKE) -C $(dir $@) $(notdir $@)
+
+# For most case studies, 'make' is sufficient, but some of them require other
+# commands (which are overridden below).
+%.build:
+	$(BUILD_WRAPPER) $(MAKE) -C $*
+
+%.build.clean:
+	$(MAKE) -C $* clean
+
+build: $(addsuffix .build,$(TARGETS))
+
+build-clean: $(addsuffix .build.clean,$(TARGETS))
+
+cerberus.build:
+	@echo "Some Cerberus tests are not compilable (by design)"
+
+cerberus.build.clean:
+	@echo "Cerberus: nothing to clean"
+
+icpc.build:
+	$(BUILD_WRAPPER) $(MAKE) -C icpc/src
+
+icpc.build.clean:
+	$(MAKE) -C icpc/src clean
 
 .FORCE:
 

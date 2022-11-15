@@ -129,7 +129,7 @@ void* mythread(void * data);
   pthread_mutex_t count_mutex =PTHREAD_MUTEX_INITIALIZER;
 
 /* Global variable which will be shared */
-int x=0;
+static int x=0;
 
 void race_condition_003()
 {
