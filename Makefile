@@ -50,7 +50,7 @@ frama-c/build/bin/frama-c:
 	  echo "*** running make..."
 	  $(MAKE) -j --quiet >/dev/null
 	  echo "*** running make install..."
-	  $(MAKE) install INSTALLDIR=$(PWD)/build >/dev/null
+	  $(MAKE) install PREFIX=$(PWD)/build >/dev/null
 	};
 	echo "Local Frama-C (re-)installed."
 
