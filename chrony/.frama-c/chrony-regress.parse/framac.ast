@@ -8703,9 +8703,7 @@ static void process_message(struct msghdr *hdr, int length, int sock_fd)
       if (cmsg->cmsg_type == 29) {
         struct timeval tv;
         struct timespec ts;
-        unsigned char *tmp_0;
-        tmp_0 = CMSG_DATA(cmsg);
-        memcpy((void *)(& tv),(void const *)tmp_0,sizeof(tv));
+        memcpy((void *)(& tv),(void const *)(cmsg + 1),sizeof(tv));
         UTI_TimevalToTimespec(& tv,& ts);
         LCL_CookTime(& ts,& local_ts.ts,& local_ts.err);
         local_ts.source = NTP_TS_KERNEL;
@@ -8713,9 +8711,7 @@ static void process_message(struct msghdr *hdr, int length, int sock_fd)
     if (cmsg->cmsg_level == 1) 
       if (cmsg->cmsg_type == 35) {
         struct timespec ts_0;
-        unsigned char *tmp_1;
-        tmp_1 = CMSG_DATA(cmsg);
-        memcpy((void *)(& ts_0),(void const *)tmp_1,sizeof(ts_0));
+        memcpy((void *)(& ts_0),(void const *)(cmsg + 1),sizeof(ts_0));
         LCL_CookTime(& ts_0,& local_ts.ts,& local_ts.err);
         local_ts.source = NTP_TS_KERNEL;
       }

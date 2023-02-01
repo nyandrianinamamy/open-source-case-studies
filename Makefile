@@ -1,4 +1,5 @@
 .ONESHELL:
+ROOT_DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 
 help::
 	@echo "*** PREPARATION TARGETS (first-time user)"
@@ -43,15 +44,12 @@ framac: frama-c/build/bin/frama-c
 frama-c/build/bin/frama-c:
 	@echo "Compiling and (re)installing local Frama-C..."
 	mkdir -p frama-c/build
-	{
-	  cd frama-c
-	  echo "*** cleaning previous builds..."
-	  $(MAKE) clean >/dev/null
-	  echo "*** running make..."
-	  $(MAKE) -j --quiet >/dev/null
-	  echo "*** running make install..."
-	  $(MAKE) install PREFIX=$(PWD)/build >/dev/null
-	};
+	echo "*** cleaning previous builds..."
+	$(MAKE) -C frama-c clean >/dev/null
+	echo "*** running make..."
+	$(MAKE) -C frama-c -j --quiet >/dev/null
+	echo "*** running make install..."
+	$(MAKE) -C frama-c install PREFIX=$(ROOT_DIR)/frama-c/build >/dev/null
 	echo "Local Frama-C (re-)installed."
 
 TARGETS=\
