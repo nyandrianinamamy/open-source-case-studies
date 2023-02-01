@@ -20,6 +20,7 @@
 |libmodbus|Library to send/receive data according to the Modbus protocol|https://github.com/stephane/libmodbus|2|22|5132|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|
 |libspng|Library for writing and reading PNG files|https://github.com/randy408/libspng|1|5|3337|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|
 |libyaml|Library for parsing and emitting YAML|https://github.com/yaml/libyaml|2|25|10548|HAS_DYN_ALLOC, UNUSED_RECURSION, NO_FLOAT|
+|line-following-robot|Very simple AVR-based robot (student project)|https://github.com/Fabio-Morais/Line-Follower-Robot|1|21|3552|NO_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|
 |microstrain|Driver for a LORD/Microstrain Inertial Measurement Unit (IMU) sensor|https://github.com/ros-drivers/microstrain_mips|1|69|19075|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|
 |mini-gmp|Implementation of a subset of GNU's Multiple Precision Arithmetic library|https://gmplib.org/|1|35|8686|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|
 |miniz|Compression library in a single source file, implementing zlib and Deflate|https://github.com/richgel999/miniz|6|26|8299|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|
