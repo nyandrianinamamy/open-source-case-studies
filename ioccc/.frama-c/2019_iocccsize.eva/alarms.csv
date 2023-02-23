@@ -58,8 +58,8 @@ directory	file	line	function	property kind	status	property
 2019	iocccsize.c	556	count	signed_overflow	Unknown	bcount + xbcount ≤ 2147483647
 FRAMAC_SHARE/libc	ctype.h	41	isalnum	precondition	Unknown	c_uchar_or_eof_or_EOF: (0 ≤ c ≤ 255) ∨ c ≡ -1
 FRAMAC_SHARE/libc	ctype.h	161	isspace	precondition	Unknown	c_uchar_or_eof: (0 ≤ c ≤ 255) ∨ c ≡ -1
-FRAMAC_SHARE/libc	stdio.h	258	fgetc	precondition	Unknown	valid_stream: \valid(stream)
-FRAMAC_SHARE/libc	stdio.h	281	fputc	precondition	Unknown	valid_stream: \valid(stream)
-FRAMAC_SHARE/libc	stdio.h	343	ungetc	precondition	Unknown	valid_stream: \valid(stream)
+FRAMAC_SHARE/libc	stdio.h	260	fgetc	precondition	Unknown	valid_stream: \valid(stream)
+FRAMAC_SHARE/libc	stdio.h	283	fputc	precondition	Unknown	valid_stream: \valid(stream)
+FRAMAC_SHARE/libc	stdio.h	345	ungetc	precondition	Unknown	valid_stream: \valid(stream)
 FRAMAC_SHARE/libc	string.h	160	strncmp	precondition	Unknown	valid_string_s1: valid_read_nstring(s1, n)
 FRAMAC_SHARE/libc	string.h	220	strspn	precondition	Unknown	valid_string_s: valid_read_string(s)
