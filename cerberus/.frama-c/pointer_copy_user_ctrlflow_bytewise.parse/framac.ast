@@ -12,8 +12,8 @@ int x = 1;
 unsigned char control_flow_copy(unsigned char c)
 {
   unsigned char __retres;
-  __FC_assert((255 == 255) != 0,"pointer_copy_user_ctrlflow_bytewise.c",3,
-              "UCHAR_MAX==255");
+  __FC_assert((255U == (unsigned int)255) != 0,
+              "pointer_copy_user_ctrlflow_bytewise.c",3,"UCHAR_MAX==255");
   switch ((int)c) {
     case 0: __retres = (unsigned char)0;
     goto return_label;

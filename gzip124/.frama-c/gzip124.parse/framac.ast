@@ -7310,7 +7310,7 @@ static void read_c_len(void)
     tmp_0 = getbits(9);
     c = (int)tmp_0;
     i = 0;
-    while (i < ((255 + 256) + 2) - 3) {
+    while ((unsigned int)i < ((255U + (unsigned int)256) + (unsigned int)2) - (unsigned int)3) {
       outbuf[i] = (uch)0;
       i ++;
     }
@@ -7363,13 +7363,14 @@ static void read_c_len(void)
         outbuf[tmp_4] = (uch)(c - 2);
       }
     }
-    while (i < ((255 + 256) + 2) - 3) {
+    while ((unsigned int)i < ((255U + (unsigned int)256) + (unsigned int)2) - (unsigned int)3) {
       int tmp_5;
       tmp_5 = i;
       i ++;
       outbuf[tmp_5] = (uch)0;
     }
-    make_table(((255 + 256) + 2) - 3,outbuf,12,d_buf);
+    make_table((int)(((255U + (unsigned int)256) + (unsigned int)2) - (unsigned int)3),
+               outbuf,12,d_buf);
   }
   return;
 }
@@ -7382,7 +7383,7 @@ static unsigned int decode_c(void)
   if (blocksize == (unsigned int)0) {
     blocksize = getbits(16);
     if (blocksize == (unsigned int)0) {
-      __retres = (unsigned int)(((255 + 256) + 2) - 3);
+      __retres = ((255U + (unsigned int)256) + (unsigned int)2) - (unsigned int)3;
       goto return_label;
     }
     read_pt_len(16 + 3,5,3);
@@ -7391,13 +7392,14 @@ static unsigned int decode_c(void)
   }
   blocksize --;
   j_0 = (unsigned int)d_buf[(int)bitbuf_0 >> ((unsigned int)(8 * 2) * sizeof(char) - (unsigned int)12)];
-  if (j_0 >= (unsigned int)(((255 + 256) + 2) - 3)) {
+  if (j_0 >= ((255U + (unsigned int)256) + (unsigned int)2) - (unsigned int)3) {
     mask = (unsigned int)1 << (((unsigned int)(8 * 2) * sizeof(char) - (unsigned int)1) - (unsigned int)12);
     while (1) {
       if ((unsigned int)bitbuf_0 & mask) j_0 = (unsigned int)*(& prev[0x8000] + j_0);
       else j_0 = (unsigned int)prev[j_0];
       mask >>= 1;
-      if (! (j_0 >= (unsigned int)(((255 + 256) + 2) - 3))) break;
+      if (! (j_0 >= ((255U + (unsigned int)256) + (unsigned int)2) - (unsigned int)3)) 
+        break;
     }
   }
   fillbuf((int)outbuf[j_0]);
@@ -7468,12 +7470,12 @@ static unsigned int decode(unsigned int count, uch *buffer)
   }
   while (1) {
     c = decode_c();
-    if (c == (unsigned int)(((255 + 256) + 2) - 3)) {
+    if (c == ((255U + (unsigned int)256) + (unsigned int)2) - (unsigned int)3) {
       done = 1;
       __retres = r;
       goto return_label;
     }
-    if (c <= (unsigned int)255) {
+    if (c <= 255U) {
       *(buffer + r) = (uch)c;
       r ++;
       ;
@@ -7484,7 +7486,7 @@ static unsigned int decode(unsigned int count, uch *buffer)
     }
     else {
       unsigned int tmp;
-      j = (int)(c - (unsigned int)((255 + 1) - 3));
+      j = (int)(c - ((255U + (unsigned int)1) - (unsigned int)3));
       tmp = decode_p();
       decode_i = ((r - tmp) - (unsigned int)1) & (((unsigned int)1 << 13) - (unsigned int)1);
       while (1) {

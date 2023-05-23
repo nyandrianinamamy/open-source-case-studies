@@ -902,7 +902,7 @@ double TST_GetRandomDouble(double min, double max)
   long tmp;
   tmp = random();
   ;
-  __retres = min + ((double)tmp / (double)32767) * (max - min);
+  __retres = min + ((double)tmp / (double)2147483647) * (max - min);
   return __retres;
 }
 

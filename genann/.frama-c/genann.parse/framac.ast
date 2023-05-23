@@ -330,7 +330,7 @@ void genann_randomize(genann *ann)
     {
       int tmp;
       tmp = rand();
-      double r = (double)tmp / (double)32767;
+      double r = (double)tmp / (double)2147483647;
       *(ann->weight + i) = r - 0.5;
     }
     i ++;
