@@ -5331,89 +5331,342 @@ static void mpi_mul_hlp(size_t i, t_uint *s, t_uint *d, t_uint b)
   t_uint c = (t_uint)0;
   t_uint t = (t_uint)0;
   while (i >= (size_t)16) {
-    /*@ assigns t, c, d, s, *(s + (..)), *(d + (..));
-        assigns t
-          \from t, (indirect: s), (indirect: d), c, b, *(s + (..)),
-                *(d + (..));
-        assigns c
-          \from t, (indirect: s), (indirect: d), c, b, *(s + (..)),
-                *(d + (..));
-        assigns d
-          \from t, (indirect: s), (indirect: d), c, b, *(s + (..)),
-                *(d + (..));
-        assigns s
-          \from t, (indirect: s), (indirect: d), c, b, *(s + (..)),
-                *(d + (..));
-        assigns *(s + (..))
-          \from t, (indirect: s), (indirect: d), c, b, *(s + (..)),
-                *(d + (..));
-        assigns *(d + (..))
-          \from t, (indirect: s), (indirect: d), c, b, *(s + (..)),
-                *(d + (..));
+    /*@ assigns *(s + (..));
+        assigns *(s + (..)) \from (indirect: s), *(s + (..));
     */
+    __asm__ ("movq   %0, %%rsi      " :  : "m" (s));
+    /*@ assigns *(d + (..));
+        assigns *(d + (..)) \from (indirect: d), *(d + (..));
+    */
+    __asm__ ("movq   %0, %%rdi      " :  : "m" (d));
+    /*@ assigns \nothing; */
+    __asm__ ("movq   %0, %%rcx      " :  : "m" (c));
+    /*@ assigns \nothing; */
+    __asm__ ("movq   %0, %%rbx      " :  : "m" (b));
+    __asm__ ("xorq   %r8, %r8       ");
+    __asm__ ("movq  (%rsi),%rax     ");
+    __asm__ ("mulq   %rbx           ");
+    __asm__ ("addq   $8,   %rsi     ");
+    __asm__ ("addq   %rcx, %rax     ");
+    __asm__ ("movq   %r8,  %rcx     ");
+    __asm__ ("adcq   $0,   %rdx     ");
+    __asm__ ("nop                   ");
+    __asm__ ("addq   %rax, (%rdi)   ");
+    __asm__ ("adcq   %rdx, %rcx     ");
+    __asm__ ("addq   $8,   %rdi     ");
+    __asm__ ("movq  (%rsi),%rax     ");
+    __asm__ ("mulq   %rbx           ");
+    __asm__ ("addq   $8,   %rsi     ");
+    __asm__ ("addq   %rcx, %rax     ");
+    __asm__ ("movq   %r8,  %rcx     ");
+    __asm__ ("adcq   $0,   %rdx     ");
+    __asm__ ("nop                   ");
+    __asm__ ("addq   %rax, (%rdi)   ");
+    __asm__ ("adcq   %rdx, %rcx     ");
+    __asm__ ("addq   $8,   %rdi     ");
+    __asm__ ("movq  (%rsi),%rax     ");
+    __asm__ ("mulq   %rbx           ");
+    __asm__ ("addq   $8,   %rsi     ");
+    __asm__ ("addq   %rcx, %rax     ");
+    __asm__ ("movq   %r8,  %rcx     ");
+    __asm__ ("adcq   $0,   %rdx     ");
+    __asm__ ("nop                   ");
+    __asm__ ("addq   %rax, (%rdi)   ");
+    __asm__ ("adcq   %rdx, %rcx     ");
+    __asm__ ("addq   $8,   %rdi     ");
+    __asm__ ("movq  (%rsi),%rax     ");
+    __asm__ ("mulq   %rbx           ");
+    __asm__ ("addq   $8,   %rsi     ");
+    __asm__ ("addq   %rcx, %rax     ");
+    __asm__ ("movq   %r8,  %rcx     ");
+    __asm__ ("adcq   $0,   %rdx     ");
+    __asm__ ("nop                   ");
+    __asm__ ("addq   %rax, (%rdi)   ");
+    __asm__ ("adcq   %rdx, %rcx     ");
+    __asm__ ("addq   $8,   %rdi     ");
+    __asm__ ("movq  (%rsi),%rax     ");
+    __asm__ ("mulq   %rbx           ");
+    __asm__ ("addq   $8,   %rsi     ");
+    __asm__ ("addq   %rcx, %rax     ");
+    __asm__ ("movq   %r8,  %rcx     ");
+    __asm__ ("adcq   $0,   %rdx     ");
+    __asm__ ("nop                   ");
+    __asm__ ("addq   %rax, (%rdi)   ");
+    __asm__ ("adcq   %rdx, %rcx     ");
+    __asm__ ("addq   $8,   %rdi     ");
+    __asm__ ("movq  (%rsi),%rax     ");
+    __asm__ ("mulq   %rbx           ");
+    __asm__ ("addq   $8,   %rsi     ");
+    __asm__ ("addq   %rcx, %rax     ");
+    __asm__ ("movq   %r8,  %rcx     ");
+    __asm__ ("adcq   $0,   %rdx     ");
+    __asm__ ("nop                   ");
+    __asm__ ("addq   %rax, (%rdi)   ");
+    __asm__ ("adcq   %rdx, %rcx     ");
+    __asm__ ("addq   $8,   %rdi     ");
+    __asm__ ("movq  (%rsi),%rax     ");
+    __asm__ ("mulq   %rbx           ");
+    __asm__ ("addq   $8,   %rsi     ");
+    __asm__ ("addq   %rcx, %rax     ");
+    __asm__ ("movq   %r8,  %rcx     ");
+    __asm__ ("adcq   $0,   %rdx     ");
+    __asm__ ("nop                   ");
+    __asm__ ("addq   %rax, (%rdi)   ");
+    __asm__ ("adcq   %rdx, %rcx     ");
+    __asm__ ("addq   $8,   %rdi     ");
+    __asm__ ("movq  (%rsi),%rax     ");
+    __asm__ ("mulq   %rbx           ");
+    __asm__ ("addq   $8,   %rsi     ");
+    __asm__ ("addq   %rcx, %rax     ");
+    __asm__ ("movq   %r8,  %rcx     ");
+    __asm__ ("adcq   $0,   %rdx     ");
+    __asm__ ("nop                   ");
+    __asm__ ("addq   %rax, (%rdi)   ");
+    __asm__ ("adcq   %rdx, %rcx     ");
+    __asm__ ("addq   $8,   %rdi     ");
+    __asm__ ("movq  (%rsi),%rax     ");
+    __asm__ ("mulq   %rbx           ");
+    __asm__ ("addq   $8,   %rsi     ");
+    __asm__ ("addq   %rcx, %rax     ");
+    __asm__ ("movq   %r8,  %rcx     ");
+    __asm__ ("adcq   $0,   %rdx     ");
+    __asm__ ("nop                   ");
+    __asm__ ("addq   %rax, (%rdi)   ");
+    __asm__ ("adcq   %rdx, %rcx     ");
+    __asm__ ("addq   $8,   %rdi     ");
+    __asm__ ("movq  (%rsi),%rax     ");
+    __asm__ ("mulq   %rbx           ");
+    __asm__ ("addq   $8,   %rsi     ");
+    __asm__ ("addq   %rcx, %rax     ");
+    __asm__ ("movq   %r8,  %rcx     ");
+    __asm__ ("adcq   $0,   %rdx     ");
+    __asm__ ("nop                   ");
+    __asm__ ("addq   %rax, (%rdi)   ");
+    __asm__ ("adcq   %rdx, %rcx     ");
+    __asm__ ("addq   $8,   %rdi     ");
+    __asm__ ("movq  (%rsi),%rax     ");
+    __asm__ ("mulq   %rbx           ");
+    __asm__ ("addq   $8,   %rsi     ");
+    __asm__ ("addq   %rcx, %rax     ");
+    __asm__ ("movq   %r8,  %rcx     ");
+    __asm__ ("adcq   $0,   %rdx     ");
+    __asm__ ("nop                   ");
+    __asm__ ("addq   %rax, (%rdi)   ");
+    __asm__ ("adcq   %rdx, %rcx     ");
+    __asm__ ("addq   $8,   %rdi     ");
+    __asm__ ("movq  (%rsi),%rax     ");
+    __asm__ ("mulq   %rbx           ");
+    __asm__ ("addq   $8,   %rsi     ");
+    __asm__ ("addq   %rcx, %rax     ");
+    __asm__ ("movq   %r8,  %rcx     ");
+    __asm__ ("adcq   $0,   %rdx     ");
+    __asm__ ("nop                   ");
+    __asm__ ("addq   %rax, (%rdi)   ");
+    __asm__ ("adcq   %rdx, %rcx     ");
+    __asm__ ("addq   $8,   %rdi     ");
+    __asm__ ("movq  (%rsi),%rax     ");
+    __asm__ ("mulq   %rbx           ");
+    __asm__ ("addq   $8,   %rsi     ");
+    __asm__ ("addq   %rcx, %rax     ");
+    __asm__ ("movq   %r8,  %rcx     ");
+    __asm__ ("adcq   $0,   %rdx     ");
+    __asm__ ("nop                   ");
+    __asm__ ("addq   %rax, (%rdi)   ");
+    __asm__ ("adcq   %rdx, %rcx     ");
+    __asm__ ("addq   $8,   %rdi     ");
+    __asm__ ("movq  (%rsi),%rax     ");
+    __asm__ ("mulq   %rbx           ");
+    __asm__ ("addq   $8,   %rsi     ");
+    __asm__ ("addq   %rcx, %rax     ");
+    __asm__ ("movq   %r8,  %rcx     ");
+    __asm__ ("adcq   $0,   %rdx     ");
+    __asm__ ("nop                   ");
+    __asm__ ("addq   %rax, (%rdi)   ");
+    __asm__ ("adcq   %rdx, %rcx     ");
+    __asm__ ("addq   $8,   %rdi     ");
+    __asm__ ("movq  (%rsi),%rax     ");
+    __asm__ ("mulq   %rbx           ");
+    __asm__ ("addq   $8,   %rsi     ");
+    __asm__ ("addq   %rcx, %rax     ");
+    __asm__ ("movq   %r8,  %rcx     ");
+    __asm__ ("adcq   $0,   %rdx     ");
+    __asm__ ("nop                   ");
+    __asm__ ("addq   %rax, (%rdi)   ");
+    __asm__ ("adcq   %rdx, %rcx     ");
+    __asm__ ("addq   $8,   %rdi     ");
+    __asm__ ("movq  (%rsi),%rax     ");
+    __asm__ ("mulq   %rbx           ");
+    __asm__ ("addq   $8,   %rsi     ");
+    __asm__ ("addq   %rcx, %rax     ");
+    __asm__ ("movq   %r8,  %rcx     ");
+    __asm__ ("adcq   $0,   %rdx     ");
+    __asm__ ("nop                   ");
+    __asm__ ("addq   %rax, (%rdi)   ");
+    __asm__ ("adcq   %rdx, %rcx     ");
+    __asm__ ("addq   $8,   %rdi     ");
+    /*@ assigns c;
+        assigns c \from \nothing; */
+    __asm__ ("movq   %%rcx, %0      " : "=m" (c));
+    /*@ assigns d;
+        assigns d \from \nothing; */
+    __asm__ ("movq   %%rdi, %0      " : "=m" (d));
+    /*@ assigns s;
+        assigns s \from \nothing; */
     __asm__ (
-      "                                  movl   %%ebx, %0;                   movl   %5, %%esi;                   movl   %6, %%edi;                   movl   %7, %%ecx;                   movl   %8, %%ebx;                                                      lodsl;                              mull   %%ebx;                       addl   %%ecx,   %%eax;              adcl   $0,      %%edx;              addl   (%%edi), %%eax;              adcl   $0,      %%edx;              movl   %%edx,   %%ecx;              stosl;                                                                 lodsl;                              mull   %%ebx;                       addl   %%ecx,   %%eax;              adcl   $0,      %%edx;              addl   (%%edi), %%eax;              adcl   $0,      %%edx;              movl   %%edx,   %%ecx;              stosl;                                                                 lodsl;                              mull   %%ebx;                       addl   %%ecx,   %%eax;              adcl   $0,      %%edx;              addl   (%%edi), %%eax;              adcl   $0,      %%edx;              movl   %%edx,   %%ecx;              stosl;                                                                 lodsl;                              mull   %%ebx;                       addl   %%ecx,   %%eax;              adcl   $0,      %%edx;              addl   (%%edi), %%eax;              adcl   $0,      %%edx;              movl   %%edx,   %%ecx;              stosl;                                                                 lodsl;                              mull   %%ebx;                       addl   %%ecx,   %%eax;              adcl   $0,      %%edx;              addl   (%%edi), %%eax;              adcl   $0,      %%edx;              movl   %%edx,   %%ecx;              stosl;                                                                 lodsl;                              mull   %%ebx;                       addl   %%ecx,   %%eax;              adcl   $0,      %%edx;              addl   (%%edi), %%eax;              adcl   $0,      %%edx;              movl   %%edx,   %%ecx;              stosl;                                                                 lodsl;                              mull   %%ebx;                       addl   %%ecx,   %%eax;              adcl   $0,      %%edx;              addl   (%%edi), %%eax;              adcl   $0,      %%edx;              movl   %%edx,   %%ecx;              stosl;                                                                 lodsl;                              mull   %%ebx;                       addl   %%ecx,   %%eax;              adcl   $0,      %%edx;              addl   (%%edi), %%eax;              adcl   $0,      %%edx;              movl   %%edx,   %%ecx;              stosl;                                                                 lodsl;                              mull   %%ebx;                       addl   %%ecx,   %%eax;              adcl   $0,      %%edx;              addl   (%%edi), %%eax;              adcl   $0,      %%edx;              movl   %%edx,   %%ecx;              stosl;                                                                 lodsl;                              mull   %%ebx;                       addl   %%ecx,   %%eax;              adcl   $0,      %%edx;              addl   (%%edi), %%eax;              adcl   $0,      %%edx;              movl   %%edx,   %%ecx;              stosl;                                                                 lodsl;                              mull   %%ebx;                       addl   %%ecx,   %%eax;              adcl   $0,      %%edx;              addl   (%%edi), %%eax;              adcl   $0,      %%edx;              movl   %%edx,   %%ecx;              stosl;                                                                 lodsl;                              mull   %%ebx;                       addl   %%ecx,   %%eax;              adcl   $0,      %%edx;              addl   (%%edi), %%eax;              adcl   $0,      %%edx;              movl   %%edx,   %%ecx;              stosl;                                                                 lodsl;                              mull   %%ebx;                       addl   %%ecx,   %%eax;              adcl   $0,      %%edx;              addl   (%%edi), %%eax;              adcl   $0,      %%edx;              movl   %%edx,   %%ecx;              stosl;                                                                 lodsl;                              mull   %%ebx;                       addl   %%ecx,   %%eax;              adcl   $0,      %%edx;              addl   (%%edi), %%eax;              adcl   $0,      %%edx;              movl   %%edx,   %%ecx;              stosl;                                                                 lodsl;                              mull   %%ebx;                       addl   %%ecx,   %%eax;              adcl   $0,      %%edx;              addl   (%%edi), %%eax;              adcl   $0,      %%edx;              movl   %%edx,   %%ecx;              stosl;                                                                 lodsl;                              mull   %%ebx;                       addl   %%ecx,   %%eax;              adcl   $0,      %%edx;              addl   (%%edi), %%eax;              adcl   $0,      %%edx;              movl   %%edx,   %%ecx;              stosl;                                                             movl   %4, %%ebx;               movl   %%ecx, %1;               movl   %%edi, %2;               movl   %%esi, %3;               "
-      : "=m" (t), "=m" (c), "=m" (d), "=m" (s)
-      : "m" (t), "m" (s), "m" (d), "m" (c), "m" (b)
-      : "eax", "ecx", "edx", "esi", "edi"
+      "movq   %%rsi, %0      "
+      : "=m" (s)
+      : 
+      : "rax", "rcx", "rdx", "rbx", "rsi", "rdi", "r8"
       );
     i -= (size_t)16;
   }
   while (i >= (size_t)8) {
-    /*@ assigns t, c, d, s, *(s + (..)), *(d + (..));
-        assigns t
-          \from t, (indirect: s), (indirect: d), c, b, *(s + (..)),
-                *(d + (..));
-        assigns c
-          \from t, (indirect: s), (indirect: d), c, b, *(s + (..)),
-                *(d + (..));
-        assigns d
-          \from t, (indirect: s), (indirect: d), c, b, *(s + (..)),
-                *(d + (..));
-        assigns s
-          \from t, (indirect: s), (indirect: d), c, b, *(s + (..)),
-                *(d + (..));
-        assigns *(s + (..))
-          \from t, (indirect: s), (indirect: d), c, b, *(s + (..)),
-                *(d + (..));
-        assigns *(d + (..))
-          \from t, (indirect: s), (indirect: d), c, b, *(s + (..)),
-                *(d + (..));
+    /*@ assigns *(s + (..));
+        assigns *(s + (..)) \from (indirect: s), *(s + (..));
     */
+    __asm__ ("movq   %0, %%rsi      " :  : "m" (s));
+    /*@ assigns *(d + (..));
+        assigns *(d + (..)) \from (indirect: d), *(d + (..));
+    */
+    __asm__ ("movq   %0, %%rdi      " :  : "m" (d));
+    /*@ assigns \nothing; */
+    __asm__ ("movq   %0, %%rcx      " :  : "m" (c));
+    /*@ assigns \nothing; */
+    __asm__ ("movq   %0, %%rbx      " :  : "m" (b));
+    __asm__ ("xorq   %r8, %r8       ");
+    __asm__ ("movq  (%rsi),%rax     ");
+    __asm__ ("mulq   %rbx           ");
+    __asm__ ("addq   $8,   %rsi     ");
+    __asm__ ("addq   %rcx, %rax     ");
+    __asm__ ("movq   %r8,  %rcx     ");
+    __asm__ ("adcq   $0,   %rdx     ");
+    __asm__ ("nop                   ");
+    __asm__ ("addq   %rax, (%rdi)   ");
+    __asm__ ("adcq   %rdx, %rcx     ");
+    __asm__ ("addq   $8,   %rdi     ");
+    __asm__ ("movq  (%rsi),%rax     ");
+    __asm__ ("mulq   %rbx           ");
+    __asm__ ("addq   $8,   %rsi     ");
+    __asm__ ("addq   %rcx, %rax     ");
+    __asm__ ("movq   %r8,  %rcx     ");
+    __asm__ ("adcq   $0,   %rdx     ");
+    __asm__ ("nop                   ");
+    __asm__ ("addq   %rax, (%rdi)   ");
+    __asm__ ("adcq   %rdx, %rcx     ");
+    __asm__ ("addq   $8,   %rdi     ");
+    __asm__ ("movq  (%rsi),%rax     ");
+    __asm__ ("mulq   %rbx           ");
+    __asm__ ("addq   $8,   %rsi     ");
+    __asm__ ("addq   %rcx, %rax     ");
+    __asm__ ("movq   %r8,  %rcx     ");
+    __asm__ ("adcq   $0,   %rdx     ");
+    __asm__ ("nop                   ");
+    __asm__ ("addq   %rax, (%rdi)   ");
+    __asm__ ("adcq   %rdx, %rcx     ");
+    __asm__ ("addq   $8,   %rdi     ");
+    __asm__ ("movq  (%rsi),%rax     ");
+    __asm__ ("mulq   %rbx           ");
+    __asm__ ("addq   $8,   %rsi     ");
+    __asm__ ("addq   %rcx, %rax     ");
+    __asm__ ("movq   %r8,  %rcx     ");
+    __asm__ ("adcq   $0,   %rdx     ");
+    __asm__ ("nop                   ");
+    __asm__ ("addq   %rax, (%rdi)   ");
+    __asm__ ("adcq   %rdx, %rcx     ");
+    __asm__ ("addq   $8,   %rdi     ");
+    __asm__ ("movq  (%rsi),%rax     ");
+    __asm__ ("mulq   %rbx           ");
+    __asm__ ("addq   $8,   %rsi     ");
+    __asm__ ("addq   %rcx, %rax     ");
+    __asm__ ("movq   %r8,  %rcx     ");
+    __asm__ ("adcq   $0,   %rdx     ");
+    __asm__ ("nop                   ");
+    __asm__ ("addq   %rax, (%rdi)   ");
+    __asm__ ("adcq   %rdx, %rcx     ");
+    __asm__ ("addq   $8,   %rdi     ");
+    __asm__ ("movq  (%rsi),%rax     ");
+    __asm__ ("mulq   %rbx           ");
+    __asm__ ("addq   $8,   %rsi     ");
+    __asm__ ("addq   %rcx, %rax     ");
+    __asm__ ("movq   %r8,  %rcx     ");
+    __asm__ ("adcq   $0,   %rdx     ");
+    __asm__ ("nop                   ");
+    __asm__ ("addq   %rax, (%rdi)   ");
+    __asm__ ("adcq   %rdx, %rcx     ");
+    __asm__ ("addq   $8,   %rdi     ");
+    __asm__ ("movq  (%rsi),%rax     ");
+    __asm__ ("mulq   %rbx           ");
+    __asm__ ("addq   $8,   %rsi     ");
+    __asm__ ("addq   %rcx, %rax     ");
+    __asm__ ("movq   %r8,  %rcx     ");
+    __asm__ ("adcq   $0,   %rdx     ");
+    __asm__ ("nop                   ");
+    __asm__ ("addq   %rax, (%rdi)   ");
+    __asm__ ("adcq   %rdx, %rcx     ");
+    __asm__ ("addq   $8,   %rdi     ");
+    __asm__ ("movq  (%rsi),%rax     ");
+    __asm__ ("mulq   %rbx           ");
+    __asm__ ("addq   $8,   %rsi     ");
+    __asm__ ("addq   %rcx, %rax     ");
+    __asm__ ("movq   %r8,  %rcx     ");
+    __asm__ ("adcq   $0,   %rdx     ");
+    __asm__ ("nop                   ");
+    __asm__ ("addq   %rax, (%rdi)   ");
+    __asm__ ("adcq   %rdx, %rcx     ");
+    __asm__ ("addq   $8,   %rdi     ");
+    /*@ assigns c;
+        assigns c \from \nothing; */
+    __asm__ ("movq   %%rcx, %0      " : "=m" (c));
+    /*@ assigns d;
+        assigns d \from \nothing; */
+    __asm__ ("movq   %%rdi, %0      " : "=m" (d));
+    /*@ assigns s;
+        assigns s \from \nothing; */
     __asm__ (
-      "                                  movl   %%ebx, %0;                   movl   %5, %%esi;                   movl   %6, %%edi;                   movl   %7, %%ecx;                   movl   %8, %%ebx;                                                      lodsl;                              mull   %%ebx;                       addl   %%ecx,   %%eax;              adcl   $0,      %%edx;              addl   (%%edi), %%eax;              adcl   $0,      %%edx;              movl   %%edx,   %%ecx;              stosl;                                                                 lodsl;                              mull   %%ebx;                       addl   %%ecx,   %%eax;              adcl   $0,      %%edx;              addl   (%%edi), %%eax;              adcl   $0,      %%edx;              movl   %%edx,   %%ecx;              stosl;                                                                 lodsl;                              mull   %%ebx;                       addl   %%ecx,   %%eax;              adcl   $0,      %%edx;              addl   (%%edi), %%eax;              adcl   $0,      %%edx;              movl   %%edx,   %%ecx;              stosl;                                                                 lodsl;                              mull   %%ebx;                       addl   %%ecx,   %%eax;              adcl   $0,      %%edx;              addl   (%%edi), %%eax;              adcl   $0,      %%edx;              movl   %%edx,   %%ecx;              stosl;                                                                 lodsl;                              mull   %%ebx;                       addl   %%ecx,   %%eax;              adcl   $0,      %%edx;              addl   (%%edi), %%eax;              adcl   $0,      %%edx;              movl   %%edx,   %%ecx;              stosl;                                                                 lodsl;                              mull   %%ebx;                       addl   %%ecx,   %%eax;              adcl   $0,      %%edx;              addl   (%%edi), %%eax;              adcl   $0,      %%edx;              movl   %%edx,   %%ecx;              stosl;                                                                 lodsl;                              mull   %%ebx;                       addl   %%ecx,   %%eax;              adcl   $0,      %%edx;              addl   (%%edi), %%eax;              adcl   $0,      %%edx;              movl   %%edx,   %%ecx;              stosl;                                                                 lodsl;                              mull   %%ebx;                       addl   %%ecx,   %%eax;              adcl   $0,      %%edx;              addl   (%%edi), %%eax;              adcl   $0,      %%edx;              movl   %%edx,   %%ecx;              stosl;                                                             movl   %4, %%ebx;               movl   %%ecx, %1;               movl   %%edi, %2;               movl   %%esi, %3;               "
-      : "=m" (t), "=m" (c), "=m" (d), "=m" (s)
-      : "m" (t), "m" (s), "m" (d), "m" (c), "m" (b)
-      : "eax", "ecx", "edx", "esi", "edi"
+      "movq   %%rsi, %0      "
+      : "=m" (s)
+      : 
+      : "rax", "rcx", "rdx", "rbx", "rsi", "rdi", "r8"
       );
     i -= (size_t)8;
   }
   while (i > (size_t)0) {
-    /*@ assigns t, c, d, s, *(s + (..)), *(d + (..));
-        assigns t
-          \from t, (indirect: s), (indirect: d), c, b, *(s + (..)),
-                *(d + (..));
-        assigns c
-          \from t, (indirect: s), (indirect: d), c, b, *(s + (..)),
-                *(d + (..));
-        assigns d
-          \from t, (indirect: s), (indirect: d), c, b, *(s + (..)),
-                *(d + (..));
-        assigns s
-          \from t, (indirect: s), (indirect: d), c, b, *(s + (..)),
-                *(d + (..));
-        assigns *(s + (..))
-          \from t, (indirect: s), (indirect: d), c, b, *(s + (..)),
-                *(d + (..));
-        assigns *(d + (..))
-          \from t, (indirect: s), (indirect: d), c, b, *(s + (..)),
-                *(d + (..));
+    /*@ assigns *(s + (..));
+        assigns *(s + (..)) \from (indirect: s), *(s + (..));
     */
+    __asm__ ("movq   %0, %%rsi      " :  : "m" (s));
+    /*@ assigns *(d + (..));
+        assigns *(d + (..)) \from (indirect: d), *(d + (..));
+    */
+    __asm__ ("movq   %0, %%rdi      " :  : "m" (d));
+    /*@ assigns \nothing; */
+    __asm__ ("movq   %0, %%rcx      " :  : "m" (c));
+    /*@ assigns \nothing; */
+    __asm__ ("movq   %0, %%rbx      " :  : "m" (b));
+    __asm__ ("xorq   %r8, %r8       ");
+    __asm__ ("movq  (%rsi),%rax     ");
+    __asm__ ("mulq   %rbx           ");
+    __asm__ ("addq   $8,   %rsi     ");
+    __asm__ ("addq   %rcx, %rax     ");
+    __asm__ ("movq   %r8,  %rcx     ");
+    __asm__ ("adcq   $0,   %rdx     ");
+    __asm__ ("nop                   ");
+    __asm__ ("addq   %rax, (%rdi)   ");
+    __asm__ ("adcq   %rdx, %rcx     ");
+    __asm__ ("addq   $8,   %rdi     ");
+    /*@ assigns c;
+        assigns c \from \nothing; */
+    __asm__ ("movq   %%rcx, %0      " : "=m" (c));
+    /*@ assigns d;
+        assigns d \from \nothing; */
+    __asm__ ("movq   %%rdi, %0      " : "=m" (d));
+    /*@ assigns s;
+        assigns s \from \nothing; */
     __asm__ (
-      "                                  movl   %%ebx, %0;                   movl   %5, %%esi;                   movl   %6, %%edi;                   movl   %7, %%ecx;                   movl   %8, %%ebx;                                                      lodsl;                              mull   %%ebx;                       addl   %%ecx,   %%eax;              adcl   $0,      %%edx;              addl   (%%edi), %%eax;              adcl   $0,      %%edx;              movl   %%edx,   %%ecx;              stosl;                                                             movl   %4, %%ebx;               movl   %%ecx, %1;               movl   %%edi, %2;               movl   %%esi, %3;               "
-      : "=m" (t), "=m" (c), "=m" (d), "=m" (s)
-      : "m" (t), "m" (s), "m" (d), "m" (c), "m" (b)
-      : "eax", "ecx", "edx", "esi", "edi"
+      "movq   %%rsi, %0      "
+      : "=m" (s)
+      : 
+      : "rax", "rcx", "rdx", "rbx", "rsi", "rdi", "r8"
       );
     i --;
   }

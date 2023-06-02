@@ -101,6 +101,7 @@ directory	file	line	function	property kind	status	property
 01_w_Defects	data_lost.c	124	data_lost_009	unsigned_downcast	Invalid or unreachable	a_0 ≤ 65535
 01_w_Defects	data_lost.c	141	data_lost_010	signed_downcast	Invalid or unreachable	s_0.a ≤ 15
 01_w_Defects	data_lost.c	151	data_lost_011	signed_downcast	Invalid or unreachable	0x8000 ≤ 32767
+01_w_Defects	data_lost.c	174	data_lost_012	signed_downcast	Unknown	a_0 ≤ 32767
 01_w_Defects	data_lost.c	186	data_lost_013	signed_downcast	Invalid or unreachable	(int)((int)(254 * a_0) + 2) ≤ 32767
 01_w_Defects	data_lost.c	198	data_lost_014	signed_downcast	Invalid or unreachable	(int)((int)(a_0 * a_0) + 7) ≤ 32767
 01_w_Defects	data_lost.c	214	data_lost_015	signed_downcast	Invalid or unreachable	tmp ≤ 32767
@@ -131,7 +132,7 @@ directory	file	line	function	property kind	status	property
 01_w_Defects	data_overflow.c	314	data_overflow_021	signed_overflow	Invalid or unreachable	max + d1 ≤ 2147483647
 01_w_Defects	data_overflow.c	331	data_overflow_022	signed_overflow	Invalid or unreachable	max + d2 ≤ 2147483647
 01_w_Defects	data_overflow.c	342	data_overflow_023	signed_overflow	Invalid or unreachable	0x7fffffff + 1 ≤ 2147483647
-01_w_Defects	data_overflow.c	364	data_overflow_024	is_nan_or_infinite	Invalid or unreachable	\is_finite(\add_float(max, (float)2.02824096e+31F))
+01_w_Defects	data_overflow.c	364	data_overflow_024	is_nan_or_infinite	Invalid or unreachable	\is_finite(\add_float(max, 2.02824096e+31F))
 01_w_Defects	data_overflow.c	385	data_overflow_025	is_nan_or_infinite	Invalid or unreachable	\is_finite(\add_double(max, (double)1.9958403095347198e+292))
 01_w_Defects	data_underflow.c	20	data_underflow_001	signed_overflow	Invalid or unreachable	-2147483648 ≤ min - 2
 01_w_Defects	data_underflow.c	32	data_underflow_002	unsigned_overflow	Invalid or unreachable	0 ≤ min - 1
@@ -334,7 +335,7 @@ directory	file	line	function	property kind	status	property
 01_w_Defects	sign_conv.c	124	sign_conv_009	signed_downcast	Invalid or unreachable	s_0.a ≤ 15
 01_w_Defects	sign_conv.c	140	sign_conv_010	unsigned_downcast	Invalid or unreachable	0 ≤ s_0.a
 01_w_Defects	sign_conv.c	150	sign_conv_011	unsigned_downcast	Invalid or unreachable	0 ≤ (int)(-1)
-01_w_Defects	sign_conv.c	167	sign_conv_012	unsigned_downcast	Invalid or unreachable	0 ≤ a_0
+01_w_Defects	sign_conv.c	167	sign_conv_012	unsigned_downcast	Unknown	0 ≤ a_0
 01_w_Defects	sign_conv.c	179	sign_conv_013	unsigned_downcast	Invalid or unreachable	0 ≤ (int)((int)(5 * a_0) + 4)
 01_w_Defects	sign_conv.c	191	sign_conv_014	unsigned_downcast	Invalid or unreachable	0 ≤ (int)((int)(a_0 * a_0) - 5)
 01_w_Defects	sign_conv.c	207	sign_conv_015	unsigned_downcast	Invalid or unreachable	0 ≤ tmp

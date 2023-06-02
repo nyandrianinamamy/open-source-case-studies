@@ -34,7 +34,7 @@ static int rrextract(u_char *msg, int msglen, u_char *rrp, u_char *dname,
   eom = msg + msglen;
   {
     short tmp;
-    tmp = Frama_C_short_interval((short)(-32768),(short)32767);
+    tmp = Frama_C_short_interval((short)(-32767 - 1),(short)32767);
     dlen = (u_int)tmp;
     cp += 2;
   }

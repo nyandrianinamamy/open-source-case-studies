@@ -50,13 +50,13 @@ static int rrextract(u_char *msg, int msglen, u_char *rrp, u_char *dname,
   }
   {
     short tmp;
-    tmp = Frama_C_short_interval((short)(-32768),(short)32767);
+    tmp = Frama_C_short_interval((short)(-32767 - 1),(short)32767);
     type = (u_int)tmp;
     cp += 2;
   }
   {
     short tmp_0;
-    tmp_0 = Frama_C_short_interval((short)(-32768),(short)32767);
+    tmp_0 = Frama_C_short_interval((short)(-32767 - 1),(short)32767);
     class = (u_int)tmp_0;
     cp += 2;
   }
@@ -74,7 +74,7 @@ static int rrextract(u_char *msg, int msglen, u_char *rrp, u_char *dname,
   if (ttl > 101) ttl = 0;
   {
     short tmp_2;
-    tmp_2 = Frama_C_short_interval((short)(-32768),(short)32767);
+    tmp_2 = Frama_C_short_interval((short)(-32767 - 1),(short)32767);
     dlen = (u_int)tmp_2;
     cp += 2;
   }

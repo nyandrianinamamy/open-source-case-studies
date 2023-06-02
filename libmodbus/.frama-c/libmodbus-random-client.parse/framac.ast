@@ -5650,7 +5650,7 @@ int main(void)
             int tmp_6;
             tmp_6 = rand();
             *(tab_rq_registers + i) = (uint16_t)((65535.0 * (double)tmp_6) / (
-                                                 (double)32767 + 1.0));
+                                                 (double)2147483647 + 1.0));
             *(tab_rw_rq_registers + i) = (uint16_t)(~ ((int)*(tab_rq_registers + i)));
             *(tab_rq_bits + i) = (uint8_t)((int)*(tab_rq_registers + i) % 2);
           }

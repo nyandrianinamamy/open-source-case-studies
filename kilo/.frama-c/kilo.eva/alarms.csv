@@ -526,6 +526,7 @@ directory	file	line	function	property kind	status	property
 .	kilo.c	1119	editorMoveCursor	signed_overflow	Unknown	E.coloff + 1 ≤ 2147483647
 .	kilo.c	1121	editorMoveCursor	signed_overflow	Unknown	-2147483648 ≤ E.cx + 1
 .	kilo.c	1121	editorMoveCursor	signed_overflow	Unknown	E.cx + 1 ≤ 2147483647
+.	kilo.c	1123	editorMoveCursor	ptr_comparison	Unknown	\pointer_comparable((void *)0, (void *)row)
 .	kilo.c	1123	editorMoveCursor	dangling_pointer	Unknown	¬\dangling(&row->size)
 .	kilo.c	1123	editorMoveCursor	initialization	Unknown	\initialized(&row->size)
 .	kilo.c	1123	editorMoveCursor	mem_access	Unknown	\valid_read(&row->size)
@@ -580,6 +581,6 @@ FRAMAC_SHARE/libc	string.h	120	memmove	precondition	Unknown	valid_dest: valid_or
 FRAMAC_SHARE/libc	string.h	121	memmove	precondition	Unknown	valid_src: valid_read_or_empty(src, n)
 FRAMAC_SHARE/libc	string.h	131	memset	precondition	Unknown	valid_s: valid_or_empty(s, n)
 FRAMAC_SHARE/libc	string.h	141	strlen	precondition	Unknown	valid_string_s: valid_read_string(s)
-FRAMAC_SHARE/libc	unistd.h	853	ftruncate	assigns clause	Unknown	assigns \nothing;
-FRAMAC_SHARE/libc	unistd.h	853	ftruncate	from clause	Unknown	assigns \result \from __x0, __x1;
-FRAMAC_SHARE/libc	unistd.h	1153	write	precondition	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))
+FRAMAC_SHARE/libc	unistd.h	860	ftruncate	assigns clause	Unknown	assigns \nothing;
+FRAMAC_SHARE/libc	unistd.h	860	ftruncate	from clause	Unknown	assigns \result \from __x0, __x1;
+FRAMAC_SHARE/libc	unistd.h	1160	write	precondition	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))

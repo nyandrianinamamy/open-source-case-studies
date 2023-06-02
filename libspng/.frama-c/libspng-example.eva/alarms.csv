@@ -24,7 +24,6 @@ directory	file	line	function	property kind	status	property
 .	spng.c	371	read_header	precondition of memcpy	Unknown	valid_src: valid_read_or_empty(src, n)
 .	spng.c	442	read_idat_bytes	precondition of memcmp	Unknown	initialization: s1: \initialized((char *)s1 + (0 .. n - 1))
 .	spng.c	452	read_idat_bytes	precondition of memcmp	Unknown	initialization: s1: \initialized((char *)s1 + (0 .. n - 1))
-.	spng.c	636	sample_to_target	shift	Unknown	0 ≤ (unsigned int)(bit_depth - sbits) < 32
 .	spng.c	765	check_ihdr	initialization	Unknown	\initialized(&ihdr->color_type)
 .	spng.c	769	check_ihdr	initialization	Unknown	\initialized(&ihdr->bit_depth)
 .	spng.c	780	check_ihdr	initialization	Unknown	\initialized(&ihdr->bit_depth)

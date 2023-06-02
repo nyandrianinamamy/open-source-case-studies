@@ -44,6 +44,7 @@ src	reader.c	77	yaml_parser_determine_encoding	precondition of memcmp	Unknown	va
 src	reader.c	100	yaml_parser_update_raw_buffer	ptr_comparison	Unknown	\pointer_comparable((void *)parser->raw_buffer.start, (void *)parser->raw_buffer.pointer)
 src	reader.c	101	yaml_parser_update_raw_buffer	dangling_pointer	Unknown	¬\dangling(&parser->raw_buffer.last)
 src	reader.c	101	yaml_parser_update_raw_buffer	ptr_comparison	Unknown	\pointer_comparable((void *)parser->raw_buffer.last, (void *)parser->raw_buffer.end)
+src	reader.c	110	yaml_parser_update_raw_buffer	ptr_comparison	Unknown	\pointer_comparable((void *)parser->raw_buffer.start, (void *)parser->raw_buffer.pointer)
 src	reader.c	111	yaml_parser_update_raw_buffer	dangling_pointer	Unknown	¬\dangling(&parser->raw_buffer.last)
 src	reader.c	111	yaml_parser_update_raw_buffer	ptr_comparison	Unknown	\pointer_comparable((void *)parser->raw_buffer.pointer, (void *)parser->raw_buffer.last)
 src	reader.c	112	yaml_parser_update_raw_buffer	precondition of memmove	Unknown	valid_dest: valid_or_empty(dest, n)
