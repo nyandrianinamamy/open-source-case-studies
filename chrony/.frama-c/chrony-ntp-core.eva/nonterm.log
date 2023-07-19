@@ -2,9 +2,8 @@ test/unit/test.c:33:[nonterm:unreachable] warning: unreachable implicit return
 addrfilt.c:347:[nonterm:stmt] warning: non-terminating function call
 stack 1: check_ip_in_node :: addrfilt.c:365 <-
          ADF_IsAllowed :: ntp_core.c:2105 <-
-         NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
-         NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-         process_response :: test/unit/ntp_core.c:381 <-
+         NCR_ProcessRxUnknown :: test/unit/ntp_core.c:119 <-
+         process_request :: test/unit/ntp_core.c:422 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
@@ -12,7 +11,7 @@ stack 2: check_ip_in_node :: addrfilt.c:365 <-
          ADF_IsAllowed :: ntp_core.c:2105 <-
          NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-         process_response :: test/unit/ntp_core.c:386 <-
+         process_response :: test/unit/ntp_core.c:381 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
@@ -20,7 +19,7 @@ stack 3: check_ip_in_node :: addrfilt.c:365 <-
          ADF_IsAllowed :: ntp_core.c:2105 <-
          NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-         process_response :: test/unit/ntp_core.c:391 <-
+         process_response :: test/unit/ntp_core.c:386 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
@@ -28,7 +27,7 @@ stack 4: check_ip_in_node :: addrfilt.c:365 <-
          ADF_IsAllowed :: ntp_core.c:2105 <-
          NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-         process_response :: test/unit/ntp_core.c:393 <-
+         process_response :: test/unit/ntp_core.c:391 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
@@ -36,7 +35,7 @@ stack 5: check_ip_in_node :: addrfilt.c:365 <-
          ADF_IsAllowed :: ntp_core.c:2105 <-
          NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-         process_response :: test/unit/ntp_core.c:399 <-
+         process_response :: test/unit/ntp_core.c:393 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
@@ -44,14 +43,15 @@ stack 6: check_ip_in_node :: addrfilt.c:365 <-
          ADF_IsAllowed :: ntp_core.c:2105 <-
          NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-         process_response :: test/unit/ntp_core.c:405 <-
+         process_response :: test/unit/ntp_core.c:399 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
 stack 7: check_ip_in_node :: addrfilt.c:365 <-
          ADF_IsAllowed :: ntp_core.c:2105 <-
-         NCR_ProcessRxUnknown :: test/unit/ntp_core.c:119 <-
-         process_request :: test/unit/ntp_core.c:422 <-
+         NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
+         NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+         process_response :: test/unit/ntp_core.c:405 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
@@ -75,8 +75,7 @@ stack 10: check_ip_in_node :: addrfilt.c:365 <-
           ADF_IsAllowed :: ntp_core.c:2105 <-
           NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
           NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-          process_response :: test/unit/ntp_core.c:292 <-
-          process_replay :: test/unit/ntp_core.c:459 <-
+          process_response :: test/unit/ntp_core.c:473 <-
           test_unit :: test/unit/test.c:70 <-
           main :: fc_stubs.c:37 <-
           eva_main
@@ -85,7 +84,7 @@ stack 11: check_ip_in_node :: addrfilt.c:365 <-
           NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
           NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
           process_response :: test/unit/ntp_core.c:292 <-
-          process_replay :: test/unit/ntp_core.c:461 <-
+          process_replay :: test/unit/ntp_core.c:459 <-
           test_unit :: test/unit/test.c:70 <-
           main :: fc_stubs.c:37 <-
           eva_main
@@ -93,7 +92,8 @@ stack 12: check_ip_in_node :: addrfilt.c:365 <-
           ADF_IsAllowed :: ntp_core.c:2105 <-
           NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
           NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-          process_response :: test/unit/ntp_core.c:473 <-
+          process_response :: test/unit/ntp_core.c:292 <-
+          process_replay :: test/unit/ntp_core.c:461 <-
           test_unit :: test/unit/test.c:70 <-
           main :: fc_stubs.c:37 <-
           eva_main
@@ -141,8 +141,10 @@ stack 2: MD5Update :: hash_intmd5.c:56 <-
 stack 3: MD5Update :: hash_intmd5.c:56 <-
          HSH_Hash :: keys.c:364 <-
          generate_ntp_auth :: keys.c:395 <-
-         KEY_GenerateAuth :: test/unit/ntp_core.c:190 <-
-         send_response :: test/unit/ntp_core.c:379 <-
+         KEY_GenerateAuth :: ntp_core.c:1090 <-
+         transmit_packet :: ntp_core.c:1228 <-
+         transmit_timeout :: test/unit/ntp_core.c:87 <-
+         send_request :: test/unit/ntp_core.c:421 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
@@ -152,7 +154,7 @@ stack 4: MD5Update :: hash_intmd5.c:56 <-
          KEY_GenerateAuth :: ntp_core.c:1090 <-
          transmit_packet :: ntp_core.c:1228 <-
          transmit_timeout :: test/unit/ntp_core.c:87 <-
-         send_request :: test/unit/ntp_core.c:421 <-
+         send_request :: test/unit/ntp_core.c:444 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
@@ -162,17 +164,15 @@ stack 5: MD5Update :: hash_intmd5.c:56 <-
          KEY_GenerateAuth :: ntp_core.c:1090 <-
          transmit_packet :: ntp_core.c:1228 <-
          transmit_timeout :: test/unit/ntp_core.c:87 <-
-         send_request :: test/unit/ntp_core.c:444 <-
+         send_request :: test/unit/ntp_core.c:466 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
 stack 6: MD5Update :: hash_intmd5.c:56 <-
          HSH_Hash :: keys.c:364 <-
          generate_ntp_auth :: keys.c:395 <-
-         KEY_GenerateAuth :: ntp_core.c:1090 <-
-         transmit_packet :: ntp_core.c:1228 <-
-         transmit_timeout :: test/unit/ntp_core.c:87 <-
-         send_request :: test/unit/ntp_core.c:466 <-
+         KEY_GenerateAuth :: test/unit/ntp_core.c:190 <-
+         send_response :: test/unit/ntp_core.c:379 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
@@ -200,8 +200,10 @@ stack 2: MD5Update :: hash_intmd5.c:56 <-
 stack 3: MD5Update :: hash_intmd5.c:56 <-
          HSH_Hash :: keys.c:364 <-
          generate_ntp_auth :: keys.c:395 <-
-         KEY_GenerateAuth :: test/unit/ntp_core.c:190 <-
-         send_response :: test/unit/ntp_core.c:379 <-
+         KEY_GenerateAuth :: ntp_core.c:1090 <-
+         transmit_packet :: ntp_core.c:1228 <-
+         transmit_timeout :: test/unit/ntp_core.c:87 <-
+         send_request :: test/unit/ntp_core.c:421 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
@@ -211,7 +213,7 @@ stack 4: MD5Update :: hash_intmd5.c:56 <-
          KEY_GenerateAuth :: ntp_core.c:1090 <-
          transmit_packet :: ntp_core.c:1228 <-
          transmit_timeout :: test/unit/ntp_core.c:87 <-
-         send_request :: test/unit/ntp_core.c:421 <-
+         send_request :: test/unit/ntp_core.c:444 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
@@ -221,17 +223,15 @@ stack 5: MD5Update :: hash_intmd5.c:56 <-
          KEY_GenerateAuth :: ntp_core.c:1090 <-
          transmit_packet :: ntp_core.c:1228 <-
          transmit_timeout :: test/unit/ntp_core.c:87 <-
-         send_request :: test/unit/ntp_core.c:444 <-
+         send_request :: test/unit/ntp_core.c:466 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
 stack 6: MD5Update :: hash_intmd5.c:56 <-
          HSH_Hash :: keys.c:364 <-
          generate_ntp_auth :: keys.c:395 <-
-         KEY_GenerateAuth :: ntp_core.c:1090 <-
-         transmit_packet :: ntp_core.c:1228 <-
-         transmit_timeout :: test/unit/ntp_core.c:87 <-
-         send_request :: test/unit/ntp_core.c:466 <-
+         KEY_GenerateAuth :: test/unit/ntp_core.c:190 <-
+         send_response :: test/unit/ntp_core.c:379 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main

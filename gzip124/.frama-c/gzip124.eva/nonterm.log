@@ -1,26 +1,26 @@
 gzip.c:602:[nonterm:unreachable] warning: unreachable return
 gzip.c:1747:[nonterm:unreachable] warning: unreachable return
 inflate.c:412:[nonterm:stmt] warning: non-terminating statement
-stack 1: huft_build :: inflate.c:763 <-
+stack 1: huft_build :: inflate.c:675 <-
+         inflate_fixed :: inflate.c:904 <-
+         inflate_block :: inflate.c:931 <-
+         inflate :: unzip.c:120 <-
+         unzip :: gzip.c:675 <-
+         treat_stdin :: gzip.c:710 <-
+         treat_file :: gzip.c:593 <-
+         main :: fc_stubs.c:21 <-
+         eva_main
+stack 2: huft_build :: inflate.c:683 <-
+         inflate_fixed :: inflate.c:904 <-
+         inflate_block :: inflate.c:931 <-
+         inflate :: unzip.c:120 <-
+         unzip :: gzip.c:675 <-
+         treat_stdin :: gzip.c:710 <-
+         treat_file :: gzip.c:593 <-
+         main :: fc_stubs.c:21 <-
+         eva_main
+stack 3: huft_build :: inflate.c:763 <-
          inflate_dynamic :: inflate.c:900 <-
-         inflate_block :: inflate.c:931 <-
-         inflate :: unzip.c:120 <-
-         unzip :: gzip.c:675 <-
-         treat_stdin :: gzip.c:710 <-
-         treat_file :: gzip.c:593 <-
-         main :: fc_stubs.c:21 <-
-         eva_main
-stack 2: huft_build :: inflate.c:675 <-
-         inflate_fixed :: inflate.c:904 <-
-         inflate_block :: inflate.c:931 <-
-         inflate :: unzip.c:120 <-
-         unzip :: gzip.c:675 <-
-         treat_stdin :: gzip.c:710 <-
-         treat_file :: gzip.c:593 <-
-         main :: fc_stubs.c:21 <-
-         eva_main
-stack 3: huft_build :: inflate.c:683 <-
-         inflate_fixed :: inflate.c:904 <-
          inflate_block :: inflate.c:931 <-
          inflate :: unzip.c:120 <-
          unzip :: gzip.c:675 <-
@@ -39,26 +39,26 @@ stack: huft_build :: inflate.c:763 <-
        main :: fc_stubs.c:21 <-
        eva_main
 inflate.c:454:[nonterm:stmt] warning: non-terminating statement
-stack 1: huft_build :: inflate.c:763 <-
+stack 1: huft_build :: inflate.c:675 <-
+         inflate_fixed :: inflate.c:904 <-
+         inflate_block :: inflate.c:931 <-
+         inflate :: unzip.c:120 <-
+         unzip :: gzip.c:675 <-
+         treat_stdin :: gzip.c:710 <-
+         treat_file :: gzip.c:593 <-
+         main :: fc_stubs.c:21 <-
+         eva_main
+stack 2: huft_build :: inflate.c:683 <-
+         inflate_fixed :: inflate.c:904 <-
+         inflate_block :: inflate.c:931 <-
+         inflate :: unzip.c:120 <-
+         unzip :: gzip.c:675 <-
+         treat_stdin :: gzip.c:710 <-
+         treat_file :: gzip.c:593 <-
+         main :: fc_stubs.c:21 <-
+         eva_main
+stack 3: huft_build :: inflate.c:763 <-
          inflate_dynamic :: inflate.c:900 <-
-         inflate_block :: inflate.c:931 <-
-         inflate :: unzip.c:120 <-
-         unzip :: gzip.c:675 <-
-         treat_stdin :: gzip.c:710 <-
-         treat_file :: gzip.c:593 <-
-         main :: fc_stubs.c:21 <-
-         eva_main
-stack 2: huft_build :: inflate.c:675 <-
-         inflate_fixed :: inflate.c:904 <-
-         inflate_block :: inflate.c:931 <-
-         inflate :: unzip.c:120 <-
-         unzip :: gzip.c:675 <-
-         treat_stdin :: gzip.c:710 <-
-         treat_file :: gzip.c:593 <-
-         main :: fc_stubs.c:21 <-
-         eva_main
-stack 3: huft_build :: inflate.c:683 <-
-         inflate_fixed :: inflate.c:904 <-
          inflate_block :: inflate.c:931 <-
          inflate :: unzip.c:120 <-
          unzip :: gzip.c:675 <-
@@ -71,8 +71,7 @@ stack 1: inflate_codes :: inflate.c:691 <-
          inflate_fixed :: inflate.c:904 <-
          inflate_block :: inflate.c:931 <-
          inflate :: unzip.c:120 <-
-         unzip :: gzip.c:675 <-
-         treat_stdin :: gzip.c:710 <-
+         unzip :: gzip.c:817 <-
          treat_file :: gzip.c:593 <-
          main :: fc_stubs.c:21 <-
          eva_main
@@ -80,7 +79,8 @@ stack 2: inflate_codes :: inflate.c:691 <-
          inflate_fixed :: inflate.c:904 <-
          inflate_block :: inflate.c:931 <-
          inflate :: unzip.c:120 <-
-         unzip :: gzip.c:817 <-
+         unzip :: gzip.c:675 <-
+         treat_stdin :: gzip.c:710 <-
          treat_file :: gzip.c:593 <-
          main :: fc_stubs.c:21 <-
          eva_main
@@ -89,8 +89,7 @@ stack 1: inflate_codes :: inflate.c:691 <-
          inflate_fixed :: inflate.c:904 <-
          inflate_block :: inflate.c:931 <-
          inflate :: unzip.c:120 <-
-         unzip :: gzip.c:675 <-
-         treat_stdin :: gzip.c:710 <-
+         unzip :: gzip.c:817 <-
          treat_file :: gzip.c:593 <-
          main :: fc_stubs.c:21 <-
          eva_main
@@ -98,7 +97,8 @@ stack 2: inflate_codes :: inflate.c:691 <-
          inflate_fixed :: inflate.c:904 <-
          inflate_block :: inflate.c:931 <-
          inflate :: unzip.c:120 <-
-         unzip :: gzip.c:817 <-
+         unzip :: gzip.c:675 <-
+         treat_stdin :: gzip.c:710 <-
          treat_file :: gzip.c:593 <-
          main :: fc_stubs.c:21 <-
          eva_main
@@ -106,15 +106,15 @@ inflate.c:778:[nonterm:stmt] warning: non-terminating statement
 stack 1: inflate_dynamic :: inflate.c:900 <-
          inflate_block :: inflate.c:931 <-
          inflate :: unzip.c:120 <-
-         unzip :: gzip.c:675 <-
-         treat_stdin :: gzip.c:710 <-
+         unzip :: gzip.c:817 <-
          treat_file :: gzip.c:593 <-
          main :: fc_stubs.c:21 <-
          eva_main
 stack 2: inflate_dynamic :: inflate.c:900 <-
          inflate_block :: inflate.c:931 <-
          inflate :: unzip.c:120 <-
-         unzip :: gzip.c:817 <-
+         unzip :: gzip.c:675 <-
+         treat_stdin :: gzip.c:710 <-
          treat_file :: gzip.c:593 <-
          main :: fc_stubs.c:21 <-
          eva_main
