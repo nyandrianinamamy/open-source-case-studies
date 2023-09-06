@@ -84,6 +84,7 @@ TARGETS=\
   safestringlib \
   semver \
   solitaire \
+  stmr \
   tsvc \
   tweetnacl-usable \
   verisec \

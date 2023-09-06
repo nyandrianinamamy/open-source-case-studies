@@ -166,6 +166,7 @@ when available. We also summarize the license of each directory below.
 - `safestringlib`: MIT
 - `semver`: MIT
 - `solitaire`: public domain, see `solitaire.c`
+- `stmr`: MIT
 - `tsvc`: MIT, see `license.txt`
 - `tweetnacl-usable`: public domain, see `LICENSE.txt`
 - `verisec`: several, according to each app

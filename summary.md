@@ -31,6 +31,7 @@
 |safestringlib|Library for handling strings securely|https://github.com/intel/safestringlib|1|148|14922|NO_DYN_ALLOC, NO_RECURSION, NO_FLOAT|
 |semver|Parser and renderer for semantic versioning 2.0.0|https://github.com/h2non/semver.c|1|4|1034|HAS_DYN_ALLOC, NO_RECURSION, NO_FLOAT|
 |solitaire|Implementation of Bruce Schneier's card cipher, Solitaire (aka Pontifex)|http://www.ciphergoth.org/crypto/solitaire/|1|1|263|NO_DYN_ALLOC, NO_RECURSION, NO_FLOAT|
+|stmr|Martin Porter’s Stemming algorithm as a C library|https://github.com/wooorm/stmr.c|1|3|497|HAS_DYN_ALLOC, HAS_RECURSION, NO_FLOAT|
 |tsvc|Test suite for vectorizing compilers|http://polaris.cs.uiuc.edu/~maleki1/TSVC.tar.gz|1|2|4041|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|
 |tweetnacl-usable|Cryptographic library in 100 tweets, in a more usable form|https://twitter.com/TweetNaCl|1|5|1072|HAS_DYN_ALLOC, NO_RECURSION, NO_FLOAT|
 |verisec|Buffer overflow benchmark|https://security.csl.toronto.edu/wp-content/uploads/2018/06/Verisec-ASE2007.pdf|275|319|14486|HAS_DYN_ALLOC, NO_RECURSION, NO_FLOAT|
