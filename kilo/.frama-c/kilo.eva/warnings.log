@@ -1,14 +1,14 @@
-kilo.c:985:[eva:garbled-mix] warning: The specification of function vsnprintf has generated a garbled mix for assigns clause *
+kilo.c:985:[eva:garbled-mix:assigns] warning: The specification of function vsnprintf has generated a garbled mix for assigns clause *
 (s + (0 .. n - 1)).
 kilo.c:1269:[eva:locals-escaping] warning: locals {__va_args} escaping the scope of a block of main through E
 kilo.c:818:[kernel:annot:missing-spec] warning: Neither code nor specification for function ftruncate, generating default assigns from the prototype
-kilo.c:818:[eva:garbled-mix] warning: The specification of function ftruncate has generated a garbled mix for assigns clause \result.
+kilo.c:818:[eva:garbled-mix:assigns] warning: The specification of function ftruncate has generated a garbled mix for assigns clause \result.
 kilo.c:830:[eva:locals-escaping] warning: locals {__va_args_14} escaping the scope of a block of editorSave through E
 kilo.c:824:[eva:locals-escaping] warning: locals {__va_args} escaping the scope of a block of editorSave through E
 kilo.c:1014:[eva:locals-escaping] warning: locals {__va_args} escaping the scope of a block of editorFind through E
 kilo.c:1028:[eva:locals-escaping] warning: locals {__va_args_25} escaping the scope of a block of editorFind through E
 kilo.c:1184:[eva:locals-escaping] warning: locals {__va_args} escaping the scope of a block of editorProcessKeypress through E
-[eva:garbled-mix] warning: Garbled mix generated during analysis:
+[eva:garbled-mix:summary] warning: Garbled mix generated during analysis:
 {{ garbled mix of &{__malloc_w_editorInsertRow_l582}
   (origin: Misaligned {kilo.c:578}) }}
 {{ garbled mix of &{__malloc_w_editorUpdateRow_l555}

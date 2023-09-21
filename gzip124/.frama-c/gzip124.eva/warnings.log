@@ -1,4 +1,4 @@
-util.c:186:[eva:garbled-mix] warning: The specification of function strrchr has generated a garbled mix for assigns clause \result.
+util.c:186:[eva:garbled-mix:assigns] warning: The specification of function strrchr has generated a garbled mix for assigns clause \result.
 util.c:400:[eva] warning: ignoring unsupported allocates clause
 FRAMAC_SHARE/libc/signal.h:129:[eva] warning: no 'assigns \result \from ...' clause specified for function signal
 inflate.c:403:[eva] warning: ignoring unsupported allocates clause
@@ -33,6 +33,6 @@ stack: huft_build :: inflate.c:683 <-
        main :: fc_stubs.c:21 <-
        eva_main
 gzip.c:675:[eva:locals-escaping] warning: locals {attr} escaping the scope of zip through file_type
-gzip.c:1487:[eva:garbled-mix] warning: The specification of function strrchr has generated a garbled mix for assigns clause \result.
-gzip.c:1503:[eva:garbled-mix] warning: The specification of function strrchr has generated a garbled mix for assigns clause \result.
+gzip.c:1487:[eva:garbled-mix:assigns] warning: The specification of function strrchr has generated a garbled mix for assigns clause \result.
+gzip.c:1503:[eva:garbled-mix:assigns] warning: The specification of function strrchr has generated a garbled mix for assigns clause \result.
 gzip.c:817:[eva:locals-escaping] warning: locals {attr} escaping the scope of zip through file_type

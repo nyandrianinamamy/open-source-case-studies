@@ -562,9 +562,9 @@ stack: sdssetlen_3 :: sds.c:385 <-
        test_format_commands :: test.c:1022 <-
        main :: fc_stubs.c:21 <-
        eva_main
-sds.c:523:[eva:garbled-mix] warning: The specification of function vsnprintf has generated a garbled mix for assigns clause *
+sds.c:523:[eva:garbled-mix:assigns] warning: The specification of function vsnprintf has generated a garbled mix for assigns clause *
 (s + (0 .. n - 1)).
-hiredis.c:481:[eva:garbled-mix] warning: The specification of function sprintf_va_2 has generated a garbled mix for assigns clause *
+hiredis.c:481:[eva:garbled-mix:assigns] warning: The specification of function sprintf_va_2 has generated a garbled mix for assigns clause *
 (s + (0 ..)).
 test.c:242:[eva:locals-escaping] warning: locals {__va_arg0_80, __va_arg1_82, __va_args_84} escaping the scope of a block of test_format_commands through len
 test.c:242:[eva:locals-escaping] warning: locals {__va_arg0_80, __va_arg1_82, __va_args_84} escaping the scope of a block of test_format_commands through "hello"
@@ -722,7 +722,7 @@ test.c:256:[eva:locals-escaping] warning: locals {__va_arg0_152, __va_arg1_154, 
 test.c:256:[eva:locals-escaping] warning: locals {__va_arg0_152, __va_arg1_154, __va_arg2_156, __va_args_158} escaping the scope of a block of test_format_commands through __malloc_w_sdsMakeRoomFor_l230_49
 test.c:256:[eva:locals-escaping] warning: locals {__va_arg0_152, __va_arg1_154, __va_arg2_156, __va_args_158} escaping the scope of a block of test_format_commands through __malloc_w_sdsMakeRoomFor_l230_50
 test.c:256:[eva:locals-escaping] warning: locals {__va_arg0_152, __va_arg1_154, __va_arg2_156, __va_args_158} escaping the scope of a block of test_format_commands through __malloc_redisvFormatCommand_l476_18
-[eva:garbled-mix] warning: Garbled mix generated during analysis:
+[eva:garbled-mix:summary] warning: Garbled mix generated during analysis:
 {{ garbled mix of &{__malloc_sdsnewlen_l91_13;
                     __realloc_w_sdsMakeRoomFor_l221_12;
                     __malloc_w_sdsnewlen_l91_14;

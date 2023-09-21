@@ -1,15 +1,15 @@
-miniz_zip.c:2919:[eva:garbled-mix] warning: The specification of function freopen has generated a garbled mix for assigns clause *stream.
-miniz_zip.c:2791:[eva:garbled-mix] warning: The specification of function fseeko has generated a garbled mix for assigns clause *stream.
-miniz_zip.c:2797:[eva:garbled-mix] warning: The specification of function fwrite has generated a garbled mix for assigns clause *stream.
+miniz_zip.c:2919:[eva:garbled-mix:assigns] warning: The specification of function freopen has generated a garbled mix for assigns clause *stream.
+miniz_zip.c:2791:[eva:garbled-mix:assigns] warning: The specification of function fseeko has generated a garbled mix for assigns clause *stream.
+miniz_zip.c:2797:[eva:garbled-mix:assigns] warning: The specification of function fwrite has generated a garbled mix for assigns clause *stream.
 miniz_zip.c:3377:[eva:locals-escaping] warning: locals {in_buf_size} escaping the scope of tdefl_compress_buffer through __malloc_miniz_def_alloc_func_l169_1
 miniz_zip.c:3384:[eva:locals-escaping] warning: locals {state} escaping the scope of a block of mz_zip_writer_add_mem_ex_v2 through __malloc_miniz_def_alloc_func_l169_1
-miniz_zip.c:4322:[eva:garbled-mix] warning: The specification of function fflush has generated a garbled mix for assigns clause *stream.
-miniz_zip.c:4322:[eva:garbled-mix] warning: The specification of function fflush has generated a garbled mix for assigns clause __fc_fopen[
+miniz_zip.c:4322:[eva:garbled-mix:assigns] warning: The specification of function fflush has generated a garbled mix for assigns clause *stream.
+miniz_zip.c:4322:[eva:garbled-mix:assigns] warning: The specification of function fflush has generated a garbled mix for assigns clause __fc_fopen[
 0 .. 16 - 1].
-miniz_zip.c:998:[eva:garbled-mix] warning: The specification of function fseeko has generated a garbled mix for assigns clause *stream.
-miniz_zip.c:972:[eva:garbled-mix] warning: The specification of function fseeko has generated a garbled mix for assigns clause *stream.
-miniz_zip.c:975:[eva:garbled-mix] warning: The specification of function fread has generated a garbled mix for assigns clause *stream.
-miniz_zip.c:975:[eva:garbled-mix] warning: The specification of function fread has generated a garbled mix for assigns clause *
+miniz_zip.c:998:[eva:garbled-mix:assigns] warning: The specification of function fseeko has generated a garbled mix for assigns clause *stream.
+miniz_zip.c:972:[eva:garbled-mix:assigns] warning: The specification of function fseeko has generated a garbled mix for assigns clause *stream.
+miniz_zip.c:975:[eva:garbled-mix:assigns] warning: The specification of function fread has generated a garbled mix for assigns clause *stream.
+miniz_zip.c:975:[eva:garbled-mix:assigns] warning: The specification of function fread has generated a garbled mix for assigns clause *
 ((char *)ptr + (0 .. nmemb * size - 1)).
 miniz_zip.c:3377:[eva:locals-escaping] warning: locals {in_buf_size} escaping the scope of tdefl_compress_buffer through __fc_fopen
 miniz_zip.c:3377:[eva:locals-escaping] warning: locals {in_buf_size} escaping the scope of tdefl_compress_buffer through data
@@ -83,7 +83,7 @@ miniz_zip.c:4365:[eva:locals-escaping] warning: locals {zip_archive} escaping th
 miniz_zip.c:4365:[eva:locals-escaping] warning: locals {zip_archive} escaping the scope of mz_zip_add_mem_to_archive_file_in_place_v2 through __realloc_w_miniz_def_realloc_func_l179_7
 miniz_zip.c:4365:[eva:locals-escaping] warning: locals {zip_archive} escaping the scope of mz_zip_add_mem_to_archive_file_in_place_v2 through __realloc_w_miniz_def_realloc_func_l179_8
 miniz_zip.c:4365:[eva:locals-escaping] warning: locals {zip_archive} escaping the scope of mz_zip_add_mem_to_archive_file_in_place_v2 through __realloc_w_miniz_def_realloc_func_l179_9
-examples/example2.c:59:[eva:garbled-mix] warning: The specification of function sprintf_va_2 has generated a garbled mix for assigns clause *
+examples/example2.c:59:[eva:garbled-mix:assigns] warning: The specification of function sprintf_va_2 has generated a garbled mix for assigns clause *
 (s + (0 ..)).
 miniz_zip.c:3377:[eva:locals-escaping] warning: locals {in_buf_size} escaping the scope of tdefl_compress_buffer through __realloc_w_miniz_def_realloc_func_l179_3
 miniz_zip.c:3377:[eva:locals-escaping] warning: locals {in_buf_size} escaping the scope of tdefl_compress_buffer through __realloc_w_miniz_def_realloc_func_l179_4
@@ -211,7 +211,7 @@ miniz_zip.c:3384:[eva:locals-escaping] warning: locals {state} escaping the scop
 miniz_zip.c:3384:[eva:locals-escaping] warning: locals {state} escaping the scope of a block of mz_zip_writer_add_mem_ex_v2 through __realloc_w_miniz_def_realloc_func_l179_22
 miniz_zip.c:3384:[eva:locals-escaping] warning: locals {state} escaping the scope of a block of mz_zip_writer_add_mem_ex_v2 through __realloc_w_miniz_def_realloc_func_l179_23
 miniz_zip.c:3384:[eva:locals-escaping] warning: locals {state} escaping the scope of a block of mz_zip_writer_add_mem_ex_v2 through __realloc_w_miniz_def_realloc_func_l179_24
-examples/example2.c:131:[eva:garbled-mix] warning: The specification of function sprintf_va_4 has generated a garbled mix for assigns clause *
+examples/example2.c:131:[eva:garbled-mix:assigns] warning: The specification of function sprintf_va_4 has generated a garbled mix for assigns clause *
 (s + (0 ..)).
 stubs.c:21:[eva:locals-escaping] warning: locals {data} escaping the scope of main through __fc_fopen
 stubs.c:21:[eva:locals-escaping] warning: locals {data} escaping the scope of main through __malloc_w_miniz_def_alloc_func_l169
@@ -243,7 +243,7 @@ stubs.c:21:[eva:locals-escaping] warning: locals {data} escaping the scope of ma
 stubs.c:21:[eva:locals-escaping] warning: locals {data} escaping the scope of main through __realloc_w_miniz_def_realloc_func_l179_22
 stubs.c:21:[eva:locals-escaping] warning: locals {data} escaping the scope of main through __realloc_w_miniz_def_realloc_func_l179_23
 stubs.c:21:[eva:locals-escaping] warning: locals {data} escaping the scope of main through __realloc_w_miniz_def_realloc_func_l179_24
-[eva:garbled-mix] warning: Garbled mix generated during analysis:
+[eva:garbled-mix:summary] warning: Garbled mix generated during analysis:
 {{ garbled mix of &{mz_zip_writer_add_put_buf_callback}
   (origin: Misaligned {miniz_tdef.c:1043}) }}
 {{ garbled mix of &{state} (origin: Misaligned {miniz_tdef.c:1043}) }}

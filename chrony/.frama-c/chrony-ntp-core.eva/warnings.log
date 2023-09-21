@@ -5202,7 +5202,7 @@ stack: UTI_NormaliseTimespec :: ntp_core.c:1080 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-util.c:763:[eva:garbled-mix] warning: The specification of function htonl has generated a garbled mix for assigns clause \result.
+util.c:763:[eva:garbled-mix:assigns] warning: The specification of function htonl has generated a garbled mix for assigns clause \result.
 util.c:764:[eva:alarm] warning: non-finite double value.
 assert \is_finite(\mul_double((double)4.294967296, (double)nsec));
 stack: UTI_TimespecToNtp64 :: ntp_core.c:1081 <-
@@ -5221,7 +5221,7 @@ stack: UTI_TimespecToNtp64 :: ntp_core.c:1081 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-util.c:764:[eva:garbled-mix] warning: The specification of function htonl has generated a garbled mix for assigns clause \result.
+util.c:764:[eva:garbled-mix:assigns] warning: The specification of function htonl has generated a garbled mix for assigns clause \result.
 md5.c:157:[kernel] warning: all target addresses were invalid. This path is assumed to be dead.
 stack: MD5Update :: hash_intmd5.c:56 <-
        HSH_Hash :: keys.c:364 <-
@@ -12687,7 +12687,7 @@ stack: CNF_Finalise :: test/unit/ntp_core.c:499 <-
        eva_main
 test/unit/test.c:70:[eva:locals-escaping] warning: locals {conf} escaping the scope of test_unit through processed_command
 test/unit/test.c:72:[kernel:annot:missing-spec] warning: Neither code nor specification for function LOG_Finalise, generating default assigns from the prototype
-[eva:garbled-mix] warning: Garbled mix generated during analysis:
+[eva:garbled-mix:summary] warning: Garbled mix generated during analysis:
 {{ garbled mix of &{read_from_socket} (origin: Merge {sched.c:185}) }}
 {{ garbled mix of &{__malloc_KEY_Reload_l235; __malloc_w_KEY_Reload_l235_0}
   (origin: Misaligned {array.c:116}) }}
