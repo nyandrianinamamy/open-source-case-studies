@@ -5969,8 +5969,7 @@ void hex_random_op2(enum hex_random_op op, unsigned long maxbits, char **ap,
   if (signs & (unsigned int)1) __gmpz_neg(a,(mpz_srcptr)(a));
   switch (op) {
     default: abort();
-    case (enum hex_random_op)OP_SQR:
-    __gmpz_mul(r,(mpz_srcptr)(a),(mpz_srcptr)(a));
+    case OP_SQR: __gmpz_mul(r,(mpz_srcptr)(a),(mpz_srcptr)(a));
     break;
   }
   {
@@ -6013,16 +6012,13 @@ void hex_random_op3(enum hex_random_op op, unsigned long maxbits, char **ap,
   if (signs & (unsigned int)2) __gmpz_neg(b,(mpz_srcptr)(b));
   switch (op) {
     default: abort();
-    case (enum hex_random_op)OP_ADD:
-    __gmpz_add(r,(mpz_srcptr)(a),(mpz_srcptr)(b));
+    case OP_ADD: __gmpz_add(r,(mpz_srcptr)(a),(mpz_srcptr)(b));
     break;
-    case (enum hex_random_op)OP_SUB:
-    __gmpz_sub(r,(mpz_srcptr)(a),(mpz_srcptr)(b));
+    case OP_SUB: __gmpz_sub(r,(mpz_srcptr)(a),(mpz_srcptr)(b));
     break;
-    case (enum hex_random_op)OP_MUL:
-    __gmpz_mul(r,(mpz_srcptr)(a),(mpz_srcptr)(b));
+    case OP_MUL: __gmpz_mul(r,(mpz_srcptr)(a),(mpz_srcptr)(b));
     break;
-    case (enum hex_random_op)OP_GCD: ;
+    case OP_GCD: ;
     if (signs & (unsigned int)4) {
       unsigned long tmp_1;
       tmp_1 = __gmp_urandomb_ui(state,(unsigned long)32);
@@ -6033,7 +6029,7 @@ void hex_random_op3(enum hex_random_op op, unsigned long maxbits, char **ap,
     }
     __gmpz_gcd(r,(mpz_srcptr)(a),(mpz_srcptr)(b));
     break;
-    case (enum hex_random_op)OP_LCM: ;
+    case OP_LCM: ;
     if (signs & (unsigned int)4) {
       unsigned long tmp_2;
       tmp_2 = __gmp_urandomb_ui(state,(unsigned long)32);
@@ -6044,14 +6040,11 @@ void hex_random_op3(enum hex_random_op op, unsigned long maxbits, char **ap,
     }
     __gmpz_lcm(r,(mpz_srcptr)(a),(mpz_srcptr)(b));
     break;
-    case (enum hex_random_op)OP_AND:
-    __gmpz_and(r,(mpz_srcptr)(a),(mpz_srcptr)(b));
+    case OP_AND: __gmpz_and(r,(mpz_srcptr)(a),(mpz_srcptr)(b));
     break;
-    case (enum hex_random_op)OP_IOR:
-    __gmpz_ior(r,(mpz_srcptr)(a),(mpz_srcptr)(b));
+    case OP_IOR: __gmpz_ior(r,(mpz_srcptr)(a),(mpz_srcptr)(b));
     break;
-    case (enum hex_random_op)OP_XOR:
-    __gmpz_xor(r,(mpz_srcptr)(a),(mpz_srcptr)(b));
+    case OP_XOR: __gmpz_xor(r,(mpz_srcptr)(a),(mpz_srcptr)(b));
     break;
   }
   {
@@ -6150,14 +6143,11 @@ void hex_random_op4(enum hex_random_op op, unsigned long maxbits, char **ap,
     if (signs & (unsigned int)2) __gmpz_neg(b,(mpz_srcptr)(b));
     switch (op) {
       default: abort();
-      case (enum hex_random_op)OP_CDIV:
-      __gmpz_cdiv_qr(c,d,(mpz_srcptr)(a),(mpz_srcptr)(b));
+      case OP_CDIV: __gmpz_cdiv_qr(c,d,(mpz_srcptr)(a),(mpz_srcptr)(b));
       break;
-      case (enum hex_random_op)OP_FDIV:
-      __gmpz_fdiv_qr(c,d,(mpz_srcptr)(a),(mpz_srcptr)(b));
+      case OP_FDIV: __gmpz_fdiv_qr(c,d,(mpz_srcptr)(a),(mpz_srcptr)(b));
       break;
-      case (enum hex_random_op)OP_TDIV:
-      __gmpz_tdiv_qr(c,d,(mpz_srcptr)(a),(mpz_srcptr)(b));
+      case OP_TDIV: __gmpz_tdiv_qr(c,d,(mpz_srcptr)(a),(mpz_srcptr)(b));
       break;
     }
   }
@@ -6209,32 +6199,26 @@ void hex_random_bit_op(enum hex_random_op op, unsigned long maxbits,
   if (signs & (unsigned int)1) __gmpz_neg(a,(mpz_srcptr)(a));
   switch (op) {
     default: abort();
-    case (enum hex_random_op)OP_SETBIT: __gmpz_set(r,(mpz_srcptr)(a));
+    case OP_SETBIT: __gmpz_set(r,(mpz_srcptr)(a));
     __gmpz_setbit(r,bbits);
     break;
-    case (enum hex_random_op)OP_CLRBIT: __gmpz_set(r,(mpz_srcptr)(a));
+    case OP_CLRBIT: __gmpz_set(r,(mpz_srcptr)(a));
     __gmpz_clrbit(r,bbits);
     break;
-    case (enum hex_random_op)OP_COMBIT: __gmpz_set(r,(mpz_srcptr)(a));
+    case OP_COMBIT: __gmpz_set(r,(mpz_srcptr)(a));
     __gmpz_combit(r,bbits);
     break;
-    case (enum hex_random_op)OP_CDIV_Q_2:
-    __gmpz_cdiv_q_2exp(r,(mpz_srcptr)(a),bbits);
+    case OP_CDIV_Q_2: __gmpz_cdiv_q_2exp(r,(mpz_srcptr)(a),bbits);
     break;
-    case (enum hex_random_op)OP_CDIV_R_2:
-    __gmpz_cdiv_r_2exp(r,(mpz_srcptr)(a),bbits);
+    case OP_CDIV_R_2: __gmpz_cdiv_r_2exp(r,(mpz_srcptr)(a),bbits);
     break;
-    case (enum hex_random_op)OP_FDIV_Q_2:
-    __gmpz_fdiv_q_2exp(r,(mpz_srcptr)(a),bbits);
+    case OP_FDIV_Q_2: __gmpz_fdiv_q_2exp(r,(mpz_srcptr)(a),bbits);
     break;
-    case (enum hex_random_op)OP_FDIV_R_2:
-    __gmpz_fdiv_r_2exp(r,(mpz_srcptr)(a),bbits);
+    case OP_FDIV_R_2: __gmpz_fdiv_r_2exp(r,(mpz_srcptr)(a),bbits);
     break;
-    case (enum hex_random_op)OP_TDIV_Q_2:
-    __gmpz_tdiv_q_2exp(r,(mpz_srcptr)(a),bbits);
+    case OP_TDIV_Q_2: __gmpz_tdiv_q_2exp(r,(mpz_srcptr)(a),bbits);
     break;
-    case (enum hex_random_op)OP_TDIV_R_2:
-    __gmpz_tdiv_r_2exp(r,(mpz_srcptr)(a),bbits);
+    case OP_TDIV_R_2: __gmpz_tdiv_r_2exp(r,(mpz_srcptr)(a),bbits);
     break;
   }
   {
@@ -6272,11 +6256,9 @@ void hex_random_scan_op(enum hex_random_op op, unsigned long maxbits,
   if (signs & (unsigned int)1) __gmpz_neg(a,(mpz_srcptr)(a));
   switch (op) {
     default: abort();
-    case (enum hex_random_op)OP_SCAN0:
-    *r = __gmpz_scan0((mpz_srcptr)(a),bbits);
+    case OP_SCAN0: *r = __gmpz_scan0((mpz_srcptr)(a),bbits);
     break;
-    case (enum hex_random_op)OP_SCAN1:
-    *r = __gmpz_scan1((mpz_srcptr)(a),bbits);
+    case OP_SCAN1: *r = __gmpz_scan1((mpz_srcptr)(a),bbits);
     break;
   }
   {

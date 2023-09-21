@@ -3192,7 +3192,7 @@ int _modbus_receive_msg(modbus_t *ctx, uint8_t *msg, msg_type_t msg_type)
     if (length_to_read == 0) 
       switch (step) {
         uint8_t tmp_0;
-        case (_step_t)_STEP_FUNCTION:
+        case _STEP_FUNCTION:
         { /* sequence */
           tmp_0 = compute_meta_length_after_function((int)*(msg + (ctx->backend)->header_length),
                                                      msg_type);
@@ -3202,7 +3202,7 @@ int _modbus_receive_msg(modbus_t *ctx, uint8_t *msg, msg_type_t msg_type)
           step = _STEP_META;
           break;
         }
-        case (_step_t)_STEP_META:
+        case _STEP_META:
         length_to_read = compute_data_length_after_meta(ctx,msg,msg_type);
         if (msg_length + length_to_read > (int)(ctx->backend)->max_adu_length) {
           __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 2;

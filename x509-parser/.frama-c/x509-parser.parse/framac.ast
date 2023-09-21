@@ -235,8 +235,8 @@ static int get_identifier(u8 const *buf, u16 len, tag_class *cls, u8 *prim,
   t = (u32)((int)*(buf + 0) & 0x1f);
   rbytes = (u16)1;
   switch (c) {
-    case (tag_class)CLASS_UNIVERSAL: case (tag_class)CLASS_APPLICATION:
-    case (tag_class)CLASS_CONTEXT_SPECIFIC: case (tag_class)CLASS_PRIVATE:
+    case CLASS_UNIVERSAL: case CLASS_APPLICATION:
+    case CLASS_CONTEXT_SPECIFIC: case CLASS_PRIVATE:
     break;
     default: ret = -241;
     goto out;

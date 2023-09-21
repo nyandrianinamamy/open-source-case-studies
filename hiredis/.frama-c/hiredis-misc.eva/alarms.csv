@@ -111,9 +111,9 @@ directory	file	line	function	property kind	status	property
 .	read.c	294	processLineItem	precondition of memcpy	Unknown	valid_src: valid_read_or_empty(src, n)
 .	read.c	295	processLineItem	index_bound	Unknown	0 ≤ len
 .	read.c	295	processLineItem	index_bound	Unknown	len < 326
+.	read.c	302	processLineItem	precondition of strtod	Unknown	valid_string_nptr: valid_read_string(nptr)
 .	read.c	303	processLineItem	initialization	Unknown	\initialized((char *)buf)
 .	read.c	303	processLineItem	initialization	Unknown	\initialized(eptr + 0)
-.	read.c	303	processLineItem	mem_access	Unknown	\valid_read(eptr + 0)
 .	read.c	309	processLineItem	function_pointer	Unknown	\valid_function((r->fn)->createDouble)
 .	read.c	314	processLineItem	ptr_comparison	Unknown	\pointer_comparable((void *)0, (void *)r->fn)
 .	read.c	314	processLineItem	dangling_pointer	Unknown	¬\dangling(&(r->fn)->createNil)
@@ -311,6 +311,7 @@ FRAMAC_SHARE/libc	netdb.h	125	freeaddrinfo	precondition	Unknown	addrinfo_valid: 
 FRAMAC_SHARE/libc	stdio.h	207	fprintf_va_2	precondition	Unknown	valid_read_string(param0)
 FRAMAC_SHARE/libc	stdio.h	213	snprintf_va_15	precondition	Unknown	valid_read_string(param0)
 FRAMAC_SHARE/libc	stdlib.h	78	atoi	precondition	Unknown	valid_nptr: \valid_read(nptr)
+FRAMAC_SHARE/libc	stdlib.h	98	strtod	precondition	Unknown	valid_string_nptr: valid_read_string(nptr)
 FRAMAC_SHARE/libc	stdlib.h	405	free	precondition	Unknown	freeable: p ≡ \null ∨ \freeable(p)
 FRAMAC_SHARE/libc	stdlib.h	422	realloc	precondition	Unknown	freeable: ptr ≡ \null ∨ \freeable(ptr)
 FRAMAC_SHARE/libc	string.c	146	strcmp	initialization	Unknown	\initialized(s1 + i)

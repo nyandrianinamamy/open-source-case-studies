@@ -57,7 +57,7 @@ errno_t memmove32_s(uint32_t *dest_0, rsize_t dmax, uint32_t const *src,
                     rsize_t smax);
 
 errno_t wmemmove_s(wchar_t *dest_0, rsize_t dmax, wchar_t const *src,
-                   unsigned int smax);
+                   rsize_t smax);
 
 errno_t memset_s(void *dest_0, rsize_t len, uint8_t value);
 
@@ -7729,7 +7729,7 @@ errno_t wmemcpy_s(wchar_t *dest_0, rsize_t dmax, wchar_t const *src,
 }
 
 errno_t wmemmove_s(wchar_t *dest_0, rsize_t dmax, wchar_t const *src,
-                   unsigned int smax)
+                   rsize_t smax)
 {
   errno_t __retres;
   wchar_t *dp;
@@ -7753,7 +7753,7 @@ errno_t wmemmove_s(wchar_t *dest_0, rsize_t dmax, wchar_t const *src,
     __retres = 403;
     goto return_label;
   }
-  if (smax == (unsigned int)0) {
+  if (smax == (rsize_t)0) {
     mem_prim_set((void *)dp,dmax * sizeof(wchar_t),(uint8_t)0);
     invoke_safe_mem_constraint_handler("wmemmove_s: smax is 0",(void *)0,401);
     __retres = 401;
@@ -37183,49 +37183,48 @@ int test_wmemmove_s(void)
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1260 */
   rc = wmemmove_s((wchar_t *)0,(rsize_t)(256 * 4),(wchar_t const *)(mem2_3),
-                  (unsigned int)(256 * 4));
+                  (rsize_t)(256 * 4));
   if (rc != 400) printf("%s %u   Error rc=%u \n",(char *)"test_wmemmove_s",
                         (unsigned int)94,(unsigned int)rc); /* printf_va_1261 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1262 */
   rc = wmemmove_s(mem1_4,(rsize_t)0,(wchar_t const *)(mem2_3),
-                  (unsigned int)(256 * 4));
+                  (rsize_t)(256 * 4));
   if (rc != 401) printf("%s %u   Error rc=%u \n",(char *)"test_wmemmove_s",
                         (unsigned int)105,(unsigned int)rc); /* printf_va_1263 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1264 */
   rc = wmemmove_s(mem1_4,(rsize_t)((256UL << 20) + (unsigned long)1),
-                  (wchar_t const *)(mem2_3),(unsigned int)(256 * 4));
+                  (wchar_t const *)(mem2_3),(rsize_t)(256 * 4));
   if (rc != 403) printf("%s %u   Error rc=%u \n",(char *)"test_wmemmove_s",
                         (unsigned int)115,(unsigned int)rc); /* printf_va_1265 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1266 */
   rc = wmemmove_s(mem1_4,(rsize_t)(256 * 4),(wchar_t const *)0,
-                  (unsigned int)(256 * 4));
+                  (rsize_t)(256 * 4));
   if (rc != 400) printf("%s %u   Error rc=%u \n",(char *)"test_wmemmove_s",
                         (unsigned int)125,(unsigned int)rc); /* printf_va_1267 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1268 */
-  rc = wmemmove_s(mem1_4,(rsize_t)10,(wchar_t const *)(mem2_3),
-                  (unsigned int)0);
+  rc = wmemmove_s(mem1_4,(rsize_t)10,(wchar_t const *)(mem2_3),(rsize_t)0);
   if (rc != 401) printf("%s %u   Error rc=%u \n",(char *)"test_wmemmove_s",
                         (unsigned int)135,(unsigned int)rc); /* printf_va_1269 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1270 */
   rc = wmemmove_s(mem1_4,(rsize_t)(256 * 4),(wchar_t const *)(mem2_3),
-                  (unsigned int)((256UL << 20) + (unsigned long)1));
+                  (rsize_t)((256UL << 20) + (unsigned long)1));
   if (rc != 403) printf("%s %u   Error rc=%u \n",(char *)"test_wmemmove_s",
                         (unsigned int)145,(unsigned int)rc); /* printf_va_1271 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1272 */
   rc = wmemmove_s(mem1_4,(rsize_t)(256 * 4),(wchar_t const *)(& mem1_4[20]),
-                  (unsigned int)21);
+                  (rsize_t)21);
   if (rc != 0) printf("%s %u   Error rc=%u \n",(char *)"test_wmemmove_s",
                       (unsigned int)155,(unsigned int)rc); /* printf_va_1273 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1274 */
   rc = wmemmove_s(& mem1_4[25],(rsize_t)(256 * 4),(wchar_t const *)(mem1_4),
-                  (unsigned int)26);
+                  (rsize_t)26);
   if (rc != 0) printf("%s %u   Error rc=%u \n",(char *)"test_wmemmove_s",
                       (unsigned int)165,(unsigned int)rc); /* printf_va_1275 */
   testno ++;
@@ -37242,7 +37241,7 @@ int test_wmemmove_s(void)
     i ++;
   }
   rc = wmemmove_s(mem1_4,(rsize_t)10,(wchar_t const *)(& mem1_4[10]),
-                  (unsigned int)10);
+                  (rsize_t)10);
   if (rc != 0) printf("%s %u   Error rc=%u \n",(char *)"test_wmemmove_s",
                       (unsigned int)180,(unsigned int)rc); /* printf_va_1277 */
   else {
@@ -37298,8 +37297,7 @@ int test_wmemmove_s(void)
     i ++;
   }
   len = (rsize_t)((256 * 4) / 2);
-  rc = wmemmove_s(mem1_4,len,(wchar_t const *)(mem2_3),
-                  (unsigned int)(256 * 4));
+  rc = wmemmove_s(mem1_4,len,(wchar_t const *)(mem2_3),(rsize_t)(256 * 4));
   if (rc != 403) printf("%s %u   Error rc=%u \n",(char *)"test_wmemmove_s",
                         (unsigned int)235,(unsigned int)rc); /* printf_va_1285 */
   else {
@@ -37414,7 +37412,7 @@ int test_wmemmove_s(void)
     i ++;
   }
   rc = wmemmove_s(mem1_4,(rsize_t)(256 * 4),(wchar_t const *)(mem1_4),
-                  (unsigned int)(256 * 4));
+                  (rsize_t)(256 * 4));
   if (rc != 0) printf("%s %u  Error rc=%u \n",(char *)"test_wmemmove_s",
                       (unsigned int)351,(unsigned int)rc); /* printf_va_1301 */
   testno ++;
@@ -37454,7 +37452,7 @@ int test_wmemmove_s(void)
     i ++;
   }
   rc = wmemmove_s(mem1_4,(rsize_t)(256 * 4),(wchar_t const *)(mem2_3),
-                  (unsigned int)((256 * 4) / 2));
+                  (rsize_t)((256 * 4) / 2));
   if (rc != 0) printf("%s %u  Error rc=%u \n",(char *)"test_wmemmove_s",
                       (unsigned int)388,(unsigned int)rc); /* printf_va_1306 */
   else {
@@ -37479,7 +37477,7 @@ int test_wmemmove_s(void)
     i ++;
   }
   rc = wmemmove_s((wchar_t *)((char *)(mem1_4) + 1),(rsize_t)(256 * 4),
-                  (wchar_t const *)(mem2_3),(unsigned int)10);
+                  (wchar_t const *)(mem2_3),(rsize_t)10);
   if (rc != 0) printf("%s %u  Error rc=%u \n",(char *)"test_wmemmove_s",
                       (unsigned int)410,(unsigned int)rc); /* printf_va_1309 */
   else {
@@ -37507,7 +37505,7 @@ int test_wmemmove_s(void)
     i ++;
   }
   rc = wmemmove_s((wchar_t *)((char *)(mem1_4) + 2),(rsize_t)(256 * 4),
-                  (wchar_t const *)(mem2_3),(unsigned int)10);
+                  (wchar_t const *)(mem2_3),(rsize_t)10);
   if (rc != 0) printf("%s %u  Error rc=%u \n",(char *)"test_wmemmove_s",
                       (unsigned int)436,(unsigned int)rc); /* printf_va_1313 */
   else {

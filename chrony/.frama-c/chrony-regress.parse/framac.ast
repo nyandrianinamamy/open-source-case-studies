@@ -1285,11 +1285,11 @@ static int check_ip_in_node(TableNode *start_node, uint32_t *ip)
     if (! (! finished)) break;
   }
   switch (state) {
-    case (State)ALLOW: result = 1;
+    case ALLOW: result = 1;
     break;
-    case (State)DENY: result = 0;
+    case DENY: result = 0;
     break;
-    case (State)AS_PARENT: __FC_assert(0 != 0,"addrfilt.c",347,"0");
+    case AS_PARENT: __FC_assert(0 != 0,"addrfilt.c",347,"0");
     break;
   }
   return result;
@@ -9547,9 +9547,9 @@ static void leap_start_timeout(void *arg)
 {
   leap_in_progress = 1;
   switch (leap_mode) {
-    case (REF_LeapMode)REF_LeapModeSystem: ;
+    case REF_LeapModeSystem: ;
     break;
-    case (REF_LeapMode)REF_LeapModeSlew: LCL_NotifyLeap(our_leap_sec);
+    case REF_LeapModeSlew: LCL_NotifyLeap(our_leap_sec);
     LCL_AccumulateOffset((double)our_leap_sec,0.0);
     {
       void *__va_args[1] = {(void *)0};
@@ -9557,7 +9557,7 @@ static void leap_start_timeout(void *arg)
                   (void * const *)(__va_args));
     }
     break;
-    case (REF_LeapMode)REF_LeapModeStep: LCL_NotifyLeap(our_leap_sec);
+    case REF_LeapModeStep: LCL_NotifyLeap(our_leap_sec);
     LCL_ApplyStepOffset((double)our_leap_sec);
     {
       void *__va_args_4[1] = {(void *)0};
@@ -9565,7 +9565,7 @@ static void leap_start_timeout(void *arg)
                   (void * const *)(__va_args_4));
     }
     break;
-    case (REF_LeapMode)REF_LeapModeIgnore:
+    case REF_LeapModeIgnore:
     {
       void *__va_args_6[1] = {(void *)0};
       LOG_Message(LOGS_WARN,"Ignoring leap second",
@@ -9631,11 +9631,10 @@ static void update_leap_status(NTP_Leap leap, time_t now, int reset)
         our_leap_sec = leap_sec;
         our_tai_offset = tai_offset;
         switch (leap_mode) {
-          case (REF_LeapMode)REF_LeapModeSystem:
+          case REF_LeapModeSystem:
           LCL_SetSystemLeap(our_leap_sec,our_tai_offset);
-          case (REF_LeapMode)REF_LeapModeSlew:
-          case (REF_LeapMode)REF_LeapModeStep:
-          case (REF_LeapMode)REF_LeapModeIgnore:
+          case REF_LeapModeSlew: case REF_LeapModeStep:
+          case REF_LeapModeIgnore:
           set_leap_timeout(now);
           break;
           default: __FC_assert(0 != 0,"reference.c",815,"0");
@@ -9753,7 +9752,7 @@ static void special_mode_sync(int valid, double offset)
     char const *tmp_2;
     double tmp_3;
     char const *tmp_4;
-    case (REF_Mode)REF_ModeInitStepSlew:
+    case REF_ModeInitStepSlew:
     if (! valid) {
       {
         void *__va_args[1] = {(void *)0};
@@ -9782,7 +9781,7 @@ static void special_mode_sync(int valid, double offset)
     else LCL_AccumulateOffset(offset,0.0);
     end_ref_mode(1);
     break;
-    case (REF_Mode)REF_ModeUpdateOnce: case (REF_Mode)REF_ModePrintOnce:
+    case REF_ModeUpdateOnce: case REF_ModePrintOnce:
     if (! valid) {
       {
         void *__va_args_17[1] = {(void *)0};
@@ -9805,7 +9804,7 @@ static void special_mode_sync(int valid, double offset)
     if (step) LCL_ApplyStepOffset(offset);
     end_ref_mode(1);
     break;
-    case (REF_Mode)REF_ModeIgnore: break;
+    case REF_ModeIgnore: break;
     default: __FC_assert(0 != 0,"reference.c",917,"0");
   }
   return;
@@ -11426,10 +11425,10 @@ static char *source_to_string(SRC_Instance inst)
   switch (inst->type) {
     char *tmp;
     char *tmp_0;
-    case (SRC_Type)SRC_NTP: tmp = UTI_IPToString(inst->ip_addr);
+    case SRC_NTP: tmp = UTI_IPToString(inst->ip_addr);
     __retres = tmp;
     goto return_label;
-    case (SRC_Type)SRC_REFCLOCK: tmp_0 = UTI_RefidToString(inst->ref_id);
+    case SRC_REFCLOCK: tmp_0 = UTI_RefidToString(inst->ref_id);
     __retres = tmp_0;
     goto return_label;
     default: __FC_assert(0 != 0,"sources.c",476,"0");
@@ -12364,18 +12363,17 @@ int SRC_ReportSource(int index_0, RPT_SourceReport *report,
         report->ip_addr.family = (uint16_t)1;
       }
       switch (src->status) {
-        case (SRC_Status)SRC_FALSETICKER: report->state = RPT_FALSETICKER;
+        case SRC_FALSETICKER: report->state = RPT_FALSETICKER;
         break;
-        case (SRC_Status)SRC_JITTERY: report->state = RPT_JITTERY;
+        case SRC_JITTERY: report->state = RPT_JITTERY;
         break;
-        case (SRC_Status)SRC_UNTRUSTED: case (SRC_Status)SRC_WAITS_SOURCES:
-        case (SRC_Status)SRC_NONPREFERRED: case (SRC_Status)SRC_WAITS_UPDATE:
-        case (SRC_Status)SRC_DISTANT: case (SRC_Status)SRC_OUTLIER:
+        case SRC_UNTRUSTED: case SRC_WAITS_SOURCES: case SRC_NONPREFERRED:
+        case SRC_WAITS_UPDATE: case SRC_DISTANT: case SRC_OUTLIER:
         report->state = RPT_OUTLIER;
         break;
-        case (SRC_Status)SRC_UNSELECTED: report->state = RPT_CANDIDATE;
+        case SRC_UNSELECTED: report->state = RPT_CANDIDATE;
         break;
-        case (SRC_Status)SRC_SELECTED: report->state = RPT_SYNC;
+        case SRC_SELECTED: report->state = RPT_SYNC;
         break;
         default: report->state = RPT_UNREACH;
         break;

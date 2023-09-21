@@ -14610,100 +14610,100 @@ char const __attribute__((__visibility__("default"))) *mz_zip_get_error_string
 {
   char const __attribute__((__visibility__("default"))) *__retres;
   switch (mz_err) {
-    case (mz_zip_error)MZ_ZIP_NO_ERROR:
+    case MZ_ZIP_NO_ERROR:
     __retres = (char const __attribute__((__visibility__("default"))) *)"no error";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_UNDEFINED_ERROR:
+    case MZ_ZIP_UNDEFINED_ERROR:
     __retres = (char const __attribute__((__visibility__("default"))) *)"undefined error";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_TOO_MANY_FILES:
+    case MZ_ZIP_TOO_MANY_FILES:
     __retres = (char const __attribute__((__visibility__("default"))) *)"too many files";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_FILE_TOO_LARGE:
+    case MZ_ZIP_FILE_TOO_LARGE:
     __retres = (char const __attribute__((__visibility__("default"))) *)"file too large";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_UNSUPPORTED_METHOD:
+    case MZ_ZIP_UNSUPPORTED_METHOD:
     __retres = (char const __attribute__((__visibility__("default"))) *)"unsupported method";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_UNSUPPORTED_ENCRYPTION:
+    case MZ_ZIP_UNSUPPORTED_ENCRYPTION:
     __retres = (char const __attribute__((__visibility__("default"))) *)"unsupported encryption";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_UNSUPPORTED_FEATURE:
+    case MZ_ZIP_UNSUPPORTED_FEATURE:
     __retres = (char const __attribute__((__visibility__("default"))) *)"unsupported feature";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_FAILED_FINDING_CENTRAL_DIR:
+    case MZ_ZIP_FAILED_FINDING_CENTRAL_DIR:
     __retres = (char const __attribute__((__visibility__("default"))) *)"failed finding central directory";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_NOT_AN_ARCHIVE:
+    case MZ_ZIP_NOT_AN_ARCHIVE:
     __retres = (char const __attribute__((__visibility__("default"))) *)"not a ZIP archive";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_INVALID_HEADER_OR_CORRUPTED:
+    case MZ_ZIP_INVALID_HEADER_OR_CORRUPTED:
     __retres = (char const __attribute__((__visibility__("default"))) *)"invalid header or archive is corrupted";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_UNSUPPORTED_MULTIDISK:
+    case MZ_ZIP_UNSUPPORTED_MULTIDISK:
     __retres = (char const __attribute__((__visibility__("default"))) *)"unsupported multidisk archive";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_DECOMPRESSION_FAILED:
+    case MZ_ZIP_DECOMPRESSION_FAILED:
     __retres = (char const __attribute__((__visibility__("default"))) *)"decompression failed or archive is corrupted";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_COMPRESSION_FAILED:
+    case MZ_ZIP_COMPRESSION_FAILED:
     __retres = (char const __attribute__((__visibility__("default"))) *)"compression failed";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_UNEXPECTED_DECOMPRESSED_SIZE:
+    case MZ_ZIP_UNEXPECTED_DECOMPRESSED_SIZE:
     __retres = (char const __attribute__((__visibility__("default"))) *)"unexpected decompressed size";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_CRC_CHECK_FAILED:
+    case MZ_ZIP_CRC_CHECK_FAILED:
     __retres = (char const __attribute__((__visibility__("default"))) *)"CRC-32 check failed";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_UNSUPPORTED_CDIR_SIZE:
+    case MZ_ZIP_UNSUPPORTED_CDIR_SIZE:
     __retres = (char const __attribute__((__visibility__("default"))) *)"unsupported central directory size";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_ALLOC_FAILED:
+    case MZ_ZIP_ALLOC_FAILED:
     __retres = (char const __attribute__((__visibility__("default"))) *)"allocation failed";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_FILE_OPEN_FAILED:
+    case MZ_ZIP_FILE_OPEN_FAILED:
     __retres = (char const __attribute__((__visibility__("default"))) *)"file open failed";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_FILE_CREATE_FAILED:
+    case MZ_ZIP_FILE_CREATE_FAILED:
     __retres = (char const __attribute__((__visibility__("default"))) *)"file create failed";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_FILE_WRITE_FAILED:
+    case MZ_ZIP_FILE_WRITE_FAILED:
     __retres = (char const __attribute__((__visibility__("default"))) *)"file write failed";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_FILE_READ_FAILED:
+    case MZ_ZIP_FILE_READ_FAILED:
     __retres = (char const __attribute__((__visibility__("default"))) *)"file read failed";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_FILE_CLOSE_FAILED:
+    case MZ_ZIP_FILE_CLOSE_FAILED:
     __retres = (char const __attribute__((__visibility__("default"))) *)"file close failed";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_FILE_SEEK_FAILED:
+    case MZ_ZIP_FILE_SEEK_FAILED:
     __retres = (char const __attribute__((__visibility__("default"))) *)"file seek failed";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_FILE_STAT_FAILED:
+    case MZ_ZIP_FILE_STAT_FAILED:
     __retres = (char const __attribute__((__visibility__("default"))) *)"file stat failed";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_INVALID_PARAMETER:
+    case MZ_ZIP_INVALID_PARAMETER:
     __retres = (char const __attribute__((__visibility__("default"))) *)"invalid parameter";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_INVALID_FILENAME:
+    case MZ_ZIP_INVALID_FILENAME:
     __retres = (char const __attribute__((__visibility__("default"))) *)"invalid filename";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_BUF_TOO_SMALL:
+    case MZ_ZIP_BUF_TOO_SMALL:
     __retres = (char const __attribute__((__visibility__("default"))) *)"buffer too small";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_INTERNAL_ERROR:
+    case MZ_ZIP_INTERNAL_ERROR:
     __retres = (char const __attribute__((__visibility__("default"))) *)"internal error";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_FILE_NOT_FOUND:
+    case MZ_ZIP_FILE_NOT_FOUND:
     __retres = (char const __attribute__((__visibility__("default"))) *)"file not found";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_ARCHIVE_TOO_LARGE:
+    case MZ_ZIP_ARCHIVE_TOO_LARGE:
     __retres = (char const __attribute__((__visibility__("default"))) *)"archive is too large";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_VALIDATION_FAILED:
+    case MZ_ZIP_VALIDATION_FAILED:
     __retres = (char const __attribute__((__visibility__("default"))) *)"validation failed";
     goto return_label;
-    case (mz_zip_error)MZ_ZIP_WRITE_CALLBACK_FAILED:
+    case MZ_ZIP_WRITE_CALLBACK_FAILED:
     __retres = (char const __attribute__((__visibility__("default"))) *)"write calledback failed";
     goto return_label;
     default: break;

@@ -1995,9 +1995,9 @@ void SignalMemoryErrors(void)
 void SetMemoryConfiguration(memory_configuration_t memory)
 {
   switch (memory) {
-    case (memory_configuration_t)PROM_e: ;
+    case PROM_e: ;
     break;
-    case (memory_configuration_t)SRAM_e: ;
+    case SRAM_e: ;
     break;
   }
   memory_mode = memory;
@@ -2857,7 +2857,7 @@ void MemoryPatch(telecommand_t *command)
     if ((int)write_checksum == (int)command->TC_code) {
       address = (data_address_t)((unsigned int)address_MSB * (unsigned int)256 + (unsigned int)address_LSB);
       switch (memory_type) {
-        case (memory_type_t)data_e: ;
+        case data_e: ;
         if ((int)address <= (0xFEFF - 32) + 1) {
           i = (uint_least8_t)0;
           while (i < (uint_least8_t)32) {
@@ -2868,7 +2868,7 @@ void MemoryPatch(telecommand_t *command)
         }
         else Set_TC_Error();
         break;
-        case (memory_type_t)code_e: ;
+        case code_e: ;
         if ((int)address >= 0x1000) {
           if ((int)address <= (0x7FFF - 32) + 1) {
             unsigned char tmp;
@@ -3256,18 +3256,17 @@ void HandleTelecommand(void)
         else 
           _LAND:
           switch (TC_state) {
-            case (TC_state_t)read_memory_e: ;
+            case read_memory_e: ;
             if ((int)received_command.TC_address != 0x60) {
               Set_TC_Error();
               TC_state = TC_handling_e;
             }
             break;
-            case (TC_state_t)write_memory_e: WriteMemory(& received_command);
+            case write_memory_e: WriteMemory(& received_command);
             break;
-            case (TC_state_t)memory_patch_e: MemoryPatch(& received_command);
+            case memory_patch_e: MemoryPatch(& received_command);
             break;
-            case (TC_state_t)TC_handling_e:
-            ExecuteCommand(& received_command);
+            case TC_handling_e: ExecuteCommand(& received_command);
             break;
           }
       previous_TC = received_command;

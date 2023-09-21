@@ -19720,67 +19720,56 @@ cipher_info_t const *cipher_info_from_type(cipher_type_t const cipher_type)
 {
   cipher_info_t const *__retres;
   switch (cipher_type) {
-    case (cipher_type_t)POLARSSL_CIPHER_AES_128_CBC:
-    __retres = & aes_128_cbc_info;
+    case POLARSSL_CIPHER_AES_128_CBC: __retres = & aes_128_cbc_info;
     goto return_label;
-    case (cipher_type_t)POLARSSL_CIPHER_AES_192_CBC:
-    __retres = & aes_192_cbc_info;
+    case POLARSSL_CIPHER_AES_192_CBC: __retres = & aes_192_cbc_info;
     goto return_label;
-    case (cipher_type_t)POLARSSL_CIPHER_AES_256_CBC:
-    __retres = & aes_256_cbc_info;
+    case POLARSSL_CIPHER_AES_256_CBC: __retres = & aes_256_cbc_info;
     goto return_label;
-    case (cipher_type_t)POLARSSL_CIPHER_AES_128_CFB128:
-    __retres = & aes_128_cfb128_info;
+    case POLARSSL_CIPHER_AES_128_CFB128: __retres = & aes_128_cfb128_info;
     goto return_label;
-    case (cipher_type_t)POLARSSL_CIPHER_AES_192_CFB128:
-    __retres = & aes_192_cfb128_info;
+    case POLARSSL_CIPHER_AES_192_CFB128: __retres = & aes_192_cfb128_info;
     goto return_label;
-    case (cipher_type_t)POLARSSL_CIPHER_AES_256_CFB128:
-    __retres = & aes_256_cfb128_info;
+    case POLARSSL_CIPHER_AES_256_CFB128: __retres = & aes_256_cfb128_info;
     goto return_label;
-    case (cipher_type_t)POLARSSL_CIPHER_AES_128_CTR:
-    __retres = & aes_128_ctr_info;
+    case POLARSSL_CIPHER_AES_128_CTR: __retres = & aes_128_ctr_info;
     goto return_label;
-    case (cipher_type_t)POLARSSL_CIPHER_AES_192_CTR:
-    __retres = & aes_192_ctr_info;
+    case POLARSSL_CIPHER_AES_192_CTR: __retres = & aes_192_ctr_info;
     goto return_label;
-    case (cipher_type_t)POLARSSL_CIPHER_AES_256_CTR:
-    __retres = & aes_256_ctr_info;
+    case POLARSSL_CIPHER_AES_256_CTR: __retres = & aes_256_ctr_info;
     goto return_label;
-    case (cipher_type_t)POLARSSL_CIPHER_CAMELLIA_128_CBC:
+    case POLARSSL_CIPHER_CAMELLIA_128_CBC:
     __retres = & camellia_128_cbc_info;
     goto return_label;
-    case (cipher_type_t)POLARSSL_CIPHER_CAMELLIA_192_CBC:
+    case POLARSSL_CIPHER_CAMELLIA_192_CBC:
     __retres = & camellia_192_cbc_info;
     goto return_label;
-    case (cipher_type_t)POLARSSL_CIPHER_CAMELLIA_256_CBC:
+    case POLARSSL_CIPHER_CAMELLIA_256_CBC:
     __retres = & camellia_256_cbc_info;
     goto return_label;
-    case (cipher_type_t)POLARSSL_CIPHER_CAMELLIA_128_CFB128:
+    case POLARSSL_CIPHER_CAMELLIA_128_CFB128:
     __retres = & camellia_128_cfb128_info;
     goto return_label;
-    case (cipher_type_t)POLARSSL_CIPHER_CAMELLIA_192_CFB128:
+    case POLARSSL_CIPHER_CAMELLIA_192_CFB128:
     __retres = & camellia_192_cfb128_info;
     goto return_label;
-    case (cipher_type_t)POLARSSL_CIPHER_CAMELLIA_256_CFB128:
+    case POLARSSL_CIPHER_CAMELLIA_256_CFB128:
     __retres = & camellia_256_cfb128_info;
     goto return_label;
-    case (cipher_type_t)POLARSSL_CIPHER_CAMELLIA_128_CTR:
+    case POLARSSL_CIPHER_CAMELLIA_128_CTR:
     __retres = & camellia_128_ctr_info;
     goto return_label;
-    case (cipher_type_t)POLARSSL_CIPHER_CAMELLIA_192_CTR:
+    case POLARSSL_CIPHER_CAMELLIA_192_CTR:
     __retres = & camellia_192_ctr_info;
     goto return_label;
-    case (cipher_type_t)POLARSSL_CIPHER_CAMELLIA_256_CTR:
+    case POLARSSL_CIPHER_CAMELLIA_256_CTR:
     __retres = & camellia_256_ctr_info;
     goto return_label;
-    case (cipher_type_t)POLARSSL_CIPHER_DES_CBC: __retres = & des_cbc_info;
+    case POLARSSL_CIPHER_DES_CBC: __retres = & des_cbc_info;
     goto return_label;
-    case (cipher_type_t)POLARSSL_CIPHER_DES_EDE_CBC:
-    __retres = & des_ede_cbc_info;
+    case POLARSSL_CIPHER_DES_EDE_CBC: __retres = & des_ede_cbc_info;
     goto return_label;
-    case (cipher_type_t)POLARSSL_CIPHER_DES_EDE3_CBC:
-    __retres = & des_ede3_cbc_info;
+    case POLARSSL_CIPHER_DES_EDE3_CBC: __retres = & des_ede3_cbc_info;
     goto return_label;
     default: __retres = (cipher_info_t const *)0;
     goto return_label;
@@ -25041,17 +25030,17 @@ md_info_t const *md_info_from_type(md_type_t md_type)
 {
   md_info_t const *__retres;
   switch (md_type) {
-    case (md_type_t)POLARSSL_MD_MD5: __retres = & md5_info;
+    case POLARSSL_MD_MD5: __retres = & md5_info;
     goto return_label;
-    case (md_type_t)POLARSSL_MD_SHA1: __retres = & sha1_info;
+    case POLARSSL_MD_SHA1: __retres = & sha1_info;
     goto return_label;
-    case (md_type_t)POLARSSL_MD_SHA224: __retres = & sha224_info;
+    case POLARSSL_MD_SHA224: __retres = & sha224_info;
     goto return_label;
-    case (md_type_t)POLARSSL_MD_SHA256: __retres = & sha256_info;
+    case POLARSSL_MD_SHA256: __retres = & sha256_info;
     goto return_label;
-    case (md_type_t)POLARSSL_MD_SHA384: __retres = & sha384_info;
+    case POLARSSL_MD_SHA384: __retres = & sha384_info;
     goto return_label;
-    case (md_type_t)POLARSSL_MD_SHA512: __retres = & sha512_info;
+    case POLARSSL_MD_SHA512: __retres = & sha512_info;
     goto return_label;
     default: __retres = (md_info_t const *)0;
     goto return_label;

@@ -1395,11 +1395,11 @@ static int check_ip_in_node(TableNode *start_node, uint32_t *ip)
     if (! (! finished)) break;
   }
   switch (state) {
-    case (State)ALLOW: result = 1;
+    case ALLOW: result = 1;
     break;
-    case (State)DENY: result = 0;
+    case DENY: result = 0;
     break;
-    case (State)AS_PARENT: __FC_assert(0 != 0,"addrfilt.c",347,"0");
+    case AS_PARENT: __FC_assert(0 != 0,"addrfilt.c",347,"0");
     break;
   }
   return result;
@@ -9733,9 +9733,9 @@ static void leap_start_timeout(void *arg)
 {
   leap_in_progress = 1;
   switch (leap_mode) {
-    case (REF_LeapMode)REF_LeapModeSystem: ;
+    case REF_LeapModeSystem: ;
     break;
-    case (REF_LeapMode)REF_LeapModeSlew: LCL_NotifyLeap(our_leap_sec);
+    case REF_LeapModeSlew: LCL_NotifyLeap(our_leap_sec);
     LCL_AccumulateOffset((double)our_leap_sec,0.0);
     {
       void *__va_args[1] = {(void *)0};
@@ -9743,7 +9743,7 @@ static void leap_start_timeout(void *arg)
                   (void * const *)(__va_args));
     }
     break;
-    case (REF_LeapMode)REF_LeapModeStep: LCL_NotifyLeap(our_leap_sec);
+    case REF_LeapModeStep: LCL_NotifyLeap(our_leap_sec);
     LCL_ApplyStepOffset((double)our_leap_sec);
     {
       void *__va_args_4[1] = {(void *)0};
@@ -9751,7 +9751,7 @@ static void leap_start_timeout(void *arg)
                   (void * const *)(__va_args_4));
     }
     break;
-    case (REF_LeapMode)REF_LeapModeIgnore:
+    case REF_LeapModeIgnore:
     {
       void *__va_args_6[1] = {(void *)0};
       LOG_Message(LOGS_WARN,"Ignoring leap second",
@@ -9817,11 +9817,10 @@ static void update_leap_status(NTP_Leap leap, time_t now, int reset)
         our_leap_sec = leap_sec;
         our_tai_offset = tai_offset;
         switch (leap_mode) {
-          case (REF_LeapMode)REF_LeapModeSystem:
+          case REF_LeapModeSystem:
           LCL_SetSystemLeap(our_leap_sec,our_tai_offset);
-          case (REF_LeapMode)REF_LeapModeSlew:
-          case (REF_LeapMode)REF_LeapModeStep:
-          case (REF_LeapMode)REF_LeapModeIgnore:
+          case REF_LeapModeSlew: case REF_LeapModeStep:
+          case REF_LeapModeIgnore:
           set_leap_timeout(now);
           break;
           default: __FC_assert(0 != 0,"reference.c",815,"0");
@@ -9939,7 +9938,7 @@ static void special_mode_sync(int valid, double offset)
     char const *tmp_2;
     double tmp_3;
     char const *tmp_4;
-    case (REF_Mode)REF_ModeInitStepSlew:
+    case REF_ModeInitStepSlew:
     if (! valid) {
       {
         void *__va_args[1] = {(void *)0};
@@ -9968,7 +9967,7 @@ static void special_mode_sync(int valid, double offset)
     else LCL_AccumulateOffset(offset,0.0);
     end_ref_mode(1);
     break;
-    case (REF_Mode)REF_ModeUpdateOnce: case (REF_Mode)REF_ModePrintOnce:
+    case REF_ModeUpdateOnce: case REF_ModePrintOnce:
     if (! valid) {
       {
         void *__va_args_17[1] = {(void *)0};
@@ -9991,7 +9990,7 @@ static void special_mode_sync(int valid, double offset)
     if (step) LCL_ApplyStepOffset(offset);
     end_ref_mode(1);
     break;
-    case (REF_Mode)REF_ModeIgnore: break;
+    case REF_ModeIgnore: break;
     default: __FC_assert(0 != 0,"reference.c",917,"0");
   }
   return;
@@ -12399,10 +12398,10 @@ static char *source_to_string(SRC_Instance inst)
   switch (inst->type) {
     char *tmp;
     char *tmp_0;
-    case (SRC_Type)SRC_NTP: tmp = UTI_IPToString(inst->ip_addr);
+    case SRC_NTP: tmp = UTI_IPToString(inst->ip_addr);
     __retres = tmp;
     goto return_label;
-    case (SRC_Type)SRC_REFCLOCK: tmp_0 = UTI_RefidToString(inst->ref_id);
+    case SRC_REFCLOCK: tmp_0 = UTI_RefidToString(inst->ref_id);
     __retres = tmp_0;
     goto return_label;
     default: __FC_assert(0 != 0,"sources.c",476,"0");
@@ -13337,18 +13336,17 @@ int SRC_ReportSource(int index_0, RPT_SourceReport *report,
         report->ip_addr.family = (uint16_t)1;
       }
       switch (src->status) {
-        case (SRC_Status)SRC_FALSETICKER: report->state = RPT_FALSETICKER;
+        case SRC_FALSETICKER: report->state = RPT_FALSETICKER;
         break;
-        case (SRC_Status)SRC_JITTERY: report->state = RPT_JITTERY;
+        case SRC_JITTERY: report->state = RPT_JITTERY;
         break;
-        case (SRC_Status)SRC_UNTRUSTED: case (SRC_Status)SRC_WAITS_SOURCES:
-        case (SRC_Status)SRC_NONPREFERRED: case (SRC_Status)SRC_WAITS_UPDATE:
-        case (SRC_Status)SRC_DISTANT: case (SRC_Status)SRC_OUTLIER:
+        case SRC_UNTRUSTED: case SRC_WAITS_SOURCES: case SRC_NONPREFERRED:
+        case SRC_WAITS_UPDATE: case SRC_DISTANT: case SRC_OUTLIER:
         report->state = RPT_OUTLIER;
         break;
-        case (SRC_Status)SRC_UNSELECTED: report->state = RPT_CANDIDATE;
+        case SRC_UNSELECTED: report->state = RPT_CANDIDATE;
         break;
-        case (SRC_Status)SRC_SELECTED: report->state = RPT_SYNC;
+        case SRC_SELECTED: report->state = RPT_SYNC;
         break;
         default: report->state = RPT_UNREACH;
         break;
@@ -16198,10 +16196,10 @@ NCR_Instance NCR_GetInstance(NTP_Remote_Address *remote_addr,
   result->local_addr.ip_addr.family = (uint16_t)0;
   result->local_addr.if_index = -1;
   switch (type) {
-    case (NTP_Source_Type)NTP_SERVER: result->local_addr.sock_fd = -2;
+    case NTP_SERVER: result->local_addr.sock_fd = -2;
     result->mode = MODE_CLIENT;
     break;
-    case (NTP_Source_Type)NTP_PEER:
+    case NTP_PEER:
     if ((int)remote_addr->ip_addr.family != 0) result->local_addr.sock_fd = 100;
     else result->local_addr.sock_fd = 0;
     result->mode = MODE_ACTIVE;
@@ -16511,15 +16509,15 @@ static double get_transmit_delay(NCR_Instance inst, int on_tx, double last_tx)
   poll_to_use = get_transmit_poll(inst);
   delay_time = UTI_Log2ToDouble(poll_to_use);
   switch (inst->opmode) {
-    case (OperatingMode)MD_OFFLINE: __FC_assert(0 != 0,"ntp_core.c",844,"0");
+    case MD_OFFLINE: __FC_assert(0 != 0,"ntp_core.c",844,"0");
     break;
-    case (OperatingMode)MD_ONLINE: ;
+    case MD_ONLINE: ;
     switch (inst->mode) {
       int tmp;
-      case (NTP_Mode)MODE_CLIENT: ;
+      case MODE_CLIENT: ;
       if (inst->presend_done) delay_time = 2.0;
       break;
-      case (NTP_Mode)MODE_ACTIVE:
+      case MODE_ACTIVE:
       { /* sequence */
         tmp = REF_GetOurStratum();
         stratum_diff = inst->remote_stratum - tmp;
@@ -16539,8 +16537,7 @@ static double get_transmit_delay(NCR_Instance inst, int on_tx, double last_tx)
       break;
     }
     break;
-    case (OperatingMode)MD_BURST_WAS_ONLINE:
-    case (OperatingMode)MD_BURST_WAS_OFFLINE:
+    case MD_BURST_WAS_ONLINE: case MD_BURST_WAS_OFFLINE:
     if (2.0 < 0.25 * delay_time) delay_time = 2.0;
     else delay_time = 0.25 * delay_time;
     break;
@@ -16808,13 +16805,13 @@ static void transmit_timeout(void *arg)
   NCR_Instance inst = (NCR_Instance)arg;
   inst->tx_timeout_id = (SCH_TimeoutID)0;
   switch (inst->opmode) {
-    case (OperatingMode)MD_BURST_WAS_ONLINE: ;
+    case MD_BURST_WAS_ONLINE: ;
     if (inst->burst_total_samples_to_go <= 1) inst->opmode = MD_ONLINE;
     break;
-    case (OperatingMode)MD_BURST_WAS_OFFLINE: ;
+    case MD_BURST_WAS_OFFLINE: ;
     if (inst->burst_total_samples_to_go <= 0) take_offline(inst);
     break;
-    case (OperatingMode)MD_ONLINE: ;
+    case MD_ONLINE: ;
     if (inst->auto_burst) 
       if (inst->local_poll > inst->minpoll) {
         int tmp;
@@ -16910,16 +16907,15 @@ static void transmit_timeout(void *arg)
   if (! sent) 
     if (inst->auto_offline) NCR_SetConnectivity(inst,SRC_OFFLINE);
   switch (inst->opmode) {
-    case (OperatingMode)MD_BURST_WAS_ONLINE:
+    case MD_BURST_WAS_ONLINE:
     if (! sent) {
       int tmp_9;
       tmp_9 = SRC_IsReachable(inst->source);
       if (! tmp_9) break;
     }
-    case (OperatingMode)MD_BURST_WAS_OFFLINE:
-    (inst->burst_total_samples_to_go) --;
+    case MD_BURST_WAS_OFFLINE: (inst->burst_total_samples_to_go) --;
     break;
-    case (OperatingMode)MD_OFFLINE: ;
+    case MD_OFFLINE: ;
     goto return_label;
     default: break;
   }
@@ -17582,8 +17578,7 @@ static int receive_packet(NCR_Instance inst, NTP_Local_Address *local_addr,
     if (good_packet) {
       process_sample(inst,& sample);
       switch (inst->opmode) {
-        case (OperatingMode)MD_BURST_WAS_ONLINE:
-        case (OperatingMode)MD_BURST_WAS_OFFLINE:
+        case MD_BURST_WAS_ONLINE: case MD_BURST_WAS_OFFLINE:
         (inst->burst_good_samples_to_go) --;
         if (inst->burst_good_samples_to_go <= 0) 
           if (inst->opmode == (unsigned int)MD_BURST_WAS_ONLINE) inst->opmode = MD_ONLINE;
@@ -17770,19 +17765,19 @@ int NCR_ProcessRxKnown(NCR_Instance inst, NTP_Local_Address *local_addr,
   switch (pkt_mode) {
     case MODE_ACTIVE: ;
     switch (inst->mode) {
-      case (NTP_Mode)MODE_ACTIVE: proc_packet = 1;
+      case MODE_ACTIVE: proc_packet = 1;
       break;
-      case (NTP_Mode)MODE_PASSIVE: break;
-      case (NTP_Mode)MODE_CLIENT: proc_as_unknown = 1;
+      case MODE_PASSIVE: break;
+      case MODE_CLIENT: proc_as_unknown = 1;
       break;
       default: break;
     }
     break;
     case MODE_PASSIVE: ;
     switch (inst->mode) {
-      case (NTP_Mode)MODE_ACTIVE: proc_packet = 1;
+      case MODE_ACTIVE: proc_packet = 1;
       break;
-      case (NTP_Mode)MODE_PASSIVE: break;
+      case MODE_PASSIVE: break;
       default: break;
     }
     break;
@@ -17790,7 +17785,7 @@ int NCR_ProcessRxKnown(NCR_Instance inst, NTP_Local_Address *local_addr,
     break;
     case MODE_SERVER: ;
     switch (inst->mode) {
-      case (NTP_Mode)MODE_CLIENT: proc_packet = 1;
+      case MODE_CLIENT: proc_packet = 1;
       break;
       default: break;
     }
@@ -17858,11 +17853,11 @@ void NCR_ProcessRxUnknown(NTP_Remote_Address *remote_addr,
   pkt_mode = (NTP_Mode)((int)message->lvm & 0x7);
   pkt_version = ((int)message->lvm >> 3) & 0x7;
   switch (pkt_mode) {
-    case (NTP_Mode)MODE_ACTIVE: my_mode = MODE_PASSIVE;
+    case MODE_ACTIVE: my_mode = MODE_PASSIVE;
     break;
-    case (NTP_Mode)MODE_CLIENT: my_mode = MODE_SERVER;
+    case MODE_CLIENT: my_mode = MODE_SERVER;
     break;
-    case (NTP_Mode)MODE_UNDEFINED: ;
+    case MODE_UNDEFINED: ;
     if (pkt_version == 1) 
       if ((int)remote_addr->port != 123) {
         my_mode = MODE_SERVER;
@@ -17880,8 +17875,8 @@ void NCR_ProcessRxUnknown(NTP_Remote_Address *remote_addr,
   valid_auth = check_packet_auth(message,length,& auth_mode,& key_id);
   if (! valid_auth) 
     switch (auth_mode) {
-      case (AuthenticationMode)AUTH_NONE: break;
-      case (AuthenticationMode)AUTH_MSSNTP: break;
+      case AUTH_NONE: break;
+      case AUTH_MSSNTP: break;
       default: ;
       goto return_label;
     }
@@ -18043,10 +18038,10 @@ void NCR_SetConnectivity(NCR_Instance inst, SRC_Connectivity connectivity)
     if (tmp) connectivity = SRC_ONLINE; else connectivity = SRC_OFFLINE;
   }
   switch (connectivity) {
-    case (SRC_Connectivity)SRC_ONLINE: ;
+    case SRC_ONLINE: ;
     switch (inst->opmode) {
-      case (OperatingMode)MD_ONLINE: break;
-      case (OperatingMode)MD_OFFLINE:
+      case MD_ONLINE: break;
+      case MD_OFFLINE:
       {
         char *__va_arg0 = s;
         void *__va_args[1] = {& __va_arg0};
@@ -18056,9 +18051,8 @@ void NCR_SetConnectivity(NCR_Instance inst, SRC_Connectivity connectivity)
       NCR_ResetInstance(inst);
       start_initial_timeout(inst);
       break;
-      case (OperatingMode)MD_BURST_WAS_ONLINE: break;
-      case (OperatingMode)MD_BURST_WAS_OFFLINE:
-      inst->opmode = MD_BURST_WAS_ONLINE;
+      case MD_BURST_WAS_ONLINE: break;
+      case MD_BURST_WAS_OFFLINE: inst->opmode = MD_BURST_WAS_ONLINE;
       {
         char *__va_arg0_8 = s;
         void *__va_args_10[1] = {& __va_arg0_8};
@@ -18069,9 +18063,9 @@ void NCR_SetConnectivity(NCR_Instance inst, SRC_Connectivity connectivity)
       default: __FC_assert(0 != 0,"ntp_core.c",2344,"0");
     }
     break;
-    case (SRC_Connectivity)SRC_OFFLINE: ;
+    case SRC_OFFLINE: ;
     switch (inst->opmode) {
-      case (OperatingMode)MD_ONLINE:
+      case MD_ONLINE:
       {
         char *__va_arg0_12 = s;
         void *__va_args_14[1] = {& __va_arg0_12};
@@ -18080,9 +18074,8 @@ void NCR_SetConnectivity(NCR_Instance inst, SRC_Connectivity connectivity)
       }
       take_offline(inst);
       break;
-      case (OperatingMode)MD_OFFLINE: break;
-      case (OperatingMode)MD_BURST_WAS_ONLINE:
-      inst->opmode = MD_BURST_WAS_OFFLINE;
+      case MD_OFFLINE: break;
+      case MD_BURST_WAS_ONLINE: inst->opmode = MD_BURST_WAS_OFFLINE;
       {
         char *__va_arg0_16 = s;
         void *__va_args_18[1] = {& __va_arg0_16};
@@ -18090,7 +18083,7 @@ void NCR_SetConnectivity(NCR_Instance inst, SRC_Connectivity connectivity)
                     (void * const *)(__va_args_18));
       }
       break;
-      case (OperatingMode)MD_BURST_WAS_OFFLINE: break;
+      case MD_BURST_WAS_OFFLINE: break;
       default: __FC_assert(0 != 0,"ntp_core.c",2362,"0");
     }
     break;
@@ -18250,10 +18243,8 @@ void NCR_InitiateSampleBurst(NCR_Instance inst, int n_good_samples,
 {
   if (inst->mode == (unsigned int)MODE_CLIENT) 
     switch (inst->opmode) {
-      case (OperatingMode)MD_BURST_WAS_OFFLINE:
-      case (OperatingMode)MD_BURST_WAS_ONLINE:
-      break;
-      case (OperatingMode)MD_ONLINE: case (OperatingMode)MD_OFFLINE:
+      case MD_BURST_WAS_OFFLINE: case MD_BURST_WAS_ONLINE: break;
+      case MD_ONLINE: case MD_OFFLINE:
       if (inst->opmode == (unsigned int)MD_ONLINE) inst->opmode = MD_BURST_WAS_ONLINE;
       else inst->opmode = MD_BURST_WAS_OFFLINE;
       inst->burst_good_samples_to_go = n_good_samples;
@@ -18271,9 +18262,9 @@ void NCR_ReportSource(NCR_Instance inst, RPT_SourceReport *report,
 {
   report->poll = get_transmit_poll(inst);
   switch (inst->mode) {
-    case (NTP_Mode)MODE_CLIENT: report->mode = RPT_NTP_CLIENT;
+    case MODE_CLIENT: report->mode = RPT_NTP_CLIENT;
     break;
-    case (NTP_Mode)MODE_ACTIVE: report->mode = RPT_NTP_PEER;
+    case MODE_ACTIVE: report->mode = RPT_NTP_PEER;
     break;
     default: __FC_assert(0 != 0,"ntp_core.c",2497,"0");
   }
@@ -18358,13 +18349,13 @@ void NCR_IncrementActivityCounters(NCR_Instance inst, int *online,
                                    int *burst_offline)
 {
   switch (inst->opmode) {
-    case (OperatingMode)MD_BURST_WAS_OFFLINE: (*burst_offline) ++;
+    case MD_BURST_WAS_OFFLINE: (*burst_offline) ++;
     break;
-    case (OperatingMode)MD_BURST_WAS_ONLINE: (*burst_online) ++;
+    case MD_BURST_WAS_ONLINE: (*burst_online) ++;
     break;
-    case (OperatingMode)MD_ONLINE: (*online) ++;
+    case MD_ONLINE: (*online) ++;
     break;
-    case (OperatingMode)MD_OFFLINE: (*offline) ++;
+    case MD_OFFLINE: (*offline) ++;
     break;
     default: __FC_assert(0 != 0,"ntp_core.c",2591,"0");
     break;

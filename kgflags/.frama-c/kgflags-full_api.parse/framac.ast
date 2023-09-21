@@ -556,25 +556,25 @@ void kgflags_print_errors(void)
     {
       _kgflags_error_t *err = & _kgflags_g.errors[i];
       switch (err->kind) {
-        case (_kgflags_error_kind_t)KGFLAGS_ERROR_KIND_MISSING_VALUE:
+        case KGFLAGS_ERROR_KIND_MISSING_VALUE:
         {
           fprintf(__fc_stderr,"Missing value for flag: %s%s\n",
                   (char *)_kgflags_g.flag_prefix,(char *)err->flag_name); /* fprintf_va_1 */
           break;
         }
-        case (_kgflags_error_kind_t)KGFLAGS_ERROR_KIND_UNKNOWN_FLAG:
+        case KGFLAGS_ERROR_KIND_UNKNOWN_FLAG:
         {
           fprintf(__fc_stderr,"Unrecognized flag: %s%s\n",
                   (char *)_kgflags_g.flag_prefix,(char *)err->flag_name); /* fprintf_va_2 */
           break;
         }
-        case (_kgflags_error_kind_t)KGFLAGS_ERROR_KIND_UNASSIGNED_FLAG:
+        case KGFLAGS_ERROR_KIND_UNASSIGNED_FLAG:
         {
           fprintf(__fc_stderr,"Unassigned required flag: %s%s\n",
                   (char *)_kgflags_g.flag_prefix,(char *)err->flag_name); /* fprintf_va_3 */
           break;
         }
-        case (_kgflags_error_kind_t)KGFLAGS_ERROR_KIND_INVALID_INT:
+        case KGFLAGS_ERROR_KIND_INVALID_INT:
         {
           fprintf(__fc_stderr,
                   "Invalid value for flag: %s%s (got %s, expected integer)\n",
@@ -582,7 +582,7 @@ void kgflags_print_errors(void)
                   (char *)err->arg); /* fprintf_va_4 */
           break;
         }
-        case (_kgflags_error_kind_t)KGFLAGS_ERROR_KIND_INVALID_DOUBLE:
+        case KGFLAGS_ERROR_KIND_INVALID_DOUBLE:
         {
           fprintf(__fc_stderr,
                   "Invalid value for flag: %s%s (got %s, expected number)\n",
@@ -590,30 +590,30 @@ void kgflags_print_errors(void)
                   (char *)err->arg); /* fprintf_va_5 */
           break;
         }
-        case (_kgflags_error_kind_t)KGFLAGS_ERROR_KIND_TOO_MANY_FLAGS:
+        case KGFLAGS_ERROR_KIND_TOO_MANY_FLAGS:
         {
           fprintf(__fc_stderr,"Too many flags declared."); /* fprintf_va_6 */
           break;
         }
-        case (_kgflags_error_kind_t)KGFLAGS_ERROR_KIND_TOO_MANY_NON_FLAG_ARGS:
+        case KGFLAGS_ERROR_KIND_TOO_MANY_NON_FLAG_ARGS:
         {
           fprintf(__fc_stderr,
                   "Too many non-flag arguments passed to program."); /* fprintf_va_7 */
           break;
         }
-        case (_kgflags_error_kind_t)KGFLAGS_ERROR_KIND_MULTIPLE_ASSIGNMENT:
+        case KGFLAGS_ERROR_KIND_MULTIPLE_ASSIGNMENT:
         {
           fprintf(__fc_stderr,"Multiple assignment of flag: %s%s\n",
                   (char *)_kgflags_g.flag_prefix,(char *)err->flag_name); /* fprintf_va_8 */
           break;
         }
-        case (_kgflags_error_kind_t)KGFLAGS_ERROR_KIND_DUPLICATE_FLAG:
+        case KGFLAGS_ERROR_KIND_DUPLICATE_FLAG:
         {
           fprintf(__fc_stderr,"Redeclaration of flag: %s%s\n",
                   (char *)_kgflags_g.flag_prefix,(char *)err->flag_name); /* fprintf_va_9 */
           break;
         }
-        case (_kgflags_error_kind_t)KGFLAGS_ERROR_KIND_PREFIX_NO:
+        case KGFLAGS_ERROR_KIND_PREFIX_NO:
         {
           fprintf(__fc_stderr,
                   "Used \"no-\" prefix when declaring boolean flag: %s%s\n",
@@ -893,7 +893,7 @@ void kgflags_print_usage(void)
         _kgflags_flag_t *flag = & _kgflags_g.flags[i];
         switch (flag->kind) {
           char const *tmp;
-          case (_kgflags_flag_kind_t)KGFLAGS_FLAG_KIND_STRING:
+          case KGFLAGS_FLAG_KIND_STRING:
           { /* sequence */
             if (flag->required) tmp = ")"; else tmp = ", optional)";
             ;
@@ -906,7 +906,7 @@ void kgflags_print_usage(void)
           if (! flag->required) fprintf(__fc_stderr,"\t\tDefault: %s\n",
                                         (char *)flag->default_value.string_value); /* fprintf_va_15 */
           break;
-          case (_kgflags_flag_kind_t)KGFLAGS_FLAG_KIND_BOOL:
+          case KGFLAGS_FLAG_KIND_BOOL:
           {
             char const *tmp_0;
             if (flag->required) tmp_0 = ")"; else tmp_0 = ", optional)";
@@ -928,7 +928,7 @@ void kgflags_print_usage(void)
             }
             break;
           }
-          case (_kgflags_flag_kind_t)KGFLAGS_FLAG_KIND_INT:
+          case KGFLAGS_FLAG_KIND_INT:
           {
             char const *tmp_2;
             if (flag->required) tmp_2 = ")"; else tmp_2 = ", optional)";
@@ -942,7 +942,7 @@ void kgflags_print_usage(void)
                                           flag->default_value.int_value); /* fprintf_va_19 */
             break;
           }
-          case (_kgflags_flag_kind_t)KGFLAGS_FLAG_KIND_DOUBLE:
+          case KGFLAGS_FLAG_KIND_DOUBLE:
           {
             char const *tmp_3;
             if (flag->required) tmp_3 = ")"; else tmp_3 = ", optional)";
@@ -956,7 +956,7 @@ void kgflags_print_usage(void)
                                           flag->default_value.double_value); /* fprintf_va_21 */
             break;
           }
-          case (_kgflags_flag_kind_t)KGFLAGS_FLAG_KIND_STRING_ARRAY:
+          case KGFLAGS_FLAG_KIND_STRING_ARRAY:
           {
             char const *tmp_4;
             if (flag->required) tmp_4 = ")"; else tmp_4 = ", optional)";
@@ -968,7 +968,7 @@ void kgflags_print_usage(void)
                     (char *)tmp_4); /* fprintf_va_22 */
             break;
           }
-          case (_kgflags_flag_kind_t)KGFLAGS_FLAG_KIND_INT_ARRAY:
+          case KGFLAGS_FLAG_KIND_INT_ARRAY:
           {
             char const *tmp_5;
             if (flag->required) tmp_5 = ")"; else tmp_5 = ", optional)";
@@ -980,7 +980,7 @@ void kgflags_print_usage(void)
                     (char *)tmp_5); /* fprintf_va_23 */
             break;
           }
-          case (_kgflags_flag_kind_t)KGFLAGS_FLAG_KIND_DOUBLE_ARRAY:
+          case KGFLAGS_FLAG_KIND_DOUBLE_ARRAY:
           {
             char const *tmp_6;
             if (flag->required) tmp_6 = ")"; else tmp_6 = ", optional)";
@@ -1283,25 +1283,25 @@ static void _kgflags_assign_default_values(void)
       else 
         if (flag->required) _LOR: goto __Cont;
       switch (flag->kind) {
-        case (_kgflags_flag_kind_t)KGFLAGS_FLAG_KIND_STRING:
+        case KGFLAGS_FLAG_KIND_STRING:
         {
           *(flag->result.string_value) = flag->default_value.string_value;
           flag->assigned = (_Bool)1;
           break;
         }
-        case (_kgflags_flag_kind_t)KGFLAGS_FLAG_KIND_BOOL:
+        case KGFLAGS_FLAG_KIND_BOOL:
         {
           *(flag->result.bool_value) = flag->default_value.bool_value;
           flag->assigned = (_Bool)1;
           break;
         }
-        case (_kgflags_flag_kind_t)KGFLAGS_FLAG_KIND_INT:
+        case KGFLAGS_FLAG_KIND_INT:
         {
           *(flag->result.int_value) = flag->default_value.int_value;
           flag->assigned = (_Bool)1;
           break;
         }
-        case (_kgflags_flag_kind_t)KGFLAGS_FLAG_KIND_DOUBLE:
+        case KGFLAGS_FLAG_KIND_DOUBLE:
         {
           *(flag->result.double_value) = flag->default_value.double_value;
           flag->assigned = (_Bool)1;
@@ -1357,7 +1357,7 @@ static char const *_kgflags_peek_arg(void)
 static void _kgflags_parse_flag(_kgflags_flag_t *flag, _Bool prefix_no)
 {
   switch (flag->kind) {
-    case (_kgflags_flag_kind_t)KGFLAGS_FLAG_KIND_STRING:
+    case KGFLAGS_FLAG_KIND_STRING:
     {
       char const *val = _kgflags_consume_arg();
       if (! val) {
@@ -1370,13 +1370,13 @@ static void _kgflags_parse_flag(_kgflags_flag_t *flag, _Bool prefix_no)
       flag->assigned = (_Bool)1;
       break;
     }
-    case (_kgflags_flag_kind_t)KGFLAGS_FLAG_KIND_BOOL:
+    case KGFLAGS_FLAG_KIND_BOOL:
     {
       *(flag->result.bool_value) = (_Bool)(! prefix_no);
       flag->assigned = (_Bool)1;
       break;
     }
-    case (_kgflags_flag_kind_t)KGFLAGS_FLAG_KIND_INT:
+    case KGFLAGS_FLAG_KIND_INT:
     {
       char const *val_0 = _kgflags_consume_arg();
       if (! val_0) {
@@ -1396,7 +1396,7 @@ static void _kgflags_parse_flag(_kgflags_flag_t *flag, _Bool prefix_no)
       flag->assigned = (_Bool)1;
       break;
     }
-    case (_kgflags_flag_kind_t)KGFLAGS_FLAG_KIND_DOUBLE:
+    case KGFLAGS_FLAG_KIND_DOUBLE:
     {
       char const *val_1 = _kgflags_consume_arg();
       if (! val_1) {
@@ -1417,7 +1417,7 @@ static void _kgflags_parse_flag(_kgflags_flag_t *flag, _Bool prefix_no)
       flag->assigned = (_Bool)1;
       break;
     }
-    case (_kgflags_flag_kind_t)KGFLAGS_FLAG_KIND_STRING_ARRAY:
+    case KGFLAGS_FLAG_KIND_STRING_ARRAY:
     {
       int initial_cursor = _kgflags_g.arg_cursor;
       int count = 0;
@@ -1440,7 +1440,7 @@ static void _kgflags_parse_flag(_kgflags_flag_t *flag, _Bool prefix_no)
       flag->assigned = (_Bool)1;
       break;
     }
-    case (_kgflags_flag_kind_t)KGFLAGS_FLAG_KIND_INT_ARRAY:
+    case KGFLAGS_FLAG_KIND_INT_ARRAY:
     {
       int initial_cursor_0 = _kgflags_g.arg_cursor;
       int count_0 = 0;
@@ -1474,7 +1474,7 @@ static void _kgflags_parse_flag(_kgflags_flag_t *flag, _Bool prefix_no)
       flag->assigned = (_Bool)1;
       break;
     }
-    case (_kgflags_flag_kind_t)KGFLAGS_FLAG_KIND_DOUBLE_ARRAY:
+    case KGFLAGS_FLAG_KIND_DOUBLE_ARRAY:
     {
       int initial_cursor_1 = _kgflags_g.arg_cursor;
       int count_1 = 0;
