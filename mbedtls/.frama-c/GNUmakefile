@@ -33,12 +33,13 @@ FRAMAC ?= frama-c
 ifeq ($(FRAMAC_LIB),)
   FRAMAC_LIB := $(shell $(FRAMAC)-config -print-lib-path)
 endif
+
+default: programs_ssl_mini_client.eva
+
 include $(FRAMAC_LIB)/analysis-scripts/prologue.mk
 ###############################################################################
 
 # Edit below as needed. Suggested flags are optional.
-
-default: programs_ssl_mini_client.eva
 
 CLANG?=clang
 
