@@ -34,7 +34,7 @@ ifeq ($(FRAMAC_LIB),)
   FRAMAC_LIB := $(shell $(FRAMAC)-config -print-lib-path)
 endif
 
-default: programs_ssl_mini_client.eva
+default: programs_pkey_pk_encrypt.eva
 
 include $(FRAMAC_LIB)/analysis-scripts/prologue.mk
 ###############################################################################
