@@ -26,7 +26,9 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
-
+#ifndef __FRAMAC__
+#include <sys/cdefs.h>
+#endif
 #include "mbedtls/build_info.h"
 
 /*
