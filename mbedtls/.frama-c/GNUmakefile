@@ -71,6 +71,8 @@ FCFLAGS     += \
 ## Eva-specific flags
 EVAFLAGS    += \
   -eva-warn-key builtins:missing-spec=abort \
+  -eva-precision 2 \
+  -eva-unroll-recursive-calls 2 \
 
 ## WP-specific flags
 WPFLAGS    += \

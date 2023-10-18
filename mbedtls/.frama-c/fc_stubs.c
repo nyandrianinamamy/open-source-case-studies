@@ -28,7 +28,9 @@
 // Do not forget to add option '-main eva_main' in order to use this stub.
 
 #ifdef __FRAMAC__
-# include "__fc_builtin.h"
+#include "__fc_builtin.h"
+#include <stdint.h>
+
 int main(int, char **);
 static volatile int nondet;
 int eva_main() {
@@ -42,4 +44,8 @@ int eva_main() {
   }
   return main(argc, argv);
 }
+
+/*@ assigns \result \from x; */
+uint32_t __builtin_bswap32(uint32_t x);
+
 #endif // __FRAMAC__
