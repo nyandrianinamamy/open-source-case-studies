@@ -34,7 +34,11 @@ ifeq ($(FRAMAC_LIB),)
   FRAMAC_LIB := $(shell $(FRAMAC)-config -print-lib-path)
 endif
 
+ifeq ($(STD_MACHDEP),)
 default: programs_pkey_pk_encrypt.eva
+else
+default: programs_pkey_pk_encrypt_x86_32.eva
+endif
 
 include $(FRAMAC_LIB)/analysis-scripts/prologue.mk
 ###############################################################################
@@ -43,6 +47,7 @@ include $(FRAMAC_LIB)/analysis-scripts/prologue.mk
 
 CLANG?=clang
 
+ifeq ($(STD_MACHDEP),)
 CUSTOM_MACHDEP=machdep_leon4.yaml
 
 $(CUSTOM_MACHDEP):
@@ -56,6 +61,9 @@ clean::
 GNUmakefile: $(CUSTOM_MACHDEP)
 
 MACHDEP = $(CUSTOM_MACHDEP)
+else
+MACHDEP = gcc_x86_32
+endif
 
 ## Preprocessing flags (for -cpp-extra-args)
 CPPFLAGS    +=
@@ -2213,7 +2221,7 @@ programs_pkey_pk_decrypt.parse: \
 
 programs_pkey_pk_decrypt.parse: FCFLAGS += -main eva_main
 
-programs_pkey_pk_encrypt.parse: \
+programs_pkey_pk_encrypt.parse programs_pkey_pk_encrypt_x86_32.parse: \
   fc_stubs.c \
   ../library/psa_crypto_hash.c \
   ../library/bignum_core.c \
