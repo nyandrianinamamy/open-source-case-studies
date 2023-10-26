@@ -12,4 +12,5 @@ else
 export OCAMLPATH := $(FRAMAC_DIR)/../lib:$(OCAMLPATH)
 FRAMAC=$(FRAMAC_DIR)/frama-c
 FRAMAC_GUI=$(FRAMAC_DIR)/frama-c-gui
+IVETTE=$(FRAMAC_DIR)/ivette -B $(FRAMAC)
 endif
