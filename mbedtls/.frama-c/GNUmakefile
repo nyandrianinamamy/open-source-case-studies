@@ -23,6 +23,10 @@
 # Makefile template for Frama-C/Eva case studies.
 # For details and usage information, see the Frama-C User Manual.
 
+ifneq ($(filter %_x86_32.eva %_x86_32.parse,$(MAKECMDGOALS)),)
+STD_MACHDEP=yes
+endif
+
 ### Prologue. Do not modify this block. #######################################
 -include path.mk # path.mk contains variables specific to each user
                  # (e.g. FRAMAC, FRAMAC_GUI) and should not be versioned. It is
@@ -65,8 +69,11 @@ else
 MACHDEP = gcc_x86_32
 endif
 
+test.parse test_x86_32.parse: \
+  test_256.c ../library/sha256.c ../library/platform_util.c
+
 ## Preprocessing flags (for -cpp-extra-args)
-CPPFLAGS    +=
+CPPFLAGS    += -I../include
 
 ## General flags
 FCFLAGS     += \
