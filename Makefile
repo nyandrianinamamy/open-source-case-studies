@@ -62,6 +62,7 @@ TARGETS=\
   chrony \
   debie1 \
   genann \
+  gnugo \
   gzip124 \
   hiredis \
   icpc \
