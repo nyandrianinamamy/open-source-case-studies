@@ -1,0 +1,11 @@
+directory	file	line	function	property kind	status	property
+FRAMAC_SHARE/libc	assert.h	31	__FC_assert	precondition	Unknown	nonnull_c: c ≢ 0
+examples	doublylinkedlist_example.c	58	main	precondition of __FC_assert	Unknown	nonnull_c: c ≢ 0
+examples	doublylinkedlist_example.c	65	main	initialization	Unknown	\initialized(&q->id)
+examples	doublylinkedlist_example.c	65	main	mem_access	Unknown	\valid_read(&q->id)
+examples	doublylinkedlist_example.c	65	main	precondition of __FC_assert	Unknown	nonnull_c: c ≢ 0
+examples	doublylinkedlist_example.c	65	main	signed_overflow	Unknown	cnt + 1 ≤ 2147483647
+src	dllist.c	98	dll_insert	mem_access	Unknown	\valid_read(&t->next)
+src	dllist.c	104	dll_insert	mem_access	Unknown	\valid_read(&t->prev)
+src	dllist.c	107	dll_insert	mem_access	Unknown	\valid_read(&t->next)
+src	dllist.c	109	dll_insert	mem_access	Unknown	\valid(&(n->next)->prev)

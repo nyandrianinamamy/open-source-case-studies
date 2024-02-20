@@ -57,6 +57,7 @@ TARGETS=\
   basic-cwe-examples \
   bench-moerman2018 \
   c-testsuite \
+  c-utils \
   cerberus \
   chrony \
   debie1 \
