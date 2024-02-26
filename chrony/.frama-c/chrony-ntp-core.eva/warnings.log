@@ -1,8 +1,8 @@
-logging.h:100:[kernel:annot:missing-spec] warning: Neither code nor specification for function LOG_SetDebugLevel,
+test/unit/test.c:53:[kernel:annot:missing-spec] warning: Neither code nor specification for function LOG_SetDebugLevel,
  generating default assigns. See -generated-spec-* options for more info
-logging.h:80:[kernel:annot:missing-spec] warning: Neither code nor specification for function LOG_Initialise,
+test/unit/test.c:68:[kernel:annot:missing-spec] warning: Neither code nor specification for function LOG_Initialise,
  generating default assigns. See -generated-spec-* options for more info
-logging.h:92:[kernel:annot:missing-spec] warning: Neither code nor specification for function LOG_Message,
+memory.c:40:[kernel:annot:missing-spec] warning: Neither code nor specification for function LOG_Message,
  generating default assigns. See -generated-spec-* options for more info
 cmdparse.c:216:[eva:alarm] warning: out of bounds write. assert \valid(tmp);
                      (tmp from q++)
@@ -3383,7 +3383,7 @@ stack: __FC_assert :: ntp_core.c:364 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-logging.h:118:[kernel:annot:missing-spec] warning: Neither code nor specification for function LOG_FileOpen,
+ntp_core.c:394:[kernel:annot:missing-spec] warning: Neither code nor specification for function LOG_FileOpen,
  generating default assigns. See -generated-spec-* options for more info
 reference.c:202:[eva:alarm] warning: function fopen: precondition 'valid_filename' got status unknown.
 stack: fopen :: reference.c:202 <-
@@ -3553,9 +3553,9 @@ stack: UTI_AddDoubleToTimespec :: reference.c:485 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-logging.h:121:[kernel:annot:missing-spec] warning: Neither code nor specification for function LOG_FileWrite,
+reference.c:856:[kernel:annot:missing-spec] warning: Neither code nor specification for function LOG_FileWrite,
  generating default assigns. See -generated-spec-* options for more info
-logging.h:103:[kernel:annot:missing-spec] warning: Neither code nor specification for function LOG_OpenFileLog,
+test/unit/test.c:81:[kernel:annot:missing-spec] warning: Neither code nor specification for function LOG_OpenFileLog,
  generating default assigns. See -generated-spec-* options for more info
 keys.c:204:[eva:alarm] warning: function fopen: precondition 'valid_filename' got status unknown.
 stack: fopen :: keys.c:204 <-
@@ -4817,7 +4817,7 @@ stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-cmdmon.h:37:[kernel:annot:missing-spec] warning: Neither code nor specification for function CAM_AddAccessRestriction,
+conf.c:1803:[kernel:annot:missing-spec] warning: Neither code nor specification for function CAM_AddAccessRestriction,
  generating default assigns. See -generated-spec-* options for more info
 util.c:310:[eva:alarm] warning: accessing uninitialized left-value.
 assert \initialized(ip6 + (unsigned long)(2 * a));
@@ -5018,9 +5018,9 @@ stack: KEY_GetAuthLength :: ntp_core.c:593 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-samplefilt.h:35:[kernel:annot:missing-spec] warning: Neither code nor specification for function SPF_CreateInstance,
+ntp_core.c:608:[kernel:annot:missing-spec] warning: Neither code nor specification for function SPF_CreateInstance,
  generating default assigns. See -generated-spec-* options for more info
-samplefilt.h:43:[kernel:annot:missing-spec] warning: Neither code nor specification for function SPF_DropSamples,
+ntp_core.c:697:[kernel:annot:missing-spec] warning: Neither code nor specification for function SPF_DropSamples,
  generating default assigns. See -generated-spec-* options for more info
 reference.c:1212:[eva:alarm] warning: signed overflow. assert -9223372036854775808 ≤ ref_time->tv_sec - 1;
 stack: REF_GetReferenceParams :: reference.c:1250 <-
@@ -5272,11 +5272,11 @@ stack: __FC_assert :: test/unit/ntp_core.c:192 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-samplefilt.h:39:[kernel:annot:missing-spec] warning: Neither code nor specification for function SPF_AccumulateSample,
+ntp_core.c:1480:[kernel:annot:missing-spec] warning: Neither code nor specification for function SPF_AccumulateSample,
  generating default assigns. See -generated-spec-* options for more info
-samplefilt.h:41:[kernel:annot:missing-spec] warning: Neither code nor specification for function SPF_GetNumberOfSamples,
+ntp_core.c:1482:[kernel:annot:missing-spec] warning: Neither code nor specification for function SPF_GetNumberOfSamples,
  generating default assigns. See -generated-spec-* options for more info
-samplefilt.h:44:[kernel:annot:missing-spec] warning: Neither code nor specification for function SPF_GetFilteredSample,
+ntp_core.c:1484:[kernel:annot:missing-spec] warning: Neither code nor specification for function SPF_GetFilteredSample,
  generating default assigns. See -generated-spec-* options for more info
 util.c:181:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&b->tv_sec);
 stack: UTI_DiffTimespecsToDouble :: ntp_core.c:1487 <-
@@ -9812,7 +9812,7 @@ stack: __FC_assert :: ntp_core.c:645 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-samplefilt.h:37:[kernel:annot:missing-spec] warning: Neither code nor specification for function SPF_DestroyInstance,
+ntp_core.c:648:[kernel:annot:missing-spec] warning: Neither code nor specification for function SPF_DestroyInstance,
  generating default assigns. See -generated-spec-* options for more info
 util.c:310:[eva:alarm] warning: function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                       \valid(s +
@@ -12692,7 +12692,7 @@ stack: CNF_Finalise :: test/unit/ntp_core.c:499 <-
        main :: fc_stubs.c:37 <-
        eva_main
 test/unit/test.c:70:[eva:locals-escaping] warning: locals {conf} escaping the scope of test_unit through processed_command
-logging.h:83:[kernel:annot:missing-spec] warning: Neither code nor specification for function LOG_Finalise,
+test/unit/test.c:72:[kernel:annot:missing-spec] warning: Neither code nor specification for function LOG_Finalise,
  generating default assigns. See -generated-spec-* options for more info
 [eva:garbled-mix:summary] warning: Garbled mix generated during analysis:
 {{ garbled mix of &{read_from_socket} (origin: Merge {sched.c:185}) }}
