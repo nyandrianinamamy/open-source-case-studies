@@ -1,5 +1,5 @@
-[eva:garbled-mix:summary] warning: Garbled mix generated during analysis:
-{{ garbled mix of &{y}
-  (origin: Arithmetic {pointer_arith_algebraic_properties_1_global.c:6}) }}
-{{ garbled mix of &{x}
-  (origin: Arithmetic {pointer_arith_algebraic_properties_1_global.c:6}) }}
+pointer_arith_algebraic_properties_1_global.c:6:[eva:garbled-mix:write] warning: Assigning imprecise value to p because of arithmetic operation on addresses.
+stack: main
+[eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
+  pointer_arith_algebraic_properties_1_global.c:6: arithmetic operation on addresses
+    (read 3 times, propagated 1 times) garbled mix of &{y; x}

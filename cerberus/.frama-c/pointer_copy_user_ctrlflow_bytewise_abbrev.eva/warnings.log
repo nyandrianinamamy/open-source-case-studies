@@ -1,5 +1,9 @@
+pointer_copy_user_ctrlflow_bytewise_abbrev.c:14:[eva:garbled-mix:write] warning: Assigning imprecise value to c because of misaligned read of addresses.
+stack: control_flow_copy :: pointer_copy_user_ctrlflow_bytewise_abbrev.c:14 <-
+       user_memcpy2 :: pointer_copy_user_ctrlflow_bytewise_abbrev.c:23 <-
+       main
 pointer_copy_user_ctrlflow_bytewise_abbrev.c:25:[kernel] warning: all target addresses were invalid. This path is assumed to be dead.
 stack: main
-[eva:garbled-mix:summary] warning: Garbled mix generated during analysis:
-{{ garbled mix of &{x}
-  (origin: Misaligned {pointer_copy_user_ctrlflow_bytewise_abbrev.c:14}) }}
+[eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
+  pointer_copy_user_ctrlflow_bytewise_abbrev.c:14: misaligned read of addresses
+    (read 16 times, propagated 4 times) garbled mix of &{x}

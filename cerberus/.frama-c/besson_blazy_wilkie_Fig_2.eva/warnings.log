@@ -1,5 +1,7 @@
 besson_blazy_wilkie_Fig_2.c:12:[kernel] warning: all target addresses were invalid. This path is assumed to be dead.
 stack: main
-[eva:garbled-mix:summary] warning: Garbled mix generated during analysis:
-{{ garbled mix of &{__malloc_main_l11}
-  (origin: Arithmetic {besson_blazy_wilkie_Fig_2.c:14}) }}
+besson_blazy_wilkie_Fig_2.c:14:[eva:garbled-mix:write] warning: Assigning imprecise value to r because of arithmetic operation on addresses.
+stack: main
+[eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
+  besson_blazy_wilkie_Fig_2.c:14: arithmetic operation on addresses
+    (read 3 times, propagated 1 times) garbled mix of &{__malloc_main_l11}

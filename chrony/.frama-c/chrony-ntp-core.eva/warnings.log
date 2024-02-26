@@ -5204,7 +5204,6 @@ stack: UTI_NormaliseTimespec :: ntp_core.c:1080 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-util.c:763:[eva:garbled-mix:assigns] warning: The specification of function htonl has generated a garbled mix for assigns clause \result.
 util.c:764:[eva:alarm] warning: non-finite double value.
 assert \is_finite(\mul_double((double)4.294967296, (double)nsec));
 stack: UTI_TimespecToNtp64 :: ntp_core.c:1081 <-
@@ -5223,7 +5222,6 @@ stack: UTI_TimespecToNtp64 :: ntp_core.c:1081 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-util.c:764:[eva:garbled-mix:assigns] warning: The specification of function htonl has generated a garbled mix for assigns clause \result.
 md5.c:157:[kernel] warning: all target addresses were invalid. This path is assumed to be dead.
 stack: MD5Update :: hash_intmd5.c:56 <-
        HSH_Hash :: keys.c:364 <-
@@ -5689,6 +5687,17 @@ stack: check_ip_in_node :: addrfilt.c:365 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
+addrfilt.c:82:[eva:garbled-mix:write] warning: Assigning imprecise value to __retres
+because of misaligned read of addresses.
+stack: get_subnet :: addrfilt.c:330 <-
+       check_ip_in_node :: addrfilt.c:365 <-
+       ADF_IsAllowed :: ntp_core.c:2105 <-
+       NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
+       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+       process_response :: test/unit/ntp_core.c:381 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
 addrfilt.c:332:[eva:alarm] warning: signed overflow. assert bits_consumed + 4 ≤ 2147483647;
 stack: check_ip_in_node :: addrfilt.c:365 <-
        ADF_IsAllowed :: ntp_core.c:2105 <-
@@ -5710,6 +5719,15 @@ stack: check_ip_in_node :: addrfilt.c:365 <-
        eva_main
 addrfilt.c:327:[eva:alarm] warning: accessing left-value that contains escaping addresses.
 assert ¬\dangling(&node->state);
+stack: check_ip_in_node :: addrfilt.c:365 <-
+       ADF_IsAllowed :: ntp_core.c:2105 <-
+       NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
+       NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+       process_response :: test/unit/ntp_core.c:381 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+addrfilt.c:327:[eva:garbled-mix:write] warning: Assigning imprecise value to state because of misaligned read of addresses.
 stack: check_ip_in_node :: addrfilt.c:365 <-
        ADF_IsAllowed :: ntp_core.c:2105 <-
        NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
@@ -12694,422 +12712,75 @@ stack: CNF_Finalise :: test/unit/ntp_core.c:499 <-
 test/unit/test.c:70:[eva:locals-escaping] warning: locals {conf} escaping the scope of test_unit through processed_command
 test/unit/test.c:72:[kernel:annot:missing-spec] warning: Neither code nor specification for function LOG_Finalise,
  generating default assigns. See -generated-spec-* options for more info
-[eva:garbled-mix:summary] warning: Garbled mix generated during analysis:
-{{ garbled mix of &{read_from_socket} (origin: Merge {sched.c:185}) }}
-{{ garbled mix of &{__malloc_KEY_Reload_l235; __malloc_w_KEY_Reload_l235_0}
-  (origin: Misaligned {array.c:116}) }}
-{{ garbled mix of &{__realloc_realloc_array_l80_47;
-                    __realloc_w_realloc_array_l80_48}
-  (origin: Misaligned {keys.c:249}) }}
-{{ garbled mix of &{__realloc_realloc_array_l80_47;
-                    __realloc_w_realloc_array_l80_48}
-  (origin: Misaligned {keys.c:250}) }}
-{{ garbled mix of &{__realloc_realloc_array_l80_47;
-                    __realloc_w_realloc_array_l80_48}
-  (origin: Misaligned {keys.c:257}) }}
-{{ garbled mix of &{__realloc_realloc_array_l80_47;
-                    __realloc_w_realloc_array_l80_48}
-  (origin: Misaligned {keys.c:115}) }}
-{{ garbled mix of &{__malloc_SRC_CreateNewInstance_l229}
-  (origin: Misaligned {addrfilt.c:82}) }}
-{{ garbled mix of &{__malloc_open_node_l137; __malloc_w_open_node_l137_0;
-                    __malloc_open_node_l137_1; __malloc_w_open_node_l137_2;
-                    __malloc_open_node_l137_3; __malloc_open_node_l137_4;
-                    __malloc_w_open_node_l137_5; __malloc_open_node_l137_6;
-                    __malloc_w_open_node_l137_7; __malloc_open_node_l137_8;
-                    __malloc_open_node_l137_9; __malloc_w_open_node_l137_10;
-                    __malloc_open_node_l137_11; __malloc_w_open_node_l137_12;
-                    __malloc_open_node_l137_13; __malloc_open_node_l137_14;
-                    __malloc_w_open_node_l137_15; __malloc_open_node_l137_16;
-                    __malloc_w_open_node_l137_17; __malloc_open_node_l137_18;
-                    __malloc_w_open_node_l137_19;
-                    __malloc_w_open_node_l137_20;
-                    __malloc_w_open_node_l137_21;
-                    __malloc_w_open_node_l137_22}
-  (origin: Arithmetic {addrfilt.c:331}) }}
-{{ garbled mix of &{__malloc_open_node_l137; __malloc_w_open_node_l137_0;
-                    __malloc_open_node_l137_1; __malloc_w_open_node_l137_2;
-                    __malloc_open_node_l137_3; __malloc_open_node_l137_4;
-                    __malloc_w_open_node_l137_5; __malloc_open_node_l137_6;
-                    __malloc_w_open_node_l137_7; __malloc_open_node_l137_8;
-                    __malloc_open_node_l137_9; __malloc_w_open_node_l137_10;
-                    __malloc_open_node_l137_11; __malloc_w_open_node_l137_12;
-                    __malloc_open_node_l137_13; __malloc_open_node_l137_14;
-                    __malloc_w_open_node_l137_15; __malloc_open_node_l137_16;
-                    __malloc_w_open_node_l137_17; __malloc_open_node_l137_18;
-                    __malloc_w_open_node_l137_19;
-                    __malloc_w_open_node_l137_20;
-                    __malloc_w_open_node_l137_21;
-                    __malloc_w_open_node_l137_22}
-  (origin: Misaligned {addrfilt.c:326}) }}
-{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
-                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
-                    __malloc_w_open_node_l137_10;
-                    __malloc_w_open_node_l137_12;
-                    __malloc_w_open_node_l137_15;
-                    __malloc_w_open_node_l137_17;
-                    __malloc_w_open_node_l137_19;
-                    __malloc_w_open_node_l137_20;
-                    __malloc_w_open_node_l137_21;
-                    __malloc_w_open_node_l137_22}
-  (origin: Misaligned {addrfilt.c:326}) }}
-{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
-                    __malloc_open_node_l137_3; __malloc_w_open_node_l137_5;
-                    __malloc_w_open_node_l137_7;
-                    __malloc_w_open_node_l137_10;
-                    __malloc_w_open_node_l137_12;
-                    __malloc_w_open_node_l137_15;
-                    __malloc_w_open_node_l137_17;
-                    __malloc_w_open_node_l137_19;
-                    __malloc_w_open_node_l137_20;
-                    __malloc_w_open_node_l137_21;
-                    __malloc_w_open_node_l137_22}
-  (origin: Misaligned {addrfilt.c:326}) }}
-{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
-                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
-                    __malloc_open_node_l137_8; __malloc_w_open_node_l137_10;
-                    __malloc_w_open_node_l137_12;
-                    __malloc_w_open_node_l137_15;
-                    __malloc_w_open_node_l137_17;
-                    __malloc_w_open_node_l137_19;
-                    __malloc_w_open_node_l137_20;
-                    __malloc_w_open_node_l137_21;
-                    __malloc_w_open_node_l137_22}
-  (origin: Misaligned {addrfilt.c:326}) }}
-{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
-                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
-                    __malloc_w_open_node_l137_10;
-                    __malloc_w_open_node_l137_12; __malloc_open_node_l137_13;
-                    __malloc_w_open_node_l137_15;
-                    __malloc_w_open_node_l137_17;
-                    __malloc_w_open_node_l137_19;
-                    __malloc_w_open_node_l137_20;
-                    __malloc_w_open_node_l137_21;
-                    __malloc_w_open_node_l137_22}
-  (origin: Misaligned {addrfilt.c:326}) }}
-{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
-                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
-                    __malloc_w_open_node_l137_10;
-                    __malloc_w_open_node_l137_12;
-                    __malloc_w_open_node_l137_15;
-                    __malloc_w_open_node_l137_17; __malloc_open_node_l137_18;
-                    __malloc_w_open_node_l137_19;
-                    __malloc_w_open_node_l137_20;
-                    __malloc_w_open_node_l137_21;
-                    __malloc_w_open_node_l137_22}
-  (origin: Misaligned {addrfilt.c:326}) }}
-{{ garbled mix of &{__malloc_NCR_GetInstance_l520}
-  (origin: Misaligned {addrfilt.c:326}) }}
-{{ garbled mix of &{__malloc_SST_CreateInstance_l215}
-  (origin: Misaligned {addrfilt.c:326}) }}
-{{ garbled mix of &{__malloc_open_node_l137; __malloc_w_open_node_l137_0;
-                    __malloc_open_node_l137_1; __malloc_w_open_node_l137_2;
-                    __malloc_open_node_l137_3; __malloc_open_node_l137_4;
-                    __malloc_w_open_node_l137_5; __malloc_open_node_l137_6;
-                    __malloc_w_open_node_l137_7; __malloc_open_node_l137_8;
-                    __malloc_open_node_l137_9; __malloc_w_open_node_l137_10;
-                    __malloc_open_node_l137_11; __malloc_w_open_node_l137_12;
-                    __malloc_open_node_l137_13; __malloc_open_node_l137_14;
-                    __malloc_w_open_node_l137_15; __malloc_open_node_l137_16;
-                    __malloc_w_open_node_l137_17; __malloc_open_node_l137_18;
-                    __malloc_w_open_node_l137_19;
-                    __malloc_w_open_node_l137_20;
-                    __malloc_w_open_node_l137_21;
-                    __malloc_w_open_node_l137_22}
-  (origin: Misaligned {addrfilt.c:327}) }}
-{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
-                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
-                    __malloc_w_open_node_l137_10;
-                    __malloc_w_open_node_l137_12;
-                    __malloc_w_open_node_l137_15;
-                    __malloc_w_open_node_l137_17;
-                    __malloc_w_open_node_l137_19;
-                    __malloc_w_open_node_l137_20;
-                    __malloc_w_open_node_l137_21;
-                    __malloc_w_open_node_l137_22}
-  (origin: Misaligned {addrfilt.c:327}) }}
-{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
-                    __malloc_open_node_l137_3; __malloc_w_open_node_l137_5;
-                    __malloc_w_open_node_l137_7;
-                    __malloc_w_open_node_l137_10;
-                    __malloc_w_open_node_l137_12;
-                    __malloc_w_open_node_l137_15;
-                    __malloc_w_open_node_l137_17;
-                    __malloc_w_open_node_l137_19;
-                    __malloc_w_open_node_l137_20;
-                    __malloc_w_open_node_l137_21;
-                    __malloc_w_open_node_l137_22}
-  (origin: Misaligned {addrfilt.c:327}) }}
-{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
-                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
-                    __malloc_open_node_l137_8; __malloc_w_open_node_l137_10;
-                    __malloc_w_open_node_l137_12;
-                    __malloc_w_open_node_l137_15;
-                    __malloc_w_open_node_l137_17;
-                    __malloc_w_open_node_l137_19;
-                    __malloc_w_open_node_l137_20;
-                    __malloc_w_open_node_l137_21;
-                    __malloc_w_open_node_l137_22}
-  (origin: Misaligned {addrfilt.c:327}) }}
-{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
-                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
-                    __malloc_w_open_node_l137_10;
-                    __malloc_w_open_node_l137_12; __malloc_open_node_l137_13;
-                    __malloc_w_open_node_l137_15;
-                    __malloc_w_open_node_l137_17;
-                    __malloc_w_open_node_l137_19;
-                    __malloc_w_open_node_l137_20;
-                    __malloc_w_open_node_l137_21;
-                    __malloc_w_open_node_l137_22}
-  (origin: Misaligned {addrfilt.c:327}) }}
-{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
-                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
-                    __malloc_w_open_node_l137_10;
-                    __malloc_w_open_node_l137_12;
-                    __malloc_w_open_node_l137_15;
-                    __malloc_w_open_node_l137_17; __malloc_open_node_l137_18;
-                    __malloc_w_open_node_l137_19;
-                    __malloc_w_open_node_l137_20;
-                    __malloc_w_open_node_l137_21;
-                    __malloc_w_open_node_l137_22}
-  (origin: Misaligned {addrfilt.c:327}) }}
-{{ garbled mix of &{__malloc_NCR_GetInstance_l520}
-  (origin: Misaligned {addrfilt.c:327}) }}
-{{ garbled mix of &{__malloc_SST_CreateInstance_l215}
-  (origin: Misaligned {addrfilt.c:327}) }}
-{{ garbled mix of &{__malloc_open_node_l137; __malloc_w_open_node_l137_0;
-                    __malloc_open_node_l137_1; __malloc_w_open_node_l137_2;
-                    __malloc_open_node_l137_3; __malloc_open_node_l137_4;
-                    __malloc_w_open_node_l137_5; __malloc_open_node_l137_6;
-                    __malloc_w_open_node_l137_7; __malloc_open_node_l137_8;
-                    __malloc_open_node_l137_9; __malloc_w_open_node_l137_10;
-                    __malloc_open_node_l137_11; __malloc_w_open_node_l137_12;
-                    __malloc_open_node_l137_13; __malloc_open_node_l137_14;
-                    __malloc_w_open_node_l137_15; __malloc_open_node_l137_16;
-                    __malloc_w_open_node_l137_17; __malloc_open_node_l137_18;
-                    __malloc_w_open_node_l137_19;
-                    __malloc_w_open_node_l137_20;
-                    __malloc_w_open_node_l137_21;
-                    __malloc_w_open_node_l137_22}
-  (origin: Misaligned {addrfilt.c:329}) }}
-{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
-                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
-                    __malloc_w_open_node_l137_10;
-                    __malloc_w_open_node_l137_12;
-                    __malloc_w_open_node_l137_15;
-                    __malloc_w_open_node_l137_17;
-                    __malloc_w_open_node_l137_19;
-                    __malloc_w_open_node_l137_20;
-                    __malloc_w_open_node_l137_21;
-                    __malloc_w_open_node_l137_22}
-  (origin: Misaligned {addrfilt.c:329}) }}
-{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
-                    __malloc_open_node_l137_3; __malloc_w_open_node_l137_5;
-                    __malloc_w_open_node_l137_7;
-                    __malloc_w_open_node_l137_10;
-                    __malloc_w_open_node_l137_12;
-                    __malloc_w_open_node_l137_15;
-                    __malloc_w_open_node_l137_17;
-                    __malloc_w_open_node_l137_19;
-                    __malloc_w_open_node_l137_20;
-                    __malloc_w_open_node_l137_21;
-                    __malloc_w_open_node_l137_22}
-  (origin: Misaligned {addrfilt.c:329}) }}
-{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
-                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
-                    __malloc_open_node_l137_8; __malloc_w_open_node_l137_10;
-                    __malloc_w_open_node_l137_12;
-                    __malloc_w_open_node_l137_15;
-                    __malloc_w_open_node_l137_17;
-                    __malloc_w_open_node_l137_19;
-                    __malloc_w_open_node_l137_20;
-                    __malloc_w_open_node_l137_21;
-                    __malloc_w_open_node_l137_22}
-  (origin: Misaligned {addrfilt.c:329}) }}
-{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
-                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
-                    __malloc_w_open_node_l137_10;
-                    __malloc_w_open_node_l137_12; __malloc_open_node_l137_13;
-                    __malloc_w_open_node_l137_15;
-                    __malloc_w_open_node_l137_17;
-                    __malloc_w_open_node_l137_19;
-                    __malloc_w_open_node_l137_20;
-                    __malloc_w_open_node_l137_21;
-                    __malloc_w_open_node_l137_22}
-  (origin: Misaligned {addrfilt.c:329}) }}
-{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
-                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
-                    __malloc_w_open_node_l137_10;
-                    __malloc_w_open_node_l137_12;
-                    __malloc_w_open_node_l137_15;
-                    __malloc_w_open_node_l137_17; __malloc_open_node_l137_18;
-                    __malloc_w_open_node_l137_19;
-                    __malloc_w_open_node_l137_20;
-                    __malloc_w_open_node_l137_21;
-                    __malloc_w_open_node_l137_22}
-  (origin: Misaligned {addrfilt.c:329}) }}
-{{ garbled mix of &{__malloc_NCR_GetInstance_l520}
-  (origin: Misaligned {addrfilt.c:329}) }}
-{{ garbled mix of &{__malloc_open_node_l137; __malloc_w_open_node_l137_0;
-                    __malloc_open_node_l137_1; __malloc_w_open_node_l137_2;
-                    __malloc_open_node_l137_3; __malloc_open_node_l137_4;
-                    __malloc_w_open_node_l137_5; __malloc_open_node_l137_6;
-                    __malloc_w_open_node_l137_7; __malloc_open_node_l137_8;
-                    __malloc_open_node_l137_9; __malloc_w_open_node_l137_10;
-                    __malloc_open_node_l137_11; __malloc_w_open_node_l137_12;
-                    __malloc_open_node_l137_13; __malloc_open_node_l137_14;
-                    __malloc_w_open_node_l137_15; __malloc_open_node_l137_16;
-                    __malloc_w_open_node_l137_17; __malloc_open_node_l137_18;
-                    __malloc_w_open_node_l137_19;
-                    __malloc_w_open_node_l137_20;
-                    __malloc_w_open_node_l137_21;
-                    __malloc_w_open_node_l137_22}
-  (origin: Misaligned {addrfilt.c:331}) }}
-{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
-                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
-                    __malloc_w_open_node_l137_10;
-                    __malloc_w_open_node_l137_12;
-                    __malloc_w_open_node_l137_15;
-                    __malloc_w_open_node_l137_17;
-                    __malloc_w_open_node_l137_19;
-                    __malloc_w_open_node_l137_20;
-                    __malloc_w_open_node_l137_21;
-                    __malloc_w_open_node_l137_22}
-  (origin: Misaligned {addrfilt.c:331}) }}
-{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
-                    __malloc_open_node_l137_3; __malloc_w_open_node_l137_5;
-                    __malloc_w_open_node_l137_7;
-                    __malloc_w_open_node_l137_10;
-                    __malloc_w_open_node_l137_12;
-                    __malloc_w_open_node_l137_15;
-                    __malloc_w_open_node_l137_17;
-                    __malloc_w_open_node_l137_19;
-                    __malloc_w_open_node_l137_20;
-                    __malloc_w_open_node_l137_21;
-                    __malloc_w_open_node_l137_22}
-  (origin: Misaligned {addrfilt.c:331}) }}
-{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
-                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
-                    __malloc_open_node_l137_8; __malloc_w_open_node_l137_10;
-                    __malloc_w_open_node_l137_12;
-                    __malloc_w_open_node_l137_15;
-                    __malloc_w_open_node_l137_17;
-                    __malloc_w_open_node_l137_19;
-                    __malloc_w_open_node_l137_20;
-                    __malloc_w_open_node_l137_21;
-                    __malloc_w_open_node_l137_22}
-  (origin: Misaligned {addrfilt.c:331}) }}
-{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
-                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
-                    __malloc_w_open_node_l137_10;
-                    __malloc_w_open_node_l137_12; __malloc_open_node_l137_13;
-                    __malloc_w_open_node_l137_15;
-                    __malloc_w_open_node_l137_17;
-                    __malloc_w_open_node_l137_19;
-                    __malloc_w_open_node_l137_20;
-                    __malloc_w_open_node_l137_21;
-                    __malloc_w_open_node_l137_22}
-  (origin: Misaligned {addrfilt.c:331}) }}
-{{ garbled mix of &{__malloc_w_open_node_l137_0; __malloc_w_open_node_l137_2;
-                    __malloc_w_open_node_l137_5; __malloc_w_open_node_l137_7;
-                    __malloc_w_open_node_l137_10;
-                    __malloc_w_open_node_l137_12;
-                    __malloc_w_open_node_l137_15;
-                    __malloc_w_open_node_l137_17; __malloc_open_node_l137_18;
-                    __malloc_w_open_node_l137_19;
-                    __malloc_w_open_node_l137_20;
-                    __malloc_w_open_node_l137_21;
-                    __malloc_w_open_node_l137_22}
-  (origin: Misaligned {addrfilt.c:331}) }}
-{{ garbled mix of &{__malloc_NCR_GetInstance_l520}
-  (origin: Misaligned {addrfilt.c:331}) }}
-{{ garbled mix of &{__malloc_SRC_CreateNewInstance_l229}
-  (origin: Misaligned {addrfilt.c:326}) }}
-{{ garbled mix of &{__malloc_SRC_CreateNewInstance_l229}
-  (origin: Misaligned {addrfilt.c:327}) }}
-{{ garbled mix of &{__malloc_SRC_CreateNewInstance_l229}
-  (origin: Misaligned {addrfilt.c:329}) }}
-{{ garbled mix of &{__malloc_SRC_CreateNewInstance_l229}
-  (origin: Misaligned {addrfilt.c:331}) }}
-{{ garbled mix of &{__malloc_SRC_CreateNewInstance_l229_0}
-  (origin: Misaligned {addrfilt.c:82}) }}
-{{ garbled mix of &{__malloc_NCR_GetInstance_l520_0}
-  (origin: Misaligned {addrfilt.c:326}) }}
-{{ garbled mix of &{__malloc_SST_CreateInstance_l215_0}
-  (origin: Misaligned {addrfilt.c:326}) }}
-{{ garbled mix of &{__malloc_NCR_GetInstance_l520_0}
-  (origin: Misaligned {addrfilt.c:327}) }}
-{{ garbled mix of &{__malloc_SST_CreateInstance_l215_0}
-  (origin: Misaligned {addrfilt.c:327}) }}
-{{ garbled mix of &{__malloc_NCR_GetInstance_l520_0}
-  (origin: Misaligned {addrfilt.c:329}) }}
-{{ garbled mix of &{__malloc_NCR_GetInstance_l520_0}
-  (origin: Misaligned {addrfilt.c:331}) }}
-{{ garbled mix of &{__malloc_SRC_CreateNewInstance_l229_0}
-  (origin: Misaligned {addrfilt.c:326}) }}
-{{ garbled mix of &{__malloc_SRC_CreateNewInstance_l229_0}
-  (origin: Misaligned {addrfilt.c:327}) }}
-{{ garbled mix of &{__malloc_SRC_CreateNewInstance_l229_0}
-  (origin: Misaligned {addrfilt.c:329}) }}
-{{ garbled mix of &{__malloc_SRC_CreateNewInstance_l229_0}
-  (origin: Misaligned {addrfilt.c:331}) }}
-{{ garbled mix of &{__malloc_SRC_CreateNewInstance_l229_2}
-  (origin: Misaligned {addrfilt.c:82}) }}
-{{ garbled mix of &{__malloc_NCR_GetInstance_l520_2}
-  (origin: Misaligned {addrfilt.c:326}) }}
-{{ garbled mix of &{__malloc_SST_CreateInstance_l215_2}
-  (origin: Misaligned {addrfilt.c:326}) }}
-{{ garbled mix of &{__malloc_NCR_GetInstance_l520_2}
-  (origin: Misaligned {addrfilt.c:327}) }}
-{{ garbled mix of &{__malloc_SST_CreateInstance_l215_2}
-  (origin: Misaligned {addrfilt.c:327}) }}
-{{ garbled mix of &{__malloc_NCR_GetInstance_l520_2}
-  (origin: Misaligned {addrfilt.c:329}) }}
-{{ garbled mix of &{__malloc_NCR_GetInstance_l520_2}
-  (origin: Misaligned {addrfilt.c:331}) }}
-{{ garbled mix of &{__malloc_SRC_CreateNewInstance_l229_2}
-  (origin: Misaligned {addrfilt.c:326}) }}
-{{ garbled mix of &{__malloc_SRC_CreateNewInstance_l229_2}
-  (origin: Misaligned {addrfilt.c:327}) }}
-{{ garbled mix of &{__malloc_SRC_CreateNewInstance_l229_2}
-  (origin: Misaligned {addrfilt.c:329}) }}
-{{ garbled mix of &{__malloc_SRC_CreateNewInstance_l229_2}
-  (origin: Misaligned {addrfilt.c:331}) }}
-{{ garbled mix of &{__malloc_SRC_CreateNewInstance_l229_1}
-  (origin: Misaligned {addrfilt.c:82}) }}
-{{ garbled mix of &{__malloc_NCR_GetInstance_l520_1}
-  (origin: Misaligned {addrfilt.c:326}) }}
-{{ garbled mix of &{__malloc_SST_CreateInstance_l215_1}
-  (origin: Misaligned {addrfilt.c:326}) }}
-{{ garbled mix of &{__malloc_NCR_GetInstance_l520_1}
-  (origin: Misaligned {addrfilt.c:327}) }}
-{{ garbled mix of &{__malloc_SST_CreateInstance_l215_1}
-  (origin: Misaligned {addrfilt.c:327}) }}
-{{ garbled mix of &{__malloc_NCR_GetInstance_l520_1}
-  (origin: Misaligned {addrfilt.c:329}) }}
-{{ garbled mix of &{__malloc_NCR_GetInstance_l520_1}
-  (origin: Misaligned {addrfilt.c:331}) }}
-{{ garbled mix of &{__malloc_SRC_CreateNewInstance_l229_1}
-  (origin: Misaligned {addrfilt.c:326}) }}
-{{ garbled mix of &{__malloc_SRC_CreateNewInstance_l229_1}
-  (origin: Misaligned {addrfilt.c:327}) }}
-{{ garbled mix of &{__malloc_SRC_CreateNewInstance_l229_1}
-  (origin: Misaligned {addrfilt.c:329}) }}
-{{ garbled mix of &{__malloc_SRC_CreateNewInstance_l229_1}
-  (origin: Misaligned {addrfilt.c:331}) }}
-{{ garbled mix of &{__malloc_SST_CreateInstance_l215_3}
-  (origin: Misaligned {addrfilt.c:326}) }}
-{{ garbled mix of &{__malloc_SST_CreateInstance_l215_3}
-  (origin: Misaligned {addrfilt.c:327}) }}
-{{ garbled mix of &{__malloc_SST_CreateInstance_l215_4}
-  (origin: Misaligned {addrfilt.c:326}) }}
-{{ garbled mix of &{__malloc_SST_CreateInstance_l215_4}
-  (origin: Misaligned {addrfilt.c:327}) }}
-{{ garbled mix of &{__malloc_SST_CreateInstance_l215_6}
-  (origin: Misaligned {addrfilt.c:326}) }}
-{{ garbled mix of &{__malloc_SST_CreateInstance_l215_6}
-  (origin: Misaligned {addrfilt.c:327}) }}
-{{ garbled mix of &{__malloc_SST_CreateInstance_l215_5}
-  (origin: Misaligned {addrfilt.c:326}) }}
-{{ garbled mix of &{__malloc_SST_CreateInstance_l215_5}
-  (origin: Misaligned {addrfilt.c:327}) }}
+[eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
+  addrfilt.c:82: misaligned read of addresses
+    (read 5280 times, propagated 1760 times)
+    garbled mix of &{__malloc_ADF_CreateTable_l91; __malloc_open_node_l137;
+                     __malloc_w_open_node_l137_0; __malloc_open_node_l137_1;
+                     __malloc_w_open_node_l137_2; __malloc_open_node_l137_3;
+                     __malloc_open_node_l137_4; __malloc_w_open_node_l137_5;
+                     __malloc_open_node_l137_6; __malloc_w_open_node_l137_7;
+                     __malloc_open_node_l137_8; __malloc_open_node_l137_9;
+                     __malloc_w_open_node_l137_10;
+                     __malloc_open_node_l137_11;
+                     __malloc_w_open_node_l137_12;
+                     __malloc_open_node_l137_13; __malloc_open_node_l137_14;
+                     __malloc_w_open_node_l137_15;
+                     __malloc_open_node_l137_16;
+                     __malloc_w_open_node_l137_17;
+                     __malloc_open_node_l137_18;
+                     __malloc_w_open_node_l137_19;
+                     __malloc_w_open_node_l137_20;
+                     __malloc_w_open_node_l137_21;
+                     __malloc_w_open_node_l137_22;
+                     __malloc_NCR_GetInstance_l520;
+                     __malloc_SRC_CreateNewInstance_l229;
+                     __malloc_NCR_GetInstance_l520_0;
+                     __malloc_SRC_CreateNewInstance_l229_0;
+                     __malloc_NCR_GetInstance_l520_1;
+                     __malloc_SRC_CreateNewInstance_l229_1;
+                     __malloc_NCR_GetInstance_l520_2;
+                     __malloc_SRC_CreateNewInstance_l229_2}
+  array.c:116: misaligned read of addresses
+    (read 3031 times, propagated 1295 times)
+    garbled mix of &{__malloc_KEY_Reload_l235;
+                     __realloc_realloc_array_l80_47;
+                     __malloc_w_KEY_Reload_l235_0;
+                     __realloc_w_realloc_array_l80_48}
+  addrfilt.c:327: misaligned read of addresses
+    (read 2880 times, propagated 720 times)
+    garbled mix of &{__malloc_open_node_l137; __malloc_w_open_node_l137_0;
+                     __malloc_open_node_l137_1; __malloc_w_open_node_l137_2;
+                     __malloc_open_node_l137_3; __malloc_open_node_l137_4;
+                     __malloc_w_open_node_l137_5; __malloc_open_node_l137_6;
+                     __malloc_w_open_node_l137_7; __malloc_open_node_l137_8;
+                     __malloc_open_node_l137_9; __malloc_w_open_node_l137_10;
+                     __malloc_open_node_l137_11;
+                     __malloc_w_open_node_l137_12;
+                     __malloc_open_node_l137_13; __malloc_open_node_l137_14;
+                     __malloc_w_open_node_l137_15;
+                     __malloc_open_node_l137_16;
+                     __malloc_w_open_node_l137_17;
+                     __malloc_open_node_l137_18;
+                     __malloc_w_open_node_l137_19;
+                     __malloc_w_open_node_l137_20;
+                     __malloc_w_open_node_l137_21;
+                     __malloc_w_open_node_l137_22;
+                     __malloc_NCR_GetInstance_l520;
+                     __malloc_SRC_CreateNewInstance_l229;
+                     __malloc_SST_CreateInstance_l215;
+                     __malloc_NCR_GetInstance_l520_0;
+                     __malloc_SRC_CreateNewInstance_l229_0;
+                     __malloc_SST_CreateInstance_l215_0;
+                     __malloc_NCR_GetInstance_l520_1;
+                     __malloc_SRC_CreateNewInstance_l229_1;
+                     __malloc_SST_CreateInstance_l215_1;
+                     __malloc_NCR_GetInstance_l520_2;
+                     __malloc_SRC_CreateNewInstance_l229_2;
+                     __malloc_SST_CreateInstance_l215_2;
+                     __malloc_SST_CreateInstance_l215_3;
+                     __malloc_SST_CreateInstance_l215_4;
+                     __malloc_SST_CreateInstance_l215_5;
+                     __malloc_SST_CreateInstance_l215_6}
+  sched.c:185: imprecise merge of addresses
+    (read 25 times, propagated 0 times) garbled mix of &{read_from_socket}
