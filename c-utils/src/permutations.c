@@ -79,11 +79,13 @@ void perm_add(permutations_t p, size_t num) {
     for (i = 0; i < num; ++i) {
         size_t cnt = 1, pos = p->input_len - 1;
         ++p->cur_perm[pos];
+        //@ dynamic_split pos>0;
         while (p->cur_perm[pos] == p->alphabet_len) {
             ++cnt;
             p->cur_perm[pos--] = 0;
             ++p->cur_perm[pos];
             /* check for wrap around */
+            //@ split p->cur_perm[pos] > p->alphabet_len;
             if (pos == 0 && p->cur_perm[pos] == p->alphabet_len) {
                 p->cur_perm[pos] = 0;
                 __update_current_str(p, 0);

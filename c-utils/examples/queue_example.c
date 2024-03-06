@@ -23,7 +23,9 @@ typedef struct person {
 } _person;
 
 
+#ifndef NUM_ELEMENTS
 #define NUM_ELEMENTS 1000000
+#endif
 
 int main(int argc, char const *argv[]) {
     bool verbose = false;

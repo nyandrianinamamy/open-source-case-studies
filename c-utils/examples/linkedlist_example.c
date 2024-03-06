@@ -26,7 +26,9 @@ typedef struct point {
 } _point;
 
 
+#ifndef NUM_ELEMENTS
 #define NUM_ELEMENTS   9000
+#endif
 
 
 int main(int argc, char const *argv[]) {

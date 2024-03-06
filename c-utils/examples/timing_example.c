@@ -26,7 +26,8 @@ int main() {
         nums[i] = rand();
         denoms[i] = rand() % ITERATIONS + 1; /* ensure no division by 0 */
     }
-
+    //@ assert \subset(denoms[0 .. ITERATIONS-1], (1 ..));
+    //@ dynamic_split *(denoms+i)>1;
     unsigned int a = 0;
     Timing t;
     /* test standard ceil function */
