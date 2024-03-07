@@ -72,6 +72,9 @@ for assigns clause __fc_stdout->__fc_FILE_data.
 unittests/test_strcasestr_s.c:193:[eva:garbled-mix:assigns] warning: The specification of function printf_va_278
 has generated a garbled mix of addresses
 for assigns clause __fc_stdout->__fc_FILE_data.
+unittests/test_strcasestr_s.c:275:[eva:garbled-mix:assigns] warning: The specification of function printf_va_291
+has generated a garbled mix of addresses
+for assigns clause __fc_stdout->__fc_FILE_data.
 unittests/Safe_String_UnitTestMain.c:114:[eva:locals-escaping] warning: locals {str1_17} escaping the scope of test_strcasestr_s through S___fc_stdout
 unittests/test_strfirstchar_s.c:90:[eva:garbled-mix:assigns] warning: The specification of function printf_va_401
 has generated a garbled mix of addresses
@@ -129,6 +132,9 @@ for assigns clause __fc_stdout->__fc_FILE_data.
 unittests/test_strpbrk_s.c:172:[eva:garbled-mix:assigns] warning: The specification of function strpbrk
 has generated a garbled mix of addresses for assigns clause \result.
 unittests/test_strpbrk_s.c:190:[eva:garbled-mix:assigns] warning: The specification of function printf_va_684
+has generated a garbled mix of addresses
+for assigns clause __fc_stdout->__fc_FILE_data.
+unittests/test_strpbrk_s.c:206:[eva:garbled-mix:assigns] warning: The specification of function printf_va_686
 has generated a garbled mix of addresses
 for assigns clause __fc_stdout->__fc_FILE_data.
 unittests/test_strpbrk_s.c:221:[eva:garbled-mix:assigns] warning: The specification of function strpbrk
@@ -456,19 +462,19 @@ stack: mem_prim_move :: safeclib/wmemmove_s.c:146 <-
        test_wmemmove_s :: unittests/Safe_String_UnitTestMain.c:162 <-
        main
 [eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
-  unittests/test_strpbrk_s.c:172: assigns clause on addresses
-    (read 50 times, propagated 56 times) garbled mix of &{str1_8}
-  unittests/test_strpbrk_s.c:155: assigns clause on addresses
-    (read 34 times, propagated 42 times) garbled mix of &{str1_8}
-  unittests/test_strpbrk_s.c:138: assigns clause on addresses
-    (read 18 times, propagated 26 times) garbled mix of &{str1_8}
   unittests/test_strpbrk_s.c:221: assigns clause on addresses
-    (read 10 times, propagated 6 times) garbled mix of &{str1_8}
+    (read 18 times, propagated 19 times) garbled mix of &{str1_8}
   unittests/test_strpbrk_s.c:238: assigns clause on addresses
-    (read 10 times, propagated 10 times) garbled mix of &{str1_8}
+    (read 18 times, propagated 19 times) garbled mix of &{str1_8}
   unittests/test_strpbrk_s.c:255: assigns clause on addresses
-    (read 10 times, propagated 10 times) garbled mix of &{str1_8}
+    (read 18 times, propagated 19 times) garbled mix of &{str1_8}
   unittests/test_strpbrk_s.c:272: assigns clause on addresses
-    (read 10 times, propagated 10 times) garbled mix of &{str1_8}
+    (read 18 times, propagated 18 times) garbled mix of &{str1_8}
+  unittests/test_strpbrk_s.c:138: assigns clause on addresses
+    (read 14 times, propagated 13 times) garbled mix of &{str1_8}
+  unittests/test_strpbrk_s.c:155: assigns clause on addresses
+    (read 14 times, propagated 15 times) garbled mix of &{str1_8}
+  unittests/test_strpbrk_s.c:172: assigns clause on addresses
+    (read 14 times, propagated 21 times) garbled mix of &{str1_8}
   unittests/test_strpbrk_s.c:121: assigns clause on addresses
-    (read 6 times, propagated 1278 times) garbled mix of &{str1_8}
+    (read 6 times, propagated 1276 times) garbled mix of &{str1_8}
