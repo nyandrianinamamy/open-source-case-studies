@@ -1,6 +1,6 @@
-logging.h:100:[kernel:annot:missing-spec] warning: Neither code nor specification for function LOG_SetDebugLevel,
+test/unit/test.c:53:[kernel:annot:missing-spec] warning: Neither code nor specification for function LOG_SetDebugLevel,
  generating default assigns. See -generated-spec-* options for more info
-logging.h:80:[kernel:annot:missing-spec] warning: Neither code nor specification for function LOG_Initialise,
+test/unit/test.c:68:[kernel:annot:missing-spec] warning: Neither code nor specification for function LOG_Initialise,
  generating default assigns. See -generated-spec-* options for more info
 test/unit/regress.c:45:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&x[j]);
 stack: test_unit :: test/unit/test.c:70 <- main :: fc_stubs.c:37 <- eva_main
@@ -654,5 +654,5 @@ stack: RGR_FindBestRegression :: test/unit/regress.c:110 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-logging.h:83:[kernel:annot:missing-spec] warning: Neither code nor specification for function LOG_Finalise,
+test/unit/test.c:72:[kernel:annot:missing-spec] warning: Neither code nor specification for function LOG_Finalise,
  generating default assigns. See -generated-spec-* options for more info

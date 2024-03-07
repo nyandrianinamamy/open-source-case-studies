@@ -1,3 +1,6 @@
-[eva:garbled-mix:summary] warning: Garbled mix generated during analysis:
-{{ garbled mix of &{x}
-  (origin: Misaligned {pointer_copy_user_dataflow_indirect_bytewise.c:5}) }}
+pointer_copy_user_dataflow_indirect_bytewise.c:5:[eva:garbled-mix:write] warning: Assigning imprecise value to *dest because of misaligned read of addresses.
+stack: user_memcpy2 :: pointer_copy_user_dataflow_indirect_bytewise.c:14 <-
+       main
+[eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
+  pointer_copy_user_dataflow_indirect_bytewise.c:5: misaligned read of addresses
+    (read 3 times, propagated 4 times) garbled mix of &{x}

@@ -946,7 +946,7 @@ void __attribute__((__visibility__("default"))) *miniz_def_alloc_func
 (void *opaque, size_t items, size_t size)
 {
   void __attribute__((__visibility__("default"))) *tmp;
-  tmp = (void __attribute__((__visibility__("default"))) *)malloc(items * size);
+  tmp = malloc(items * size);
   return tmp;
 }
 
@@ -961,15 +961,14 @@ void __attribute__((__visibility__("default"))) *miniz_def_realloc_func
 (void *opaque, void *address, size_t items, size_t size)
 {
   void __attribute__((__visibility__("default"))) *tmp;
-  tmp = (void __attribute__((__visibility__("default"))) *)realloc(address,
-                                                                   items * size);
+  tmp = realloc(address,items * size);
   return tmp;
 }
 
 char const __attribute__((__visibility__("default"))) *mz_version(void)
 {
   char const __attribute__((__visibility__("default"))) *__retres;
-  __retres = (char const __attribute__((__visibility__("default"))) *)"10.1.0";
+  __retres = "10.1.0";
   return __retres;
 }
 
@@ -994,29 +993,29 @@ int __attribute__((__visibility__("default"))) mz_deflateInit2(mz_streamp pStrea
   tdefl_status __attribute__((__visibility__("default"))) tmp_1;
   tmp = tdefl_create_comp_flags_from_zip_params(level,window_bits,strategy);
   mz_uint comp_flags =
-    (mz_uint)((unsigned int __attribute__((__visibility__("default"))))TDEFL_COMPUTE_ADLER32 | tmp);
+    (unsigned int __attribute__((__visibility__("default"))))TDEFL_COMPUTE_ADLER32 | tmp;
   if (! pStream) {
-    __retres = (int __attribute__((__visibility__("default"))))MZ_STREAM_ERROR;
+    __retres = MZ_STREAM_ERROR;
     goto return_label;
   }
   if (method != 8) {
-    __retres = (int __attribute__((__visibility__("default"))))MZ_PARAM_ERROR;
+    __retres = MZ_PARAM_ERROR;
     goto return_label;
   }
   else 
     if (mem_level < 1) {
-      __retres = (int __attribute__((__visibility__("default"))))MZ_PARAM_ERROR;
+      __retres = MZ_PARAM_ERROR;
       goto return_label;
     }
     else 
       if (mem_level > 9) {
-        __retres = (int __attribute__((__visibility__("default"))))MZ_PARAM_ERROR;
+        __retres = MZ_PARAM_ERROR;
         goto return_label;
       }
       else 
         if (window_bits != 15) 
           if (- window_bits != 15) {
-            __retres = (int __attribute__((__visibility__("default"))))MZ_PARAM_ERROR;
+            __retres = MZ_PARAM_ERROR;
             goto return_label;
           }
   pStream->data_type = 0;
@@ -1033,19 +1032,19 @@ int __attribute__((__visibility__("default"))) mz_deflateInit2(mz_streamp pStrea
   pComp = (tdefl_compressor *)(*(pStream->zalloc))(pStream->opaque,(size_t)1,
                                                    sizeof(tdefl_compressor));
   if (! pComp) {
-    __retres = (int __attribute__((__visibility__("default"))))MZ_MEM_ERROR;
+    __retres = MZ_MEM_ERROR;
     goto return_label;
   }
   pStream->state = (struct mz_internal_state *)pComp;
   tmp_1 = tdefl_init(pComp,
                      (mz_bool (*)(void const *pBuf, int len, void *pUser))0,
                      (void *)0,(int)comp_flags);
-  if (tmp_1 != (int __attribute__((__visibility__("default"))))TDEFL_STATUS_OKAY) {
+  if (tmp_1 != TDEFL_STATUS_OKAY) {
     mz_deflateEnd(pStream);
-    __retres = (int __attribute__((__visibility__("default"))))MZ_PARAM_ERROR;
+    __retres = MZ_PARAM_ERROR;
     goto return_label;
   }
-  __retres = (int __attribute__((__visibility__("default"))))MZ_OK;
+  __retres = MZ_OK;
   return_label: return __retres;
 }
 
@@ -1054,22 +1053,22 @@ int __attribute__((__visibility__("default"))) mz_deflateReset(mz_streamp pStrea
   int __attribute__((__visibility__("default"))) __retres;
   mz_ulong tmp;
   if (! pStream) {
-    __retres = (int __attribute__((__visibility__("default"))))MZ_STREAM_ERROR;
+    __retres = MZ_STREAM_ERROR;
     goto return_label;
   }
   else 
     if (! pStream->state) {
-      __retres = (int __attribute__((__visibility__("default"))))MZ_STREAM_ERROR;
+      __retres = MZ_STREAM_ERROR;
       goto return_label;
     }
     else 
       if (! pStream->zalloc) {
-        __retres = (int __attribute__((__visibility__("default"))))MZ_STREAM_ERROR;
+        __retres = MZ_STREAM_ERROR;
         goto return_label;
       }
       else 
         if (! pStream->zfree) {
-          __retres = (int __attribute__((__visibility__("default"))))MZ_STREAM_ERROR;
+          __retres = MZ_STREAM_ERROR;
           goto return_label;
         }
   tmp = (mz_ulong)0;
@@ -1078,7 +1077,7 @@ int __attribute__((__visibility__("default"))) mz_deflateReset(mz_streamp pStrea
   tdefl_init((tdefl_compressor *)pStream->state,
              (mz_bool (*)(void const *pBuf, int len, void *pUser))0,
              (void *)0,(int)((tdefl_compressor *)pStream->state)->m_flags);
-  __retres = (int __attribute__((__visibility__("default"))))MZ_OK;
+  __retres = MZ_OK;
   return_label: return __retres;
 }
 
@@ -1092,38 +1091,38 @@ int __attribute__((__visibility__("default"))) mz_deflate(mz_streamp pStream,
   mz_ulong orig_total_out;
   int mz_status = MZ_OK;
   if (! pStream) {
-    __retres = (int __attribute__((__visibility__("default"))))MZ_STREAM_ERROR;
+    __retres = MZ_STREAM_ERROR;
     goto return_label;
   }
   else 
     if (! pStream->state) {
-      __retres = (int __attribute__((__visibility__("default"))))MZ_STREAM_ERROR;
+      __retres = MZ_STREAM_ERROR;
       goto return_label;
     }
     else 
       if (flush < 0) {
-        __retres = (int __attribute__((__visibility__("default"))))MZ_STREAM_ERROR;
+        __retres = MZ_STREAM_ERROR;
         goto return_label;
       }
       else 
         if (flush > MZ_FINISH) {
-          __retres = (int __attribute__((__visibility__("default"))))MZ_STREAM_ERROR;
+          __retres = MZ_STREAM_ERROR;
           goto return_label;
         }
         else 
           if (! pStream->next_out) {
-            __retres = (int __attribute__((__visibility__("default"))))MZ_STREAM_ERROR;
+            __retres = MZ_STREAM_ERROR;
             goto return_label;
           }
   if (! pStream->avail_out) {
-    __retres = (int __attribute__((__visibility__("default"))))MZ_BUF_ERROR;
+    __retres = MZ_BUF_ERROR;
     goto return_label;
   }
   if (flush == MZ_PARTIAL_FLUSH) flush = MZ_SYNC_FLUSH;
   if (((tdefl_compressor *)pStream->state)->m_prev_return_status == TDEFL_STATUS_DONE) {
     int tmp;
     if (flush == MZ_FINISH) tmp = MZ_STREAM_END; else tmp = MZ_BUF_ERROR;
-    __retres = (int __attribute__((__visibility__("default"))))tmp;
+    __retres = tmp;
     goto return_label;
   }
   orig_total_in = pStream->total_in;
@@ -1138,7 +1137,7 @@ int __attribute__((__visibility__("default"))) mz_deflate(mz_streamp pStream,
                            (void const *)pStream->next_in,& in_bytes,
                            (void *)pStream->next_out,& out_bytes,
                            (tdefl_flush)flush);
-    defl_status = (tdefl_status)tmp_0;
+    defl_status = tmp_0;
     pStream->next_in += (mz_uint)in_bytes;
     pStream->avail_in -= (mz_uint)in_bytes;
     pStream->total_in += (mz_ulong)((mz_uint)in_bytes);
@@ -1166,11 +1165,11 @@ int __attribute__((__visibility__("default"))) mz_deflate(mz_streamp pStream,
                 if (pStream->total_in != orig_total_in) break;
                 else 
                   if (pStream->total_out != orig_total_out) break;
-              __retres = (int __attribute__((__visibility__("default"))))MZ_BUF_ERROR;
+              __retres = MZ_BUF_ERROR;
               goto return_label;
             }
   }
-  __retres = (int __attribute__((__visibility__("default"))))mz_status;
+  __retres = mz_status;
   return_label: return __retres;
 }
 
@@ -1178,29 +1177,27 @@ int __attribute__((__visibility__("default"))) mz_deflateEnd(mz_streamp pStream)
 {
   int __attribute__((__visibility__("default"))) __retres;
   if (! pStream) {
-    __retres = (int __attribute__((__visibility__("default"))))MZ_STREAM_ERROR;
+    __retres = MZ_STREAM_ERROR;
     goto return_label;
   }
   if (pStream->state) {
     (*(pStream->zfree))(pStream->opaque,(void *)pStream->state);
     pStream->state = (struct mz_internal_state *)0;
   }
-  __retres = (int __attribute__((__visibility__("default"))))MZ_OK;
+  __retres = MZ_OK;
   return_label: return __retres;
 }
 
 mz_ulong __attribute__((__visibility__("default"))) mz_deflateBound(mz_streamp pStream,
                                                                     mz_ulong source_len)
 {
-  mz_ulong __attribute__((__visibility__("default"))) __retres;
   mz_ulong tmp;
   if ((mz_ulong)128 + (source_len * (mz_ulong)110) / (mz_ulong)100 > 
       ((mz_ulong)128 + source_len) + (source_len / (mz_ulong)(31 * 1024) + (mz_ulong)1) * (mz_ulong)5) 
     tmp = (mz_ulong)128 + (source_len * (mz_ulong)110) / (mz_ulong)100;
   else tmp = ((mz_ulong)128 + source_len) + (source_len / (mz_ulong)(
                                              31 * 1024) + (mz_ulong)1) * (mz_ulong)5;
-  __retres = (mz_ulong __attribute__((__visibility__("default"))))tmp;
-  return __retres;
+  return tmp;
 }
 
 int __attribute__((__visibility__("default"))) mz_compress2(unsigned char *pDest,
@@ -1215,24 +1212,24 @@ int __attribute__((__visibility__("default"))) mz_compress2(unsigned char *pDest
   int __attribute__((__visibility__("default"))) tmp_0;
   memset((void *)(& stream),0,sizeof(stream));
   if ((source_len | *pDest_len) > (unsigned long)0xFFFFFFFFU) {
-    __retres = (int __attribute__((__visibility__("default"))))MZ_PARAM_ERROR;
+    __retres = MZ_PARAM_ERROR;
     goto return_label;
   }
   stream.next_in = pSource;
   stream.avail_in = (mz_uint32)source_len;
   stream.next_out = pDest;
   stream.avail_out = (mz_uint32)*pDest_len;
-  status = (int)mz_deflateInit(& stream,level);
+  status = mz_deflateInit(& stream,level);
   if (status != MZ_OK) {
-    __retres = (int __attribute__((__visibility__("default"))))status;
+    __retres = status;
     goto return_label;
   }
-  status = (int)mz_deflate(& stream,MZ_FINISH);
+  status = mz_deflate(& stream,MZ_FINISH);
   if (status != MZ_STREAM_END) {
     int tmp;
     mz_deflateEnd(& stream);
     if (status == MZ_OK) tmp = MZ_BUF_ERROR; else tmp = status;
-    __retres = (int __attribute__((__visibility__("default"))))tmp;
+    __retres = tmp;
     goto return_label;
   }
   *pDest_len = stream.total_out;
@@ -1266,12 +1263,12 @@ int __attribute__((__visibility__("default"))) mz_inflateInit2(mz_streamp pStrea
   int __attribute__((__visibility__("default"))) __retres;
   inflate_state *pDecomp;
   if (! pStream) {
-    __retres = (int __attribute__((__visibility__("default"))))MZ_STREAM_ERROR;
+    __retres = MZ_STREAM_ERROR;
     goto return_label;
   }
   if (window_bits != 15) 
     if (- window_bits != 15) {
-      __retres = (int __attribute__((__visibility__("default"))))MZ_PARAM_ERROR;
+      __retres = MZ_PARAM_ERROR;
       goto return_label;
     }
   pStream->data_type = 0;
@@ -1288,7 +1285,7 @@ int __attribute__((__visibility__("default"))) mz_inflateInit2(mz_streamp pStrea
   pDecomp = (inflate_state *)(*(pStream->zalloc))(pStream->opaque,(size_t)1,
                                                   sizeof(inflate_state));
   if (! pDecomp) {
-    __retres = (int __attribute__((__visibility__("default"))))MZ_MEM_ERROR;
+    __retres = MZ_MEM_ERROR;
     goto return_label;
   }
   pStream->state = (struct mz_internal_state *)pDecomp;
@@ -1305,7 +1302,7 @@ int __attribute__((__visibility__("default"))) mz_inflateInit2(mz_streamp pStrea
   pDecomp->m_first_call = (mz_uint)1;
   pDecomp->m_has_flushed = (mz_uint)0;
   pDecomp->m_window_bits = window_bits;
-  __retres = (int __attribute__((__visibility__("default"))))MZ_OK;
+  __retres = MZ_OK;
   return_label: return __retres;
 }
 
@@ -1321,7 +1318,7 @@ int __attribute__((__visibility__("default"))) mz_inflateReset(mz_streamp pStrea
   int __attribute__((__visibility__("default"))) __retres;
   inflate_state *pDecomp;
   if (! pStream) {
-    __retres = (int __attribute__((__visibility__("default"))))MZ_STREAM_ERROR;
+    __retres = MZ_STREAM_ERROR;
     goto return_label;
   }
   pStream->data_type = 0;
@@ -1343,7 +1340,7 @@ int __attribute__((__visibility__("default"))) mz_inflateReset(mz_streamp pStrea
   pDecomp->m_last_status = TINFL_STATUS_NEEDS_MORE_INPUT;
   pDecomp->m_first_call = (mz_uint)1;
   pDecomp->m_has_flushed = (mz_uint)0;
-  __retres = (int __attribute__((__visibility__("default"))))MZ_OK;
+  __retres = MZ_OK;
   return_label: return __retres;
 }
 
@@ -1361,19 +1358,19 @@ int __attribute__((__visibility__("default"))) mz_inflate(mz_streamp pStream,
   int tmp_3;
   mz_uint decomp_flags = (mz_uint)TINFL_FLAG_COMPUTE_ADLER32;
   if (! pStream) {
-    __retres = (int __attribute__((__visibility__("default"))))MZ_STREAM_ERROR;
+    __retres = MZ_STREAM_ERROR;
     goto return_label;
   }
   else 
     if (! pStream->state) {
-      __retres = (int __attribute__((__visibility__("default"))))MZ_STREAM_ERROR;
+      __retres = MZ_STREAM_ERROR;
       goto return_label;
     }
   if (flush == MZ_PARTIAL_FLUSH) flush = MZ_SYNC_FLUSH;
   if (flush) 
     if (flush != MZ_SYNC_FLUSH) 
       if (flush != MZ_FINISH) {
-        __retres = (int __attribute__((__visibility__("default"))))MZ_STREAM_ERROR;
+        __retres = MZ_STREAM_ERROR;
         goto return_label;
       }
   pState = (inflate_state *)pStream->state;
@@ -1382,12 +1379,12 @@ int __attribute__((__visibility__("default"))) mz_inflate(mz_streamp pStream,
   first_call = pState->m_first_call;
   pState->m_first_call = (mz_uint)0;
   if (pState->m_last_status < 0) {
-    __retres = (int __attribute__((__visibility__("default"))))MZ_DATA_ERROR;
+    __retres = MZ_DATA_ERROR;
     goto return_label;
   }
   if (pState->m_has_flushed) 
     if (flush != MZ_FINISH) {
-      __retres = (int __attribute__((__visibility__("default"))))MZ_STREAM_ERROR;
+      __retres = MZ_STREAM_ERROR;
       goto return_label;
     }
   pState->m_has_flushed |= (unsigned int)(flush == MZ_FINISH);
@@ -1400,7 +1397,7 @@ int __attribute__((__visibility__("default"))) mz_inflate(mz_streamp pStream,
       tmp = tinfl_decompress(& pState->m_decomp,pStream->next_in,& in_bytes,
                              pStream->next_out,pStream->next_out,& out_bytes,
                              decomp_flags);
-      status = (tinfl_status)tmp;
+      status = tmp;
       pState->m_last_status = status;
       pStream->next_in += (mz_uint)in_bytes;
       pStream->avail_in -= (mz_uint)in_bytes;
@@ -1410,16 +1407,16 @@ int __attribute__((__visibility__("default"))) mz_inflate(mz_streamp pStream,
       pStream->avail_out -= (mz_uint)out_bytes;
       pStream->total_out += (mz_ulong)((mz_uint)out_bytes);
       if (status < 0) {
-        __retres = (int __attribute__((__visibility__("default"))))MZ_DATA_ERROR;
+        __retres = MZ_DATA_ERROR;
         goto return_label;
       }
       else 
         if (status != TINFL_STATUS_DONE) {
           pState->m_last_status = TINFL_STATUS_FAILED;
-          __retres = (int __attribute__((__visibility__("default"))))MZ_BUF_ERROR;
+          __retres = MZ_BUF_ERROR;
           goto return_label;
         }
-      __retres = (int __attribute__((__visibility__("default"))))MZ_STREAM_END;
+      __retres = MZ_STREAM_END;
       goto return_label;
     }
   if (flush != MZ_FINISH) decomp_flags |= (unsigned int)TINFL_FLAG_HAS_MORE_INPUT;
@@ -1437,7 +1434,7 @@ int __attribute__((__visibility__("default"))) mz_inflate(mz_streamp pStream,
     if (pState->m_last_status == TINFL_STATUS_DONE) 
       if (! pState->m_dict_avail) tmp_0 = MZ_STREAM_END; else tmp_0 = MZ_OK;
     else tmp_0 = MZ_OK;
-    __retres = (int __attribute__((__visibility__("default"))))tmp_0;
+    __retres = tmp_0;
     goto return_label;
   }
   while (1) {
@@ -1448,7 +1445,7 @@ int __attribute__((__visibility__("default"))) mz_inflate(mz_streamp pStream,
                              pState->m_dict,
                              & pState->m_dict[pState->m_dict_ofs],
                              & out_bytes,decomp_flags);
-    status = (tinfl_status)tmp_1;
+    status = tmp_1;
     pState->m_last_status = status;
     pStream->next_in += (mz_uint)in_bytes;
     pStream->avail_in -= (mz_uint)in_bytes;
@@ -1465,13 +1462,13 @@ int __attribute__((__visibility__("default"))) mz_inflate(mz_streamp pStream,
     pState->m_dict_avail -= n;
     pState->m_dict_ofs = (pState->m_dict_ofs + n) & (unsigned int)(32768 - 1);
     if (status < 0) {
-      __retres = (int __attribute__((__visibility__("default"))))MZ_DATA_ERROR;
+      __retres = MZ_DATA_ERROR;
       goto return_label;
     }
     else 
       if (status == TINFL_STATUS_NEEDS_MORE_INPUT) {
         if (! orig_avail_in) {
-          __retres = (int __attribute__((__visibility__("default"))))MZ_BUF_ERROR;
+          __retres = MZ_BUF_ERROR;
           goto return_label;
         }
         else goto _LAND;
@@ -1483,12 +1480,12 @@ int __attribute__((__visibility__("default"))) mz_inflate(mz_streamp pStream,
             int tmp_2;
             if (pState->m_dict_avail) tmp_2 = MZ_BUF_ERROR;
             else tmp_2 = MZ_STREAM_END;
-            __retres = (int __attribute__((__visibility__("default"))))tmp_2;
+            __retres = tmp_2;
             goto return_label;
           }
           else 
             if (! pStream->avail_out) {
-              __retres = (int __attribute__((__visibility__("default"))))MZ_BUF_ERROR;
+              __retres = MZ_BUF_ERROR;
               goto return_label;
             }
         }
@@ -1505,7 +1502,7 @@ int __attribute__((__visibility__("default"))) mz_inflate(mz_streamp pStream,
   if (status == TINFL_STATUS_DONE) 
     if (! pState->m_dict_avail) tmp_3 = MZ_STREAM_END; else tmp_3 = MZ_OK;
   else tmp_3 = MZ_OK;
-  __retres = (int __attribute__((__visibility__("default"))))tmp_3;
+  __retres = tmp_3;
   return_label: return __retres;
 }
 
@@ -1513,14 +1510,14 @@ int __attribute__((__visibility__("default"))) mz_inflateEnd(mz_streamp pStream)
 {
   int __attribute__((__visibility__("default"))) __retres;
   if (! pStream) {
-    __retres = (int __attribute__((__visibility__("default"))))MZ_STREAM_ERROR;
+    __retres = MZ_STREAM_ERROR;
     goto return_label;
   }
   if (pStream->state) {
     (*(pStream->zfree))(pStream->opaque,(void *)pStream->state);
     pStream->state = (struct mz_internal_state *)0;
   }
-  __retres = (int __attribute__((__visibility__("default"))))MZ_OK;
+  __retres = MZ_OK;
   return_label: return __retres;
 }
 
@@ -1535,19 +1532,19 @@ int __attribute__((__visibility__("default"))) mz_uncompress2(unsigned char *pDe
   int __attribute__((__visibility__("default"))) tmp_0;
   memset((void *)(& stream),0,sizeof(stream));
   if ((*pSource_len | *pDest_len) > (unsigned long)0xFFFFFFFFU) {
-    __retres = (int __attribute__((__visibility__("default"))))MZ_PARAM_ERROR;
+    __retres = MZ_PARAM_ERROR;
     goto return_label;
   }
   stream.next_in = pSource;
   stream.avail_in = (mz_uint32)*pSource_len;
   stream.next_out = pDest;
   stream.avail_out = (mz_uint32)*pDest_len;
-  status = (int)mz_inflateInit(& stream);
+  status = mz_inflateInit(& stream);
   if (status != MZ_OK) {
-    __retres = (int __attribute__((__visibility__("default"))))status;
+    __retres = status;
     goto return_label;
   }
-  status = (int)mz_inflate(& stream,MZ_FINISH);
+  status = mz_inflate(& stream,MZ_FINISH);
   *pSource_len -= (mz_ulong)stream.avail_in;
   if (status != MZ_STREAM_END) {
     int tmp;
@@ -1555,7 +1552,7 @@ int __attribute__((__visibility__("default"))) mz_uncompress2(unsigned char *pDe
     if (status == MZ_BUF_ERROR) 
       if (! stream.avail_in) tmp = MZ_DATA_ERROR; else tmp = status;
     else tmp = status;
-    __retres = (int __attribute__((__visibility__("default"))))tmp;
+    __retres = tmp;
     goto return_label;
   }
   *pDest_len = stream.total_out;
@@ -1592,7 +1589,7 @@ char const __attribute__((__visibility__("default"))) *mz_error(int err)
   i = (mz_uint)0;
   while ((unsigned long)i < sizeof(mz_error_s_error_descs) / sizeof(mz_error_s_error_descs[0])) {
     if (mz_error_s_error_descs[i].m_err == err) {
-      __retres = (char const __attribute__((__visibility__("default"))) *)mz_error_s_error_descs[i].m_pDesc;
+      __retres = mz_error_s_error_descs[i].m_pDesc;
       goto return_label;
     }
     i ++;
@@ -5546,7 +5543,7 @@ tdefl_status __attribute__((__visibility__("default"))) tdefl_compress
                   if (pOut_buf_size) *pOut_buf_size = (size_t)0;
                   tmp = TDEFL_STATUS_BAD_PARAM;
                   d->m_prev_return_status = tmp;
-                  __retres = (tdefl_status __attribute__((__visibility__("default"))))tmp;
+                  __retres = tmp;
                   goto return_label;
                 }
               }
@@ -5559,7 +5556,7 @@ tdefl_status __attribute__((__visibility__("default"))) tdefl_compress
       tdefl_status tmp_1;
       _LOR_0: tmp_1 = tdefl_flush_output_buffer(d);
       d->m_prev_return_status = tmp_1;
-      __retres = (tdefl_status __attribute__((__visibility__("default"))))tmp_1;
+      __retres = tmp_1;
       goto return_label;
     }
   if ((d->m_flags & (unsigned int)TDEFL_MAX_PROBES_MASK) == (unsigned int)1) {
@@ -5568,7 +5565,7 @@ tdefl_status __attribute__((__visibility__("default"))) tdefl_compress
         mz_bool tmp_2;
         tmp_2 = tdefl_compress_fast(d);
         if (! tmp_2) {
-          __retres = (tdefl_status __attribute__((__visibility__("default"))))d->m_prev_return_status;
+          __retres = d->m_prev_return_status;
           goto return_label;
         }
       }
@@ -5582,7 +5579,7 @@ tdefl_status __attribute__((__visibility__("default"))) tdefl_compress
       mz_bool tmp_3;
       tmp_3 = tdefl_compress_normal(d);
       if (! tmp_3) {
-        __retres = (tdefl_status __attribute__((__visibility__("default"))))d->m_prev_return_status;
+        __retres = d->m_prev_return_status;
         goto return_label;
       }
     }
@@ -5601,7 +5598,7 @@ tdefl_status __attribute__((__visibility__("default"))) tdefl_compress
           int tmp_5;
           tmp_5 = tdefl_flush_block(d,(int)flush);
           if (tmp_5 < 0) {
-            __retres = (tdefl_status __attribute__((__visibility__("default"))))d->m_prev_return_status;
+            __retres = d->m_prev_return_status;
             goto return_label;
           }
           d->m_finished = (mz_uint)(flush == (unsigned int)TDEFL_FINISH);
@@ -5613,7 +5610,7 @@ tdefl_status __attribute__((__visibility__("default"))) tdefl_compress
         }
   tmp_6 = tdefl_flush_output_buffer(d);
   d->m_prev_return_status = tmp_6;
-  __retres = (tdefl_status __attribute__((__visibility__("default"))))tmp_6;
+  __retres = tmp_6;
   return_label: return __retres;
 }
 
@@ -5717,7 +5714,7 @@ tdefl_status __attribute__((__visibility__("default"))) tdefl_get_prev_return_st
 (tdefl_compressor *d)
 {
   tdefl_status __attribute__((__visibility__("default"))) __retres;
-  __retres = (tdefl_status __attribute__((__visibility__("default"))))d->m_prev_return_status;
+  __retres = d->m_prev_return_status;
   return __retres;
 }
 
@@ -5725,7 +5722,7 @@ mz_uint32 __attribute__((__visibility__("default"))) tdefl_get_adler32
 (tdefl_compressor *d)
 {
   mz_uint32 __attribute__((__visibility__("default"))) __retres;
-  __retres = (mz_uint32 __attribute__((__visibility__("default"))))d->m_adler32;
+  __retres = d->m_adler32;
   return __retres;
 }
 
@@ -5741,35 +5738,32 @@ mz_bool __attribute__((__visibility__("default"))) tdefl_compress_mem_to_output
   int tmp_2;
   if (buf_len) {
     if (! pBuf) {
-      __retres = (mz_bool __attribute__((__visibility__("default"))))0;
+      __retres = 0;
       goto return_label;
     }
     else goto _LAND;
   }
   else 
-    _LAND:
-    if (! pPut_buf_func) {
-      __retres = (mz_bool __attribute__((__visibility__("default"))))0;
-      goto return_label;
-    }
+    _LAND: if (! pPut_buf_func) {
+             __retres = 0;
+             goto return_label;
+           }
   pComp = (tdefl_compressor *)malloc(sizeof(tdefl_compressor));
   if (! pComp) {
-    __retres = (mz_bool __attribute__((__visibility__("default"))))0;
+    __retres = 0;
     goto return_label;
   }
   tmp_0 = tdefl_init(pComp,pPut_buf_func,pPut_buf_user,flags);
-  succeeded = tmp_0 == (int __attribute__((__visibility__("default"))))TDEFL_STATUS_OKAY;
+  succeeded = tmp_0 == TDEFL_STATUS_OKAY;
   if (succeeded) {
     tdefl_status __attribute__((__visibility__("default"))) tmp_1;
     tmp_1 = tdefl_compress_buffer(pComp,pBuf,buf_len,TDEFL_FINISH);
-    if (tmp_1 == (int __attribute__((__visibility__("default"))))TDEFL_STATUS_DONE) 
-      tmp_2 = 1;
-    else tmp_2 = 0;
+    if (tmp_1 == TDEFL_STATUS_DONE) tmp_2 = 1; else tmp_2 = 0;
   }
   else tmp_2 = 0;
   succeeded = tmp_2;
   free((void *)pComp);
-  __retres = (mz_bool __attribute__((__visibility__("default"))))succeeded;
+  __retres = succeeded;
   return_label: return __retres;
 }
 
@@ -5822,7 +5816,7 @@ void __attribute__((__visibility__("default"))) *tdefl_compress_mem_to_heap
                                      & tdefl_output_buffer_putter,
                                      (void *)(& out_buf),flags);
   if (! tmp) {
-    __retres = (void __attribute__((__visibility__("default"))) *)0;
+    __retres = (void *)0;
     goto return_label;
   }
   *pOut_len = out_buf.m_size;
@@ -5851,7 +5845,7 @@ size_t __attribute__((__visibility__("default"))) tdefl_compress_mem_to_mem
     __retres = (size_t __attribute__((__visibility__("default"))))0;
     goto return_label;
   }
-  __retres = (size_t __attribute__((__visibility__("default"))))out_buf.m_size;
+  __retres = out_buf.m_size;
   return_label: return __retres;
 }
 
@@ -5870,7 +5864,6 @@ static mz_uint const s_tdefl_num_probes[11] =
 mz_uint __attribute__((__visibility__("default"))) tdefl_create_comp_flags_from_zip_params
 (int level, int window_bits, int strategy)
 {
-  mz_uint __attribute__((__visibility__("default"))) __retres;
   int tmp_0;
   int tmp_1;
   if (level >= 0) {
@@ -5891,8 +5884,7 @@ mz_uint __attribute__((__visibility__("default"))) tdefl_create_comp_flags_from_
         if (strategy == MZ_FIXED) comp_flags |= (unsigned int)TDEFL_FORCE_ALL_STATIC_BLOCKS;
         else 
           if (strategy == MZ_RLE) comp_flags |= (unsigned int)TDEFL_RLE_MATCHES;
-  __retres = (mz_uint __attribute__((__visibility__("default"))))comp_flags;
-  return __retres;
+  return comp_flags;
 }
 
 static mz_uint const tdefl_write_image_to_png_file_in_memory_ex_s_tdefl_png_num_probes[11] =
@@ -5932,7 +5924,7 @@ void __attribute__((__visibility__("default"))) *tdefl_write_image_to_png_file_i
   int bpl = w * num_chans;
   *pLen_out = (size_t)0;
   if (! pComp) {
-    __retres = (void __attribute__((__visibility__("default"))) *)0;
+    __retres = (void *)0;
     goto return_label;
   }
   memset((void *)(& out_buf),0,sizeof(out_buf));
@@ -5942,7 +5934,7 @@ void __attribute__((__visibility__("default"))) *tdefl_write_image_to_png_file_i
   out_buf.m_pBuf = (mz_uint8 *)malloc(out_buf.m_capacity);
   if ((mz_uint8 *)0 == out_buf.m_pBuf) {
     free((void *)pComp);
-    __retres = (void __attribute__((__visibility__("default"))) *)0;
+    __retres = (void *)0;
     goto return_label;
   }
   z = 41;
@@ -5972,10 +5964,10 @@ void __attribute__((__visibility__("default"))) *tdefl_write_image_to_png_file_i
     y ++;
   }
   tmp_4 = tdefl_compress_buffer(pComp,(void const *)0,(size_t)0,TDEFL_FINISH);
-  if (tmp_4 != (int __attribute__((__visibility__("default"))))TDEFL_STATUS_DONE) {
+  if (tmp_4 != TDEFL_STATUS_DONE) {
     free((void *)pComp);
     free((void *)out_buf.m_pBuf);
-    __retres = (void __attribute__((__visibility__("default"))) *)0;
+    __retres = (void *)0;
     goto return_label;
   }
   *pLen_out = out_buf.m_size - (size_t)41;
@@ -6049,7 +6041,7 @@ void __attribute__((__visibility__("default"))) *tdefl_write_image_to_png_file_i
     *pLen_out = (size_t)0;
     free((void *)pComp);
     free((void *)out_buf.m_pBuf);
-    __retres = (void __attribute__((__visibility__("default"))) *)0;
+    __retres = (void *)0;
     goto return_label;
   }
   tmp_7 = mz_crc32((mz_ulong)0,
@@ -6080,11 +6072,9 @@ void __attribute__((__visibility__("default"))) *tdefl_write_image_to_png_file_i
 tdefl_compressor __attribute__((__visibility__("default"))) *tdefl_compressor_alloc
 (void)
 {
-  tdefl_compressor __attribute__((__visibility__("default"))) *__retres;
   tdefl_compressor *tmp;
   tmp = (tdefl_compressor *)malloc(sizeof(tdefl_compressor));
-  __retres = (tdefl_compressor __attribute__((__visibility__("default"))) *)tmp;
-  return __retres;
+  return tmp;
 }
 
 void __attribute__((__visibility__("default"))) tdefl_compressor_free

@@ -1,5 +1,5 @@
-[eva:garbled-mix:summary] warning: Garbled mix generated during analysis:
-{{ garbled mix of &{x}
-  (origin: Arithmetic {provenance_tag_bits_via_uintptr_t_1.c:8}) }}
-{{ garbled mix of &{x}
-  (origin: Arithmetic {provenance_tag_bits_via_uintptr_t_1.c:10}) }}
+provenance_tag_bits_via_uintptr_t_1.c:10:[eva:garbled-mix:write] warning: Assigning imprecise value to i because of arithmetic operation on addresses.
+stack: main
+[eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
+  provenance_tag_bits_via_uintptr_t_1.c:10: arithmetic operation on addresses
+    (read 6 times, propagated 4 times) garbled mix of &{x}

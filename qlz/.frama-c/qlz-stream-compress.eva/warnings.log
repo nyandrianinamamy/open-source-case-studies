@@ -1,35 +1,21 @@
-stream_compress.c:35:[eva:garbled-mix:assigns] warning: The specification of function fread has generated a garbled mix for assigns clause *
-((char *)ptr + (0 .. nmemb * size - 1)).
-[eva:garbled-mix:summary] warning: Garbled mix generated during analysis:
-{{ garbled mix of &{__malloc_main_l19}
-  (origin: Misaligned {quicklz.c:388}) }}
-{{ garbled mix of &{__malloc_main_l19}
-  (origin: Misaligned {quicklz.c:404}) }}
-{{ garbled mix of &{__malloc_main_l19}
-  (origin: Misaligned {quicklz.c:117}) }}
-{{ garbled mix of &{__malloc_main_l19}
-  (origin: Misaligned {quicklz.c:432}) }}
-{{ garbled mix of &{__malloc_main_l19}
-  (origin: Misaligned {quicklz.c:433}) }}
-{{ garbled mix of &{__malloc_main_l19}
-  (origin: Misaligned {quicklz.c:419}) }}
-{{ garbled mix of &{__malloc_main_l19}
-  (origin: Arithmetic {quicklz.c:424}) }}
-{{ garbled mix of &{__malloc_main_l19}
-  (origin: Arithmetic {quicklz.c:427}) }}
-{{ garbled mix of &{__malloc_main_l24}
-  (origin: Misaligned {quicklz.c:419}) }}
-{{ garbled mix of &{__malloc_main_l24}
-  (origin: Arithmetic {quicklz.c:424}) }}
-{{ garbled mix of &{__malloc_main_l24}
-  (origin: Arithmetic {quicklz.c:427}) }}
-{{ garbled mix of &{__malloc_main_l24}
-  (origin: Misaligned {quicklz.c:433}) }}
-{{ garbled mix of &{__malloc_main_l19; __malloc_main_l24}
-  (origin: Misaligned {quicklz.c:419}) }}
-{{ garbled mix of &{__malloc_main_l19; __malloc_main_l24}
-  (origin: Arithmetic {quicklz.c:424}) }}
-{{ garbled mix of &{__malloc_main_l19; __malloc_main_l24}
-  (origin: Arithmetic {quicklz.c:427}) }}
-{{ garbled mix of &{__malloc_main_l19; __malloc_main_l24}
-  (origin: Misaligned {quicklz.c:433}) }}
+quicklz.c:117:[eva:garbled-mix:write] warning: Assigning imprecise value to __retres
+because of misaligned read of addresses.
+stack: fast_read :: quicklz.c:126 <-
+       hashat :: quicklz.c:431 <-
+       qlz_compress_core :: quicklz.c:770 <-
+       qlz_compress :: stream_compress.c:37 <-
+       main :: fc_stubs.c:21 <-
+       eva_main
+quicklz.c:432:[eva:garbled-mix:write] warning: Assigning imprecise value to tmp_2 because of misaligned read of addresses.
+stack: qlz_compress_core :: quicklz.c:770 <-
+       qlz_compress :: stream_compress.c:37 <-
+       main :: fc_stubs.c:21 <-
+       eva_main
+[eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
+  quicklz.c:432: misaligned read of addresses
+    (read 20590 times, propagated 5089 times)
+    garbled mix of &{__malloc_main_l19; __malloc_main_l24}
+  quicklz.c:117: misaligned read of addresses
+    (read 117 times, propagated 9 times) garbled mix of &{__malloc_main_l19}
+  quicklz.c:419: misaligned write of addresses
+    (read 101 times, propagated 90 times) garbled mix of &{__malloc_main_l24}
