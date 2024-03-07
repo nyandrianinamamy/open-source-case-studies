@@ -22,11 +22,10 @@ FCFLAGS     += \
 ## Eva-specific flags
 EVAFLAGS    += \
   -eva-warn-key builtins:missing-spec=abort \
-  -eva-precision 1 \
+  -eva-widening-delay 1 \
+  -eva-slevel 5 \
+  -eva-domains symbolic-locations \
   -eva-partition-history 1 \
-  -eva-domains cvalue,equality \
-  # -eva-domains cvalue,equality,symbolic-locations,octagon \
-  # -eva-slevel-function fioe:500
 
 ## GUI-only flags
 FCGUIFLAGS += \

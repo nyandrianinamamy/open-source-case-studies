@@ -23,6 +23,7 @@ directory	file	line	function	property kind	status	property
 .	endgame.c	265	endgame	index_bound	Unknown	0 ≤ i
 .	endgame.c	265	endgame	index_bound	Unknown	i < 19
 .	endgame.c	265	endgame	initialization	Unknown	\initialized(&i)
+.	endgame.c	265	endgame	initialization	Unknown	\initialized(&j)
 .	endgame.c	275	endgame	precondition of strcmp	Unknown	valid_string_s1: valid_read_string(s1)
 .	endgame.c	278	endgame	index_bound	Unknown	0 ≤ i
 .	endgame.c	278	endgame	index_bound	Unknown	i < 19
@@ -59,16 +60,16 @@ directory	file	line	function	property kind	status	property
 .	findwinr.c	72	findwinner	initialization	Unknown	\initialized(&ti[u])
 .	findwinr.c	72	findwinner	initialization	Unknown	\initialized(&tj[u])
 .	findwinr.c	72	findwinner	index_bound	Unknown	u < 3
-.	findwinr.c	76	findwinner	index_bound	Unknown	0 ≤ ti[u]
-.	findwinr.c	76	findwinner	index_bound	Unknown	ti[u] < 19
-.	findwinr.c	76	findwinner	index_bound	Unknown	0 ≤ tj[u]
-.	findwinr.c	76	findwinner	index_bound	Unknown	tj[u] < 19
 .	findwinr.c	79	findwinner	initialization	Unknown	\initialized(&ti[v])
 .	findwinr.c	79	findwinner	initialization	Unknown	\initialized(&tj[v])
 .	findwinr.c	79	findwinner	index_bound	Unknown	v < 3
 .	findwinr.c	83	findwinner	signed_overflow	Unknown	120 - (int)(20 * lib) ≤ 2147483647
 .	findwinr.c	83	findwinner	signed_overflow	Unknown	-2147483648 ≤ 20 * lib
 .	findwinr.c	83	findwinner	signed_overflow	Unknown	20 * lib ≤ 2147483647
+.	findwinr.c	90	findwinner	index_bound	Unknown	0 ≤ ti[u]
+.	findwinr.c	90	findwinner	index_bound	Unknown	ti[u] < 19
+.	findwinr.c	90	findwinner	index_bound	Unknown	0 ≤ tj[u]
+.	findwinr.c	90	findwinner	index_bound	Unknown	tj[u] < 19
 .	fioe.c	45	fioe	index_bound	Unknown	0 ≤ j
 .	fioe.c	45	fioe	index_bound	Unknown	j < 19
 .	fioe.c	46	fioe	index_bound	Unknown	0 ≤ (int)(j - 1)
@@ -120,7 +121,6 @@ directory	file	line	function	property kind	status	property
 .	matchpat.c	166	matchpat	initialization	Unknown	\initialized(&tj)
 .	matchpat.c	175	matchpat	initialization	Unknown	\initialized(&ti)
 .	matchpat.c	176	matchpat	initialization	Unknown	\initialized(&tj)
-.	opening.c	81	opening	division_by_zero	Unknown	opening_tree[*cnd].ndct ≢ 0
 .	suicide.c	62	suicide	signed_overflow	Unknown	k + 1 ≤ 2147483647
 FRAMAC_SHARE/libc	stdio.h	120	fclose	precondition	Unknown	valid_stream: \valid(stream)
 FRAMAC_SHARE/libc	string.h	153	strcmp	precondition	Unknown	valid_string_s1: valid_read_string(s1)
