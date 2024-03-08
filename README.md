@@ -134,6 +134,7 @@ when available. We also summarize the license of each directory below.
 - `basic-cwe-examples`: see `LICENSE`
 - `bench-moerman2018`: MIT
 - `c-testsuite`: see `LICENSE` and `LICENSE-tests`
+- `c-utils` : MIT
 - `cerberus`: see `LICENSE`
 - `chrony`: GPL
 - `debie1`: distribution and use authorized by Patria Aviation Oy,

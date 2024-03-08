@@ -6,6 +6,7 @@
 |cerberus|Test suite related to the Cerberus project|https://www.cl.cam.ac.uk/~pes20/cerberus/|192|191|2520|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|
 |chrony|Implementation of the Network Time Protocol|https://chrony.tuxfamily.org/|2|123|27367|HAS_DYN_ALLOC, REM_RECURSION, HAS_FLOAT|
 |c-testsuite|Part of a collaborative database of compiler test cases|https://github.com/c-testsuite/c-testsuite|215|220|4959|HAS_DYN_ALLOC, HAS_RECURSION, HAS_FLOAT|
+|c-utils|c-utils is a collection of utility libraries.|https://github.com/barrust/c-utils|13|43|6392|HAS_DYN_ALLOC, HAS_RECURSION, HAS_FLOAT|
 |debie1|Benchmark based on the DEBIE-1 satellite instrument|http://www.tidorum.fi/debie1/|1|48|6269|NO_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|
 |genann|Simple neural network library|https://github.com/codeplea/genann|1|8|690|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|
 |gzip124|Data compression program|https://www.gnu.org/software/gzip/|1|35|5826|HAS_DYN_ALLOC, REM_RECURSION, NO_FLOAT|
