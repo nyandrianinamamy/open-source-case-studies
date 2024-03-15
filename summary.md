@@ -22,6 +22,7 @@
 |libspng|Library for writing and reading PNG files|https://github.com/randy408/libspng|1|5|3337|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|
 |libyaml|Library for parsing and emitting YAML|https://github.com/yaml/libyaml|2|25|10548|HAS_DYN_ALLOC, UNUSED_RECURSION, NO_FLOAT|
 |line-following-robot|Very simple AVR-based robot (student project)|https://github.com/Fabio-Morais/Line-Follower-Robot|1|21|3552|NO_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|
+|mbedtls|Implementation of the TLS and SSL protocols (formerly PolarSSL)|https://github.com/Mbed-TLS/mbedtls|179|538|319813|HAS_DYN_ALLOC, HAS_RECURSION, NO_FLOAT|
 |microstrain|Driver for a LORD/Microstrain Inertial Measurement Unit (IMU) sensor|https://github.com/ros-drivers/microstrain_mips|1|69|19075|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|
 |mini-gmp|Implementation of a subset of GNU's Multiple Precision Arithmetic library|https://gmplib.org/|1|35|8686|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|
 |miniz|Compression library in a single source file, implementing zlib and Deflate|https://github.com/richgel999/miniz|6|26|8299|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|
@@ -36,7 +37,7 @@
 |tsvc|Test suite for vectorizing compilers|http://polaris.cs.uiuc.edu/~maleki1/TSVC.tar.gz|1|2|4041|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|
 |tweetnacl-usable|Cryptographic library in 100 tweets, in a more usable form|https://twitter.com/TweetNaCl|1|5|1072|HAS_DYN_ALLOC, NO_RECURSION, NO_FLOAT|
 |verisec|Buffer overflow benchmark|https://security.csl.toronto.edu/wp-content/uploads/2018/06/Verisec-ASE2007.pdf|275|319|14486|HAS_DYN_ALLOC, NO_RECURSION, NO_FLOAT|
-|x509-parser|RTE-free X.509 parser|https://github.com/ANSSI-FR/x509-parser|1|4|21972|NO_DYN_ALLOC, NO_RECURSION, NO_FLOAT|
+|x509-parser|RTE-free X.509 parser|https://github.com/ANSSI-FR/x509-parser|1|3|5057|NO_DYN_ALLOC, NO_RECURSION, NO_FLOAT|
 
 Note: the 'Tags' column refers to code features that may be found in the code.
       A few examples are presented below.
