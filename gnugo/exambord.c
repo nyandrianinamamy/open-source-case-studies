@@ -61,7 +61,9 @@ void examboard(int color) /* BLACK or WHITE */
    n = 0; /* The number of captures this move for Ko purposes */
 
 /* remove all piece of zero liberty */
+  //@ loop unroll 19;
    for (i = 0; i < 19; i++)
+     //@ loop unroll 19;
      for (j = 0; j < 19; j++)
        if ((p[i][j] == color) && (l[i][j] == 0))
 	 {

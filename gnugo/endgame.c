@@ -202,6 +202,7 @@ void endgame(void)
 /* Then a list for our opponent's moves */
   createlist(umove, umovelist);
 
+  //@ dynamic_split  queinit;
   cont = 1;
   do {
       printf("Dead piece? ");

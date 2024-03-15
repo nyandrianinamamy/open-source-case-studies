@@ -67,6 +67,12 @@ int matchpat(int m,     /* row origin */
 /* try each orientation transformation */
       {
        k = 0;  cont = 1;
+       #ifdef _FC_ACTIVE_LONG_PROOF
+       //@ dynamic_split r;
+       /*@
+         loop invariant k <= pat[r].patlen;
+       */
+       #endif
        while ((k != pat[r].patlen) && cont)
 /* match each point */
 	 {

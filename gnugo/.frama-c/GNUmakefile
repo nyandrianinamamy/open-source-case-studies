@@ -22,10 +22,8 @@ FCFLAGS     += \
 ## Eva-specific flags
 EVAFLAGS    += \
   -eva-warn-key builtins:missing-spec=abort \
-  -eva-widening-delay 1 \
   -eva-slevel 5 \
   -eva-domains symbolic-locations \
-  -eva-partition-history 1 \
 
 ## GUI-only flags
 FCGUIFLAGS += \
@@ -36,6 +34,7 @@ TARGETS = gnugo.eva
 ### Each target <t>.eva needs a rule <t>.parse with source files as prerequisites
 gnugo.parse: \
   $(sort $(wildcard ../*.c)) \
+  $(shell $(FRAMAC)-config -print-share-path)/libc/string.c \
 
 ### Epilogue. Do not modify this block. #######################################
 include $(shell $(FRAMAC)-config -print-lib-path)/analysis-scripts/epilogue.mk

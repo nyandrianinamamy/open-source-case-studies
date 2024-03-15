@@ -70,6 +70,8 @@ int main(int argc,
 
 /* read my color, pieces captured */
       fscanf(fp, "%d %d %d ", &mymove, &mk, &uk);
+      //@ assert unsanitized_input:consider_ok:\subset(mymove, (1 .. 2));
+
 /* read opening pattern flags */
       for (i = 0; i < 9; i++)
         fscanf(fp, "%d ", &opn[i]);
@@ -123,6 +125,7 @@ int main(int argc,
          if (i)
 	   {
             genmove(&i, &j);   /* computer move */
+            //@ assert first_move:consider_ok: 0<=i;
             p[i][j] = mymove;
           }
        }

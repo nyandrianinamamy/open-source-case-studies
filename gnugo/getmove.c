@@ -67,6 +67,7 @@ void getmove(char move[],  /* move string */
          for (m = 0; m < 9; m++)
            fprintf(fp, "%d ", opn[m]);
 
+         //@ assert unverified_file:consider_ok: \valid(fp);
 	 fclose(fp);
 	 play = -1;
        }

@@ -50,6 +50,7 @@ int findpatn(int *i,    /* row number of next move */
  if (opn[4])   /* continue last move */
    {
     opn[4] = 0;  /* clear flag */
+    //@ assert consider_ok: cnd>0;
     if (opening(i, j, &cnd, mtype)) opn[4] = 1; /* more move then reset flag */
     if (p[*i][*j] == EMPTY)  /* valid move */
       {

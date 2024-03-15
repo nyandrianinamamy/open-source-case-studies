@@ -56,7 +56,9 @@ int suicide(int i,
     eval(mymove);
     k = 0;
 
+    //@ loop unroll 19;
     for (m = 0; m < 19; m++)
+      //@ loop unroll 19;
       for (n = 0; n < 19; n++)
 /* count pieces will be killed */
 	if ((p[m][n] == mymove) && !l[m][n]) ++k;
