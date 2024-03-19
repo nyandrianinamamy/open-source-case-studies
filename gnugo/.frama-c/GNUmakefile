@@ -33,8 +33,31 @@ TARGETS = gnugo.eva
 
 ### Each target <t>.eva needs a rule <t>.parse with source files as prerequisites
 gnugo.parse: \
-  $(sort $(wildcard ../*.c)) \
   $(shell $(FRAMAC)-config -print-share-path)/libc/string.c \
+  ../count.c \
+  ../countlib.c \
+  ../endgame.c \
+  ../eval.c \
+  ../exambord.c \
+  ../findcolr.c \
+  ../findnext.c \
+  ../findopen.c \
+  ../findpatn.c \
+  ../findsavr.c \
+  ../findwinr.c \
+  ../fioe.c \
+  ../genmove.c \
+  ../getij.c \
+  ../getmove.c \
+  ../initmark.c \
+  ../main.c \
+  ../matchpat.c \
+  ../opening.c \
+  ../openregn.c \
+  ../sethand.c \
+  ../showbord.c \
+  ../showinst.c \
+  ../suicide.c \
 
 ### Epilogue. Do not modify this block. #######################################
 include $(shell $(FRAMAC)-config -print-lib-path)/analysis-scripts/epilogue.mk
