@@ -1,0 +1,111 @@
+directory	file	line	function	property kind	status	property
+.	__fc_stubs.h	12	countlib	precondition	Unknown	in_grid_i: in_grid(m)
+.	__fc_stubs.h	13	countlib	precondition	Unknown	in_grid_j: in_grid(n)
+.	__fc_stubs.h	18	fioe	precondition	Unknown	in_grid_i: in_grid(i)
+.	__fc_stubs.h	19	fioe	precondition	Unknown	in_grid_j: in_grid(j)
+.	__fc_stubs.h	34	genmove	postcondition	Unknown	in_grid_i: pass ≡ 0 ⇒ in_grid(*\old(i))
+.	__fc_stubs.h	35	genmove	postcondition	Unknown	in_grid_j: pass ≡ 0 ⇒ in_grid(*\old(j))
+.	__fc_stubs.h	56	findwinner	postcondition	Unknown	\result ≡ 1 ⇒ 0 ≤ *\old(i) < 19
+.	__fc_stubs.h	57	findwinner	postcondition	Unknown	\result ≡ 1 ⇒ 0 ≤ *\old(j) < 19
+.	__fc_stubs.h	69	count	precondition	Unknown	in_grid_i: in_grid(i)
+.	__fc_stubs.h	70	count	precondition	Unknown	in_grid_j: in_grid(j)
+.	__fc_stubs.h	82	count	postcondition	Unknown	0 ≤ lib ≤ 360
+.	__fc_stubs.h	95	getmove	precondition	Unknown	\valid(i)
+.	__fc_stubs.h	96	getmove	precondition	Unknown	\valid(j)
+.	__fc_stubs.h	97	getmove	precondition	Unknown	\valid(move)
+.	__fc_stubs.h	100	getmove	postcondition	Unknown	play: in_grid_i: play ≢ 0 ∧ pass ≡ 0 ⇒ in_grid(*\old(i))
+.	__fc_stubs.h	101	getmove	postcondition	Unknown	play: in_grid_j: play ≢ 0 ∧ pass ≡ 0 ⇒ in_grid(*\old(j))
+.	__fc_stubs.h	102	getmove	postcondition	Unknown	endOrPass: *\old(i) ≡ \old(*i)
+.	__fc_stubs.h	103	getmove	postcondition	Unknown	endOrPass: *\old(j) ≡ \old(*j)
+.	__fc_stubs.h	104	getmove	postcondition	Unknown	Pass: *\old(i) ≡ -1
+.	count.c	58	count	precondition of count	Unknown	in_grid_i: in_grid(i)
+.	count.c	58	count	precondition of count	Unknown	in_grid_j: in_grid(j)
+.	count.c	70	count	precondition of count	Unknown	in_grid_i: in_grid(i)
+.	count.c	70	count	precondition of count	Unknown	in_grid_j: in_grid(j)
+.	count.c	82	count	precondition of count	Unknown	in_grid_i: in_grid(i)
+.	count.c	82	count	precondition of count	Unknown	in_grid_j: in_grid(j)
+.	count.c	94	count	precondition of count	Unknown	in_grid_i: in_grid(i)
+.	count.c	94	count	precondition of count	Unknown	in_grid_j: in_grid(j)
+.	endgame.c	125	enqueue	signed_overflow	Unknown	size + 1 ≤ 2147483647
+.	endgame.c	161	bfslist	initialization	Unknown	\initialized(&(*(movelist + u))[k])
+.	endgame.c	161	bfslist	index_bound	Unknown	k < 5
+.	endgame.c	162	bfslist	index_bound	Unknown	v < (int)(19 * 19)
+.	endgame.c	173	bfslist	index_bound	Unknown	w < (int)(19 * 19)
+.	endgame.c	213	endgame	initialization	Unknown	\initialized(&i)
+.	endgame.c	213	endgame	initialization	Unknown	\initialized(&j)
+.	endgame.c	213	endgame	index_bound	Unknown	0 ≤ i
+.	endgame.c	213	endgame	index_bound	Unknown	i < 19
+.	endgame.c	226	endgame	signed_overflow	Unknown	mk + 1 ≤ 2147483647
+.	endgame.c	266	endgame	index_bound	Unknown	0 ≤ i
+.	endgame.c	266	endgame	index_bound	Unknown	i < 19
+.	endgame.c	266	endgame	initialization	Unknown	\initialized(&i)
+.	endgame.c	266	endgame	initialization	Unknown	\initialized(&j)
+.	endgame.c	279	endgame	index_bound	Unknown	0 ≤ i
+.	endgame.c	279	endgame	index_bound	Unknown	i < 19
+.	endgame.c	285	endgame	signed_overflow	Unknown	N + 1 ≤ 2147483647
+.	endgame.c	300	endgame	signed_overflow	Unknown	mtot + 1 ≤ 2147483647
+.	endgame.c	303	endgame	signed_overflow	Unknown	utot + 1 ≤ 2147483647
+.	findcolr.c	103	findcolor	initialization	Unknown	\initialized(&result)
+.	findcolr.c	108	findcolor	initialization	Unknown	\initialized(&result)
+.	findnext.c	76	findnextmove	initialization	Unknown	\initialized(&tval)
+.	findnext.c	76	findnextmove	initialization	Unknown	\initialized(&ti)
+.	findnext.c	76	findnextmove	initialization	Unknown	\initialized(&tj)
+.	findnext.c	76	findnextmove	precondition of fioe	Unknown	in_grid_i: in_grid(i)
+.	findnext.c	76	findnextmove	precondition of fioe	Unknown	in_grid_j: in_grid(j)
+.	findnext.c	103	findnextmove	initialization	Unknown	\initialized(&tval)
+.	findnext.c	103	findnextmove	initialization	Unknown	\initialized(&ti)
+.	findnext.c	103	findnextmove	initialization	Unknown	\initialized(&tj)
+.	findnext.c	103	findnextmove	precondition of fioe	Unknown	in_grid_i: in_grid(i)
+.	findnext.c	103	findnextmove	precondition of fioe	Unknown	in_grid_j: in_grid(j)
+.	findnext.c	130	findnextmove	initialization	Unknown	\initialized(&tval)
+.	findnext.c	130	findnextmove	initialization	Unknown	\initialized(&ti)
+.	findnext.c	130	findnextmove	initialization	Unknown	\initialized(&tj)
+.	findnext.c	130	findnextmove	precondition of fioe	Unknown	in_grid_i: in_grid(i)
+.	findnext.c	130	findnextmove	precondition of fioe	Unknown	in_grid_j: in_grid(j)
+.	findnext.c	157	findnextmove	initialization	Unknown	\initialized(&tval)
+.	findnext.c	157	findnextmove	initialization	Unknown	\initialized(&ti)
+.	findnext.c	157	findnextmove	initialization	Unknown	\initialized(&tj)
+.	findnext.c	157	findnextmove	precondition of fioe	Unknown	in_grid_i: in_grid(i)
+.	findnext.c	157	findnextmove	precondition of fioe	Unknown	in_grid_j: in_grid(j)
+.	findopen.c	72	findopen	mem_access	Unknown	\valid(i + *ct)
+.	findopen.c	88	findopen	mem_access	Unknown	\valid(i + *ct)
+.	findopen.c	104	findopen	mem_access	Unknown	\valid(i + *ct)
+.	findpatn.c	53	findpatn	user assertion	Unknown	findpatn_cnd > 0
+.	findwinr.c	62	findwinner	initialization	Unknown	\initialized((int *)ti)
+.	findwinr.c	63	findwinner	initialization	Unknown	\initialized((int *)tj)
+.	findwinr.c	72	findwinner	initialization	Unknown	\initialized(&ti[u])
+.	findwinr.c	72	findwinner	initialization	Unknown	\initialized(&tj[u])
+.	findwinr.c	72	findwinner	precondition of countlib	Unknown	in_grid_i: in_grid(m)
+.	findwinr.c	72	findwinner	precondition of countlib	Unknown	in_grid_j: in_grid(n)
+.	findwinr.c	79	findwinner	initialization	Unknown	\initialized(&ti[v])
+.	findwinr.c	79	findwinner	initialization	Unknown	\initialized(&tj[v])
+.	findwinr.c	79	findwinner	precondition of countlib	Unknown	in_grid_i: in_grid(m)
+.	findwinr.c	79	findwinner	precondition of countlib	Unknown	in_grid_j: in_grid(n)
+.	findwinr.c	90	findwinner	index_bound	Unknown	0 ≤ ti[u]
+.	findwinr.c	90	findwinner	index_bound	Unknown	ti[u] < 19
+.	findwinr.c	90	findwinner	index_bound	Unknown	0 ≤ tj[u]
+.	findwinr.c	90	findwinner	index_bound	Unknown	tj[u] < 19
+.	fioe.c	46	fioe	index_bound	Unknown	0 ≤ (int)(j - 1)
+.	fioe.c	56	fioe	index_bound	Unknown	0 ≤ (int)(j - 1)
+.	genmove.c	118	genmove	signed_overflow	Unknown	pass + 1 ≤ 2147483647
+.	genmove.c	129	genmove	signed_overflow	Unknown	*j + 66 ≤ 2147483647
+.	genmove.c	131	genmove	signed_overflow	Unknown	19 - *i ≤ 2147483647
+.	getij.c	54	getij	initialization	Unknown	\initialized(move + 1)
+.	getij.c	55	getij	initialization	Unknown	\initialized(move + 2)
+.	getmove.c	70	getmove	user assertion	Unknown	\valid(fp)
+.	getmove.c	79	getmove	signed_overflow	Unknown	pass + 1 ≤ 2147483647
+.	getmove.c	87	getmove	index_bound	Unknown	*i < 19
+.	getmove.c	87	getmove	index_bound	Unknown	0 ≤ *i
+.	getmove.c	87	getmove	index_bound	Unknown	*j < 19
+.	getmove.c	92	getmove	precondition of getmove	Unknown	\valid(i)
+.	getmove.c	92	getmove	precondition of getmove	Unknown	\valid(j)
+.	getmove.c	92	getmove	precondition of getmove	Unknown	\valid(move)
+.	main.c	73	main	user assertion	Unknown	\subset(mymove, 1 .. 2)
+.	main.c	128	main	user assertion	Unknown	0 ≤ i
+.	main.c	139	main	index_bound	Unknown	0 ≤ i
+.	matchpat.c	80	matchpat	index_bound	Unknown	k < 16
+.	matchpat.c	166	matchpat	initialization	Unknown	\initialized(&ti)
+.	matchpat.c	172	matchpat	initialization	Unknown	\initialized(&tj)
+.	matchpat.c	181	matchpat	initialization	Unknown	\initialized(&ti)
+.	matchpat.c	182	matchpat	initialization	Unknown	\initialized(&tj)
+FRAMAC_SHARE/libc	string.c	146	strcmp	initialization	Unknown	\initialized(s1 + i)

@@ -1,0 +1,67 @@
+# Makefile template for Frama-C/Eva case studies.
+# For details and usage information, see the Frama-C User Manual.
+
+### Prologue. Do not modify this block. #######################################
+-include path.mk
+FRAMAC ?= frama-c
+include $(shell $(FRAMAC)-config -print-lib-path)/analysis-scripts/prologue.mk
+###############################################################################
+
+# Edit below as needed. Suggested flags are optional.
+
+## Preprocessing flags (for -cpp-extra-args)
+CPPFLAGS    += \
+  -include __fc_stubs.h \
+
+## General flags
+FCFLAGS     += \
+  -add-symbolic-path=..:. \
+  -kernel-warn-key annot:missing-spec=abort \
+  -kernel-warn-key typing:implicit-function-declaration=abort \
+
+## Eva-specific flags
+EVAFLAGS    += \
+  -eva-warn-key builtins:missing-spec=abort \
+  -eva-slevel 5 \
+  -eva-domains symbolic-locations \
+
+## GUI-only flags
+FCGUIFLAGS += \
+
+## Analysis targets (suffixed with .eva)
+TARGETS = gnugo.eva
+
+### Each target <t>.eva needs a rule <t>.parse with source files as prerequisites
+gnugo.parse: \
+  $(shell $(FRAMAC)-config -print-share-path)/libc/string.c \
+  ../count.c \
+  ../countlib.c \
+  ../endgame.c \
+  ../eval.c \
+  ../exambord.c \
+  ../findcolr.c \
+  ../findnext.c \
+  ../findopen.c \
+  ../findpatn.c \
+  ../findsavr.c \
+  ../findwinr.c \
+  ../fioe.c \
+  ../genmove.c \
+  ../getij.c \
+  ../getmove.c \
+  ../initmark.c \
+  ../main.c \
+  ../matchpat.c \
+  ../opening.c \
+  ../openregn.c \
+  ../sethand.c \
+  ../showbord.c \
+  ../showinst.c \
+  ../suicide.c \
+
+### Epilogue. Do not modify this block. #######################################
+include $(shell $(FRAMAC)-config -print-lib-path)/analysis-scripts/epilogue.mk
+###############################################################################
+
+# optional, for OSCS
+-include ../../Makefile.common
