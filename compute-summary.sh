@@ -1,12 +1,9 @@
 #!/usr/bin/env bash
 
 # Compute a summary table listing general information about each directory
-# Requires 'cloc' and POSIX utilities
+# Requires Git, Perl and POSIX utilities; uses a local version of cloc
 
-targets=$(find . -mindepth 1 -maxdepth 1 -name ".*" -prune -o \
-               -type d -printf '%P\n' | \
-              sort | \
-              grep -v tutorials | grep -v frama-c)
+targets=$(ls -d -- */ | tr -d '/' | LC_ALL=C sort)
 
 out=summary.md
 rm -f $out
@@ -16,11 +13,15 @@ echo "| Directory | Description | URL | #Eva targets | #.c/.h files | #LoC | Tag
 echo "| --------- | ----------- | --- |          --- |          --- |  --- | ---  |" >> $out
 for t in $targets
 do
+    if [ ! -d $t/.frama-c -o ! -f $t/OSCS-README.txt ]; then
+        echo "$t: no .frama-c or OSCS-README.txt, skipping"
+        continue
+    fi
     echo "Processing $t..."
-    csv="$(cloc --include-ext=c,h --csv $t | grep -A9999 ^files | tail -1)"
+    csv="$(cd $t && git ls-files '*.[ch]' | ../cloc-2.00.pl --list-file=- --csv | grep -A9999 ^files | tail -1)"
     desc="$(cd $t && sed '1!d' OSCS-README.txt)"
     url="$(cd $t && sed '2!d' OSCS-README.txt)"
-    ntargets="$(cd $t && make -C .frama-c display-targets --no-print-directory | wc -w)"
+    ntargets="$(cd $t && make -C .frama-c display-targets --no-print-directory | wc -w | tr -d "[:blank:]")"
     nfiles=$(echo $csv | cut -d',' -f1)
     loc=$(echo $csv | cut -d',' -f5)
     tags="$(cd $t && sed '3!d' OSCS-README.txt)"
