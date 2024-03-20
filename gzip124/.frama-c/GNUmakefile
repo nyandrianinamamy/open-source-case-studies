@@ -29,11 +29,15 @@ FCFLAGS  += \
 
 ## Eva-specific flags
 EVAFLAGS += \
-  -eva-slevel 4 \
+  -eva-slevel 2 \
   -eva-no-alloc-returns-null \
-  -eva-no-builtins-auto \
-  -eva-widening-delay 3 \
-  -eva-widening-period 3 \
+
+# Comparison with other parametrizations
+# Baseline: -eva-no-alloc-returns-null -eva-slevel 2: time 120s
+# -eva-slevel 3: time 511s, -0 alarms
+# -eva-domains equality: time 201s, -12 alarms
+# -eva-domains gauges: time 351s, -4 alarms
+# -eva-domains equality,gauges: time 491s, -17 alarms
 
 ## GUI-only flags
 FCGUIFLAGS += \
@@ -41,22 +45,22 @@ FCGUIFLAGS += \
 TARGETS = gzip124.eva
 
 gzip124.parse: \
-  ../gzip.c \
-  ../zip.c \
-  ../deflate.c \
-  ../trees.c \
-  ../bits.c \
-  ../unzip.c \
-  ../inflate.c \
-  ../util.c \
-  ../crypt.c \
-  ../lzw.c \
-  ../unlzw.c \
-  ../unpack.c \
-  ../unlzh.c \
-  ../getopt.c \
   $(shell $(FRAMAC)-config -print-share-path)/libc/stdlib.c \
   fc_stubs.c \
+  ../bits.c \
+  ../crypt.c \
+  ../deflate.c \
+  ../getopt.c \
+  ../gzip.c \
+  ../inflate.c \
+  ../lzw.c \
+  ../trees.c \
+  ../unlzh.c \
+  ../unlzw.c \
+  ../unpack.c \
+  ../unzip.c \
+  ../util.c \
+  ../zip.c \
 
 ### Epilogue. Do not modify this block. #######################################
 include $(shell $(FRAMAC)-config -print-lib-path)/analysis-scripts/epilogue.mk

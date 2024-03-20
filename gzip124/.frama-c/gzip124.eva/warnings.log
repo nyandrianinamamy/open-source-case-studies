@@ -1,38 +1,7 @@
 util.c:186:[eva:garbled-mix:assigns] warning: The specification of function strrchr
 has generated a garbled mix of addresses for assigns clause \result.
-util.c:400:[eva] warning: ignoring unsupported allocates clause
+util.c:311:[eva] warning: calloc out of bounds: assert(nmemb * size <= SIZE_MAX)
 FRAMAC_SHARE/libc/signal.h:129:[eva] warning: no 'assigns \result \from ...' clause specified for function signal
-inflate.c:403:[eva] warning: ignoring unsupported allocates clause
-inflate.c:412:[kernel] warning: all target addresses were invalid. This path is assumed to be dead.
-stack: huft_build :: inflate.c:763 <-
-       inflate_dynamic :: inflate.c:900 <-
-       inflate_block :: inflate.c:931 <-
-       inflate :: unzip.c:120 <-
-       unzip :: gzip.c:675 <-
-       treat_stdin :: gzip.c:710 <-
-       treat_file :: gzip.c:593 <-
-       main :: fc_stubs.c:21 <-
-       eva_main
-inflate.c:412:[kernel] warning: all target addresses were invalid. This path is assumed to be dead.
-stack: huft_build :: inflate.c:675 <-
-       inflate_fixed :: inflate.c:904 <-
-       inflate_block :: inflate.c:931 <-
-       inflate :: unzip.c:120 <-
-       unzip :: gzip.c:675 <-
-       treat_stdin :: gzip.c:710 <-
-       treat_file :: gzip.c:593 <-
-       main :: fc_stubs.c:21 <-
-       eva_main
-inflate.c:412:[kernel] warning: all target addresses were invalid. This path is assumed to be dead.
-stack: huft_build :: inflate.c:683 <-
-       inflate_fixed :: inflate.c:904 <-
-       inflate_block :: inflate.c:931 <-
-       inflate :: unzip.c:120 <-
-       unzip :: gzip.c:675 <-
-       treat_stdin :: gzip.c:710 <-
-       treat_file :: gzip.c:593 <-
-       main :: fc_stubs.c:21 <-
-       eva_main
 gzip.c:675:[eva:locals-escaping] warning: locals {attr} escaping the scope of zip through file_type
 gzip.c:1487:[eva:garbled-mix:assigns] warning: The specification of function strrchr
 has generated a garbled mix of addresses for assigns clause \result.
@@ -40,10 +9,63 @@ gzip.c:1503:[eva:garbled-mix:assigns] warning: The specification of function str
 has generated a garbled mix of addresses for assigns clause \result.
 gzip.c:817:[eva:locals-escaping] warning: locals {attr} escaping the scope of zip through file_type
 [eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
+  inflate.c:446: imprecise merge of addresses
+    (read 391618 times, propagated 113144 times)
+    garbled mix of &{d_buf; window; prev; ll; pt_table;
+                     __malloc_w_huft_build_l403;
+                     __malloc_w_huft_build_l403_0;
+                     __malloc_w_huft_build_l403_1;
+                     __malloc_w_huft_build_l403_2;
+                     __malloc_w_huft_build_l403_3;
+                     __malloc_w_huft_build_l403_4;
+                     __malloc_w_huft_build_l403_5;
+                     __malloc_w_huft_build_l403_6;
+                     __malloc_w_huft_build_l403_7;
+                     __malloc_w_huft_build_l403_8;
+                     __malloc_w_huft_build_l403_9;
+                     __malloc_w_huft_build_l403_10;
+                     __malloc_w_huft_build_l403_11;
+                     __malloc_w_huft_build_l403_12;
+                     __malloc_w_huft_build_l403_13}
   util.c:186: assigns clause on addresses
-    (read 1735 times, propagated 823 times)
-    garbled mix of &{ifname; ofname; argv0}
+    (read 1817 times, propagated 835 times)
+    garbled mix of &{argv0; ifname; ofname}
+  inflate.c:446: misaligned read of addresses
+    (read 640 times, propagated 316 times)
+    garbled mix of &{__malloc_w_huft_build_l403;
+                     __malloc_w_huft_build_l403_2;
+                     __malloc_w_huft_build_l403_4;
+                     __malloc_w_huft_build_l403_7;
+                     __malloc_w_huft_build_l403_9;
+                     __malloc_w_huft_build_l403_12}
+  inflate.c:382: imprecise merge of addresses
+    (read 618 times, propagated 618 times)
+    garbled mix of &{__malloc_w_huft_build_l403;
+                     __malloc_w_huft_build_l403_0;
+                     __malloc_w_huft_build_l403_1;
+                     __malloc_w_huft_build_l403_2;
+                     __malloc_w_huft_build_l403_3;
+                     __malloc_w_huft_build_l403_4;
+                     __malloc_w_huft_build_l403_5;
+                     __malloc_w_huft_build_l403_6;
+                     __malloc_w_huft_build_l403_7;
+                     __malloc_w_huft_build_l403_8;
+                     __malloc_w_huft_build_l403_9;
+                     __malloc_w_huft_build_l403_10;
+                     __malloc_w_huft_build_l403_11;
+                     __malloc_w_huft_build_l403_12;
+                     __malloc_w_huft_build_l403_13}
+  inflate.c:444: imprecise merge of addresses
+    (read 574 times, propagated 574 times)
+    garbled mix of &{__malloc_w_huft_build_l403_0;
+                     __malloc_w_huft_build_l403_5;
+                     __malloc_w_huft_build_l403_10}
+  inflate.c:445: imprecise merge of addresses
+    (read 492 times, propagated 492 times)
+    garbled mix of &{__malloc_w_huft_build_l403_1;
+                     __malloc_w_huft_build_l403_6;
+                     __malloc_w_huft_build_l403_11}
   gzip.c:1487: assigns clause on addresses
-    (read 108 times, propagated 36 times) garbled mix of &{ofname}
+    (read 216 times, propagated 72 times) garbled mix of &{ofname}
   gzip.c:1503: assigns clause on addresses
-    (read 30 times, propagated 6 times) garbled mix of &{ofname}
+    (read 60 times, propagated 12 times) garbled mix of &{ofname}
