@@ -4,6 +4,14 @@ default:
 variables:
   GIT_CLEAN_FLAGS: none #each use case cleans its own directory
 
+__update-summary:
+  tags:
+    - docker
+  script:
+    - git config --global --add safe.directory $PWD
+    - ./compute-summary.sh
+    - git diff --exit-code summary.md
+
 .make_job: &make_job
   tags:
     - docker
