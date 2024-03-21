@@ -13,9 +13,11 @@ stack: qlz_compress_core :: quicklz.c:770 <-
        eva_main
 [eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
   quicklz.c:432: misaligned read of addresses
-    (read 20590 times, propagated 5089 times)
+    (read in 68 statements, propagated through 47 statements)
     garbled mix of &{__malloc_main_l19; __malloc_main_l24}
-  quicklz.c:117: misaligned read of addresses
-    (read 117 times, propagated 9 times) garbled mix of &{__malloc_main_l19}
   quicklz.c:419: misaligned write of addresses
-    (read 101 times, propagated 90 times) garbled mix of &{__malloc_main_l24}
+    (read in 14 statements, propagated through 15 statements)
+    garbled mix of &{__malloc_main_l24}
+  quicklz.c:117: misaligned read of addresses
+    (read in 8 statements, propagated through 7 statements)
+    garbled mix of &{__malloc_main_l19}

@@ -12713,8 +12713,17 @@ test/unit/test.c:70:[eva:locals-escaping] warning: locals {conf} escaping the sc
 test/unit/test.c:72:[kernel:annot:missing-spec] warning: Neither code nor specification for function LOG_Finalise,
  generating default assigns. See -generated-spec-* options for more info
 [eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
+  array.c:116: misaligned read of addresses
+    (read in 44 statements, propagated through 35 statements)
+    garbled mix of &{__malloc_KEY_Reload_l235;
+                     __realloc_realloc_array_l80_47;
+                     __malloc_w_KEY_Reload_l235_0;
+                     __realloc_w_realloc_array_l80_48}
+  sched.c:185: imprecise merge of addresses
+    (read in 4 statements, propagated through 0 statements)
+    garbled mix of &{read_from_socket}
   addrfilt.c:82: misaligned read of addresses
-    (read 5280 times, propagated 1760 times)
+    (read in 3 statements, propagated through 3 statements)
     garbled mix of &{__malloc_ADF_CreateTable_l91; __malloc_open_node_l137;
                      __malloc_w_open_node_l137_0; __malloc_open_node_l137_1;
                      __malloc_w_open_node_l137_2; __malloc_open_node_l137_3;
@@ -12741,14 +12750,8 @@ test/unit/test.c:72:[kernel:annot:missing-spec] warning: Neither code nor specif
                      __malloc_SRC_CreateNewInstance_l229_1;
                      __malloc_NCR_GetInstance_l520_2;
                      __malloc_SRC_CreateNewInstance_l229_2}
-  array.c:116: misaligned read of addresses
-    (read 3031 times, propagated 1295 times)
-    garbled mix of &{__malloc_KEY_Reload_l235;
-                     __realloc_realloc_array_l80_47;
-                     __malloc_w_KEY_Reload_l235_0;
-                     __realloc_w_realloc_array_l80_48}
   addrfilt.c:327: misaligned read of addresses
-    (read 2880 times, propagated 720 times)
+    (read in 1 statement, propagated through 1 statement)
     garbled mix of &{__malloc_open_node_l137; __malloc_w_open_node_l137_0;
                      __malloc_open_node_l137_1; __malloc_w_open_node_l137_2;
                      __malloc_open_node_l137_3; __malloc_open_node_l137_4;
@@ -12782,5 +12785,3 @@ test/unit/test.c:72:[kernel:annot:missing-spec] warning: Neither code nor specif
                      __malloc_SST_CreateInstance_l215_4;
                      __malloc_SST_CreateInstance_l215_5;
                      __malloc_SST_CreateInstance_l215_6}
-  sched.c:185: imprecise merge of addresses
-    (read 25 times, propagated 0 times) garbled mix of &{read_from_socket}

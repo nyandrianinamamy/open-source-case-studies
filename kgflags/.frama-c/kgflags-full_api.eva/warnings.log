@@ -20,17 +20,18 @@ fc_stubs.c:21:[eva:locals-escaping] warning: locals {int_arr, double_arr} escapi
 fc_stubs.c:21:[eva:locals-escaping] warning: locals {double_arr} escaping the scope of main through _kgflags_g
 [eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
   kgflags.h:657: misaligned read of addresses
-    (read 360 times, propagated 40 times)
+    (read in 9 statements, propagated through 8 statements)
     garbled mix of &{argv1; argv2; argv3; argv4; "string"; "bool"; "int";
                      "double"; "string-array"; "int-array"; "double-array"}
   kgflags.h:735: imprecise merge of addresses
-    (read 47 times, propagated 21 times) garbled mix of &{argv}
+    (read in 4 statements, propagated through 8 statements)
+    garbled mix of &{argv}
   kgflags.h:533: misaligned read of addresses
-    (read 16 times, propagated 11 times)
+    (read in 3 statements, propagated through 3 statements)
     garbled mix of &{argv0; argv1; argv2; argv3; argv4}
   kgflags.h:550: misaligned read of addresses
-    (read 16 times, propagated 11 times)
+    (read in 3 statements, propagated through 3 statements)
     garbled mix of &{argv0; argv1; argv2; argv3; argv4}
   kgflags.h:522: misaligned read of addresses
-    (read 13 times, propagated 19 times)
+    (read in 2 statements, propagated through 3 statements)
     garbled mix of &{argv0; argv1; argv2; argv3; argv4}
