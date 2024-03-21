@@ -256,7 +256,7 @@ stubs.c:21:[eva:locals-escaping] warning: locals {data} escaping the scope of ma
 stubs.c:21:[eva:locals-escaping] warning: locals {data} escaping the scope of main through __realloc_w_miniz_def_realloc_func_l179_24
 [eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
   miniz_zip.c:2919: assigns clause on addresses
-    (read 82764 times, propagated 22504 times)
+    (read in 1018 statements, propagated through 700 statements)
     garbled mix of &{__fc_fopen; miniz_def_alloc_func; miniz_def_free_func;
                      miniz_def_realloc_func; data; in_buf_size; state;
                      zip_archive; mz_zip_file_read_func;
@@ -293,7 +293,7 @@ stubs.c:21:[eva:locals-escaping] warning: locals {data} escaping the scope of ma
                      __realloc_w_miniz_def_realloc_func_l179_23;
                      __realloc_w_miniz_def_realloc_func_l179_24}
   miniz_tdef.c:1043: misaligned read of addresses
-    (read 837 times, propagated 165 times)
+    (read in 98 statements, propagated through 63 statements)
     garbled mix of &{__fc_fopen; miniz_def_alloc_func; miniz_def_free_func;
                      miniz_def_realloc_func; data; in_buf_size; state;
                      zip_archive; mz_zip_file_read_func;
@@ -314,7 +314,7 @@ stubs.c:21:[eva:locals-escaping] warning: locals {data} escaping the scope of ma
                      __realloc_w_miniz_def_realloc_func_l179_8;
                      __realloc_w_miniz_def_realloc_func_l179_9}
   miniz_tdef.c:1067: misaligned read of addresses
-    (read 32 times, propagated 15 times)
+    (read in 11 statements, propagated through 6 statements)
     garbled mix of &{data; in_buf_size; state;
                      mz_zip_writer_add_put_buf_callback;
                      __malloc_w_miniz_def_alloc_func_l169_1}

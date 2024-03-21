@@ -462,19 +462,27 @@ stack: mem_prim_move :: safeclib/wmemmove_s.c:146 <-
        test_wmemmove_s :: unittests/Safe_String_UnitTestMain.c:162 <-
        main
 [eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
-  unittests/test_strpbrk_s.c:221: assigns clause on addresses
-    (read 18 times, propagated 19 times) garbled mix of &{str1_8}
-  unittests/test_strpbrk_s.c:238: assigns clause on addresses
-    (read 18 times, propagated 19 times) garbled mix of &{str1_8}
-  unittests/test_strpbrk_s.c:255: assigns clause on addresses
-    (read 18 times, propagated 19 times) garbled mix of &{str1_8}
-  unittests/test_strpbrk_s.c:272: assigns clause on addresses
-    (read 18 times, propagated 18 times) garbled mix of &{str1_8}
-  unittests/test_strpbrk_s.c:138: assigns clause on addresses
-    (read 14 times, propagated 13 times) garbled mix of &{str1_8}
-  unittests/test_strpbrk_s.c:155: assigns clause on addresses
-    (read 14 times, propagated 15 times) garbled mix of &{str1_8}
-  unittests/test_strpbrk_s.c:172: assigns clause on addresses
-    (read 14 times, propagated 21 times) garbled mix of &{str1_8}
   unittests/test_strpbrk_s.c:121: assigns clause on addresses
-    (read 6 times, propagated 1276 times) garbled mix of &{str1_8}
+    (read in 2 statements, propagated through 373 statements)
+    garbled mix of &{str1_8}
+  unittests/test_strpbrk_s.c:138: assigns clause on addresses
+    (read in 2 statements, propagated through 3 statements)
+    garbled mix of &{str1_8}
+  unittests/test_strpbrk_s.c:155: assigns clause on addresses
+    (read in 2 statements, propagated through 3 statements)
+    garbled mix of &{str1_8}
+  unittests/test_strpbrk_s.c:172: assigns clause on addresses
+    (read in 2 statements, propagated through 7 statements)
+    garbled mix of &{str1_8}
+  unittests/test_strpbrk_s.c:221: assigns clause on addresses
+    (read in 2 statements, propagated through 3 statements)
+    garbled mix of &{str1_8}
+  unittests/test_strpbrk_s.c:238: assigns clause on addresses
+    (read in 2 statements, propagated through 3 statements)
+    garbled mix of &{str1_8}
+  unittests/test_strpbrk_s.c:255: assigns clause on addresses
+    (read in 2 statements, propagated through 3 statements)
+    garbled mix of &{str1_8}
+  unittests/test_strpbrk_s.c:272: assigns clause on addresses
+    (read in 2 statements, propagated through 2 statements)
+    garbled mix of &{str1_8}

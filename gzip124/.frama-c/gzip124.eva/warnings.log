@@ -10,7 +10,7 @@ has generated a garbled mix of addresses for assigns clause \result.
 gzip.c:817:[eva:locals-escaping] warning: locals {attr} escaping the scope of zip through file_type
 [eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
   inflate.c:446: imprecise merge of addresses
-    (read 391618 times, propagated 113144 times)
+    (read in 428 statements, propagated through 350 statements)
     garbled mix of &{d_buf; window; prev; ll; pt_table;
                      __malloc_w_huft_build_l403;
                      __malloc_w_huft_build_l403_0;
@@ -28,18 +28,24 @@ gzip.c:817:[eva:locals-escaping] warning: locals {attr} escaping the scope of zi
                      __malloc_w_huft_build_l403_12;
                      __malloc_w_huft_build_l403_13}
   util.c:186: assigns clause on addresses
-    (read 1817 times, propagated 835 times)
+    (read in 59 statements, propagated through 55 statements)
     garbled mix of &{argv0; ifname; ofname}
   inflate.c:446: misaligned read of addresses
-    (read 640 times, propagated 316 times)
+    (read in 43 statements, propagated through 30 statements)
     garbled mix of &{__malloc_w_huft_build_l403;
                      __malloc_w_huft_build_l403_2;
                      __malloc_w_huft_build_l403_4;
                      __malloc_w_huft_build_l403_7;
                      __malloc_w_huft_build_l403_9;
                      __malloc_w_huft_build_l403_12}
+  gzip.c:1487: assigns clause on addresses
+    (read in 3 statements, propagated through 2 statements)
+    garbled mix of &{ofname}
+  gzip.c:1503: assigns clause on addresses
+    (read in 2 statements, propagated through 1 statement)
+    garbled mix of &{ofname}
   inflate.c:382: imprecise merge of addresses
-    (read 618 times, propagated 618 times)
+    (read in 1 statement, propagated through 1 statement)
     garbled mix of &{__malloc_w_huft_build_l403;
                      __malloc_w_huft_build_l403_0;
                      __malloc_w_huft_build_l403_1;
@@ -56,16 +62,12 @@ gzip.c:817:[eva:locals-escaping] warning: locals {attr} escaping the scope of zi
                      __malloc_w_huft_build_l403_12;
                      __malloc_w_huft_build_l403_13}
   inflate.c:444: imprecise merge of addresses
-    (read 574 times, propagated 574 times)
+    (read in 1 statement, propagated through 1 statement)
     garbled mix of &{__malloc_w_huft_build_l403_0;
                      __malloc_w_huft_build_l403_5;
                      __malloc_w_huft_build_l403_10}
   inflate.c:445: imprecise merge of addresses
-    (read 492 times, propagated 492 times)
+    (read in 1 statement, propagated through 1 statement)
     garbled mix of &{__malloc_w_huft_build_l403_1;
                      __malloc_w_huft_build_l403_6;
                      __malloc_w_huft_build_l403_11}
-  gzip.c:1487: assigns clause on addresses
-    (read 216 times, propagated 72 times) garbled mix of &{ofname}
-  gzip.c:1503: assigns clause on addresses
-    (read 60 times, propagated 12 times) garbled mix of &{ofname}

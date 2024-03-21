@@ -7,7 +7,8 @@ tkn-3-commented.c:37:[kernel] warning: all target addresses were invalid. This p
 stack: alloc :: tkn-3-commented.c:77 <- main
 [eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
   tkn-3-commented.c:66: misaligned write of addresses
-    (read 2176 times, propagated 574 times)
+    (read in 16 statements, propagated through 10 statements)
     garbled mix of &{kfree_list; __malloc_main_l59}
   tkn-3-commented.c:62: arithmetic operation on addresses
-    (read 5 times, propagated 1 times) garbled mix of &{__malloc_main_l59}
+    (read in 1 statement, propagated through 1 statement)
+    garbled mix of &{__malloc_main_l59}

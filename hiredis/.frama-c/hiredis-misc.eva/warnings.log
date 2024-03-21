@@ -40,7 +40,7 @@ net.c:495:[eva] warning: ignoring unsupported allocates clause
 test.c:511:[eva] warning: ignoring unsupported allocates clause
 [eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
   hiredis.c:194: misaligned write of addresses
-    (read 11743 times, propagated 0 times)
+    (read in 24 statements, propagated through 0 statements)
     garbled mix of &{freeReplyObject; createStringObject; createArrayObject;
                      createIntegerObject; createDoubleObject;
                      createNilObject; createBoolObject;
@@ -99,8 +99,8 @@ test.c:511:[eva] warning: ignoring unsupported allocates clause
                      __calloc_w_createReplyObject_l77_60;
                      __calloc_w_createReplyObject_l77_61}
   hiredis.c:148: misaligned write of addresses
-    (read 12 times, propagated 0 times)
+    (read in 2 statements, propagated through 0 statements)
     garbled mix of &{freeReplyObject; __calloc_w_createReplyObject_l77}
   hiredis.c:175: misaligned write of addresses
-    (read 12 times, propagated 0 times)
+    (read in 2 statements, propagated through 0 statements)
     garbled mix of &{freeReplyObject; __calloc_w_createReplyObject_l77_0}

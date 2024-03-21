@@ -227,9 +227,9 @@ directory	file	line	function	property kind	status	property
 .	test.c	1015	main	precondition of access	Unknown	valid_string_path: valid_read_string(path)
 FRAMAC_SHARE/libc	assert.h	31	__FC_assert	precondition	Unknown	nonnull_c: c ≢ 0
 FRAMAC_SHARE/libc	stdio.h	207	fprintf_va_2	precondition	Unknown	valid_read_string(param0)
-FRAMAC_SHARE/libc	stdlib.h	78	atoi	precondition	Unknown	valid_nptr: \valid_read(nptr)
-FRAMAC_SHARE/libc	stdlib.h	405	free	precondition	Unknown	freeable: p ≡ \null ∨ \freeable(p)
-FRAMAC_SHARE/libc	stdlib.h	422	realloc	precondition	Unknown	freeable: ptr ≡ \null ∨ \freeable(ptr)
+FRAMAC_SHARE/libc	stdlib.h	79	atoi	precondition	Unknown	valid_nptr: \valid_read(nptr)
+FRAMAC_SHARE/libc	stdlib.h	406	free	precondition	Unknown	freeable: p ≡ \null ∨ \freeable(p)
+FRAMAC_SHARE/libc	stdlib.h	423	realloc	precondition	Unknown	freeable: ptr ≡ \null ∨ \freeable(ptr)
 FRAMAC_SHARE/libc	string.c	146	strcmp	mem_access	Unknown	\valid_read(s1 + i)
 FRAMAC_SHARE/libc	string.c	146	strcmp	mem_access	Unknown	\valid_read(s2 + i)
 FRAMAC_SHARE/libc	string.c	155	strncmp	dangling_pointer	Unknown	¬\dangling(s1 + i)
