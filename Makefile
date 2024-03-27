@@ -97,10 +97,15 @@ help::
 	@echo "Known targets:"
 	@echo "$(sort $(TARGETS))"
 
-# A target for "fast" analyses, used to speed up testing
-QUICK_TARGETS=$(filter-out polarssl gzip124 libmodbus monocypher chrony,$(TARGETS))
+# Targets sorted by "longest-running first"
+SLOW_TARGETS=monocypher chrony debie1 polarssl libmodbus
 
-all: $(TARGETS)
+QUICK_TARGETS=$(filter-out $(SLOW_TARGETS),$(TARGETS))
+
+# Start long-running targets first, to minimize overall wall-clock time
+# Note: we rely on the fact that GNU make tends to start running targets
+# in left-to-right order
+all: $(SLOW_TARGETS) $(QUICK_TARGETS)
 
 summary:
 	frama-c/share/analysis-scripts/summary.py
