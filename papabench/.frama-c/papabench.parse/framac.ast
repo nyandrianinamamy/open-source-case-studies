@@ -4425,7 +4425,7 @@ double pp_sqrt(double n)
   tmp = ldexp((double)m,e / 2);
   x = (float)tmp;
   i = 0;
-  /*@ loop unroll 5; */
+  /*@ loop \eva::unroll 5; */
   while (i < 5) {
     x = (float)(((double)x + n / (double)x) / (double)2);
     i ++;

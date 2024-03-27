@@ -1049,7 +1049,7 @@ void TST_GetRandomAddress(IPAddr *ip, int family, int bits)
     __FC_assert((bits <= 128) != 0,"test/unit/test.c",118,"bits <= 128");
     i = 0;
     b = 120;
-    /*@ loop unroll 16; */
+    /*@ loop \eva::unroll 16; */
     while (i < 16) {
       if (b >= bits) ip->addr.in6[i] = (uint8_t)0;
       else {
@@ -1158,7 +1158,7 @@ static void split_ip6(IPAddr *ip, uint32_t *dst)
 {
   int i;
   i = 0;
-  /*@ loop unroll 4; */
+  /*@ loop \eva::unroll 4; */
   while (i < 4) {
     *(dst + i) = ((((uint32_t)ip->addr.in6[i * 4 + 0] << 24) | (unsigned int)(
                    (int)ip->addr.in6[i * 4 + 1] << 16)) | (unsigned int)(
@@ -1198,7 +1198,7 @@ static void close_node(TableNode *node)
   TableNode *child_node;
   if (node->extended != (struct _TableNode *)0) {
     i = 0;
-    /*@ loop unroll 16; */
+    /*@ loop \eva::unroll 16; */
     while ((unsigned long)i < 1UL << 4) {
       child_node = node->extended + i;
       i ++;
@@ -1217,7 +1217,7 @@ static void open_node(TableNode *node)
     node->extended = (struct _TableNode *)Malloc2(1UL << 4,
                                                   sizeof(struct _TableNode));
     i = 0;
-    /*@ loop unroll 4; */
+    /*@ loop \eva::unroll 4; */
     while ((unsigned long)i < 1UL << 4) {
       child_node = node->extended + i;
       child_node->state = AS_PARENT;
@@ -1250,7 +1250,7 @@ static ADF_Status set_subnet(TableNode *start_node, uint32_t *ip, int ip_len,
     }
     else {
       if ((bits_to_go & (4 - 1)) == 0) {
-        /*@ loop unroll 128; */
+        /*@ loop \eva::unroll 128; */
         while (bits_to_go > 0) {
           subnet = get_subnet(ip,(unsigned int)bits_consumed);
           if (! node->extended) open_node(node);
@@ -1267,7 +1267,7 @@ static ADF_Status set_subnet(TableNode *start_node, uint32_t *ip, int ip_len,
         int j;
         TableNode *this_node;
         uint32_t tmp;
-        /*@ loop unroll 124; */
+        /*@ loop \eva::unroll 124; */
         while (bits_to_go >= 4) {
           subnet = get_subnet(ip,(unsigned int)bits_consumed);
           if (! node->extended) open_node(node);
@@ -1283,7 +1283,7 @@ static ADF_Status set_subnet(TableNode *start_node, uint32_t *ip, int ip_len,
         if (! node->extended) open_node(node);
         i = (int)subnet;
         j = 0;
-        /*@ loop unroll 16; */
+        /*@ loop \eva::unroll 16; */
         while (j < N) {
           this_node = node->extended + i;
           if (delete_children) close_node(this_node);
@@ -1436,7 +1436,7 @@ static int is_any_allowed(TableNode *node, State parent)
               "state != AS_PARENT");
   if (node->extended) {
     i = 0;
-    /*@ loop unroll 16; */
+    /*@ loop \eva::unroll 16; */
     while ((unsigned long)i < 1UL << 4) {
       if (nondet) {
         __retres = 1;
@@ -6811,7 +6811,7 @@ void MD5Update(MD5_CTX *mdContext, unsigned char const *inBuf,
       if (mdi == 0x40) {
         i = (unsigned int)0;
         ii = (unsigned int)0;
-        /*@ loop unroll 16; */
+        /*@ loop \eva::unroll 16; */
         while (i < (unsigned int)16) {
           in[i] = ((((UINT4)mdContext->in[ii + (unsigned int)3] << 24) | (
                     (UINT4)mdContext->in[ii + (unsigned int)2] << 16)) | (
@@ -6843,7 +6843,7 @@ void MD5Final(MD5_CTX *mdContext)
   MD5Update(mdContext,PADDING,padLen);
   i = (unsigned int)0;
   ii = (unsigned int)0;
-  /*@ loop unroll 14; */
+  /*@ loop \eva::unroll 14; */
   while (i < (unsigned int)14) {
     in[i] = ((((UINT4)mdContext->in[ii + (unsigned int)3] << 24) | ((UINT4)mdContext->in[
                                                                     ii + (unsigned int)2] << 16)) | (
@@ -6854,7 +6854,7 @@ void MD5Final(MD5_CTX *mdContext)
   Transform(mdContext->buf,in);
   i = (unsigned int)0;
   ii = (unsigned int)0;
-  /*@ loop unroll 4; */
+  /*@ loop \eva::unroll 4; */
   while (i < (unsigned int)4) {
     mdContext->digest[ii] = (unsigned char)(mdContext->buf[i] & (unsigned int)0xFF);
     mdContext->digest[ii + (unsigned int)1] = (unsigned char)((mdContext->buf[i] >> 8) & (unsigned int)0xFF);
@@ -7267,7 +7267,7 @@ static int determine_hash_delay(uint32_t key_id)
   int nsecs;
   memset((void *)(& pkt),0,sizeof(pkt));
   i = 0;
-  /*@ loop unroll 10; */
+  /*@ loop \eva::unroll 10; */
   while (i < 10) {
     LCL_ReadRawTime(& before);
     KEY_GenerateAuth(key_id,(unsigned char const *)(& pkt),48,
@@ -12414,7 +12414,7 @@ static void mark_ok_sources(SRC_Status status)
 {
   int i;
   i = 0;
-  /*@ loop unroll 2; */
+  /*@ loop \eva::unroll 2; */
   while (i < n_sources) {
     if ((*(sources + i))->status != (unsigned int)SRC_OK) goto __Cont;
     (*(sources + i))->status = status;
@@ -12469,7 +12469,7 @@ static int combine_sources(int n_sel_sources, struct timespec *ref_time,
     sel_src_distance += reselect_distance_0;
   combined = 0;
   i = combined;
-  /*@ loop unroll 2; */
+  /*@ loop \eva::unroll 2; */
   while (i < n_sel_sources) {
     index_0 = *(sel_sources + i);
     SST_GetTrackingData((*(sources + index_0))->stats,& src_ref_time,
@@ -12594,7 +12594,7 @@ void SRC_SelectSource(SRC_Instance updated_inst)
   max_sel_reach_size = 0;
   max_reach_sample_ago = 0.0;
   i = 0;
-  /*@ loop unroll 2; */
+  /*@ loop \eva::unroll 2; */
   while (i < n_sources) {
     __FC_assert(((*(sources + i))->status != (unsigned int)SRC_OK) != 0,
                 "sources.c",634,"sources[i]->status != SRC_OK");
@@ -12645,7 +12645,7 @@ void SRC_SelectSource(SRC_Instance updated_inst)
   orphan_stratum = REF_GetOrphanStratum();
   orphan_source = -1;
   i = 0;
-  /*@ loop unroll 2; */
+  /*@ loop \eva::unroll 2; */
   while (i < n_sources) {
     if ((*(sources + i))->status != (unsigned int)SRC_OK) goto __Cont_0;
     si = & (*(sources + i))->sel_info;
@@ -12686,7 +12686,7 @@ void SRC_SelectSource(SRC_Instance updated_inst)
         }
     }
   i = 0;
-  /*@ loop unroll 2; */
+  /*@ loop \eva::unroll 2; */
   while (i < n_sources) {
     if ((*(sources + i))->status != (unsigned int)SRC_OK) goto __Cont_1;
     si = & (*(sources + i))->sel_info;
@@ -12726,7 +12726,7 @@ void SRC_SelectSource(SRC_Instance updated_inst)
   best_hi = 0.0;
   best_lo = best_hi;
   i = 0;
-  /*@ loop unroll 4; */
+  /*@ loop \eva::unroll 4; */
   while (i < n_endpoints) {
     switch ((sort_list + i)->tag) {
       case LOW: depth ++;
@@ -12766,7 +12766,7 @@ void SRC_SelectSource(SRC_Instance updated_inst)
     }
   n_sel_sources = 0;
   i = 0;
-  /*@ loop unroll 2; */
+  /*@ loop \eva::unroll 2; */
   while (i < n_sources) {
     if ((*(sources + i))->status != (unsigned int)SRC_OK) goto __Cont_2;
     if (! best_trust_depth) goto _LOR_1;
@@ -12837,7 +12837,7 @@ void SRC_SelectSource(SRC_Instance updated_inst)
   leap_del = leap_votes;
   leap_ins = leap_del;
   i = leap_ins;
-  /*@ loop unroll 2; */
+  /*@ loop \eva::unroll 2; */
   while (i < n_sel_sources) {
     index_0 = *(sel_sources + i);
     if (best_trust_depth) 
@@ -12855,7 +12855,7 @@ void SRC_SelectSource(SRC_Instance updated_inst)
     if (leap_del > leap_votes / 2) leap_status = LEAP_DeleteSecond;
     else leap_status = LEAP_Normal;
   i = 0;
-  /*@ loop unroll 2; */
+  /*@ loop \eva::unroll 2; */
   while (i < n_sel_sources) {
     if ((*(sources + *(sel_sources + i)))->sel_options & 0x2) break;
     i ++;
@@ -12863,7 +12863,7 @@ void SRC_SelectSource(SRC_Instance updated_inst)
   if (i < n_sel_sources) {
     j = 0;
     i = j;
-    /*@ loop unroll 2; */
+    /*@ loop \eva::unroll 2; */
     while (i < n_sel_sources) {
       if (! ((*(sources + *(sel_sources + i)))->sel_options & 0x2)) (*(
                                                                     sources + *(
@@ -12884,7 +12884,7 @@ void SRC_SelectSource(SRC_Instance updated_inst)
   index_0 = *(sel_sources + 0);
   min_stratum = (*(sources + index_0))->sel_info.stratum;
   i = 1;
-  /*@ loop unroll 2; */
+  /*@ loop \eva::unroll 2; */
   while (i < n_sel_sources) {
     index_0 = *(sel_sources + i);
     stratum = (*(sources + index_0))->sel_info.stratum;
@@ -12897,7 +12897,7 @@ void SRC_SelectSource(SRC_Instance updated_inst)
   if (selected_source_index != -1) sel_src_distance = (*(sources + selected_source_index))->sel_info.root_distance + 
                                                       (double)((*(sources + selected_source_index))->sel_info.stratum - min_stratum) * stratum_weight_0;
   i = 0;
-  /*@ loop unroll 2; */
+  /*@ loop \eva::unroll 2; */
   while (i < n_sources) {
     if ((*(sources + i))->status != (unsigned int)SRC_OK) goto _LOR_3;
     else 
@@ -12952,7 +12952,7 @@ void SRC_SelectSource(SRC_Instance updated_inst)
             tmp_7 = source_to_string(*(sources + selected_source_index));
             log_selection_message((char *)"Selected source %s",tmp_7);
             i = 0;
-            /*@ loop unroll 2; */
+            /*@ loop \eva::unroll 2; */
             while (i < n_sources) {
               (*(sources + i))->sel_score = 1.0;
               (*(sources + i))->distant = 0;
@@ -12963,7 +12963,7 @@ void SRC_SelectSource(SRC_Instance updated_inst)
   (*(sources + selected_source_index))->status = SRC_SELECTED;
   if ((*(sources + selected_source_index))->updates == 0) {
     i = 0;
-    /*@ loop unroll 2; */
+    /*@ loop \eva::unroll 2; */
     while (i < n_sel_sources) {
       index_0 = *(sel_sources + i);
       if ((*(sources + index_0))->status == (unsigned int)SRC_OK) 
@@ -12974,7 +12974,7 @@ void SRC_SelectSource(SRC_Instance updated_inst)
     goto return_label;
   }
   i = 0;
-  /*@ loop unroll 2; */
+  /*@ loop \eva::unroll 2; */
   while (i < n_sources) {
     (*(sources + i))->updates = 0;
     i ++;
@@ -13022,7 +13022,7 @@ static void slew_sources(struct timespec *raw, struct timespec *cooked,
 {
   int i;
   i = 0;
-  /*@ loop unroll 2; */
+  /*@ loop \eva::unroll 2; */
   while (i < n_sources) {
     if (change_type == (unsigned int)LCL_ChangeUnknownStep) SST_ResetInstance
                                                             ((*(sources + i))->stats);
@@ -13038,7 +13038,7 @@ static void add_dispersion(double dispersion, void *anything)
 {
   int i;
   i = 0;
-  /*@ loop unroll 2; */
+  /*@ loop \eva::unroll 2; */
   while (i < n_sources) {
     SST_AddDispersion((*(sources + i))->stats,dispersion);
     i ++;
@@ -13144,7 +13144,7 @@ void SRC_DumpSources(void)
   FILE *out;
   int i;
   i = 0;
-  /*@ loop unroll 2; */
+  /*@ loop \eva::unroll 2; */
   while (i < n_sources) {
     out = open_dumpfile(*(sources + i),"w");
     if (! out) goto __Cont;
@@ -13160,7 +13160,7 @@ void SRC_ReloadSources(void)
   FILE *in;
   int i;
   i = 0;
-  /*@ loop unroll 2; */
+  /*@ loop \eva::unroll 2; */
   while (i < n_sources) {
     {
       int tmp_1;
@@ -13307,7 +13307,7 @@ int SRC_ActiveSources(void)
   int r;
   r = 0;
   i = r;
-  /*@ loop unroll 2; */
+  /*@ loop \eva::unroll 2; */
   while (i < n_sources) {
     if ((*(sources + i))->active) r ++;
     i ++;
@@ -15917,7 +15917,7 @@ int eva_main(void)
   char *argv[6] = {argv0, argv1, argv2, argv3, argv4, (char *)0};
   {
     int i = 0;
-    /*@ loop unroll 5; */
+    /*@ loop \eva::unroll 5; */
     while (i < 5) {
       Frama_C_make_unknown(argv[i],(size_t)255);
       *(argv[i] + 255) = (char)0;
@@ -18889,7 +18889,7 @@ void test_unit(void)
       (char)'\000'}};
   CNF_Initialise(0,0);
   i = 0;
-  /*@ loop unroll 4; */
+  /*@ loop \eva::unroll 4; */
   while ((unsigned long)i < sizeof(conf) / sizeof(conf[0])) {
     CNF_ParseLine((char const *)0,i + 1,conf[i]);
     i ++;
@@ -18907,7 +18907,7 @@ void test_unit(void)
   CNF_SetupAccessRestrictions();
   CPS_ParseNTPSourceAdd(source_line,& source);
   i = 0;
-  /*@ loop unroll 3; */
+  /*@ loop \eva::unroll 3; */
   while (i < 3) {
     {
       long tmp;
@@ -18936,7 +18936,7 @@ void test_unit(void)
       NCR_StartInstance(inst1);
       has_updated = 0;
       j = 0;
-      /*@ loop unroll 5; */
+      /*@ loop \eva::unroll 5; */
       while (j < 5) {
         {
           int tmp_6;
@@ -19017,7 +19017,7 @@ void test_unit(void)
                               & source.params);
       NCR_StartInstance(inst1);
       j = 0;
-      /*@ loop unroll 2; */
+      /*@ loop \eva::unroll 2; */
       while (j < 2) {
         send_request(inst1);
         process_request(& remote_addr);
@@ -19033,7 +19033,7 @@ void test_unit(void)
       req_length = 0;
       res_length = req_length;
       j = 0;
-      /*@ loop unroll 4; */
+      /*@ loop \eva::unroll 4; */
       while (j < 4) {
         {
           int tmp_15;
@@ -19052,7 +19052,7 @@ void test_unit(void)
           process_response(inst2,j > source.params.interleaved,j > 0,j > 0,1);
           packet_queue[(j * 2) % 10] = res_buffer;
           k = 0;
-          /*@ loop unroll 5; */
+          /*@ loop \eva::unroll 5; */
           while (k < j % 4 + 1) {
             {
               int tmp_16;
@@ -19080,7 +19080,7 @@ void test_unit(void)
           process_response(inst1,1,1,1,1);
           packet_queue[(j * 2 + 1) % 10] = res_buffer;
           k = 0;
-          /*@ loop unroll 5; */
+          /*@ loop \eva::unroll 5; */
           while (k < j % 4 + 1) {
             {
               int tmp_19;

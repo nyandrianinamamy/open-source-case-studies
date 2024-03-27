@@ -666,10 +666,10 @@ void addRandom(uint8_t board[4][4])
     addRandom_initialized = (_Bool)1;
   }
   x = (uint8_t)0;
-  /*@ loop unroll 4; */
+  /*@ loop \eva::unroll 4; */
   while ((int)x < 4) {
     y = (uint8_t)0;
-    /*@ loop unroll 4; */
+    /*@ loop \eva::unroll 4; */
     while ((int)y < 4) {
       if ((int)(*(board + x))[y] == 0) {
         list[len][0] = x;
@@ -699,10 +699,10 @@ void initBoard(uint8_t board[4][4])
   uint8_t x;
   uint8_t y;
   x = (uint8_t)0;
-  /*@ loop unroll 4; */
+  /*@ loop \eva::unroll 4; */
   while ((int)x < 4) {
     y = (uint8_t)0;
-    /*@ loop unroll 4; */
+    /*@ loop \eva::unroll 4; */
     while ((int)y < 4) {
       (*(board + x))[y] = (uint8_t)0;
       y = (uint8_t)((int)y + 1);
@@ -983,7 +983,7 @@ int test(void)
     }
     slideArray(array);
     i = (uint8_t)0;
-    /*@ loop unroll 4; */
+    /*@ loop \eva::unroll 4; */
     while ((int)i < 4) {
       if ((int)array[i] != (int)*(out + i)) success = (_Bool)0;
       i = (uint8_t)((int)i + 1);

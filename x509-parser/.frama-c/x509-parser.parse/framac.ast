@@ -3094,7 +3094,7 @@ static _alg_id const *find_alg_by_oid(u8 const *buf, u16 len)
       loop invariant found ≡ (_alg_id const *)0;
       loop assigns cur, found, k;
       loop variant sizeof(known_algs) / sizeof(known_algs[0]) - k;
-      loop unroll sizeof(known_algs) / sizeof(known_algs[0]);
+      loop \eva::unroll sizeof(known_algs) / sizeof(known_algs[0]);
   */
   while ((unsigned long)k < sizeof(known_algs) / sizeof(known_algs[0])) {
     {
@@ -4079,7 +4079,7 @@ static _name_oid const *find_dn_by_oid(u8 const *buf, u16 len)
       loop invariant found ≡ (_name_oid const *)0;
       loop assigns cur, found, k;
       loop variant sizeof(known_dn_oids) / sizeof(known_dn_oids[0]) - k;
-      loop unroll sizeof(known_dn_oids) / sizeof(known_dn_oids[0]);
+      loop \eva::unroll sizeof(known_dn_oids) / sizeof(known_dn_oids[0]);
   */
   while ((unsigned long)k < sizeof(known_dn_oids) / sizeof(known_dn_oids[0])) {
     {
@@ -4338,7 +4338,7 @@ static int parse_UTCTime(u8 const *buf, u16 len, u16 *eaten, u16 *year,
       loop invariant ∀ ℤ x; 0 ≤ x < i ⇒ 0x30 ≤ *(buf + x) ≤ 0x39;
       loop assigns i;
       loop variant 12 - i;
-      loop unroll 12;
+      loop \eva::unroll 12;
   */
   while ((int)i < 12) {
     if ((int)c_zero > (int)*(buf + i)) {
@@ -7025,7 +7025,7 @@ static _ext_oid const *find_ext_by_oid(u8 const *buf, u16 len)
       loop invariant found ≡ (_ext_oid const *)0;
       loop assigns cur, found, k;
       loop variant sizeof(known_ext_oids) / sizeof(known_ext_oids[0]) - k;
-      loop unroll sizeof(known_ext_oids) / sizeof(known_ext_oids[0]);
+      loop \eva::unroll sizeof(known_ext_oids) / sizeof(known_ext_oids[0]);
   */
   while ((unsigned long)k < sizeof(known_ext_oids) / sizeof(known_ext_oids[0])) {
     {
@@ -7270,7 +7270,7 @@ static int parse_x509_Extensions(u8 const *buf, u16 len, u16 *eaten,
                                        sizeof(known_ext_oids) /
                                        sizeof(known_ext_oids[0]) - 1];
       loop variant sizeof(known_ext_oids) / sizeof(known_ext_oids[0]) - i;
-      loop unroll sizeof(known_ext_oids) / sizeof(known_ext_oids[0]);
+      loop \eva::unroll sizeof(known_ext_oids) / sizeof(known_ext_oids[0]);
   */
   while ((unsigned long)i < sizeof(known_ext_oids) / sizeof(known_ext_oids[0])) {
     parsed_oid_list[i] = (_ext_oid const *)0;

@@ -1460,7 +1460,7 @@ void Convert_AD(ADC_parameters_t *ADC_parameters)
   unsigned int word;
   Start_Conversion();
   conversion_count = (unsigned char)0;
-  /*@ loop unroll ADC_parameters->conversion_max_tries; */
+  /*@ loop \eva::unroll ADC_parameters->conversion_max_tries; */
   while (1) {
     if ((uint_least8_t)conversion_count < ADC_parameters->conversion_max_tries) {
       unsigned char tmp;
@@ -1574,7 +1574,7 @@ void Read_AD_Channel(ADC_parameters_t *ADC_parameters)
   unsigned short delay_limit;
   delay_limit = (unsigned short)(((double)2000 / 1.085 - (double)4) / (double)2);
   tries_left = (unsigned char)ADC_parameters->ADC_max_tries;
-  /*@ loop unroll 1; */
+  /*@ loop \eva::unroll 1; */
   while ((int)tries_left > 0) {
     confirm_hit_result = (unsigned char)0;
     ADC_channel_register = (unsigned char)((unsigned int)((int)ADC_channel_register & 0x80) | ADC_parameters->ADC_channel);
@@ -2412,7 +2412,7 @@ void HandleAcquisition(void)
                 unsigned char tmp;
                 _LOR: tmp = Event_Flag();
                 if ((int)tmp == 1) {
-                  /*@ split event_queue_length; */ ;
+                  /*@ \eva::split event_queue_length; */ ;
                   event = GetFreeRecord();
                   event->SU_number = (unsigned char)((int)trigger_unit & 0xFF);
                   memcpy((void *)(& event->plasma_1_plus),
@@ -2451,7 +2451,7 @@ void HandleAcquisition(void)
                   event->SU_temperature_2 = telemetry_data.SU_temperature[
                   (int)trigger_unit - 1][1];
                   ClassifyEvent(event);
-                  /*@ merge event_queue_length; */ ;
+                  /*@ \eva::merge event_queue_length; */ ;
                   checksum_pointer = (unsigned char *)event;
                   event_checksum = (unsigned char)0;
                   i = (uint_least8_t)1;
@@ -3418,7 +3418,7 @@ void RecordEvent(void)
     if (event_queue_length < (uint_least8_t)10) event_queue_length ++;
   }
   else {
-    /*@ widen_hints global:free_slot_index, 1261; */
+    /*@ \eva::widen_hints global:free_slot_index, 1261; */
     if (free_slot_index < max_events) {
       record_index = free_slot_index;
       science_data.event[record_index].quality_number = (unsigned char)0;
@@ -7001,7 +7001,7 @@ void Monitoring_Task_Tests(void)
   int sec;
   int tot_errors;
   int max_errors = 20;
-  /*@ widen_hints tot_errors, 20; */
+  /*@ \eva::widen_hints tot_errors, 20; */
   health_mon_round = (uint_least8_t)9;
   temp_meas_count = (uint_least8_t)5;
   voltage_meas_count = (uint_least8_t)17;
@@ -7562,7 +7562,7 @@ void TM_Tests(void)
   Handle_TC(41);
   Check_Nonzero(TC_state == (unsigned int)SC_TM_e);
   octets = 0;
-  /*@ loop unroll 22; */
+  /*@ loop \eva::unroll 22; */
   while (mail_count[0] == 0) {
     if (telemetry_pointer < telemetry_end_pointer) {
       printf("RPT_Ipoint %d\n",3); /* printf_va_169 */
@@ -8412,7 +8412,7 @@ static void Acquisition_Tests(void)
   hit_budget_left = (uint_least8_t)(10 + 2);
   Check_Zero((int)event_queue_length);
   octets = 0;
-  /*@ loop unroll 17676; */
+  /*@ loop \eva::unroll 17676; */
   while (mail_count[0] == 0) {
     if (telemetry_pointer < telemetry_end_pointer) {
       printf("RPT_Ipoint %d\n",3); /* printf_va_208 */
@@ -8650,7 +8650,7 @@ void SU_Self_Test_Tests(void)
   Check_Nonzero(self_test_SU_number == (sensor_number_t)2);
   Check_No_Errors();
   printf("\nCASE: %s:\n\n",(char *)"Run Self Test for SU2"); /* printf_va_223 */
-  /*@ loop unroll 10; */
+  /*@ loop \eva::unroll 10; */
   while (health_mon_round != (uint_least8_t)round_7_e) Monitor_Health(61);
   Check_Nonzero(self_test_SU_number == (sensor_number_t)2);
   Check_Nonzero(SU_state[1] == (unsigned int)self_test_mon_e);
@@ -8671,7 +8671,7 @@ void SU_Self_Test_Tests(void)
   Check_Nonzero(self_test_SU_number == (sensor_number_t)2);
   Check_Nonzero(SU_state[1] == (unsigned int)self_test_mon_e);
   sim_self_test = (unsigned char)0;
-  /*@ loop unroll 10; */
+  /*@ loop \eva::unroll 10; */
   while (health_mon_round != (uint_least8_t)round_7_e) Monitor_Health(61);
   Check_Nonzero(self_test_SU_number == (sensor_number_t)2);
   Check_Nonzero(SU_state[1] == (unsigned int)self_test_mon_e);

@@ -330,7 +330,7 @@ int main(void)
   k = kh_get_32((kh_32_t const *)h,(khint32_t)5);
   kh_del_32(h,k);
   k = (khint_t)0;
-  /*@ loop unroll 32; */
+  /*@ loop \eva::unroll 32; */
   while (k != h->n_buckets) {
     if (! ((int)*(h->flags + k) & 3)) *(h->vals + k) = (char)1;
     k ++;

@@ -2924,7 +2924,7 @@ static int send_msg(modbus_t *ctx, uint8_t *msg, int msg_length)
   msg_length = (*((ctx->backend)->send_msg_pre))(msg,msg_length);
   if (ctx->debug) {
     i = 0;
-    /*@ loop unroll 260; */
+    /*@ loop \eva::unroll 260; */
     while (i < msg_length) {
       printf("[%.2X]",(unsigned int)((int)*(msg + i))); /* printf_va_9 */
       i ++;
@@ -4139,11 +4139,11 @@ static int read_io_status(modbus_t *ctx, int function, int addr, int nb,
     offset = (int)((ctx->backend)->header_length + (unsigned int)2);
     offset_end = offset + rc;
     i = offset;
-    /*@ loop unroll 14; */
+    /*@ loop \eva::unroll 14; */
     while (i < offset_end) {
       temp = (int)rsp[i];
       bit = 0x01;
-      /*@ loop unroll 16; */
+      /*@ loop \eva::unroll 16; */
       while (1) {
         if (bit & 0xff) {
           if (! (pos < nb)) break;
@@ -4299,7 +4299,7 @@ static int read_registers(modbus_t *ctx, int function, int addr, int nb,
     }
     offset = (int)(ctx->backend)->header_length;
     i = 0;
-    /*@ loop unroll 100; */
+    /*@ loop \eva::unroll 100; */
     while (i < rc) {
       *(dest + i) = (uint16_t)(((int)rsp[(offset + 2) + (i << 1)] << 8) | (int)rsp[
                                (offset + 3) + (i << 1)]);
@@ -4487,7 +4487,7 @@ int modbus_write_bits(modbus_t *ctx, int addr, int nb, uint8_t const *src)
   req_length ++;
   req[tmp_0] = (uint8_t)byte_count;
   i = 0;
-  /*@ loop unroll 13; */
+  /*@ loop \eva::unroll 13; */
   while (i < byte_count) {
     {
       int bit;
@@ -4573,7 +4573,7 @@ int modbus_write_registers(modbus_t *ctx, int addr, int nb,
   req_length ++;
   req[tmp] = (uint8_t)byte_count;
   i = 0;
-  /*@ loop unroll 100; */
+  /*@ loop \eva::unroll 100; */
   while (i < nb) {
     {
       int tmp_0;
@@ -4725,7 +4725,7 @@ int modbus_write_and_read_registers(modbus_t *ctx, int write_addr,
   req_length ++;
   req[tmp_3] = (uint8_t)byte_count;
   i = 0;
-  /*@ loop unroll 100; */
+  /*@ loop \eva::unroll 100; */
   while (i < write_nb) {
     {
       int tmp_4;
@@ -4754,7 +4754,7 @@ int modbus_write_and_read_registers(modbus_t *ctx, int write_addr,
     }
     offset = (int)(ctx->backend)->header_length;
     i = 0;
-    /*@ loop unroll 100; */
+    /*@ loop \eva::unroll 100; */
     while (i < rc) {
       *(dest + i) = (uint16_t)(((int)rsp[(offset + 2) + (i << 1)] << 8) | (int)rsp[
                                (offset + 3) + (i << 1)]);

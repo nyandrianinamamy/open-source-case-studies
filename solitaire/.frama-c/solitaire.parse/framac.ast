@@ -303,7 +303,7 @@ static void print_deck(void)
 {
   int i;
   i = 0;
-  /*@ loop unroll 54; */
+  /*@ loop \eva::unroll 54; */
   while (i < 54) {
     if (*(state.deck + i) < 53) putchar(' ' + *(state.deck + i));
     else 
@@ -338,7 +338,7 @@ static void key_deck(char *key)
   state.deck = & state.deck1[3];
   state.spare = & state.deck2[3];
   i = 0;
-  /*@ loop unroll 52; */
+  /*@ loop \eva::unroll 52; */
   while (i < 52) {
     *(state.deck + i) = i + 1;
     i ++;
@@ -353,7 +353,7 @@ static void key_deck(char *key)
         cycle_deck(0);
         kval = ((int)*key - 'A') + 1;
         i = 0;
-        /*@ loop unroll 53; */
+        /*@ loop \eva::unroll 53; */
         while (i < 53) {
           *(state.spare + i) = *(state.deck + (i + kval) % 53);
           i ++;
@@ -464,7 +464,7 @@ int main(int argc, char **argv)
   av ++;
   argc --;
   if (argc < 2) printf("Usage: [flags] key message|len\n"); /* printf_va_3 */
-  /*@ loop unroll 3; */
+  /*@ loop \eva::unroll 3; */
   while (argc > 2) {
     int tmp_1;
     tmp_1 = strcmp((char const *)*av,"-v");
@@ -486,7 +486,7 @@ int main(int argc, char **argv)
   if ((int)*tmp != '\000') {
     char *text = *(av + 1);
     int i = 0;
-    /*@ loop unroll 256; */
+    /*@ loop \eva::unroll 256; */
     while ((int)*text != '\000') {
       if ((int)*text >= 'A') 
         if ((int)*text <= 'Z') {
@@ -545,7 +545,7 @@ int eva_main(void)
   char *argv[6] = {argv0, argv1, argv2, argv3, argv4, (char *)0};
   {
     int i = 0;
-    /*@ loop unroll 5; */
+    /*@ loop \eva::unroll 5; */
     while (i < 5) {
       Frama_C_make_unknown(argv[i],(size_t)255);
       *(argv[i] + 255) = (char)0;

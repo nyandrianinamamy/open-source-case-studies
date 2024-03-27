@@ -152,7 +152,7 @@ void hexdump(char *data, int len)
 {
   int i;
   i = 0;
-  /*@ loop unroll 105; */
+  /*@ loop \eva::unroll 105; */
   while (i < len) {
     printf("%02X",(unsigned int)((int)((u8)*(data + i)))); /* printf_va_1 */
     i ++;
@@ -813,7 +813,7 @@ int crypto_onetimeauth_poly1305_tweet(unsigned char *out,
   r[11] &= (unsigned long)15;
   r[12] &= (unsigned long)252;
   r[15] &= (unsigned long)15;
-  /*@ loop unroll 5; */
+  /*@ loop \eva::unroll 5; */
   while (n > (unsigned long long)0) {
     j = (u32)0;
     while (j < (u32)17) {

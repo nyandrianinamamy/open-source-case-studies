@@ -571,7 +571,7 @@ static void chacha20_encrypt(crypto_chacha_ctx *ctx, u8 *cipher_text,
                              u8 const *plain_text, size_t text_size)
 {
   size_t i = (size_t)0;
-  /*@ loop unroll 64; */
+  /*@ loop \eva::unroll 64; */
   while (i < text_size) {
     {
       u8 tmp;
@@ -632,12 +632,12 @@ void crypto_chacha20_encrypt(crypto_chacha_ctx *ctx, uint8_t *cipher_text,
   text_size -= align;
   {
     size_t i = (size_t)0;
-    /*@ loop unroll 4; */
+    /*@ loop \eva::unroll 4; */
     while (i < text_size >> 6) {
       chacha20_refill_pool(ctx);
       if (plain_text != (uint8_t const *)0) {
         size_t j = (size_t)0;
-        /*@ loop unroll 16; */
+        /*@ loop \eva::unroll 16; */
         while (j < (size_t)16) {
           {
             u32 plain = load32_le(plain_text);
@@ -650,7 +650,7 @@ void crypto_chacha20_encrypt(crypto_chacha_ctx *ctx, uint8_t *cipher_text,
       }
       else {
         size_t j_0 = (size_t)0;
-        /*@ loop unroll 16; */
+        /*@ loop \eva::unroll 16; */
         while (j_0 < (size_t)16) {
           store32_le(cipher_text,ctx->pool[j_0]);
           cipher_text += 4;
@@ -742,7 +742,7 @@ static void poly_update(crypto_poly1305_ctx *ctx, u8 const *message,
                         size_t message_size)
 {
   size_t i = (size_t)0;
-  /*@ loop unroll 15; */
+  /*@ loop \eva::unroll 15; */
   while (i < message_size) {
     poly_take_input(ctx,*(message + i));
     if (ctx->c_idx == (size_t)16) {
@@ -758,7 +758,7 @@ void crypto_poly1305_init(crypto_poly1305_ctx *ctx, uint8_t const key[32])
 {
   {
     size_t i = (size_t)0;
-    /*@ loop unroll 5; */
+    /*@ loop \eva::unroll 5; */
     while (i < (size_t)5) {
       ctx->h[i] = (uint32_t)0;
       i ++;
@@ -779,7 +779,7 @@ void crypto_poly1305_init(crypto_poly1305_ctx *ctx, uint8_t const key[32])
   }
   {
     size_t i_1 = (size_t)1;
-    /*@ loop unroll 3; */
+    /*@ loop \eva::unroll 3; */
     while (i_1 < (size_t)4) {
       {
         u32 tmp_0;
@@ -791,7 +791,7 @@ void crypto_poly1305_init(crypto_poly1305_ctx *ctx, uint8_t const key[32])
   }
   {
     size_t i_2 = (size_t)0;
-    /*@ loop unroll 4; */
+    /*@ loop \eva::unroll 4; */
     while (i_2 < (size_t)4) {
       ctx->pad[i_2] = load32_le((key + i_2 * (size_t)4) + 16);
       i_2 ++;
@@ -1848,7 +1848,7 @@ static void blake2b_set_input(crypto_blake2b_ctx *ctx, u8 input,
 {
   if (index_0 == (size_t)0) {
     size_t i = (size_t)0;
-    /*@ loop unroll 16; */
+    /*@ loop \eva::unroll 16; */
     while (i < (size_t)16) {
       ctx->input[i] = (uint64_t)0;
       i ++;
@@ -1888,7 +1888,7 @@ void crypto_blake2b_general_init(crypto_blake2b_ctx *ctx, size_t hash_size,
 {
   {
     size_t i = (size_t)0;
-    /*@ loop unroll 8; */
+    /*@ loop \eva::unroll 8; */
     while (i < (size_t)8) {
       ctx->hash[i] = iv[i];
       i ++;
@@ -1929,7 +1929,7 @@ void crypto_blake2b_update(crypto_blake2b_ctx *ctx, uint8_t const *message,
       blake2b_end_block(ctx);
       {
         size_t j = (size_t)0;
-        /*@ loop unroll 16; */
+        /*@ loop \eva::unroll 16; */
         while (j < (size_t)16) {
           ctx->input[j] = load64_le_0(message + j * (size_t)8);
           j ++;
@@ -2040,7 +2040,7 @@ static void store_block(u8 bytes[1024], block const *b)
 static void copy_block(block *o, block const *in)
 {
   size_t i = (size_t)0;
-  /*@ loop unroll 128; */
+  /*@ loop \eva::unroll 128; */
   while (i < (size_t)128) {
     o->a[i] = in->a[i];
     i ++;
@@ -2051,7 +2051,7 @@ static void copy_block(block *o, block const *in)
 static void xor_block(block *o, block const *in)
 {
   size_t i = (size_t)0;
-  /*@ loop unroll 128; */
+  /*@ loop \eva::unroll 128; */
   while (i < (size_t)128) {
     o->a[i] ^= in->a[i];
     i ++;
@@ -2091,7 +2091,7 @@ static void g_rounds(block *work_block)
 {
   {
     int i = 0;
-    /*@ loop unroll 8; */
+    /*@ loop \eva::unroll 8; */
     while (i < 128) {
       work_block->a[i] += work_block->a[i + 4] + ((unsigned long)2 * (
                                                   work_block->a[i] & (unsigned long)0xffffffff)) * (
@@ -2282,7 +2282,7 @@ static void g_rounds(block *work_block)
   }
   {
     int i_0 = 0;
-    /*@ loop unroll 8; */
+    /*@ loop \eva::unroll 8; */
     while (i_0 < 16) {
       work_block->a[i_0] += work_block->a[i_0 + 32] + ((unsigned long)2 * (
                                                        work_block->a[i_0] & (unsigned long)0xffffffff)) * (
@@ -2730,7 +2730,7 @@ void crypto_argon2i(uint8_t *hash, uint32_t hash_size, void *work_area,
 static void fe_0(i32 h[10])
 {
   size_t i = (size_t)0;
-  /*@ loop unroll 10; */
+  /*@ loop \eva::unroll 10; */
   while (i < (size_t)10) {
     *(h + i) = 0;
     i ++;
@@ -2743,7 +2743,7 @@ static void fe_1(i32 h[10])
   *(h + 0) = 1;
   {
     size_t i = (size_t)1;
-    /*@ loop unroll 9; */
+    /*@ loop \eva::unroll 9; */
     while (i < (size_t)10) {
       *(h + i) = 0;
       i ++;
@@ -2755,7 +2755,7 @@ static void fe_1(i32 h[10])
 static void fe_copy(i32 h[10], i32 const f[10])
 {
   size_t i = (size_t)0;
-  /*@ loop unroll 10; */
+  /*@ loop \eva::unroll 10; */
   while (i < (size_t)10) {
     *(h + i) = *(f + i);
     i ++;
@@ -2776,7 +2776,7 @@ static void fe_neg(i32 h[10], i32 const f[10])
 static void fe_add(i32 h[10], i32 const f[10], i32 const g[10])
 {
   size_t i = (size_t)0;
-  /*@ loop unroll 10; */
+  /*@ loop \eva::unroll 10; */
   while (i < (size_t)10) {
     *(h + i) = *(f + i) + *(g + i);
     i ++;
@@ -2787,7 +2787,7 @@ static void fe_add(i32 h[10], i32 const f[10], i32 const g[10])
 static void fe_sub(i32 h[10], i32 const f[10], i32 const g[10])
 {
   size_t i = (size_t)0;
-  /*@ loop unroll 10; */
+  /*@ loop \eva::unroll 10; */
   while (i < (size_t)10) {
     *(h + i) = *(f + i) - *(g + i);
     i ++;
@@ -2798,7 +2798,7 @@ static void fe_sub(i32 h[10], i32 const f[10], i32 const g[10])
 static void fe_cswap(i32 f[10], i32 g[10], int b)
 {
   size_t i = (size_t)0;
-  /*@ loop unroll 10; */
+  /*@ loop \eva::unroll 10; */
   while (i < (size_t)10) {
     {
       i32 x = (*(f + i) ^ *(g + i)) & - b;
@@ -2813,7 +2813,7 @@ static void fe_cswap(i32 f[10], i32 g[10], int b)
 static void fe_ccopy(i32 f[10], i32 const g[10], int b)
 {
   size_t i = (size_t)0;
-  /*@ loop unroll 10; */
+  /*@ loop \eva::unroll 10; */
   while (i < (size_t)10) {
     {
       i32 x = (*(f + i) ^ *(g + i)) & - b;
@@ -3353,7 +3353,7 @@ static void fe_pow22523(i32 out[10], i32 const z[10])
   fe_sq(t1,(i32 const *)(t0));
   {
     size_t i = (size_t)1;
-    /*@ loop unroll 5; */
+    /*@ loop \eva::unroll 5; */
     while (i < (size_t)5) {
       fe_sq(t1,(i32 const *)(t1));
       i ++;
@@ -3363,7 +3363,7 @@ static void fe_pow22523(i32 out[10], i32 const z[10])
   fe_sq(t1,(i32 const *)(t0));
   {
     size_t i_0 = (size_t)1;
-    /*@ loop unroll 10; */
+    /*@ loop \eva::unroll 10; */
     while (i_0 < (size_t)10) {
       fe_sq(t1,(i32 const *)(t1));
       i_0 ++;
@@ -3373,7 +3373,7 @@ static void fe_pow22523(i32 out[10], i32 const z[10])
   fe_sq(t2,(i32 const *)(t1));
   {
     size_t i_1 = (size_t)1;
-    /*@ loop unroll 20; */
+    /*@ loop \eva::unroll 20; */
     while (i_1 < (size_t)20) {
       fe_sq(t2,(i32 const *)(t2));
       i_1 ++;
@@ -3383,7 +3383,7 @@ static void fe_pow22523(i32 out[10], i32 const z[10])
   fe_sq(t1,(i32 const *)(t1));
   {
     size_t i_2 = (size_t)1;
-    /*@ loop unroll 10; */
+    /*@ loop \eva::unroll 10; */
     while (i_2 < (size_t)10) {
       fe_sq(t1,(i32 const *)(t1));
       i_2 ++;
@@ -3393,7 +3393,7 @@ static void fe_pow22523(i32 out[10], i32 const z[10])
   fe_sq(t1,(i32 const *)(t0));
   {
     size_t i_3 = (size_t)1;
-    /*@ loop unroll 50; */
+    /*@ loop \eva::unroll 50; */
     while (i_3 < (size_t)50) {
       fe_sq(t1,(i32 const *)(t1));
       i_3 ++;
@@ -3403,7 +3403,7 @@ static void fe_pow22523(i32 out[10], i32 const z[10])
   fe_sq(t2,(i32 const *)(t1));
   {
     size_t i_4 = (size_t)1;
-    /*@ loop unroll 100; */
+    /*@ loop \eva::unroll 100; */
     while (i_4 < (size_t)100) {
       fe_sq(t2,(i32 const *)(t2));
       i_4 ++;
@@ -3413,7 +3413,7 @@ static void fe_pow22523(i32 out[10], i32 const z[10])
   fe_sq(t1,(i32 const *)(t1));
   {
     size_t i_5 = (size_t)1;
-    /*@ loop unroll 50; */
+    /*@ loop \eva::unroll 50; */
     while (i_5 < (size_t)50) {
       fe_sq(t1,(i32 const *)(t1));
       i_5 ++;
@@ -3423,7 +3423,7 @@ static void fe_pow22523(i32 out[10], i32 const z[10])
   fe_sq(t0,(i32 const *)(t0));
   {
     size_t i_6 = (size_t)1;
-    /*@ loop unroll 2; */
+    /*@ loop \eva::unroll 2; */
     while (i_6 < (size_t)2) {
       fe_sq(t0,(i32 const *)(t0));
       i_6 ++;
@@ -3441,7 +3441,7 @@ static void fe_tobytes(u8 s[32], i32 const h[10])
   i32 t[10];
   {
     size_t i = (size_t)0;
-    /*@ loop unroll 10; */
+    /*@ loop \eva::unroll 10; */
     while (i < (size_t)10) {
       t[i] = *(h + i);
       i ++;
@@ -3450,7 +3450,7 @@ static void fe_tobytes(u8 s[32], i32 const h[10])
   i32 q = (19 * t[9] + (1 << 24)) >> 25;
   {
     size_t i_0 = (size_t)0;
-    /*@ loop unroll 5; */
+    /*@ loop \eva::unroll 5; */
     while (i_0 < (size_t)5) {
       q += t[(size_t)2 * i_0];
       q >>= 26;
@@ -3662,13 +3662,13 @@ static void modL(u8 *r, i64 x[64])
 {
   {
     unsigned int i = (unsigned int)63;
-    /*@ loop unroll 32; */
+    /*@ loop \eva::unroll 32; */
     while (i >= (unsigned int)32) {
       {
         i64 carry = (i64)0;
         {
           size_t j = (size_t)(i - (unsigned int)32);
-          /*@ loop unroll 20; */
+          /*@ loop \eva::unroll 20; */
           while (j < (size_t)(i - (unsigned int)12)) {
             *(x + j) = (i64)((u64)*(x + j) + ((u64)carry - (u64)((i64)16 * *(
                                                                  x + i)) * L[
@@ -3688,7 +3688,7 @@ static void modL(u8 *r, i64 x[64])
   i64 carry_0 = (i64)0;
   {
     size_t i_0 = (size_t)0;
-    /*@ loop unroll 32; */
+    /*@ loop \eva::unroll 32; */
     while (i_0 < (size_t)32) {
       *(x + i_0) = (i64)((u64)*(x + i_0) + ((u64)carry_0 - (u64)(*(x + 31) >> 4) * L[i_0]));
       carry_0 = *(x + i_0) >> 8;
@@ -3698,7 +3698,7 @@ static void modL(u8 *r, i64 x[64])
   }
   {
     size_t i_1 = (size_t)0;
-    /*@ loop unroll 32; */
+    /*@ loop \eva::unroll 32; */
     while (i_1 < (size_t)32) {
       *(x + i_1) = (i64)((u64)*(x + i_1) - (u64)carry_0 * L[i_1]);
       i_1 ++;
@@ -3706,7 +3706,7 @@ static void modL(u8 *r, i64 x[64])
   }
   {
     size_t i_2 = (size_t)0;
-    /*@ loop unroll 32; */
+    /*@ loop \eva::unroll 32; */
     while (i_2 < (size_t)32) {
       *(x + (i_2 + (size_t)1)) += *(x + i_2) >> 8;
       *(r + i_2) = (u8)(*(x + i_2) & (long)255);
@@ -3721,7 +3721,7 @@ static void reduce(u8 r[64])
   i64 x[64];
   {
     size_t i = (size_t)0;
-    /*@ loop unroll 64; */
+    /*@ loop \eva::unroll 64; */
     while (i < (size_t)64) {
       x[i] = (i64)((u64)*(r + i));
       *(r + i) = (u8)0;
@@ -3774,7 +3774,7 @@ static int is_above_L(u8 const a[32])
   int __retres;
   {
     int i = 31;
-    /*@ loop unroll 32; */
+    /*@ loop \eva::unroll 32; */
     while (i >= 0) {
       if ((u64)*(a + i) > L[i]) {
         __retres = 1;
@@ -3985,7 +3985,7 @@ static void slide(i8 adds[258], u8 const scalar[32])
 {
   {
     size_t i = (size_t)0;
-    /*@ loop unroll 256; */
+    /*@ loop \eva::unroll 256; */
     while (i < (size_t)256) {
       {
         int tmp;
@@ -3997,7 +3997,7 @@ static void slide(i8 adds[258], u8 const scalar[32])
   }
   {
     size_t i_0 = (size_t)256;
-    /*@ loop unroll 2; */
+    /*@ loop \eva::unroll 2; */
     while (i_0 < (size_t)258) {
       *(adds + i_0) = (i8)0;
       i_0 ++;
@@ -4005,12 +4005,12 @@ static void slide(i8 adds[258], u8 const scalar[32])
   }
   {
     size_t i_1 = (size_t)0;
-    /*@ loop unroll 254; */
+    /*@ loop \eva::unroll 254; */
     while (i_1 < (size_t)254) {
       if ((int)*(adds + i_1) != 0) {
         {
           size_t j = (size_t)1;
-          /*@ loop unroll 5; */
+          /*@ loop \eva::unroll 5; */
           while (j < (size_t)5) {
             *(adds + i_1) = (i8)((int)*(adds + i_1) | ((int)*(adds + (
                                                               i_1 + j)) << j));
@@ -4845,7 +4845,7 @@ void crypto_check_init(crypto_check_ctx *ctx, uint8_t const signature[64],
 {
   {
     size_t i = (size_t)0;
-    /*@ loop unroll 64; */
+    /*@ loop \eva::unroll 64; */
     while (i < (size_t)64) {
       ctx->sig[i] = *(signature + i);
       i ++;
@@ -4853,7 +4853,7 @@ void crypto_check_init(crypto_check_ctx *ctx, uint8_t const signature[64],
   }
   {
     size_t i_0 = (size_t)0;
-    /*@ loop unroll 32; */
+    /*@ loop \eva::unroll 32; */
     while (i_0 < (size_t)32) {
       ctx->pk[i_0] = *(public_key + i_0);
       i_0 ++;
@@ -5501,7 +5501,7 @@ u64 rand64(void)
 void p_random(u8 *stream, size_t size)
 {
   size_t i = (size_t)0;
-  /*@ loop unroll 480; */
+  /*@ loop \eva::unroll 480; */
   while (i < size) {
     {
       u64 tmp;
@@ -435454,7 +435454,7 @@ int zerocmp(u8 const *p, size_t n)
   int __retres;
   {
     size_t i = (size_t)0;
-    /*@ loop unroll 32; */
+    /*@ loop \eva::unroll 32; */
     while (i < n) {
       if ((int)*(p + i) != 0) {
         __retres = -1;
@@ -435502,7 +435502,7 @@ static int test(void (*f)(vector const *, vector *), char const *name,
     out.size = out_size;
     {
       size_t i = (size_t)0;
-      /*@ loop unroll 6; */
+      /*@ loop \eva::unroll 6; */
       while (i < nb_inputs) {
         (in + i)->buf = *(vectors + (idx + i));
         (in + i)->size = *(sizes + (idx + i));
@@ -435866,18 +435866,18 @@ static int p_verify(size_t size, int (*compare)(u8 const *, u8 const *))
   int status = 0;
   {
     size_t i = (size_t)0;
-    /*@ loop unroll 2; */
+    /*@ loop \eva::unroll 2; */
     while (i < (size_t)2) {
       {
         size_t j = (size_t)0;
-        /*@ loop unroll 2; */
+        /*@ loop \eva::unroll 2; */
         while (j < (size_t)2) {
           {
             int tmp;
             int tmp_0;
             {
               size_t k = (size_t)0;
-              /*@ loop unroll 64; */
+              /*@ loop \eva::unroll 64; */
               while (k < size) {
                 a[k] = (u8)i;
                 b[k] = (u8)j;

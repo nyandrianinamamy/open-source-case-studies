@@ -596,7 +596,7 @@ void endgame(void)
   printf(" \'stop\' when you have finished.\n"); /* printf_va_8 */
   createlist(mymove,mymovelist);
   createlist(umove,umovelist);
-  /*@ dynamic_split queinit; */ ;
+  /*@ \eva::dynamic_split queinit; */ ;
   cont = 1;
   while (1) {
     {
@@ -739,10 +739,10 @@ void examboard(int color_0)
   }
   n = 0;
   i = 0;
-  /*@ loop unroll 19; */
+  /*@ loop \eva::unroll 19; */
   while (i < 19) {
     j = 0;
-    /*@ loop unroll 19; */
+    /*@ loop \eva::unroll 19; */
     while (j < 19) {
       if ((int)p[i][j] == color_0) 
         if ((int)l[i][j] == 0) {
@@ -5079,10 +5079,10 @@ int suicide(int i, int j)
     eval(mymove);
     k = 0;
     m = 0;
-    /*@ loop unroll 19; */
+    /*@ loop \eva::unroll 19; */
     while (m < 19) {
       n = 0;
-      /*@ loop unroll 19; */
+      /*@ loop \eva::unroll 19; */
       while (n < 19) {
         if ((int)p[m][n] == mymove) 
           if (! l[m][n]) k ++;

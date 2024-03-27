@@ -3195,7 +3195,7 @@ void arc4_setup(arc4_context *ctx, unsigned char const *key,
   ctx->y = 0;
   m = ctx->m;
   i = 0;
-  /*@ loop unroll 256; */
+  /*@ loop \eva::unroll 256; */
   while (i < 256) {
     *(m + i) = (unsigned char)i;
     i ++;
@@ -3203,7 +3203,7 @@ void arc4_setup(arc4_context *ctx, unsigned char const *key,
   k = (unsigned int)0;
   j = (int)k;
   i = 0;
-  /*@ loop unroll 256; */
+  /*@ loop \eva::unroll 256; */
   while (i < 256) {
     if (k >= keylen) k = (unsigned int)0;
     a = (int)*(m + i);
@@ -8610,21 +8610,21 @@ int camellia_setkey_enc(camellia_context *ctx, unsigned char const *key,
     goto return_label;
   }
   i = (size_t)0;
-  /*@ loop unroll 32; */
+  /*@ loop \eva::unroll 32; */
   while (i < keysize / (unsigned int)8) {
     t[i] = *(key + i);
     i ++;
   }
   if (keysize == (unsigned int)192) {
     i = (size_t)0;
-    /*@ loop unroll 8; */
+    /*@ loop \eva::unroll 8; */
     while (i < (size_t)8) {
       t[(size_t)24 + i] = (unsigned char)(~ ((int)t[(size_t)16 + i]));
       i ++;
     }
   }
   i = (size_t)0;
-  /*@ loop unroll 6; */
+  /*@ loop \eva::unroll 6; */
   while (i < (size_t)6) {
     SIGMA[i][0] = (uint32_t)(((((unsigned long)SIGMA_CHARS[i][0] << 24) | (
                                (unsigned long)SIGMA_CHARS[i][0 + 1] << 16)) | (
@@ -8638,7 +8638,7 @@ int camellia_setkey_enc(camellia_context *ctx, unsigned char const *key,
   }
   memset((void *)(KC),0,sizeof(KC));
   i = (size_t)0;
-  /*@ loop unroll 8; */
+  /*@ loop \eva::unroll 8; */
   while (i < (size_t)8) {
     KC[i] = (uint32_t)(((((unsigned long)t[i * (size_t)4] << 24) | ((unsigned long)t[
                                                                     i * (size_t)4 + (size_t)1] << 16)) | (
@@ -8647,7 +8647,7 @@ int camellia_setkey_enc(camellia_context *ctx, unsigned char const *key,
     i ++;
   }
   i = (size_t)0;
-  /*@ loop unroll 4; */
+  /*@ loop \eva::unroll 4; */
   while (i < (size_t)4) {
     KC[(size_t)8 + i] = KC[i] ^ KC[(size_t)4 + i];
     i ++;
@@ -8657,7 +8657,7 @@ int camellia_setkey_enc(camellia_context *ctx, unsigned char const *key,
   camellia_feistel((uint32_t const *)(& KC[10]),(uint32_t const *)(SIGMA[1]),
                    & KC[8]);
   i = (size_t)0;
-  /*@ loop unroll 4; */
+  /*@ loop \eva::unroll 4; */
   while (i < (size_t)4) {
     KC[(size_t)8 + i] ^= KC[i];
     i ++;
@@ -8668,7 +8668,7 @@ int camellia_setkey_enc(camellia_context *ctx, unsigned char const *key,
                    & KC[8]);
   if (keysize > (unsigned int)128) {
     i = (size_t)0;
-    /*@ loop unroll 4; */
+    /*@ loop \eva::unroll 4; */
     while (i < (size_t)4) {
       KC[(size_t)12 + i] = KC[(size_t)4 + i] ^ KC[(size_t)8 + i];
       i ++;
@@ -8683,7 +8683,7 @@ int camellia_setkey_enc(camellia_context *ctx, unsigned char const *key,
   TK[2] = KC[0 * 4 + 2];
   TK[3] = KC[0 * 4 + 3];
   i = (size_t)1;
-  /*@ loop unroll 4; */
+  /*@ loop \eva::unroll 4; */
   while (i <= (size_t)4) {
     if (shifts[idx][0][i - (size_t)1]) {
       *(& TK[i * (size_t)4] + 0) = (TK[0] << ((size_t)15 * i) % (unsigned int)32) ^ (
@@ -8698,7 +8698,7 @@ int camellia_setkey_enc(camellia_context *ctx, unsigned char const *key,
     i ++;
   }
   i = (size_t)0;
-  /*@ loop unroll 20; */
+  /*@ loop \eva::unroll 20; */
   while (i < (size_t)20) {
     if ((int)indexes[idx][0][i] != -1) *(RK + indexes[idx][0][i]) = TK[i];
     i ++;
@@ -8709,7 +8709,7 @@ int camellia_setkey_enc(camellia_context *ctx, unsigned char const *key,
     TK[2] = KC[1 * 4 + 2];
     TK[3] = KC[1 * 4 + 3];
     i = (size_t)1;
-    /*@ loop unroll 4; */
+    /*@ loop \eva::unroll 4; */
     while (i <= (size_t)4) {
       if (shifts[idx][1][i - (size_t)1]) {
         *(& TK[i * (size_t)4] + 0) = (TK[0] << ((size_t)15 * i) % (unsigned int)32) ^ (
@@ -8724,7 +8724,7 @@ int camellia_setkey_enc(camellia_context *ctx, unsigned char const *key,
       i ++;
     }
     i = (size_t)0;
-    /*@ loop unroll 20; */
+    /*@ loop \eva::unroll 20; */
     while (i < (size_t)20) {
       if ((int)indexes[idx][1][i] != -1) *(RK + indexes[idx][1][i]) = TK[i];
       i ++;
@@ -8735,7 +8735,7 @@ int camellia_setkey_enc(camellia_context *ctx, unsigned char const *key,
   TK[2] = KC[2 * 4 + 2];
   TK[3] = KC[2 * 4 + 3];
   i = (size_t)1;
-  /*@ loop unroll 4; */
+  /*@ loop \eva::unroll 4; */
   while (i <= (size_t)4) {
     if (shifts[idx][2][i - (size_t)1]) {
       *(& TK[i * (size_t)4] + 0) = (TK[0] << ((size_t)15 * i) % (unsigned int)32) ^ (
@@ -8750,7 +8750,7 @@ int camellia_setkey_enc(camellia_context *ctx, unsigned char const *key,
     i ++;
   }
   i = (size_t)0;
-  /*@ loop unroll 20; */
+  /*@ loop \eva::unroll 20; */
   while (i < (size_t)20) {
     if ((int)indexes[idx][2][i] != -1) *(RK + indexes[idx][2][i]) = TK[i];
     i ++;
@@ -8761,7 +8761,7 @@ int camellia_setkey_enc(camellia_context *ctx, unsigned char const *key,
     TK[2] = KC[3 * 4 + 2];
     TK[3] = KC[3 * 4 + 3];
     i = (size_t)1;
-    /*@ loop unroll 4; */
+    /*@ loop \eva::unroll 4; */
     while (i <= (size_t)4) {
       if (shifts[idx][3][i - (size_t)1]) {
         *(& TK[i * (size_t)4] + 0) = (TK[0] << ((size_t)15 * i) % (unsigned int)32) ^ (
@@ -8776,14 +8776,14 @@ int camellia_setkey_enc(camellia_context *ctx, unsigned char const *key,
       i ++;
     }
     i = (size_t)0;
-    /*@ loop unroll 20; */
+    /*@ loop \eva::unroll 20; */
     while (i < (size_t)20) {
       if ((int)indexes[idx][3][i] != -1) *(RK + indexes[idx][3][i]) = TK[i];
       i ++;
     }
   }
   i = (size_t)0;
-  /*@ loop unroll 20; */
+  /*@ loop \eva::unroll 20; */
   while (i < (size_t)20) {
     if ((int)transposes[idx][i] != -1) *(RK + ((size_t)(32 + 12 * idx) + i)) = *(
                                        RK + transposes[idx][i]);
@@ -8858,7 +8858,7 @@ int camellia_setkey_dec(camellia_context *ctx, unsigned char const *key,
   *tmp_5 = *tmp_6;
   i = (size_t)(22 + 8 * idx);
   SK -= 6;
-  /*@ loop unroll 30; */
+  /*@ loop \eva::unroll 30; */
   while (i > (size_t)0) {
     {
       uint32_t *tmp_7;
@@ -20974,7 +20974,7 @@ int block_cipher_df(unsigned char *output, unsigned char const *data,
   *(p + data_len) = (unsigned char)0x80;
   buf_len = (int)(((size_t)(16 + 8) + data_len) + (size_t)1);
   i = 0;
-  /*@ loop unroll 32; */
+  /*@ loop \eva::unroll 32; */
   while (i < 32) {
     key[i] = (unsigned char)i;
     i ++;
@@ -20982,14 +20982,14 @@ int block_cipher_df(unsigned char *output, unsigned char const *data,
   aes_setkey_enc(& aes_ctx,(unsigned char const *)(key),
                  (unsigned int)(32 * 8));
   j = 0;
-  /*@ loop unroll 3; */
+  /*@ loop \eva::unroll 3; */
   while (j < 32 + 16) {
     p = buf;
     memset((void *)(chain),0,(size_t)16);
     use_len = buf_len;
     while (use_len > 0) {
       i = 0;
-      /*@ loop unroll 16; */
+      /*@ loop \eva::unroll 16; */
       while (i < 16) {
         chain[i] = (unsigned char)((int)chain[i] ^ (int)*(p + i));
         i ++;
@@ -21007,7 +21007,7 @@ int block_cipher_df(unsigned char *output, unsigned char const *data,
   iv = & tmp[32];
   p = output;
   j = 0;
-  /*@ loop unroll 3; */
+  /*@ loop \eva::unroll 3; */
   while (j < 32 + 16) {
     aes_crypt_ecb(& aes_ctx,1,(unsigned char const *)iv,iv);
     memcpy((void *)p,(void const *)iv,(size_t)16);
@@ -21029,10 +21029,10 @@ int ctr_drbg_update_internal(ctr_drbg_context *ctx,
   unsigned char *p = tmp;
   memset((void *)(tmp),0,(size_t)(32 + 16));
   j = 0;
-  /*@ loop unroll 3; */
+  /*@ loop \eva::unroll 3; */
   while (j < 32 + 16) {
     i = 16 - 1;
-    /*@ loop unroll 16; */
+    /*@ loop \eva::unroll 16; */
     while (1) {
       int tmp_0;
       ctx->counter[i] = (unsigned char)((int)ctx->counter[i] + 1);
@@ -21050,7 +21050,7 @@ int ctr_drbg_update_internal(ctr_drbg_context *ctx,
     j += 16;
   }
   i = 0;
-  /*@ loop unroll 48; */
+  /*@ loop \eva::unroll 48; */
   while (i < 32 + 16) {
     tmp[i] = (unsigned char)((int)tmp[i] ^ (int)*(data + i));
     i ++;
@@ -23165,7 +23165,7 @@ static void des3_set3key(unsigned long esk[96], unsigned long dsk[96],
   des_setkey(dsk + 32,key + 8);
   des_setkey(esk + 64,key + 16);
   i = 0;
-  /*@ loop unroll 16; */
+  /*@ loop \eva::unroll 16; */
   while (i < 32) {
     *(dsk + i) = *(esk + (94 - i));
     *(dsk + (i + 1)) = *(esk + (95 - i));
@@ -24429,7 +24429,7 @@ int entropy_gather(entropy_context *ctx)
     goto return_label;
   }
   i = 0;
-  /*@ loop unroll 2; */
+  /*@ loop \eva::unroll 2; */
   while (i < ctx->source_count) {
     olen = (size_t)0;
     ret = (*(ctx->source[i].f_source))(ctx->source[i].p_source,buf,
@@ -24478,7 +24478,7 @@ int entropy_func(void *data, unsigned char *output, size_t len)
       }
       reached = 0;
       i = 0;
-      /*@ loop unroll 2; */
+      /*@ loop \eva::unroll 2; */
       while (i < ctx->source_count) {
         if (ctx->source[i].size >= ctx->source[i].threshold) reached ++;
         i ++;
@@ -24493,7 +24493,7 @@ int entropy_func(void *data, unsigned char *output, size_t len)
   sha4_starts(& ctx->accumulator,0);
   sha4_update(& ctx->accumulator,(unsigned char const *)(buf),(size_t)64);
   i = 0;
-  /*@ loop unroll 2; */
+  /*@ loop \eva::unroll 2; */
   while (i < ctx->source_count) {
     ctx->source[i].size = (size_t)0;
     i ++;
@@ -25657,7 +25657,7 @@ void md5_hmac_starts(md5_context *ctx, unsigned char const *key,
   memset((void *)(ctx->ipad),0x36,(size_t)64);
   memset((void *)(ctx->opad),0x5C,(size_t)64);
   i = (size_t)0;
-  /*@ loop unroll 64; */
+  /*@ loop \eva::unroll 64; */
   while (i < keylen) {
     ctx->ipad[i] = (unsigned char)((int)ctx->ipad[i] ^ (int)*(key + i));
     ctx->opad[i] = (unsigned char)((int)ctx->opad[i] ^ (int)*(key + i));
@@ -27315,7 +27315,7 @@ int net_bind(int *fd, char const *bind_ip, int port)
     memset((void *)(c),0,sizeof(c));
     sscanf(bind_ip,"%d.%d.%d.%d",c,& c[1],& c[2],& c[3]); /* sscanf_va_1 */
     n = 0;
-    /*@ loop unroll 4; */
+    /*@ loop \eva::unroll 4; */
     while (n < 4) {
       if (c[n] < 0) break;
       else 
@@ -30395,7 +30395,7 @@ void sha1_hmac_starts(sha1_context *ctx, unsigned char const *key,
   memset((void *)(ctx->ipad),0x36,(size_t)64);
   memset((void *)(ctx->opad),0x5C,(size_t)64);
   i = (size_t)0;
-  /*@ loop unroll 64; */
+  /*@ loop \eva::unroll 64; */
   while (i < keylen) {
     ctx->ipad[i] = (unsigned char)((int)ctx->ipad[i] ^ (int)*(key + i));
     ctx->opad[i] = (unsigned char)((int)ctx->opad[i] ^ (int)*(key + i));
@@ -37167,7 +37167,7 @@ static int ssl_parse_client_hello(ssl_context *ssl)
     memcpy((void *)(& ssl->randbytes[32] - chal_len),(void const *)p,
            chal_len);
     i = (unsigned int)0;
-    /*@ loop unroll 13; */
+    /*@ loop \eva::unroll 13; */
     while (*(ssl->ciphersuites + i) != 0) {
       j = (unsigned int)0;
       p = buf + 6;
@@ -37262,11 +37262,11 @@ static int ssl_parse_client_hello(ssl_context *ssl)
                 }
       }
     i = (unsigned int)0;
-    /*@ loop unroll 13; */
+    /*@ loop \eva::unroll 13; */
     while (*(ssl->ciphersuites + i) != 0) {
       j = (unsigned int)0;
       p = (buf + 41) + sess_len;
-      /*@ loop unroll 128; */
+      /*@ loop \eva::unroll 128; */
       while (j < ciph_len) {
         if ((int)*(p + 0) == 0) 
           if ((int)*(p + 1) == *(ssl->ciphersuites + i)) goto have_ciphersuite;
@@ -37773,7 +37773,7 @@ static int tls1_prf(unsigned char *secret, size_t slen, char *label,
   md5_hmac((unsigned char const *)S1,hs,(unsigned char const *)(& tmp[20]),
            nb,& tmp[4]);
   i = (size_t)0;
-  /*@ loop unroll 16; */
+  /*@ loop \eva::unroll 16; */
   while (i < dlen) {
     md5_hmac((unsigned char const *)S1,hs,(unsigned char const *)(& tmp[4]),
              (size_t)16 + nb,h_i);
@@ -37782,7 +37782,7 @@ static int tls1_prf(unsigned char *secret, size_t slen, char *label,
     if (i + (size_t)16 > dlen) k = dlen % (unsigned int)16;
     else k = (size_t)16;
     j = (size_t)0;
-    /*@ loop unroll 16; */
+    /*@ loop \eva::unroll 16; */
     while (j < k) {
       *(dstbuf + (i + j)) = h_i[j];
       j ++;
@@ -37792,7 +37792,7 @@ static int tls1_prf(unsigned char *secret, size_t slen, char *label,
   sha1_hmac((unsigned char const *)S2,hs,(unsigned char const *)(& tmp[20]),
             nb,tmp);
   i = (size_t)0;
-  /*@ loop unroll 16; */
+  /*@ loop \eva::unroll 16; */
   while (i < dlen) {
     sha1_hmac((unsigned char const *)S2,hs,(unsigned char const *)(tmp),
               (size_t)20 + nb,h_i);
@@ -37801,7 +37801,7 @@ static int tls1_prf(unsigned char *secret, size_t slen, char *label,
     if (i + (size_t)20 > dlen) k = dlen % (unsigned int)20;
     else k = (size_t)20;
     j = (size_t)0;
-    /*@ loop unroll 20; */
+    /*@ loop \eva::unroll 20; */
     while (j < k) {
       *(dstbuf + (i + j)) = (unsigned char)((int)*(dstbuf + (i + j)) ^ (int)h_i[j]);
       j ++;
@@ -37830,7 +37830,7 @@ int ssl_derive_keys(ssl_context *ssl)
     size_t len = ssl->pmslen;
     if (ssl->minor_ver == 0) {
       i = 0;
-      /*@ loop unroll 3; */
+      /*@ loop \eva::unroll 3; */
       while (i < 3) {
         memset((void *)(padding),'A' + i,(size_t)(1 + i));
         sha1_starts(& sha1_0);
@@ -37857,7 +37857,7 @@ int ssl_derive_keys(ssl_context *ssl)
   memset((void *)(tmp),0,sizeof(tmp));
   if (ssl->minor_ver == 0) {
     i = 0;
-    /*@ loop unroll 16; */
+    /*@ loop \eva::unroll 16; */
     while (i < 16) {
       memset((void *)(padding),'A' + i,(size_t)(1 + i));
       sha1_starts(& sha1_0);
@@ -38109,7 +38109,7 @@ static int ssl_encrypt_buf(ssl_context *ssl)
   }
   ssl->out_msglen += ssl->maclen;
   i = (size_t)8;
-  /*@ loop unroll 8; */
+  /*@ loop \eva::unroll 8; */
   while (i > (size_t)0) {
     *(ssl->out_ctr + (i - (size_t)1)) = (unsigned char)((int)*(ssl->out_ctr + (
                                                                i - (size_t)1)) + 1);
@@ -38127,7 +38127,7 @@ static int ssl_encrypt_buf(ssl_context *ssl)
     padlen = ssl->ivlen - (ssl->out_msglen + (size_t)1) % ssl->ivlen;
     if (padlen == ssl->ivlen) padlen = (size_t)0;
     i = (size_t)0;
-    /*@ loop unroll 17; */
+    /*@ loop \eva::unroll 17; */
     while (i <= padlen) {
       *(ssl->out_msg + (ssl->out_msglen + i)) = (unsigned char)padlen;
       i ++;
@@ -38237,7 +38237,7 @@ static int ssl_decrypt_buf(ssl_context *ssl)
       dec_msglen -= ssl->ivlen;
       ssl->in_msglen -= ssl->ivlen;
       i = (size_t)0;
-      /*@ loop unroll 16; */
+      /*@ loop \eva::unroll 16; */
       while (i < ssl->ivlen) {
         ssl->iv_dec[i] = *(ssl->in_msg + i);
         i ++;
@@ -38297,13 +38297,13 @@ static int ssl_decrypt_buf(ssl_context *ssl)
       size_t fake_pad_count = (size_t)0;
       size_t padding_idx = (ssl->in_msglen - padlen) - (size_t)1;
       i = (size_t)1;
-      /*@ loop unroll 257; */
+      /*@ loop \eva::unroll 257; */
       while (i <= padlen) {
         pad_count += (size_t)((size_t)*(ssl->in_msg + (padding_idx + i)) == 
                               padlen - (size_t)1);
         i ++;
       }
-      /*@ loop unroll 257; */
+      /*@ loop \eva::unroll 257; */
       while (i <= (size_t)256) {
         fake_pad_count += (size_t)((size_t)*(ssl->in_msg + (padding_idx + i)) == 
                                    padlen - (size_t)1);
@@ -38339,7 +38339,7 @@ static int ssl_decrypt_buf(ssl_context *ssl)
                       ssl->in_msglen + (size_t)13);
       md5_hmac_finish(& ctx,ssl->in_msg + ssl->in_msglen);
       j = 0;
-      /*@ loop unroll 255; */
+      /*@ loop \eva::unroll 255; */
       while (j < extra_run) {
         md5_process(& ctx,(unsigned char const *)ssl->in_msg);
         j ++;
@@ -38354,7 +38354,7 @@ static int ssl_decrypt_buf(ssl_context *ssl)
                          ssl->in_msglen + (size_t)13);
         sha1_hmac_finish(& ctx_0,ssl->in_msg + ssl->in_msglen);
         j = 0;
-        /*@ loop unroll 255; */
+        /*@ loop \eva::unroll 255; */
         while (j < extra_run) {
           sha1_process(& ctx_0,(unsigned char const *)ssl->in_msg);
           j ++;
@@ -38382,7 +38382,7 @@ static int ssl_decrypt_buf(ssl_context *ssl)
   }
   else ssl->nb_zero = 0;
   i = (size_t)8;
-  /*@ loop unroll 8; */
+  /*@ loop \eva::unroll 8; */
   while (i > (size_t)0) {
     *(ssl->in_ctr + (i - (size_t)1)) = (unsigned char)((int)*(ssl->in_ctr + (
                                                               i - (size_t)1)) + 1);

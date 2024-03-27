@@ -214,7 +214,7 @@ void perm_add(permutations_t p, size_t num)
       size_t cnt = (size_t)1;
       size_t pos = p->input_len - (size_t)1;
       *(p->cur_perm + pos) = (unsigned short)((int)*(p->cur_perm + pos) + 1);
-      /*@ dynamic_split pos > 0; */ ;
+      /*@ \eva::dynamic_split pos > 0; */ ;
       while ((int)*(p->cur_perm + pos) == (int)p->alphabet_len) {
         size_t tmp;
         cnt ++;
@@ -222,7 +222,7 @@ void perm_add(permutations_t p, size_t num)
         pos --;
         *(p->cur_perm + tmp) = (unsigned short)0;
         *(p->cur_perm + pos) = (unsigned short)((int)*(p->cur_perm + pos) + 1);
-        /*@ split *(p->cur_perm + pos) > p->alphabet_len; */ ;
+        /*@ \eva::split *(p->cur_perm + pos) > p->alphabet_len; */ ;
         if (pos == (size_t)0) 
           if ((int)*(p->cur_perm + pos) == (int)p->alphabet_len) {
             *(p->cur_perm + pos) = (unsigned short)0;

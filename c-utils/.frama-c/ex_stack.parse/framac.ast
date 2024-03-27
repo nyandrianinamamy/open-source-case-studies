@@ -239,7 +239,7 @@ int eva_main(void)
   char *argv[2] = {argv0, (char *)0};
   {
     int i = 0;
-    /*@ loop unroll 2; */
+    /*@ loop \eva::unroll 2; */
     while (i < argc) {
       Frama_C_make_unknown(argv[i],(size_t)255);
       *(argv[i] + 255) = (char)0;

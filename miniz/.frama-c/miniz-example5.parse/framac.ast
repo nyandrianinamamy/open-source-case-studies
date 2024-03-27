@@ -265,7 +265,7 @@ int eva_main(void)
   char *argv[6] = {argv0, argv1, argv2, argv3, argv4, (char *)0};
   {
     int i = 0;
-    /*@ loop unroll 5; */
+    /*@ loop \eva::unroll 5; */
     while (i < 5) {
       Frama_C_make_unknown(argv[i],(size_t)255);
       *(argv[i] + 255) = (char)0;
