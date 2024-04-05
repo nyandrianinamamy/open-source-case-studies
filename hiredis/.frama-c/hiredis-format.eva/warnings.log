@@ -732,7 +732,7 @@ test.c:256:[eva:locals-escaping] warning: locals {__va_arg0_152, __va_arg1_154, 
 test.c:256:[eva:locals-escaping] warning: locals {__va_arg0_152, __va_arg1_154, __va_arg2_156, __va_args_158} escaping the scope of a block of test_format_commands through __malloc_redisvFormatCommand_l476_18
 [eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
   sds.c:523: assigns clause on addresses
-    (read in 163 statements, propagated through 112 statements)
+    (read in 168 statements, propagated through 114 statements)
     garbled mix of &{__va_arg0_80; __va_arg1_82; __va_args_84; __va_arg0_86;
                      __va_arg1_88; __va_args_90; __va_arg0_92; __va_arg1_94;
                      __va_args_96; __va_arg0_98; __va_arg1_100;
@@ -861,16 +861,8 @@ test.c:256:[eva:locals-escaping] warning: locals {__va_arg0_152, __va_arg1_154, 
                      __malloc_w_sdsMakeRoomFor_l230_48;
                      __realloc_w_sdsMakeRoomFor_l221_50;
                      __malloc_w_sdsMakeRoomFor_l230_49;
-                     __malloc_w_sdsMakeRoomFor_l230_50}
-  sds.c:208: arithmetic operation on addresses
-    (read in 111 statements, propagated through 83 statements)
-    garbled mix of &{__va_arg0_152; __va_arg1_154; __va_arg2_156;
-                     __va_args_158; "foo"; __malloc_sdsnewlen_l91_37;
-                     __realloc_w_sdsMakeRoomFor_l221_48;
-                     __malloc_w_sdsnewlen_l91_38;
-                     __realloc_w_sdsMakeRoomFor_l221_49;
-                     __malloc_w_sdsMakeRoomFor_l230_48;
-                     __realloc_w_sdsMakeRoomFor_l221_50;
-                     __malloc_w_sdsMakeRoomFor_l230_49;
                      __malloc_w_sdsMakeRoomFor_l230_50;
                      __malloc_redisvFormatCommand_l476_18}
+  sds.c:208: arithmetic operation on addresses
+    (read in 12 statements, propagated through 9 statements)
+    garbled mix of &{"foo"}

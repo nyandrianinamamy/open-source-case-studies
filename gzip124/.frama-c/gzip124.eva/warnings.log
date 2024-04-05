@@ -27,10 +27,7 @@ gzip.c:817:[eva:locals-escaping] warning: locals {attr} escaping the scope of zi
                      __malloc_w_huft_build_l403_11;
                      __malloc_w_huft_build_l403_12;
                      __malloc_w_huft_build_l403_13}
-  util.c:186: assigns clause on addresses
-    (read in 59 statements, propagated through 55 statements)
-    garbled mix of &{argv0; ifname; ofname}
-  inflate.c:446: misaligned read of addresses
+  inflate.c:423: misaligned read of addresses
     (read in 43 statements, propagated through 30 statements)
     garbled mix of &{__malloc_w_huft_build_l403;
                      __malloc_w_huft_build_l403_2;
@@ -38,6 +35,9 @@ gzip.c:817:[eva:locals-escaping] warning: locals {attr} escaping the scope of zi
                      __malloc_w_huft_build_l403_7;
                      __malloc_w_huft_build_l403_9;
                      __malloc_w_huft_build_l403_12}
+  util.c:186: assigns clause on addresses
+    (read in 11 statements, propagated through 8 statements)
+    garbled mix of &{argv0; ifname; ofname}
   gzip.c:1487: assigns clause on addresses
     (read in 3 statements, propagated through 2 statements)
     garbled mix of &{ofname}
