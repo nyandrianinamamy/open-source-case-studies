@@ -82,6 +82,7 @@ TARGETS=\
   monocypher \
   papabench \
   polarssl \
+  powerwindow \
   qlz \
   safestringlib \
   semver \
