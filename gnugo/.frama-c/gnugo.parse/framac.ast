@@ -3,6 +3,7 @@
 #include "errno.h"
 #include "signal.h"
 #include "stdarg.h"
+#include "stddef.h"
 #include "stdint.h"
 #include "stdio.h"
 #include "stdlib.h"
@@ -2278,7 +2279,8 @@ int main(int argc, char **argv)
       i ++;
     }
     fscanf(fp,"%d %d %d ",& mymove,& mk,& uk); /* fscanf_va_2 */
-    /*@ assert unsanitized_input: consider_ok: \subset(mymove, 1 .. 2); */ ;
+    /*@ assert unsanitized_input: consider_ok: \subset(mymove, (1 .. 2)); */
+    ;
     i = 0;
     while (i < 9) {
       fscanf(fp,"%d ",& opn[i]); /* fscanf_va_3 */

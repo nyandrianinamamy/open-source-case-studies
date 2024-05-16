@@ -6,7 +6,9 @@
  */
 typedef char u_char;
 typedef int u_int;
+#ifndef u_int32_t
 typedef int u_int32_t;
+#endif
 
 /* Buffer being overflowed has size (MAXDATA*2); I believe this is
  * because its a buffer of bytes, and two bytes keep being written at

@@ -1,12 +1,6 @@
-util.c:186:[eva:garbled-mix:assigns] warning: The specification of function strrchr
-has generated a garbled mix of addresses for assigns clause \result.
 util.c:311:[eva] warning: calloc out of bounds: assert(nmemb * size <= SIZE_MAX)
 FRAMAC_SHARE/libc/signal.h:129:[eva] warning: no 'assigns \result \from ...' clause specified for function signal
 gzip.c:675:[eva:locals-escaping] warning: locals {attr} escaping the scope of zip through file_type
-gzip.c:1487:[eva:garbled-mix:assigns] warning: The specification of function strrchr
-has generated a garbled mix of addresses for assigns clause \result.
-gzip.c:1503:[eva:garbled-mix:assigns] warning: The specification of function strrchr
-has generated a garbled mix of addresses for assigns clause \result.
 gzip.c:817:[eva:locals-escaping] warning: locals {attr} escaping the scope of zip through file_type
 [eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
   inflate.c:446: imprecise merge of addresses
@@ -35,15 +29,6 @@ gzip.c:817:[eva:locals-escaping] warning: locals {attr} escaping the scope of zi
                      __malloc_w_huft_build_l403_7;
                      __malloc_w_huft_build_l403_9;
                      __malloc_w_huft_build_l403_12}
-  util.c:186: assigns clause on addresses
-    (read in 11 statements, propagated through 8 statements)
-    garbled mix of &{argv0; ifname; ofname}
-  gzip.c:1487: assigns clause on addresses
-    (read in 3 statements, propagated through 2 statements)
-    garbled mix of &{ofname}
-  gzip.c:1503: assigns clause on addresses
-    (read in 2 statements, propagated through 1 statement)
-    garbled mix of &{ofname}
   inflate.c:382: imprecise merge of addresses
     (read in 1 statement, propagated through 1 statement)
     garbled mix of &{__malloc_w_huft_build_l403;
