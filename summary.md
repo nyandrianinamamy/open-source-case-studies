@@ -37,7 +37,7 @@
 |stmr|Martin Porter's Stemming algorithm as a C library|https://github.com/wooorm/stmr.c|1|3|497|HAS_DYN_ALLOC, HAS_RECURSION, NO_FLOAT|
 |tsvc|Test suite for vectorizing compilers|http://polaris.cs.uiuc.edu/~maleki1/TSVC.tar.gz|1|2|4041|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|
 |tweetnacl-usable|Cryptographic library in 100 tweets, in a more usable form|https://twitter.com/TweetNaCl|1|5|1072|HAS_DYN_ALLOC, NO_RECURSION, NO_FLOAT|
-|verisec|Buffer overflow benchmark|https://security.csl.toronto.edu/wp-content/uploads/2018/06/Verisec-ASE2007.pdf|275|320|14559|HAS_DYN_ALLOC, NO_RECURSION, NO_FLOAT|
+|verisec|Buffer overflow benchmark|https://security.csl.toronto.edu/wp-content/uploads/2018/06/Verisec-ASE2007.pdf|275|320|14561|HAS_DYN_ALLOC, NO_RECURSION, NO_FLOAT|
 |x509-parser|RTE-free X.509 parser|https://github.com/ANSSI-FR/x509-parser|1|3|5057|NO_DYN_ALLOC, NO_RECURSION, NO_FLOAT|
 
 Note: the 'Tags' column refers to code features that may be found in the code.

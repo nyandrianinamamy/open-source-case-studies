@@ -5,12 +5,12 @@
 #include "errno.h"
 #include "stdarg.h"
 #include "stddef.h"
+#include "stdint.h"
 #include "stdio.h"
 #include "string.h"
 #include "strings.h"
 typedef char u_char;
 typedef int u_int;
-typedef int u_int32_t;
 int dn_expand(u_char const *msg, u_char const *eomorig,
               u_char const *comp_dn, char *exp_dn, int length);
 
@@ -26,7 +26,7 @@ static int rrextract(u_char *msg, int msglen, u_char *rrp, u_char *dname,
   u_int type;
   u_int dlen;
   int n;
-  u_int32_t ttl;
+  uint32_t ttl;
   u_char data[2 * 2];
   int tmp_3;
   int tmp_4;
@@ -66,10 +66,10 @@ static int rrextract(u_char *msg, int msglen, u_char *rrp, u_char *dname,
     long tmp_1;
     tmp_1 = Frama_C_long_interval(-9223372036854775807L - 1L,
                                   9223372036854775807L);
-    ttl = (u_int32_t)tmp_1;
+    ttl = (uint32_t)tmp_1;
     cp += 4;
   }
-  if (ttl > 101) ttl = 0;
+  if (ttl > (uint32_t)101) ttl = (uint32_t)0;
   {
     short tmp_2;
     tmp_2 = Frama_C_short_interval((short)(-32767 - 1),(short)32767);
