@@ -2412,7 +2412,6 @@ void HandleAcquisition(void)
                 unsigned char tmp;
                 _LOR: tmp = Event_Flag();
                 if ((int)tmp == 1) {
-                  /*@ \eva::split event_queue_length; */ ;
                   event = GetFreeRecord();
                   event->SU_number = (unsigned char)((int)trigger_unit & 0xFF);
                   memcpy((void *)(& event->plasma_1_plus),

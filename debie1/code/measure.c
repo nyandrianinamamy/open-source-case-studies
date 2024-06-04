@@ -405,7 +405,6 @@ void HandleAcquisition (void)
       if ((state == self_test_e || state == acquisition_e) 
            && (EVENT_FLAG == ACCEPT_EVENT))
       {
-         /*@ split event_queue_length; */
          event = GetFreeRecord();
          /* Get pointer to the new event record. */
 
