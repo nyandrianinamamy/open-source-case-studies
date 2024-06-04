@@ -4387,9 +4387,6 @@ double pp_atan2(double x, double y)
   return_label: return __retres;
 }
 
-/*@ requires \is_finite(x);
-    assigns \result;
-    assigns \result \from x; */
 double pp_sin(double x)
 {
   double xi;
