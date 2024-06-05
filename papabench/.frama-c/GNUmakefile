@@ -32,7 +32,7 @@ FCFLAGS     += \
 ## Eva-specific flags
 EVAFLAGS    += \
   -eva-warn-key builtins:missing-spec=abort \
-  -eva-slevel 1 \
+  -eva-precision 1 \
 
 ## GUI-only flags
 FCGUIFLAGS += \
