@@ -7,19 +7,18 @@ stack: memcpy :: spng.c:948 <-
        spng_get_ihdr :: examples/example.c:71 <-
        main
 [eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
+  spng.c:1366: imprecise merge of addresses
+    (read in 29 statements, propagated through 3 statements)
+    garbled mix of &{__malloc_w_spng__malloc_l220_0;
+                     __malloc_w_spng__malloc_l220_2;
+                     __malloc_w_spng__malloc_l220_4}
+  spng.c:1375: imprecise merge of addresses
+    (read in 18 statements, propagated through 3 statements)
+    garbled mix of &{__malloc_w_spng__malloc_l220_0;
+                     __malloc_w_spng__malloc_l220_2;
+                     __malloc_w_spng__malloc_l220_4}
   spng.c:948: imprecise merge of addresses
     (read in 3 statements, propagated through 1 statement)
     garbled mix of &{__malloc_w_spng__malloc_l220_0;
                      __malloc_w_spng__malloc_l220_2;
                      __malloc_w_spng__malloc_l220_4}
-  spng.c:950: misaligned read of addresses
-    (read in 2 statements, propagated through 0 statements)
-    garbled mix of &{__malloc_w_spng__malloc_l220_0;
-                     __malloc_w_spng__malloc_l220_2;
-                     __malloc_w_spng__malloc_l220_4}
-  spng.c:1406: imprecise merge of addresses
-    (read in 1 statement, propagated through 0 statements)
-    garbled mix of &{__malloc_w_spng__malloc_l220_0}
-  spng.c:1686: imprecise merge of addresses
-    (read in 1 statement, propagated through 0 statements)
-    garbled mix of &{__malloc_w_spng__malloc_l220_0}
