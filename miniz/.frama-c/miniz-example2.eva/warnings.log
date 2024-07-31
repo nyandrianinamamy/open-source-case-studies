@@ -2,30 +2,6 @@ miniz_zip.c:2919:[eva:garbled-mix:assigns] warning: The specification of functio
 has generated a garbled mix of addresses for assigns clause *stream.
 miniz_zip.c:3377:[eva:locals-escaping] warning: locals {in_buf_size} escaping the scope of tdefl_compress_buffer through __malloc_miniz_def_alloc_func_l169_1
 miniz_zip.c:3384:[eva:locals-escaping] warning: locals {state} escaping the scope of a block of mz_zip_writer_add_mem_ex_v2 through __malloc_miniz_def_alloc_func_l169_1
-miniz_tdef.c:1043:[eva:garbled-mix:write] warning: Assigning imprecise value to *(d->m_pLZ_flags)
-because of misaligned read of addresses.
-stack: tdefl_record_literal :: miniz_tdef.c:1171 <-
-       tdefl_compress_normal :: miniz_tdef.c:1293 <-
-       tdefl_compress :: miniz_tdef.c:1319 <-
-       tdefl_compress_buffer :: miniz_zip.c:3377 <-
-       mz_zip_writer_add_mem_ex_v2 :: miniz_zip.c:3148 <-
-       mz_zip_writer_add_mem_ex :: miniz_zip.c:4428 <-
-       mz_zip_add_mem_to_archive_file_in_place_v2 :: miniz_zip.c:4365 <-
-       mz_zip_add_mem_to_archive_file_in_place :: examples/example2.c:64 <-
-       main :: stubs.c:21 <-
-       eva_main
-miniz_tdef.c:1067:[eva:garbled-mix:write] warning: Assigning imprecise value to *(d->m_pLZ_flags)
-because of misaligned read of addresses.
-stack: tdefl_record_match :: miniz_tdef.c:1187 <-
-       tdefl_compress_normal :: miniz_tdef.c:1293 <-
-       tdefl_compress :: miniz_tdef.c:1319 <-
-       tdefl_compress_buffer :: miniz_zip.c:3377 <-
-       mz_zip_writer_add_mem_ex_v2 :: miniz_zip.c:3148 <-
-       mz_zip_writer_add_mem_ex :: miniz_zip.c:4428 <-
-       mz_zip_add_mem_to_archive_file_in_place_v2 :: miniz_zip.c:4365 <-
-       mz_zip_add_mem_to_archive_file_in_place :: examples/example2.c:64 <-
-       main :: stubs.c:21 <-
-       eva_main
 miniz_zip.c:3377:[eva:locals-escaping] warning: locals {in_buf_size} escaping the scope of tdefl_compress_buffer through __fc_fopen
 miniz_zip.c:3377:[eva:locals-escaping] warning: locals {in_buf_size} escaping the scope of tdefl_compress_buffer through data
 miniz_zip.c:3377:[eva:locals-escaping] warning: locals {in_buf_size} escaping the scope of tdefl_compress_buffer through state
@@ -292,8 +268,8 @@ stubs.c:21:[eva:locals-escaping] warning: locals {data} escaping the scope of ma
                      __realloc_w_miniz_def_realloc_func_l179_22;
                      __realloc_w_miniz_def_realloc_func_l179_23;
                      __realloc_w_miniz_def_realloc_func_l179_24}
-  miniz_tdef.c:1043: misaligned read of addresses
-    (read in 98 statements, propagated through 63 statements)
+  miniz_tdef.c:1042: imprecise merge of addresses
+    (read in 99 statements, propagated through 63 statements)
     garbled mix of &{__fc_fopen; miniz_def_alloc_func; miniz_def_free_func;
                      miniz_def_realloc_func; data; in_buf_size; state;
                      zip_archive; mz_zip_file_read_func;
@@ -313,8 +289,8 @@ stubs.c:21:[eva:locals-escaping] warning: locals {data} escaping the scope of ma
                      __realloc_w_miniz_def_realloc_func_l179_7;
                      __realloc_w_miniz_def_realloc_func_l179_8;
                      __realloc_w_miniz_def_realloc_func_l179_9}
-  miniz_tdef.c:1067: misaligned read of addresses
-    (read in 11 statements, propagated through 6 statements)
+  miniz_tdef.c:1060: imprecise merge of addresses
+    (read in 15 statements, propagated through 7 statements)
     garbled mix of &{data; in_buf_size; state;
                      mz_zip_writer_add_put_buf_callback;
                      __malloc_w_miniz_def_alloc_func_l169_1}

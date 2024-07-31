@@ -158,6 +158,7 @@ directory	file	line	function	property kind	status	property
 .	spng.c	2304	spng_ctx_free	dangling_pointer	Unknown	¬\dangling(&(ctx->splt_list + i)->entries)
 .	spng.c	2304	spng_ctx_free	initialization	Unknown	\initialized(&(ctx->splt_list + i)->entries)
 .	spng.c	2304	spng_ctx_free	mem_access	Unknown	\valid_read(&(ctx->splt_list + i)->entries)
+.	spng.c	2304	spng_ctx_free	ptr_comparison	Unknown	\pointer_comparable((void *)(ctx->splt_list + i)->entries, (void *)0)
 FRAMAC_SHARE/libc	stdio.h	150	fopen	precondition	Unknown	valid_filename: valid_read_string(filename)
 FRAMAC_SHARE/libc	stdio.h	211	printf_va_2	precondition	Unknown	valid_read_string(param0)
 FRAMAC_SHARE/libc	stdio.h	353	fread	precondition	Unknown	valid_ptr_block: \valid((char *)ptr + (0 .. nmemb * size - 1))

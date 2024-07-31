@@ -991,12 +991,12 @@ FRAMAC_SHARE/libc	string.h	477	strcat	precondition	Unknown	valid_string_dest: va
 FRAMAC_SHARE/libc	string.h	478	strcat	precondition	Unknown	room_string: \valid(dest + (0 .. strlen(dest) + strlen(src)))
 FRAMAC_SHARE/libc	unistd.h	768	chown	precondition	Unknown	valid_string_path: valid_read_string(path)
 FRAMAC_SHARE/libc	unistd.h	776	close	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
-FRAMAC_SHARE/libc	unistd.h	975	lseek	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
-FRAMAC_SHARE/libc	unistd.h	1014	read	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
-FRAMAC_SHARE/libc	unistd.h	1015	read	precondition	Unknown	buf_has_room: \valid((char *)buf + (0 .. count - 1))
-FRAMAC_SHARE/libc	unistd.h	1143	unlink	precondition	Unknown	valid_string_path: valid_read_string(path)
-FRAMAC_SHARE/libc	unistd.h	1159	write	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
-FRAMAC_SHARE/libc	unistd.h	1160	write	precondition	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))
+FRAMAC_SHARE/libc	unistd.h	976	lseek	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
+FRAMAC_SHARE/libc	unistd.h	1015	read	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
+FRAMAC_SHARE/libc	unistd.h	1016	read	precondition	Unknown	buf_has_room: \valid((char *)buf + (0 .. count - 1))
+FRAMAC_SHARE/libc	unistd.h	1144	unlink	precondition	Unknown	valid_string_path: valid_read_string(path)
+FRAMAC_SHARE/libc	unistd.h	1160	write	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
+FRAMAC_SHARE/libc	unistd.h	1161	write	precondition	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))
 FRAMAC_SHARE/libc/sys	stat.h	35	chmod	precondition	Unknown	valid_path: valid_read_string(path)
 FRAMAC_SHARE/libc/sys	stat.h	103	lstat	precondition	Unknown	valid_path: valid_read_string(path)
 FRAMAC_SHARE/libc/sys	stat.h	147	stat	precondition	Unknown	valid_pathname: valid_read_string(pathname)

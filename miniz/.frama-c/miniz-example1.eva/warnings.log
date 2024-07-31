@@ -1,15 +1,5 @@
 miniz.c:335:[eva:locals-escaping] warning: locals {in_bytes} escaping the scope of mz_deflate through __malloc_miniz_def_alloc_func_l169
 miniz.c:335:[eva:locals-escaping] warning: locals {out_bytes} escaping the scope of mz_deflate through __malloc_miniz_def_alloc_func_l169
-miniz_tdef.c:1067:[eva:garbled-mix:write] warning: Assigning imprecise value to *(d->m_pLZ_flags)
-because of misaligned read of addresses.
-stack: tdefl_record_match :: miniz_tdef.c:1196 <-
-       tdefl_compress_normal :: miniz_tdef.c:1293 <-
-       tdefl_compress :: miniz.c:264 <-
-       mz_deflate :: miniz.c:335 <-
-       mz_compress2 :: miniz.c:348 <-
-       mz_compress :: examples/example1.c:43 <-
-       main :: stubs.c:21 <-
-       eva_main
 miniz.c:335:[eva:locals-escaping] warning: locals {in_bytes, out_bytes} escaping the scope of mz_deflate through stream
 miniz.c:335:[eva:locals-escaping] warning: locals {in_bytes, out_bytes} escaping the scope of mz_deflate through __malloc_main_l34
 miniz.c:335:[eva:locals-escaping] warning: locals {in_bytes, out_bytes} escaping the scope of mz_deflate through __malloc_w_miniz_def_alloc_func_l169
@@ -22,8 +12,8 @@ miniz.c:335:[eva:locals-escaping] warning: locals {in_bytes, out_bytes} escaping
                      __malloc_main_l34; __malloc_main_l35;
                      __malloc_w_miniz_def_alloc_func_l169;
                      __malloc_w_miniz_def_alloc_func_l169_0}
-  miniz_tdef.c:1067: misaligned read of addresses
-    (read in 5 statements, propagated through 5 statements)
+  miniz_tdef.c:1060: imprecise merge of addresses
+    (read in 9 statements, propagated through 6 statements)
     garbled mix of &{in_bytes; out_bytes;
                      "Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.";
                      __malloc_main_l34; __malloc_w_miniz_def_alloc_func_l169}
