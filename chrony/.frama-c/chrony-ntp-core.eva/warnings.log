@@ -4604,23 +4604,6 @@ stack: is_any_allowed :: addrfilt.c:414 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-util.c:291:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&addr->family);
-stack: UTI_IPToString :: conf.c:1797 <-
-       CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-util.c:296:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&addr->addr.in4);
-stack: UTI_IPToString :: conf.c:1797 <-
-       CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-conf.c:1797:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&node->subnet_bits);
-stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
 conf.c:1795:[eva:alarm] warning: out of bounds read. assert \valid_read(&node->allow);
 stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
        test_unit :: test/unit/test.c:70 <-
@@ -4721,23 +4704,6 @@ stack: set_subnet :: addrfilt.c:244 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-util.c:291:[eva:alarm] warning: out of bounds read. assert \valid_read(&addr->family);
-stack: UTI_IPToString :: conf.c:1797 <-
-       CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-util.c:296:[eva:alarm] warning: out of bounds read. assert \valid_read(&addr->addr.in4);
-stack: UTI_IPToString :: conf.c:1797 <-
-       CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-conf.c:1797:[eva:alarm] warning: out of bounds read. assert \valid_read(&node->subnet_bits);
-stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
 memory.c:38:[eva:malloc:weak] warning: marking variable `__malloc_open_node_l137_19' as weak
 stack: malloc :: memory.c:38 <-
        Malloc :: memory.c:74 <-
@@ -4790,6 +4756,40 @@ stack: malloc :: memory.c:38 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
+util.c:291:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&addr->family);
+stack: UTI_IPToString :: conf.c:1797 <-
+       CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+util.c:291:[eva:alarm] warning: out of bounds read. assert \valid_read(&addr->family);
+stack: UTI_IPToString :: conf.c:1797 <-
+       CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+util.c:296:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&addr->addr.in4);
+stack: UTI_IPToString :: conf.c:1797 <-
+       CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+util.c:296:[eva:alarm] warning: out of bounds read. assert \valid_read(&addr->addr.in4);
+stack: UTI_IPToString :: conf.c:1797 <-
+       CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+conf.c:1797:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&node->subnet_bits);
+stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+conf.c:1797:[eva:alarm] warning: out of bounds read. assert \valid_read(&node->subnet_bits);
+stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
 array.c:94:[eva:alarm] warning: function __FC_assert: precondition 'nonnull_c' got status unknown.
 stack: __FC_assert :: array.c:94 <-
        ARR_GetElement :: conf.c:1802 <-
@@ -4819,8 +4819,24 @@ stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
        eva_main
 conf.c:1803:[kernel:annot:missing-spec] warning: Neither code nor specification for function CAM_AddAccessRestriction,
  generating default assigns. See -generated-spec-* options for more info
+conf.c:1803:[eva:alarm] warning: out of bounds read. assert \valid_read(&node->allow);
+stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+conf.c:1803:[eva:alarm] warning: out of bounds read. assert \valid_read(&node->subnet_bits);
+stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
 util.c:310:[eva:alarm] warning: accessing uninitialized left-value.
 assert \initialized(ip6 + (unsigned long)(2 * a));
+stack: UTI_IPToString :: conf.c:1805 <-
+       CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+util.c:310:[eva:alarm] warning: out of bounds read. assert \valid_read(ip6 + (unsigned long)(2 * a));
 stack: UTI_IPToString :: conf.c:1805 <-
        CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
        test_unit :: test/unit/test.c:70 <-
@@ -4833,31 +4849,15 @@ stack: UTI_IPToString :: conf.c:1805 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-conf.c:1805:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&node->subnet_bits);
-stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-conf.c:1803:[eva:alarm] warning: out of bounds read. assert \valid_read(&node->allow);
-stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-conf.c:1803:[eva:alarm] warning: out of bounds read. assert \valid_read(&node->subnet_bits);
-stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
-util.c:310:[eva:alarm] warning: out of bounds read. assert \valid_read(ip6 + (unsigned long)(2 * a));
-stack: UTI_IPToString :: conf.c:1805 <-
-       CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
-       test_unit :: test/unit/test.c:70 <-
-       main :: fc_stubs.c:37 <-
-       eva_main
 util.c:310:[eva:alarm] warning: out of bounds read.
 assert \valid_read(ip6 + (unsigned long)((unsigned long)(2 * a) + 1));
 stack: UTI_IPToString :: conf.c:1805 <-
        CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+       test_unit :: test/unit/test.c:70 <-
+       main :: fc_stubs.c:37 <-
+       eva_main
+conf.c:1805:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(&node->subnet_bits);
+stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
