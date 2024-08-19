@@ -164,6 +164,7 @@ when available. We also summarize the license of each directory below.
 - `monocypher`: see `README`
 - `papabench`: GPL
 - `polarssl`: GPL
+- `powerwindow`: GPL
 - `qlz`: GPL
 - `safestringlib`: MIT
 - `semver`: MIT

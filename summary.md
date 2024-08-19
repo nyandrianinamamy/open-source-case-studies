@@ -30,6 +30,7 @@
 |monocypher|Small, self-contained cryptographic library|https://monocypher.org|1|42|23680|HAS_DYN_ALLOC(tests), NO_RECURSION, NO_FLOAT|
 |papabench|Real time benchmark based on the Paparazzi unmanned aerial vehicle (UAV) code|https://github.com/t-crest/patmos-benchmarks/tree/master/PapaBench-0.4|1|80|7251|NO_DYN_ALLOC, UNUSED_RECURSION, HAS_FLOAT|
 |polarssl|Implementation of the TLS and SSL protocols (formerly PolarSSL)|https://github.com/ARMmbed/mbedtls|1|119|29184|HAS_DYN_ALLOC, REM_RECURSION, NO_FLOAT|
+|powerwindow|Distributed power window control, by CoSys-Lab, part of TACLeBench|https://github.com/tacle/tacle-bench/tree/master/bench/app/powerwindow|1|39|2918|NO_DYN_ALLOC, NO_RECURSION, NO_FLOAT|
 |qlz|Fast compression library|http://www.quicklz.com|4|7|963|HAS_DYN_ALLOC(tests), NO_RECURSION, NO_FLOAT|
 |safestringlib|Library for handling strings securely|https://github.com/intel/safestringlib|1|148|14922|NO_DYN_ALLOC, NO_RECURSION, NO_FLOAT|
 |semver|Parser and renderer for semantic versioning 2.0.0|https://github.com/h2non/semver.c|1|4|1034|HAS_DYN_ALLOC, NO_RECURSION, NO_FLOAT|
