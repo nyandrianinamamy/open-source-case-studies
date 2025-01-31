@@ -80,9 +80,9 @@ directory	file	line	function	property kind	status	property
 2019/yang	violet.c	50	main	initialization	Unknown	\initialized(&(U + h)->z)
 2019/yang	violet.c	50	main	mem_access	Unknown	\valid_read(&(U + h)->z)
 2019/yang	violet.c	51	main	signed_overflow	Unknown	q - y ≤ 2147483647
-FRAMAC_SHARE/libc	stdio.h	120	fclose	precondition	Unknown	valid_stream: \valid(stream)
-FRAMAC_SHARE/libc	stdio.h	150	fopen	precondition	Unknown	valid_filename: valid_read_string(filename)
-FRAMAC_SHARE/libc	stdio.h	260	fgetc	precondition	Unknown	valid_stream: \valid(stream)
-FRAMAC_SHARE/libc	stdio.h	283	fputc	precondition	Unknown	valid_stream: \valid(stream)
-FRAMAC_SHARE/libc	stdio.h	486	perror	precondition	Unknown	valid_string_s: valid_read_string(s)
-FRAMAC_SHARE/libc	stdlib.h	673	abs	precondition	Unknown	abs_representable: j > -2147483647 - 1
+FRAMAC_SHARE/libc	stdio.h	157	fclose	precondition	Unknown	valid_stream: \valid(stream)
+FRAMAC_SHARE/libc	stdio.h	187	fopen	precondition	Unknown	valid_filename: valid_read_string(filename)
+FRAMAC_SHARE/libc	stdio.h	297	fgetc	precondition	Unknown	valid_stream: \valid(stream)
+FRAMAC_SHARE/libc	stdio.h	320	fputc	precondition	Unknown	valid_stream: \valid(stream)
+FRAMAC_SHARE/libc	stdio.h	523	perror	precondition	Unknown	valid_string_s: valid_read_string(s)
+FRAMAC_SHARE/libc	stdlib.h	683	abs	precondition	Unknown	abs_representable: j > -2147483647 - 1
