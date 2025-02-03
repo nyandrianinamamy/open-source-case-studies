@@ -5942,7 +5942,7 @@ static void parse_include(char *line)
   size_t i;
   int r;
   check_number_of_args(line,1);
-  r = glob((char const *)line,1 << 0,
+  r = glob((char const *)line,(1 << 11) | (1 << 0),
            (int (*)(char const *epath, int eerrno))0,& gl);
   if (r != 0) {
     if (r != 3) {
@@ -7718,7 +7718,7 @@ extern void LCL_RemoveDispersionNotifyHandler(void (*handler)(double dispersion,
 void LCL_ReadRawTime(struct timespec *ts)
 {
   int tmp_0;
-  tmp_0 = clock_gettime(666,ts);
+  tmp_0 = clock_gettime(0,ts);
   if (tmp_0 < 0) {
     char *tmp;
     tmp = strerror(__fc_errno);

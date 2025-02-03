@@ -158,22 +158,16 @@ directory	file	line	function	property kind	status	property
 .	solitaire.c	220	key_deck	mem_access	Unknown	\valid_read(state.deck + (int)((int)(i + kval) % 53))
 .	solitaire.c	221	key_deck	mem_access	Unknown	\valid(state.spare + 53)
 .	solitaire.c	221	key_deck	mem_access	Unknown	\valid_read(state.deck + 53)
-.	solitaire.c	223	key_deck	signed_overflow	Unknown	(int)((int)(state.a + 53) - kval) % 53 ≤ 2147483647
-.	solitaire.c	223	key_deck	signed_overflow	Unknown	-2147483648 ≤ (int)((int)(state.a + 53) - kval) % 53
 .	solitaire.c	223	key_deck	signed_overflow	Unknown	(int)(state.a + 53) - kval ≤ 2147483647
 .	solitaire.c	223	key_deck	signed_overflow	Unknown	-2147483648 ≤ (int)(state.a + 53) - kval
 .	solitaire.c	223	key_deck	signed_overflow	Unknown	-2147483648 ≤ state.a + 53
 .	solitaire.c	223	key_deck	signed_overflow	Unknown	state.a + 53 ≤ 2147483647
-.	solitaire.c	225	key_deck	signed_overflow	Unknown	(int)((int)(state.b + 53) - kval) % 53 ≤ 2147483647
-.	solitaire.c	225	key_deck	signed_overflow	Unknown	-2147483648 ≤ (int)((int)(state.b + 53) - kval) % 53
 .	solitaire.c	225	key_deck	signed_overflow	Unknown	(int)(state.b + 53) - kval ≤ 2147483647
 .	solitaire.c	225	key_deck	signed_overflow	Unknown	-2147483648 ≤ (int)(state.b + 53) - kval
 .	solitaire.c	225	key_deck	signed_overflow	Unknown	-2147483648 ≤ state.b + 53
 .	solitaire.c	225	key_deck	signed_overflow	Unknown	state.b + 53 ≤ 2147483647
 .	solitaire.c	248	encrypt_char	signed_overflow	Unknown	(int)'A' + (int)((int)((int)((int)char_in - (int)'A') + lastout) % 26) ≤ 2147483647
 .	solitaire.c	248	encrypt_char	signed_overflow	Unknown	-2147483648 ≤ (int)'A' + (int)((int)((int)((int)char_in - (int)'A') + lastout) % 26)
-.	solitaire.c	248	encrypt_char	signed_overflow	Unknown	(int)((int)((int)char_in - (int)'A') + lastout) % 26 ≤ 2147483647
-.	solitaire.c	248	encrypt_char	signed_overflow	Unknown	-2147483648 ≤ (int)((int)((int)char_in - (int)'A') + lastout) % 26
 .	solitaire.c	248	encrypt_char	signed_overflow	Unknown	(int)((int)char_in - (int)'A') + lastout ≤ 2147483647
 .	solitaire.c	248	encrypt_char	signed_overflow	Unknown	-2147483648 ≤ (int)((int)char_in - (int)'A') + lastout
 FRAMAC_SHARE/libc	assert.h	31	__FC_assert	precondition	Unknown	nonnull_c: c ≢ 0

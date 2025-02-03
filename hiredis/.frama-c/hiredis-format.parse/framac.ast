@@ -823,16 +823,16 @@ static int dictExpand(dict *ht, unsigned long size)
 static int dictAdd(dict *ht, void *key, void *val)
 {
   int __retres;
-  int index_0;
+  int index;
   dictEntry *entry;
-  index_0 = _dictKeyIndex(ht,(void const *)key);
-  if (index_0 == -1) {
+  index = _dictKeyIndex(ht,(void const *)key);
+  if (index == -1) {
     __retres = 1;
     goto return_label;
   }
   entry = (dictEntry *)hi_malloc(sizeof(*entry));
-  entry->next = *(ht->table + index_0);
-  *(ht->table + index_0) = entry;
+  entry->next = *(ht->table + index);
+  *(ht->table + index) = entry;
   if ((ht->type)->keyDup) entry->key = (*((ht->type)->keyDup))(ht->privdata,
                                                                (void const *)key);
   else entry->key = key;
@@ -1994,16 +1994,16 @@ static int dictExpand_0(dict *ht, unsigned long size)
 static int dictAdd_0(dict *ht, void *key, void *val)
 {
   int __retres;
-  int index_0;
+  int index;
   dictEntry *entry;
-  index_0 = _dictKeyIndex_0(ht,(void const *)key);
-  if (index_0 == -1) {
+  index = _dictKeyIndex_0(ht,(void const *)key);
+  if (index == -1) {
     __retres = 1;
     goto return_label;
   }
   entry = (dictEntry *)hi_malloc(sizeof(*entry));
-  entry->next = *(ht->table + index_0);
-  *(ht->table + index_0) = entry;
+  entry->next = *(ht->table + index);
+  *(ht->table + index) = entry;
   if ((ht->type)->keyDup) entry->key = (*((ht->type)->keyDup))(ht->privdata,
                                                                (void const *)key);
   else entry->key = key;
