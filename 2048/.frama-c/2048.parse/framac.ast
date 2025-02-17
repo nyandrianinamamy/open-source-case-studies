@@ -1127,49 +1127,47 @@ int main(int argc, char **argv)
   initBoard(board);
   setBufferedInput((_Bool)0);
   while (1) {
-    {
-      int tmp;
-      tmp = getchar();
-      c = (char)tmp;
-      switch ((int)c) {
-        case 97: case 104: case 68: success = moveLeft(board);
+    int tmp;
+    tmp = getchar();
+    c = (char)tmp;
+    switch ((int)c) {
+      case 97: case 104: case 68: success = moveLeft(board);
+      break;
+      case 100: case 108: case 67: success = moveRight(board);
+      break;
+      case 119: case 107: case 65: success = moveUp(board);
+      break;
+      case 115: case 106: case 66: success = moveDown(board);
+      break;
+      default: success = (_Bool)0;
+    }
+    if (success) {
+      _Bool tmp_0;
+      drawBoard(board);
+      usleep((useconds_t)150000);
+      addRandom(board);
+      drawBoard(board);
+      tmp_0 = gameEnded(board);
+      if (tmp_0) {
+        printf("         GAME OVER          \n"); /* printf_va_31 */
         break;
-        case 100: case 108: case 67: success = moveRight(board);
-        break;
-        case 119: case 107: case 65: success = moveUp(board);
-        break;
-        case 115: case 106: case 66: success = moveDown(board);
-        break;
-        default: success = (_Bool)0;
       }
-      if (success) {
-        _Bool tmp_0;
-        drawBoard(board);
-        usleep((useconds_t)150000);
-        addRandom(board);
-        drawBoard(board);
-        tmp_0 = gameEnded(board);
-        if (tmp_0) {
-          printf("         GAME OVER          \n"); /* printf_va_31 */
-          break;
-        }
-      }
-      if ((int)c == 'q') {
-        int tmp_1;
-        printf("        QUIT? (y/n)         \n"); /* printf_va_32 */
-        tmp_1 = getchar();
-        c = (char)tmp_1;
-        if ((int)c == 'y') break;
-        drawBoard(board);
-      }
-      if ((int)c == 'r') {
-        int tmp_2;
-        printf("       RESTART? (y/n)       \n"); /* printf_va_33 */
-        tmp_2 = getchar();
-        c = (char)tmp_2;
-        if ((int)c == 'y') initBoard(board);
-        drawBoard(board);
-      }
+    }
+    if ((int)c == 'q') {
+      int tmp_1;
+      printf("        QUIT? (y/n)         \n"); /* printf_va_32 */
+      tmp_1 = getchar();
+      c = (char)tmp_1;
+      if ((int)c == 'y') break;
+      drawBoard(board);
+    }
+    if ((int)c == 'r') {
+      int tmp_2;
+      printf("       RESTART? (y/n)       \n"); /* printf_va_33 */
+      tmp_2 = getchar();
+      c = (char)tmp_2;
+      if ((int)c == 'y') initBoard(board);
+      drawBoard(board);
     }
   }
   setBufferedInput((_Bool)1);

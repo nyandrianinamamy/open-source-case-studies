@@ -19,19 +19,23 @@ directory	file	line	function	property kind	status	property
 .	quicklz.c	276	qlz_compress_core	signed_overflow	Unknown	src - source ≤ 2147483647
 .	quicklz.c	292	qlz_compress_core	initialization	Unknown	\initialized(&state->hash[hash].cache)
 .	quicklz.c	295	qlz_compress_core	initialization	Unknown	\initialized(&state->hash[hash].offset)
-.	quicklz.c	296	qlz_compress_core	signed_overflow	Unknown	src - source ≤ 2147483647
-.	quicklz.c	299	qlz_compress_core	ptr_comparison	Unknown	\pointer_comparable((void *)o, (void *)source)
+.	quicklz.c	299	qlz_compress_core	ptr_comparison	Unknown	\pointer_comparable((void *)o, (void *)0)
+.	quicklz.c	299	qlz_compress_core	differing_blocks	Unknown	\base_addr(src) ≡ \base_addr(o)
 .	quicklz.c	299	qlz_compress_core	signed_overflow	Unknown	-2147483648 ≤ src - o
+.	quicklz.c	299	qlz_compress_core	signed_overflow	Unknown	src - o ≤ 2147483647
 .	quicklz.c	299	qlz_compress_core	ptr_comparison	Unknown	\pointer_comparable((void *)src, (void *)(o + 1))
 .	quicklz.c	299	qlz_compress_core	ptr_comparison	Unknown	\pointer_comparable((void *)src, (void *)(source + 3))
 .	quicklz.c	324	qlz_compress_core	initialization	Unknown	\initialized(o + (int)(src - old_src))
 .	quicklz.c	324	qlz_compress_core	initialization	Unknown	\initialized(src)
 .	quicklz.c	324	qlz_compress_core	mem_access	Unknown	\valid_read(o + (int)(src - old_src))
 .	quicklz.c	324	qlz_compress_core	mem_access	Unknown	\valid_read(src)
+.	quicklz.c	324	qlz_compress_core	signed_overflow	Unknown	-2147483648 ≤ src - old_src
+.	quicklz.c	324	qlz_compress_core	signed_overflow	Unknown	src - old_src ≤ 2147483647
 .	quicklz.c	327	qlz_compress_core	initialization	Unknown	\initialized(o + (int)(src - old_src))
 .	quicklz.c	327	qlz_compress_core	initialization	Unknown	\initialized(src)
 .	quicklz.c	327	qlz_compress_core	mem_access	Unknown	\valid_read(o + (int)(src - old_src))
 .	quicklz.c	327	qlz_compress_core	mem_access	Unknown	\valid_read(src)
+.	quicklz.c	327	qlz_compress_core	signed_overflow	Unknown	-2147483648 ≤ src - old_src
 .	quicklz.c	327	qlz_compress_core	signed_overflow	Unknown	src - old_src ≤ 2147483647
 .	quicklz.c	329	qlz_compress_core	signed_overflow	Unknown	(int)((last_byte - 4) - (src - 5)) + 1 ≤ 2147483647
 .	quicklz.c	329	qlz_compress_core	signed_overflow	Unknown	(last_byte - 4) - (src - 5) ≤ 2147483647
@@ -40,14 +44,15 @@ directory	file	line	function	property kind	status	property
 .	quicklz.c	332	qlz_compress_core	initialization	Unknown	\initialized(src)
 .	quicklz.c	332	qlz_compress_core	mem_access	Unknown	\valid_read(o + (int)(src - old_src))
 .	quicklz.c	332	qlz_compress_core	mem_access	Unknown	\valid_read(src)
+.	quicklz.c	332	qlz_compress_core	signed_overflow	Unknown	-2147483648 ≤ src - old_src
 .	quicklz.c	332	qlz_compress_core	signed_overflow	Unknown	src - old_src ≤ 2147483647
+.	quicklz.c	337	qlz_compress_core	signed_overflow	Unknown	-2147483648 ≤ src - old_src
 .	quicklz.c	337	qlz_compress_core	signed_overflow	Unknown	src - old_src ≤ 2147483647
 .	quicklz.c	355	qlz_compress_core	initialization	Unknown	\initialized(src)
 .	quicklz.c	355	qlz_compress_core	mem_access	Unknown	\valid(dst)
 .	quicklz.c	355	qlz_compress_core	mem_access	Unknown	\valid_read(src)
 .	quicklz.c	508	qlz_compress_core	ptr_comparison	Unknown	\pointer_comparable((void *)src, (void *)last_byte)
 .	quicklz.c	518	qlz_compress_core	ptr_comparison	Unknown	\pointer_comparable((void *)src, (void *)(last_byte - 3))
-.	quicklz.c	524	qlz_compress_core	signed_overflow	Unknown	src - source ≤ 2147483647
 .	quicklz.c	537	qlz_compress_core	initialization	Unknown	\initialized(src)
 .	quicklz.c	537	qlz_compress_core	mem_access	Unknown	\valid(dst)
 .	quicklz.c	537	qlz_compress_core	mem_access	Unknown	\valid_read(src)

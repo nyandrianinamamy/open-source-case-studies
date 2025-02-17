@@ -1,4 +1,4 @@
-[metrics] Defined functions (511)
+[metrics] Defined functions (508)
 =======================
  add_pkcs_padding (1 call); aes_crypt_cbc (6 calls);
  aes_crypt_cbc_wrap (address taken) (0 call); aes_crypt_cfb128 (3 calls);
@@ -125,17 +125,16 @@
  net_connect (0 call); net_is_blocking (3 calls);
  net_recv (address taken) (0 call); net_send (address taken) (0 call);
  net_set_block (0 call); net_set_nonblock (0 call); net_usleep (0 call);
- padlock_supports (2 calls); padlock_xcryptcbc (1 call);
- padlock_xcryptecb (1 call); pem_aes_decrypt (3 calls);
- pem_des3_decrypt (1 call); pem_des_decrypt (1 call); pem_free (28 calls);
- pem_get_iv (3 calls); pem_init (5 calls); pem_pbkdf1 (3 calls);
- pem_read_buffer (6 calls); platform_entropy_poll (address taken) (0 call);
- rsa_check_privkey (2 calls); rsa_check_pubkey (4 calls);
- rsa_free (20 calls); rsa_gen_key (0 call); rsa_init (3 calls);
- rsa_pkcs1_decrypt (2 calls); rsa_pkcs1_encrypt (2 calls);
- rsa_pkcs1_sign (3 calls); rsa_pkcs1_verify (6 calls); rsa_private (4 calls);
- rsa_public (4 calls); rsa_self_test (0 call); set_alarm (0 call);
- sha1 (address taken) (3 calls); sha1_ctx_alloc (address taken) (0 call);
+ pem_aes_decrypt (3 calls); pem_des3_decrypt (1 call);
+ pem_des_decrypt (1 call); pem_free (28 calls); pem_get_iv (3 calls);
+ pem_init (5 calls); pem_pbkdf1 (3 calls); pem_read_buffer (6 calls);
+ platform_entropy_poll (address taken) (0 call); rsa_check_privkey (2 calls);
+ rsa_check_pubkey (4 calls); rsa_free (20 calls); rsa_gen_key (0 call);
+ rsa_init (3 calls); rsa_pkcs1_decrypt (2 calls);
+ rsa_pkcs1_encrypt (2 calls); rsa_pkcs1_sign (3 calls);
+ rsa_pkcs1_verify (6 calls); rsa_private (4 calls); rsa_public (4 calls);
+ rsa_self_test (0 call); set_alarm (0 call); sha1 (address taken) (3 calls);
+ sha1_ctx_alloc (address taken) (0 call);
  sha1_ctx_free (address taken) (0 call); sha1_file (1 call);
  sha1_file_wrap (address taken) (0 call); sha1_finish (18 calls);
  sha1_finish_wrap (address taken) (0 call);
@@ -315,15 +314,15 @@ Potential entry points (122)
 
 Global metrics
 ============== 
-Sloc = 15552
-Decision point = 2529
-Global variables = 178
-If = 2341
+Sloc = 15839
+Decision point = 2523
+Global variables = 179
+If = 2335
 Loop = 295
-Goto = 1342
-Assignment = 6533
-Exit point = 511
-Function = 513
-Function call = 2390
-Pointer dereferencing = 4355
-Cyclomatic complexity = 3040
+Goto = 1338
+Assignment = 7095
+Exit point = 508
+Function = 510
+Function call = 2384
+Pointer dereferencing = 4472
+Cyclomatic complexity = 3031

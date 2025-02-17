@@ -1943,14 +1943,12 @@ void dynamic_buffer_underrun_028(void)
 void dynamic_buffer_underrun_029(void)
 {
   while (1) {
-    {
-      char *buf = malloc(sizeof(char));
-      if (buf != (char *)0) {
-        *(buf + -1) = (char)'a';
-        free((void *)buf);
-      }
-      break;
+    char *buf = malloc(sizeof(char));
+    if (buf != (char *)0) {
+      *(buf + -1) = (char)'a';
+      free((void *)buf);
     }
+    break;
   }
   return;
 }

@@ -4757,9 +4757,12 @@ static mz_uint16 TDEFL_READ_UNALIGNED_WORD2(mz_uint16 const *p)
   return ret;
 }
 
-__inline static void ( __attribute__((__always_inline__)) tdefl_find_match)
-(tdefl_compressor *d, mz_uint lookahead_pos, mz_uint max_dist,
- mz_uint max_match_len, mz_uint *pMatch_dist, mz_uint *pMatch_len)
+__inline static void tdefl_find_match(tdefl_compressor *d,
+                                      mz_uint lookahead_pos,
+                                      mz_uint max_dist,
+                                      mz_uint max_match_len,
+                                      mz_uint *pMatch_dist,
+                                      mz_uint *pMatch_len)
 {
   mz_uint dist;
   mz_uint next_probe_pos;
@@ -5190,8 +5193,7 @@ static mz_bool tdefl_compress_fast(tdefl_compressor *d)
   return_label: return __retres;
 }
 
-__inline static void ( __attribute__((__always_inline__)) tdefl_record_literal)
-(tdefl_compressor *d, mz_uint8 lit)
+__inline static void tdefl_record_literal(tdefl_compressor *d, mz_uint8 lit)
 {
   mz_uint8 *tmp;
   (d->m_total_lz_bytes) ++;
@@ -5211,8 +5213,8 @@ __inline static void ( __attribute__((__always_inline__)) tdefl_record_literal)
   return;
 }
 
-__inline static void ( __attribute__((__always_inline__)) tdefl_record_match)
-(tdefl_compressor *d, mz_uint match_len, mz_uint match_dist)
+__inline static void tdefl_record_match(tdefl_compressor *d,
+                                        mz_uint match_len, mz_uint match_dist)
 {
   mz_uint32 s0;
   mz_uint32 s1;

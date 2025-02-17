@@ -1134,15 +1134,6 @@ void sha4_hmac(unsigned char const *key, size_t keylen,
 
 int sha4_self_test(int verbose);
 
-int padlock_supports(int feature);
-
-int padlock_xcryptecb(aes_context *ctx, int mode,
-                      unsigned char const input[16], unsigned char output[16]);
-
-int padlock_xcryptcbc(aes_context *ctx, int mode, size_t length,
-                      unsigned char iv[16], unsigned char const *input,
-                      unsigned char *output);
-
 static unsigned char FSb[256];
 static unsigned long FT0[256];
 static unsigned long FT1[256];
@@ -1268,7 +1259,7 @@ int aes_setkey_enc(aes_context *ctx, unsigned char const *key,
     default: __retres = -0x0020;
     goto return_label;
   }
-  RK = (unsigned long *)((long)16 + ((long)(ctx->buf) & (long)(~ 15)));
+  RK = ctx->buf;
   ctx->rk = RK;
   i = (unsigned int)0;
   while (i < keysize >> 5) {
@@ -1380,7 +1371,7 @@ int aes_setkey_dec(aes_context *ctx, unsigned char const *key,
     default: __retres = -0x0020;
     goto return_label;
   }
-  RK = (unsigned long *)((long)16 + ((long)(ctx->buf) & (long)(~ 15)));
+  RK = ctx->buf;
   ctx->rk = RK;
   ret = aes_setkey_enc(& cty,key,keysize);
   if (ret != 0) {
@@ -1473,241 +1464,231 @@ int aes_crypt_ecb(aes_context *ctx, int mode, unsigned char const input[16],
   unsigned long Y1;
   unsigned long Y2;
   unsigned long Y3;
-  int tmp_0;
+  unsigned long *tmp;
+  unsigned long *tmp_0;
   unsigned long *tmp_1;
   unsigned long *tmp_2;
-  unsigned long *tmp_3;
-  unsigned long *tmp_4;
-  tmp_0 = padlock_supports(0x00C0);
-  if (tmp_0) {
-    int tmp;
-    tmp = padlock_xcryptecb(ctx,mode,input,output);
-    if (tmp == 0) {
-      __retres = 0;
-      goto return_label;
-    }
-  }
   RK = ctx->rk;
   X0 = (((unsigned long)*(input + 0) | ((unsigned long)*(input + (0 + 1)) << 8)) | (
         (unsigned long)*(input + (0 + 2)) << 16)) | ((unsigned long)*(
                                                      input + (0 + 3)) << 24);
-  tmp_1 = RK;
+  tmp = RK;
   RK ++;
-  X0 ^= *tmp_1;
+  X0 ^= *tmp;
   X1 = (((unsigned long)*(input + 4) | ((unsigned long)*(input + (4 + 1)) << 8)) | (
         (unsigned long)*(input + (4 + 2)) << 16)) | ((unsigned long)*(
                                                      input + (4 + 3)) << 24);
-  tmp_2 = RK;
+  tmp_0 = RK;
   RK ++;
-  X1 ^= *tmp_2;
+  X1 ^= *tmp_0;
   X2 = (((unsigned long)*(input + 8) | ((unsigned long)*(input + (8 + 1)) << 8)) | (
         (unsigned long)*(input + (8 + 2)) << 16)) | ((unsigned long)*(
                                                      input + (8 + 3)) << 24);
-  tmp_3 = RK;
+  tmp_1 = RK;
   RK ++;
-  X2 ^= *tmp_3;
+  X2 ^= *tmp_1;
   X3 = (((unsigned long)*(input + 12) | ((unsigned long)*(input + (12 + 1)) << 8)) | (
         (unsigned long)*(input + (12 + 2)) << 16)) | ((unsigned long)*(
                                                       input + (12 + 3)) << 24);
-  tmp_4 = RK;
+  tmp_2 = RK;
   RK ++;
-  X3 ^= *tmp_4;
+  X3 ^= *tmp_2;
   if (mode == 0) {
+    unsigned long *tmp_15;
+    unsigned long *tmp_16;
     unsigned long *tmp_17;
     unsigned long *tmp_18;
-    unsigned long *tmp_19;
-    unsigned long *tmp_20;
     i = (ctx->nr >> 1) - 1;
     while (i > 0) {
       {
+        unsigned long *tmp_3;
+        unsigned long *tmp_4;
         unsigned long *tmp_5;
         unsigned long *tmp_6;
-        unsigned long *tmp_7;
-        unsigned long *tmp_8;
+        tmp_3 = RK;
+        RK ++;
+        Y0 = (((*tmp_3 ^ RT0[X0 & (unsigned long)0xFF]) ^ RT1[(X3 >> 8) & (unsigned long)0xFF]) ^ RT2[
+              (X2 >> 16) & (unsigned long)0xFF]) ^ RT3[(X1 >> 24) & (unsigned long)0xFF];
+        tmp_4 = RK;
+        RK ++;
+        Y1 = (((*tmp_4 ^ RT0[X1 & (unsigned long)0xFF]) ^ RT1[(X0 >> 8) & (unsigned long)0xFF]) ^ RT2[
+              (X3 >> 16) & (unsigned long)0xFF]) ^ RT3[(X2 >> 24) & (unsigned long)0xFF];
         tmp_5 = RK;
         RK ++;
-        Y0 = (((*tmp_5 ^ RT0[X0 & (unsigned long)0xFF]) ^ RT1[(X3 >> 8) & (unsigned long)0xFF]) ^ RT2[
-              (X2 >> 16) & (unsigned long)0xFF]) ^ RT3[(X1 >> 24) & (unsigned long)0xFF];
+        Y2 = (((*tmp_5 ^ RT0[X2 & (unsigned long)0xFF]) ^ RT1[(X1 >> 8) & (unsigned long)0xFF]) ^ RT2[
+              (X0 >> 16) & (unsigned long)0xFF]) ^ RT3[(X3 >> 24) & (unsigned long)0xFF];
         tmp_6 = RK;
         RK ++;
-        Y1 = (((*tmp_6 ^ RT0[X1 & (unsigned long)0xFF]) ^ RT1[(X0 >> 8) & (unsigned long)0xFF]) ^ RT2[
-              (X3 >> 16) & (unsigned long)0xFF]) ^ RT3[(X2 >> 24) & (unsigned long)0xFF];
-        tmp_7 = RK;
-        RK ++;
-        Y2 = (((*tmp_7 ^ RT0[X2 & (unsigned long)0xFF]) ^ RT1[(X1 >> 8) & (unsigned long)0xFF]) ^ RT2[
-              (X0 >> 16) & (unsigned long)0xFF]) ^ RT3[(X3 >> 24) & (unsigned long)0xFF];
-        tmp_8 = RK;
-        RK ++;
-        Y3 = (((*tmp_8 ^ RT0[X3 & (unsigned long)0xFF]) ^ RT1[(X2 >> 8) & (unsigned long)0xFF]) ^ RT2[
+        Y3 = (((*tmp_6 ^ RT0[X3 & (unsigned long)0xFF]) ^ RT1[(X2 >> 8) & (unsigned long)0xFF]) ^ RT2[
               (X1 >> 16) & (unsigned long)0xFF]) ^ RT3[(X0 >> 24) & (unsigned long)0xFF];
       }
       {
+        unsigned long *tmp_7;
+        unsigned long *tmp_8;
         unsigned long *tmp_9;
         unsigned long *tmp_10;
-        unsigned long *tmp_11;
-        unsigned long *tmp_12;
+        tmp_7 = RK;
+        RK ++;
+        X0 = (((*tmp_7 ^ RT0[Y0 & (unsigned long)0xFF]) ^ RT1[(Y3 >> 8) & (unsigned long)0xFF]) ^ RT2[
+              (Y2 >> 16) & (unsigned long)0xFF]) ^ RT3[(Y1 >> 24) & (unsigned long)0xFF];
+        tmp_8 = RK;
+        RK ++;
+        X1 = (((*tmp_8 ^ RT0[Y1 & (unsigned long)0xFF]) ^ RT1[(Y0 >> 8) & (unsigned long)0xFF]) ^ RT2[
+              (Y3 >> 16) & (unsigned long)0xFF]) ^ RT3[(Y2 >> 24) & (unsigned long)0xFF];
         tmp_9 = RK;
         RK ++;
-        X0 = (((*tmp_9 ^ RT0[Y0 & (unsigned long)0xFF]) ^ RT1[(Y3 >> 8) & (unsigned long)0xFF]) ^ RT2[
-              (Y2 >> 16) & (unsigned long)0xFF]) ^ RT3[(Y1 >> 24) & (unsigned long)0xFF];
+        X2 = (((*tmp_9 ^ RT0[Y2 & (unsigned long)0xFF]) ^ RT1[(Y1 >> 8) & (unsigned long)0xFF]) ^ RT2[
+              (Y0 >> 16) & (unsigned long)0xFF]) ^ RT3[(Y3 >> 24) & (unsigned long)0xFF];
         tmp_10 = RK;
         RK ++;
-        X1 = (((*tmp_10 ^ RT0[Y1 & (unsigned long)0xFF]) ^ RT1[(Y0 >> 8) & (unsigned long)0xFF]) ^ RT2[
-              (Y3 >> 16) & (unsigned long)0xFF]) ^ RT3[(Y2 >> 24) & (unsigned long)0xFF];
-        tmp_11 = RK;
-        RK ++;
-        X2 = (((*tmp_11 ^ RT0[Y2 & (unsigned long)0xFF]) ^ RT1[(Y1 >> 8) & (unsigned long)0xFF]) ^ RT2[
-              (Y0 >> 16) & (unsigned long)0xFF]) ^ RT3[(Y3 >> 24) & (unsigned long)0xFF];
-        tmp_12 = RK;
-        RK ++;
-        X3 = (((*tmp_12 ^ RT0[Y3 & (unsigned long)0xFF]) ^ RT1[(Y2 >> 8) & (unsigned long)0xFF]) ^ RT2[
+        X3 = (((*tmp_10 ^ RT0[Y3 & (unsigned long)0xFF]) ^ RT1[(Y2 >> 8) & (unsigned long)0xFF]) ^ RT2[
               (Y1 >> 16) & (unsigned long)0xFF]) ^ RT3[(Y0 >> 24) & (unsigned long)0xFF];
       }
       i --;
     }
     {
+      unsigned long *tmp_11;
+      unsigned long *tmp_12;
       unsigned long *tmp_13;
       unsigned long *tmp_14;
-      unsigned long *tmp_15;
-      unsigned long *tmp_16;
+      tmp_11 = RK;
+      RK ++;
+      Y0 = (((*tmp_11 ^ RT0[X0 & (unsigned long)0xFF]) ^ RT1[(X3 >> 8) & (unsigned long)0xFF]) ^ RT2[
+            (X2 >> 16) & (unsigned long)0xFF]) ^ RT3[(X1 >> 24) & (unsigned long)0xFF];
+      tmp_12 = RK;
+      RK ++;
+      Y1 = (((*tmp_12 ^ RT0[X1 & (unsigned long)0xFF]) ^ RT1[(X0 >> 8) & (unsigned long)0xFF]) ^ RT2[
+            (X3 >> 16) & (unsigned long)0xFF]) ^ RT3[(X2 >> 24) & (unsigned long)0xFF];
       tmp_13 = RK;
       RK ++;
-      Y0 = (((*tmp_13 ^ RT0[X0 & (unsigned long)0xFF]) ^ RT1[(X3 >> 8) & (unsigned long)0xFF]) ^ RT2[
-            (X2 >> 16) & (unsigned long)0xFF]) ^ RT3[(X1 >> 24) & (unsigned long)0xFF];
+      Y2 = (((*tmp_13 ^ RT0[X2 & (unsigned long)0xFF]) ^ RT1[(X1 >> 8) & (unsigned long)0xFF]) ^ RT2[
+            (X0 >> 16) & (unsigned long)0xFF]) ^ RT3[(X3 >> 24) & (unsigned long)0xFF];
       tmp_14 = RK;
       RK ++;
-      Y1 = (((*tmp_14 ^ RT0[X1 & (unsigned long)0xFF]) ^ RT1[(X0 >> 8) & (unsigned long)0xFF]) ^ RT2[
-            (X3 >> 16) & (unsigned long)0xFF]) ^ RT3[(X2 >> 24) & (unsigned long)0xFF];
-      tmp_15 = RK;
-      RK ++;
-      Y2 = (((*tmp_15 ^ RT0[X2 & (unsigned long)0xFF]) ^ RT1[(X1 >> 8) & (unsigned long)0xFF]) ^ RT2[
-            (X0 >> 16) & (unsigned long)0xFF]) ^ RT3[(X3 >> 24) & (unsigned long)0xFF];
-      tmp_16 = RK;
-      RK ++;
-      Y3 = (((*tmp_16 ^ RT0[X3 & (unsigned long)0xFF]) ^ RT1[(X2 >> 8) & (unsigned long)0xFF]) ^ RT2[
+      Y3 = (((*tmp_14 ^ RT0[X3 & (unsigned long)0xFF]) ^ RT1[(X2 >> 8) & (unsigned long)0xFF]) ^ RT2[
             (X1 >> 16) & (unsigned long)0xFF]) ^ RT3[(X0 >> 24) & (unsigned long)0xFF];
     }
-    tmp_17 = RK;
+    tmp_15 = RK;
     RK ++;
-    X0 = (((*tmp_17 ^ (unsigned long)RSb[Y0 & (unsigned long)0xFF]) ^ (
+    X0 = (((*tmp_15 ^ (unsigned long)RSb[Y0 & (unsigned long)0xFF]) ^ (
            (unsigned long)RSb[(Y3 >> 8) & (unsigned long)0xFF] << 8)) ^ (
           (unsigned long)RSb[(Y2 >> 16) & (unsigned long)0xFF] << 16)) ^ (
          (unsigned long)RSb[(Y1 >> 24) & (unsigned long)0xFF] << 24);
-    tmp_18 = RK;
+    tmp_16 = RK;
     RK ++;
-    X1 = (((*tmp_18 ^ (unsigned long)RSb[Y1 & (unsigned long)0xFF]) ^ (
+    X1 = (((*tmp_16 ^ (unsigned long)RSb[Y1 & (unsigned long)0xFF]) ^ (
            (unsigned long)RSb[(Y0 >> 8) & (unsigned long)0xFF] << 8)) ^ (
           (unsigned long)RSb[(Y3 >> 16) & (unsigned long)0xFF] << 16)) ^ (
          (unsigned long)RSb[(Y2 >> 24) & (unsigned long)0xFF] << 24);
-    tmp_19 = RK;
+    tmp_17 = RK;
     RK ++;
-    X2 = (((*tmp_19 ^ (unsigned long)RSb[Y2 & (unsigned long)0xFF]) ^ (
+    X2 = (((*tmp_17 ^ (unsigned long)RSb[Y2 & (unsigned long)0xFF]) ^ (
            (unsigned long)RSb[(Y1 >> 8) & (unsigned long)0xFF] << 8)) ^ (
           (unsigned long)RSb[(Y0 >> 16) & (unsigned long)0xFF] << 16)) ^ (
          (unsigned long)RSb[(Y3 >> 24) & (unsigned long)0xFF] << 24);
-    tmp_20 = RK;
+    tmp_18 = RK;
     RK ++;
-    X3 = (((*tmp_20 ^ (unsigned long)RSb[Y3 & (unsigned long)0xFF]) ^ (
+    X3 = (((*tmp_18 ^ (unsigned long)RSb[Y3 & (unsigned long)0xFF]) ^ (
            (unsigned long)RSb[(Y2 >> 8) & (unsigned long)0xFF] << 8)) ^ (
           (unsigned long)RSb[(Y1 >> 16) & (unsigned long)0xFF] << 16)) ^ (
          (unsigned long)RSb[(Y0 >> 24) & (unsigned long)0xFF] << 24);
   }
   else {
+    unsigned long *tmp_31;
+    unsigned long *tmp_32;
     unsigned long *tmp_33;
     unsigned long *tmp_34;
-    unsigned long *tmp_35;
-    unsigned long *tmp_36;
     i = (ctx->nr >> 1) - 1;
     while (i > 0) {
       {
+        unsigned long *tmp_19;
+        unsigned long *tmp_20;
         unsigned long *tmp_21;
         unsigned long *tmp_22;
-        unsigned long *tmp_23;
-        unsigned long *tmp_24;
+        tmp_19 = RK;
+        RK ++;
+        Y0 = (((*tmp_19 ^ FT0[X0 & (unsigned long)0xFF]) ^ FT1[(X1 >> 8) & (unsigned long)0xFF]) ^ FT2[
+              (X2 >> 16) & (unsigned long)0xFF]) ^ FT3[(X3 >> 24) & (unsigned long)0xFF];
+        tmp_20 = RK;
+        RK ++;
+        Y1 = (((*tmp_20 ^ FT0[X1 & (unsigned long)0xFF]) ^ FT1[(X2 >> 8) & (unsigned long)0xFF]) ^ FT2[
+              (X3 >> 16) & (unsigned long)0xFF]) ^ FT3[(X0 >> 24) & (unsigned long)0xFF];
         tmp_21 = RK;
         RK ++;
-        Y0 = (((*tmp_21 ^ FT0[X0 & (unsigned long)0xFF]) ^ FT1[(X1 >> 8) & (unsigned long)0xFF]) ^ FT2[
-              (X2 >> 16) & (unsigned long)0xFF]) ^ FT3[(X3 >> 24) & (unsigned long)0xFF];
+        Y2 = (((*tmp_21 ^ FT0[X2 & (unsigned long)0xFF]) ^ FT1[(X3 >> 8) & (unsigned long)0xFF]) ^ FT2[
+              (X0 >> 16) & (unsigned long)0xFF]) ^ FT3[(X1 >> 24) & (unsigned long)0xFF];
         tmp_22 = RK;
         RK ++;
-        Y1 = (((*tmp_22 ^ FT0[X1 & (unsigned long)0xFF]) ^ FT1[(X2 >> 8) & (unsigned long)0xFF]) ^ FT2[
-              (X3 >> 16) & (unsigned long)0xFF]) ^ FT3[(X0 >> 24) & (unsigned long)0xFF];
-        tmp_23 = RK;
-        RK ++;
-        Y2 = (((*tmp_23 ^ FT0[X2 & (unsigned long)0xFF]) ^ FT1[(X3 >> 8) & (unsigned long)0xFF]) ^ FT2[
-              (X0 >> 16) & (unsigned long)0xFF]) ^ FT3[(X1 >> 24) & (unsigned long)0xFF];
-        tmp_24 = RK;
-        RK ++;
-        Y3 = (((*tmp_24 ^ FT0[X3 & (unsigned long)0xFF]) ^ FT1[(X0 >> 8) & (unsigned long)0xFF]) ^ FT2[
+        Y3 = (((*tmp_22 ^ FT0[X3 & (unsigned long)0xFF]) ^ FT1[(X0 >> 8) & (unsigned long)0xFF]) ^ FT2[
               (X1 >> 16) & (unsigned long)0xFF]) ^ FT3[(X2 >> 24) & (unsigned long)0xFF];
       }
       {
+        unsigned long *tmp_23;
+        unsigned long *tmp_24;
         unsigned long *tmp_25;
         unsigned long *tmp_26;
-        unsigned long *tmp_27;
-        unsigned long *tmp_28;
+        tmp_23 = RK;
+        RK ++;
+        X0 = (((*tmp_23 ^ FT0[Y0 & (unsigned long)0xFF]) ^ FT1[(Y1 >> 8) & (unsigned long)0xFF]) ^ FT2[
+              (Y2 >> 16) & (unsigned long)0xFF]) ^ FT3[(Y3 >> 24) & (unsigned long)0xFF];
+        tmp_24 = RK;
+        RK ++;
+        X1 = (((*tmp_24 ^ FT0[Y1 & (unsigned long)0xFF]) ^ FT1[(Y2 >> 8) & (unsigned long)0xFF]) ^ FT2[
+              (Y3 >> 16) & (unsigned long)0xFF]) ^ FT3[(Y0 >> 24) & (unsigned long)0xFF];
         tmp_25 = RK;
         RK ++;
-        X0 = (((*tmp_25 ^ FT0[Y0 & (unsigned long)0xFF]) ^ FT1[(Y1 >> 8) & (unsigned long)0xFF]) ^ FT2[
-              (Y2 >> 16) & (unsigned long)0xFF]) ^ FT3[(Y3 >> 24) & (unsigned long)0xFF];
+        X2 = (((*tmp_25 ^ FT0[Y2 & (unsigned long)0xFF]) ^ FT1[(Y3 >> 8) & (unsigned long)0xFF]) ^ FT2[
+              (Y0 >> 16) & (unsigned long)0xFF]) ^ FT3[(Y1 >> 24) & (unsigned long)0xFF];
         tmp_26 = RK;
         RK ++;
-        X1 = (((*tmp_26 ^ FT0[Y1 & (unsigned long)0xFF]) ^ FT1[(Y2 >> 8) & (unsigned long)0xFF]) ^ FT2[
-              (Y3 >> 16) & (unsigned long)0xFF]) ^ FT3[(Y0 >> 24) & (unsigned long)0xFF];
-        tmp_27 = RK;
-        RK ++;
-        X2 = (((*tmp_27 ^ FT0[Y2 & (unsigned long)0xFF]) ^ FT1[(Y3 >> 8) & (unsigned long)0xFF]) ^ FT2[
-              (Y0 >> 16) & (unsigned long)0xFF]) ^ FT3[(Y1 >> 24) & (unsigned long)0xFF];
-        tmp_28 = RK;
-        RK ++;
-        X3 = (((*tmp_28 ^ FT0[Y3 & (unsigned long)0xFF]) ^ FT1[(Y0 >> 8) & (unsigned long)0xFF]) ^ FT2[
+        X3 = (((*tmp_26 ^ FT0[Y3 & (unsigned long)0xFF]) ^ FT1[(Y0 >> 8) & (unsigned long)0xFF]) ^ FT2[
               (Y1 >> 16) & (unsigned long)0xFF]) ^ FT3[(Y2 >> 24) & (unsigned long)0xFF];
       }
       i --;
     }
     {
+      unsigned long *tmp_27;
+      unsigned long *tmp_28;
       unsigned long *tmp_29;
       unsigned long *tmp_30;
-      unsigned long *tmp_31;
-      unsigned long *tmp_32;
+      tmp_27 = RK;
+      RK ++;
+      Y0 = (((*tmp_27 ^ FT0[X0 & (unsigned long)0xFF]) ^ FT1[(X1 >> 8) & (unsigned long)0xFF]) ^ FT2[
+            (X2 >> 16) & (unsigned long)0xFF]) ^ FT3[(X3 >> 24) & (unsigned long)0xFF];
+      tmp_28 = RK;
+      RK ++;
+      Y1 = (((*tmp_28 ^ FT0[X1 & (unsigned long)0xFF]) ^ FT1[(X2 >> 8) & (unsigned long)0xFF]) ^ FT2[
+            (X3 >> 16) & (unsigned long)0xFF]) ^ FT3[(X0 >> 24) & (unsigned long)0xFF];
       tmp_29 = RK;
       RK ++;
-      Y0 = (((*tmp_29 ^ FT0[X0 & (unsigned long)0xFF]) ^ FT1[(X1 >> 8) & (unsigned long)0xFF]) ^ FT2[
-            (X2 >> 16) & (unsigned long)0xFF]) ^ FT3[(X3 >> 24) & (unsigned long)0xFF];
+      Y2 = (((*tmp_29 ^ FT0[X2 & (unsigned long)0xFF]) ^ FT1[(X3 >> 8) & (unsigned long)0xFF]) ^ FT2[
+            (X0 >> 16) & (unsigned long)0xFF]) ^ FT3[(X1 >> 24) & (unsigned long)0xFF];
       tmp_30 = RK;
       RK ++;
-      Y1 = (((*tmp_30 ^ FT0[X1 & (unsigned long)0xFF]) ^ FT1[(X2 >> 8) & (unsigned long)0xFF]) ^ FT2[
-            (X3 >> 16) & (unsigned long)0xFF]) ^ FT3[(X0 >> 24) & (unsigned long)0xFF];
-      tmp_31 = RK;
-      RK ++;
-      Y2 = (((*tmp_31 ^ FT0[X2 & (unsigned long)0xFF]) ^ FT1[(X3 >> 8) & (unsigned long)0xFF]) ^ FT2[
-            (X0 >> 16) & (unsigned long)0xFF]) ^ FT3[(X1 >> 24) & (unsigned long)0xFF];
-      tmp_32 = RK;
-      RK ++;
-      Y3 = (((*tmp_32 ^ FT0[X3 & (unsigned long)0xFF]) ^ FT1[(X0 >> 8) & (unsigned long)0xFF]) ^ FT2[
+      Y3 = (((*tmp_30 ^ FT0[X3 & (unsigned long)0xFF]) ^ FT1[(X0 >> 8) & (unsigned long)0xFF]) ^ FT2[
             (X1 >> 16) & (unsigned long)0xFF]) ^ FT3[(X2 >> 24) & (unsigned long)0xFF];
     }
-    tmp_33 = RK;
+    tmp_31 = RK;
     RK ++;
-    X0 = (((*tmp_33 ^ (unsigned long)FSb[Y0 & (unsigned long)0xFF]) ^ (
+    X0 = (((*tmp_31 ^ (unsigned long)FSb[Y0 & (unsigned long)0xFF]) ^ (
            (unsigned long)FSb[(Y1 >> 8) & (unsigned long)0xFF] << 8)) ^ (
           (unsigned long)FSb[(Y2 >> 16) & (unsigned long)0xFF] << 16)) ^ (
          (unsigned long)FSb[(Y3 >> 24) & (unsigned long)0xFF] << 24);
-    tmp_34 = RK;
+    tmp_32 = RK;
     RK ++;
-    X1 = (((*tmp_34 ^ (unsigned long)FSb[Y1 & (unsigned long)0xFF]) ^ (
+    X1 = (((*tmp_32 ^ (unsigned long)FSb[Y1 & (unsigned long)0xFF]) ^ (
            (unsigned long)FSb[(Y2 >> 8) & (unsigned long)0xFF] << 8)) ^ (
           (unsigned long)FSb[(Y3 >> 16) & (unsigned long)0xFF] << 16)) ^ (
          (unsigned long)FSb[(Y0 >> 24) & (unsigned long)0xFF] << 24);
-    tmp_35 = RK;
+    tmp_33 = RK;
     RK ++;
-    X2 = (((*tmp_35 ^ (unsigned long)FSb[Y2 & (unsigned long)0xFF]) ^ (
+    X2 = (((*tmp_33 ^ (unsigned long)FSb[Y2 & (unsigned long)0xFF]) ^ (
            (unsigned long)FSb[(Y3 >> 8) & (unsigned long)0xFF] << 8)) ^ (
           (unsigned long)FSb[(Y0 >> 16) & (unsigned long)0xFF] << 16)) ^ (
          (unsigned long)FSb[(Y1 >> 24) & (unsigned long)0xFF] << 24);
-    tmp_36 = RK;
+    tmp_34 = RK;
     RK ++;
-    X3 = (((*tmp_36 ^ (unsigned long)FSb[Y3 & (unsigned long)0xFF]) ^ (
+    X3 = (((*tmp_34 ^ (unsigned long)FSb[Y3 & (unsigned long)0xFF]) ^ (
            (unsigned long)FSb[(Y0 >> 8) & (unsigned long)0xFF] << 8)) ^ (
           (unsigned long)FSb[(Y1 >> 16) & (unsigned long)0xFF] << 16)) ^ (
          (unsigned long)FSb[(Y2 >> 24) & (unsigned long)0xFF] << 24);
@@ -1729,7 +1710,7 @@ int aes_crypt_ecb(aes_context *ctx, int mode, unsigned char const input[16],
   *(output + (12 + 2)) = (unsigned char)(X3 >> 16);
   *(output + (12 + 3)) = (unsigned char)(X3 >> 24);
   __retres = 0;
-  return_label: return __retres;
+  return __retres;
 }
 
 /*@ requires length % 16 ≡ 0;
@@ -1749,19 +1730,9 @@ int aes_crypt_cbc(aes_context *ctx, int mode, size_t length,
   int __retres;
   int i;
   unsigned char temp[16];
-  int tmp_0;
   if (length % (unsigned int)16) {
     __retres = -0x0022;
     goto return_label;
-  }
-  tmp_0 = padlock_supports(0x00C0);
-  if (tmp_0) {
-    int tmp;
-    tmp = padlock_xcryptcbc(ctx,mode,length,iv,input,output);
-    if (tmp == 0) {
-      __retres = 0;
-      goto return_label;
-    }
   }
   if (mode == 0) 
     while (length > (size_t)0) {
@@ -5331,343 +5302,648 @@ static void mpi_mul_hlp(size_t i, t_uint *s, t_uint *d, t_uint b)
   t_uint c = (t_uint)0;
   t_uint t = (t_uint)0;
   while (i >= (size_t)16) {
-    /*@ assigns *(s + (..));
-        assigns *(s + (..)) \from (indirect: s), *(s + (..));
-    */
-    __asm__ ("movq   %0, %%rsi      " :  : "m" (s));
-    /*@ assigns *(d + (..));
-        assigns *(d + (..)) \from (indirect: d), *(d + (..));
-    */
-    __asm__ ("movq   %0, %%rdi      " :  : "m" (d));
-    /*@ assigns \nothing; */
-    __asm__ ("movq   %0, %%rcx      " :  : "m" (c));
-    /*@ assigns \nothing; */
-    __asm__ ("movq   %0, %%rbx      " :  : "m" (b));
-    __asm__ ("xorq   %r8, %r8       ");
-    __asm__ ("movq  (%rsi),%rax     ");
-    __asm__ ("mulq   %rbx           ");
-    __asm__ ("addq   $8,   %rsi     ");
-    __asm__ ("addq   %rcx, %rax     ");
-    __asm__ ("movq   %r8,  %rcx     ");
-    __asm__ ("adcq   $0,   %rdx     ");
-    __asm__ ("nop                   ");
-    __asm__ ("addq   %rax, (%rdi)   ");
-    __asm__ ("adcq   %rdx, %rcx     ");
-    __asm__ ("addq   $8,   %rdi     ");
-    __asm__ ("movq  (%rsi),%rax     ");
-    __asm__ ("mulq   %rbx           ");
-    __asm__ ("addq   $8,   %rsi     ");
-    __asm__ ("addq   %rcx, %rax     ");
-    __asm__ ("movq   %r8,  %rcx     ");
-    __asm__ ("adcq   $0,   %rdx     ");
-    __asm__ ("nop                   ");
-    __asm__ ("addq   %rax, (%rdi)   ");
-    __asm__ ("adcq   %rdx, %rcx     ");
-    __asm__ ("addq   $8,   %rdi     ");
-    __asm__ ("movq  (%rsi),%rax     ");
-    __asm__ ("mulq   %rbx           ");
-    __asm__ ("addq   $8,   %rsi     ");
-    __asm__ ("addq   %rcx, %rax     ");
-    __asm__ ("movq   %r8,  %rcx     ");
-    __asm__ ("adcq   $0,   %rdx     ");
-    __asm__ ("nop                   ");
-    __asm__ ("addq   %rax, (%rdi)   ");
-    __asm__ ("adcq   %rdx, %rcx     ");
-    __asm__ ("addq   $8,   %rdi     ");
-    __asm__ ("movq  (%rsi),%rax     ");
-    __asm__ ("mulq   %rbx           ");
-    __asm__ ("addq   $8,   %rsi     ");
-    __asm__ ("addq   %rcx, %rax     ");
-    __asm__ ("movq   %r8,  %rcx     ");
-    __asm__ ("adcq   $0,   %rdx     ");
-    __asm__ ("nop                   ");
-    __asm__ ("addq   %rax, (%rdi)   ");
-    __asm__ ("adcq   %rdx, %rcx     ");
-    __asm__ ("addq   $8,   %rdi     ");
-    __asm__ ("movq  (%rsi),%rax     ");
-    __asm__ ("mulq   %rbx           ");
-    __asm__ ("addq   $8,   %rsi     ");
-    __asm__ ("addq   %rcx, %rax     ");
-    __asm__ ("movq   %r8,  %rcx     ");
-    __asm__ ("adcq   $0,   %rdx     ");
-    __asm__ ("nop                   ");
-    __asm__ ("addq   %rax, (%rdi)   ");
-    __asm__ ("adcq   %rdx, %rcx     ");
-    __asm__ ("addq   $8,   %rdi     ");
-    __asm__ ("movq  (%rsi),%rax     ");
-    __asm__ ("mulq   %rbx           ");
-    __asm__ ("addq   $8,   %rsi     ");
-    __asm__ ("addq   %rcx, %rax     ");
-    __asm__ ("movq   %r8,  %rcx     ");
-    __asm__ ("adcq   $0,   %rdx     ");
-    __asm__ ("nop                   ");
-    __asm__ ("addq   %rax, (%rdi)   ");
-    __asm__ ("adcq   %rdx, %rcx     ");
-    __asm__ ("addq   $8,   %rdi     ");
-    __asm__ ("movq  (%rsi),%rax     ");
-    __asm__ ("mulq   %rbx           ");
-    __asm__ ("addq   $8,   %rsi     ");
-    __asm__ ("addq   %rcx, %rax     ");
-    __asm__ ("movq   %r8,  %rcx     ");
-    __asm__ ("adcq   $0,   %rdx     ");
-    __asm__ ("nop                   ");
-    __asm__ ("addq   %rax, (%rdi)   ");
-    __asm__ ("adcq   %rdx, %rcx     ");
-    __asm__ ("addq   $8,   %rdi     ");
-    __asm__ ("movq  (%rsi),%rax     ");
-    __asm__ ("mulq   %rbx           ");
-    __asm__ ("addq   $8,   %rsi     ");
-    __asm__ ("addq   %rcx, %rax     ");
-    __asm__ ("movq   %r8,  %rcx     ");
-    __asm__ ("adcq   $0,   %rdx     ");
-    __asm__ ("nop                   ");
-    __asm__ ("addq   %rax, (%rdi)   ");
-    __asm__ ("adcq   %rdx, %rcx     ");
-    __asm__ ("addq   $8,   %rdi     ");
-    __asm__ ("movq  (%rsi),%rax     ");
-    __asm__ ("mulq   %rbx           ");
-    __asm__ ("addq   $8,   %rsi     ");
-    __asm__ ("addq   %rcx, %rax     ");
-    __asm__ ("movq   %r8,  %rcx     ");
-    __asm__ ("adcq   $0,   %rdx     ");
-    __asm__ ("nop                   ");
-    __asm__ ("addq   %rax, (%rdi)   ");
-    __asm__ ("adcq   %rdx, %rcx     ");
-    __asm__ ("addq   $8,   %rdi     ");
-    __asm__ ("movq  (%rsi),%rax     ");
-    __asm__ ("mulq   %rbx           ");
-    __asm__ ("addq   $8,   %rsi     ");
-    __asm__ ("addq   %rcx, %rax     ");
-    __asm__ ("movq   %r8,  %rcx     ");
-    __asm__ ("adcq   $0,   %rdx     ");
-    __asm__ ("nop                   ");
-    __asm__ ("addq   %rax, (%rdi)   ");
-    __asm__ ("adcq   %rdx, %rcx     ");
-    __asm__ ("addq   $8,   %rdi     ");
-    __asm__ ("movq  (%rsi),%rax     ");
-    __asm__ ("mulq   %rbx           ");
-    __asm__ ("addq   $8,   %rsi     ");
-    __asm__ ("addq   %rcx, %rax     ");
-    __asm__ ("movq   %r8,  %rcx     ");
-    __asm__ ("adcq   $0,   %rdx     ");
-    __asm__ ("nop                   ");
-    __asm__ ("addq   %rax, (%rdi)   ");
-    __asm__ ("adcq   %rdx, %rcx     ");
-    __asm__ ("addq   $8,   %rdi     ");
-    __asm__ ("movq  (%rsi),%rax     ");
-    __asm__ ("mulq   %rbx           ");
-    __asm__ ("addq   $8,   %rsi     ");
-    __asm__ ("addq   %rcx, %rax     ");
-    __asm__ ("movq   %r8,  %rcx     ");
-    __asm__ ("adcq   $0,   %rdx     ");
-    __asm__ ("nop                   ");
-    __asm__ ("addq   %rax, (%rdi)   ");
-    __asm__ ("adcq   %rdx, %rcx     ");
-    __asm__ ("addq   $8,   %rdi     ");
-    __asm__ ("movq  (%rsi),%rax     ");
-    __asm__ ("mulq   %rbx           ");
-    __asm__ ("addq   $8,   %rsi     ");
-    __asm__ ("addq   %rcx, %rax     ");
-    __asm__ ("movq   %r8,  %rcx     ");
-    __asm__ ("adcq   $0,   %rdx     ");
-    __asm__ ("nop                   ");
-    __asm__ ("addq   %rax, (%rdi)   ");
-    __asm__ ("adcq   %rdx, %rcx     ");
-    __asm__ ("addq   $8,   %rdi     ");
-    __asm__ ("movq  (%rsi),%rax     ");
-    __asm__ ("mulq   %rbx           ");
-    __asm__ ("addq   $8,   %rsi     ");
-    __asm__ ("addq   %rcx, %rax     ");
-    __asm__ ("movq   %r8,  %rcx     ");
-    __asm__ ("adcq   $0,   %rdx     ");
-    __asm__ ("nop                   ");
-    __asm__ ("addq   %rax, (%rdi)   ");
-    __asm__ ("adcq   %rdx, %rcx     ");
-    __asm__ ("addq   $8,   %rdi     ");
-    __asm__ ("movq  (%rsi),%rax     ");
-    __asm__ ("mulq   %rbx           ");
-    __asm__ ("addq   $8,   %rsi     ");
-    __asm__ ("addq   %rcx, %rax     ");
-    __asm__ ("movq   %r8,  %rcx     ");
-    __asm__ ("adcq   $0,   %rdx     ");
-    __asm__ ("nop                   ");
-    __asm__ ("addq   %rax, (%rdi)   ");
-    __asm__ ("adcq   %rdx, %rcx     ");
-    __asm__ ("addq   $8,   %rdi     ");
-    __asm__ ("movq  (%rsi),%rax     ");
-    __asm__ ("mulq   %rbx           ");
-    __asm__ ("addq   $8,   %rsi     ");
-    __asm__ ("addq   %rcx, %rax     ");
-    __asm__ ("movq   %r8,  %rcx     ");
-    __asm__ ("adcq   $0,   %rdx     ");
-    __asm__ ("nop                   ");
-    __asm__ ("addq   %rax, (%rdi)   ");
-    __asm__ ("adcq   %rdx, %rcx     ");
-    __asm__ ("addq   $8,   %rdi     ");
-    /*@ assigns c;
-        assigns c \from \nothing; */
-    __asm__ ("movq   %%rcx, %0      " : "=m" (c));
-    /*@ assigns d;
-        assigns d \from \nothing; */
-    __asm__ ("movq   %%rdi, %0      " : "=m" (d));
-    /*@ assigns s;
-        assigns s \from \nothing; */
-    __asm__ (
-      "movq   %%rsi, %0      "
-      : "=m" (s)
-      : 
-      : "rax", "rcx", "rdx", "rbx", "rsi", "rdi", "r8"
-      );
+    {
+      t_uint s0;
+      t_uint s1;
+      t_uint b0;
+      t_uint b1;
+      t_uint r0;
+      t_uint r1;
+      t_uint rx;
+      t_uint ry;
+      t_uint *tmp;
+      t_uint *tmp_0;
+      t_uint *tmp_1;
+      t_uint *tmp_2;
+      t_uint *tmp_3;
+      t_uint *tmp_4;
+      t_uint *tmp_5;
+      t_uint *tmp_6;
+      t_uint *tmp_7;
+      t_uint *tmp_8;
+      t_uint *tmp_9;
+      t_uint *tmp_10;
+      t_uint *tmp_11;
+      t_uint *tmp_12;
+      t_uint *tmp_13;
+      t_uint *tmp_14;
+      b0 = (b << (sizeof(t_uint) << 2)) >> (sizeof(t_uint) << 2);
+      b1 = b >> (sizeof(t_uint) << 2);
+      s0 = (*s << (sizeof(t_uint) << 2)) >> (sizeof(t_uint) << 2);
+      s1 = *s >> (sizeof(t_uint) << 2);
+      s ++;
+      rx = s0 * b1;
+      r0 = s0 * b0;
+      ry = s1 * b0;
+      r1 = s1 * b1;
+      r1 += rx >> (sizeof(t_uint) << 2);
+      r1 += ry >> (sizeof(t_uint) << 2);
+      rx <<= sizeof(t_uint) << 2;
+      ry <<= sizeof(t_uint) << 2;
+      r0 += rx;
+      r1 += (t_uint)(r0 < rx);
+      r0 += ry;
+      r1 += (t_uint)(r0 < ry);
+      r0 += c;
+      r1 += (t_uint)(r0 < c);
+      r0 += *d;
+      r1 += (t_uint)(r0 < *d);
+      c = r1;
+      tmp = d;
+      d ++;
+      *tmp = r0;
+      s0 = (*s << (sizeof(t_uint) << 2)) >> (sizeof(t_uint) << 2);
+      s1 = *s >> (sizeof(t_uint) << 2);
+      s ++;
+      rx = s0 * b1;
+      r0 = s0 * b0;
+      ry = s1 * b0;
+      r1 = s1 * b1;
+      r1 += rx >> (sizeof(t_uint) << 2);
+      r1 += ry >> (sizeof(t_uint) << 2);
+      rx <<= sizeof(t_uint) << 2;
+      ry <<= sizeof(t_uint) << 2;
+      r0 += rx;
+      r1 += (t_uint)(r0 < rx);
+      r0 += ry;
+      r1 += (t_uint)(r0 < ry);
+      r0 += c;
+      r1 += (t_uint)(r0 < c);
+      r0 += *d;
+      r1 += (t_uint)(r0 < *d);
+      c = r1;
+      tmp_0 = d;
+      d ++;
+      *tmp_0 = r0;
+      s0 = (*s << (sizeof(t_uint) << 2)) >> (sizeof(t_uint) << 2);
+      s1 = *s >> (sizeof(t_uint) << 2);
+      s ++;
+      rx = s0 * b1;
+      r0 = s0 * b0;
+      ry = s1 * b0;
+      r1 = s1 * b1;
+      r1 += rx >> (sizeof(t_uint) << 2);
+      r1 += ry >> (sizeof(t_uint) << 2);
+      rx <<= sizeof(t_uint) << 2;
+      ry <<= sizeof(t_uint) << 2;
+      r0 += rx;
+      r1 += (t_uint)(r0 < rx);
+      r0 += ry;
+      r1 += (t_uint)(r0 < ry);
+      r0 += c;
+      r1 += (t_uint)(r0 < c);
+      r0 += *d;
+      r1 += (t_uint)(r0 < *d);
+      c = r1;
+      tmp_1 = d;
+      d ++;
+      *tmp_1 = r0;
+      s0 = (*s << (sizeof(t_uint) << 2)) >> (sizeof(t_uint) << 2);
+      s1 = *s >> (sizeof(t_uint) << 2);
+      s ++;
+      rx = s0 * b1;
+      r0 = s0 * b0;
+      ry = s1 * b0;
+      r1 = s1 * b1;
+      r1 += rx >> (sizeof(t_uint) << 2);
+      r1 += ry >> (sizeof(t_uint) << 2);
+      rx <<= sizeof(t_uint) << 2;
+      ry <<= sizeof(t_uint) << 2;
+      r0 += rx;
+      r1 += (t_uint)(r0 < rx);
+      r0 += ry;
+      r1 += (t_uint)(r0 < ry);
+      r0 += c;
+      r1 += (t_uint)(r0 < c);
+      r0 += *d;
+      r1 += (t_uint)(r0 < *d);
+      c = r1;
+      tmp_2 = d;
+      d ++;
+      *tmp_2 = r0;
+      s0 = (*s << (sizeof(t_uint) << 2)) >> (sizeof(t_uint) << 2);
+      s1 = *s >> (sizeof(t_uint) << 2);
+      s ++;
+      rx = s0 * b1;
+      r0 = s0 * b0;
+      ry = s1 * b0;
+      r1 = s1 * b1;
+      r1 += rx >> (sizeof(t_uint) << 2);
+      r1 += ry >> (sizeof(t_uint) << 2);
+      rx <<= sizeof(t_uint) << 2;
+      ry <<= sizeof(t_uint) << 2;
+      r0 += rx;
+      r1 += (t_uint)(r0 < rx);
+      r0 += ry;
+      r1 += (t_uint)(r0 < ry);
+      r0 += c;
+      r1 += (t_uint)(r0 < c);
+      r0 += *d;
+      r1 += (t_uint)(r0 < *d);
+      c = r1;
+      tmp_3 = d;
+      d ++;
+      *tmp_3 = r0;
+      s0 = (*s << (sizeof(t_uint) << 2)) >> (sizeof(t_uint) << 2);
+      s1 = *s >> (sizeof(t_uint) << 2);
+      s ++;
+      rx = s0 * b1;
+      r0 = s0 * b0;
+      ry = s1 * b0;
+      r1 = s1 * b1;
+      r1 += rx >> (sizeof(t_uint) << 2);
+      r1 += ry >> (sizeof(t_uint) << 2);
+      rx <<= sizeof(t_uint) << 2;
+      ry <<= sizeof(t_uint) << 2;
+      r0 += rx;
+      r1 += (t_uint)(r0 < rx);
+      r0 += ry;
+      r1 += (t_uint)(r0 < ry);
+      r0 += c;
+      r1 += (t_uint)(r0 < c);
+      r0 += *d;
+      r1 += (t_uint)(r0 < *d);
+      c = r1;
+      tmp_4 = d;
+      d ++;
+      *tmp_4 = r0;
+      s0 = (*s << (sizeof(t_uint) << 2)) >> (sizeof(t_uint) << 2);
+      s1 = *s >> (sizeof(t_uint) << 2);
+      s ++;
+      rx = s0 * b1;
+      r0 = s0 * b0;
+      ry = s1 * b0;
+      r1 = s1 * b1;
+      r1 += rx >> (sizeof(t_uint) << 2);
+      r1 += ry >> (sizeof(t_uint) << 2);
+      rx <<= sizeof(t_uint) << 2;
+      ry <<= sizeof(t_uint) << 2;
+      r0 += rx;
+      r1 += (t_uint)(r0 < rx);
+      r0 += ry;
+      r1 += (t_uint)(r0 < ry);
+      r0 += c;
+      r1 += (t_uint)(r0 < c);
+      r0 += *d;
+      r1 += (t_uint)(r0 < *d);
+      c = r1;
+      tmp_5 = d;
+      d ++;
+      *tmp_5 = r0;
+      s0 = (*s << (sizeof(t_uint) << 2)) >> (sizeof(t_uint) << 2);
+      s1 = *s >> (sizeof(t_uint) << 2);
+      s ++;
+      rx = s0 * b1;
+      r0 = s0 * b0;
+      ry = s1 * b0;
+      r1 = s1 * b1;
+      r1 += rx >> (sizeof(t_uint) << 2);
+      r1 += ry >> (sizeof(t_uint) << 2);
+      rx <<= sizeof(t_uint) << 2;
+      ry <<= sizeof(t_uint) << 2;
+      r0 += rx;
+      r1 += (t_uint)(r0 < rx);
+      r0 += ry;
+      r1 += (t_uint)(r0 < ry);
+      r0 += c;
+      r1 += (t_uint)(r0 < c);
+      r0 += *d;
+      r1 += (t_uint)(r0 < *d);
+      c = r1;
+      tmp_6 = d;
+      d ++;
+      *tmp_6 = r0;
+      s0 = (*s << (sizeof(t_uint) << 2)) >> (sizeof(t_uint) << 2);
+      s1 = *s >> (sizeof(t_uint) << 2);
+      s ++;
+      rx = s0 * b1;
+      r0 = s0 * b0;
+      ry = s1 * b0;
+      r1 = s1 * b1;
+      r1 += rx >> (sizeof(t_uint) << 2);
+      r1 += ry >> (sizeof(t_uint) << 2);
+      rx <<= sizeof(t_uint) << 2;
+      ry <<= sizeof(t_uint) << 2;
+      r0 += rx;
+      r1 += (t_uint)(r0 < rx);
+      r0 += ry;
+      r1 += (t_uint)(r0 < ry);
+      r0 += c;
+      r1 += (t_uint)(r0 < c);
+      r0 += *d;
+      r1 += (t_uint)(r0 < *d);
+      c = r1;
+      tmp_7 = d;
+      d ++;
+      *tmp_7 = r0;
+      s0 = (*s << (sizeof(t_uint) << 2)) >> (sizeof(t_uint) << 2);
+      s1 = *s >> (sizeof(t_uint) << 2);
+      s ++;
+      rx = s0 * b1;
+      r0 = s0 * b0;
+      ry = s1 * b0;
+      r1 = s1 * b1;
+      r1 += rx >> (sizeof(t_uint) << 2);
+      r1 += ry >> (sizeof(t_uint) << 2);
+      rx <<= sizeof(t_uint) << 2;
+      ry <<= sizeof(t_uint) << 2;
+      r0 += rx;
+      r1 += (t_uint)(r0 < rx);
+      r0 += ry;
+      r1 += (t_uint)(r0 < ry);
+      r0 += c;
+      r1 += (t_uint)(r0 < c);
+      r0 += *d;
+      r1 += (t_uint)(r0 < *d);
+      c = r1;
+      tmp_8 = d;
+      d ++;
+      *tmp_8 = r0;
+      s0 = (*s << (sizeof(t_uint) << 2)) >> (sizeof(t_uint) << 2);
+      s1 = *s >> (sizeof(t_uint) << 2);
+      s ++;
+      rx = s0 * b1;
+      r0 = s0 * b0;
+      ry = s1 * b0;
+      r1 = s1 * b1;
+      r1 += rx >> (sizeof(t_uint) << 2);
+      r1 += ry >> (sizeof(t_uint) << 2);
+      rx <<= sizeof(t_uint) << 2;
+      ry <<= sizeof(t_uint) << 2;
+      r0 += rx;
+      r1 += (t_uint)(r0 < rx);
+      r0 += ry;
+      r1 += (t_uint)(r0 < ry);
+      r0 += c;
+      r1 += (t_uint)(r0 < c);
+      r0 += *d;
+      r1 += (t_uint)(r0 < *d);
+      c = r1;
+      tmp_9 = d;
+      d ++;
+      *tmp_9 = r0;
+      s0 = (*s << (sizeof(t_uint) << 2)) >> (sizeof(t_uint) << 2);
+      s1 = *s >> (sizeof(t_uint) << 2);
+      s ++;
+      rx = s0 * b1;
+      r0 = s0 * b0;
+      ry = s1 * b0;
+      r1 = s1 * b1;
+      r1 += rx >> (sizeof(t_uint) << 2);
+      r1 += ry >> (sizeof(t_uint) << 2);
+      rx <<= sizeof(t_uint) << 2;
+      ry <<= sizeof(t_uint) << 2;
+      r0 += rx;
+      r1 += (t_uint)(r0 < rx);
+      r0 += ry;
+      r1 += (t_uint)(r0 < ry);
+      r0 += c;
+      r1 += (t_uint)(r0 < c);
+      r0 += *d;
+      r1 += (t_uint)(r0 < *d);
+      c = r1;
+      tmp_10 = d;
+      d ++;
+      *tmp_10 = r0;
+      s0 = (*s << (sizeof(t_uint) << 2)) >> (sizeof(t_uint) << 2);
+      s1 = *s >> (sizeof(t_uint) << 2);
+      s ++;
+      rx = s0 * b1;
+      r0 = s0 * b0;
+      ry = s1 * b0;
+      r1 = s1 * b1;
+      r1 += rx >> (sizeof(t_uint) << 2);
+      r1 += ry >> (sizeof(t_uint) << 2);
+      rx <<= sizeof(t_uint) << 2;
+      ry <<= sizeof(t_uint) << 2;
+      r0 += rx;
+      r1 += (t_uint)(r0 < rx);
+      r0 += ry;
+      r1 += (t_uint)(r0 < ry);
+      r0 += c;
+      r1 += (t_uint)(r0 < c);
+      r0 += *d;
+      r1 += (t_uint)(r0 < *d);
+      c = r1;
+      tmp_11 = d;
+      d ++;
+      *tmp_11 = r0;
+      s0 = (*s << (sizeof(t_uint) << 2)) >> (sizeof(t_uint) << 2);
+      s1 = *s >> (sizeof(t_uint) << 2);
+      s ++;
+      rx = s0 * b1;
+      r0 = s0 * b0;
+      ry = s1 * b0;
+      r1 = s1 * b1;
+      r1 += rx >> (sizeof(t_uint) << 2);
+      r1 += ry >> (sizeof(t_uint) << 2);
+      rx <<= sizeof(t_uint) << 2;
+      ry <<= sizeof(t_uint) << 2;
+      r0 += rx;
+      r1 += (t_uint)(r0 < rx);
+      r0 += ry;
+      r1 += (t_uint)(r0 < ry);
+      r0 += c;
+      r1 += (t_uint)(r0 < c);
+      r0 += *d;
+      r1 += (t_uint)(r0 < *d);
+      c = r1;
+      tmp_12 = d;
+      d ++;
+      *tmp_12 = r0;
+      s0 = (*s << (sizeof(t_uint) << 2)) >> (sizeof(t_uint) << 2);
+      s1 = *s >> (sizeof(t_uint) << 2);
+      s ++;
+      rx = s0 * b1;
+      r0 = s0 * b0;
+      ry = s1 * b0;
+      r1 = s1 * b1;
+      r1 += rx >> (sizeof(t_uint) << 2);
+      r1 += ry >> (sizeof(t_uint) << 2);
+      rx <<= sizeof(t_uint) << 2;
+      ry <<= sizeof(t_uint) << 2;
+      r0 += rx;
+      r1 += (t_uint)(r0 < rx);
+      r0 += ry;
+      r1 += (t_uint)(r0 < ry);
+      r0 += c;
+      r1 += (t_uint)(r0 < c);
+      r0 += *d;
+      r1 += (t_uint)(r0 < *d);
+      c = r1;
+      tmp_13 = d;
+      d ++;
+      *tmp_13 = r0;
+      s0 = (*s << (sizeof(t_uint) << 2)) >> (sizeof(t_uint) << 2);
+      s1 = *s >> (sizeof(t_uint) << 2);
+      s ++;
+      rx = s0 * b1;
+      r0 = s0 * b0;
+      ry = s1 * b0;
+      r1 = s1 * b1;
+      r1 += rx >> (sizeof(t_uint) << 2);
+      r1 += ry >> (sizeof(t_uint) << 2);
+      rx <<= sizeof(t_uint) << 2;
+      ry <<= sizeof(t_uint) << 2;
+      r0 += rx;
+      r1 += (t_uint)(r0 < rx);
+      r0 += ry;
+      r1 += (t_uint)(r0 < ry);
+      r0 += c;
+      r1 += (t_uint)(r0 < c);
+      r0 += *d;
+      r1 += (t_uint)(r0 < *d);
+      c = r1;
+      tmp_14 = d;
+      d ++;
+      *tmp_14 = r0;
+    }
     i -= (size_t)16;
   }
   while (i >= (size_t)8) {
-    /*@ assigns *(s + (..));
-        assigns *(s + (..)) \from (indirect: s), *(s + (..));
-    */
-    __asm__ ("movq   %0, %%rsi      " :  : "m" (s));
-    /*@ assigns *(d + (..));
-        assigns *(d + (..)) \from (indirect: d), *(d + (..));
-    */
-    __asm__ ("movq   %0, %%rdi      " :  : "m" (d));
-    /*@ assigns \nothing; */
-    __asm__ ("movq   %0, %%rcx      " :  : "m" (c));
-    /*@ assigns \nothing; */
-    __asm__ ("movq   %0, %%rbx      " :  : "m" (b));
-    __asm__ ("xorq   %r8, %r8       ");
-    __asm__ ("movq  (%rsi),%rax     ");
-    __asm__ ("mulq   %rbx           ");
-    __asm__ ("addq   $8,   %rsi     ");
-    __asm__ ("addq   %rcx, %rax     ");
-    __asm__ ("movq   %r8,  %rcx     ");
-    __asm__ ("adcq   $0,   %rdx     ");
-    __asm__ ("nop                   ");
-    __asm__ ("addq   %rax, (%rdi)   ");
-    __asm__ ("adcq   %rdx, %rcx     ");
-    __asm__ ("addq   $8,   %rdi     ");
-    __asm__ ("movq  (%rsi),%rax     ");
-    __asm__ ("mulq   %rbx           ");
-    __asm__ ("addq   $8,   %rsi     ");
-    __asm__ ("addq   %rcx, %rax     ");
-    __asm__ ("movq   %r8,  %rcx     ");
-    __asm__ ("adcq   $0,   %rdx     ");
-    __asm__ ("nop                   ");
-    __asm__ ("addq   %rax, (%rdi)   ");
-    __asm__ ("adcq   %rdx, %rcx     ");
-    __asm__ ("addq   $8,   %rdi     ");
-    __asm__ ("movq  (%rsi),%rax     ");
-    __asm__ ("mulq   %rbx           ");
-    __asm__ ("addq   $8,   %rsi     ");
-    __asm__ ("addq   %rcx, %rax     ");
-    __asm__ ("movq   %r8,  %rcx     ");
-    __asm__ ("adcq   $0,   %rdx     ");
-    __asm__ ("nop                   ");
-    __asm__ ("addq   %rax, (%rdi)   ");
-    __asm__ ("adcq   %rdx, %rcx     ");
-    __asm__ ("addq   $8,   %rdi     ");
-    __asm__ ("movq  (%rsi),%rax     ");
-    __asm__ ("mulq   %rbx           ");
-    __asm__ ("addq   $8,   %rsi     ");
-    __asm__ ("addq   %rcx, %rax     ");
-    __asm__ ("movq   %r8,  %rcx     ");
-    __asm__ ("adcq   $0,   %rdx     ");
-    __asm__ ("nop                   ");
-    __asm__ ("addq   %rax, (%rdi)   ");
-    __asm__ ("adcq   %rdx, %rcx     ");
-    __asm__ ("addq   $8,   %rdi     ");
-    __asm__ ("movq  (%rsi),%rax     ");
-    __asm__ ("mulq   %rbx           ");
-    __asm__ ("addq   $8,   %rsi     ");
-    __asm__ ("addq   %rcx, %rax     ");
-    __asm__ ("movq   %r8,  %rcx     ");
-    __asm__ ("adcq   $0,   %rdx     ");
-    __asm__ ("nop                   ");
-    __asm__ ("addq   %rax, (%rdi)   ");
-    __asm__ ("adcq   %rdx, %rcx     ");
-    __asm__ ("addq   $8,   %rdi     ");
-    __asm__ ("movq  (%rsi),%rax     ");
-    __asm__ ("mulq   %rbx           ");
-    __asm__ ("addq   $8,   %rsi     ");
-    __asm__ ("addq   %rcx, %rax     ");
-    __asm__ ("movq   %r8,  %rcx     ");
-    __asm__ ("adcq   $0,   %rdx     ");
-    __asm__ ("nop                   ");
-    __asm__ ("addq   %rax, (%rdi)   ");
-    __asm__ ("adcq   %rdx, %rcx     ");
-    __asm__ ("addq   $8,   %rdi     ");
-    __asm__ ("movq  (%rsi),%rax     ");
-    __asm__ ("mulq   %rbx           ");
-    __asm__ ("addq   $8,   %rsi     ");
-    __asm__ ("addq   %rcx, %rax     ");
-    __asm__ ("movq   %r8,  %rcx     ");
-    __asm__ ("adcq   $0,   %rdx     ");
-    __asm__ ("nop                   ");
-    __asm__ ("addq   %rax, (%rdi)   ");
-    __asm__ ("adcq   %rdx, %rcx     ");
-    __asm__ ("addq   $8,   %rdi     ");
-    __asm__ ("movq  (%rsi),%rax     ");
-    __asm__ ("mulq   %rbx           ");
-    __asm__ ("addq   $8,   %rsi     ");
-    __asm__ ("addq   %rcx, %rax     ");
-    __asm__ ("movq   %r8,  %rcx     ");
-    __asm__ ("adcq   $0,   %rdx     ");
-    __asm__ ("nop                   ");
-    __asm__ ("addq   %rax, (%rdi)   ");
-    __asm__ ("adcq   %rdx, %rcx     ");
-    __asm__ ("addq   $8,   %rdi     ");
-    /*@ assigns c;
-        assigns c \from \nothing; */
-    __asm__ ("movq   %%rcx, %0      " : "=m" (c));
-    /*@ assigns d;
-        assigns d \from \nothing; */
-    __asm__ ("movq   %%rdi, %0      " : "=m" (d));
-    /*@ assigns s;
-        assigns s \from \nothing; */
-    __asm__ (
-      "movq   %%rsi, %0      "
-      : "=m" (s)
-      : 
-      : "rax", "rcx", "rdx", "rbx", "rsi", "rdi", "r8"
-      );
+    {
+      t_uint s0_0;
+      t_uint s1_0;
+      t_uint b0_0;
+      t_uint b1_0;
+      t_uint r0_0;
+      t_uint r1_0;
+      t_uint rx_0;
+      t_uint ry_0;
+      t_uint *tmp_15;
+      t_uint *tmp_16;
+      t_uint *tmp_17;
+      t_uint *tmp_18;
+      t_uint *tmp_19;
+      t_uint *tmp_20;
+      t_uint *tmp_21;
+      t_uint *tmp_22;
+      b0_0 = (b << (sizeof(t_uint) << 2)) >> (sizeof(t_uint) << 2);
+      b1_0 = b >> (sizeof(t_uint) << 2);
+      s0_0 = (*s << (sizeof(t_uint) << 2)) >> (sizeof(t_uint) << 2);
+      s1_0 = *s >> (sizeof(t_uint) << 2);
+      s ++;
+      rx_0 = s0_0 * b1_0;
+      r0_0 = s0_0 * b0_0;
+      ry_0 = s1_0 * b0_0;
+      r1_0 = s1_0 * b1_0;
+      r1_0 += rx_0 >> (sizeof(t_uint) << 2);
+      r1_0 += ry_0 >> (sizeof(t_uint) << 2);
+      rx_0 <<= sizeof(t_uint) << 2;
+      ry_0 <<= sizeof(t_uint) << 2;
+      r0_0 += rx_0;
+      r1_0 += (t_uint)(r0_0 < rx_0);
+      r0_0 += ry_0;
+      r1_0 += (t_uint)(r0_0 < ry_0);
+      r0_0 += c;
+      r1_0 += (t_uint)(r0_0 < c);
+      r0_0 += *d;
+      r1_0 += (t_uint)(r0_0 < *d);
+      c = r1_0;
+      tmp_15 = d;
+      d ++;
+      *tmp_15 = r0_0;
+      s0_0 = (*s << (sizeof(t_uint) << 2)) >> (sizeof(t_uint) << 2);
+      s1_0 = *s >> (sizeof(t_uint) << 2);
+      s ++;
+      rx_0 = s0_0 * b1_0;
+      r0_0 = s0_0 * b0_0;
+      ry_0 = s1_0 * b0_0;
+      r1_0 = s1_0 * b1_0;
+      r1_0 += rx_0 >> (sizeof(t_uint) << 2);
+      r1_0 += ry_0 >> (sizeof(t_uint) << 2);
+      rx_0 <<= sizeof(t_uint) << 2;
+      ry_0 <<= sizeof(t_uint) << 2;
+      r0_0 += rx_0;
+      r1_0 += (t_uint)(r0_0 < rx_0);
+      r0_0 += ry_0;
+      r1_0 += (t_uint)(r0_0 < ry_0);
+      r0_0 += c;
+      r1_0 += (t_uint)(r0_0 < c);
+      r0_0 += *d;
+      r1_0 += (t_uint)(r0_0 < *d);
+      c = r1_0;
+      tmp_16 = d;
+      d ++;
+      *tmp_16 = r0_0;
+      s0_0 = (*s << (sizeof(t_uint) << 2)) >> (sizeof(t_uint) << 2);
+      s1_0 = *s >> (sizeof(t_uint) << 2);
+      s ++;
+      rx_0 = s0_0 * b1_0;
+      r0_0 = s0_0 * b0_0;
+      ry_0 = s1_0 * b0_0;
+      r1_0 = s1_0 * b1_0;
+      r1_0 += rx_0 >> (sizeof(t_uint) << 2);
+      r1_0 += ry_0 >> (sizeof(t_uint) << 2);
+      rx_0 <<= sizeof(t_uint) << 2;
+      ry_0 <<= sizeof(t_uint) << 2;
+      r0_0 += rx_0;
+      r1_0 += (t_uint)(r0_0 < rx_0);
+      r0_0 += ry_0;
+      r1_0 += (t_uint)(r0_0 < ry_0);
+      r0_0 += c;
+      r1_0 += (t_uint)(r0_0 < c);
+      r0_0 += *d;
+      r1_0 += (t_uint)(r0_0 < *d);
+      c = r1_0;
+      tmp_17 = d;
+      d ++;
+      *tmp_17 = r0_0;
+      s0_0 = (*s << (sizeof(t_uint) << 2)) >> (sizeof(t_uint) << 2);
+      s1_0 = *s >> (sizeof(t_uint) << 2);
+      s ++;
+      rx_0 = s0_0 * b1_0;
+      r0_0 = s0_0 * b0_0;
+      ry_0 = s1_0 * b0_0;
+      r1_0 = s1_0 * b1_0;
+      r1_0 += rx_0 >> (sizeof(t_uint) << 2);
+      r1_0 += ry_0 >> (sizeof(t_uint) << 2);
+      rx_0 <<= sizeof(t_uint) << 2;
+      ry_0 <<= sizeof(t_uint) << 2;
+      r0_0 += rx_0;
+      r1_0 += (t_uint)(r0_0 < rx_0);
+      r0_0 += ry_0;
+      r1_0 += (t_uint)(r0_0 < ry_0);
+      r0_0 += c;
+      r1_0 += (t_uint)(r0_0 < c);
+      r0_0 += *d;
+      r1_0 += (t_uint)(r0_0 < *d);
+      c = r1_0;
+      tmp_18 = d;
+      d ++;
+      *tmp_18 = r0_0;
+      s0_0 = (*s << (sizeof(t_uint) << 2)) >> (sizeof(t_uint) << 2);
+      s1_0 = *s >> (sizeof(t_uint) << 2);
+      s ++;
+      rx_0 = s0_0 * b1_0;
+      r0_0 = s0_0 * b0_0;
+      ry_0 = s1_0 * b0_0;
+      r1_0 = s1_0 * b1_0;
+      r1_0 += rx_0 >> (sizeof(t_uint) << 2);
+      r1_0 += ry_0 >> (sizeof(t_uint) << 2);
+      rx_0 <<= sizeof(t_uint) << 2;
+      ry_0 <<= sizeof(t_uint) << 2;
+      r0_0 += rx_0;
+      r1_0 += (t_uint)(r0_0 < rx_0);
+      r0_0 += ry_0;
+      r1_0 += (t_uint)(r0_0 < ry_0);
+      r0_0 += c;
+      r1_0 += (t_uint)(r0_0 < c);
+      r0_0 += *d;
+      r1_0 += (t_uint)(r0_0 < *d);
+      c = r1_0;
+      tmp_19 = d;
+      d ++;
+      *tmp_19 = r0_0;
+      s0_0 = (*s << (sizeof(t_uint) << 2)) >> (sizeof(t_uint) << 2);
+      s1_0 = *s >> (sizeof(t_uint) << 2);
+      s ++;
+      rx_0 = s0_0 * b1_0;
+      r0_0 = s0_0 * b0_0;
+      ry_0 = s1_0 * b0_0;
+      r1_0 = s1_0 * b1_0;
+      r1_0 += rx_0 >> (sizeof(t_uint) << 2);
+      r1_0 += ry_0 >> (sizeof(t_uint) << 2);
+      rx_0 <<= sizeof(t_uint) << 2;
+      ry_0 <<= sizeof(t_uint) << 2;
+      r0_0 += rx_0;
+      r1_0 += (t_uint)(r0_0 < rx_0);
+      r0_0 += ry_0;
+      r1_0 += (t_uint)(r0_0 < ry_0);
+      r0_0 += c;
+      r1_0 += (t_uint)(r0_0 < c);
+      r0_0 += *d;
+      r1_0 += (t_uint)(r0_0 < *d);
+      c = r1_0;
+      tmp_20 = d;
+      d ++;
+      *tmp_20 = r0_0;
+      s0_0 = (*s << (sizeof(t_uint) << 2)) >> (sizeof(t_uint) << 2);
+      s1_0 = *s >> (sizeof(t_uint) << 2);
+      s ++;
+      rx_0 = s0_0 * b1_0;
+      r0_0 = s0_0 * b0_0;
+      ry_0 = s1_0 * b0_0;
+      r1_0 = s1_0 * b1_0;
+      r1_0 += rx_0 >> (sizeof(t_uint) << 2);
+      r1_0 += ry_0 >> (sizeof(t_uint) << 2);
+      rx_0 <<= sizeof(t_uint) << 2;
+      ry_0 <<= sizeof(t_uint) << 2;
+      r0_0 += rx_0;
+      r1_0 += (t_uint)(r0_0 < rx_0);
+      r0_0 += ry_0;
+      r1_0 += (t_uint)(r0_0 < ry_0);
+      r0_0 += c;
+      r1_0 += (t_uint)(r0_0 < c);
+      r0_0 += *d;
+      r1_0 += (t_uint)(r0_0 < *d);
+      c = r1_0;
+      tmp_21 = d;
+      d ++;
+      *tmp_21 = r0_0;
+      s0_0 = (*s << (sizeof(t_uint) << 2)) >> (sizeof(t_uint) << 2);
+      s1_0 = *s >> (sizeof(t_uint) << 2);
+      s ++;
+      rx_0 = s0_0 * b1_0;
+      r0_0 = s0_0 * b0_0;
+      ry_0 = s1_0 * b0_0;
+      r1_0 = s1_0 * b1_0;
+      r1_0 += rx_0 >> (sizeof(t_uint) << 2);
+      r1_0 += ry_0 >> (sizeof(t_uint) << 2);
+      rx_0 <<= sizeof(t_uint) << 2;
+      ry_0 <<= sizeof(t_uint) << 2;
+      r0_0 += rx_0;
+      r1_0 += (t_uint)(r0_0 < rx_0);
+      r0_0 += ry_0;
+      r1_0 += (t_uint)(r0_0 < ry_0);
+      r0_0 += c;
+      r1_0 += (t_uint)(r0_0 < c);
+      r0_0 += *d;
+      r1_0 += (t_uint)(r0_0 < *d);
+      c = r1_0;
+      tmp_22 = d;
+      d ++;
+      *tmp_22 = r0_0;
+    }
     i -= (size_t)8;
   }
   while (i > (size_t)0) {
-    /*@ assigns *(s + (..));
-        assigns *(s + (..)) \from (indirect: s), *(s + (..));
-    */
-    __asm__ ("movq   %0, %%rsi      " :  : "m" (s));
-    /*@ assigns *(d + (..));
-        assigns *(d + (..)) \from (indirect: d), *(d + (..));
-    */
-    __asm__ ("movq   %0, %%rdi      " :  : "m" (d));
-    /*@ assigns \nothing; */
-    __asm__ ("movq   %0, %%rcx      " :  : "m" (c));
-    /*@ assigns \nothing; */
-    __asm__ ("movq   %0, %%rbx      " :  : "m" (b));
-    __asm__ ("xorq   %r8, %r8       ");
-    __asm__ ("movq  (%rsi),%rax     ");
-    __asm__ ("mulq   %rbx           ");
-    __asm__ ("addq   $8,   %rsi     ");
-    __asm__ ("addq   %rcx, %rax     ");
-    __asm__ ("movq   %r8,  %rcx     ");
-    __asm__ ("adcq   $0,   %rdx     ");
-    __asm__ ("nop                   ");
-    __asm__ ("addq   %rax, (%rdi)   ");
-    __asm__ ("adcq   %rdx, %rcx     ");
-    __asm__ ("addq   $8,   %rdi     ");
-    /*@ assigns c;
-        assigns c \from \nothing; */
-    __asm__ ("movq   %%rcx, %0      " : "=m" (c));
-    /*@ assigns d;
-        assigns d \from \nothing; */
-    __asm__ ("movq   %%rdi, %0      " : "=m" (d));
-    /*@ assigns s;
-        assigns s \from \nothing; */
-    __asm__ (
-      "movq   %%rsi, %0      "
-      : "=m" (s)
-      : 
-      : "rax", "rcx", "rdx", "rbx", "rsi", "rdi", "r8"
-      );
+    {
+      t_uint s0_1;
+      t_uint s1_1;
+      t_uint b0_1;
+      t_uint b1_1;
+      t_uint r0_1;
+      t_uint r1_1;
+      t_uint rx_1;
+      t_uint ry_1;
+      t_uint *tmp_23;
+      b0_1 = (b << (sizeof(t_uint) << 2)) >> (sizeof(t_uint) << 2);
+      b1_1 = b >> (sizeof(t_uint) << 2);
+      s0_1 = (*s << (sizeof(t_uint) << 2)) >> (sizeof(t_uint) << 2);
+      s1_1 = *s >> (sizeof(t_uint) << 2);
+      s ++;
+      rx_1 = s0_1 * b1_1;
+      r0_1 = s0_1 * b0_1;
+      ry_1 = s1_1 * b0_1;
+      r1_1 = s1_1 * b1_1;
+      r1_1 += rx_1 >> (sizeof(t_uint) << 2);
+      r1_1 += ry_1 >> (sizeof(t_uint) << 2);
+      rx_1 <<= sizeof(t_uint) << 2;
+      ry_1 <<= sizeof(t_uint) << 2;
+      r0_1 += rx_1;
+      r1_1 += (t_uint)(r0_1 < rx_1);
+      r0_1 += ry_1;
+      r1_1 += (t_uint)(r0_1 < ry_1);
+      r0_1 += c;
+      r1_1 += (t_uint)(r0_1 < c);
+      r0_1 += *d;
+      r1_1 += (t_uint)(r0_1 < *d);
+      c = r1_1;
+      tmp_23 = d;
+      d ++;
+      *tmp_23 = r0_1;
+    }
     i --;
   }
   t ++;
@@ -27484,165 +27760,6 @@ void net_close(int fd)
   return;
 }
 
-static int padlock_supports_flags = -1;
-int padlock_supports(int feature)
-{
-  int __retres;
-  int ebx;
-  int edx;
-  if (padlock_supports_flags == -1) {
-    /*@ assigns ebx, edx;
-        assigns ebx \from ebx;
-        assigns edx \from ebx; */
-    __asm__ (
-      "movl  %%ebx, %0           \n"
-      "movl  $0xC0000000, %%eax  \n"
-      "cpuid                     \n"
-      "cmpl  $0xC0000001, %%eax  \n"
-      "movl  $0, %%edx           \n"
-      "jb    unsupported         \n"
-      "movl  $0xC0000001, %%eax  \n"
-      "cpuid                     \n"
-      "unsupported:              \n"
-      "movl  %%edx, %1           \n"
-      "movl  %2, %%ebx           \n"
-      : "=m" (ebx), "=m" (edx)
-      : "m" (ebx)
-      : "eax", "ecx", "edx"
-      );
-    padlock_supports_flags = edx;
-  }
-  __retres = padlock_supports_flags & feature;
-  return __retres;
-}
-
-int padlock_xcryptecb(aes_context *ctx, int mode,
-                      unsigned char const input[16], unsigned char output[16])
-{
-  int __retres;
-  int ebx;
-  unsigned long *rk;
-  unsigned long *blk;
-  unsigned long *ctrl;
-  unsigned char buf[256];
-  rk = ctx->rk;
-  blk = (unsigned long *)((long)16 + ((long)(buf) & (long)(~ 15)));
-  memcpy((void *)blk,(void const *)input,(size_t)16);
-  ctrl = blk + 4;
-  *ctrl = (unsigned long)((0x80 | ctx->nr) | (((ctx->nr + (mode ^ 1)) - 10) << 9));
-  /*@ assigns ebx, *(ctrl + (..)), *(rk + (..)), *(blk + (..));
-      assigns ebx
-        \from ebx, (indirect: ctrl), (indirect: rk), (indirect: blk),
-              *(ctrl + (..)), *(rk + (..)), *(blk + (..));
-      assigns *(ctrl + (..))
-        \from ebx, (indirect: ctrl), (indirect: rk), (indirect: blk),
-              *(ctrl + (..)), *(rk + (..)), *(blk + (..));
-      assigns *(rk + (..))
-        \from ebx, (indirect: ctrl), (indirect: rk), (indirect: blk),
-              *(ctrl + (..)), *(rk + (..)), *(blk + (..));
-      assigns *(blk + (..))
-        \from ebx, (indirect: ctrl), (indirect: rk), (indirect: blk),
-              *(ctrl + (..)), *(rk + (..)), *(blk + (..));
-  */
-  __asm__ (
-    "pushfl; popfl         \n"
-    "movl    %%ebx, %0     \n"
-    "movl    $1, %%ecx     \n"
-    "movl    %2, %%edx     \n"
-    "movl    %3, %%ebx     \n"
-    "movl    %4, %%esi     \n"
-    "movl    %4, %%edi     \n"
-    ".byte  0xf3,0x0f,0xa7,0xc8\n"
-    "movl    %1, %%ebx     \n"
-    : "=m" (ebx)
-    : "m" (ebx), "m" (ctrl), "m" (rk), "m" (blk)
-    : "ecx", "edx", "esi", "edi"
-    );
-  memcpy((void *)output,(void const *)blk,(size_t)16);
-  __retres = 0;
-  return __retres;
-}
-
-int padlock_xcryptcbc(aes_context *ctx, int mode, size_t length,
-                      unsigned char iv[16], unsigned char const *input,
-                      unsigned char *output)
-{
-  int __retres;
-  int ebx;
-  size_t count;
-  unsigned long *rk;
-  unsigned long *iw;
-  unsigned long *ctrl;
-  unsigned char buf[256];
-  if (((long)input & (long)15) != (long)0) {
-    __retres = -0x0030;
-    goto return_label;
-  }
-  else 
-    if (((long)output & (long)15) != (long)0) {
-      __retres = -0x0030;
-      goto return_label;
-    }
-  rk = ctx->rk;
-  iw = (unsigned long *)((long)16 + ((long)(buf) & (long)(~ 15)));
-  memcpy((void *)iw,(void const *)iv,(size_t)16);
-  ctrl = iw + 4;
-  *ctrl = (unsigned long)((0x80 | ctx->nr) | (((ctx->nr + (mode ^ 1)) - 10) << 9));
-  count = (length + (size_t)15) >> 4;
-  /*@ assigns ebx, *(ctrl + (..)), *(rk + (..)), *(input + (..)),
-              *(output + (..)), *(iw + (..));
-      assigns ebx
-        \from ebx, count, (indirect: ctrl), (indirect: rk),
-              (indirect: input), (indirect: output), (indirect: iw),
-              *(ctrl + (..)), *(rk + (..)), *(input + (..)),
-              *(output + (..)), *(iw + (..));
-      assigns *(ctrl + (..))
-        \from ebx, count, (indirect: ctrl), (indirect: rk),
-              (indirect: input), (indirect: output), (indirect: iw),
-              *(ctrl + (..)), *(rk + (..)), *(input + (..)),
-              *(output + (..)), *(iw + (..));
-      assigns *(rk + (..))
-        \from ebx, count, (indirect: ctrl), (indirect: rk),
-              (indirect: input), (indirect: output), (indirect: iw),
-              *(ctrl + (..)), *(rk + (..)), *(input + (..)),
-              *(output + (..)), *(iw + (..));
-      assigns *(input + (..))
-        \from ebx, count, (indirect: ctrl), (indirect: rk),
-              (indirect: input), (indirect: output), (indirect: iw),
-              *(ctrl + (..)), *(rk + (..)), *(input + (..)),
-              *(output + (..)), *(iw + (..));
-      assigns *(output + (..))
-        \from ebx, count, (indirect: ctrl), (indirect: rk),
-              (indirect: input), (indirect: output), (indirect: iw),
-              *(ctrl + (..)), *(rk + (..)), *(input + (..)),
-              *(output + (..)), *(iw + (..));
-      assigns *(iw + (..))
-        \from ebx, count, (indirect: ctrl), (indirect: rk),
-              (indirect: input), (indirect: output), (indirect: iw),
-              *(ctrl + (..)), *(rk + (..)), *(input + (..)),
-              *(output + (..)), *(iw + (..));
-  */
-  __asm__ (
-    "pushfl; popfl         \n"
-    "movl    %%ebx, %0     \n"
-    "movl    %2, %%ecx     \n"
-    "movl    %3, %%edx     \n"
-    "movl    %4, %%ebx     \n"
-    "movl    %5, %%esi     \n"
-    "movl    %6, %%edi     \n"
-    "movl    %7, %%eax     \n"
-    ".byte  0xf3,0x0f,0xa7,0xd0\n"
-    "movl    %1, %%ebx     \n"
-    : "=m" (ebx)
-    : "m" (ebx), "m" (count), "m" (ctrl), "m" (rk), "m" (input),
-      "m" (output), "m" (iw)
-    : "eax", "ecx", "edx", "esi", "edi"
-    );
-  memcpy((void *)iv,(void const *)iw,(size_t)16);
-  __retres = 0;
-  return_label: return __retres;
-}
-
 __inline static unsigned int cipher_get_block_size_2(cipher_context_t const *ctx)
 {
   unsigned int __retres;
@@ -36757,18 +36874,16 @@ static int ssl_parse_server_hello(ssl_context *ssl)
         }
   i = 0;
   while (1) {
-    {
-      int tmp_0;
-      if (*(ssl->ciphersuites + i) == 0) {
-        __retres = -0x7980;
-        goto return_label;
-      }
-      tmp_0 = i;
-      i ++;
-      ;
-      if (*(ssl->ciphersuites + tmp_0) == (ssl->session)->ciphersuite) 
-        break;
+    int tmp_0;
+    if (*(ssl->ciphersuites + i) == 0) {
+      __retres = -0x7980;
+      goto return_label;
     }
+    tmp_0 = i;
+    i ++;
+    ;
+    if (*(ssl->ciphersuites + tmp_0) == (ssl->session)->ciphersuite) 
+      break;
   }
   if ((int)*(buf + ((size_t)41 + n)) != 0) {
     __retres = -0x7980;
@@ -39464,17 +39579,22 @@ void ssl_free(ssl_context *ssl)
   return;
 }
 
+static int hardclock_init = 0;
+static struct timeval tv_init;
 /*@ assigns \result;
     assigns \result \from _hardclock_clock; */
 unsigned long hardclock(void)
 {
-  unsigned long lo;
-  unsigned long hi;
-  /*@ assigns lo, hi;
-      assigns lo \from \nothing;
-      assigns hi \from \nothing; */
-  __asm__ ("rdtsc" : "=a" (lo), "=d" (hi));
-  return lo;
+  unsigned long __retres;
+  struct timeval tv_cur;
+  if (hardclock_init == 0) {
+    gettimeofday(& tv_init,(void *)0);
+    hardclock_init = 1;
+  }
+  gettimeofday(& tv_cur,(void *)0);
+  __retres = (unsigned long)((tv_cur.tv_sec - tv_init.tv_sec) * (time_t)1000000 + (time_t)(
+                             tv_cur.tv_usec - tv_init.tv_usec));
+  return __retres;
 }
 
 int volatile alarmed = 0;

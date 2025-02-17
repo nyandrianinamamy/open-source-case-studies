@@ -1424,17 +1424,15 @@ static void _kgflags_parse_flag(_kgflags_flag_t *flag, _Bool prefix_no)
       int initial_cursor = _kgflags_g.arg_cursor;
       int count = 0;
       while (1) {
-        {
-          char const *val_2 = _kgflags_peek_arg();
-          if (val_2 == (char const *)0) goto _LOR;
-          else {
-            _Bool tmp_5;
-            tmp_5 = _kgflags_is_flag(val_2);
-            if (tmp_5) _LOR: break;
-          }
-          _kgflags_consume_arg();
-          count ++;
+        char const *val_2 = _kgflags_peek_arg();
+        if (val_2 == (char const *)0) goto _LOR;
+        else {
+          _Bool tmp_5;
+          tmp_5 = _kgflags_is_flag(val_2);
+          if (tmp_5) _LOR: break;
         }
+        _kgflags_consume_arg();
+        count ++;
       }
       kgflags_string_array_t *arr = flag->result.string_array;
       arr->_items = _kgflags_g.argv + initial_cursor;
@@ -1448,25 +1446,22 @@ static void _kgflags_parse_flag(_kgflags_flag_t *flag, _Bool prefix_no)
       int count_0 = 0;
       _Bool all_args_ok = (_Bool)1;
       while (1) {
-        {
-          char const *val_3 = _kgflags_peek_arg();
-          if (val_3 == (char const *)0) goto _LOR_0;
-          else {
-            _Bool tmp_7;
-            tmp_7 = _kgflags_is_flag(val_3);
-            if (tmp_7) _LOR_0: break;
-          }
-          _kgflags_consume_arg();
-          _Bool ok_1 = (_Bool)0;
-          _kgflags_parse_int(val_3,& ok_1);
-          if (! ok_1) {
-            flag->error = (_Bool)1;
-            _kgflags_add_error(KGFLAGS_ERROR_KIND_INVALID_INT,flag->name,
-                               val_3);
-            all_args_ok = (_Bool)0;
-          }
-          count_0 ++;
+        char const *val_3 = _kgflags_peek_arg();
+        if (val_3 == (char const *)0) goto _LOR_0;
+        else {
+          _Bool tmp_7;
+          tmp_7 = _kgflags_is_flag(val_3);
+          if (tmp_7) _LOR_0: break;
         }
+        _kgflags_consume_arg();
+        _Bool ok_1 = (_Bool)0;
+        _kgflags_parse_int(val_3,& ok_1);
+        if (! ok_1) {
+          flag->error = (_Bool)1;
+          _kgflags_add_error(KGFLAGS_ERROR_KIND_INVALID_INT,flag->name,val_3);
+          all_args_ok = (_Bool)0;
+        }
+        count_0 ++;
       }
       kgflags_int_array_t *arr_0 = flag->result.int_array;
       if (all_args_ok) {
@@ -1482,25 +1477,23 @@ static void _kgflags_parse_flag(_kgflags_flag_t *flag, _Bool prefix_no)
       int count_1 = 0;
       _Bool all_args_ok_0 = (_Bool)1;
       while (1) {
-        {
-          char const *val_4 = _kgflags_peek_arg();
-          if (val_4 == (char const *)0) goto _LOR_1;
-          else {
-            _Bool tmp_9;
-            tmp_9 = _kgflags_is_flag(val_4);
-            if (tmp_9) _LOR_1: break;
-          }
-          _kgflags_consume_arg();
-          _Bool ok_2 = (_Bool)0;
-          _kgflags_parse_double(val_4,& ok_2);
-          if (! ok_2) {
-            flag->error = (_Bool)1;
-            _kgflags_add_error(KGFLAGS_ERROR_KIND_INVALID_DOUBLE,flag->name,
-                               val_4);
-            all_args_ok_0 = (_Bool)0;
-          }
-          count_1 ++;
+        char const *val_4 = _kgflags_peek_arg();
+        if (val_4 == (char const *)0) goto _LOR_1;
+        else {
+          _Bool tmp_9;
+          tmp_9 = _kgflags_is_flag(val_4);
+          if (tmp_9) _LOR_1: break;
         }
+        _kgflags_consume_arg();
+        _Bool ok_2 = (_Bool)0;
+        _kgflags_parse_double(val_4,& ok_2);
+        if (! ok_2) {
+          flag->error = (_Bool)1;
+          _kgflags_add_error(KGFLAGS_ERROR_KIND_INVALID_DOUBLE,flag->name,
+                             val_4);
+          all_args_ok_0 = (_Bool)0;
+        }
+        count_1 ++;
       }
       kgflags_double_array_t *arr_1 = flag->result.double_array;
       if (all_args_ok_0) {
