@@ -2,10 +2,7 @@
 #include "errno.h"
 #include "inttypes.h"
 #include "math.h"
-#include "stdarg.h"
-#include "stddef.h"
 #include "stdint.h"
-#include "stdio.h"
 struct __file {
    char *buf ;
    unsigned char unget ;
@@ -73,9 +70,9 @@ void eeprom_update_byte(uint8_t *__p, uint8_t __value);
 
 void eeprom_update_word(uint16_t *__p, uint16_t __value);
 
-struct __file *__iob[];
+struct __file *__iob[3];
 
-__inline static int fflush_0(FILE *stream __attribute__((__unused__)))
+__inline static int fflush(FILE *stream __attribute__((__unused__)))
 {
   int __retres;
   __retres = 0;
@@ -464,41 +461,23 @@ void __vector_18(void)
   return;
 }
 
-/*@ requires valid_read_string(format);
-    assigns \result, __fc_stdout->__fc_FILE_data;
-    assigns \result
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            (indirect: __fc_stdout->__fc_FILE_data),
-            (indirect: *(format + (0 ..)));
-    assigns __fc_stdout->__fc_FILE_data
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+/*@ requires valid_read_string(__fmt);
+    assigns \result;
+    assigns \result \from (indirect: *(__fmt + (0 ..)));
  */
-int printf_va_1(char const * restrict format);
+int printf_va_1(char const *__fmt);
 
-/*@ requires valid_read_string(format);
-    assigns \result, __fc_stdout->__fc_FILE_data;
-    assigns \result
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            (indirect: __fc_stdout->__fc_FILE_data),
-            (indirect: *(format + (0 ..)));
-    assigns __fc_stdout->__fc_FILE_data
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+/*@ requires valid_read_string(__fmt);
+    assigns \result;
+    assigns \result \from (indirect: *(__fmt + (0 ..)));
  */
-int printf_va_2(char const * restrict format);
+int printf_va_2(char const *__fmt);
 
-/*@ requires valid_read_string(format);
-    assigns \result, __fc_stdout->__fc_FILE_data;
-    assigns \result
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            (indirect: __fc_stdout->__fc_FILE_data),
-            (indirect: *(format + (0 ..)));
-    assigns __fc_stdout->__fc_FILE_data
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+/*@ requires valid_read_string(__fmt);
+    assigns \result;
+    assigns \result \from (indirect: *(__fmt + (0 ..)));
  */
-int printf_va_3(char const * restrict format);
+int printf_va_3(char const *__fmt);
 
 int main(void)
 {
@@ -1232,29 +1211,17 @@ void Modo_Stop(void)
   return;
 }
 
-/*@ requires valid_read_string(format);
-    assigns \result, __fc_stdout->__fc_FILE_data;
-    assigns \result
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            (indirect: __fc_stdout->__fc_FILE_data),
-            (indirect: *(format + (0 ..)));
-    assigns __fc_stdout->__fc_FILE_data
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+/*@ requires valid_read_string(__fmt);
+    assigns \result;
+    assigns \result \from (indirect: *(__fmt + (0 ..)));
  */
-int printf_va_4(char const * restrict format);
+int printf_va_4(char const *__fmt);
 
-/*@ requires valid_read_string(format);
-    assigns \result, __fc_stdout->__fc_FILE_data;
-    assigns \result
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            (indirect: __fc_stdout->__fc_FILE_data),
-            (indirect: *(format + (0 ..)));
-    assigns __fc_stdout->__fc_FILE_data
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+/*@ requires valid_read_string(__fmt);
+    assigns \result;
+    assigns \result \from (indirect: *(__fmt + (0 ..)));
  */
-int printf_va_5(char const * restrict format);
+int printf_va_5(char const *__fmt);
 
 void Modo_Perdido(void)
 {
@@ -1274,41 +1241,23 @@ void Modo_Perdido(void)
   return;
 }
 
-/*@ requires valid_read_string(format);
-    assigns \result, __fc_stdout->__fc_FILE_data;
-    assigns \result
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            (indirect: __fc_stdout->__fc_FILE_data),
-            (indirect: *(format + (0 ..)));
-    assigns __fc_stdout->__fc_FILE_data
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+/*@ requires valid_read_string(__fmt);
+    assigns \result;
+    assigns \result \from (indirect: *(__fmt + (0 ..)));
  */
-int printf_va_6(char const * restrict format);
+int printf_va_6(char const *__fmt);
 
-/*@ requires valid_read_string(format);
-    assigns \result, __fc_stdout->__fc_FILE_data;
-    assigns \result
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            (indirect: __fc_stdout->__fc_FILE_data),
-            (indirect: *(format + (0 ..)));
-    assigns __fc_stdout->__fc_FILE_data
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+/*@ requires valid_read_string(__fmt);
+    assigns \result;
+    assigns \result \from (indirect: *(__fmt + (0 ..)));
  */
-int printf_va_7(char const * restrict format);
+int printf_va_7(char const *__fmt);
 
-/*@ requires valid_read_string(format);
-    assigns \result, __fc_stdout->__fc_FILE_data;
-    assigns \result
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            (indirect: __fc_stdout->__fc_FILE_data),
-            (indirect: *(format + (0 ..)));
-    assigns __fc_stdout->__fc_FILE_data
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+/*@ requires valid_read_string(__fmt);
+    assigns \result;
+    assigns \result \from (indirect: *(__fmt + (0 ..)));
  */
-int printf_va_8(char const * restrict format);
+int printf_va_8(char const *__fmt);
 
 void Incializa_Manual(void)
 {
@@ -1364,101 +1313,57 @@ void Conta_Volta(void)
   return;
 }
 
-/*@ requires valid_read_string(format);
-    assigns \result, __fc_stdout->__fc_FILE_data;
+/*@ requires valid_read_string(__fmt);
+    assigns \result;
     assigns \result
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            (indirect: __fc_stdout->__fc_FILE_data),
-            (indirect: *(format + (0 ..))), (indirect: param9),
+      \from (indirect: *(__fmt + (0 ..))), (indirect: param9),
             (indirect: param8), (indirect: param7), (indirect: param6),
             (indirect: param5), (indirect: param4), (indirect: param3),
             (indirect: param2), (indirect: param1), (indirect: param0);
-    assigns __fc_stdout->__fc_FILE_data
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
-            param9, param8, param7, param6, param5, param4, param3, param2,
-            param1, param0;
  */
-int printf_va_9(char const * restrict format, int param0, int param1,
-                int param2, int param3, int param4, int param5, int param6,
-                int param7, int param8, int param9);
+int printf_va_9(char const *__fmt, int param0, int param1, int param2,
+                int param3, int param4, int param5, int param6, int param7,
+                int param8, int param9);
 
-/*@ requires valid_read_string(format);
-    assigns \result, __fc_stdout->__fc_FILE_data;
-    assigns \result
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            (indirect: __fc_stdout->__fc_FILE_data),
-            (indirect: *(format + (0 ..))), (indirect: param0);
-    assigns __fc_stdout->__fc_FILE_data
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
-            param0;
+/*@ requires valid_read_string(__fmt);
+    assigns \result;
+    assigns \result \from (indirect: *(__fmt + (0 ..))), (indirect: param0);
  */
-int printf_va_10(char const * restrict format, int param0);
+int printf_va_10(char const *__fmt, int param0);
 
-/*@ requires valid_read_string(format);
-    assigns \result, __fc_stdout->__fc_FILE_data;
-    assigns \result
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            (indirect: __fc_stdout->__fc_FILE_data),
-            (indirect: *(format + (0 ..)));
-    assigns __fc_stdout->__fc_FILE_data
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+/*@ requires valid_read_string(__fmt);
+    assigns \result;
+    assigns \result \from (indirect: *(__fmt + (0 ..)));
  */
-int printf_va_11(char const * restrict format);
+int printf_va_11(char const *__fmt);
 
-/*@ requires valid_read_string(format);
-    assigns \result, __fc_stdout->__fc_FILE_data;
-    assigns \result
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            (indirect: __fc_stdout->__fc_FILE_data),
-            (indirect: *(format + (0 ..)));
-    assigns __fc_stdout->__fc_FILE_data
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+/*@ requires valid_read_string(__fmt);
+    assigns \result;
+    assigns \result \from (indirect: *(__fmt + (0 ..)));
  */
-int printf_va_12(char const * restrict format);
+int printf_va_12(char const *__fmt);
 
-/*@ requires valid_read_string(format);
-    assigns \result, __fc_stdout->__fc_FILE_data;
-    assigns \result
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            (indirect: __fc_stdout->__fc_FILE_data),
-            (indirect: *(format + (0 ..)));
-    assigns __fc_stdout->__fc_FILE_data
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+/*@ requires valid_read_string(__fmt);
+    assigns \result;
+    assigns \result \from (indirect: *(__fmt + (0 ..)));
  */
-int printf_va_13(char const * restrict format);
+int printf_va_13(char const *__fmt);
 
 /*@ requires valid_read_string(param0);
-    requires valid_read_string(format);
-    assigns \result, __fc_stdout->__fc_FILE_data;
+    requires valid_read_string(__fmt);
+    assigns \result;
     assigns \result
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            (indirect: __fc_stdout->__fc_FILE_data),
-            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
-    assigns __fc_stdout->__fc_FILE_data
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
-            *(param0 + (0 ..));
+      \from (indirect: *(__fmt + (0 ..))), (indirect: *(param0 + (0 ..)));
  */
-int printf_va_14(char const * restrict format, char *param0);
+int printf_va_14(char const *__fmt, char *param0);
 
 /*@ requires valid_read_string(param0);
-    requires valid_read_string(format);
-    assigns \result, __fc_stdout->__fc_FILE_data;
+    requires valid_read_string(__fmt);
+    assigns \result;
     assigns \result
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            (indirect: __fc_stdout->__fc_FILE_data),
-            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
-    assigns __fc_stdout->__fc_FILE_data
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
-            *(param0 + (0 ..));
+      \from (indirect: *(__fmt + (0 ..))), (indirect: *(param0 + (0 ..)));
  */
-int printf_va_15(char const * restrict format, char *param0);
+int printf_va_15(char const *__fmt, char *param0);
 
 void lcd_print_lcd(void)
 {
@@ -1523,12 +1428,12 @@ void Read_Battery(void)
   return;
 }
 
-/*@ requires valid_read_string(format);
-    assigns \result, *(s + (0 ..));
-    assigns \result \from (indirect: *(format + (0 ..))), (indirect: param0);
-    assigns *(s + (0 ..)) \from (indirect: *(format + (0 ..))), param0;
+/*@ requires valid_read_string(__fmt);
+    assigns \result, *(__s + (0 ..));
+    assigns \result \from (indirect: *(__fmt + (0 ..))), (indirect: param0);
+    assigns *(__s + (0 ..)) \from (indirect: *(__fmt + (0 ..))), param0;
  */
-int sprintf_va_1(char * restrict s, char const * restrict format, int param0);
+int sprintf_va_1(char *__s, char const *__fmt, int param0);
 
 void Print_Battery(unsigned int V_0)
 {
@@ -1734,53 +1639,29 @@ void Send_Battery_Bluetooth(void)
   return;
 }
 
-/*@ requires valid_read_string(format);
-    assigns \result, __fc_stdout->__fc_FILE_data;
-    assigns \result
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            (indirect: __fc_stdout->__fc_FILE_data),
-            (indirect: *(format + (0 ..)));
-    assigns __fc_stdout->__fc_FILE_data
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+/*@ requires valid_read_string(__fmt);
+    assigns \result;
+    assigns \result \from (indirect: *(__fmt + (0 ..)));
  */
-int printf_va_16(char const * restrict format);
+int printf_va_16(char const *__fmt);
 
-/*@ requires valid_read_string(format);
-    assigns \result, __fc_stdout->__fc_FILE_data;
-    assigns \result
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            (indirect: __fc_stdout->__fc_FILE_data),
-            (indirect: *(format + (0 ..)));
-    assigns __fc_stdout->__fc_FILE_data
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+/*@ requires valid_read_string(__fmt);
+    assigns \result;
+    assigns \result \from (indirect: *(__fmt + (0 ..)));
  */
-int printf_va_17(char const * restrict format);
+int printf_va_17(char const *__fmt);
 
-/*@ requires valid_read_string(format);
-    assigns \result, __fc_stdout->__fc_FILE_data;
-    assigns \result
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            (indirect: __fc_stdout->__fc_FILE_data),
-            (indirect: *(format + (0 ..)));
-    assigns __fc_stdout->__fc_FILE_data
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+/*@ requires valid_read_string(__fmt);
+    assigns \result;
+    assigns \result \from (indirect: *(__fmt + (0 ..)));
  */
-int printf_va_18(char const * restrict format);
+int printf_va_18(char const *__fmt);
 
-/*@ requires valid_read_string(format);
-    assigns \result, __fc_stdout->__fc_FILE_data;
-    assigns \result
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            (indirect: __fc_stdout->__fc_FILE_data),
-            (indirect: *(format + (0 ..)));
-    assigns __fc_stdout->__fc_FILE_data
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+/*@ requires valid_read_string(__fmt);
+    assigns \result;
+    assigns \result \from (indirect: *(__fmt + (0 ..)));
  */
-int printf_va_19(char const * restrict format);
+int printf_va_19(char const *__fmt);
 
 void Bateria_Fraca(void)
 {
@@ -1816,41 +1697,23 @@ void Bateria_Fraca(void)
   return;
 }
 
-/*@ requires valid_read_string(format);
-    assigns \result, __fc_stdout->__fc_FILE_data;
-    assigns \result
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            (indirect: __fc_stdout->__fc_FILE_data),
-            (indirect: *(format + (0 ..)));
-    assigns __fc_stdout->__fc_FILE_data
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+/*@ requires valid_read_string(__fmt);
+    assigns \result;
+    assigns \result \from (indirect: *(__fmt + (0 ..)));
  */
-int printf_va_20(char const * restrict format);
+int printf_va_20(char const *__fmt);
 
-/*@ requires valid_read_string(format);
-    assigns \result, __fc_stdout->__fc_FILE_data;
-    assigns \result
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            (indirect: __fc_stdout->__fc_FILE_data),
-            (indirect: *(format + (0 ..)));
-    assigns __fc_stdout->__fc_FILE_data
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+/*@ requires valid_read_string(__fmt);
+    assigns \result;
+    assigns \result \from (indirect: *(__fmt + (0 ..)));
  */
-int printf_va_21(char const * restrict format);
+int printf_va_21(char const *__fmt);
 
-/*@ requires valid_read_string(format);
-    assigns \result, __fc_stdout->__fc_FILE_data;
-    assigns \result
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            (indirect: __fc_stdout->__fc_FILE_data),
-            (indirect: *(format + (0 ..)));
-    assigns __fc_stdout->__fc_FILE_data
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+/*@ requires valid_read_string(__fmt);
+    assigns \result;
+    assigns \result \from (indirect: *(__fmt + (0 ..)));
  */
-int printf_va_22(char const * restrict format);
+int printf_va_22(char const *__fmt);
 
 void Competicao(void)
 {
@@ -1890,41 +1753,23 @@ void Reproduzir(void)
   return;
 }
 
-/*@ requires valid_read_string(format);
-    assigns \result, __fc_stdout->__fc_FILE_data;
-    assigns \result
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            (indirect: __fc_stdout->__fc_FILE_data),
-            (indirect: *(format + (0 ..)));
-    assigns __fc_stdout->__fc_FILE_data
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+/*@ requires valid_read_string(__fmt);
+    assigns \result;
+    assigns \result \from (indirect: *(__fmt + (0 ..)));
  */
-int printf_va_23(char const * restrict format);
+int printf_va_23(char const *__fmt);
 
-/*@ requires valid_read_string(format);
-    assigns \result, __fc_stdout->__fc_FILE_data;
-    assigns \result
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            (indirect: __fc_stdout->__fc_FILE_data),
-            (indirect: *(format + (0 ..)));
-    assigns __fc_stdout->__fc_FILE_data
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+/*@ requires valid_read_string(__fmt);
+    assigns \result;
+    assigns \result \from (indirect: *(__fmt + (0 ..)));
  */
-int printf_va_24(char const * restrict format);
+int printf_va_24(char const *__fmt);
 
-/*@ requires valid_read_string(format);
-    assigns \result, __fc_stdout->__fc_FILE_data;
-    assigns \result
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            (indirect: __fc_stdout->__fc_FILE_data),
-            (indirect: *(format + (0 ..)));
-    assigns __fc_stdout->__fc_FILE_data
-      \from (indirect: __fc_stdout->__fc_FILE_id),
-            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+/*@ requires valid_read_string(__fmt);
+    assigns \result;
+    assigns \result \from (indirect: *(__fmt + (0 ..)));
  */
-int printf_va_25(char const * restrict format);
+int printf_va_25(char const *__fmt);
 
 void Init_Reproducao(void)
 {
@@ -1950,6 +1795,14 @@ void Init_Reproducao(void)
   lcd_gotoxy((unsigned char)1,(unsigned char)3);
   printf("********************"); /* printf_va_25 */
   return;
+}
+
+struct __file *__iob[3];
+__inline static int fflush_0(FILE *stream __attribute__((__unused__)))
+{
+  int __retres;
+  __retres = 0;
+  return __retres;
 }
 
 uint8_t eeprom_read_byte(uint8_t const *__p) __attribute__((__pure__));

@@ -1,4 +1,4 @@
-[metrics] Defined functions (45)
+[metrics] Defined functions (46)
 ======================
  Bateria_Fraca (1 call); Calculo (2 calls); Competicao (1 call);
  Conta_Volta (1 call); Gravar (1 call); Incializa_Manual (1 call);
@@ -11,8 +11,8 @@
  __vector_18 (0 call); _delay_loop_1 (0 call); _delay_loop_2 (0 call);
  _delay_ms (8 calls); _delay_us (12 calls); eeprom_read_byte (3 calls);
  eeprom_read_word (1 call); eeprom_update_byte (3 calls);
- eeprom_update_word (1 call); fflush_0 (0 call); init_adc (1 call);
- init_usart (1 call); lcdCommand (13 calls);
+ eeprom_update_word (1 call); fflush (0 call); fflush_0 (0 call);
+ init_adc (1 call); init_usart (1 call); lcdCommand (13 calls);
  lcdData (address taken) (1 call); lcd_command (2 calls); lcd_data (2 calls);
  lcd_gotoxy (26 calls); lcd_init (1 call); lcd_print (1 call);
  lcd_print_lcd (2 calls); main (0 call); read_adc (1 call); 
@@ -29,22 +29,22 @@ Undefined and unspecified functions (0)
 =============================
  
 
-Potential entry points (7)
+Potential entry points (8)
 ==========================
  Receive_Data; __vector_13; __vector_18; _delay_loop_1; _delay_loop_2;
-  fflush_0; main; 
+  fflush; fflush_0; main; 
 
 Global metrics
 ============== 
-Sloc = 1006
+Sloc = 1002
 Decision point = 282
 Global variables = 45
 If = 270
 Loop = 16
 Goto = 90
-Assignment = 336
-Exit point = 45
-Function = 45
+Assignment = 337
+Exit point = 46
+Function = 46
 Function call = 191
 Pointer dereferencing = 184
-Cyclomatic complexity = 327
+Cyclomatic complexity = 328
