@@ -1,0 +1,10 @@
+quicklz.c:292:[eva:garbled-mix:write] warning: Assigning imprecise value to cached
+because of arithmetic operation on addresses.
+stack: qlz_compress_core :: quicklz.c:748 <-
+       qlz_compress :: compress_file.c:30 <-
+       main :: fc_stubs.c:21 <-
+       eva_main
+[eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
+  quicklz.c:292: arithmetic operation on addresses
+    (read in 2 statements, propagated through 1 statement)
+    garbled mix of &{__malloc_main_l23}

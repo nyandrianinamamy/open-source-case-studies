@@ -5,4 +5,4 @@ SOURCES += sources/main.c avr-libc/libc/stdio/iob.c \
   sources/eeprom_stubs.c sources/avr_stubs.c
 
 CPPFLAGS += -Iavr-libc/include -D__AVR_ATmega328P__ -DF_CPU=1000000UL \
-  -D__OPTIMIZE__
+  -D__OPTIMIZE__ -Wno-incompatible-pointer-types

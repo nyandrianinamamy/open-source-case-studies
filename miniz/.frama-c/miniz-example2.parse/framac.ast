@@ -5472,9 +5472,12 @@ static mz_uint16 TDEFL_READ_UNALIGNED_WORD2(mz_uint16 const *p)
   return ret;
 }
 
-__inline static void ( __attribute__((__always_inline__)) tdefl_find_match)
-(tdefl_compressor *d, mz_uint lookahead_pos, mz_uint max_dist,
- mz_uint max_match_len, mz_uint *pMatch_dist, mz_uint *pMatch_len)
+__inline static void tdefl_find_match(tdefl_compressor *d,
+                                      mz_uint lookahead_pos,
+                                      mz_uint max_dist,
+                                      mz_uint max_match_len,
+                                      mz_uint *pMatch_dist,
+                                      mz_uint *pMatch_len)
 {
   mz_uint dist;
   mz_uint next_probe_pos;
@@ -5905,8 +5908,7 @@ static mz_bool tdefl_compress_fast(tdefl_compressor *d)
   return_label: return __retres;
 }
 
-__inline static void ( __attribute__((__always_inline__)) tdefl_record_literal)
-(tdefl_compressor *d, mz_uint8 lit)
+__inline static void tdefl_record_literal(tdefl_compressor *d, mz_uint8 lit)
 {
   mz_uint8 *tmp;
   (d->m_total_lz_bytes) ++;
@@ -5926,8 +5928,8 @@ __inline static void ( __attribute__((__always_inline__)) tdefl_record_literal)
   return;
 }
 
-__inline static void ( __attribute__((__always_inline__)) tdefl_record_match)
-(tdefl_compressor *d, mz_uint match_len, mz_uint match_dist)
+__inline static void tdefl_record_match(tdefl_compressor *d,
+                                        mz_uint match_len, mz_uint match_dist)
 {
   mz_uint32 s0;
   mz_uint32 s1;
@@ -8345,16 +8347,16 @@ void __attribute__((__visibility__("default"))) tinfl_decompressor_free
 }
 
 #pragma message("Using fopen, ftello, fseeko, stat() etc. path for file I/O - this path may not support large files.")
-__inline static void ( __attribute__((__always_inline__)) mz_zip_array_init)
-(mz_zip_array *pArray, mz_uint32 element_size)
+__inline static void mz_zip_array_init(mz_zip_array *pArray,
+                                       mz_uint32 element_size)
 {
   memset((void *)pArray,0,sizeof(mz_zip_array));
   pArray->m_element_size = element_size;
   return;
 }
 
-__inline static void ( __attribute__((__always_inline__)) mz_zip_array_clear)
-(mz_zip_archive *pZip, mz_zip_array *pArray)
+__inline static void mz_zip_array_clear(mz_zip_archive *pZip,
+                                        mz_zip_array *pArray)
 {
   (*(pZip->m_pFree))(pZip->m_pAlloc_opaque,pArray->m_p);
   memset((void *)pArray,0,sizeof(mz_zip_array));
@@ -8392,9 +8394,10 @@ static mz_bool mz_zip_array_ensure_capacity(mz_zip_archive *pZip,
   return_label: return __retres;
 }
 
-__inline static mz_bool ( __attribute__((__always_inline__)) mz_zip_array_reserve)
-(mz_zip_archive *pZip, mz_zip_array *pArray, size_t new_capacity,
- mz_uint growing)
+__inline static mz_bool mz_zip_array_reserve(mz_zip_archive *pZip,
+                                             mz_zip_array *pArray,
+                                             size_t new_capacity,
+                                             mz_uint growing)
 {
   mz_bool __retres;
   if (new_capacity > pArray->m_capacity) {
@@ -8409,8 +8412,9 @@ __inline static mz_bool ( __attribute__((__always_inline__)) mz_zip_array_reserv
   return_label: return __retres;
 }
 
-__inline static mz_bool ( __attribute__((__always_inline__)) mz_zip_array_resize)
-(mz_zip_archive *pZip, mz_zip_array *pArray, size_t new_size, mz_uint growing)
+__inline static mz_bool mz_zip_array_resize(mz_zip_archive *pZip,
+                                            mz_zip_array *pArray,
+                                            size_t new_size, mz_uint growing)
 {
   mz_bool __retres;
   if (new_size > pArray->m_capacity) {
@@ -8426,16 +8430,19 @@ __inline static mz_bool ( __attribute__((__always_inline__)) mz_zip_array_resize
   return_label: return __retres;
 }
 
-__inline static mz_bool ( __attribute__((__always_inline__)) mz_zip_array_ensure_room)
-(mz_zip_archive *pZip, mz_zip_array *pArray, size_t n)
+__inline static mz_bool mz_zip_array_ensure_room(mz_zip_archive *pZip,
+                                                 mz_zip_array *pArray,
+                                                 size_t n)
 {
   mz_bool tmp;
   tmp = mz_zip_array_reserve(pZip,pArray,pArray->m_size + n,(mz_uint)1);
   return tmp;
 }
 
-__inline static mz_bool ( __attribute__((__always_inline__)) mz_zip_array_push_back)
-(mz_zip_archive *pZip, mz_zip_array *pArray, void const *pElements, size_t n)
+__inline static mz_bool mz_zip_array_push_back(mz_zip_archive *pZip,
+                                               mz_zip_array *pArray,
+                                               void const *pElements,
+                                               size_t n)
 {
   mz_bool __retres;
   mz_bool tmp;
@@ -8508,8 +8515,8 @@ static mz_bool mz_zip_set_file_times(char const *pFilename,
   return tmp_0;
 }
 
-__inline static mz_bool ( __attribute__((__always_inline__)) mz_zip_set_error)
-(mz_zip_archive *pZip, mz_zip_error err_num)
+__inline static mz_bool mz_zip_set_error(mz_zip_archive *pZip,
+                                         mz_zip_error err_num)
 {
   mz_bool __retres;
   if (pZip) pZip->m_last_error = err_num;
@@ -8565,9 +8572,10 @@ static mz_bool mz_zip_reader_init_internal(mz_zip_archive *pZip,
   return_label: return __retres;
 }
 
-__inline static mz_bool ( __attribute__((__always_inline__)) mz_zip_reader_filename_less)
-(mz_zip_array const *pCentral_dir_array,
- mz_zip_array const *pCentral_dir_offsets, mz_uint l_index, mz_uint r_index)
+__inline static mz_bool mz_zip_reader_filename_less(mz_zip_array const *pCentral_dir_array,
+                                                    mz_zip_array const *pCentral_dir_offsets,
+                                                    mz_uint l_index,
+                                                    mz_uint r_index)
 {
   mz_uint8 const *pE;
   mz_uint tmp;
@@ -9458,8 +9466,8 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_reader_init_cfile
   return_label: return __retres;
 }
 
-__inline static mz_uint8 const *( __attribute__((__always_inline__)) mz_zip_get_cdh)
-(mz_zip_archive *pZip, mz_uint file_index)
+__inline static mz_uint8 const *mz_zip_get_cdh(mz_zip_archive *pZip,
+                                               mz_uint file_index)
 {
   mz_uint8 const *__retres;
   if (! pZip) {
@@ -9708,8 +9716,8 @@ static mz_bool mz_zip_file_stat_internal(mz_zip_archive *pZip,
   return_label: return __retres;
 }
 
-__inline static mz_bool ( __attribute__((__always_inline__)) mz_zip_string_equal)
-(char const *pA, char const *pB, mz_uint len, mz_uint flags)
+__inline static mz_bool mz_zip_string_equal(char const *pA, char const *pB,
+                                            mz_uint len, mz_uint flags)
 {
   mz_bool __retres;
   mz_uint i;
@@ -9741,10 +9749,10 @@ __inline static mz_bool ( __attribute__((__always_inline__)) mz_zip_string_equal
   return_label: return __retres;
 }
 
-__inline static int ( __attribute__((__always_inline__)) mz_zip_filename_compare)
-(mz_zip_array const *pCentral_dir_array,
- mz_zip_array const *pCentral_dir_offsets, mz_uint l_index, char const *pR,
- mz_uint r_len)
+__inline static int mz_zip_filename_compare(mz_zip_array const *pCentral_dir_array,
+                                            mz_zip_array const *pCentral_dir_offsets,
+                                            mz_uint l_index, char const *pR,
+                                            mz_uint r_len)
 {
   mz_uint8 const *pE;
   mz_uint tmp;
@@ -11526,16 +11534,14 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_validate_file_archive
   return_label: return __retres;
 }
 
-__inline static void ( __attribute__((__always_inline__)) mz_write_le16)
-(mz_uint8 *p, mz_uint16 v)
+__inline static void mz_write_le16(mz_uint8 *p, mz_uint16 v)
 {
   *(p + 0) = (mz_uint8)v;
   *(p + 1) = (mz_uint8)((int)v >> 8);
   return;
 }
 
-__inline static void ( __attribute__((__always_inline__)) mz_write_le32)
-(mz_uint8 *p, mz_uint32 v)
+__inline static void mz_write_le32(mz_uint8 *p, mz_uint32 v)
 {
   *(p + 0) = (mz_uint8)v;
   *(p + 1) = (mz_uint8)(v >> 8);
@@ -11544,8 +11550,7 @@ __inline static void ( __attribute__((__always_inline__)) mz_write_le32)
   return;
 }
 
-__inline static void ( __attribute__((__always_inline__)) mz_write_le64)
-(mz_uint8 *p, mz_uint64 v)
+__inline static void mz_write_le64(mz_uint8 *p, mz_uint64 v)
 {
   mz_write_le32(p,(mz_uint32)v);
   mz_write_le32(p + sizeof(mz_uint32),(mz_uint32)(v >> 32));
@@ -13047,43 +13052,40 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_writer_add_read_buf_ca
     }
     if (! level) {
       while (1) {
-        {
-          size_t tmp_30;
-          size_t tmp_33;
-          mz_ulong __attribute__((__visibility__("default"))) tmp_34;
-          tmp_30 = (*read_callback)(callback_opaque,file_ofs,pRead_buf,
-                                    (size_t)MZ_ZIP_MAX_IO_BUF_SIZE);
-          size_t n = tmp_30;
-          if (n == (size_t)0) break;
-          if (n > (size_t)MZ_ZIP_MAX_IO_BUF_SIZE) goto _LOR_2;
-          else 
-            if (file_ofs + n > max_size) {
-              _LOR_2:
-              {
-                mz_bool __attribute__((__visibility__("default"))) tmp_31;
-                (*(pZip->m_pFree))(pZip->m_pAlloc_opaque,pRead_buf);
-                tmp_31 = mz_zip_set_error(pZip,MZ_ZIP_FILE_READ_FAILED);
-                __retres = tmp_31;
-                goto return_label;
-              }
+        size_t tmp_30;
+        size_t tmp_33;
+        mz_ulong __attribute__((__visibility__("default"))) tmp_34;
+        tmp_30 = (*read_callback)(callback_opaque,file_ofs,pRead_buf,
+                                  (size_t)MZ_ZIP_MAX_IO_BUF_SIZE);
+        size_t n = tmp_30;
+        if (n == (size_t)0) break;
+        if (n > (size_t)MZ_ZIP_MAX_IO_BUF_SIZE) goto _LOR_2;
+        else 
+          if (file_ofs + n > max_size) {
+            _LOR_2:
+            {
+              mz_bool __attribute__((__visibility__("default"))) tmp_31;
+              (*(pZip->m_pFree))(pZip->m_pAlloc_opaque,pRead_buf);
+              tmp_31 = mz_zip_set_error(pZip,MZ_ZIP_FILE_READ_FAILED);
+              __retres = tmp_31;
+              goto return_label;
             }
-          tmp_33 = (*(pZip->m_pWrite))(pZip->m_pIO_opaque,
-                                       cur_archive_file_ofs,
-                                       (void const *)pRead_buf,n);
-          ;
-          if (tmp_33 != n) {
-            mz_bool __attribute__((__visibility__("default"))) tmp_32;
-            (*(pZip->m_pFree))(pZip->m_pAlloc_opaque,pRead_buf);
-            tmp_32 = mz_zip_set_error(pZip,MZ_ZIP_FILE_WRITE_FAILED);
-            __retres = tmp_32;
-            goto return_label;
           }
-          file_ofs += n;
-          tmp_34 = mz_crc32((mz_ulong)uncomp_crc32,
-                            (mz_uint8 const *)pRead_buf,n);
-          uncomp_crc32 = (mz_uint32)tmp_34;
-          cur_archive_file_ofs += n;
+        tmp_33 = (*(pZip->m_pWrite))(pZip->m_pIO_opaque,cur_archive_file_ofs,
+                                     (void const *)pRead_buf,n);
+        ;
+        if (tmp_33 != n) {
+          mz_bool __attribute__((__visibility__("default"))) tmp_32;
+          (*(pZip->m_pFree))(pZip->m_pAlloc_opaque,pRead_buf);
+          tmp_32 = mz_zip_set_error(pZip,MZ_ZIP_FILE_WRITE_FAILED);
+          __retres = tmp_32;
+          goto return_label;
         }
+        file_ofs += n;
+        tmp_34 = mz_crc32((mz_ulong)uncomp_crc32,(mz_uint8 const *)pRead_buf,
+                          n);
+        uncomp_crc32 = (mz_uint32)tmp_34;
+        cur_archive_file_ofs += n;
       }
       uncomp_size = file_ofs;
       comp_size = uncomp_size;

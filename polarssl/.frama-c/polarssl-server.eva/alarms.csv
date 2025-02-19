@@ -45,6 +45,7 @@ FRAMAC_SHARE/libc	unistd.h	1045	read	precondition	Unknown	buf_has_room: \valid((
 FRAMAC_SHARE/libc	unistd.h	1189	write	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
 FRAMAC_SHARE/libc	unistd.h	1190	write	precondition	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))
 FRAMAC_SHARE/libc/sys	socket.h	306	accept	precondition	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
+FRAMAC_SHARE/libc/sys	socket.h	545	setsockopt	precondition	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
 FRAMAC_SHARE/libc/sys	socket.h	556	shutdown	precondition	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
 library	ctr_drbg.c	154	block_cipher_df	mem_access	Unknown	\valid_read(p + i)
 library	des.c	384	des_setkey	postcondition	Unknown	\initialized(\old(SK) + (0 .. 31))
@@ -59,6 +60,7 @@ library	md5.c	240	md5_update	precondition of memcpy	Unknown	valid_src: valid_rea
 library	md5.c	350	md5_hmac_starts	initialization	Unknown	\initialized(key + i)
 library	md5.c	350	md5_hmac_starts	mem_access	Unknown	\valid_read(key + i)
 library	md5.c	379	md5_hmac_finish	precondition of md5_finish	Unknown	\valid(output + (0 .. 15))
+library	net.c	169	net_bind	precondition of setsockopt	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
 library	net.c	246	net_accept	precondition of accept	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
 library	net.c	303	net_recv	precondition of read	Unknown	buf_has_room: \valid((char *)buf + (0 .. count - 1))
 library	net.c	303	net_recv	precondition of read	Unknown	valid_fd: 0 ≤ fd < 1024

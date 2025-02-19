@@ -12,7 +12,7 @@ typedef unsigned int ui32;
 typedef unsigned short ui16;
 struct __anonstruct_qlz_hash_compress_1 {
    ui32 cache ;
-   unsigned int offset ;
+   unsigned char const *offset ;
 };
 typedef struct __anonstruct_qlz_hash_compress_1 qlz_hash_compress;
 struct __anonstruct_qlz_hash_decompress_2 {
@@ -117,7 +117,7 @@ static void reset_table_compress(qlz_state_compress *state)
   int i;
   i = 0;
   while (i < 4096) {
-    state->hash[i].offset = (unsigned int)0;
+    state->hash[i].offset = (unsigned char const *)0;
     i ++;
   }
   return;
@@ -276,10 +276,10 @@ static size_t qlz_compress_core(unsigned char const *source,
       hash = hash_func(fetch);
       cached = fetch ^ state->hash[hash].cache;
       state->hash[hash].cache = fetch;
-      o = source + state->hash[hash].offset;
-      state->hash[hash].offset = (size_t)(src - source);
+      o = state->hash[hash].offset + 0;
+      state->hash[hash].offset = src - 0;
       if ((cached & (unsigned int)0xffffff) == (unsigned int)0) {
-        if (o != source) {
+        if (o != (unsigned char const *)0) {
           if (src - o > 2) goto _LOR;
           else 
             if (src == o + 1) {
@@ -375,7 +375,7 @@ static size_t qlz_compress_core(unsigned char const *source,
       ui32 fetch_0;
       fetch_0 = fast_read((void const *)src,(ui32)3);
       hash_0 = hash_func(fetch_0);
-      state->hash[hash_0].offset = (size_t)(src - source);
+      state->hash[hash_0].offset = src - 0;
       state->hash[hash_0].cache = fetch_0;
     }
     *dst = *src;

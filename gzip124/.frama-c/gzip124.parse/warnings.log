@@ -1,5 +1,6 @@
 getopt.c:362:[kernel:typing:no-proto] warning: Calling function getenv that is declared without prototype.
-Its formals will be inferred from actual arguments
+Its formals will be inferred from actual arguments.
+Declare it as getenv(void) if the function does not take any parameters.
 gzip.c:448:[kernel:typing:incompatible-types-call] warning: implicit conversion between incompatible function types:
 void (*)(void)
 and

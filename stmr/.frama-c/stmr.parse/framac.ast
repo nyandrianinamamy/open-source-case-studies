@@ -51,44 +51,38 @@ static int getMeasure(void)
   position = 0;
   index_0 = k0;
   while (1) {
-    {
-      int tmp;
-      if (index_0 > j) {
-        __retres = position;
-        goto return_label;
-      }
-      tmp = isConsonant(index_0);
-      if (! tmp) break;
-      index_0 ++;
+    int tmp;
+    if (index_0 > j) {
+      __retres = position;
+      goto return_label;
     }
+    tmp = isConsonant(index_0);
+    if (! tmp) break;
+    index_0 ++;
   }
   index_0 ++;
   while (1) {
     while (1) {
-      {
-        int tmp_0;
-        if (index_0 > j) {
-          __retres = position;
-          goto return_label;
-        }
-        tmp_0 = isConsonant(index_0);
-        if (tmp_0) break;
-        index_0 ++;
+      int tmp_0;
+      if (index_0 > j) {
+        __retres = position;
+        goto return_label;
       }
+      tmp_0 = isConsonant(index_0);
+      if (tmp_0) break;
+      index_0 ++;
     }
     index_0 ++;
     position ++;
     while (1) {
-      {
-        int tmp_1;
-        if (index_0 > j) {
-          __retres = position;
-          goto return_label;
-        }
-        tmp_1 = isConsonant(index_0);
-        if (! tmp_1) break;
-        index_0 ++;
+      int tmp_1;
+      if (index_0 > j) {
+        __retres = position;
+        goto return_label;
       }
+      tmp_1 = isConsonant(index_0);
+      if (! tmp_1) break;
+      index_0 ++;
     }
     index_0 ++;
   }

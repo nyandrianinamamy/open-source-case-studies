@@ -3113,20 +3113,18 @@ int main(void)
     if (tmp) init_cpt = (uint8_t)((int)init_cpt - 1);
   }
   while (1) {
-    {
-      bool_t tmp_0;
-      tmp_0 = timer_periodic_0();
-      if (tmp_0) periodic_task();
-      if (gps_msg_received) {
-        parse_gps_msg();
-        send_gps_pos();
-        send_radIR();
-        send_takeOff();
-      }
-      if (link_fbw_receive_complete) {
-        link_fbw_receive_complete = (uint8_t)0;
-        radio_control_task();
-      }
+    bool_t tmp_0;
+    tmp_0 = timer_periodic_0();
+    if (tmp_0) periodic_task();
+    if (gps_msg_received) {
+      parse_gps_msg();
+      send_gps_pos();
+      send_radIR();
+      send_takeOff();
+    }
+    if (link_fbw_receive_complete) {
+      link_fbw_receive_complete = (uint8_t)0;
+      radio_control_task();
     }
   }
   __retres = 0;

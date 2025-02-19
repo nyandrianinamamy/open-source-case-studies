@@ -1,10 +1,10 @@
 [metrics] Eva coverage statistics
 =======================
-Syntactically reachable functions = 320 (out of 513)
+Syntactically reachable functions = 317 (out of 510)
 Semantically reached functions = 133
-Coverage estimation = 41.6% 
+Coverage estimation = 42.0% 
 
-Unreached functions (187) =
+Unreached functions (184) =
   <include/polarssl/md.h>: md_get_size_2; 
   <library/aes.c>: aes_gen_tables; 
   <library/asn1parse.c>: asn1_get_bitstring; asn1_get_bool; asn1_get_int;
@@ -44,8 +44,6 @@ Unreached functions (187) =
     sha512_hmac_finish_wrap; sha512_hmac_reset_wrap; sha512_hmac_starts_wrap;
     sha512_hmac_update_wrap; sha512_hmac_wrap; sha512_starts_wrap;
     sha512_update_wrap; sha512_wrap; 
-  <library/padlock.c>: padlock_supports; padlock_xcryptcbc;
-    padlock_xcryptecb; 
   <library/pem.c>: pem_aes_decrypt; pem_des3_decrypt; pem_des_decrypt;
     pem_free; pem_get_iv; pem_init; pem_pbkdf1; pem_read_buffer; 
   <library/rsa.c>: mgf_mask; rsa_check_privkey; rsa_check_pubkey;
@@ -71,10 +69,6 @@ Unreached functions (187) =
   <programs/ssl/ssl_server.c>: my_debug;
 [metrics] References to non-analyzed functions
 ------------------------------------
-Function aes_crypt_cbc calls padlock_supports (at library/aes.c:771)
-Function aes_crypt_cbc calls padlock_xcryptcbc (at library/aes.c:773)
-Function aes_crypt_ecb calls padlock_supports (at library/aes.c:659)
-Function aes_crypt_ecb calls padlock_xcryptecb (at library/aes.c:661)
 Function aes_setkey_enc calls aes_gen_tables (at library/aes.c:450)
 Function camellia_crypt_cbc calls camellia_crypt_ecb (at library/camellia.c:563)
 Function camellia_crypt_cbc calls camellia_crypt_ecb (at library/camellia.c:582)
@@ -270,7 +264,7 @@ Initializer of sha512_info references sha512_ctx_alloc (at library/md_wrap.c:709
 Initializer of sha512_info references sha512_ctx_free (at library/md_wrap.c:710)
 [metrics] Statements analyzed by Eva
 --------------------------
-5733 stmts in analyzed functions, 2854 stmts analyzed (49.8%)
+5722 stmts in analyzed functions, 2854 stmts analyzed (49.9%)
 arc4_setup: 26 stmts out of 26 (100.0%)
 block_cipher_df: 72 stmts out of 72 (100.0%)
 ctr_drbg_init: 2 stmts out of 2 (100.0%)
@@ -366,8 +360,8 @@ rsa_pkcs1_sign: 38 stmts out of 172 (22.1%)
 ssl_parse_certificate_verify: 6 stmts out of 36 (16.7%)
 ssl_write_certificate_request: 6 stmts out of 47 (12.8%)
 ssl_parse_certificate: 8 stmts out of 103 (7.8%)
-aes_crypt_cbc: 0 stmts out of 45 (0.0%)
-aes_crypt_ecb: 0 stmts out of 201 (0.0%)
+aes_crypt_cbc: 0 stmts out of 38 (0.0%)
+aes_crypt_ecb: 0 stmts out of 194 (0.0%)
 aes_setkey_dec: 0 stmts out of 89 (0.0%)
 aes_setkey_enc: 0 stmts out of 70 (0.0%)
 arc4_crypt: 0 stmts out of 20 (0.0%)
@@ -378,12 +372,12 @@ des3_crypt_cbc: 0 stmts out of 38 (0.0%)
 des_setkey: 0 stmts out of 39 (0.0%)
 dhm_check_range: 0 stmts out of 13 (0.0%)
 dhm_make_params: 0 stmts out of 77 (0.0%)
-hardclock: 0 stmts out of 2 (0.0%)
+hardclock: 0 stmts out of 6 (0.0%)
 md5_process: 0 stmts out of 233 (0.0%)
 mpi_add_abs: 0 stmts out of 49 (0.0%)
 mpi_cmp_abs: 0 stmts out of 42 (0.0%)
 mpi_cmp_mpi: 0 stmts out of 52 (0.0%)
-mpi_exp_mod: 0 stmts out of 175 (0.0%)
+mpi_exp_mod: 0 stmts out of 174 (0.0%)
 mpi_free: 0 stmts out of 10 (0.0%)
 mpi_mod_mpi: 0 stmts out of 25 (0.0%)
 mpi_msb: 0 stmts out of 16 (0.0%)

@@ -30,7 +30,16 @@
 /* $Id$ */
 
 #include <stdint.h>
+#ifdef __FRAMAC__
+// Frama-C's preprocessing command will include its libc before the local one,
+// and we can only append, not prepend, to its arguments.
+// So we have to fix it using this conditional inclusion.
+// Also, AVR's stdio.h is incompatible with Frama-C's, so we must NOT
+// include it.
+#include "include/stdio.h"
+#else
 #include <stdio.h>
+#endif
 
 #include "stdio_private.h"
 

@@ -495,8 +495,7 @@ sds sdscpy(sds s, char const *t);
 
 sds sdscatvprintf(sds s, char const *fmt, va_list ap);
 
-sds ( /* format attribute */ sdscatprintf)(sds s, char const *fmt,
-                                           void * const *__va_params);
+sds sdscatprintf(sds s, char const *fmt, void * const *__va_params);
 
 sds sdscatfmt(sds s, char const *fmt, void * const *__va_params);
 
@@ -6437,8 +6436,7 @@ sds sdscatvprintf(sds s, char const *fmt, va_list ap)
   return_label: return __retres;
 }
 
-sds ( /* format attribute */ sdscatprintf)(sds s, char const *fmt,
-                                           void * const *__va_params)
+sds sdscatprintf(sds s, char const *fmt, void * const *__va_params)
 {
   va_list ap;
   char *t;

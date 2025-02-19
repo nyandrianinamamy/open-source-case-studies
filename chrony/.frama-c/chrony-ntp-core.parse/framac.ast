@@ -706,9 +706,8 @@ extern void LOG_Initialise(void);
 
 extern void LOG_Finalise(void);
 
-extern void ( /* format attribute */ LOG_Message)(LOG_Severity severity,
-                                                  char const *format,
-                                                  void * const *__va_params);
+extern void LOG_Message(LOG_Severity severity, char const *format,
+                        void * const *__va_params);
 
 extern void LOG_SetDebugLevel(int level);
 
@@ -716,9 +715,8 @@ extern void LOG_OpenFileLog(char const *log_file);
 
 extern LOG_FileID LOG_FileOpen(char const *name, char const *banner);
 
-extern void ( /* format attribute */ LOG_FileWrite)(LOG_FileID id,
-                                                    char const *format,
-                                                    void * const *__va_params);
+extern void LOG_FileWrite(LOG_FileID id, char const *format,
+                          void * const *__va_params);
 
 void lcl_InvokeDispersionNotifyHandlers(double dispersion);
 
@@ -1856,51 +1854,49 @@ static Record *get_record(IPAddr *ip)
         goto return_label;
       }
   while (1) {
-    {
-      uint32_t tmp;
-      int tmp_3;
-      tmp = UTI_IPToHash(ip);
-      first = (tmp % slots) * (1U << 4);
-      i = (unsigned int)0;
-      oldest_record = (Record *)0;
-      while (i < 1U << 4) {
-        {
-          int tmp_0;
-          int tmp_1;
-          record = (Record *)ARR_GetElement(records,first + i);
-          tmp_0 = UTI_CompareIPs(ip,& record->ip_addr,(IPAddr *)0);
-          if (! tmp_0) {
-            __retres = record;
-            goto return_label;
-          }
-          if ((int)record->ip_addr.family == 0) break;
-          tmp_1 = compare_ts(record->last_ntp_hit,record->last_cmd_hit);
-          if (tmp_1 > 0) last_hit = (time_t)record->last_ntp_hit;
-          else last_hit = (time_t)record->last_cmd_hit;
-          if (! oldest_record) goto _LOR;
-          else {
-            int tmp_2;
-            tmp_2 = compare_ts((uint32_t)oldest_hit,(uint32_t)last_hit);
-            if (tmp_2 > 0) goto _LOR;
-            else 
-              if (oldest_hit == last_hit) 
-                if (record->ntp_hits + record->cmd_hits < oldest_record->ntp_hits + oldest_record->cmd_hits) {
-                  _LOR: {
-                          oldest_record = record;
-                          oldest_hit = last_hit;
-                        }
-                }
-          }
+    uint32_t tmp;
+    int tmp_3;
+    tmp = UTI_IPToHash(ip);
+    first = (tmp % slots) * (1U << 4);
+    i = (unsigned int)0;
+    oldest_record = (Record *)0;
+    while (i < 1U << 4) {
+      {
+        int tmp_0;
+        int tmp_1;
+        record = (Record *)ARR_GetElement(records,first + i);
+        tmp_0 = UTI_CompareIPs(ip,& record->ip_addr,(IPAddr *)0);
+        if (! tmp_0) {
+          __retres = record;
+          goto return_label;
         }
-        i ++;
+        if ((int)record->ip_addr.family == 0) break;
+        tmp_1 = compare_ts(record->last_ntp_hit,record->last_cmd_hit);
+        if (tmp_1 > 0) last_hit = (time_t)record->last_ntp_hit;
+        else last_hit = (time_t)record->last_cmd_hit;
+        if (! oldest_record) goto _LOR;
+        else {
+          int tmp_2;
+          tmp_2 = compare_ts((uint32_t)oldest_hit,(uint32_t)last_hit);
+          if (tmp_2 > 0) goto _LOR;
+          else 
+            if (oldest_hit == last_hit) 
+              if (record->ntp_hits + record->cmd_hits < oldest_record->ntp_hits + oldest_record->cmd_hits) {
+                _LOR: {
+                        oldest_record = record;
+                        oldest_hit = last_hit;
+                      }
+              }
+        }
       }
-      if ((int)record->ip_addr.family == 0) break;
-      tmp_3 = expand_hashtable();
-      if (tmp_3) continue;
-      record = oldest_record;
-      total_record_drops ++;
-      break;
+      i ++;
     }
+    if ((int)record->ip_addr.family == 0) break;
+    tmp_3 = expand_hashtable();
+    if (tmp_3) continue;
+    record = oldest_record;
+    total_record_drops ++;
+    break;
   }
   record->ip_addr = *ip;
   tmp_4 = (uint32_t)0;
@@ -15605,49 +15601,47 @@ int UTI_CreateDirAndParents(char const *path, mode_t mode_0, uid_t uid,
   k = 0;
   i = k;
   while (1) {
-    {
-      int tmp_2;
-      int tmp_3;
-      tmp_2 = i;
-      i ++;
-      tmp_3 = k;
-      k ++;
-      *(p + tmp_2) = *(path + tmp_3);
-      if ((int)*(path + k) == '/') goto _LOR;
-      else 
-        if (! *(path + k)) {
-          _LOR:
-          {
-            int tmp_7;
-            gid_t tmp_4;
-            uid_t tmp_5;
-            mode_t tmp_6;
-            last = 1;
-            j = k;
-            while (*(path + j)) {
-              if ((int)*(path + j) != '/') {
-                k = j - 1;
-                last = 0;
-                break;
-              }
-              j ++;
+    int tmp_2;
+    int tmp_3;
+    tmp_2 = i;
+    i ++;
+    tmp_3 = k;
+    k ++;
+    *(p + tmp_2) = *(path + tmp_3);
+    if ((int)*(path + k) == '/') goto _LOR;
+    else 
+      if (! *(path + k)) {
+        _LOR:
+        {
+          int tmp_7;
+          gid_t tmp_4;
+          uid_t tmp_5;
+          mode_t tmp_6;
+          last = 1;
+          j = k;
+          while (*(path + j)) {
+            if ((int)*(path + j) != '/') {
+              k = j - 1;
+              last = 0;
+              break;
             }
-            *(p + i) = (char)0;
-            if (last) tmp_4 = gid; else tmp_4 = (gid_t)0;
-            if (last) tmp_5 = uid; else tmp_5 = (uid_t)0;
-            if (last) tmp_6 = mode_0; else tmp_6 = (mode_t)0755;
-            ;
-            tmp_7 = create_dir(p,tmp_6,tmp_5,tmp_4);
-            if (! tmp_7) {
-              free((void *)p);
-              __retres = 0;
-              goto return_label;
-            }
-            if (last) break;
+            j ++;
           }
+          *(p + i) = (char)0;
+          if (last) tmp_4 = gid; else tmp_4 = (gid_t)0;
+          if (last) tmp_5 = uid; else tmp_5 = (uid_t)0;
+          if (last) tmp_6 = mode_0; else tmp_6 = (mode_t)0755;
+          ;
+          tmp_7 = create_dir(p,tmp_6,tmp_5,tmp_4);
+          if (! tmp_7) {
+            free((void *)p);
+            __retres = 0;
+            goto return_label;
+          }
+          if (last) break;
         }
-      if (! *(path + k)) break;
-    }
+      }
+    if (! *(path + k)) break;
   }
   free((void *)p);
   __retres = 1;

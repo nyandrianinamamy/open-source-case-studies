@@ -42,7 +42,6 @@ __inline static khint_t __ac_Wang_hash(khint_t key)
   return key;
 }
 
-__inline static kh_32_t *kh_init_32(void) __attribute__((__unused__));
 __inline static kh_32_t *kh_init_32(void)
 {
   kh_32_t *tmp;
@@ -50,7 +49,6 @@ __inline static kh_32_t *kh_init_32(void)
   return tmp;
 }
 
-__inline static void kh_destroy_32(kh_32_t *h) __attribute__((__unused__));
 __inline static void kh_destroy_32(kh_32_t *h)
 {
   if (h) {
@@ -62,7 +60,6 @@ __inline static void kh_destroy_32(kh_32_t *h)
   return;
 }
 
-__inline static void kh_clear_32(kh_32_t *h) __attribute__((__unused__));
 __inline static void kh_clear_32(kh_32_t *h)
 {
   if (h) 
@@ -76,8 +73,6 @@ __inline static void kh_clear_32(kh_32_t *h)
   return;
 }
 
-__inline static khint_t kh_get_32(kh_32_t const *h, khint32_t key) __attribute__((
-__unused__));
 __inline static khint_t kh_get_32(kh_32_t const *h, khint32_t key)
 {
   khint_t __retres;
@@ -116,8 +111,6 @@ __inline static khint_t kh_get_32(kh_32_t const *h, khint32_t key)
   return_label: return __retres;
 }
 
-__inline static int kh_resize_32(kh_32_t *h, khint_t new_n_buckets) __attribute__((
-__unused__));
 __inline static int kh_resize_32(kh_32_t *h, khint_t new_n_buckets)
 {
   int __retres;
@@ -172,40 +165,38 @@ __inline static int kh_resize_32(kh_32_t *h, khint_t new_n_buckets)
         val = *(h->vals + j);
         *(h->flags + j) = (khint8_t)((int)*(h->flags + j) | 1);
         while (1) {
-          {
-            khint_t k;
-            khint_t i;
-            khint_t step = (khint_t)0;
-            k = key;
-            i = k & new_mask;
-            while (! ((int)*(new_flags + i) & 2)) {
-              step ++;
-              i = (i + step) & new_mask;
-            }
-            *(new_flags + i) = (khint8_t)((int)*(new_flags + i) & ~ 2);
-            if (i < h->n_buckets) {
-              if (((int)*(h->flags + i) & 3) == 0) {
-                {
-                  khint32_t tmp_2 = *(h->keys + i);
-                  *(h->keys + i) = key;
-                  key = tmp_2;
-                }
-                {
-                  char tmp_3 = *(h->vals + i);
-                  *(h->vals + i) = val;
-                  val = tmp_3;
-                }
-                *(h->flags + i) = (khint8_t)((int)*(h->flags + i) | 1);
+          khint_t k;
+          khint_t i;
+          khint_t step = (khint_t)0;
+          k = key;
+          i = k & new_mask;
+          while (! ((int)*(new_flags + i) & 2)) {
+            step ++;
+            i = (i + step) & new_mask;
+          }
+          *(new_flags + i) = (khint8_t)((int)*(new_flags + i) & ~ 2);
+          if (i < h->n_buckets) {
+            if (((int)*(h->flags + i) & 3) == 0) {
+              {
+                khint32_t tmp_2 = *(h->keys + i);
+                *(h->keys + i) = key;
+                key = tmp_2;
               }
-              else goto _LAND;
+              {
+                char tmp_3 = *(h->vals + i);
+                *(h->vals + i) = val;
+                val = tmp_3;
+              }
+              *(h->flags + i) = (khint8_t)((int)*(h->flags + i) | 1);
             }
-            else {
-              _LAND: {
-                       *(h->keys + i) = key;
-                       *(h->vals + i) = val;
-                       break;
-                     }
-            }
+            else goto _LAND;
+          }
+          else {
+            _LAND: {
+                     *(h->keys + i) = key;
+                     *(h->vals + i) = val;
+                     break;
+                   }
           }
         }
       }
@@ -226,8 +217,6 @@ __inline static int kh_resize_32(kh_32_t *h, khint_t new_n_buckets)
   return_label: return __retres;
 }
 
-__inline static khint_t kh_put_32(kh_32_t *h, khint32_t key, int *ret) __attribute__((
-__unused__));
 __inline static khint_t kh_put_32(kh_32_t *h, khint32_t key, int *ret)
 {
   khint_t __retres;
@@ -304,8 +293,6 @@ __inline static khint_t kh_put_32(kh_32_t *h, khint32_t key, int *ret)
   return_label: return __retres;
 }
 
-__inline static void kh_del_32(kh_32_t *h, khint_t x) __attribute__((
-__unused__));
 __inline static void kh_del_32(kh_32_t *h, khint_t x)
 {
   if (x != h->n_buckets) 
