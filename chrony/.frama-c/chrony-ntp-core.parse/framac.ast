@@ -26,11 +26,14 @@
 #include "string.h"
 #include "strings.h"
 #include "stropts.h"
+#include "sys/ipc.h"
 #include "sys/resource.h"
 #include "sys/select.h"
+#include "sys/shm.h"
 #include "sys/socket.h"
 #include "sys/stat.h"
 #include "sys/time.h"
+#include "sys/timex.h"
 #include "sys/types.h"
 #include "sys/uio.h"
 #include "sys/un.h"
@@ -8880,7 +8883,7 @@ static void process_message(struct msghdr *hdr, int length, int sock_fd)
   local_addr.sock_fd = sock_fd;
   if (hdr->msg_flags & 0x20) goto return_label;
   if (hdr->msg_flags & 0x8) ;
-  cmsg = CMSG_FIRSTHDR(hdr);
+  cmsg = CMSG_FIRSTHDR((struct msghdr const *)hdr);
   while (cmsg) {
     if (cmsg->cmsg_level == 1) 
       if (cmsg->cmsg_type == 29) {
@@ -8898,7 +8901,8 @@ static void process_message(struct msghdr *hdr, int length, int sock_fd)
         LCL_CookTime(& ts_0,& local_ts.ts,& local_ts.err);
         local_ts.source = NTP_TS_KERNEL;
       }
-    cmsg = CMSG_NXTHDR(hdr,cmsg);
+    cmsg = CMSG_NXTHDR((struct msghdr const *)hdr,
+                       (struct cmsghdr const *)cmsg);
   }
   if (length < 48) goto return_label;
   else 

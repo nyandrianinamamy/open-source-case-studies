@@ -3457,6 +3457,8 @@ stack: strcpy :: reference.c:651 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
+reference.c:657:[eva:garbled-mix:assigns] warning: The specification of function mktime has generated a garbled mix of addresses
+for assigns clause *timeptr.
 reference.c:659:[eva:alarm] warning: signed overflow. assert -9223372036854775808 ≤ t - when;
 stack: get_tz_leap :: reference.c:248 <-
        REF_Initialise :: test/unit/ntp_core.c:325 <-
@@ -12718,6 +12720,9 @@ test/unit/test.c:72:[kernel:annot:missing-spec] warning: Neither code nor specif
                      __malloc_SRC_CreateNewInstance_l229_1;
                      __malloc_NCR_GetInstance_l520_2;
                      __malloc_SRC_CreateNewInstance_l229_2}
+  reference.c:657: misaligned read of addresses
+    (read in 2 statements, propagated through 2 statements)
+    garbled mix of &{S_tm_zone___fc_time_tm}
   addrfilt.c:327: misaligned read of addresses
     (read in 1 statement, propagated through 1 statement)
     garbled mix of &{__malloc_open_node_l137; __malloc_w_open_node_l137_0;
