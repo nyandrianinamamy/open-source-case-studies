@@ -149,7 +149,7 @@ directory	file	line	function	property kind	status	property
 .	solitaire.c	163	cycle_deck	mem_access	Unknown	\valid_read(state.deck + 0)
 .	solitaire.c	170	cycle_deck	signed_overflow	Unknown	-2147483648 ≤ output - 26
 .	solitaire.c	170	cycle_deck	signed_overflow	Unknown	output - 26 ≤ 2147483647
-.	solitaire.c	173	cycle_deck	signed_overflow	Unknown	cocount + (int)(lastout ≡ output? 1: 0) ≤ 2147483647
+.	solitaire.c	173	cycle_deck	signed_overflow	Unknown	cocount + (int)(lastout ≡ output ? 1 : 0) ≤ 2147483647
 .	solitaire.c	186	print_deck	mem_access	Unknown	\valid_read(state.deck + i)
 .	solitaire.c	187	print_deck	signed_overflow	Unknown	(int)' ' + *(state.deck + i) ≤ 2147483647
 .	solitaire.c	187	print_deck	signed_overflow	Unknown	-2147483648 ≤ (int)' ' + *(state.deck + i)

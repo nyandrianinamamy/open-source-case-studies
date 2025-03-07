@@ -65,6 +65,6 @@ FRAMAC_SHARE/libc	stdio.c	129	vasprintf	precondition of Frama_C_make_unknown	Unk
 FRAMAC_SHARE/libc	stdio.c	130	vasprintf	mem_access	Unknown	\valid(*strp + (size_t)(len - 1U))
 FRAMAC_SHARE/libc	stdio.h	249	fprintf_va_12	precondition	Unknown	valid_read_string(param0)
 FRAMAC_SHARE/libc	stdio.h	249	fprintf_va_7	precondition	Unknown	valid_read_string(param1)
-FRAMAC_SHARE/libc	string.h	174	strlen	precondition	Unknown	valid_string_s: valid_read_string(s)
+FRAMAC_SHARE/libc	string.h	168	strlen	precondition	Unknown	valid_string_s: valid_read_string(s)
 tests	mini-random.c	30	set_str	precondition of fprintf_va_12	Unknown	valid_read_string(param0)
 tests	testutils.c	159	dump	precondition of fprintf_va_7	Unknown	valid_read_string(param1)

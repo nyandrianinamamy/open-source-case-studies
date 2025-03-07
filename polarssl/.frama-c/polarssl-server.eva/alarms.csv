@@ -35,17 +35,16 @@ directory	file	line	function	property kind	status	property
 .	fc_stubs.h	356	des3_crypt_cbc	precondition	Unknown	\initialized(input + (0 .. length - 1))
 .	fc_stubs.h	361	des3_crypt_cbc	postcondition	Unknown	\initialized(\old(output) + (0 .. \old(length) - 1))
 .	fc_stubs.h	362	des3_crypt_cbc	postcondition	Unknown	\result ≡ 0
-FRAMAC_SHARE/libc	string.h	128	memcpy	precondition	Unknown	valid_dest: valid_or_empty(dest, n)
-FRAMAC_SHARE/libc	string.h	129	memcpy	precondition	Unknown	valid_src: valid_read_or_empty(src, n)
-FRAMAC_SHARE/libc	string.h	153	memmove	precondition	Unknown	valid_dest: valid_or_empty(dest, n)
-FRAMAC_SHARE/libc	string.h	154	memmove	precondition	Unknown	valid_src: valid_read_or_empty(src, n)
-FRAMAC_SHARE/libc	string.h	164	memset	precondition	Unknown	valid_s: valid_or_empty(s, n)
+FRAMAC_SHARE/libc	string.h	122	memcpy	precondition	Unknown	valid_dest: valid_or_empty(dest, n)
+FRAMAC_SHARE/libc	string.h	123	memcpy	precondition	Invalid or unreachable	valid_src: valid_read_or_empty(src, n)
+FRAMAC_SHARE/libc	string.h	147	memmove	precondition	Unknown	valid_dest: valid_or_empty(dest, n)
+FRAMAC_SHARE/libc	string.h	148	memmove	precondition	Unknown	valid_src: valid_read_or_empty(src, n)
+FRAMAC_SHARE/libc	string.h	158	memset	precondition	Unknown	valid_s: valid_or_empty(s, n)
 FRAMAC_SHARE/libc	unistd.h	1143	read	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
 FRAMAC_SHARE/libc	unistd.h	1144	read	precondition	Unknown	buf_has_room: \valid((char *)buf + (0 .. count - 1))
 FRAMAC_SHARE/libc	unistd.h	1326	write	precondition	Unknown	valid_fd: 0 ≤ fd < 1024
 FRAMAC_SHARE/libc	unistd.h	1327	write	precondition	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))
 FRAMAC_SHARE/libc/sys	socket.h	313	accept	precondition	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
-FRAMAC_SHARE/libc/sys	socket.h	558	setsockopt	precondition	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
 FRAMAC_SHARE/libc/sys	socket.h	569	shutdown	precondition	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
 library	ctr_drbg.c	154	block_cipher_df	mem_access	Unknown	\valid_read(p + i)
 library	des.c	384	des_setkey	postcondition	Unknown	\initialized(\old(SK) + (0 .. 31))
@@ -60,7 +59,6 @@ library	md5.c	240	md5_update	precondition of memcpy	Unknown	valid_src: valid_rea
 library	md5.c	350	md5_hmac_starts	initialization	Unknown	\initialized(key + i)
 library	md5.c	350	md5_hmac_starts	mem_access	Unknown	\valid_read(key + i)
 library	md5.c	379	md5_hmac_finish	precondition of md5_finish	Unknown	\valid(output + (0 .. 15))
-library	net.c	169	net_bind	precondition of setsockopt	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
 library	net.c	246	net_accept	precondition of accept	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
 library	net.c	303	net_recv	precondition of read	Unknown	buf_has_room: \valid((char *)buf + (0 .. count - 1))
 library	net.c	303	net_recv	precondition of read	Unknown	valid_fd: 0 ≤ fd < 1024
@@ -130,6 +128,6 @@ library	ssl_tls.c	839	ssl_decrypt_buf	user assertion	Unknown	0 ≤ ssl->in_msgle
 library	ssl_tls.c	929	ssl_decrypt_buf	signed_overflow	Unknown	ssl->nb_zero + 1 ≤ 2147483647
 library	ssl_tls.c	1092	ssl_read_record	precondition of memmove	Unknown	valid_dest: valid_or_empty(dest, n)
 library	ssl_tls.c	1092	ssl_read_record	precondition of memmove	Unknown	valid_src: valid_read_or_empty(src, n)
-library	ssl_tls.c	1353	ssl_write_certificate	precondition of memcpy	Unknown	valid_src: valid_read_or_empty(src, n)
+library	ssl_tls.c	1353	ssl_write_certificate	precondition of memcpy	Invalid or unreachable	valid_src: valid_read_or_empty(src, n)
 library	ssl_tls.c	2327	ssl_write	precondition of memcpy	Unknown	valid_src: valid_read_or_empty(src, n)
 programs/ssl	ssl_server.c	133	my_get_session	postcondition	Unknown	\result ≡ 0 ∨ \result ≡ 1
