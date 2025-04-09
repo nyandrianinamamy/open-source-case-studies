@@ -24651,14 +24651,14 @@ int entropy_add_source(entropy_context *ctx,
                        void *p_source, size_t threshold)
 {
   int __retres;
-  int index_0 = ctx->source_count;
-  if (index_0 >= 20) {
+  int index = ctx->source_count;
+  if (index >= 20) {
     __retres = -0x003E;
     goto return_label;
   }
-  ctx->source[index_0].f_source = f_source;
-  ctx->source[index_0].p_source = p_source;
-  ctx->source[index_0].threshold = threshold;
+  ctx->source[index].f_source = f_source;
+  ctx->source[index].p_source = p_source;
+  ctx->source[index].threshold = threshold;
   (ctx->source_count) ++;
   __retres = 0;
   return_label: return __retres;

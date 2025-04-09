@@ -10,28 +10,28 @@
 #include "string.c"
 #include "string.h"
 #include "strings.h"
-int stem(char *p, int index_0, int position);
+int stem(char *p, int index, int position);
 
 static char *b;
 static int k;
 static int k0;
 static int j;
 /*@ assigns \result;
-    assigns \result \from (indirect: *(b + index_0)), (indirect: index_0);
+    assigns \result \from (indirect: *(b + index)), (indirect: index);
  */
-static int isConsonant(int index_0)
+static int isConsonant(int index)
 {
   int __retres;
-  switch ((int)*(b + index_0)) {
+  switch ((int)*(b + index)) {
     int tmp_1;
     case 'a': case 'e': case 'i': case 'o': case 'u': __retres = 0;
     goto return_label;
     case 'y': ;
-    if (index_0 == k0) tmp_1 = 1;
+    if (index == k0) tmp_1 = 1;
     else {
       int tmp_0;
       int tmp;
-      tmp = isConsonant(index_0 - 1);
+      tmp = isConsonant(index - 1);
       if (tmp) tmp_0 = 0; else tmp_0 = 1;
       tmp_1 = tmp_0;
     }
@@ -47,44 +47,44 @@ static int getMeasure(void)
 {
   int __retres;
   int position;
-  int index_0;
+  int index;
   position = 0;
-  index_0 = k0;
+  index = k0;
   while (1) {
     int tmp;
-    if (index_0 > j) {
+    if (index > j) {
       __retres = position;
       goto return_label;
     }
-    tmp = isConsonant(index_0);
+    tmp = isConsonant(index);
     if (! tmp) break;
-    index_0 ++;
+    index ++;
   }
-  index_0 ++;
+  index ++;
   while (1) {
     while (1) {
       int tmp_0;
-      if (index_0 > j) {
+      if (index > j) {
         __retres = position;
         goto return_label;
       }
-      tmp_0 = isConsonant(index_0);
+      tmp_0 = isConsonant(index);
       if (tmp_0) break;
-      index_0 ++;
+      index ++;
     }
-    index_0 ++;
+    index ++;
     position ++;
     while (1) {
       int tmp_1;
-      if (index_0 > j) {
+      if (index > j) {
         __retres = position;
         goto return_label;
       }
-      tmp_1 = isConsonant(index_0);
+      tmp_1 = isConsonant(index);
       if (! tmp_1) break;
-      index_0 ++;
+      index ++;
     }
-    index_0 ++;
+    index ++;
   }
   return_label: return __retres;
 }
@@ -92,15 +92,15 @@ static int getMeasure(void)
 static int vowelInStem(void)
 {
   int __retres;
-  int index_0;
-  index_0 = k0 - 1;
+  int index;
+  index = k0 - 1;
   while (1) {
-    index_0 ++;
+    index ++;
     ;
-    if (! (index_0 <= j)) break;
+    if (! (index <= j)) break;
     {
       int tmp;
-      tmp = isConsonant(index_0);
+      tmp = isConsonant(index);
       if (! tmp) {
         __retres = 1;
         goto return_label;
@@ -111,34 +111,34 @@ static int vowelInStem(void)
   return_label: return __retres;
 }
 
-static int isDoubleConsonant(int index_0)
+static int isDoubleConsonant(int index)
 {
   int __retres;
   int tmp;
-  if ((int)*(b + index_0) != (int)*(b + (index_0 - 1))) {
+  if ((int)*(b + index) != (int)*(b + (index - 1))) {
     __retres = 0;
     goto return_label;
   }
-  tmp = isConsonant(index_0);
+  tmp = isConsonant(index);
   __retres = tmp;
   return_label: return __retres;
 }
 
-static int cvc(int index_0)
+static int cvc(int index)
 {
   int __retres;
   int character;
-  if (index_0 < k0 + 2) goto _LOR;
+  if (index < k0 + 2) goto _LOR;
   else {
     int tmp;
-    tmp = isConsonant(index_0);
+    tmp = isConsonant(index);
     if (tmp) {
       int tmp_0;
-      tmp_0 = isConsonant(index_0 - 1);
+      tmp_0 = isConsonant(index - 1);
       if (tmp_0) goto _LOR;
       else {
         int tmp_1;
-        tmp_1 = isConsonant(index_0 - 2);
+        tmp_1 = isConsonant(index - 2);
         if (! tmp_1) {
           _LOR: {
                   __retres = 0;
@@ -149,7 +149,7 @@ static int cvc(int index_0)
     }
     else goto _LOR;
   }
-  character = (int)*(b + index_0);
+  character = (int)*(b + index);
   if (character == 'w') goto _LOR_0;
   else 
     if (character == 'x') goto _LOR_0;
@@ -596,12 +596,12 @@ static void step5(void)
   return;
 }
 
-int stem(char *p, int index_0, int position)
+int stem(char *p, int index, int position)
 {
   int __retres;
   b = p;
   k = position;
-  k0 = index_0;
+  k0 = index;
   if (k <= k0 + 1) {
     __retres = k;
     goto return_label;

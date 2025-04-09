@@ -9828,11 +9828,11 @@ int __attribute__((__visibility__("default"))) mz_zip_reader_locate_file
 (mz_zip_archive *pZip, char const *pName, char const *pComment, mz_uint flags)
 {
   int __attribute__((__visibility__("default"))) __retres;
-  mz_uint32 index_0;
+  mz_uint32 index;
   mz_bool __attribute__((__visibility__("default"))) tmp;
-  tmp = mz_zip_reader_locate_file_v2(pZip,pName,pComment,flags,& index_0);
+  tmp = mz_zip_reader_locate_file_v2(pZip,pName,pComment,flags,& index);
   if (tmp) {
-    __retres = (int)index_0;
+    __retres = (int)index;
     goto return_label;
   }
   else {

@@ -1843,10 +1843,9 @@ static void blake2b_compress(crypto_blake2b_ctx *ctx, int is_last_block)
   return;
 }
 
-static void blake2b_set_input(crypto_blake2b_ctx *ctx, u8 input,
-                              size_t index_0)
+static void blake2b_set_input(crypto_blake2b_ctx *ctx, u8 input, size_t index)
 {
-  if (index_0 == (size_t)0) {
+  if (index == (size_t)0) {
     size_t i = (size_t)0;
     /*@ loop \eva::unroll 16; */
     while (i < (size_t)16) {
@@ -1854,8 +1853,8 @@ static void blake2b_set_input(crypto_blake2b_ctx *ctx, u8 input,
       i ++;
     }
   }
-  size_t word = index_0 >> 3;
-  size_t byte = index_0 & (unsigned long)7;
+  size_t word = index >> 3;
+  size_t byte = index & (unsigned long)7;
   ctx->input[word] |= (u64)input << (byte << 3);
   return;
 }
@@ -2585,7 +2584,7 @@ static u32 gidx_next(gidx_ctx *ctx)
     (ctx->ctr) ++;
     gidx_refresh(ctx);
   }
-  u32 index_0 = ctx->offset & (unsigned int)127;
+  u32 index = ctx->offset & (unsigned int)127;
   u32 offset = ctx->offset;
   (ctx->offset) ++;
   int first_pass = ctx->pass_number == (u32)0;
@@ -2597,7 +2596,7 @@ static u32 gidx_next(gidx_ctx *ctx)
     ((ctx->slice_number + (u32)1) & (unsigned int)3) * slice_size;
   if (first_pass) tmp_0 = (u32)0; else tmp_0 = next_slice;
   u32 start_pos = tmp_0;
-  u64 j1 = ctx->b.a[index_0] & (unsigned long)0xffffffff;
+  u64 j1 = ctx->b.a[index] & (unsigned long)0xffffffff;
   u64 x = j1 * j1 >> 32;
   u64 y = (u64)area_size * x >> 32;
   u64 z = (u64)(area_size - (u32)1) - y;
@@ -4713,13 +4712,13 @@ static void ge_scalarmult_base(ge *p, u8 const scalar[32])
           (u8)((((tmp + (tmp_0 << 1)) + (tmp_1 << 2)) + (tmp_2 << 3)) + (
                tmp_3 << 4));
         u8 high = (u8)((int)teeth >> 4);
-        u8 index_0 = (u8)(((int)teeth ^ ((int)high - 1)) & 15);
+        u8 index = (u8)(((int)teeth ^ ((int)high - 1)) & 15);
         {
           size_t j = (size_t)0;
           while (j < (size_t)16) {
             {
               i32 select =
-                (i32)((unsigned long)1 & (((j ^ (unsigned long)index_0) - (unsigned long)1) >> 8));
+                (i32)((unsigned long)1 & (((j ^ (unsigned long)index) - (unsigned long)1) >> 8));
               fe_ccopy(yp,comb_Yp[j],select);
               fe_ccopy(ym,comb_Ym[j],select);
               fe_ccopy(t2,comb_T2[j],select);

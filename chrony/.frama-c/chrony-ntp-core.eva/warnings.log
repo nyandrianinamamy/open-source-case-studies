@@ -5921,7 +5921,7 @@ stack: SST_DoNewRegression :: sources.c:350 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-regress.c:353:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(flags + index_0);
+regress.c:353:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(flags + index);
 stack: find_ordered_entry_with_flags :: regress.c:427 <-
        find_median :: regress.c:442 <-
        RGR_FindMedian :: sourcestats.c:546 <-
@@ -6088,7 +6088,7 @@ stack: __FC_assert :: addrfilt.c:347 <-
        main :: fc_stubs.c:37 <-
        eva_main
 sourcestats.c:422:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&inst->peer_delays[index_0]);
+assert \initialized(&inst->peer_delays[index]);
 stack: find_min_delay_sample :: sourcestats.c:288 <-
        prune_register :: sourcestats.c:301 <-
        SST_AccumulateSample :: sources.c:349 <-
@@ -6299,7 +6299,7 @@ stack: find_ordered_entry_with_flags :: regress.c:425 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-regress.c:371:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(x + index_0);
+regress.c:371:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(x + index);
 stack: find_ordered_entry_with_flags :: regress.c:425 <-
        find_median :: regress.c:442 <-
        RGR_FindMedian :: sourcestats.c:546 <-
@@ -6967,7 +6967,7 @@ stack: SRC_SelectSource :: ntp_core.c:1507 <-
        main :: fc_stubs.c:37 <-
        eva_main
 sources.c:932:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&(*(sources + index_0))->sel_info.leap);
+assert \initialized(&(*(sources + index))->sel_info.leap);
 stack: SRC_SelectSource :: ntp_core.c:1507 <-
        process_sample :: ntp_core.c:1834 <-
        receive_packet :: ntp_core.c:2070 <-
@@ -6987,7 +6987,7 @@ stack: __FC_assert :: sources.c:960 <-
        main :: fc_stubs.c:37 <-
        eva_main
 sources.c:970:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&(*(sources + index_0))->sel_info.stratum);
+assert \initialized(&(*(sources + index))->sel_info.stratum);
 stack: SRC_SelectSource :: ntp_core.c:1507 <-
        process_sample :: ntp_core.c:1834 <-
        receive_packet :: ntp_core.c:2070 <-
@@ -7495,7 +7495,7 @@ stack: find_ordered_entry_with_flags :: regress.c:427 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-regress.c:354:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(x + index_0);
+regress.c:354:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(x + index);
 stack: find_ordered_entry_with_flags :: regress.c:428 <-
        find_median :: regress.c:442 <-
        RGR_FindMedian :: sourcestats.c:546 <-
@@ -10675,7 +10675,7 @@ stack: memcpy :: fc_stubs.c:13 <-
        main :: fc_stubs.c:37 <-
        eva_main
 sources.c:934:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&(*(sources + index_0))->sel_info.leap);
+assert \initialized(&(*(sources + index))->sel_info.leap);
 stack: SRC_SelectSource :: ntp_core.c:1507 <-
        process_sample :: ntp_core.c:1834 <-
        receive_packet :: ntp_core.c:2070 <-
@@ -10727,7 +10727,7 @@ stack: SRC_SelectSource :: ntp_core.c:1507 <-
        main :: fc_stubs.c:37 <-
        eva_main
 sources.c:974:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&(*(sources + index_0))->sel_info.stratum);
+assert \initialized(&(*(sources + index))->sel_info.stratum);
 stack: SRC_SelectSource :: ntp_core.c:1507 <-
        process_sample :: ntp_core.c:1834 <-
        receive_packet :: ntp_core.c:2070 <-
@@ -10834,7 +10834,7 @@ stack: __FC_assert :: sourcestats.c:713 <-
        main :: fc_stubs.c:37 <-
        eva_main
 sources.c:533:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&(*(sources + index_0))->sel_info.root_distance);
+assert \initialized(&(*(sources + index))->sel_info.root_distance);
 stack: combine_sources :: sources.c:1091 <-
        SRC_SelectSource :: ntp_core.c:1507 <-
        process_sample :: ntp_core.c:1834 <-
@@ -10846,7 +10846,7 @@ stack: combine_sources :: sources.c:1091 <-
        main :: fc_stubs.c:37 <-
        eva_main
 sources.c:554:[eva:alarm] warning: accessing uninitialized left-value.
-assert \initialized(&(*(sources + index_0))->sel_info.root_distance);
+assert \initialized(&(*(sources + index))->sel_info.root_distance);
 stack: combine_sources :: sources.c:1091 <-
        SRC_SelectSource :: ntp_core.c:1507 <-
        process_sample :: ntp_core.c:1834 <-
@@ -12355,7 +12355,7 @@ stack: SRC_SelectSource :: ntp_core.c:1507 <-
        main :: fc_stubs.c:37 <-
        eva_main
 sources.c:929:[eva:alarm] warning: accessing left-value that contains escaping addresses.
-assert ¬\dangling(sources + index_0);
+assert ¬\dangling(sources + index);
 stack: SRC_SelectSource :: ntp_core.c:1507 <-
        process_sample :: ntp_core.c:1834 <-
        receive_packet :: ntp_core.c:2070 <-
@@ -12365,7 +12365,7 @@ stack: SRC_SelectSource :: ntp_core.c:1507 <-
        main :: fc_stubs.c:37 <-
        eva_main
 sources.c:932:[eva:alarm] warning: accessing left-value that contains escaping addresses.
-assert ¬\dangling(sources + index_0);
+assert ¬\dangling(sources + index);
 stack: SRC_SelectSource :: ntp_core.c:1507 <-
        process_sample :: ntp_core.c:1834 <-
        receive_packet :: ntp_core.c:2070 <-

@@ -672,7 +672,7 @@ int yaml_document_initialize(yaml_document_t *document,
 
 void yaml_document_delete(yaml_document_t *document);
 
-yaml_node_t *yaml_document_get_node(yaml_document_t *document, int index_0);
+yaml_node_t *yaml_document_get_node(yaml_document_t *document, int index);
 
 yaml_node_t *yaml_document_get_root_node(yaml_document_t *document);
 
@@ -2380,13 +2380,13 @@ void yaml_document_delete(yaml_document_t *document)
   return;
 }
 
-yaml_node_t *yaml_document_get_node(yaml_document_t *document, int index_0)
+yaml_node_t *yaml_document_get_node(yaml_document_t *document, int index)
 {
   yaml_node_t *__retres;
   __FC_assert(document != (yaml_document_t *)0,"src/api.c",1167,"document");
-  if (index_0 > 0) 
-    if (document->nodes.start + index_0 <= document->nodes.top) {
-      __retres = (document->nodes.start + index_0) - 1;
+  if (index > 0) 
+    if (document->nodes.start + index <= document->nodes.top) {
+      __retres = (document->nodes.start + index) - 1;
       goto return_label;
     }
   __retres = (yaml_node_t *)0;
@@ -2746,12 +2746,12 @@ int yaml_document_append_mapping_pair(yaml_document_t *document, int mapping,
 
 static void yaml_emitter_delete_document_and_anchors(yaml_emitter_t *emitter);
 
-static void yaml_emitter_anchor_node(yaml_emitter_t *emitter, int index_0);
+static void yaml_emitter_anchor_node(yaml_emitter_t *emitter, int index);
 
 static yaml_char_t *yaml_emitter_generate_anchor(yaml_emitter_t *emitter,
                                                  int anchor_id);
 
-static int yaml_emitter_dump_node(yaml_emitter_t *emitter, int index_0);
+static int yaml_emitter_dump_node(yaml_emitter_t *emitter, int index);
 
 static int yaml_emitter_dump_alias(yaml_emitter_t *emitter,
                                    yaml_char_t *anchor);
@@ -2877,7 +2877,7 @@ int yaml_emitter_dump(yaml_emitter_t *emitter, yaml_document_t *document)
 
 static void yaml_emitter_delete_document_and_anchors(yaml_emitter_t *emitter)
 {
-  int index_0;
+  int index;
   yaml_node_t *tmp_0;
   yaml_node_t *tmp;
   if (! emitter->anchors) {
@@ -2885,11 +2885,11 @@ static void yaml_emitter_delete_document_and_anchors(yaml_emitter_t *emitter)
     emitter->document = (yaml_document_t *)0;
     goto return_label;
   }
-  index_0 = 0;
-  while ((emitter->document)->nodes.start + index_0 < (emitter->document)->nodes.top) {
+  index = 0;
+  while ((emitter->document)->nodes.start + index < (emitter->document)->nodes.top) {
     {
-      yaml_node_t node = *((emitter->document)->nodes.start + index_0);
-      if (! (emitter->anchors + index_0)->serialized) {
+      yaml_node_t node = *((emitter->document)->nodes.start + index);
+      if (! (emitter->anchors + index)->serialized) {
         yaml_free((void *)node.tag);
         if (node.type == (unsigned int)YAML_SCALAR_NODE) yaml_free((void *)node.data.scalar.value);
       }
@@ -2906,7 +2906,7 @@ static void yaml_emitter_delete_document_and_anchors(yaml_emitter_t *emitter)
         node.data.mapping.pairs.start = node.data.mapping.pairs.top;
       }
     }
-    index_0 ++;
+    index ++;
   }
   yaml_free((void *)(emitter->document)->nodes.start);
   tmp_0 = (yaml_node_t *)0;
@@ -2921,13 +2921,13 @@ static void yaml_emitter_delete_document_and_anchors(yaml_emitter_t *emitter)
   return_label: return;
 }
 
-static void yaml_emitter_anchor_node(yaml_emitter_t *emitter, int index_0)
+static void yaml_emitter_anchor_node(yaml_emitter_t *emitter, int index)
 {
   yaml_node_item_t *item;
   yaml_node_pair_t *pair;
-  yaml_node_t *node = ((emitter->document)->nodes.start + index_0) - 1;
-  ((emitter->anchors + (index_0 - 1))->references) ++;
-  if ((emitter->anchors + (index_0 - 1))->references == 1) 
+  yaml_node_t *node = ((emitter->document)->nodes.start + index) - 1;
+  ((emitter->anchors + (index - 1))->references) ++;
+  if ((emitter->anchors + (index - 1))->references == 1) 
     switch (node->type) {
       case YAML_SEQUENCE_NODE: item = node->data.sequence.items.start;
       while (item < node->data.sequence.items.top) {
@@ -2945,9 +2945,9 @@ static void yaml_emitter_anchor_node(yaml_emitter_t *emitter, int index_0)
       default: break;
     }
   else 
-    if ((emitter->anchors + (index_0 - 1))->references == 2) {
+    if ((emitter->anchors + (index - 1))->references == 2) {
       (emitter->last_anchor_id) ++;
-      (emitter->anchors + (index_0 - 1))->anchor = emitter->last_anchor_id;
+      (emitter->anchors + (index - 1))->anchor = emitter->last_anchor_id;
     }
   return;
 }
@@ -2973,11 +2973,11 @@ static yaml_char_t *yaml_emitter_generate_anchor(yaml_emitter_t *emitter,
   return_label: return __retres;
 }
 
-static int yaml_emitter_dump_node(yaml_emitter_t *emitter, int index_0)
+static int yaml_emitter_dump_node(yaml_emitter_t *emitter, int index)
 {
   int __retres;
-  yaml_node_t *node = ((emitter->document)->nodes.start + index_0) - 1;
-  int anchor_id = (emitter->anchors + (index_0 - 1))->anchor;
+  yaml_node_t *node = ((emitter->document)->nodes.start + index) - 1;
+  int anchor_id = (emitter->anchors + (index - 1))->anchor;
   yaml_char_t *anchor = (yaml_char_t *)0;
   if (anchor_id) {
     anchor = yaml_emitter_generate_anchor(emitter,anchor_id);
@@ -2986,13 +2986,13 @@ static int yaml_emitter_dump_node(yaml_emitter_t *emitter, int index_0)
       goto return_label;
     }
   }
-  if ((emitter->anchors + (index_0 - 1))->serialized) {
+  if ((emitter->anchors + (index - 1))->serialized) {
     int tmp;
     tmp = yaml_emitter_dump_alias(emitter,anchor);
     __retres = tmp;
     goto return_label;
   }
-  (emitter->anchors + (index_0 - 1))->serialized = 1;
+  (emitter->anchors + (index - 1))->serialized = 1;
   switch (node->type) {
     int tmp_0;
     int tmp_1;
@@ -10358,7 +10358,7 @@ static int yaml_parser_set_composer_error_context(yaml_parser_t *parser,
                                                   char const *problem,
                                                   yaml_mark_t problem_mark);
 
-static int yaml_parser_register_anchor(yaml_parser_t *parser, int index_0,
+static int yaml_parser_register_anchor(yaml_parser_t *parser, int index,
                                        yaml_char_t *anchor);
 
 static void yaml_parser_delete_aliases(yaml_parser_t *parser);
@@ -10628,7 +10628,7 @@ static int yaml_parser_load_nodes(yaml_parser_t *parser,
   return_label: return __retres;
 }
 
-static int yaml_parser_register_anchor(yaml_parser_t *parser, int index_0,
+static int yaml_parser_register_anchor(yaml_parser_t *parser, int index,
                                        yaml_char_t *anchor)
 {
   int __retres;
@@ -10640,8 +10640,8 @@ static int yaml_parser_register_anchor(yaml_parser_t *parser, int index_0,
     goto return_label;
   }
   data.anchor = anchor;
-  data.index = index_0;
-  data.mark = ((parser->document)->nodes.start + (index_0 - 1))->start_mark;
+  data.index = index;
+  data.mark = ((parser->document)->nodes.start + (index - 1))->start_mark;
   alias_data = parser->aliases.start;
   while (alias_data != parser->aliases.top) {
     {
@@ -10689,7 +10689,7 @@ static int yaml_parser_register_anchor(yaml_parser_t *parser, int index_0,
 }
 
 static int yaml_parser_load_node_add(yaml_parser_t *parser,
-                                     struct loader_ctx *ctx, int index_0)
+                                     struct loader_ctx *ctx, int index)
 {
   int __retres;
   struct yaml_node_s *parent;
@@ -10725,7 +10725,7 @@ static int yaml_parser_load_node_add(yaml_parser_t *parser,
         yaml_node_item_t *tmp_1;
         _LOR: tmp_1 = parent->data.sequence.items.top;
         (parent->data.sequence.items.top) ++;
-        *tmp_1 = index_0;
+        *tmp_1 = index;
         tmp_2 = 1;
       }
       else {
@@ -10747,11 +10747,11 @@ static int yaml_parser_load_node_add(yaml_parser_t *parser,
         yaml_node_pair_t *p = parent->data.mapping.pairs.top - 1;
         if (p->key != 0) 
           if (p->value == 0) {
-            p->value = index_0;
+            p->value = index;
             break;
           }
       }
-      pair.key = index_0;
+      pair.key = index;
       pair.value = 0;
       if (parent->data.mapping.pairs.top - parent->data.mapping.pairs.start < (long)(
           2147483647 - 1)) tmp_3 = 1;
@@ -10831,7 +10831,7 @@ static int yaml_parser_load_scalar(yaml_parser_t *parser,
 {
   int __retres;
   yaml_node_t node;
-  int index_0;
+  int index;
   int tmp;
   int tmp_3;
   int tmp_4;
@@ -10885,14 +10885,13 @@ static int yaml_parser_load_scalar(yaml_parser_t *parser,
     }
   }
   if (! tmp_3) goto error;
-  index_0 = (int)((parser->document)->nodes.top - (parser->document)->nodes.start);
-  tmp_4 = yaml_parser_register_anchor(parser,index_0,
-                                      event->data.scalar.anchor);
+  index = (int)((parser->document)->nodes.top - (parser->document)->nodes.start);
+  tmp_4 = yaml_parser_register_anchor(parser,index,event->data.scalar.anchor);
   if (! tmp_4) {
     __retres = 0;
     goto return_label;
   }
-  tmp_5 = yaml_parser_load_node_add(parser,ctx,index_0);
+  tmp_5 = yaml_parser_load_node_add(parser,ctx,index);
   __retres = tmp_5;
   goto return_label;
   error: yaml_free((void *)tag);
@@ -10908,7 +10907,7 @@ static int yaml_parser_load_sequence(yaml_parser_t *parser,
 {
   int __retres;
   yaml_node_t node;
-  int index_0;
+  int index;
   int tmp;
   int tmp_2;
   int tmp_5;
@@ -10981,14 +10980,14 @@ static int yaml_parser_load_sequence(yaml_parser_t *parser,
     }
   }
   if (! tmp_5) goto error;
-  index_0 = (int)((parser->document)->nodes.top - (parser->document)->nodes.start);
-  tmp_6 = yaml_parser_register_anchor(parser,index_0,
+  index = (int)((parser->document)->nodes.top - (parser->document)->nodes.start);
+  tmp_6 = yaml_parser_register_anchor(parser,index,
                                       event->data.sequence_start.anchor);
   if (! tmp_6) {
     __retres = 0;
     goto return_label;
   }
-  tmp_7 = yaml_parser_load_node_add(parser,ctx,index_0);
+  tmp_7 = yaml_parser_load_node_add(parser,ctx,index);
   if (! tmp_7) {
     __retres = 0;
     goto return_label;
@@ -11011,7 +11010,7 @@ static int yaml_parser_load_sequence(yaml_parser_t *parser,
       int *tmp_10;
       _LOR_1: tmp_10 = ctx->top;
       (ctx->top) ++;
-      *tmp_10 = index_0;
+      *tmp_10 = index;
       tmp_11 = 1;
     }
     else {
@@ -11036,14 +11035,14 @@ static int yaml_parser_load_sequence_end(yaml_parser_t *parser,
                                          struct loader_ctx *ctx)
 {
   int __retres;
-  int index_0;
+  int index;
   __FC_assert((ctx->top - ctx->start > (long)0) != 0,"src/loader.c",467,
               "((*ctx).top - (*ctx).start) > 0");
-  index_0 = *(ctx->top - 1);
-  __FC_assert((((parser->document)->nodes.start + (index_0 - 1))->type == (unsigned int)YAML_SEQUENCE_NODE) != 0,
+  index = *(ctx->top - 1);
+  __FC_assert((((parser->document)->nodes.start + (index - 1))->type == (unsigned int)YAML_SEQUENCE_NODE) != 0,
               "src/loader.c",470,
               "parser->document->nodes.start[index-1].type == YAML_SEQUENCE_NODE");
-  ((parser->document)->nodes.start + (index_0 - 1))->end_mark = event->end_mark;
+  ((parser->document)->nodes.start + (index - 1))->end_mark = event->end_mark;
   (ctx->top) --;
   ;
   __retres = 1;
@@ -11056,7 +11055,7 @@ static int yaml_parser_load_mapping(yaml_parser_t *parser,
 {
   int __retres;
   yaml_node_t node;
-  int index_0;
+  int index;
   int tmp;
   int tmp_2;
   int tmp_5;
@@ -11129,14 +11128,14 @@ static int yaml_parser_load_mapping(yaml_parser_t *parser,
     }
   }
   if (! tmp_5) goto error;
-  index_0 = (int)((parser->document)->nodes.top - (parser->document)->nodes.start);
-  tmp_6 = yaml_parser_register_anchor(parser,index_0,
+  index = (int)((parser->document)->nodes.top - (parser->document)->nodes.start);
+  tmp_6 = yaml_parser_register_anchor(parser,index,
                                       event->data.mapping_start.anchor);
   if (! tmp_6) {
     __retres = 0;
     goto return_label;
   }
-  tmp_7 = yaml_parser_load_node_add(parser,ctx,index_0);
+  tmp_7 = yaml_parser_load_node_add(parser,ctx,index);
   if (! tmp_7) {
     __retres = 0;
     goto return_label;
@@ -11159,7 +11158,7 @@ static int yaml_parser_load_mapping(yaml_parser_t *parser,
       int *tmp_10;
       _LOR_1: tmp_10 = ctx->top;
       (ctx->top) ++;
-      *tmp_10 = index_0;
+      *tmp_10 = index;
       tmp_11 = 1;
     }
     else {
@@ -11184,14 +11183,14 @@ static int yaml_parser_load_mapping_end(yaml_parser_t *parser,
                                         struct loader_ctx *ctx)
 {
   int __retres;
-  int index_0;
+  int index;
   __FC_assert((ctx->top - ctx->start > (long)0) != 0,"src/loader.c",535,
               "((*ctx).top - (*ctx).start) > 0");
-  index_0 = *(ctx->top - 1);
-  __FC_assert((((parser->document)->nodes.start + (index_0 - 1))->type == (unsigned int)YAML_MAPPING_NODE) != 0,
+  index = *(ctx->top - 1);
+  __FC_assert((((parser->document)->nodes.start + (index - 1))->type == (unsigned int)YAML_MAPPING_NODE) != 0,
               "src/loader.c",538,
               "parser->document->nodes.start[index-1].type == YAML_MAPPING_NODE");
-  ((parser->document)->nodes.start + (index_0 - 1))->end_mark = event->end_mark;
+  ((parser->document)->nodes.start + (index - 1))->end_mark = event->end_mark;
   (ctx->top) --;
   ;
   __retres = 1;

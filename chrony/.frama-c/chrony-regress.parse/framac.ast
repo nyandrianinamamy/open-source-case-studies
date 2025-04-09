@@ -1370,7 +1370,7 @@ void ARR_DestroyInstance(ARR_Instance array);
 
 void *ARR_GetNewElement(ARR_Instance array);
 
-void *ARR_GetElement(ARR_Instance array, unsigned int index_0);
+void *ARR_GetElement(ARR_Instance array, unsigned int index);
 
 void *ARR_GetElements(ARR_Instance array);
 
@@ -1425,12 +1425,11 @@ void *ARR_GetNewElement(ARR_Instance array)
   return tmp;
 }
 
-void *ARR_GetElement(ARR_Instance array, unsigned int index_0)
+void *ARR_GetElement(ARR_Instance array, unsigned int index)
 {
   void *__retres;
-  __FC_assert((index_0 < array->used) != 0,"array.c",94,
-              "index < array->used");
-  __retres = (void *)((char *)array->data + (size_t)index_0 * (size_t)array->elem_size);
+  __FC_assert((index < array->used) != 0,"array.c",94,"index < array->used");
+  __retres = (void *)((char *)array->data + (size_t)index * (size_t)array->elem_size);
   return __retres;
 }
 
@@ -1478,17 +1477,17 @@ int CLG_LogNTPAccess(IPAddr *client, struct timespec *now);
 
 int CLG_LogCommandAccess(IPAddr *client, struct timespec *now);
 
-int CLG_LimitNTPResponseRate(int index_0);
+int CLG_LimitNTPResponseRate(int index);
 
-int CLG_LimitCommandResponseRate(int index_0);
+int CLG_LimitCommandResponseRate(int index);
 
-void CLG_GetNtpTimestamps(int index_0, NTP_int64 **rx_ts, NTP_int64 **tx_ts);
+void CLG_GetNtpTimestamps(int index, NTP_int64 **rx_ts, NTP_int64 **tx_ts);
 
 int CLG_GetNtpMinPoll(void);
 
 int CLG_GetNumberOfIndices(void);
 
-int CLG_GetClientAccessReportByIndex(int index_0,
+int CLG_GetClientAccessReportByIndex(int index,
                                      RPT_ClientAccessByIndex_Report *report,
                                      struct timespec *now);
 
@@ -1683,7 +1682,7 @@ int CNF_GetInitSources(void);
 
 double CNF_GetInitStepThreshold(void);
 
-int CNF_GetHwTsInterface(unsigned int index_0, CNF_HwTsInterface **iface);
+int CNF_GetHwTsInterface(unsigned int index, CNF_HwTsInterface **iface);
 
 static ARR_Instance records;
 static unsigned int slots;
@@ -2147,7 +2146,7 @@ static int limit_response_random(int leak_rate)
   return r;
 }
 
-int CLG_LimitNTPResponseRate(int index_0)
+int CLG_LimitNTPResponseRate(int index)
 {
   int __retres;
   Record *record;
@@ -2156,7 +2155,7 @@ int CLG_LimitNTPResponseRate(int index_0)
     __retres = 0;
     goto return_label;
   }
-  record = (Record *)ARR_GetElement(records,(unsigned int)index_0);
+  record = (Record *)ARR_GetElement(records,(unsigned int)index);
   record->flags = (uint8_t)((int)record->flags & ~ 0x1);
   if ((int)record->ntp_tokens >= (int)ntp_tokens_per_packet) {
     record->ntp_tokens = (uint16_t)((int)record->ntp_tokens - (int)ntp_tokens_per_packet);
@@ -2178,7 +2177,7 @@ int CLG_LimitNTPResponseRate(int index_0)
   return_label: return __retres;
 }
 
-int CLG_LimitCommandResponseRate(int index_0)
+int CLG_LimitCommandResponseRate(int index)
 {
   int __retres;
   Record *record;
@@ -2187,7 +2186,7 @@ int CLG_LimitCommandResponseRate(int index_0)
     __retres = 0;
     goto return_label;
   }
-  record = (Record *)ARR_GetElement(records,(unsigned int)index_0);
+  record = (Record *)ARR_GetElement(records,(unsigned int)index);
   if ((int)record->cmd_tokens >= (int)cmd_tokens_per_packet) {
     record->cmd_tokens = (uint16_t)((int)record->cmd_tokens - (int)cmd_tokens_per_packet);
     __retres = 0;
@@ -2205,10 +2204,10 @@ int CLG_LimitCommandResponseRate(int index_0)
   return_label: return __retres;
 }
 
-void CLG_GetNtpTimestamps(int index_0, NTP_int64 **rx_ts, NTP_int64 **tx_ts)
+void CLG_GetNtpTimestamps(int index, NTP_int64 **rx_ts, NTP_int64 **tx_ts)
 {
   Record *record;
-  record = (Record *)ARR_GetElement(records,(unsigned int)index_0);
+  record = (Record *)ARR_GetElement(records,(unsigned int)index);
   *rx_ts = & record->ntp_rx_ts;
   *tx_ts = & record->ntp_tx_ts;
   return;
@@ -2262,7 +2261,7 @@ static uint32_t get_last_ago(uint32_t x, uint32_t y)
   return_label: return __retres;
 }
 
-int CLG_GetClientAccessReportByIndex(int index_0,
+int CLG_GetClientAccessReportByIndex(int index,
                                      RPT_ClientAccessByIndex_Report *report,
                                      struct timespec *now)
 {
@@ -2277,7 +2276,7 @@ int CLG_GetClientAccessReportByIndex(int index_0,
     goto return_label;
   }
   else 
-    if (index_0 < 0) {
+    if (index < 0) {
       __retres = 0;
       goto return_label;
     }
@@ -2285,12 +2284,12 @@ int CLG_GetClientAccessReportByIndex(int index_0,
       unsigned int tmp;
       tmp = ARR_GetSize(records);
       ;
-      if ((unsigned int)index_0 >= tmp) {
+      if ((unsigned int)index >= tmp) {
         __retres = 0;
         goto return_label;
       }
     }
-  record = (Record *)ARR_GetElement(records,(unsigned int)index_0);
+  record = (Record *)ARR_GetElement(records,(unsigned int)index);
   if ((int)record->ip_addr.family == 0) {
     __retres = 0;
     goto return_label;
@@ -2429,13 +2428,13 @@ int SRC_ReadNumberOfSources(void);
 
 int SRC_ActiveSources(void);
 
-int SRC_ReportSource(int index_0, RPT_SourceReport *report,
+int SRC_ReportSource(int index, RPT_SourceReport *report,
                      struct timespec *now);
 
-int SRC_ReportSourcestats(int index_0, RPT_SourcestatsReport *report,
+int SRC_ReportSourcestats(int index, RPT_SourcestatsReport *report,
                           struct timespec *now);
 
-SRC_Type SRC_GetType(int index_0);
+SRC_Type SRC_GetType(int index);
 
 int CPS_ParseNTPSourceAdd(char *line, CPS_NTP_Source *src);
 
@@ -6492,17 +6491,17 @@ double CNF_GetInitStepThreshold(void)
   return init_slew_threshold;
 }
 
-int CNF_GetHwTsInterface(unsigned int index_0, CNF_HwTsInterface **iface)
+int CNF_GetHwTsInterface(unsigned int index, CNF_HwTsInterface **iface)
 {
   int __retres;
   unsigned int tmp;
   tmp = ARR_GetSize(hwts_interfaces);
   ;
-  if (index_0 >= tmp) {
+  if (index >= tmp) {
     __retres = 0;
     goto return_label;
   }
-  *iface = (CNF_HwTsInterface *)ARR_GetElement(hwts_interfaces,index_0);
+  *iface = (CNF_HwTsInterface *)ARR_GetElement(hwts_interfaces,index);
   __retres = 1;
   return_label: return __retres;
 }
@@ -7060,13 +7059,13 @@ void KEY_Finalise(void)
   return;
 }
 
-static Key *get_key(unsigned int index_0)
+static Key *get_key(unsigned int index)
 {
   Key *__retres;
   void *tmp;
   tmp = ARR_GetElements(keys);
   ;
-  __retres = (Key *)tmp + index_0;
+  __retres = (Key *)tmp + index;
   return __retres;
 }
 
@@ -11477,7 +11476,7 @@ static int combine_sources(int n_sel_sources, struct timespec *ref_time,
   double inv_sum2_frequency_sd;
   double inv_sum2_skew;
   int i;
-  int index_0;
+  int index;
   int combined;
   double tmp_1;
   double tmp_2;
@@ -11499,13 +11498,13 @@ static int combine_sources(int n_sel_sources, struct timespec *ref_time,
   i = combined;
   /*@ loop \eva::unroll 2; */
   while (i < n_sel_sources) {
-    index_0 = *(sel_sources + i);
-    SST_GetTrackingData((*(sources + index_0))->stats,& src_ref_time,
+    index = *(sel_sources + i);
+    SST_GetTrackingData((*(sources + index))->stats,& src_ref_time,
                         & src_offset,& src_offset_sd,& src_frequency,
                         & src_frequency_sd,& src_skew,& src_root_delay,
                         & src_root_dispersion);
-    if (index_0 != selected_source_index) {
-      if ((*(sources + index_0))->sel_info.root_distance > combine_limit_0 * sel_src_distance) 
+    if (index != selected_source_index) {
+      if ((*(sources + index))->sel_info.root_distance > combine_limit_0 * sel_src_distance) 
         goto _LOR;
       else {
         double tmp;
@@ -11515,24 +11514,24 @@ static int combine_sources(int n_sel_sources, struct timespec *ref_time,
         ;
         if (tmp > combine_limit_0 * ((*skew + src_skew) + tmp_0)) 
           _LOR:
-          if ((*(sources + index_0))->reachability_size >= 8) (*(sources + index_0))->distant = 32;
-          else (*(sources + index_0))->distant = 1;
+          if ((*(sources + index))->reachability_size >= 8) (*(sources + index))->distant = 32;
+          else (*(sources + index))->distant = 1;
         else goto _LAND;
       }
     }
     else {
       _LAND: ;
-      if ((*(sources + index_0))->distant) ((*(sources + index_0))->distant) --;
+      if ((*(sources + index))->distant) ((*(sources + index))->distant) --;
     }
-    if ((*(sources + index_0))->distant) {
-      (*(sources + index_0))->status = SRC_DISTANT;
+    if ((*(sources + index))->distant) {
+      (*(sources + index))->status = SRC_DISTANT;
       goto __Cont;
     }
-    if ((*(sources + index_0))->status == (unsigned int)SRC_OK) (*(sources + index_0))->status = SRC_UNSELECTED;
+    if ((*(sources + index))->status == (unsigned int)SRC_OK) (*(sources + index))->status = SRC_UNSELECTED;
     elapsed = UTI_DiffTimespecsToDouble(ref_time,& src_ref_time);
     src_offset += elapsed * src_frequency;
     src_offset_sd += elapsed * src_frequency_sd;
-    offset_weight = 1.0 / (*(sources + index_0))->sel_info.root_distance;
+    offset_weight = 1.0 / (*(sources + index))->sel_info.root_distance;
     frequency_weight = 1.0 / (src_frequency_sd * src_frequency_sd);
     sum_offset_weight += offset_weight;
     sum_offset += offset_weight * src_offset;
@@ -11566,7 +11565,7 @@ void SRC_SelectSource(SRC_Instance updated_inst)
   int j;
   int j1;
   int j2;
-  int index_0;
+  int index;
   int sel_prefer;
   int n_endpoints;
   int n_sel_sources;
@@ -11867,14 +11866,14 @@ void SRC_SelectSource(SRC_Instance updated_inst)
   i = leap_ins;
   /*@ loop \eva::unroll 2; */
   while (i < n_sel_sources) {
-    index_0 = *(sel_sources + i);
+    index = *(sel_sources + i);
     if (best_trust_depth) 
-      if (! ((*(sources + index_0))->sel_options & 0x4)) goto __Cont_3;
+      if (! ((*(sources + index))->sel_options & 0x4)) goto __Cont_3;
     leap_votes ++;
-    if ((*(sources + index_0))->sel_info.leap == (unsigned int)LEAP_InsertSecond) 
+    if ((*(sources + index))->sel_info.leap == (unsigned int)LEAP_InsertSecond) 
       leap_ins ++;
     else 
-      if ((*(sources + index_0))->sel_info.leap == (unsigned int)LEAP_DeleteSecond) 
+      if ((*(sources + index))->sel_info.leap == (unsigned int)LEAP_DeleteSecond) 
         leap_del ++;
     __Cont_3: i ++;
   }
@@ -11909,13 +11908,13 @@ void SRC_SelectSource(SRC_Instance updated_inst)
     sel_prefer = 1;
   }
   else sel_prefer = 0;
-  index_0 = *(sel_sources + 0);
-  min_stratum = (*(sources + index_0))->sel_info.stratum;
+  index = *(sel_sources + 0);
+  min_stratum = (*(sources + index))->sel_info.stratum;
   i = 1;
   /*@ loop \eva::unroll 2; */
   while (i < n_sel_sources) {
-    index_0 = *(sel_sources + i);
-    stratum = (*(sources + index_0))->sel_info.stratum;
+    index = *(sel_sources + i);
+    stratum = (*(sources + index))->sel_info.stratum;
     if (stratum < min_stratum) min_stratum = stratum;
     i ++;
   }
@@ -11993,10 +11992,10 @@ void SRC_SelectSource(SRC_Instance updated_inst)
     i = 0;
     /*@ loop \eva::unroll 2; */
     while (i < n_sel_sources) {
-      index_0 = *(sel_sources + i);
-      if ((*(sources + index_0))->status == (unsigned int)SRC_OK) 
-        if ((*(sources + index_0))->distant) (*(sources + index_0))->status = SRC_DISTANT;
-        else (*(sources + index_0))->status = SRC_UNSELECTED;
+      index = *(sel_sources + i);
+      if ((*(sources + index))->status == (unsigned int)SRC_OK) 
+        if ((*(sources + index))->distant) (*(sources + index))->status = SRC_DISTANT;
+        else (*(sources + index))->status = SRC_UNSELECTED;
       i ++;
     }
     goto return_label;
@@ -12343,21 +12342,21 @@ int SRC_ActiveSources(void)
   return r;
 }
 
-int SRC_ReportSource(int index_0, RPT_SourceReport *report,
+int SRC_ReportSource(int index, RPT_SourceReport *report,
                      struct timespec *now)
 {
   int __retres;
   SRC_Instance src;
-  if (index_0 >= n_sources) goto _LOR;
+  if (index >= n_sources) goto _LOR;
   else 
-    if (index_0 < 0) {
+    if (index < 0) {
       _LOR: {
               __retres = 0;
               goto return_label;
             }
     }
     else {
-      src = *(sources + index_0);
+      src = *(sources + index);
       if (src->ip_addr) report->ip_addr = *(src->ip_addr);
       else {
         report->ip_addr.addr.in4 = src->ref_id;
@@ -12388,21 +12387,21 @@ int SRC_ReportSource(int index_0, RPT_SourceReport *report,
   return_label: return __retres;
 }
 
-int SRC_ReportSourcestats(int index_0, RPT_SourcestatsReport *report,
+int SRC_ReportSourcestats(int index, RPT_SourcestatsReport *report,
                           struct timespec *now)
 {
   int __retres;
   SRC_Instance src;
-  if (index_0 >= n_sources) goto _LOR;
+  if (index >= n_sources) goto _LOR;
   else 
-    if (index_0 < 0) {
+    if (index < 0) {
       _LOR: {
               __retres = 0;
               goto return_label;
             }
     }
     else {
-      src = *(sources + index_0);
+      src = *(sources + index);
       report->ref_id = src->ref_id;
       if (src->ip_addr) report->ip_addr = *(src->ip_addr);
       else report->ip_addr.family = (uint16_t)0;
@@ -12413,19 +12412,19 @@ int SRC_ReportSourcestats(int index_0, RPT_SourcestatsReport *report,
   return_label: return __retres;
 }
 
-SRC_Type SRC_GetType(int index_0)
+SRC_Type SRC_GetType(int index)
 {
   SRC_Type __retres;
-  if (index_0 >= n_sources) {
+  if (index >= n_sources) {
     __retres = (SRC_Type)(-1);
     goto return_label;
   }
   else 
-    if (index_0 < 0) {
+    if (index < 0) {
       __retres = (SRC_Type)(-1);
       goto return_label;
     }
-  __retres = (*(sources + index_0))->type;
+  __retres = (*(sources + index))->type;
   return_label: return __retres;
 }
 
@@ -12633,13 +12632,13 @@ static void find_best_sample_index(SST_Stats inst, double *times_back)
 static void find_min_delay_sample(SST_Stats inst)
 {
   int i;
-  int index_0;
+  int index;
   inst->min_delay_sample = get_runsbuf_index(inst,- inst->runs_samples);
   i = - inst->runs_samples + 1;
   while (i < inst->n_samples) {
-    index_0 = get_runsbuf_index(inst,i);
-    if (inst->peer_delays[index_0] < inst->peer_delays[inst->min_delay_sample]) 
-      inst->min_delay_sample = index_0;
+    index = get_runsbuf_index(inst,i);
+    if (inst->peer_delays[index] < inst->peer_delays[inst->min_delay_sample]) 
+      inst->min_delay_sample = index;
     i ++;
   }
   return;
@@ -15396,7 +15395,7 @@ int RGR_FindBestRegression(double *x, double *y, double *w, int n, int m,
   return_label: return __retres;
 }
 
-static double find_ordered_entry_with_flags(double *x, int n, int index_0,
+static double find_ordered_entry_with_flags(double *x, int n, int index,
                                             char *flags)
 {
   double __retres;
@@ -15407,12 +15406,12 @@ static double find_ordered_entry_with_flags(double *x, int n, int index_0,
   double temp;
   double piv;
   int pivind;
-  __FC_assert((index_0 >= 0) != 0,"regress.c",350,"index >= 0");
-  if (*(flags + index_0)) {
-    __retres = *(x + index_0);
+  __FC_assert((index >= 0) != 0,"regress.c",350,"index >= 0");
+  if (*(flags + index)) {
+    __retres = *(x + index);
     goto return_label;
   }
-  v = index_0;
+  v = index;
   u = v;
   while (1) {
     if (u > 0) {
@@ -15441,7 +15440,7 @@ static double find_ordered_entry_with_flags(double *x, int n, int index_0,
       tmp = (char)1;
       *(flags + u) = tmp;
       *(flags + v) = tmp;
-      __retres = *(x + index_0);
+      __retres = *(x + index);
       goto return_label;
     }
     else {
@@ -15472,14 +15471,14 @@ static double find_ordered_entry_with_flags(double *x, int n, int index_0,
       *(x + u) = *(x + r);
       *(x + r) = temp;
       *(flags + r) = (char)1;
-      if (index_0 == r) {
+      if (index == r) {
         __retres = *(x + r);
         goto return_label;
       }
       else 
-        if (index_0 < r) v = r - 1;
+        if (index < r) v = r - 1;
         else 
-          if (index_0 > r) u = l;
+          if (index > r) u = l;
     }
   return_label: return __retres;
 }

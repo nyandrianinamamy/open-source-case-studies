@@ -10,6 +10,7 @@ FRAMAC_SHARE/libc	unistd.h	1327	write	precondition	Unknown	buf_has_room: \valid_
 FRAMAC_SHARE/libc/sys	socket.h	313	accept	precondition	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
 FRAMAC_SHARE/libc/sys	socket.h	454	recv	precondition	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
 FRAMAC_SHARE/libc/sys	socket.h	455	recv	precondition	Unknown	valid_buffer_length: \valid((char *)buf + (0 .. len - 1))
+FRAMAC_SHARE/libc/sys	socket.h	510	send	precondition	Unknown	available_sockfd: 0 ≤ sockfd < 1024
 FRAMAC_SHARE/libc/sys	socket.h	511	send	precondition	Unknown	buf_len_ok: \valid_read((char *)buf + (0 .. len - 1))
 src	modbus-data.c	89	modbus_set_bits_from_bytes	initialization	Unknown	\initialized(tab_byte + (unsigned int)((unsigned int)(i - (unsigned int)idx) / 8))
 src	modbus-data.c	89	modbus_set_bits_from_bytes	mem_access	Unknown	\valid(dest + i)
@@ -32,9 +33,11 @@ src	modbus-rtu.c	377	_modbus_rtu_check_integrity	mem_access	Unknown	\valid_read(
 src	modbus-tcp.c	152	_modbus_tcp_prepare_response_tid	initialization	Unknown	\initialized(req + 0)
 src	modbus-tcp.c	152	_modbus_tcp_prepare_response_tid	initialization	Unknown	\initialized(req + 1)
 src	modbus-tcp.c	158	_modbus_tcp_send_msg_pre	signed_overflow	Unknown	-2147483648 ≤ req_length - 6
+src	modbus-tcp.c	172	_modbus_tcp_send	precondition of send	Unknown	available_sockfd: 0 ≤ sockfd < 1024
 src	modbus-tcp.c	172	_modbus_tcp_send	precondition of send	Unknown	buf_len_ok: \valid_read((char *)buf + (0 .. len - 1))
 src	modbus-tcp.c	180	_modbus_tcp_recv	precondition of recv	Unknown	valid_buffer_length: \valid((char *)buf + (0 .. len - 1))
 src	modbus-tcp.c	180	_modbus_tcp_recv	precondition of recv	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
+src	modbus-tcp.c	451	_modbus_tcp_flush	precondition of recv	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
 src	modbus-tcp.c	472	_modbus_tcp_flush	signed_overflow	Unknown	rc_sum + rc ≤ 2147483647
 src	modbus-tcp.c	663	modbus_tcp_accept	precondition of accept	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
 src	modbus-tcp.c	693	modbus_tcp_pi_accept	precondition of accept	Unknown	valid_sockfd: 0 ≤ sockfd < 1024

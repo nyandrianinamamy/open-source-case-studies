@@ -4574,18 +4574,18 @@ static unsigned char ad_random[319] =
    (unsigned char)0xa1,
    (unsigned char)0x62,
    (unsigned char)0x11};
-void Next(unsigned int *index_0)
+void Next(unsigned int *index)
 {
-  (*index_0) ++;
-  if (*index_0 >= (unsigned int)319) *index_0 = (unsigned int)0;
+  (*index) ++;
+  if (*index >= (unsigned int)319) *index = (unsigned int)0;
   return;
 }
 
-unsigned char Next_Rand(unsigned int *index_0)
+unsigned char Next_Rand(unsigned int *index)
 {
   unsigned char __retres;
-  Next(index_0);
-  __retres = ad_random[*index_0];
+  Next(index);
+  __retres = ad_random[*index];
   return __retres;
 }
 

@@ -112,7 +112,7 @@ errno_t strcspn_s(char const *dest_0, rsize_t dmax, char const *src,
 errno_t strfirstchar_s(char *dest_0, rsize_t dmax, char c, char **first);
 
 errno_t strfirstdiff_s(char const *dest_0, rsize_t dmax, char const *src,
-                       rsize_t *index_0);
+                       rsize_t *index);
 
 _Bool strisalphanumeric_s(char const *dest_0, rsize_t dmax);
 
@@ -133,7 +133,7 @@ _Bool strisuppercase_s(char const *dest_0, rsize_t dmax);
 errno_t strlastchar_s(char *dest_0, rsize_t dmax, char c, char **last);
 
 errno_t strlastdiff_s(char const *dest_0, rsize_t dmax, char const *src,
-                      rsize_t *index_0);
+                      rsize_t *index);
 
 errno_t strljustify_s(char *dest_0, rsize_t dmax);
 
@@ -149,10 +149,10 @@ errno_t strpbrk_s(char *dest_0, rsize_t dmax, char *src, rsize_t slen,
                   char **first);
 
 errno_t strfirstsame_s(char const *dest_0, rsize_t dmax, char const *src,
-                       rsize_t *index_0);
+                       rsize_t *index);
 
 errno_t strlastsame_s(char const *dest_0, rsize_t dmax, char const *src,
-                      rsize_t *index_0);
+                      rsize_t *index);
 
 errno_t strprefix_s(char const *dest_0, rsize_t dmax, char const *src);
 
@@ -2989,81 +2989,81 @@ unsigned int parse_format(char const *format, char *pformatList,
                           unsigned int maxFormats)
 {
   unsigned int numFormats = (unsigned int)0;
-  unsigned int index_0 = (unsigned int)0;
+  unsigned int index = (unsigned int)0;
   unsigned int start = (unsigned int)0;
   char lmod = (char)0;
   while (1) {
-    if ((unsigned long)index_0 < 4UL << 10) 
-      if ((int)*(format + index_0) != '\000') {
+    if ((unsigned long)index < 4UL << 10) 
+      if ((int)*(format + index) != '\000') {
         if (! (numFormats < maxFormats)) break;
       }
       else break;
     else break;
-    if ((int)*(format + index_0) == '%') {
-      start = index_0;
-      index_0 ++;
+    if ((int)*(format + index) == '%') {
+      start = index;
+      index ++;
       ;
-      switch ((int)*(format + index_0)) {
+      switch ((int)*(format + index)) {
         case '\000': continue;
         case '%': continue;
-        case '#': case '0': case '-': case ' ': case '+': index_0 ++;
+        case '#': case '0': case '-': case ' ': case '+': index ++;
         break;
       }
       while (1) {
-        if ((int)*(format + index_0) != '\000') 
-          if ((int)*(format + index_0) >= '0') {
-            if (! ((int)*(format + index_0) <= '9')) break;
+        if ((int)*(format + index) != '\000') 
+          if ((int)*(format + index) >= '0') {
+            if (! ((int)*(format + index) <= '9')) break;
           }
           else break;
         else break;
-        index_0 ++;
+        index ++;
       }
-      if ((int)*(format + index_0) != '\000') 
-        if ((int)*(format + index_0) == '.') {
-          index_0 ++;
+      if ((int)*(format + index) != '\000') 
+        if ((int)*(format + index) == '.') {
+          index ++;
           while (1) {
-            if ((int)*(format + index_0) != '\000') 
-              if ((int)*(format + index_0) >= '0') {
-                if (! ((int)*(format + index_0) <= '9')) break;
+            if ((int)*(format + index) != '\000') 
+              if ((int)*(format + index) >= '0') {
+                if (! ((int)*(format + index) <= '9')) break;
               }
               else break;
             else break;
-            index_0 ++;
+            index ++;
           }
         }
       lmod = (char)' ';
-      switch ((int)*(format + index_0)) {
+      switch ((int)*(format + index)) {
         case 'h': { /* sequence */
-                    index_0 ++;
+                    index ++;
                     ;
                   }
-        if ((int)*(format + index_0) == 'h') {
-          index_0 ++;
+        if ((int)*(format + index) == 'h') {
+          index ++;
           lmod = (char)'H';
         }
         else lmod = (char)'h';
         break;
         case 'l': { /* sequence */
-                    index_0 ++;
+                    index ++;
                     ;
                   }
-        if ((int)*(format + index_0) == 'l') {
-          index_0 ++;
+        if ((int)*(format + index) == 'l') {
+          index ++;
           lmod = (char)'d';
         }
         else lmod = (char)'l';
         break;
         case 'L': lmod = (char)'L';
         break;
-        case 'j': case 'z': case 't': index_0 ++;
+        case 'j': case 'z': case 't': index ++;
         break;
       }
-      switch ((int)*(format + index_0)) {
+      switch ((int)*(format + index)) {
         case 'c': ;
         if ((int)lmod == 'l') *(pformatList + numFormats) = (char)'C';
         else *(pformatList + numFormats) = (char)'c';
         numFormats ++;
-        index_0 ++;
+        index ++;
         break;
         case 'd': case 'i': case 'o': case 'u': case 'x': case 'X': ;
         if ((int)lmod == 'H') *(pformatList + numFormats) = (char)'c';
@@ -3073,7 +3073,7 @@ unsigned int parse_format(char const *format, char *pformatList,
             if ((int)lmod == 'h') *(pformatList + numFormats) = (char)'h';
             else *(pformatList + numFormats) = (char)'d';
         numFormats ++;
-        index_0 ++;
+        index ++;
         break;
         case 'e': case 'E': case 'f': case 'F': case 'g': case 'G': case 'a':
         case 'A':
@@ -3081,7 +3081,7 @@ unsigned int parse_format(char const *format, char *pformatList,
         if ((int)lmod == 'L') *(pformatList + numFormats) = (char)'G';
         else *(pformatList + numFormats) = (char)'g';
         numFormats ++;
-        index_0 ++;
+        index ++;
         break;
         case 's': ;
         if ((int)lmod == 'l') goto _LOR;
@@ -3090,11 +3090,11 @@ unsigned int parse_format(char const *format, char *pformatList,
                                 *(pformatList + numFormats) = (char)'S';
           else *(pformatList + numFormats) = (char)'s';
         numFormats ++;
-        index_0 ++;
+        index ++;
         break;
         case 'p': *(pformatList + numFormats) = (char)'p';
         numFormats ++;
-        index_0 ++;
+        index ++;
         break;
         case 'n': ;
         if ((int)lmod == 'H') *(pformatList + numFormats) = (char)'1';
@@ -3104,13 +3104,13 @@ unsigned int parse_format(char const *format, char *pformatList,
             if ((int)lmod == 'h') *(pformatList + numFormats) = (char)'2';
             else *(pformatList + numFormats) = (char)'3';
         numFormats ++;
-        index_0 ++;
+        index ++;
         break;
-        case 'm': index_0 ++;
+        case 'm': index ++;
         continue;
         default:
         printf("failed to recognize format string ["); /* printf_va_1 */
-        while (start < index_0) {
+        while (start < index) {
           printf("%c",(int)*(format + start)); /* printf_va_2 */
           start ++;
         }
@@ -3118,7 +3118,7 @@ unsigned int parse_format(char const *format, char *pformatList,
         break;
       }
     }
-    else index_0 ++;
+    else index ++;
   }
   return numFormats;
 }
@@ -3152,20 +3152,20 @@ int snprintf_s_i(char *dest_0, rsize_t dmax, char const *format, int a)
   char pformatList[16];
   unsigned int tmp_0;
   int tmp_1;
-  unsigned int index_0 = (unsigned int)0;
+  unsigned int index = (unsigned int)0;
   unsigned int nfo = parse_format(format,pformatList,(unsigned int)16);
   if (nfo != (unsigned int)1) {
     *(dest_0 + 0) = (char)'\000';
     __retres = -1 * 410;
     goto return_label;
   }
-  tmp_0 = check_integer_format(pformatList[index_0]);
+  tmp_0 = check_integer_format(pformatList[index]);
   if (tmp_0 == (unsigned int)0) {
     *(dest_0 + 0) = (char)'\000';
     __retres = -1 * 411;
     goto return_label;
   }
-  index_0 ++;
+  index ++;
   tmp_1 = snprintf(dest_0,dmax,format,a); /* snprintf_va_1 */
   __retres = tmp_1;
   return_label: return __retres;
@@ -3190,20 +3190,20 @@ int snprintf_s_l(char *dest_0, rsize_t dmax, char const *format, long a)
   char pformatList[16];
   int tmp_0;
   int tmp_1;
-  unsigned int index_0 = (unsigned int)0;
+  unsigned int index = (unsigned int)0;
   unsigned int nfo = parse_format(format,pformatList,(unsigned int)16);
   if (nfo != (unsigned int)1) {
     *(dest_0 + 0) = (char)'\000';
     __retres = -1 * 410;
     goto return_label;
   }
-  if ('l' == (int)pformatList[index_0]) tmp_0 = 1; else tmp_0 = 0;
+  if ('l' == (int)pformatList[index]) tmp_0 = 1; else tmp_0 = 0;
   if (tmp_0 == 0) {
     *(dest_0 + 0) = (char)'\000';
     __retres = -1 * 411;
     goto return_label;
   }
-  index_0 ++;
+  index ++;
   tmp_1 = snprintf(dest_0,dmax,format,a); /* snprintf_va_2 */
   __retres = tmp_1;
   return_label: return __retres;
@@ -3233,27 +3233,27 @@ int snprintf_s_si(char *dest_0, rsize_t dmax, char const *format, char *s,
   int tmp_0;
   unsigned int tmp_1;
   int tmp_2;
-  unsigned int index_0 = (unsigned int)0;
+  unsigned int index = (unsigned int)0;
   unsigned int nfo = parse_format(format,pformatList,(unsigned int)16);
   if (nfo != (unsigned int)2) {
     *(dest_0 + 0) = (char)'\000';
     __retres = -1 * 410;
     goto return_label;
   }
-  if ('s' == (int)pformatList[index_0]) tmp_0 = 1; else tmp_0 = 0;
+  if ('s' == (int)pformatList[index]) tmp_0 = 1; else tmp_0 = 0;
   if (tmp_0 == 0) {
     *(dest_0 + 0) = (char)'\000';
     __retres = -1 * 411;
     goto return_label;
   }
-  index_0 ++;
-  tmp_1 = check_integer_format(pformatList[index_0]);
+  index ++;
+  tmp_1 = check_integer_format(pformatList[index]);
   if (tmp_1 == (unsigned int)0) {
     *(dest_0 + 0) = (char)'\000';
     __retres = -1 * 411;
     goto return_label;
   }
-  index_0 ++;
+  index ++;
   tmp_2 = snprintf(dest_0,dmax,format,s,a); /* snprintf_va_3 */
   __retres = tmp_2;
   return_label: return __retres;
@@ -3283,27 +3283,27 @@ int snprintf_s_sl(char *dest_0, rsize_t dmax, char const *format, char *s,
   int tmp_0;
   int tmp_1;
   int tmp_2;
-  unsigned int index_0 = (unsigned int)0;
+  unsigned int index = (unsigned int)0;
   unsigned int nfo = parse_format(format,pformatList,(unsigned int)16);
   if (nfo != (unsigned int)2) {
     *(dest_0 + 0) = (char)'\000';
     __retres = -1 * 410;
     goto return_label;
   }
-  if ('s' == (int)pformatList[index_0]) tmp_0 = 1; else tmp_0 = 0;
+  if ('s' == (int)pformatList[index]) tmp_0 = 1; else tmp_0 = 0;
   if (tmp_0 == 0) {
     *(dest_0 + 0) = (char)'\000';
     __retres = -1 * 411;
     goto return_label;
   }
-  index_0 ++;
-  if ('l' == (int)pformatList[index_0]) tmp_1 = 1; else tmp_1 = 0;
+  index ++;
+  if ('l' == (int)pformatList[index]) tmp_1 = 1; else tmp_1 = 0;
   if (tmp_1 == 0) {
     *(dest_0 + 0) = (char)'\000';
     __retres = -1 * 411;
     goto return_label;
   }
-  index_0 ++;
+  index ++;
   tmp_2 = snprintf(dest_0,dmax,format,s,a); /* snprintf_va_4 */
   __retres = tmp_2;
   return_label: return __retres;
@@ -4744,17 +4744,17 @@ __inline static void handle_wc_error_14(wchar_t *orig_dest,
 }
 
 errno_t strfirstdiff_s(char const *dest_0, rsize_t dmax, char const *src,
-                       rsize_t *index_0)
+                       rsize_t *index)
 {
   errno_t __retres;
   char const *rp;
-  if (index_0 == (rsize_t *)0) {
+  if (index == (rsize_t *)0) {
     invoke_safe_str_constraint_handler("strfirstdiff_s: index is null",
                                        (void *)0,400);
     __retres = 400;
     goto return_label;
   }
-  *index_0 = (rsize_t)0;
+  *index = (rsize_t)0;
   if (dest_0 == (char const *)0) {
     invoke_safe_str_constraint_handler("strfirstdiff_s: dest is null",
                                        (void *)0,400);
@@ -4788,7 +4788,7 @@ errno_t strfirstdiff_s(char const *dest_0, rsize_t dmax, char const *src,
       else break;
     else break;
     if ((int)*dest_0 != (int)*src) {
-      *index_0 = (rsize_t)(dest_0 - rp);
+      *index = (rsize_t)(dest_0 - rp);
       __retres = 0;
       goto return_label;
     }
@@ -4820,17 +4820,17 @@ __inline static void handle_wc_error_15(wchar_t *orig_dest,
 }
 
 errno_t strfirstsame_s(char const *dest_0, rsize_t dmax, char const *src,
-                       rsize_t *index_0)
+                       rsize_t *index)
 {
   errno_t __retres;
   char const *rp = (char const *)0;
-  if (index_0 == (rsize_t *)0) {
+  if (index == (rsize_t *)0) {
     invoke_safe_str_constraint_handler("strfirstsame_s: index is null",
                                        (void *)0,400);
     __retres = 400;
     goto return_label;
   }
-  *index_0 = (rsize_t)0;
+  *index = (rsize_t)0;
   if (dest_0 == (char const *)0) {
     invoke_safe_str_constraint_handler("strfirstsame_s: dest is null",
                                        (void *)0,400);
@@ -4864,7 +4864,7 @@ errno_t strfirstsame_s(char const *dest_0, rsize_t dmax, char const *src,
       else break;
     else break;
     if ((int)*dest_0 == (int)*src) {
-      *index_0 = (uint32_t)(dest_0 - rp);
+      *index = (uint32_t)(dest_0 - rp);
       __retres = 0;
       goto return_label;
     }
@@ -5576,18 +5576,18 @@ __inline static void handle_wc_error_25(wchar_t *orig_dest,
 }
 
 errno_t strlastdiff_s(char const *dest_0, rsize_t dmax, char const *src,
-                      rsize_t *index_0)
+                      rsize_t *index)
 {
   errno_t __retres;
   char const *rp;
   _Bool there_is_a_diff = (_Bool)0;
-  if (index_0 == (rsize_t *)0) {
+  if (index == (rsize_t *)0) {
     invoke_safe_str_constraint_handler("strlastdiff_s: index is null",
                                        (void *)0,400);
     __retres = 400;
     goto return_label;
   }
-  *index_0 = (rsize_t)0;
+  *index = (rsize_t)0;
   if (dest_0 == (char const *)0) {
     invoke_safe_str_constraint_handler("strlastdiff_s: dest is null",
                                        (void *)0,400);
@@ -5622,7 +5622,7 @@ errno_t strlastdiff_s(char const *dest_0, rsize_t dmax, char const *src,
     else break;
     if ((int)*dest_0 != (int)*src) {
       there_is_a_diff = (_Bool)1;
-      *index_0 = (rsize_t)(dest_0 - rp);
+      *index = (rsize_t)(dest_0 - rp);
     }
     dest_0 ++;
     src ++;
@@ -5659,18 +5659,18 @@ __inline static void handle_wc_error_26(wchar_t *orig_dest,
 }
 
 errno_t strlastsame_s(char const *dest_0, rsize_t dmax, char const *src,
-                      rsize_t *index_0)
+                      rsize_t *index)
 {
   errno_t __retres;
   char const *rp;
   _Bool similarity;
-  if (index_0 == (rsize_t *)0) {
+  if (index == (rsize_t *)0) {
     invoke_safe_str_constraint_handler("strlastsame_s: index is null",
                                        (void *)0,400);
     __retres = 400;
     goto return_label;
   }
-  *index_0 = (rsize_t)0;
+  *index = (rsize_t)0;
   if (dest_0 == (char const *)0) {
     invoke_safe_str_constraint_handler("strlastsame_s: dest is null",
                                        (void *)0,400);
@@ -5706,7 +5706,7 @@ errno_t strlastsame_s(char const *dest_0, rsize_t dmax, char const *src,
     else break;
     if ((int)*dest_0 == (int)*src) {
       similarity = (_Bool)1;
-      *index_0 = (uint32_t)(dest_0 - rp);
+      *index = (uint32_t)(dest_0 - rp);
     }
     dest_0 ++;
     src ++;

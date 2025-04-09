@@ -230,18 +230,18 @@ int semver_parse_version(char const *str, semver_t *ver)
 {
   int __retres;
   size_t len;
-  int index_0;
+  int index;
   int value;
   char *slice;
   char *next;
   char *endptr;
   slice = (char *)str;
-  index_0 = 0;
+  index = 0;
   while (1) {
     if (slice != (char *)0) {
       int tmp;
-      tmp = index_0;
-      index_0 ++;
+      tmp = index;
+      index ++;
       ;
       if (! (tmp < 4)) break;
     }
@@ -259,7 +259,7 @@ int semver_parse_version(char const *str, semver_t *ver)
         __retres = -1;
         goto return_label;
       }
-    switch (index_0) {
+    switch (index) {
       case 1: ver->major = value;
       break;
       case 2: ver->minor = value;

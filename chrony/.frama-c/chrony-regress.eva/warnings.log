@@ -280,7 +280,7 @@ stack: find_ordered_entry_with_flags :: regress.c:425 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-regress.c:371:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(x + index_0);
+regress.c:371:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(x + index);
 stack: find_ordered_entry_with_flags :: regress.c:425 <-
        find_median :: regress.c:472 <-
        eval_robust_residual :: regress.c:595 <-
@@ -427,7 +427,7 @@ stack: find_ordered_entry_with_flags :: regress.c:427 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-regress.c:354:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(x + index_0);
+regress.c:354:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(x + index);
 stack: find_ordered_entry_with_flags :: regress.c:428 <-
        find_median :: regress.c:472 <-
        eval_robust_residual :: regress.c:595 <-
@@ -502,7 +502,7 @@ test/unit/regress.c:70:[eva:alarm] warning: accessing uninitialized left-value.
 assert \initialized(&y[(long)(tmp_11 % (long)n)]);
 (tmp_11 from random())
 stack: test_unit :: test/unit/test.c:70 <- main :: fc_stubs.c:37 <- eva_main
-regress.c:353:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(flags + index_0);
+regress.c:353:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(flags + index);
 stack: find_ordered_entry_with_flags :: regress.c:425 <-
        find_median :: regress.c:472 <-
        eval_robust_residual :: regress.c:595 <-

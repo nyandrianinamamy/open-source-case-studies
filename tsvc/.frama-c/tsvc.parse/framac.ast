@@ -7169,7 +7169,7 @@ int s315(void)
   double clock_dif_sec;
   float x_0;
   float chksum;
-  int index_0;
+  int index;
   init((char *)"s315 ");
   {
     int i = 0;
@@ -7183,18 +7183,18 @@ int s315(void)
     int nl = 0;
     while (nl < 200000) {
       x_0 = a[0];
-      index_0 = 0;
+      index = 0;
       {
         int i_0 = 0;
         while (i_0 < 32000) {
           if (a[i_0] > x_0) {
             x_0 = a[i_0];
-            index_0 = i_0;
+            index = i_0;
           }
           i_0 ++;
         }
       }
-      chksum = x_0 + (float)index_0;
+      chksum = x_0 + (float)index;
       dummy(a,b,c,d,e,aa,bb,cc,chksum);
       nl ++;
     }
@@ -7203,7 +7203,7 @@ int s315(void)
   clock_dif = end_t - start_t;
   clock_dif_sec = (double)clock_dif / 1000000.0;
   printf("S315\t %.2f \t\t",clock_dif_sec); /* printf_va_112 */
-  temp = ((float)index_0 + x_0) + (float)1;
+  temp = ((float)index + x_0) + (float)1;
   check(-1);
   __retres = 0;
   return __retres;
@@ -7326,7 +7326,7 @@ int s318(int inc)
   clock_t clock_dif;
   double clock_dif_sec;
   int k;
-  int index_0;
+  int index;
   float max_0;
   float chksum;
   init((char *)"s318 ");
@@ -7337,7 +7337,7 @@ int s318(int inc)
       {
         int tmp;
         k = 0;
-        index_0 = 0;
+        index = 0;
         tmp = abs((int)a[0]);
         max_0 = (float)tmp;
         k += inc;
@@ -7350,7 +7350,7 @@ int s318(int inc)
               tmp_0 = abs((int)a[k]);
               ;
               if ((float)tmp_0 <= max_0) goto L5;
-              index_0 = i;
+              index = i;
               tmp_1 = abs((int)a[k]);
               max_0 = (float)tmp_1;
               L5: k += inc;
@@ -7358,7 +7358,7 @@ int s318(int inc)
             i ++;
           }
         }
-        chksum = max_0 + (float)index_0;
+        chksum = max_0 + (float)index;
         dummy(a,b,c,d,e,aa,bb,cc,chksum);
       }
       nl ++;
@@ -7368,7 +7368,7 @@ int s318(int inc)
   clock_dif = end_t - start_t;
   clock_dif_sec = (double)clock_dif / 1000000.0;
   printf("S318\t %.2f \t\t",clock_dif_sec); /* printf_va_115 */
-  temp = (max_0 + (float)index_0) + (float)1;
+  temp = (max_0 + (float)index) + (float)1;
   check(-1);
   __retres = 0;
   return __retres;
@@ -7927,7 +7927,7 @@ int s332(float t)
   clock_t end_t;
   clock_t clock_dif;
   double clock_dif_sec;
-  int index_0;
+  int index;
   float value;
   float chksum;
   init((char *)"s332 ");
@@ -7935,20 +7935,20 @@ int s332(float t)
   {
     int nl = 0;
     while (nl < 200000) {
-      index_0 = -2;
+      index = -2;
       value = (float)(- 1.);
       {
         int i = 0;
         while (i < 32000) {
           if (a[i] > t) {
-            index_0 = i;
+            index = i;
             value = a[i];
             goto L20;
           }
           i ++;
         }
       }
-      L20: chksum = value + (float)index_0;
+      L20: chksum = value + (float)index;
       dummy(a,b,c,d,e,aa,bb,cc,chksum);
       nl ++;
     }

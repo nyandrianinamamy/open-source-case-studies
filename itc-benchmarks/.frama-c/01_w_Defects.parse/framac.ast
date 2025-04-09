@@ -1095,9 +1095,9 @@ void dynamic_buffer_overrun_011(void)
 void dynamic_buffer_overrun_012(void)
 {
   int *buf = calloc((size_t)5,sizeof(int));
-  int index_0 = 5;
+  int index = 5;
   if (buf != (int *)0) {
-    *(buf + index_0) = 9;
+    *(buf + index) = 9;
     free((void *)buf);
   }
   return;
@@ -1106,9 +1106,9 @@ void dynamic_buffer_overrun_012(void)
 void dynamic_buffer_overrun_013(void)
 {
   int *buf = calloc((size_t)5,sizeof(int));
-  int index_0 = 5;
+  int index = 5;
   if (buf != (int *)0) {
-    *(buf + index_0) = 1;
+    *(buf + index) = 1;
     free((void *)buf);
   }
   return;
@@ -1117,9 +1117,9 @@ void dynamic_buffer_overrun_013(void)
 void dynamic_buffer_overrun_014(void)
 {
   int *buf = calloc((size_t)5,sizeof(int));
-  int index_0 = 3;
+  int index = 3;
   if (buf != (int *)0) {
-    *(buf + (2 * index_0 + 1)) = 1;
+    *(buf + (2 * index + 1)) = 1;
     free((void *)buf);
   }
   return;
@@ -1128,9 +1128,9 @@ void dynamic_buffer_overrun_014(void)
 void dynamic_buffer_overrun_015(void)
 {
   int *buf = calloc((size_t)5,sizeof(int));
-  int index_0 = 2;
+  int index = 2;
   if (buf != (int *)0) {
-    *(buf + (index_0 * index_0 + 1)) = 1;
+    *(buf + (index * index + 1)) = 1;
     free((void *)buf);
   }
   return;
@@ -1155,11 +1155,11 @@ void dynamic_buffer_overrun_016(void)
   return;
 }
 
-void dynamic_buffer_overrun_017_func_001(int index_0)
+void dynamic_buffer_overrun_017_func_001(int index)
 {
   int *buf = calloc((size_t)5,sizeof(int));
   if (buf != (int *)0) {
-    *(buf + index_0) = 1;
+    *(buf + index) = 1;
     free((void *)buf);
   }
   return;
@@ -1175,9 +1175,9 @@ void dynamic_buffer_overrun_018(void)
 {
   int *buf = calloc((size_t)5,sizeof(int));
   int indexes[4] = {3, 4, 5, 6};
-  int index_0 = 4;
+  int index = 4;
   if (buf != (int *)0) {
-    *(buf + indexes[index_0]) = 1;
+    *(buf + indexes[index]) = 1;
     free((void *)buf);
   }
   return;
@@ -1187,8 +1187,8 @@ void dynamic_buffer_overrun_019(void)
 {
   int index1;
   int *buf = calloc((size_t)5,sizeof(int));
-  int index_0 = 5;
-  index1 = index_0;
+  int index = 5;
+  index1 = index;
   if (buf != (int *)0) {
     *(buf + index1) = 1;
     free((void *)buf);
@@ -1201,8 +1201,8 @@ void dynamic_buffer_overrun_020(void)
   int index1;
   int index2;
   int *buf = calloc((size_t)5,sizeof(int));
-  int index_0 = 5;
-  index1 = index_0;
+  int index = 5;
+  index1 = index;
   index2 = index1;
   if (buf != (int *)0) {
     *(buf + index2) = 1;
@@ -1707,9 +1707,9 @@ void dynamic_buffer_underrun_011(void)
 void dynamic_buffer_underrun_012(void)
 {
   int *buf = calloc((size_t)5,sizeof(int));
-  int index_0 = 5;
+  int index = 5;
   if (buf != (int *)0) {
-    *(buf - index_0) = 9;
+    *(buf - index) = 9;
     free((void *)buf);
   }
   return;
@@ -1719,11 +1719,11 @@ void dynamic_buffer_underrun_013(void)
 {
   int tmp_0;
   int *buf = calloc((size_t)5,sizeof(int));
-  int index_0 = 5;
+  int index = 5;
   tmp_0 = rand();
-  index_0 = tmp_0 - 2;
+  index = tmp_0 - 2;
   if (buf != (int *)0) {
-    *(buf + - index_0) = 1;
+    *(buf + - index) = 1;
     free((void *)buf);
   }
   return;
@@ -1732,9 +1732,9 @@ void dynamic_buffer_underrun_013(void)
 void dynamic_buffer_underrun_014(void)
 {
   int *buf = calloc((size_t)5,sizeof(int));
-  int index_0 = 3;
+  int index = 3;
   if (buf != (int *)0) {
-    *(buf + (-2 * index_0 + 1)) = 1;
+    *(buf + (-2 * index + 1)) = 1;
     free((void *)buf);
   }
   return;
@@ -1743,9 +1743,9 @@ void dynamic_buffer_underrun_014(void)
 void dynamic_buffer_underrun_015(void)
 {
   int *buf = calloc((size_t)5,sizeof(int));
-  int index_0 = 2;
+  int index = 2;
   if (buf != (int *)0) {
-    *(buf + (index_0 * index_0 - 5)) = 1;
+    *(buf + (index * index - 5)) = 1;
     free((void *)buf);
   }
   return;
@@ -1770,11 +1770,11 @@ void dynamic_buffer_underrun_016(void)
   return;
 }
 
-void dynamic_buffer_underrun_017_func_001(int index_0)
+void dynamic_buffer_underrun_017_func_001(int index)
 {
   int *buf = calloc((size_t)5,sizeof(int));
   if (buf != (int *)0) {
-    *(buf - index_0) = 1;
+    *(buf - index) = 1;
     free((void *)buf);
   }
   return;
@@ -1790,9 +1790,9 @@ void dynamic_buffer_underrun_018(void)
 {
   int *buf = calloc((size_t)5,sizeof(int));
   int indexes[4] = {3, 4, 5, 6};
-  int index_0 = 2;
+  int index = 2;
   if (buf != (int *)0) {
-    *(buf - indexes[index_0]) = 1;
+    *(buf - indexes[index]) = 1;
     free((void *)buf);
   }
   return;
@@ -1802,8 +1802,8 @@ void dynamic_buffer_underrun_019(void)
 {
   int index1;
   int *buf = calloc((size_t)5,sizeof(int));
-  int index_0 = -5;
-  index1 = index_0;
+  int index = -5;
+  index1 = index;
   if (buf != (int *)0) {
     *(buf + index1) = 1;
     free((void *)buf);
@@ -1816,8 +1816,8 @@ void dynamic_buffer_underrun_020(void)
   int index1;
   int index2;
   int *buf = calloc((size_t)5,sizeof(int));
-  int index_0 = -5;
-  index1 = index_0;
+  int index = -5;
+  index1 = index;
   index2 = index1;
   if (buf != (int *)0) {
     *(buf + index2) = 1;
@@ -2016,8 +2016,8 @@ void dynamic_buffer_underrun_033(void)
 {
   int c;
   char *message = calloc((size_t)12,sizeof(char));
-  int index_0 = 12;
-  int len = index_0 - 12;
+  int index = 12;
+  int len = index - 12;
   if (message != (char *)0) {
     while (len >= -2) {
       int tmp_0;
@@ -3843,13 +3843,13 @@ void invalid_memory_access_011(void)
   int *ptr;
   int j;
   int i = 0;
-  int index_0[4] = {3, 5, 4, 6};
+  int index[4] = {3, 5, 4, 6};
   j = 0;
   while (1) {
     ptr = (int *)malloc(sizeof(int) * (unsigned int)4);
     if (ptr != (int *)0) {
       while (i < 4) {
-        *(ptr + i) = index_0[i];
+        *(ptr + i) = index[i];
         i ++;
       }
       free((void *)ptr);
@@ -5823,33 +5823,33 @@ void overrun_st_012(void)
 void overrun_st_013(void)
 {
   int buf[5];
-  int index_0 = 5;
-  buf[index_0] = 1;
+  int index = 5;
+  buf[index] = 1;
   return;
 }
 
 void overrun_st_014(void)
 {
   int buf[5];
-  int index_0;
-  index_0 = rand();
-  buf[index_0] = 1;
+  int index;
+  index = rand();
+  buf[index] = 1;
   return;
 }
 
 void overrun_st_015(void)
 {
   int buf[5];
-  int index_0 = 2;
-  buf[2 * index_0 + 1] = 1;
+  int index = 2;
+  buf[2 * index + 1] = 1;
   return;
 }
 
 void overrun_st_016(void)
 {
   int buf[5];
-  int index_0 = 2;
-  buf[index_0 * index_0 + 1] = 1;
+  int index = 2;
+  buf[index * index + 1] = 1;
   return;
 }
 
@@ -5870,9 +5870,9 @@ void overrun_st_017(void)
 }
 
 int overrun_st_018_buf[5];
-void overrun_st_018_func_001(int index_0)
+void overrun_st_018_func_001(int index)
 {
-  overrun_st_018_buf[index_0] = 1;
+  overrun_st_018_buf[index] = 1;
   return;
 }
 
@@ -5886,8 +5886,8 @@ void overrun_st_019(void)
 {
   int buf[5];
   int indexes[4] = {3, 4, 5, 6};
-  int index_0 = 2;
-  buf[indexes[index_0]] = 1;
+  int index = 2;
+  buf[indexes[index]] = 1;
   return;
 }
 
@@ -5895,8 +5895,8 @@ void overrun_st_020(void)
 {
   int buf[5];
   int index1;
-  int index_0 = 5;
-  index1 = index_0;
+  int index = 5;
+  index1 = index;
   buf[index1] = 1;
   return;
 }
@@ -5906,8 +5906,8 @@ void overrun_st_021(void)
   int buf[5];
   int index1;
   int index2;
-  int index_0 = 5;
-  index1 = index_0;
+  int index = 5;
+  index1 = index;
   index2 = index1;
   buf[index2] = 1;
   return;
@@ -6012,9 +6012,9 @@ void overrun_st_032(void)
 {
   int buf[5];
   int *p;
-  int index_0 = 5;
+  int index = 5;
   p = buf;
-  *(p + index_0) = 1;
+  *(p + index) = 1;
   return;
 }
 
@@ -6022,10 +6022,10 @@ void overrun_st_033(void)
 {
   int buf[5];
   int *p;
-  int index_0;
+  int index;
   p = buf;
-  index_0 = rand();
-  *(p + index_0) = 1;
+  index = rand();
+  *(p + index) = 1;
   return;
 }
 
@@ -6033,9 +6033,9 @@ void overrun_st_034(void)
 {
   int buf[5];
   int *p;
-  int index_0 = 2;
+  int index = 2;
   p = buf;
-  *(p + (2 * index_0 + 1)) = 1;
+  *(p + (2 * index + 1)) = 1;
   return;
 }
 
@@ -6043,9 +6043,9 @@ void overrun_st_035(void)
 {
   int buf[5];
   int *p;
-  int index_0 = 2;
+  int index = 2;
   p = buf;
-  *(p + (index_0 * index_0 + 1)) = 1;
+  *(p + (index * index + 1)) = 1;
   return;
 }
 
@@ -6067,12 +6067,12 @@ void overrun_st_036(void)
   return;
 }
 
-void overrun_st_037_func_001(int index_0)
+void overrun_st_037_func_001(int index)
 {
   int buf[5];
   int *p;
   p = buf;
-  *(p + index_0) = 1;
+  *(p + index) = 1;
   return;
 }
 
@@ -6087,9 +6087,9 @@ void overrun_st_038(void)
   int buf[5];
   int *p;
   int indexes[4] = {3, 4, 5, 6};
-  int index_0 = 2;
+  int index = 2;
   p = buf;
-  *(p + indexes[index_0]) = 1;
+  *(p + indexes[index]) = 1;
   return;
 }
 
@@ -6098,8 +6098,8 @@ void overrun_st_039(void)
   int buf[5];
   int *p;
   int index1;
-  int index_0 = 5;
-  index1 = index_0;
+  int index = 5;
+  index1 = index;
   p = buf;
   *(p + index1) = 1;
   return;
@@ -6111,8 +6111,8 @@ void overrun_st_040(void)
   int *p;
   int index1;
   int index2;
-  int index_0 = 5;
-  index1 = index_0;
+  int index = 5;
+  index1 = index;
   index2 = index1;
   p = buf;
   *(p + index2) = 1;
@@ -7424,8 +7424,8 @@ void underrun_st_002(void)
 void underrun_st_003(void)
 {
   int buf[5];
-  int index_0 = -1;
-  buf[index_0] = 1;
+  int index = -1;
+  buf[index] = 1;
   return;
 }
 
@@ -7452,9 +7452,9 @@ void underrun_st_006(void)
 {
   int buf[5];
   int *p;
-  int index_0 = 1;
+  int index = 1;
   p = buf;
-  *(p - index_0) = 1;
+  *(p - index) = 1;
   return;
 }
 

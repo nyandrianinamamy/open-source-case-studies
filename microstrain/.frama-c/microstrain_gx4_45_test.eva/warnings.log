@@ -19,6 +19,14 @@ stack: mip_3dm_cmd_ahrs_message_format :: MIPSDK/C/Examples/Linux/GX4-45/GX4_45_
     garbled mix of &{__mip_interface_command_response_handler;
                      device_interface; mip_sdk_port_open_local_port_handle}
   MIPSDK/C/Library/Source/ring_buffer.c:438: misaligned read of addresses
-    (read in 59 statements, propagated through 37 statements)
+    (read in 57 statements, propagated through 36 statements)
+    garbled mix of &{__mip_interface_command_response_handler;
+                     device_interface; mip_sdk_port_open_local_port_handle}
+  MIPSDK/C/Library/Source/mip_sdk_inteface.c:756: misaligned write of addresses
+    (read in 10 statements, propagated through 8 statements)
+    garbled mix of &{__mip_interface_command_response_handler;
+                     device_interface}
+  MIPSDK/C/Library/Source/mip_sdk_inteface.c:735: imprecise merge of addresses
+    (read in 3 statements, propagated through 1 statement)
     garbled mix of &{__mip_interface_command_response_handler;
                      device_interface; mip_sdk_port_open_local_port_handle}

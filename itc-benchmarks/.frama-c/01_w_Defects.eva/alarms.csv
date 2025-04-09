@@ -30,13 +30,13 @@ directory	file	line	function	property kind	status	property
 01_w_Defects	buffer_overrun_dynamic.c	173	dynamic_buffer_overrun_009	mem_access	Invalid or unreachable	\valid(*(pbuf[i]) + j)
 01_w_Defects	buffer_overrun_dynamic.c	197	dynamic_buffer_overrun_010	mem_access	Invalid or unreachable	\valid(&(sbuf + 5)->a)
 01_w_Defects	buffer_overrun_dynamic.c	217	dynamic_buffer_overrun_011	mem_access	Invalid or unreachable	\valid(&(s_0 + 5)->buf[4])
-01_w_Defects	buffer_overrun_dynamic.c	232	dynamic_buffer_overrun_012	mem_access	Invalid or unreachable	\valid(buf + index_0)
-01_w_Defects	buffer_overrun_dynamic.c	247	dynamic_buffer_overrun_013	mem_access	Invalid or unreachable	\valid(buf + index_0)
-01_w_Defects	buffer_overrun_dynamic.c	262	dynamic_buffer_overrun_014	mem_access	Invalid or unreachable	\valid(buf + (int)((int)(2 * index_0) + 1))
-01_w_Defects	buffer_overrun_dynamic.c	277	dynamic_buffer_overrun_015	mem_access	Invalid or unreachable	\valid(buf + (int)((int)(index_0 * index_0) + 1))
+01_w_Defects	buffer_overrun_dynamic.c	232	dynamic_buffer_overrun_012	mem_access	Invalid or unreachable	\valid(buf + index)
+01_w_Defects	buffer_overrun_dynamic.c	247	dynamic_buffer_overrun_013	mem_access	Invalid or unreachable	\valid(buf + index)
+01_w_Defects	buffer_overrun_dynamic.c	262	dynamic_buffer_overrun_014	mem_access	Invalid or unreachable	\valid(buf + (int)((int)(2 * index) + 1))
+01_w_Defects	buffer_overrun_dynamic.c	277	dynamic_buffer_overrun_015	mem_access	Invalid or unreachable	\valid(buf + (int)((int)(index * index) + 1))
 01_w_Defects	buffer_overrun_dynamic.c	297	dynamic_buffer_overrun_016	mem_access	Invalid or unreachable	\valid(buf + tmp_0)
-01_w_Defects	buffer_overrun_dynamic.c	311	dynamic_buffer_overrun_017_func_001	mem_access	Invalid or unreachable	\valid(buf + index_0)
-01_w_Defects	buffer_overrun_dynamic.c	332	dynamic_buffer_overrun_018	index_bound	Invalid or unreachable	index_0 < 4
+01_w_Defects	buffer_overrun_dynamic.c	311	dynamic_buffer_overrun_017_func_001	mem_access	Invalid or unreachable	\valid(buf + index)
+01_w_Defects	buffer_overrun_dynamic.c	332	dynamic_buffer_overrun_018	index_bound	Invalid or unreachable	index < 4
 01_w_Defects	buffer_overrun_dynamic.c	349	dynamic_buffer_overrun_019	mem_access	Invalid or unreachable	\valid(buf + index1)
 01_w_Defects	buffer_overrun_dynamic.c	368	dynamic_buffer_overrun_020	mem_access	Invalid or unreachable	\valid(buf + index2)
 01_w_Defects	buffer_overrun_dynamic.c	386	dynamic_buffer_overrun_021	mem_access	Invalid or unreachable	\valid(p2 + 5)
@@ -62,13 +62,13 @@ directory	file	line	function	property kind	status	property
 01_w_Defects	buffer_underrun_dynamic.c	177	dynamic_buffer_underrun_009	index_bound	Invalid or unreachable	0 ≤ (int)(i - 3)
 01_w_Defects	buffer_underrun_dynamic.c	201	dynamic_buffer_underrun_010	mem_access	Invalid or unreachable	\valid(&(sbuf + (int)(-1))->a)
 01_w_Defects	buffer_underrun_dynamic.c	221	dynamic_buffer_underrun_011	mem_access	Invalid or unreachable	\valid(&(s_0 - 5)->buf[4])
-01_w_Defects	buffer_underrun_dynamic.c	236	dynamic_buffer_underrun_012	mem_access	Invalid or unreachable	\valid(buf - index_0)
-01_w_Defects	buffer_underrun_dynamic.c	252	dynamic_buffer_underrun_013	mem_access	Unknown	\valid(buf + (int)(-index_0))
-01_w_Defects	buffer_underrun_dynamic.c	267	dynamic_buffer_underrun_014	mem_access	Invalid or unreachable	\valid(buf + (int)((int)((int)(-2) * index_0) + 1))
-01_w_Defects	buffer_underrun_dynamic.c	282	dynamic_buffer_underrun_015	mem_access	Invalid or unreachable	\valid(buf + (int)((int)(index_0 * index_0) - 5))
+01_w_Defects	buffer_underrun_dynamic.c	236	dynamic_buffer_underrun_012	mem_access	Invalid or unreachable	\valid(buf - index)
+01_w_Defects	buffer_underrun_dynamic.c	252	dynamic_buffer_underrun_013	mem_access	Unknown	\valid(buf + (int)(-index))
+01_w_Defects	buffer_underrun_dynamic.c	267	dynamic_buffer_underrun_014	mem_access	Invalid or unreachable	\valid(buf + (int)((int)((int)(-2) * index) + 1))
+01_w_Defects	buffer_underrun_dynamic.c	282	dynamic_buffer_underrun_015	mem_access	Invalid or unreachable	\valid(buf + (int)((int)(index * index) - 5))
 01_w_Defects	buffer_underrun_dynamic.c	302	dynamic_buffer_underrun_016	mem_access	Invalid or unreachable	\valid(buf + tmp_0)
-01_w_Defects	buffer_underrun_dynamic.c	316	dynamic_buffer_underrun_017_func_001	mem_access	Invalid or unreachable	\valid(buf - index_0)
-01_w_Defects	buffer_underrun_dynamic.c	337	dynamic_buffer_underrun_018	mem_access	Invalid or unreachable	\valid(buf - indexes[index_0])
+01_w_Defects	buffer_underrun_dynamic.c	316	dynamic_buffer_underrun_017_func_001	mem_access	Invalid or unreachable	\valid(buf - index)
+01_w_Defects	buffer_underrun_dynamic.c	337	dynamic_buffer_underrun_018	mem_access	Invalid or unreachable	\valid(buf - indexes[index])
 01_w_Defects	buffer_underrun_dynamic.c	354	dynamic_buffer_underrun_019	mem_access	Invalid or unreachable	\valid(buf + index1)
 01_w_Defects	buffer_underrun_dynamic.c	373	dynamic_buffer_underrun_020	mem_access	Invalid or unreachable	\valid(buf + index2)
 01_w_Defects	buffer_underrun_dynamic.c	391	dynamic_buffer_underrun_021	mem_access	Invalid or unreachable	\valid(p2 - 5)
@@ -251,13 +251,13 @@ directory	file	line	function	property kind	status	property
 01_w_Defects	overrun_st.c	154	overrun_st_010	mem_access	Invalid or unreachable	\valid(pbuf[4] + 5)
 01_w_Defects	overrun_st.c	170	overrun_st_011	index_bound	Invalid or unreachable	5 < 5
 01_w_Defects	overrun_st.c	186	overrun_st_012	index_bound	Invalid or unreachable	5 < 5
-01_w_Defects	overrun_st.c	197	overrun_st_013	index_bound	Invalid or unreachable	index_0 < 5
-01_w_Defects	overrun_st.c	212	overrun_st_014	index_bound	Unknown	index_0 < 5
-01_w_Defects	overrun_st.c	226	overrun_st_015	index_bound	Invalid or unreachable	(int)((int)(2 * index_0) + 1) < 5
-01_w_Defects	overrun_st.c	240	overrun_st_016	index_bound	Invalid or unreachable	(int)((int)(index_0 * index_0) + 1) < 5
+01_w_Defects	overrun_st.c	197	overrun_st_013	index_bound	Invalid or unreachable	index < 5
+01_w_Defects	overrun_st.c	212	overrun_st_014	index_bound	Unknown	index < 5
+01_w_Defects	overrun_st.c	226	overrun_st_015	index_bound	Invalid or unreachable	(int)((int)(2 * index) + 1) < 5
+01_w_Defects	overrun_st.c	240	overrun_st_016	index_bound	Invalid or unreachable	(int)((int)(index * index) + 1) < 5
 01_w_Defects	overrun_st.c	258	overrun_st_017	index_bound	Invalid or unreachable	tmp < 5
-01_w_Defects	overrun_st.c	271	overrun_st_018_func_001	index_bound	Invalid or unreachable	index_0 < 5
-01_w_Defects	overrun_st.c	288	overrun_st_019	index_bound	Invalid or unreachable	indexes[index_0] < 5
+01_w_Defects	overrun_st.c	271	overrun_st_018_func_001	index_bound	Invalid or unreachable	index < 5
+01_w_Defects	overrun_st.c	288	overrun_st_019	index_bound	Invalid or unreachable	indexes[index] < 5
 01_w_Defects	overrun_st.c	304	overrun_st_020	index_bound	Invalid or unreachable	index1 < 5
 01_w_Defects	overrun_st.c	322	overrun_st_021	index_bound	Invalid or unreachable	index2 < 5
 01_w_Defects	overrun_st.c	337	overrun_st_022	mem_access	Invalid or unreachable	\valid(p + 5)
@@ -270,13 +270,13 @@ directory	file	line	function	property kind	status	property
 01_w_Defects	overrun_st.c	445	overrun_st_029	mem_access	Invalid or unreachable	\valid(*pp + 5)
 01_w_Defects	overrun_st.c	462	overrun_st_030	mem_access	Invalid or unreachable	\valid(p2 + 5)
 01_w_Defects	overrun_st.c	477	overrun_st_031	mem_access	Invalid or unreachable	\valid(p + 5)
-01_w_Defects	overrun_st.c	490	overrun_st_032	mem_access	Invalid or unreachable	\valid(p + index_0)
-01_w_Defects	overrun_st.c	507	overrun_st_033	mem_access	Unknown	\valid(p + index_0)
-01_w_Defects	overrun_st.c	523	overrun_st_034	mem_access	Invalid or unreachable	\valid(p + (int)((int)(2 * index_0) + 1))
-01_w_Defects	overrun_st.c	539	overrun_st_035	mem_access	Invalid or unreachable	\valid(p + (int)((int)(index_0 * index_0) + 1))
+01_w_Defects	overrun_st.c	490	overrun_st_032	mem_access	Invalid or unreachable	\valid(p + index)
+01_w_Defects	overrun_st.c	507	overrun_st_033	mem_access	Unknown	\valid(p + index)
+01_w_Defects	overrun_st.c	523	overrun_st_034	mem_access	Invalid or unreachable	\valid(p + (int)((int)(2 * index) + 1))
+01_w_Defects	overrun_st.c	539	overrun_st_035	mem_access	Invalid or unreachable	\valid(p + (int)((int)(index * index) + 1))
 01_w_Defects	overrun_st.c	559	overrun_st_036	mem_access	Invalid or unreachable	\valid(p + tmp)
-01_w_Defects	overrun_st.c	574	overrun_st_037_func_001	mem_access	Invalid or unreachable	\valid(p + index_0)
-01_w_Defects	overrun_st.c	596	overrun_st_038	mem_access	Invalid or unreachable	\valid(p + indexes[index_0])
+01_w_Defects	overrun_st.c	574	overrun_st_037_func_001	mem_access	Invalid or unreachable	\valid(p + index)
+01_w_Defects	overrun_st.c	596	overrun_st_038	mem_access	Invalid or unreachable	\valid(p + indexes[index])
 01_w_Defects	overrun_st.c	614	overrun_st_039	mem_access	Invalid or unreachable	\valid(p + index1)
 01_w_Defects	overrun_st.c	634	overrun_st_040	mem_access	Invalid or unreachable	\valid(p + index2)
 01_w_Defects	overrun_st.c	650	overrun_st_041	index_bound	Unknown	i < 5
@@ -351,10 +351,10 @@ directory	file	line	function	property kind	status	property
 01_w_Defects	st_underrun.c	249	st_underrun_007_func_001	index_bound	Unknown	0 ≤ len
 01_w_Defects	underrun_st.c	21	underrun_st_001	index_bound	Invalid or unreachable	0 ≤ (int)(-1)
 01_w_Defects	underrun_st.c	31	underrun_st_002	index_bound	Invalid or unreachable	0 ≤ (int)(-1)
-01_w_Defects	underrun_st.c	42	underrun_st_003	index_bound	Invalid or unreachable	0 ≤ index_0
+01_w_Defects	underrun_st.c	42	underrun_st_003	index_bound	Invalid or unreachable	0 ≤ index
 01_w_Defects	underrun_st.c	55	underrun_st_004	mem_access	Invalid or unreachable	\valid_read(p - 1)
 01_w_Defects	underrun_st.c	67	underrun_st_005	mem_access	Invalid or unreachable	\valid(p - 1)
-01_w_Defects	underrun_st.c	80	underrun_st_006	mem_access	Invalid or unreachable	\valid(p - index_0)
+01_w_Defects	underrun_st.c	80	underrun_st_006	mem_access	Invalid or unreachable	\valid(p - index)
 01_w_Defects	underrun_st.c	93	underrun_st_007	index_bound	Unknown	0 ≤ i
 01_w_Defects	underrun_st.c	109	underrun_st_008	mem_access	Unknown	\valid(p)
 01_w_Defects	underrun_st.c	124	underrun_st_009	index_bound	Unknown	0 ≤ i
