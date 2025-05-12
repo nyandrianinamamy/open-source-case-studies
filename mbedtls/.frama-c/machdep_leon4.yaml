@@ -9,7 +9,6 @@ alignof_longlong: 8
 alignof_ptr: 4
 alignof_short: 2
 alignof_str: 1
-max_align_t: long long
 bufsiz: '8192'
 char_is_unsigned: false
 compiler: clang
@@ -56,6 +55,7 @@ custom_defs:
     __DBL_MIN_10_EXP__: (-307)
     __DBL_MIN_EXP__: (-1021)
     __DBL_MIN__: '2.2250738585072014e-308'
+    __DBL_NORM_MAX__: '1.7976931348623157e+308'
     __DECIMAL_DIG__: __LDBL_DECIMAL_DIG__
     __ELF__: '1'
     __FINITE_MATH_ONLY__: '0'
@@ -73,6 +73,7 @@ custom_defs:
     __FLT_MIN_10_EXP__: (-37)
     __FLT_MIN_EXP__: (-125)
     __FLT_MIN__: 1.17549435e-38F
+    __FLT_NORM_MAX__: 3.40282347e+38F
     __FLT_RADIX__: '2'
     __FPCLASS_NEGINF: '0x0004'
     __FPCLASS_NEGNORMAL: '0x0008'
@@ -95,6 +96,8 @@ custom_defs:
     __GCC_ATOMIC_SHORT_LOCK_FREE: '2'
     __GCC_ATOMIC_TEST_AND_SET_TRUEVAL: '1'
     __GCC_ATOMIC_WCHAR_T_LOCK_FREE: '2'
+    __GCC_CONSTRUCTIVE_SIZE: '32'
+    __GCC_DESTRUCTIVE_SIZE: '32'
     __GNUC_MINOR__: '2'
     __GNUC_PATCHLEVEL__: '1'
     __GNUC_STDC_INLINE__: '1'
@@ -188,6 +191,7 @@ custom_defs:
     __LDBL_MIN_10_EXP__: (-307)
     __LDBL_MIN_EXP__: (-1021)
     __LDBL_MIN__: 2.2250738585072014e-308L
+    __LDBL_NORM_MAX__: 1.7976931348623157e+308L
     __LLONG_WIDTH__: '64'
     __LONG_LONG_MAX__: 9223372036854775807LL
     __LONG_MAX__: 2147483647L
@@ -331,7 +335,7 @@ custom_defs:
     __UINT_LEAST8_MAX__: '255'
     __UINT_LEAST8_TYPE__: unsigned char
     __USER_LABEL_PREFIX__: ''
-    __VERSION__: '"Clang 18.1.8 (Fedora 18.1.8-1.fc40)"'
+    __VERSION__: '"Clang 19.1.7 (Fedora 19.1.7-3.fc41)"'
     __WCHAR_MAX__: '2147483647'
     __WCHAR_TYPE__: int
     __WCHAR_WIDTH__: '32'
@@ -340,10 +344,10 @@ custom_defs:
     __WINT_WIDTH__: '32'
     __clang__: '1'
     __clang_literal_encoding__: '"UTF-8"'
-    __clang_major__: '18'
+    __clang_major__: '19'
     __clang_minor__: '1'
-    __clang_patchlevel__: '8'
-    __clang_version__: '"18.1.8 (Fedora 18.1.8-1.fc40)"'
+    __clang_patchlevel__: '7'
+    __clang_version__: '"19.1.7 (Fedora 19.1.7-3.fc41)"'
     __clang_wide_literal_encoding__: '"UTF-32"'
     __llvm__: '1'
     __sparc: '1'
@@ -353,9 +357,6 @@ custom_defs:
     sparc: '1'
 eof: (-1)
 errno:
-    edom: '33'
-    eilseq: '84'
-    erange: '34'
     e2big: '7'
     eacces: '13'
     eaddrinuse: '98'
@@ -381,6 +382,7 @@ errno:
     edeadlk: '35'
     edeadlock: '35'
     edestaddrreq: '89'
+    edom: '33'
     edquot: '122'
     eexist: '17'
     efault: '14'
@@ -388,6 +390,7 @@ errno:
     ehostdown: '112'
     ehostunreach: '113'
     eidrm: '43'
+    eilseq: '84'
     einprogress: '115'
     eintr: '4'
     einval: '22'
@@ -404,9 +407,9 @@ errno:
     el3rst: '47'
     elibacc: '79'
     elibbad: '80'
+    elibexec: '83'
     elibmax: '82'
     elibscn: '81'
-    elibexec: '83'
     eloop: '40'
     emediumtype: '124'
     emfile: '24'
@@ -455,14 +458,15 @@ errno:
     eproto: '71'
     eprotonosupport: '93'
     eprototype: '91'
+    erange: '34'
     eremchg: '78'
     eremote: '66'
     eremoteio: '121'
     erestart: '85'
     erofs: '30'
     eshutdown: '108'
-    espipe: '29'
     esocktnosupport: '94'
+    espipe: '29'
     esrch: '3'
     estale: '116'
     estrpipe: '86'
@@ -479,18 +483,20 @@ filename_max: '4096'
 fopen_max: '16'
 has__builtin_va_list: true
 host_name_max: '64'
-int_fast8_t: signed char
 int_fast16_t: int
 int_fast32_t: int
 int_fast64_t: long long
+int_fast8_t: signed char
 intptr_t: int
+l_ctermid: '9'
 l_tmpnam: '20'
 little_endian: false
 machdep_name: machdep_leon4
+max_align_t: long long
 mb_cur_max: ((size_t)16)
 nsig: (64 + 1)
 path_max: '4096'
-posix_version: 200809L
+posix_c_source: 200809L
 ptrdiff_t: int
 rand_max: '2147483647'
 sig_atomic_t: int
@@ -509,12 +515,12 @@ ssize_t: int
 time_t: long
 tmp_max: '238328'
 tty_name_max: '32'
-uint_fast8_t: unsigned char
 uint_fast16_t: unsigned int
 uint_fast32_t: unsigned int
 uint_fast64_t: unsigned long long
+uint_fast8_t: unsigned char
 uintptr_t: unsigned int
-version: clang version 18.1.8 (Fedora 18.1.8-1.fc40)
+version: clang version 19.1.7 (Fedora 19.1.7-3.fc41)
 wchar_t: int
 weof: (0xffffffffu)
 wint_t: int
