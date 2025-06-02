@@ -1,4 +1,4 @@
-[metrics] Defined functions (98)
+[metrics] Defined functions (97)
 ======================
  _getopt_internal (1 call); abort_gzip (address taken) (3 calls);
  add_envopt (1 call); basename (3 calls); bi_init (1 call);
@@ -28,12 +28,11 @@
  read_tree (1 call); same_file (2 calls); scan_tree (2 calls);
  send_all_trees (1 call); send_bits (21 calls); send_tree (2 calls);
  set_file_type (1 call); shorten_name (3 calls); strlwr (3 calls);
- treat_dir (0 call); treat_file (2 calls); treat_stdin (2 calls);
- unlzh (address taken) (0 call); unlzw (address taken) (0 call);
- unpack (address taken) (0 call); unzip (address taken) (0 call);
- updcrc (5 calls); usage (3 calls); version (1 call); warn (0 call);
- write_buf (7 calls); write_error (2 calls); xmalloc (1 call);
- zip (address taken) (0 call); 
+ treat_file (1 call); treat_stdin (2 calls); unlzh (address taken) (0 call);
+ unlzw (address taken) (0 call); unpack (address taken) (0 call);
+ unzip (address taken) (0 call); updcrc (5 calls); usage (3 calls);
+ version (1 call); warn (0 call); write_buf (7 calls); write_error (2 calls);
+ xmalloc (1 call); zip (address taken) (0 call); 
 
 Specified-only functions (0)
 ============================
@@ -47,21 +46,21 @@ Undefined and unspecified functions (0)
 =============================
  
 
-Potential entry points (4)
+Potential entry points (3)
 ==========================
- eva_main; make_simple_name; treat_dir; warn; 
+ eva_main; make_simple_name; warn; 
 
 Global metrics
 ============== 
-Sloc = 4942
-Decision point = 919
+Sloc = 4905
+Decision point = 913
 Global variables = 148
-If = 899
-Loop = 191
-Goto = 159
-Assignment = 2152
-Exit point = 98
-Function = 98
-Function call = 563
-Pointer dereferencing = 382
-Cyclomatic complexity = 1017
+If = 893
+Loop = 190
+Goto = 157
+Assignment = 2140
+Exit point = 97
+Function = 97
+Function call = 551
+Pointer dereferencing = 377
+Cyclomatic complexity = 1010

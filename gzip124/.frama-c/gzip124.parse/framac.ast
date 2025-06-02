@@ -5,14 +5,12 @@
 #include "errno.h"
 #include "fcntl.h"
 #include "signal.h"
-#include "stdarg.h"
 #include "stddef.h"
 #include "stdint.h"
 #include "stdio.h"
 #include "stdlib.c"
 #include "stdlib.h"
 #include "string.h"
-#include "strings.h"
 #include "sys/stat.h"
 #include "sys/types.h"
 #include "time.h"
@@ -42,7 +40,6 @@ enum __anonenum_ordering_1 {
     PERMUTE = 1,
     RETURN_IN_ORDER = 2
 };
-typedef struct dirent dir_type;
 union __anonunion_v_1 {
    ush n ;
    struct huft *t ;
@@ -1528,8 +1525,6 @@ static void copy_stat(struct stat *ifstat) __attribute__((__FC_OLDSTYLEPROTO__))
 static void do_exit(int exitcode) __attribute__((__FC_OLDSTYLEPROTO__));
 
 int (*work)(int infile, int outfile) = & zip;
-static void treat_dir(char *dir) __attribute__((__FC_OLDSTYLEPROTO__));
-
 /*@ requires valid_read_string(param0);
     requires valid_read_string(param1);
     requires valid_read_string(param2);
@@ -3794,94 +3789,6 @@ static void copy_stat(struct stat *ifstat)
     if (! quiet) perror((char const *)(ifname));
   }
   return;
-}
-
-/*@ requires valid_read_string(param0);
-    requires valid_read_string(param1);
-    requires valid_read_string(format);
-    assigns \result, stream->__fc_FILE_data;
-    assigns \result
-      \from (indirect: stream->__fc_FILE_id),
-            (indirect: stream->__fc_FILE_data),
-            (indirect: *(format + (0 ..))), (indirect: *(param1 + (0 ..))),
-            (indirect: *(param0 + (0 ..)));
-    assigns stream->__fc_FILE_data
-      \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
-            (indirect: *(format + (0 ..))), *(param1 + (0 ..)),
-            *(param0 + (0 ..));
- */
-int fprintf_va_55(FILE * restrict stream, char const * restrict format,
-                  char *param0, char *param1);
-
-/*@ requires valid_read_string(param0);
-    requires valid_read_string(param1);
-    requires valid_read_string(param2);
-    requires valid_read_string(format);
-    assigns \result, stream->__fc_FILE_data;
-    assigns \result
-      \from (indirect: stream->__fc_FILE_id),
-            (indirect: stream->__fc_FILE_data),
-            (indirect: *(format + (0 ..))), (indirect: *(param2 + (0 ..))),
-            (indirect: *(param1 + (0 ..))), (indirect: *(param0 + (0 ..)));
-    assigns stream->__fc_FILE_data
-      \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
-            (indirect: *(format + (0 ..))), *(param2 + (0 ..)),
-            *(param1 + (0 ..)), *(param0 + (0 ..));
- */
-int fprintf_va_56(FILE * restrict stream, char const * restrict format,
-                  char *param0, char *param1, char *param2);
-
-static void treat_dir(char *dir) __attribute__((__FC_OLDSTYLEPROTO__));
-static void treat_dir(char *dir)
-{
-  dir_type *dp;
-  DIR *dirp;
-  char nbuf[1024];
-  int len;
-  dirp = opendir((char const *)dir);
-  if (dirp == (DIR *)0) {
-    fprintf(__fc_stderr,"%s: %s unreadable\n",progname,dir); /* fprintf_va_55 */
-    exit_code = 1;
-    goto return_label;
-  }
-  while (1) {
-    dp = readdir(dirp);
-    if (! (dp != (dir_type *)0)) break;
-    {
-      int tmp;
-      size_t tmp_1;
-      size_t tmp_3;
-      tmp = strcmp((char const *)(dp->d_name),".");
-      if (tmp == 0) goto _LOR;
-      else {
-        int tmp_0;
-        tmp_0 = strcmp((char const *)(dp->d_name),"..");
-        if (tmp_0 == 0) _LOR: continue;
-      }
-      tmp_1 = strlen((char const *)dir);
-      len = (int)tmp_1;
-      tmp_3 = strlen((char const *)(dp->d_name));
-      ;
-      if ((len + (int)tmp_3) + 1 < 1024 - 1) {
-        strcpy(nbuf,(char const *)dir);
-        if (len != 0) {
-          int tmp_2;
-          tmp_2 = len;
-          len ++;
-          nbuf[tmp_2] = (char)'/';
-        }
-        strcpy(& nbuf[len],(char const *)(dp->d_name));
-        treat_file(nbuf);
-      }
-      else {
-        fprintf(__fc_stderr,"%s: %s/%s: pathname too long\n",progname,dir,
-                dp->d_name); /* fprintf_va_56 */
-        exit_code = 1;
-      }
-    }
-  }
-  closedir(dirp);
-  return_label: return;
 }
 
 static int do_exit_in_exit = 0;

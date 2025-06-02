@@ -1,4 +1,4 @@
-[metrics] Defined functions (521)
+[metrics] Defined functions (520)
 =======================
  ADF_Allow (1 call); ADF_AllowAll (1 call); ADF_CreateTable (1 call);
  ADF_Deny (1 call); ADF_DenyAll (1 call); ADF_DestroyTable (1 call);
@@ -180,7 +180,7 @@
  check_ip_in_node (2 calls); check_ntp_auth (1 call);
  check_number_of_args (16 calls); check_offset (4 calls);
  check_packet_auth (2 calls); check_packet_format (4 calls);
- clamp_freq (3 calls); close_client_socket (5 calls); close_node (4 calls);
+ clamp_freq (3 calls); close_client_socket (4 calls); close_node (4 calls);
  close_socket (6 calls); combine_sources (1 call);
  command_parse_error (31 calls); compare_keys_by_id (address taken) (0 call);
  compare_sort_elements (address taken) (0 call); compare_ts (2 calls);
@@ -236,7 +236,7 @@
  process_sample (1 call); prune_register (2 calls);
  read_frequency (address taken) (0 call);
  read_from_socket (address taken) (0 call); realloc_array (2 calls);
- receive_packet (1 call); receive_timeout (0 call); release_tqe (1 call);
+ receive_packet (1 call); release_tqe (1 call);
  resolve_name (address taken) (0 call); restart_timeout (4 calls);
  schedule_fb_drift (2 calls); send_request (4 calls);
  send_response (5 calls); set_bucket_params (2 calls);
@@ -273,7 +273,7 @@ Undefined and unspecified functions (21)
 =============================
  
 
-Potential entry points (114)
+Potential entry points (113)
 ============================
  CLG_Finalise; CLG_GetClientAccessReportByIndex; CLG_GetNumberOfIndices;
   CLG_GetServerStatsReport; CLG_Initialise; CLG_LimitCommandResponseRate;
@@ -309,19 +309,19 @@ Potential entry points (114)
   UTI_DropRoot; UTI_FloatHostToNetwork; UTI_FloatNetworkToHost;
   UTI_IPHostToNetwork; UTI_IPNetworkToHost; UTI_Ntp64ToString;
   UTI_SetQuitSignalsHandler; UTI_SockaddrToString; UTI_TimespecHostToNetwork;
-  UTI_TimespecNetworkToHost; UTI_TimevalToDouble; eva_main; receive_timeout; 
+  UTI_TimespecNetworkToHost; UTI_TimevalToDouble; eva_main; 
 
 Global metrics
 ============== 
-Sloc = 10445
+Sloc = 10441
 Decision point = 1910
 Global variables = 254
 If = 1794
 Loop = 169
 Goto = 485
-Assignment = 4644
-Exit point = 521
-Function = 542
-Function call = 2130
-Pointer dereferencing = 2774
-Cyclomatic complexity = 2431
+Assignment = 4642
+Exit point = 520
+Function = 541
+Function call = 2129
+Pointer dereferencing = 2773
+Cyclomatic complexity = 2430

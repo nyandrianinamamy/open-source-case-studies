@@ -7,7 +7,6 @@
 #include "glob.c"
 #include "glob.h"
 #include "grp.h"
-#include "inttypes.h"
 #include "math.h"
 #include "netdb.c"
 #include "netdb.h"
@@ -25,19 +24,12 @@
 #include "string.c"
 #include "string.h"
 #include "strings.h"
-#include "stropts.h"
-#include "sys/ipc.h"
-#include "sys/resource.h"
 #include "sys/select.h"
-#include "sys/shm.h"
 #include "sys/socket.h"
 #include "sys/stat.h"
 #include "sys/time.h"
-#include "sys/timex.h"
-#include "sys/types.h"
 #include "sys/uio.h"
 #include "sys/un.h"
-#include "sys/wait.h"
 #include "syslog.h"
 #include "time.h"
 #include "unistd.h"
@@ -16565,14 +16557,6 @@ static double get_separation(int poll)
     tmp_2 = tmp_1;
   }
   return tmp_2;
-}
-
-static void receive_timeout(void *arg)
-{
-  NCR_Instance inst = (NCR_Instance)arg;
-  inst->rx_timeout_id = (SCH_TimeoutID)0;
-  close_client_socket(inst);
-  return;
 }
 
 static int transmit_packet(NTP_Mode my_mode, int interleaved, int my_poll,

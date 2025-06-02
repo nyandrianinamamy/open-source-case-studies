@@ -228,8 +228,8 @@ directory	file	line	function	property kind	status	property
 FRAMAC_SHARE/libc	assert.h	31	__FC_assert	precondition	Unknown	nonnull_c: c ≢ 0
 FRAMAC_SHARE/libc	stdio.h	249	fprintf_va_2	precondition	Unknown	valid_read_string(param0)
 FRAMAC_SHARE/libc	stdlib.h	79	atoi	precondition	Unknown	valid_nptr: valid_read_string(nptr)
-FRAMAC_SHARE/libc	stdlib.h	438	free	precondition	Unknown	freeable: p ≡ \null ∨ \freeable(p)
-FRAMAC_SHARE/libc	stdlib.h	455	realloc	precondition	Unknown	freeable: ptr ≡ \null ∨ \freeable(ptr)
+FRAMAC_SHARE/libc	stdlib.h	442	free	precondition	Unknown	freeable: p ≡ \null ∨ \freeable(p)
+FRAMAC_SHARE/libc	stdlib.h	459	realloc	precondition	Unknown	freeable: ptr ≡ \null ∨ \freeable(ptr)
 FRAMAC_SHARE/libc	string.c	146	strcmp	mem_access	Unknown	\valid_read(s1 + i)
 FRAMAC_SHARE/libc	string.c	146	strcmp	mem_access	Unknown	\valid_read(s2 + i)
 FRAMAC_SHARE/libc	string.c	155	strncmp	dangling_pointer	Unknown	¬\dangling(s1 + i)
