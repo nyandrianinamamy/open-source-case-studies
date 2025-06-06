@@ -2,7 +2,6 @@
 #include "errno.h"
 #include "stdlib.h"
 #include "string.h"
-#include "strings.h"
 typedef unsigned char khint8_t;
 typedef unsigned int khint32_t;
 typedef khint32_t khint_t;
@@ -18,30 +17,6 @@ struct kh_32_s {
 };
 typedef struct kh_32_s kh_32_t;
 static double const __ac_HASH_UPPER = 0.77;
-__inline static khint_t __ac_X31_hash_string(char const *s)
-{
-  khint_t h = (khint_t)*s;
-  if (h) {
-    s ++;
-    while (*s) {
-      h = ((h << 5) - h) + (khint_t)*s;
-      s ++;
-    }
-  }
-  return h;
-}
-
-__inline static khint_t __ac_Wang_hash(khint_t key)
-{
-  key += ~ (key << 15);
-  key ^= key >> 10;
-  key += key << 3;
-  key ^= key >> 6;
-  key += ~ (key << 11);
-  key ^= key >> 16;
-  return key;
-}
-
 __inline static kh_32_t *kh_init_32(void)
 {
   kh_32_t *tmp;
@@ -57,19 +32,6 @@ __inline static void kh_destroy_32(kh_32_t *h)
     free((void *)h->vals);
     free((void *)h);
   }
-  return;
-}
-
-__inline static void kh_clear_32(kh_32_t *h)
-{
-  if (h) 
-    if (h->flags) {
-      khint_t tmp;
-      memset((void *)h->flags,2,h->n_buckets);
-      tmp = (khint_t)0;
-      h->n_occupied = tmp;
-      h->size = tmp;
-    }
   return;
 }
 

@@ -1,4 +1,4 @@
-[metrics] Defined functions (98)
+[metrics] Defined functions (84)
 ======================
  __vector_12 (0 call); __vector_17 (0 call); __vector_20 (0 call);
  __vector_21 (0 call); __vector_30 (0 call); __vector_32 (0 call);
@@ -30,13 +30,7 @@
  send_debug (1 call); send_desired (1 call); send_gps_pos (1 call);
  send_mode (1 call); send_nav_ref (1 call); send_nav_values (1 call);
  send_radIR (1 call); send_settings (1 call); send_takeOff (1 call);
- spi_init (1 call); stabilisation_task (1 call); timer_enable_int (0 call);
- timer_enable_int_0 (0 call); timer_enable_int_1 (0 call);
- timer_enable_int_2 (0 call); timer_enable_int_3 (0 call);
- timer_enable_int_4 (0 call); timer_enable_int_5 (0 call);
- timer_enable_int_6 (0 call); timer_init (0 call); timer_init_0 (1 call);
- timer_now (0 call); timer_now_0 (0 call); timer_now_non_atomic (0 call);
- timer_now_non_atomic_0 (0 call); timer_periodic (0 call);
+ spi_init (1 call); stabilisation_task (1 call); timer_init_0 (1 call);
  timer_periodic_0 (2 calls); uart0_init (0 call); uart0_print_hex (0 call);
  uart0_print_string (0 call); uart0_transmit (3 calls); uart1_init (1 call);
  uart1_transmit (0 call); 
@@ -53,27 +47,23 @@ Undefined and unspecified functions (0)
 =============================
  
 
-Potential entry points (29)
+Potential entry points (15)
 ===========================
  __vector_12; __vector_17; __vector_20; __vector_21; __vector_30;
   __vector_32; __vector_5; __vector_7; ad7714_init; ad7714_on_spi_it; main;
-  timer_enable_int; timer_enable_int_0; timer_enable_int_1;
-  timer_enable_int_2; timer_enable_int_3; timer_enable_int_4;
-  timer_enable_int_5; timer_enable_int_6; timer_init; timer_now; timer_now_0;
-  timer_now_non_atomic; timer_now_non_atomic_0; timer_periodic; uart0_init;
-  uart0_print_hex; uart0_print_string; uart1_transmit; 
+  uart0_init; uart0_print_hex; uart0_print_string; uart1_transmit; 
 
 Global metrics
 ============== 
-Sloc = 3923
-Decision point = 674
+Sloc = 3888
+Decision point = 673
 Global variables = 181
-If = 674
+If = 673
 Loop = 23
-Goto = 87
-Assignment = 2311
-Exit point = 98
-Function = 98
+Goto = 86
+Assignment = 2293
+Exit point = 84
+Function = 84
 Function call = 112
-Pointer dereferencing = 623
-Cyclomatic complexity = 772
+Pointer dereferencing = 606
+Cyclomatic complexity = 757

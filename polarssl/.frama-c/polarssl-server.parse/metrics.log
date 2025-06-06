@@ -1,4 +1,4 @@
-[metrics] Defined functions (508)
+[metrics] Defined functions (464)
 =======================
  add_pkcs_padding (1 call); aes_crypt_cbc (6 calls);
  aes_crypt_cbc_wrap (address taken) (0 call); aes_crypt_cfb128 (3 calls);
@@ -27,20 +27,7 @@
  camellia_setkey_enc (7 calls);
  camellia_setkey_enc_wrap (address taken) (0 call); cipher_finish (0 call);
  cipher_free_ctx (0 call); cipher_get_block_size (12 calls);
- cipher_get_block_size_0 (0 call); cipher_get_block_size_1 (0 call);
- cipher_get_block_size_2 (0 call); cipher_get_cipher_mode (0 call);
- cipher_get_cipher_mode_0 (0 call); cipher_get_cipher_mode_1 (0 call);
- cipher_get_cipher_mode_2 (0 call); cipher_get_iv_size (2 calls);
- cipher_get_iv_size_0 (0 call); cipher_get_iv_size_1 (0 call);
- cipher_get_iv_size_2 (0 call); cipher_get_key_size (0 call);
- cipher_get_key_size_0 (0 call); cipher_get_key_size_1 (0 call);
- cipher_get_key_size_2 (0 call); cipher_get_name (0 call);
- cipher_get_name_0 (0 call); cipher_get_name_1 (0 call);
- cipher_get_name_2 (0 call); cipher_get_operation (0 call);
- cipher_get_operation_0 (0 call); cipher_get_operation_1 (0 call);
- cipher_get_operation_2 (0 call); cipher_get_type (0 call);
- cipher_get_type_0 (0 call); cipher_get_type_1 (0 call);
- cipher_get_type_2 (0 call); cipher_info_from_string (0 call);
+ cipher_get_iv_size (2 calls); cipher_info_from_string (0 call);
  cipher_info_from_type (21 calls); cipher_init_ctx (0 call);
  cipher_list (0 call); cipher_reset (0 call); cipher_self_test (0 call);
  cipher_setkey (0 call); cipher_update (0 call); ctr_drbg_init (1 call);
@@ -94,26 +81,23 @@
  md5_self_test (0 call); md5_starts (18 calls);
  md5_starts_wrap (address taken) (0 call); md5_update (46 calls);
  md5_update_wrap (address taken) (0 call); md_file (0 call);
- md_finish (3 calls); md_free_ctx (5 calls); md_get_name (0 call);
- md_get_name_0 (0 call); md_get_name_1 (0 call); md_get_name_2 (0 call);
- md_get_size (0 call); md_get_size_0 (0 call); md_get_size_1 (0 call);
- md_get_size_2 (4 calls); md_get_type (0 call); md_get_type_0 (0 call);
- md_get_type_1 (0 call); md_get_type_2 (0 call); md_hmac (0 call);
- md_hmac_finish (0 call); md_hmac_reset (0 call); md_hmac_starts (0 call);
- md_hmac_update (0 call); md_info_from_string (0 call);
- md_info_from_type (10 calls); md_init_ctx (4 calls); md_list (0 call);
- md_starts (3 calls); md_update (8 calls); mgf_mask (6 calls);
- mpi_add_abs (2 calls); mpi_add_int (4 calls); mpi_add_mpi (8 calls);
- mpi_cmp_abs (5 calls); mpi_cmp_int (25 calls); mpi_cmp_mpi (26 calls);
- mpi_copy (27 calls); mpi_div_int (1 call); mpi_div_mpi (4 calls);
- mpi_exp_mod (8 calls); mpi_fill_random (4 calls); mpi_free (80 calls);
- mpi_gcd (5 calls); mpi_gen_prime (2 calls); mpi_get_bit (0 call);
- mpi_get_digit (3 calls); mpi_grow (18 calls); mpi_init (58 calls);
- mpi_inv_mod (3 calls); mpi_is_prime (3 calls); mpi_lsb (5 calls);
- mpi_lset (19 calls); mpi_mod_int (2 calls); mpi_mod_mpi (8 calls);
- mpi_montg_init (1 call); mpi_montmul (9 calls); mpi_montred (2 calls);
- mpi_msb (19 calls); mpi_mul_hlp (3 calls); mpi_mul_int (3 calls);
- mpi_mul_mpi (10 calls); mpi_read_binary (5 calls); mpi_read_file (0 call);
+ md_finish (3 calls); md_free_ctx (5 calls); md_get_size_2 (4 calls);
+ md_hmac (0 call); md_hmac_finish (0 call); md_hmac_reset (0 call);
+ md_hmac_starts (0 call); md_hmac_update (0 call);
+ md_info_from_string (0 call); md_info_from_type (10 calls);
+ md_init_ctx (4 calls); md_list (0 call); md_starts (3 calls);
+ md_update (8 calls); mgf_mask (6 calls); mpi_add_abs (2 calls);
+ mpi_add_int (4 calls); mpi_add_mpi (8 calls); mpi_cmp_abs (5 calls);
+ mpi_cmp_int (25 calls); mpi_cmp_mpi (26 calls); mpi_copy (27 calls);
+ mpi_div_int (1 call); mpi_div_mpi (4 calls); mpi_exp_mod (8 calls);
+ mpi_fill_random (4 calls); mpi_free (80 calls); mpi_gcd (5 calls);
+ mpi_gen_prime (2 calls); mpi_get_bit (0 call); mpi_get_digit (3 calls);
+ mpi_grow (18 calls); mpi_init (58 calls); mpi_inv_mod (3 calls);
+ mpi_is_prime (3 calls); mpi_lsb (5 calls); mpi_lset (19 calls);
+ mpi_mod_int (2 calls); mpi_mod_mpi (8 calls); mpi_montg_init (1 call);
+ mpi_montmul (9 calls); mpi_montred (2 calls); mpi_msb (19 calls);
+ mpi_mul_hlp (3 calls); mpi_mul_int (3 calls); mpi_mul_mpi (10 calls);
+ mpi_read_binary (5 calls); mpi_read_file (0 call);
  mpi_read_string (19 calls); mpi_self_test (0 call); mpi_set_bit (0 call);
  mpi_shift_l (8 calls); mpi_shift_r (21 calls); mpi_size (9 calls);
  mpi_sub_abs (6 calls); mpi_sub_hlp (3 calls); mpi_sub_int (8 calls);
@@ -210,11 +194,7 @@
  ssl_get_ciphersuite_id (0 call); ssl_get_ciphersuite_name (1 call);
  ssl_get_verify_result (0 call); ssl_get_version (0 call);
  ssl_handshake (3 calls); ssl_handshake_client (1 call);
- ssl_handshake_server (1 call); ssl_init (1 call);
- ssl_list_ciphersuites (0 call); ssl_list_ciphersuites_0 (0 call);
- ssl_list_ciphersuites_1 (0 call); ssl_list_ciphersuites_2 (0 call);
- ssl_list_ciphersuites_3 (0 call); ssl_list_ciphersuites_4 (0 call);
- ssl_list_ciphersuites_5 (0 call); ssl_mac_md5 (2 calls);
+ ssl_handshake_server (1 call); ssl_init (1 call); ssl_mac_md5 (2 calls);
  ssl_mac_sha1 (2 calls); ssl_parse_certificate (2 calls);
  ssl_parse_certificate_request (1 call);
  ssl_parse_certificate_verify (1 call);
@@ -275,54 +255,40 @@ Undefined and unspecified functions (0)
 =============================
  
 
-Potential entry points (122)
-============================
+Potential entry points (78)
+===========================
  aes_self_test; arc4_self_test; base64_self_test; camellia_self_test;
-  cipher_finish; cipher_free_ctx; cipher_get_block_size_0;
-  cipher_get_block_size_1; cipher_get_block_size_2; cipher_get_cipher_mode;
-  cipher_get_cipher_mode_0; cipher_get_cipher_mode_1;
-  cipher_get_cipher_mode_2; cipher_get_iv_size_0; cipher_get_iv_size_1;
-  cipher_get_iv_size_2; cipher_get_key_size; cipher_get_key_size_0;
-  cipher_get_key_size_1; cipher_get_key_size_2; cipher_get_name;
-  cipher_get_name_0; cipher_get_name_1; cipher_get_name_2;
-  cipher_get_operation; cipher_get_operation_0; cipher_get_operation_1;
-  cipher_get_operation_2; cipher_get_type; cipher_get_type_0;
-  cipher_get_type_1; cipher_get_type_2; cipher_info_from_string;
-  cipher_init_ctx; cipher_list; cipher_reset; cipher_self_test;
-  cipher_setkey; cipher_update; ctr_drbg_self_test; ctr_drbg_set_entropy_len;
-  ctr_drbg_set_reseed_interval; ctr_drbg_update_seed_file; debug_fmt;
-  debug_print_buf; debug_print_crt; debug_print_msg; debug_print_ret;
-  des_key_check_key_parity; des_key_check_weak; des_key_set_parity;
-  des_self_test; dhm_self_test; entropy_update_manual; get_timer; m_sleep;
-  main; md5_self_test; md_file; md_get_name; md_get_name_0; md_get_name_1;
-  md_get_name_2; md_get_size; md_get_size_0; md_get_size_1; md_get_type;
-  md_get_type_0; md_get_type_1; md_get_type_2; md_hmac; md_hmac_finish;
-  md_hmac_reset; md_hmac_starts; md_hmac_update; md_info_from_string;
-  md_list; mpi_get_bit; mpi_read_file; mpi_self_test; mpi_set_bit;
-  mpi_write_file; net_connect; net_set_block; net_set_nonblock; net_usleep;
-  rsa_gen_key; rsa_self_test; set_alarm; sha1_self_test; sha2_self_test;
-  sha4_self_test; ssl_get_bytes_avail; ssl_get_ciphersuite;
+  cipher_finish; cipher_free_ctx; cipher_info_from_string; cipher_init_ctx;
+  cipher_list; cipher_reset; cipher_self_test; cipher_setkey; cipher_update;
+  ctr_drbg_self_test; ctr_drbg_set_entropy_len; ctr_drbg_set_reseed_interval;
+  ctr_drbg_update_seed_file; debug_fmt; debug_print_buf; debug_print_crt;
+  debug_print_msg; debug_print_ret; des_key_check_key_parity;
+  des_key_check_weak; des_key_set_parity; des_self_test; dhm_self_test;
+  entropy_update_manual; get_timer; m_sleep; main; md5_self_test; md_file;
+  md_hmac; md_hmac_finish; md_hmac_reset; md_hmac_starts; md_hmac_update;
+  md_info_from_string; md_list; mpi_get_bit; mpi_read_file; mpi_self_test;
+  mpi_set_bit; mpi_write_file; net_connect; net_set_block; net_set_nonblock;
+  net_usleep; rsa_gen_key; rsa_self_test; set_alarm; sha1_self_test;
+  sha2_self_test; sha4_self_test; ssl_get_bytes_avail; ssl_get_ciphersuite;
   ssl_get_ciphersuite_id; ssl_get_verify_result; ssl_get_version;
-  ssl_list_ciphersuites; ssl_list_ciphersuites_0; ssl_list_ciphersuites_1;
-  ssl_list_ciphersuites_2; ssl_list_ciphersuites_3; ssl_list_ciphersuites_4;
-  ssl_list_ciphersuites_5; ssl_set_dh_param_ctx; ssl_set_hostname;
-  ssl_set_max_version; ssl_set_verify; version_get_number;
-  version_get_string; version_get_string_full; x509_oid_get_description;
+  ssl_set_dh_param_ctx; ssl_set_hostname; ssl_set_max_version;
+  ssl_set_verify; version_get_number; version_get_string;
+  version_get_string_full; x509_oid_get_description;
   x509_oid_get_numeric_string; x509_self_test; x509parse_crl_info;
   x509parse_crlfile; x509parse_crtfile; x509parse_dhmfile; x509parse_keyfile;
   x509parse_public_keyfile; xtea_crypt_cbc; xtea_self_test; 
 
 Global metrics
 ============== 
-Sloc = 15839
-Decision point = 2523
+Sloc = 15559
+Decision point = 2475
 Global variables = 179
-If = 2335
+If = 2287
 Loop = 295
-Goto = 1338
-Assignment = 7095
-Exit point = 508
-Function = 510
+Goto = 1290
+Assignment = 7003
+Exit point = 464
+Function = 466
 Function call = 2384
-Pointer dereferencing = 4472
-Cyclomatic complexity = 3031
+Pointer dereferencing = 4395
+Cyclomatic complexity = 2939
