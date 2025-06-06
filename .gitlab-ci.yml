@@ -4,9 +4,14 @@ default:
 variables:
   GIT_CLEAN_FLAGS: none #each use case cleans its own directory
 
+stages:
+  - prepare
+  - parse-and-run
+
 __update-summary:
   tags:
     - docker
+  stage: prepare
   script:
     - git config --global --add safe.directory $PWD
     - ./compute-summary.sh
@@ -15,6 +20,7 @@ __update-summary:
 .make_job: &make_job
   tags:
     - docker
+  stage: parse-and-run
   script:
     - make -C $TARGET/.frama-c clean
     - make $TARGET
