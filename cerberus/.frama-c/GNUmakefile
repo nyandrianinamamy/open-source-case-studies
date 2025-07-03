@@ -20,7 +20,7 @@ FCFLAGS     += \
   -add-symbolic-path=..:. \
   -kernel-warn-key annot:missing-spec=abort \
   -kernel-warn-key typing:implicit-function-declaration=abort \
-  -no-autoload-plugins -load-module eva,from,inout,metrics,nonterm,report,scope,variadic \
+  -no-autoload-plugins -load-module eva,from,inout,metrics,nonterm,report,scope \
 
 ## Eva-specific flags
 EVAFLAGS    += \

@@ -22,7 +22,7 @@ FCFLAGS     += \
   -kernel-warn-key annot:missing-spec=abort \
   -kernel-warn-key typing:implicit-function-declaration=abort \
   -no-autoload-plugins \
-  -load-module variadic,metrics,report,scope,from,inout,eva,nonterm \
+  -load-module metrics,report,scope,from,inout,eva,nonterm \
 
 ## Eva-specific flags
 EVAFLAGS    += \

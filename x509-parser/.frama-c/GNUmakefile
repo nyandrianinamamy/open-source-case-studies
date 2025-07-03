@@ -69,7 +69,7 @@ EACSL_FLAGS = \
   -M \
   --rte=mem \
   -F "-no-annot" \
-  -F "-rte-verbose 0 -variadic-verbose 0" \
+  -F "-rte-verbose 0" \
   -c \
   -E -D__FC_EACSL__ \
 
