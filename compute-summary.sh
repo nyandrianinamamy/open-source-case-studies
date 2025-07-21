@@ -9,8 +9,8 @@ out=summary.md
 rm -f $out
 # Compute a summary for each directory, using `cloc`
 
-echo "| Directory | Description | URL | #Eva targets | #.c/.h files | #LoC | Tags |" > $out
-echo "| --------- | ----------- | --- |          --- |          --- |  --- | ---  |" >> $out
+echo "| Directory | Description | URL | #Eva targets | #Eva alarms | #.c/.h files | #LoC | Tags |" > $out
+echo "| --------- | ----------- | --- |          --- |         --- |          --- |  --- | ---  |" >> $out
 for t in $targets
 do
     if [ ! -d $t/.frama-c -o ! -f $t/OSCS-README.txt ]; then
@@ -22,10 +22,21 @@ do
     desc="$(cd $t && sed '1!d' OSCS-README.txt)"
     url="$(cd $t && sed '2!d' OSCS-README.txt)"
     ntargets="$(cd $t && make -C .frama-c display-targets --no-print-directory | wc -w | tr -d "[:blank:]")"
+    # special case: mbedtls is not currently run by the CI, so we skip it
+    if [ "$t" == "mbedtls" ]; then
+        nalarms=-1
+    else
+        # Note: we add /dev/null to the list of files to ensure wc will display
+        #       the 'total' line even if there is only one '.eva' directory
+        ncsvlines=$(cd $t && \
+                        wc -l /dev/null .frama-c/*.eva/alarms.csv | \
+                            grep "total$" | sed 's/ */ /' | cut -d' ' -f2)
+        nalarms="$(($ncsvlines - $ntargets))"
+    fi
     nfiles=$(echo $csv | cut -d',' -f1)
     loc=$(echo $csv | cut -d',' -f5)
     tags="$(cd $t && sed '3!d' OSCS-README.txt)"
-    echo "|$t|$desc|$url|$ntargets|$nfiles|$loc|$tags|" >> $out
+    echo "|$t|$desc|$url|$ntargets|$nalarms|$nfiles|$loc|$tags|" >> $out
 done
 
 cat >>$out <<EOF
