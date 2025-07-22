@@ -137,7 +137,9 @@ display-targets:
 	          $(shell $(MAKE) --quiet -C $(target)/.frama-c display-targets)))
 
 %.eva: .FORCE
-	$(MAKE) -C $(dir $@) $(notdir $@)
+	$(if $(subst ./,,$(dir $@)),\
+	$(MAKE) -C $(dir $@).frama-c $(notdir $@),\
+	$(error "Usage: make dir/target.eva"))
 
 # For most case studies, 'make' is sufficient, but some of them require other
 # commands (which are overridden below).
