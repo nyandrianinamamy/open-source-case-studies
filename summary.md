@@ -19,7 +19,7 @@
 |kgflags|Header-only command-line parsing library|https://github.com/kgabis/kgflags|2|118|5|1222|NO_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|
 |khash|Standalone, generic C library|https://github.com/attractivechaos/klib|1|0|2|308|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|
 |kilo|Text editor in less than 1000 lines of code|https://github.com/antirez/kilo/blob/master/kilo.c|1|583|2|1012|HAS_DYN_ALLOC, REM_RECURSION, NO_FLOAT|
-|libmodbus|Library to send/receive data according to the Modbus protocol|https://github.com/stephane/libmodbus|2|141|22|5172|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|
+|libmodbus|Library to send/receive data according to the Modbus protocol|https://github.com/stephane/libmodbus|2|144|22|5172|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|
 |libspng|Library for writing and reading PNG files|https://github.com/randy408/libspng|1|183|5|3337|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|
 |libyaml|Library for parsing and emitting YAML|https://github.com/yaml/libyaml|2|151|25|10548|HAS_DYN_ALLOC, UNUSED_RECURSION, NO_FLOAT|
 |line-following-robot|Very simple AVR-based robot (student project)|https://github.com/Fabio-Morais/Line-Follower-Robot|1|4|21|3560|NO_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|
