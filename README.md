@@ -10,6 +10,59 @@ This repository is a collection of open source C codes to be used with
 Most directories contain open-source code that constitutes a "case study".
 A few contain sets of tests, benchmarks or tutorials.
 
+# Summary
+
+`summary.md` contains a machine-generated file summarizing some pieces of
+information from each directory, such as:
+
+- Name, URL, description;
+- Number of Eva targets, number of alarms (in the current configuration),
+  number of source files, number of lines of code;
+- Some metadata under the form of _tags_;
+- The _kind_ of each directory (test suite, library, executable).
+
+Tags and kinds are described in the sections below.
+
+## Tags
+
+Note: these tags are selected via manual code inspection and are not formally
+verified. Please file an issue if you spot any incoherences.
+
+- `NO_DYN_ALLOC`: the code does not use dynamic allocation
+  (calls to `malloc`, `calloc`, `realloc`, `alloca`).
+- `HAS_DYN_ALLOC`: the code uses dynamic allocation.
+- `HAS_RECURSION`: the code contains recursive calls reached by the current
+  Eva targets.
+- `UNUSED_RECURSION`: the code contains recursive calls (either in the main
+  application/library, or in test cases), but current Eva targets do not
+  invoke them.
+- `REM_RECURSION`: the code contains recursive calls, but they were removed or
+  commented in the current Eva test cases.
+- `NO_RECURSION`: the code does not contain recursive calls.
+- `HAS_FLOAT`: the code uses floating-point types/arithmetics.
+- `NO_FLOAT`: the code does not use floating-point types/arithmetics.
+
+Tags may specify _where_ they occur, e.g. `HAS_DYN_ALLOC(tests)` means that
+dynamic allocation only happens inside test files.
+
+## Kinds
+
+Note: these kinds are defined via manual inspection and are not formally
+verified. We arbitrarily classify them according to what we believe are its
+"main" intent; e.g. a library with some tests and binary tools is still mainly
+a library.
+
+- `executable`: a stand-alone application, usually a command-line program
+  (or a collection of programs) that is expected to be used by itself
+  after compilation.
+- `library`: its main purpose is to provide an API and become embedded
+  into other applications. Many libraries include self-contained test
+  and example programs, but these are secondary.
+- `test suite`: a set of (usually short) files used to test or benchmark
+  analyses and applications. Results are usually considered in the aggregate.
+
+Note: the kind does not distinguish between educational code (e.g. academic
+examples) and real-world applications.
 
 # Requirements
 

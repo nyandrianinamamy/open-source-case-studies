@@ -9,8 +9,8 @@ out=summary.md
 rm -f $out
 # Compute a summary for each directory, using `cloc`
 
-echo "| Directory | Description | URL | #Eva targets | #Eva alarms | #.c/.h files | #LoC | Tags |" > $out
-echo "| --------- | ----------- | --- |          --- |         --- |          --- |  --- | ---  |" >> $out
+echo "| Directory | Description | URL | #Eva targets | #Eva alarms | #.c/.h files | #LoC | Tags | Kind |" > $out
+echo "| --------- | ----------- | --- |          --- |         --- |          --- |  --- | ---  | ---  |" >> $out
 for t in $targets
 do
     if [ ! -d $t/.frama-c -o ! -f $t/OSCS-README.txt ]; then
@@ -36,7 +36,8 @@ do
     nfiles=$(echo $csv | cut -d',' -f1)
     loc=$(echo $csv | cut -d',' -f5)
     tags="$(cd $t && sed '3!d' OSCS-README.txt)"
-    echo "|$t|$desc|$url|$ntargets|$nalarms|$nfiles|$loc|$tags|" >> $out
+    kind="$(cd $t && sed '4!d' OSCS-README.txt)"
+    echo "|$t|$desc|$url|$ntargets|$nalarms|$nfiles|$loc|$tags|$kind|" >> $out
 done
 
 cat >>$out <<EOF
