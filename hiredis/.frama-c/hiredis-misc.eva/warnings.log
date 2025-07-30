@@ -4,7 +4,7 @@ read.c:279:[from] warning: variadic call detected. Using only 1 argument(s).
 read.c:327:[from] warning: variadic call detected. Using only 1 argument(s).
 read.c:384:[from] warning: variadic call detected. Using only 1 argument(s).
 read.c:456:[from] warning: variadic call detected. Using only 1 argument(s).
-sds.h:215:[kernel] warning: all target addresses were invalid. This path is assumed to be dead.
+sds.h:215:[eva] warning: all target addresses were invalid. This path is assumed to be dead.
 stack: sdssetalloc_3 :: sds.c:238 <-
        sdsMakeRoomFor :: sds.c:382 <-
        sdscatlen :: read.c:605 <-
@@ -12,21 +12,21 @@ stack: sdssetalloc_3 :: sds.c:238 <-
        test_reply_reader :: test.c:1024 <-
        main :: fc_stubs.c:21 <-
        eva_main
-sds.h:148:[kernel] warning: all target addresses were invalid. This path is assumed to be dead.
+sds.h:148:[eva] warning: all target addresses were invalid. This path is assumed to be dead.
 stack: sdssetlen_3 :: sds.c:385 <-
        sdscatlen :: read.c:605 <-
        redisReaderFeed :: test.c:347 <-
        test_reply_reader :: test.c:1024 <-
        main :: fc_stubs.c:21 <-
        eva_main
-sds.h:151:[kernel] warning: all target addresses were invalid. This path is assumed to be dead.
+sds.h:151:[eva] warning: all target addresses were invalid. This path is assumed to be dead.
 stack: sdssetlen_3 :: sds.c:385 <-
        sdscatlen :: read.c:605 <-
        redisReaderFeed :: test.c:347 <-
        test_reply_reader :: test.c:1024 <-
        main :: fc_stubs.c:21 <-
        eva_main
-sds.h:151:[kernel] warning: all target addresses were invalid. This path is assumed to be dead.
+sds.h:151:[eva] warning: all target addresses were invalid. This path is assumed to be dead.
 stack: sdssetlen_3 :: sds.c:236 <-
        sdsMakeRoomFor :: sds.c:382 <-
        sdscatlen :: read.c:605 <-
