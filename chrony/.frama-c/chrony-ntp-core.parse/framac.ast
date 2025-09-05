@@ -8355,8 +8355,7 @@ DNS_Status DNS_Name2IPAddress(char const *name, IPAddr *ip_addrs,
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -9463,8 +9462,7 @@ static void end_ref_mode(int result)
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -13043,8 +13041,7 @@ static void add_dispersion(double dispersion, void *anything)
     requires valid_read_string(param1);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -13059,8 +13056,7 @@ int snprintf_va_3(char * restrict s, size_t n, char const * restrict format,
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -13190,8 +13186,7 @@ void SRC_ReloadSources(void)
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -13205,8 +13200,7 @@ int snprintf_va_5(char * restrict s, size_t n, char const * restrict format,
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -14533,8 +14527,7 @@ static char buffer_pool[16][64];
 static int pool_ptr = 0;
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -14598,8 +14591,7 @@ char *UTI_RefidToString(uint32_t ref_id)
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -14609,8 +14601,7 @@ int snprintf_va_8(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -14626,8 +14617,7 @@ int snprintf_va_9(char * restrict s, size_t n, char const * restrict format,
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))), (indirect: param0);
@@ -14639,8 +14629,7 @@ int snprintf_va_10(char * restrict s, size_t n, char const * restrict format,
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -14915,8 +14904,7 @@ int UTI_IPAndPortToSockaddr(IPAddr *ip, unsigned short port,
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -14931,8 +14919,7 @@ int snprintf_va_12(char * restrict s, size_t n, char const * restrict format,
 /*@ requires valid_read_nstring(param1, param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -14946,8 +14933,7 @@ int snprintf_va_13(char * restrict s, size_t n, char const * restrict format,
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -15002,8 +14988,7 @@ char const *UTI_SockaddrFamilyToString(int family)
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -15465,8 +15450,7 @@ void UTI_SetQuitSignalsHandler(void (*handler)(int ), int ignore_sigpipe)
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),

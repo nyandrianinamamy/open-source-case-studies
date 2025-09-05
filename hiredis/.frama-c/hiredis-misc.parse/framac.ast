@@ -1365,8 +1365,7 @@ static int __redisGetSubscribeCallback(redisAsyncContext *ac,
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -3244,8 +3243,7 @@ int redisNetWrite(redisContext *c)
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -3510,8 +3508,7 @@ int redisContextSetTimeout(redisContext *c, struct timeval const tv)
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))), (indirect: param0);
@@ -3524,8 +3521,7 @@ int snprintf_va_3(char * restrict s, size_t n, char const * restrict format,
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -3539,8 +3535,7 @@ int snprintf_va_4(char * restrict s, size_t n, char const * restrict format,
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -3554,8 +3549,7 @@ int snprintf_va_5(char * restrict s, size_t n, char const * restrict format,
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -3939,8 +3933,7 @@ static void __redisReaderSetError(redisReader *r, int type, char const *str)
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))), (indirect: param0);
@@ -3952,8 +3945,7 @@ int snprintf_va_7(char * restrict s, size_t n, char const * restrict format,
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -3963,8 +3955,7 @@ int snprintf_va_8(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -3974,8 +3965,7 @@ int snprintf_va_9(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -3985,8 +3975,7 @@ int snprintf_va_10(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -3996,8 +3985,7 @@ int snprintf_va_11(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -4007,8 +3995,7 @@ int snprintf_va_12(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))), (indirect: param0);
@@ -4020,8 +4007,7 @@ int snprintf_va_13(char * restrict s, size_t n, char const * restrict format,
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))), (indirect: param0);
@@ -4098,8 +4084,7 @@ static size_t chrtos(char *buf, size_t size, char byte)
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -4345,7 +4330,7 @@ static int processLineItem(redisReader *r)
             char buf[326];
             char *eptr;
             double d;
-            int tmp_4;
+            int tmp_2;
             if ((size_t)len >= sizeof(buf)) {
               __redisReaderSetError(r,4,"Double value is too large");
               __retres = -1;
@@ -4353,30 +4338,21 @@ static int processLineItem(redisReader *r)
             }
             memcpy((void *)(buf),(void const *)p,(size_t)len);
             buf[len] = (char)'\000';
-            tmp_4 = strcasecmp((char const *)(buf),",inf");
-            if (tmp_4 == 0) d = (double)INFINITY;
+            tmp_2 = strcasecmp((char const *)(buf),",inf");
+            if (tmp_2 == 0) d = (double)INFINITY;
             else {
-              int tmp_3;
-              tmp_3 = strcasecmp((char const *)(buf),",-inf");
-              if (tmp_3 == 0) d = (double)(- INFINITY);
+              int tmp_1;
+              tmp_1 = strcasecmp((char const *)(buf),",-inf");
+              if (tmp_1 == 0) d = (double)(- INFINITY);
               else {
                 d = strtod((char const *)(buf),& eptr);
                 if ((int)buf[0] == '\000') goto _LOR;
                 else 
                   if ((int)*(eptr + 0) != '\000') goto _LOR;
                   else {
-                    int tmp_2;
-                    if (sizeof(d) == sizeof(float)) {
-                      int tmp_0;
-                      tmp_0 = __fc_fpclassifyf((float)d);
-                      tmp_2 = tmp_0 == 0;
-                    }
-                    else {
-                      int tmp_1;
-                      tmp_1 = __fc_fpclassify(d);
-                      tmp_2 = tmp_1 == 0;
-                    }
-                    if (tmp_2) {
+                    int tmp_0;
+                    tmp_0 = __fc_fpclassify(d);
+                    if (tmp_0 == 0) {
                       _LOR:
                       {
                         __redisReaderSetError(r,4,"Bad double value");
@@ -4401,11 +4377,11 @@ static int processLineItem(redisReader *r)
           else obj = (void *)4;
         else 
           if (cur->type == 8) {
-            int tmp_5;
-            if ((int)*(p + 0) == 't') tmp_5 = 1;
+            int tmp_3;
+            if ((int)*(p + 0) == 't') tmp_3 = 1;
             else 
-              if ((int)*(p + 0) == 'T') tmp_5 = 1; else tmp_5 = 0;
-            int bval = tmp_5;
+              if ((int)*(p + 0) == 'T') tmp_3 = 1; else tmp_3 = 0;
+            int bval = tmp_3;
             if (r->fn) 
               if ((r->fn)->createBool) obj = (*((r->fn)->createBool))
                                        ((redisReadTask const *)cur,bval);

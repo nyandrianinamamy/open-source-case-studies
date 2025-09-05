@@ -106,20 +106,11 @@ double genann_act_sigmoid_cached(genann const *ann __attribute__((__unused__)),
                                  double a)
 {
   double __retres;
-  int tmp_2;
-  int tmp_1;
-  if (sizeof(a) == sizeof(float)) {
-    int tmp;
-    tmp = __fc_fpclassifyf((float)a);
-    tmp_1 = tmp == 0;
-  }
-  else {
-    int tmp_0;
-    tmp_0 = __fc_fpclassify(a);
-    tmp_1 = tmp_0 == 0;
-  }
-  if (tmp_1) tmp_2 = 0; else tmp_2 = 1;
-  __FC_assert(tmp_2 != 0,"genann.c",87,"!isnan(a)");
+  int tmp_0;
+  int tmp;
+  tmp = __fc_fpclassify(a);
+  if (tmp == 0) tmp_0 = 0; else tmp_0 = 1;
+  __FC_assert(tmp_0 != 0,"genann.c",87,"!isnan(a)");
   if (a < sigmoid_dom_min) {
     __retres = lookup[0];
     goto return_label;

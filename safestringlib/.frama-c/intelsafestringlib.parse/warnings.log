@@ -1,10 +1,10 @@
 unittests/test_wmemmove_s.c:407:[kernel:typing:incompatible-types-call] warning: expected 'wchar_t *' but got argument of type 'wchar_t': (wchar_t)((char *)(mem1) + 1)
 unittests/test_wmemmove_s.c:433:[kernel:typing:incompatible-types-call] warning: expected 'wchar_t *' but got argument of type 'wchar_t': (wchar_t)((char *)(mem1) + 2)
 safeclib/abort_handler_s.c:71:[kernel:typing:variadic] warning: Incorrect type for argument 3. The argument will be cast from errno_t to unsigned int.
-safeclib/snprintf_support.c:241:[kernel] warning: Call to function snprintf with non-static format argument: assuming that parameters are coherent with the format, and that no %n specifiers are present in the actual string.
-safeclib/snprintf_support.c:266:[kernel] warning: Call to function snprintf with non-static format argument: assuming that parameters are coherent with the format, and that no %n specifiers are present in the actual string.
-safeclib/snprintf_support.c:297:[kernel] warning: Call to function snprintf with non-static format argument: assuming that parameters are coherent with the format, and that no %n specifiers are present in the actual string.
-safeclib/snprintf_support.c:328:[kernel] warning: Call to function snprintf with non-static format argument: assuming that parameters are coherent with the format, and that no %n specifiers are present in the actual string.
+safeclib/snprintf_support.c:241:[kernel:typing:variadic:format:nonliteral] warning: Call to function snprintf with non-static format argument: assuming that parameters are coherent with the format, and that no %n specifiers are present in the actual string.
+safeclib/snprintf_support.c:266:[kernel:typing:variadic:format:nonliteral] warning: Call to function snprintf with non-static format argument: assuming that parameters are coherent with the format, and that no %n specifiers are present in the actual string.
+safeclib/snprintf_support.c:297:[kernel:typing:variadic:format:nonliteral] warning: Call to function snprintf with non-static format argument: assuming that parameters are coherent with the format, and that no %n specifiers are present in the actual string.
+safeclib/snprintf_support.c:328:[kernel:typing:variadic:format:nonliteral] warning: Call to function snprintf with non-static format argument: assuming that parameters are coherent with the format, and that no %n specifiers are present in the actual string.
 unittests/test_memcpy16_s.c:85:[kernel:typing:variadic] warning: Incorrect type for argument 3. The argument will be cast from uint32_t to int.
 unittests/test_memcpy16_s.c:104:[kernel:typing:variadic] warning: Incorrect type for argument 3. The argument will be cast from uint32_t to int.
 unittests/test_memcpy16_s.c:124:[kernel:typing:variadic] warning: Incorrect type for argument 3. The argument will be cast from uint32_t to int.

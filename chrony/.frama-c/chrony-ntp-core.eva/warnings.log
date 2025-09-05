@@ -60,19 +60,19 @@ stack: CPS_SplitWord :: conf.c:442 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:189:[eva:alarm] warning: out of bounds read. assert \valid_read(s1 + i);
+FRAMAC_SHARE/libc/string.c:175:[eva:alarm] warning: out of bounds read. assert \valid_read(s1 + i);
 stack: strcasecmp :: conf.c:444 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:189:[eva:alarm] warning: out of bounds read. assert \valid_read(s2 + i);
+FRAMAC_SHARE/libc/string.c:175:[eva:alarm] warning: out of bounds read. assert \valid_read(s2 + i);
 stack: strcasecmp :: conf.c:444 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:193:[eva:alarm] warning: out of bounds read. assert \valid_read(s2 + i);
+FRAMAC_SHARE/libc/string.c:179:[eva:alarm] warning: out of bounds read. assert \valid_read(s2 + i);
 stack: strcasecmp :: conf.c:444 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
        test_unit :: test/unit/test.c:70 <-
@@ -94,8 +94,8 @@ stack: get_number_of_args :: conf.c:313 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:332:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
+FRAMAC_SHARE/libc/string.c:318:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:318 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:573 <-
@@ -103,8 +103,8 @@ stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:573 <-
@@ -112,8 +112,8 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:573 <-
@@ -143,8 +143,8 @@ stack: sscanf_va_51 :: conf.c:1259 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:332:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
+FRAMAC_SHARE/libc/string.c:318:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:318 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:1263 <-
        parse_tempcomp :: conf.c:571 <-
@@ -152,8 +152,8 @@ stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:1263 <-
        parse_tempcomp :: conf.c:571 <-
@@ -161,8 +161,8 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:1263 <-
        parse_tempcomp :: conf.c:571 <-
@@ -177,8 +177,8 @@ stack: sscanf_va_52 :: conf.c:1265 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:332:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
+FRAMAC_SHARE/libc/string.c:318:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:318 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:1274 <-
        parse_tempcomp :: conf.c:571 <-
@@ -186,8 +186,8 @@ stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:1274 <-
        parse_tempcomp :: conf.c:571 <-
@@ -195,8 +195,8 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:1274 <-
        parse_tempcomp :: conf.c:571 <-
@@ -218,21 +218,21 @@ stack: sscanf_va_50 :: conf.c:1220 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:190:[eva:alarm] warning: out of bounds read. assert \valid_read(s1 + i);
+FRAMAC_SHARE/libc/string.c:176:[eva:alarm] warning: out of bounds read. assert \valid_read(s1 + i);
 stack: strcasecmp :: conf.c:1229 <-
        parse_smoothtime :: conf.c:567 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:193:[eva:alarm] warning: out of bounds read. assert \valid_read(s1 + i);
+FRAMAC_SHARE/libc/string.c:179:[eva:alarm] warning: out of bounds read. assert \valid_read(s1 + i);
 stack: strcasecmp :: conf.c:1229 <-
        parse_smoothtime :: conf.c:567 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:194:[eva:alarm] warning: out of bounds read. assert \valid_read(s1 + i);
+FRAMAC_SHARE/libc/string.c:180:[eva:alarm] warning: out of bounds read. assert \valid_read(s1 + i);
 stack: strcasecmp :: conf.c:1229 <-
        parse_smoothtime :: conf.c:567 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
@@ -396,8 +396,8 @@ stack: parse_source :: conf.c:565 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:332:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
+FRAMAC_SHARE/libc/string.c:318:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:318 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:645 <-
        parse_source :: conf.c:565 <-
@@ -405,8 +405,8 @@ stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:645 <-
        parse_source :: conf.c:565 <-
@@ -414,8 +414,8 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:645 <-
        parse_source :: conf.c:565 <-
@@ -430,8 +430,8 @@ stack: sscanf_va_22 :: conf.c:601 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:332:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
+FRAMAC_SHARE/libc/string.c:318:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:318 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:557 <-
@@ -439,8 +439,8 @@ stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:557 <-
@@ -448,8 +448,8 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:557 <-
@@ -457,8 +457,8 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:332:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
+FRAMAC_SHARE/libc/string.c:318:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:318 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:555 <-
@@ -466,8 +466,8 @@ stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:555 <-
@@ -475,8 +475,8 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:555 <-
@@ -498,8 +498,8 @@ stack: sscanf_va_23 :: conf.c:614 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:332:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
+FRAMAC_SHARE/libc/string.c:318:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:318 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:723 <-
        parse_refclock :: conf.c:549 <-
@@ -507,8 +507,8 @@ stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:723 <-
        parse_refclock :: conf.c:549 <-
@@ -516,8 +516,8 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:723 <-
        parse_refclock :: conf.c:549 <-
@@ -525,8 +525,8 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:332:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
+FRAMAC_SHARE/libc/string.c:318:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:318 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:727 <-
        parse_refclock :: conf.c:549 <-
@@ -534,8 +534,8 @@ stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:727 <-
        parse_refclock :: conf.c:549 <-
@@ -543,8 +543,8 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:727 <-
        parse_refclock :: conf.c:549 <-
@@ -877,8 +877,8 @@ stack: sscanf_va_18 :: cmdparse.c:104 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:332:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
+FRAMAC_SHARE/libc/string.c:318:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:318 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:645 <-
        parse_source :: conf.c:542 <-
@@ -886,8 +886,8 @@ stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:645 <-
        parse_source :: conf.c:542 <-
@@ -895,8 +895,8 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:645 <-
        parse_source :: conf.c:542 <-
@@ -904,8 +904,8 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:332:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
+FRAMAC_SHARE/libc/string.c:318:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:318 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:540 <-
@@ -913,8 +913,8 @@ stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:540 <-
@@ -922,8 +922,8 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:540 <-
@@ -1075,8 +1075,8 @@ stack: sscanf_va_18 :: cmdparse.c:104 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:332:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
+FRAMAC_SHARE/libc/string.c:318:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:318 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:645 <-
        parse_source :: conf.c:538 <-
@@ -1084,8 +1084,8 @@ stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:645 <-
        parse_source :: conf.c:538 <-
@@ -1093,8 +1093,8 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:645 <-
        parse_source :: conf.c:538 <-
@@ -1102,8 +1102,8 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:332:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
+FRAMAC_SHARE/libc/string.c:318:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:318 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:536 <-
@@ -1111,8 +1111,8 @@ stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:536 <-
@@ -1120,8 +1120,8 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:536 <-
@@ -1213,8 +1213,8 @@ stack: sscanf_va_45 :: conf.c:992 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:332:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
+FRAMAC_SHARE/libc/string.c:318:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:318 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:993 <-
        parse_mailonchange :: conf.c:508 <-
@@ -1222,8 +1222,8 @@ stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:993 <-
        parse_mailonchange :: conf.c:508 <-
@@ -1231,8 +1231,8 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:993 <-
        parse_mailonchange :: conf.c:508 <-
@@ -1240,8 +1240,8 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:332:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
+FRAMAC_SHARE/libc/string.c:318:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:318 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:506 <-
@@ -1249,8 +1249,8 @@ stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:506 <-
@@ -1258,8 +1258,8 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:506 <-
@@ -1281,21 +1281,21 @@ stack: sscanf_va_22 :: conf.c:601 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:146:[eva:alarm] warning: out of bounds read. assert \valid_read(s1 + i);
+FRAMAC_SHARE/libc/string.c:132:[eva:alarm] warning: out of bounds read. assert \valid_read(s1 + i);
 stack: strcmp :: conf.c:845 <-
        parse_log :: conf.c:500 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:146:[eva:alarm] warning: out of bounds read. assert \valid_read(s2 + i);
+FRAMAC_SHARE/libc/string.c:132:[eva:alarm] warning: out of bounds read. assert \valid_read(s2 + i);
 stack: strcmp :: conf.c:845 <-
        parse_log :: conf.c:500 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:149:[eva:alarm] warning: out of bounds read. assert \valid_read((unsigned char *)s1 + i);
+FRAMAC_SHARE/libc/string.c:135:[eva:alarm] warning: out of bounds read. assert \valid_read((unsigned char *)s1 + i);
 stack: strcmp :: conf.c:845 <-
        parse_log :: conf.c:500 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
@@ -1325,8 +1325,8 @@ stack: CPS_ParseLocal :: conf.c:875 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:332:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
+FRAMAC_SHARE/libc/string.c:318:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:318 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:494 <-
@@ -1334,8 +1334,8 @@ stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:494 <-
@@ -1343,8 +1343,8 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:494 <-
@@ -1352,8 +1352,8 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:332:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
+FRAMAC_SHARE/libc/string.c:318:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:318 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:490 <-
@@ -1361,8 +1361,8 @@ stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:490 <-
@@ -1370,8 +1370,8 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:490 <-
@@ -1386,7 +1386,7 @@ stack: sscanf_va_40 :: conf.c:896 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/netdb.c:121:[eva:alarm] warning: out of bounds read. assert \valid_read(cp);
+FRAMAC_SHARE/libc/netdb.c:107:[eva:alarm] warning: out of bounds read. assert \valid_read(cp);
 stack: gethostbyname :: nameserv.c:121 <-
        DNS_Name2IPAddress :: conf.c:905 <-
        parse_initstepslew :: conf.c:488 <-
@@ -1394,7 +1394,7 @@ stack: gethostbyname :: nameserv.c:121 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/netdb.c:124:[eva:alarm] warning: out of bounds read. assert \valid_read(cp);
+FRAMAC_SHARE/libc/netdb.c:110:[eva:alarm] warning: out of bounds read. assert \valid_read(cp);
 stack: gethostbyname :: nameserv.c:121 <-
        DNS_Name2IPAddress :: conf.c:905 <-
        parse_initstepslew :: conf.c:488 <-
@@ -1402,8 +1402,8 @@ stack: gethostbyname :: nameserv.c:121 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/netdb.c:127:[eva:alarm] warning: function inet_addr: precondition 'valid_arg' got status unknown.
-stack: inet_addr :: FRAMAC_SHARE/libc/netdb.c:127 <-
+FRAMAC_SHARE/libc/netdb.c:113:[eva:alarm] warning: function inet_addr: precondition 'valid_arg' got status unknown.
+stack: inet_addr :: FRAMAC_SHARE/libc/netdb.c:113 <-
        gethostbyname :: nameserv.c:121 <-
        DNS_Name2IPAddress :: conf.c:905 <-
        parse_initstepslew :: conf.c:488 <-
@@ -1411,8 +1411,8 @@ stack: inet_addr :: FRAMAC_SHARE/libc/netdb.c:127 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:246:[eva:alarm] warning: out of bounds read. assert \valid_read(src + i);
-stack: strncpy :: FRAMAC_SHARE/libc/netdb.c:131 <-
+FRAMAC_SHARE/libc/string.c:232:[eva:alarm] warning: out of bounds read. assert \valid_read(src + i);
+stack: strncpy :: FRAMAC_SHARE/libc/netdb.c:117 <-
        gethostbyname :: nameserv.c:121 <-
        DNS_Name2IPAddress :: conf.c:905 <-
        parse_initstepslew :: conf.c:488 <-
@@ -1420,8 +1420,8 @@ stack: strncpy :: FRAMAC_SHARE/libc/netdb.c:131 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:247:[eva:alarm] warning: out of bounds read. assert \valid_read(src + i);
-stack: strncpy :: FRAMAC_SHARE/libc/netdb.c:131 <-
+FRAMAC_SHARE/libc/string.c:233:[eva:alarm] warning: out of bounds read. assert \valid_read(src + i);
+stack: strncpy :: FRAMAC_SHARE/libc/netdb.c:117 <-
        gethostbyname :: nameserv.c:121 <-
        DNS_Name2IPAddress :: conf.c:905 <-
        parse_initstepslew :: conf.c:488 <-
@@ -1429,8 +1429,8 @@ stack: strncpy :: FRAMAC_SHARE/libc/netdb.c:131 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/netdb.c:153:[eva:alarm] warning: function inet_addr: precondition 'valid_arg' got status unknown.
-stack: inet_addr :: FRAMAC_SHARE/libc/netdb.c:153 <-
+FRAMAC_SHARE/libc/netdb.c:139:[eva:alarm] warning: function inet_addr: precondition 'valid_arg' got status unknown.
+stack: inet_addr :: FRAMAC_SHARE/libc/netdb.c:139 <-
        gethostbyname :: nameserv.c:121 <-
        DNS_Name2IPAddress :: conf.c:905 <-
        parse_initstepslew :: conf.c:488 <-
@@ -1485,8 +1485,8 @@ stack: realloc :: memory.c:50 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:332:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
+FRAMAC_SHARE/libc/string.c:318:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:318 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:1295 <-
        parse_hwtimestamp :: conf.c:484 <-
@@ -1494,8 +1494,8 @@ stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:1295 <-
        parse_hwtimestamp :: conf.c:484 <-
@@ -1503,8 +1503,8 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:1295 <-
        parse_hwtimestamp :: conf.c:484 <-
@@ -1519,28 +1519,28 @@ stack: sscanf_va_53 :: conf.c:1327 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:189:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(s1 + i);
+FRAMAC_SHARE/libc/string.c:175:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(s1 + i);
 stack: strcasecmp :: conf.c:1329 <-
        parse_hwtimestamp :: conf.c:484 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:190:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(s1 + i);
+FRAMAC_SHARE/libc/string.c:176:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(s1 + i);
 stack: strcasecmp :: conf.c:1329 <-
        parse_hwtimestamp :: conf.c:484 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:193:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(s1 + i);
+FRAMAC_SHARE/libc/string.c:179:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(s1 + i);
 stack: strcasecmp :: conf.c:1329 <-
        parse_hwtimestamp :: conf.c:484 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:194:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(s1 + i);
+FRAMAC_SHARE/libc/string.c:180:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(s1 + i);
 stack: strcasecmp :: conf.c:1329 <-
        parse_hwtimestamp :: conf.c:484 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
@@ -1595,8 +1595,8 @@ stack: parse_hwtimestamp :: conf.c:484 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:332:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
+FRAMAC_SHARE/libc/string.c:318:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:318 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:482 <-
@@ -1604,8 +1604,8 @@ stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:482 <-
@@ -1613,8 +1613,8 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:482 <-
@@ -1629,8 +1629,8 @@ stack: sscanf_va_42 :: conf.c:948 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:332:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
+FRAMAC_SHARE/libc/string.c:318:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:318 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:476 <-
@@ -1638,8 +1638,8 @@ stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:476 <-
@@ -1647,8 +1647,8 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:476 <-
@@ -1656,8 +1656,8 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:332:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
+FRAMAC_SHARE/libc/string.c:318:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:318 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:474 <-
@@ -1665,8 +1665,8 @@ stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:474 <-
@@ -1674,8 +1674,8 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:474 <-
@@ -1683,14 +1683,14 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:155:[eva:alarm] warning: out of bounds read. assert \valid_read(s1 + i);
+FRAMAC_SHARE/libc/string.c:141:[eva:alarm] warning: out of bounds read. assert \valid_read(s1 + i);
 stack: strncmp :: conf.c:1013 <-
        parse_allow_deny :: conf.c:472 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:156:[eva:alarm] warning: out of bounds read. assert \valid_read((unsigned char *)s1 + i);
+FRAMAC_SHARE/libc/string.c:142:[eva:alarm] warning: out of bounds read. assert \valid_read((unsigned char *)s1 + i);
 stack: strncmp :: conf.c:1013 <-
        parse_allow_deny :: conf.c:472 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
@@ -1862,8 +1862,8 @@ stack: sscanf_va_49 :: conf.c:1197 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:332:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
+FRAMAC_SHARE/libc/string.c:318:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:318 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:1151 <-
@@ -1872,8 +1872,8 @@ stack: strlen :: FRAMAC_SHARE/libc/string.c:332 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_dest' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:1151 <-
@@ -1882,8 +1882,8 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:338:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
-stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
+FRAMAC_SHARE/libc/string.c:324:[eva:alarm] warning: function memcpy: precondition 'valid_src' got status unknown.
+stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:1151 <-
@@ -1892,14 +1892,14 @@ stack: memcpy :: FRAMAC_SHARE/libc/string.c:338 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:146:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(s1 + i);
+FRAMAC_SHARE/libc/string.c:132:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(s1 + i);
 stack: strcmp :: conf.c:1153 <-
        parse_bindcmdaddress :: conf.c:453 <-
        CNF_ParseLine :: test/unit/ntp_core.c:317 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:149:[eva:alarm] warning: accessing uninitialized left-value.
+FRAMAC_SHARE/libc/string.c:135:[eva:alarm] warning: accessing uninitialized left-value.
 assert \initialized((unsigned char *)s1 + i);
 stack: strcmp :: conf.c:1153 <-
        parse_bindcmdaddress :: conf.c:453 <-
@@ -2556,8 +2556,8 @@ stack: __FC_assert :: array.c:94 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:333:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l333_27' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_27' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:573 <-
@@ -2565,8 +2565,8 @@ stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:333:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l333_28' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_28' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:1263 <-
        parse_tempcomp :: conf.c:571 <-
@@ -2574,8 +2574,8 @@ stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:333:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l333_29' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_29' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:1274 <-
        parse_tempcomp :: conf.c:571 <-
@@ -2583,8 +2583,8 @@ stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:333:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l333_30' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_30' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:645 <-
        parse_source :: conf.c:565 <-
@@ -2614,8 +2614,8 @@ stack: realloc :: memory.c:50 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:333:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l333_31' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_31' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:557 <-
@@ -2623,8 +2623,8 @@ stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:333:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l333_32' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_32' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:555 <-
@@ -2632,8 +2632,8 @@ stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:333:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l333_33' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_33' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:723 <-
        parse_refclock :: conf.c:549 <-
@@ -2641,8 +2641,8 @@ stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:333:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l333_34' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_34' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:727 <-
        parse_refclock :: conf.c:549 <-
@@ -2670,8 +2670,8 @@ stack: realloc :: memory.c:50 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:333:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l333_35' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_35' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:645 <-
        parse_source :: conf.c:542 <-
@@ -2701,8 +2701,8 @@ stack: realloc :: memory.c:50 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:333:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l333_36' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_36' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:540 <-
@@ -2710,8 +2710,8 @@ stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:333:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l333_37' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_37' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:645 <-
        parse_source :: conf.c:538 <-
@@ -2741,8 +2741,8 @@ stack: realloc :: memory.c:50 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:333:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l333_38' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_38' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:536 <-
@@ -2750,8 +2750,8 @@ stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:333:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l333_39' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_39' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:993 <-
        parse_mailonchange :: conf.c:508 <-
@@ -2759,8 +2759,8 @@ stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:333:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l333_40' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_40' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:506 <-
@@ -2768,8 +2768,8 @@ stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:333:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l333_41' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_41' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:494 <-
@@ -2777,8 +2777,8 @@ stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:333:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l333_42' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_42' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:490 <-
@@ -2806,8 +2806,8 @@ stack: realloc :: memory.c:50 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:333:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l333_43' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_43' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:1295 <-
        parse_hwtimestamp :: conf.c:484 <-
@@ -2815,8 +2815,8 @@ stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:333:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l333_44' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_44' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:482 <-
@@ -2824,8 +2824,8 @@ stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:333:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l333_45' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_45' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:476 <-
@@ -2833,8 +2833,8 @@ stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:333:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l333_46' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_46' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:474 <-
@@ -3042,8 +3042,8 @@ stack: realloc :: memory.c:50 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:333:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l333_47' as weak
-stack: malloc :: FRAMAC_SHARE/libc/string.c:333 <-
+FRAMAC_SHARE/libc/string.c:319:[eva:malloc:weak] warning: marking variable `__malloc_strdup_l319_47' as weak
+stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
        strdup :: memory.c:88 <-
        Strdup :: conf.c:591 <-
        parse_string :: conf.c:1151 <-
@@ -3148,16 +3148,14 @@ stack: calculate_sys_precision :: local.c:173 <-
        main :: fc_stubs.c:37 <-
        eva_main
 local.c:126:[eva:alarm] warning: signed overflow.
-assert
--9223372036854775808 ≤ 1000000000 * (long)(ts.tv_sec - old_ts.tv_sec);
+assert -9223372036854775808 ≤ 1000000000 * (long)(ts.tv_sec - old_ts.tv_sec);
 stack: calculate_sys_precision :: local.c:173 <-
        LCL_Initialise :: test/unit/ntp_core.c:319 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
 local.c:126:[eva:alarm] warning: signed overflow.
-assert
-1000000000 * (long)(ts.tv_sec - old_ts.tv_sec) ≤ 9223372036854775807;
+assert 1000000000 * (long)(ts.tv_sec - old_ts.tv_sec) ≤ 9223372036854775807;
 stack: calculate_sys_precision :: local.c:173 <-
        LCL_Initialise :: test/unit/ntp_core.c:319 <-
        test_unit :: test/unit/test.c:70 <-
@@ -3404,8 +3402,7 @@ stack: UTI_AddDoubleToTimespec :: local.c:391 <-
        main :: fc_stubs.c:37 <-
        eva_main
 util.c:98:[eva:alarm] warning: signed overflow.
-assert
--9223372036854775808 ≤ ts->tv_sec + (long)(ts->tv_nsec / 1000000000);
+assert -9223372036854775808 ≤ ts->tv_sec + (long)(ts->tv_nsec / 1000000000);
 stack: UTI_NormaliseTimespec :: util.c:194 <-
        UTI_AddDoubleToTimespec :: local.c:391 <-
        LCL_CookTime :: local.c:472 <-
@@ -3443,14 +3440,14 @@ stack: UTI_DiffTimespecsToDouble :: util.c:632 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:226:[eva:alarm] warning: out of bounds read. assert \valid_read(src + i);
+FRAMAC_SHARE/libc/string.c:212:[eva:alarm] warning: out of bounds read. assert \valid_read(src + i);
 stack: strcpy :: reference.c:651 <-
        get_tz_leap :: reference.c:248 <-
        REF_Initialise :: test/unit/ntp_core.c:325 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:227:[eva:alarm] warning: out of bounds read. assert \valid_read(src + i);
+FRAMAC_SHARE/libc/string.c:213:[eva:alarm] warning: out of bounds read. assert \valid_read(src + i);
 stack: strcpy :: reference.c:651 <-
        get_tz_leap :: reference.c:248 <-
        REF_Initialise :: test/unit/ntp_core.c:325 <-
@@ -3566,7 +3563,7 @@ stack: fopen :: keys.c:204 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/stdio.c:178:[eva:alarm] warning: out of bounds write. assert \valid(s + i);
+FRAMAC_SHARE/libc/stdio.c:164:[eva:alarm] warning: out of bounds write. assert \valid(s + i);
 stack: fgets :: keys.c:210 <-
        KEY_Reload :: keys.c:80 <-
        KEY_Initialise :: test/unit/ntp_core.c:328 <-
@@ -3727,7 +3724,7 @@ stack: strlen :: keys.c:139 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:155:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(s1 + i);
+FRAMAC_SHARE/libc/string.c:141:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(s1 + i);
 stack: strncmp :: keys.c:142 <-
        decode_password :: keys.c:228 <-
        KEY_Reload :: keys.c:80 <-
@@ -3735,7 +3732,7 @@ stack: strncmp :: keys.c:142 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:156:[eva:alarm] warning: accessing uninitialized left-value.
+FRAMAC_SHARE/libc/string.c:142:[eva:alarm] warning: accessing uninitialized left-value.
 assert \initialized((unsigned char *)s1 + i);
 stack: strncmp :: keys.c:142 <-
        decode_password :: keys.c:228 <-
@@ -7781,7 +7778,7 @@ stack: strlen :: reference.c:341 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:226:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(src + i);
+FRAMAC_SHARE/libc/string.c:212:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(src + i);
 stack: strcpy :: reference.c:347 <-
        update_drift_file :: reference.c:1083 <-
        REF_SetReference :: sources.c:1094 <-
@@ -7793,7 +7790,7 @@ stack: strcpy :: reference.c:347 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:227:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(src + i);
+FRAMAC_SHARE/libc/string.c:213:[eva:alarm] warning: accessing uninitialized left-value. assert \initialized(src + i);
 stack: strcpy :: reference.c:347 <-
        update_drift_file :: reference.c:1083 <-
        REF_SetReference :: sources.c:1094 <-
@@ -7805,7 +7802,7 @@ stack: strcpy :: reference.c:347 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:227:[eva:alarm] warning: out of bounds write. assert \valid(dest + i);
+FRAMAC_SHARE/libc/string.c:213:[eva:alarm] warning: out of bounds write. assert \valid(dest + i);
 stack: strcpy :: reference.c:347 <-
        update_drift_file :: reference.c:1083 <-
        REF_SetReference :: sources.c:1094 <-
@@ -7817,7 +7814,7 @@ stack: strcpy :: reference.c:347 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:228:[eva:alarm] warning: out of bounds write. assert \valid(dest + i);
+FRAMAC_SHARE/libc/string.c:214:[eva:alarm] warning: out of bounds write. assert \valid(dest + i);
 stack: strcpy :: reference.c:347 <-
        update_drift_file :: reference.c:1083 <-
        REF_SetReference :: sources.c:1094 <-
@@ -7829,8 +7826,8 @@ stack: strcpy :: reference.c:347 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:201:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:201 <-
+FRAMAC_SHARE/libc/string.c:187:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:187 <-
        strcat :: reference.c:348 <-
        update_drift_file :: reference.c:1083 <-
        REF_SetReference :: sources.c:1094 <-
@@ -7842,7 +7839,7 @@ stack: strlen :: FRAMAC_SHARE/libc/string.c:201 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:203:[eva:alarm] warning: out of bounds write. assert \valid(dest + (size_t)(n + i));
+FRAMAC_SHARE/libc/string.c:189:[eva:alarm] warning: out of bounds write. assert \valid(dest + (size_t)(n + i));
 stack: strcat :: reference.c:348 <-
        update_drift_file :: reference.c:1083 <-
        REF_SetReference :: sources.c:1094 <-
@@ -7854,7 +7851,7 @@ stack: strcat :: reference.c:348 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:202:[eva:alarm] warning: out of bounds read. assert \valid_read(src + i);
+FRAMAC_SHARE/libc/string.c:188:[eva:alarm] warning: out of bounds read. assert \valid_read(src + i);
 stack: strcat :: reference.c:348 <-
        update_drift_file :: reference.c:1083 <-
        REF_SetReference :: sources.c:1094 <-
@@ -7866,7 +7863,7 @@ stack: strcat :: reference.c:348 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:205:[eva:alarm] warning: out of bounds write. assert \valid(dest + (size_t)(n + i));
+FRAMAC_SHARE/libc/string.c:191:[eva:alarm] warning: out of bounds write. assert \valid(dest + (size_t)(n + i));
 stack: strcat :: reference.c:348 <-
        update_drift_file :: reference.c:1083 <-
        REF_SetReference :: sources.c:1094 <-
@@ -8434,8 +8431,8 @@ stack: strlen :: reference.c:341 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:201:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:201 <-
+FRAMAC_SHARE/libc/string.c:187:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:187 <-
        strcat :: reference.c:348 <-
        update_drift_file :: reference.c:1083 <-
        REF_SetReference :: sources.c:1094 <-
@@ -8833,8 +8830,8 @@ stack: strlen :: reference.c:341 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:201:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:201 <-
+FRAMAC_SHARE/libc/string.c:187:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:187 <-
        strcat :: reference.c:348 <-
        update_drift_file :: reference.c:1083 <-
        REF_SetReference :: sources.c:1094 <-
@@ -9194,8 +9191,8 @@ stack: strlen :: reference.c:341 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:201:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:201 <-
+FRAMAC_SHARE/libc/string.c:187:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:187 <-
        strcat :: reference.c:348 <-
        update_drift_file :: reference.c:1083 <-
        REF_SetReference :: sources.c:1094 <-
@@ -9419,8 +9416,8 @@ stack: strlen :: reference.c:341 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:201:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:201 <-
+FRAMAC_SHARE/libc/string.c:187:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:187 <-
        strcat :: reference.c:348 <-
        update_drift_file :: reference.c:1083 <-
        REF_SetReference :: sources.c:1094 <-
@@ -9624,8 +9621,8 @@ stack: strlen :: reference.c:341 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:201:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:201 <-
+FRAMAC_SHARE/libc/string.c:187:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:187 <-
        strcat :: reference.c:348 <-
        update_drift_file :: reference.c:1083 <-
        REF_SetReference :: sources.c:1094 <-
@@ -10480,8 +10477,8 @@ stack: strlen :: reference.c:341 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:201:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:201 <-
+FRAMAC_SHARE/libc/string.c:187:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:187 <-
        strcat :: reference.c:348 <-
        update_drift_file :: reference.c:1083 <-
        REF_SetReference :: sources.c:1094 <-
@@ -10911,8 +10908,8 @@ stack: strlen :: reference.c:341 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:201:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:201 <-
+FRAMAC_SHARE/libc/string.c:187:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:187 <-
        strcat :: reference.c:348 <-
        update_drift_file :: reference.c:1083 <-
        REF_SetReference :: sources.c:1094 <-
@@ -11182,8 +11179,8 @@ stack: strlen :: reference.c:341 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:201:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:201 <-
+FRAMAC_SHARE/libc/string.c:187:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:187 <-
        strcat :: reference.c:348 <-
        update_drift_file :: reference.c:1083 <-
        REF_SetReference :: sources.c:1094 <-
@@ -11392,8 +11389,8 @@ stack: strlen :: reference.c:341 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:201:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:201 <-
+FRAMAC_SHARE/libc/string.c:187:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:187 <-
        strcat :: reference.c:348 <-
        update_drift_file :: reference.c:1083 <-
        REF_SetReference :: sources.c:1094 <-
@@ -11608,8 +11605,8 @@ stack: strlen :: reference.c:341 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:201:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:201 <-
+FRAMAC_SHARE/libc/string.c:187:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:187 <-
        strcat :: reference.c:348 <-
        update_drift_file :: reference.c:1083 <-
        REF_SetReference :: sources.c:1094 <-
@@ -11853,8 +11850,8 @@ stack: strlen :: reference.c:341 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:201:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:201 <-
+FRAMAC_SHARE/libc/string.c:187:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:187 <-
        strcat :: reference.c:348 <-
        update_drift_file :: reference.c:1083 <-
        REF_SetReference :: sources.c:1094 <-
@@ -12243,8 +12240,8 @@ stack: strlen :: reference.c:341 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:201:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:201 <-
+FRAMAC_SHARE/libc/string.c:187:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:187 <-
        strcat :: reference.c:348 <-
        update_drift_file :: reference.c:1083 <-
        REF_SetReference :: sources.c:1094 <-
@@ -12427,8 +12424,8 @@ stack: strlen :: reference.c:341 <-
        test_unit :: test/unit/test.c:70 <-
        main :: fc_stubs.c:37 <-
        eva_main
-FRAMAC_SHARE/libc/string.c:201:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
-stack: strlen :: FRAMAC_SHARE/libc/string.c:201 <-
+FRAMAC_SHARE/libc/string.c:187:[eva:alarm] warning: function strlen: precondition 'valid_string_s' got status unknown.
+stack: strlen :: FRAMAC_SHARE/libc/string.c:187 <-
        strcat :: reference.c:348 <-
        update_drift_file :: reference.c:289 <-
        REF_Finalise :: test/unit/ntp_core.c:493 <-

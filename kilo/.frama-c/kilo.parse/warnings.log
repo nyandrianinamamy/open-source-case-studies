@@ -1,23 +1,23 @@
-fc_stubs.c:10:[kernel] warning: found two contracts (old location: FRAMAC_SHARE/libc/stdio.h:654). Merging them
-FRAMAC_SHARE/libc/stdio.h:654:[kernel] warning: location *(*lineptr + (0 .. *n - 1)) is not present in all assigns clauses
-FRAMAC_SHARE/libc/stdio.h:654:[kernel] warning: incompatible from
-clauses (FRAMAC_SHARE/libc/stdio.h:654:'assigns *n \from *stream;' and
+fc_stubs.c:10:[kernel] warning: found two contracts (old location: FRAMAC_SHARE/libc/stdio.h:640). Merging them
+FRAMAC_SHARE/libc/stdio.h:640:[kernel] warning: location *(*lineptr + (0 .. *n - 1)) is not present in all assigns clauses
+FRAMAC_SHARE/libc/stdio.h:640:[kernel] warning: incompatible from
+clauses (FRAMAC_SHARE/libc/stdio.h:640:'assigns *n \from *stream;' and
 fc_stubs.c:16:'assigns *n
                  \from (indirect: lineptr), (indirect: n), (indirect: delim),
                        (indirect: stream), (indirect: *lineptr),
                        (indirect: *n), (indirect: *stream),
                        (indirect: *(*lineptr + (0 ..)));').
 Keeping only the first one.
-FRAMAC_SHARE/libc/stdio.h:654:[kernel] warning: incompatible from
-clauses (FRAMAC_SHARE/libc/stdio.h:654:'assigns *stream \from *stream;' and
+FRAMAC_SHARE/libc/stdio.h:640:[kernel] warning: incompatible from
+clauses (FRAMAC_SHARE/libc/stdio.h:640:'assigns *stream \from *stream;' and
 fc_stubs.c:16:'assigns *stream
                  \from (indirect: lineptr), (indirect: n), (indirect: delim),
                        (indirect: stream), (indirect: *lineptr),
                        (indirect: *n), (indirect: *stream),
                        (indirect: *(*lineptr + (0 ..)));').
 Keeping only the first one.
-FRAMAC_SHARE/libc/stdio.h:654:[kernel] warning: incompatible from
-clauses (FRAMAC_SHARE/libc/stdio.h:654:'assigns \result \from *stream;' and
+FRAMAC_SHARE/libc/stdio.h:640:[kernel] warning: incompatible from
+clauses (FRAMAC_SHARE/libc/stdio.h:640:'assigns \result \from *stream;' and
 fc_stubs.c:16:'assigns \result
                  \from (indirect: lineptr), (indirect: n), (indirect: delim),
                        (indirect: stream), (indirect: *lineptr),
@@ -26,4 +26,4 @@ fc_stubs.c:16:'assigns \result
 Keeping only the first one.
 fc_stubs.c:16:[kernel] warning: location *lineptr is not present in all assigns clauses
 fc_stubs.c:16:[kernel] warning: location *(*lineptr + (0 ..)) is not present in all assigns clauses
-fc_stubs.c:27:[kernel] warning: found two contracts (old location: FRAMAC_SHARE/libc/stdio.h:654). Merging them
+fc_stubs.c:27:[kernel] warning: found two contracts (old location: FRAMAC_SHARE/libc/stdio.h:640). Merging them

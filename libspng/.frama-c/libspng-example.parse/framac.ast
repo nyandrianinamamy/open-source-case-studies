@@ -3425,7 +3425,7 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
   if (apply_gamma) {
     float max;
     uint32_t lut_entries;
-    int tmp_4;
+    int tmp_2;
     float file_gamma = (float)ctx->gama / 100000.0f;
     if (fmt == SPNG_FMT_RGBA8) {
       lut_entries = (uint32_t)256;
@@ -3445,9 +3445,8 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
     }
     float screen_gamma = 2.2f;
     float exponent = file_gamma * screen_gamma;
-    if (sizeof(exponent) == sizeof(float)) tmp_4 = __fc_fpclassifyf(exponent);
-    else tmp_4 = __fc_fpclassify((double)exponent);
-    if (2 == tmp_4) {
+    tmp_2 = __fc_fpclassifyf(exponent);
+    if (2 == tmp_2) {
       ret = SPNG_EGAMA;
       goto decode_err;
     }
@@ -3455,12 +3454,12 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
     i = (uint32_t)0;
     while (i < lut_entries) {
       {
-        double tmp_5;
-        double tmp_6;
-        tmp_5 = pow((double)((float)i / max),(double)exponent);
-        float c = (float)(tmp_5 * (double)max);
-        tmp_6 = fmin((double)c,(double)max);
-        c = (float)tmp_6;
+        double tmp_3;
+        double tmp_4;
+        tmp_3 = pow((double)((float)i / max),(double)exponent);
+        float c = (float)(tmp_3 * (double)max);
+        tmp_4 = fmin((double)c,(double)max);
+        c = (float)tmp_4;
         *(gamma_lut + i) = (uint16_t)c;
       }
       i ++;

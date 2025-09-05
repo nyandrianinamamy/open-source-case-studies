@@ -27,8 +27,7 @@ void f1(int argc)
   {
     unsigned long __lengthof_test;
     int tmp;
-    /*@
-    assert alloca_bounds: 0 < sizeof(char) * argc ≤ 18446744073709551615;
+    /*@ assert alloca_bounds: 0 < sizeof(char) * argc ≤ 18446744073709551615;
      */
     ;
     __lengthof_test = (unsigned long)argc;

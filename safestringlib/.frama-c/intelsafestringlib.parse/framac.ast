@@ -3095,8 +3095,7 @@ unsigned int check_integer_format(char const format)
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))), (indirect: param0);
@@ -3133,8 +3132,7 @@ int snprintf_s_i(char *dest_0, rsize_t dmax, char const *format, int a)
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))), (indirect: param0);
@@ -3172,8 +3170,7 @@ int snprintf_s_l(char *dest_0, rsize_t dmax, char const *format, long a)
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -3222,8 +3219,7 @@ int snprintf_s_si(char *dest_0, rsize_t dmax, char const *format, char *s,
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),

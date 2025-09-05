@@ -160,8 +160,7 @@ static int _extract_complex_tag(u8 const *buf, u16 len, u32 *tag_num,
   rbytes = (u16)0;
   /*@ loop invariant 0 ≤ rbytes ≤ len;
       loop invariant t ≤ (1 << (u32)(7 * rbytes)) - 1;
-      loop invariant
-        ∀ ℤ x; 0 ≤ x < rbytes ⇒ (*(buf + x) & 0x80) ≢ 0;
+      loop invariant ∀ ℤ x; 0 ≤ x < rbytes ⇒ (*(buf + x) & 0x80) ≢ 0;
       loop assigns rbytes, t;
       loop variant len - rbytes;
   */
@@ -365,8 +364,7 @@ static int get_length(u8 const *buf, u16 len, u16 *adv_len, u16 *eaten)
     ensures \result < 0 ∨ \result ≡ 0;
     ensures \result ≡ 0 ⇒ 1 < *\old(parsed) ≤ \old(len);
     ensures \result ≡ 0 ⇒ *\old(content_len) ≤ \old(len);
-    ensures
-      \result ≡ 0 ⇒ *\old(content_len) + *\old(parsed) ≤ \old(len);
+    ensures \result ≡ 0 ⇒ *\old(content_len) + *\old(parsed) ≤ \old(len);
     ensures \old(len) ≡ 0 ⇒ \result < 0;
     ensures \old(buf) ≡ \null ⇒ \result < 0;
     assigns *parsed, *content_len;
@@ -481,8 +479,7 @@ static int parse_explicit_id_len(u8 const *buf, u16 len, u32 exp_ext_type,
     ensures \result ≡ 0 ⇒ *\old(eaten) > 0;
     ensures
       \old(len) > 0 ∧ \old(buf) ≢ \null ∧ \result ≢ 0 ⇒
-      (∀ ℤ x;
-         0 ≤ x < \min(\old(len), 4) ⇒ (*(\old(buf) + x) & 0x80) ≢ 0);
+      (∀ ℤ x; 0 ≤ x < \min(\old(len), 4) ⇒ (*(\old(buf) + x) & 0x80) ≢ 0);
     ensures \old(len) ≡ 0 ⇒ \result < 0;
     assigns *arc_val, *eaten;
  */
@@ -503,8 +500,7 @@ static int _parse_arc(u8 const *buf, u16 len, u32 *arc_val, u16 *eaten)
   rbytes = (u16)0;
   /*@ loop invariant 0 ≤ rbytes ≤ len;
       loop invariant av ≤ (1 << (u32)(7 * rbytes)) - 1;
-      loop invariant
-        ∀ ℤ x; 0 ≤ x < rbytes ⇒ (*(buf + x) & 0x80) ≢ 0;
+      loop invariant ∀ ℤ x; 0 ≤ x < rbytes ⇒ (*(buf + x) & 0x80) ≢ 0;
       loop assigns rbytes, av;
       loop variant len - rbytes;
   */
@@ -2789,8 +2785,7 @@ static _curve const *find_curve_by_oid(u8 const *buf, u16 len)
   else 
     if ((int)len == 0) _LOR: goto out;
   k = (u8)0;
-  /*@ loop invariant
-        0 ≤ k ≤ sizeof(known_curves) / sizeof(known_curves[0]);
+  /*@ loop invariant 0 ≤ k ≤ sizeof(known_curves) / sizeof(known_curves[0]);
       loop invariant found ≡ (_curve const *)0;
       loop assigns cur, found, k;
       loop variant sizeof(known_curves) / sizeof(known_curves[0]) - k;
@@ -2973,8 +2968,7 @@ static int parse_algoid_params_generic(u8 const *buf, u16 len,
     ensures \old(param) ≡ \null ⇒ \result < 0;
     ensures \result < 0 ∨ \result ≡ 0;
     ensures
-      \result ≡ 0 ⇒
-      \old(param)->null_param ≡ (u8 const *)null_encoded_val;
+      \result ≡ 0 ⇒ \old(param)->null_param ≡ (u8 const *)null_encoded_val;
     assigns param->null_param;
  */
 static int parse_algoid_params_rsa(u8 const *buf, u16 len, alg_param *param)
@@ -3125,8 +3119,7 @@ static _alg_id const *find_alg_by_oid(u8 const *buf, u16 len)
     requires \valid(alg);
     requires \separated(buf, alg, param, eaten);
     ensures \result < 0 ∨ \result ≡ 0;
-    ensures
-      \result ≡ 0 ⇒ (∃ unsigned char x; *\old(alg) ≡ known_algs[x]);
+    ensures \result ≡ 0 ⇒ (∃ unsigned char x; *\old(alg) ≡ known_algs[x]);
     ensures \result ≡ 0 ⇒ 1 < *\old(eaten) ≤ \old(len);
     ensures \old(len) ≡ 0 ⇒ \result < 0;
     ensures \old(buf) ≡ \null ⇒ \result < 0;
@@ -3528,8 +3521,7 @@ static int check_bmp_string(u8 const *buf, u16 len)
     requires len > 0 ∧ buf ≢ \null ⇒ \valid_read(buf + (0 .. len - 1));
     ensures \result < 0 ∨ \result ≡ 0;
     ensures
-      \result ≡ 0 ⇒
-      \old(len) ≥ 2 ∧ \old(lb) ≤ \old(len) - 2 ≤ \old(ub);
+      \result ≡ 0 ⇒ \old(len) ≥ 2 ∧ \old(lb) ≤ \old(len) - 2 ≤ \old(ub);
     ensures \old(len) ≡ 0 ⇒ \result < 0;
     ensures \old(buf) ≡ \null ⇒ \result < 0;
     assigns \nothing;
@@ -3594,8 +3586,7 @@ static int parse_directory_string(u8 const *buf, u16 len, u16 lb, u16 ub)
     requires len > 0 ∧ buf ≢ \null ⇒ \valid_read(buf + (0 .. len - 1));
     ensures \result < 0 ∨ \result ≡ 0;
     ensures
-      \result ≡ 0 ⇒
-      \old(len) ≥ 2 ∧ \old(lb) ≤ \old(len) - 2 ≤ \old(ub);
+      \result ≡ 0 ⇒ \old(len) ≥ 2 ∧ \old(lb) ≤ \old(len) - 2 ≤ \old(ub);
     ensures \old(len) ≡ 0 ⇒ \result < 0;
     ensures \old(buf) ≡ \null ⇒ \result < 0;
     assigns \nothing;
@@ -3682,8 +3673,7 @@ static int check_ia5_string(u8 const *buf, u16 len)
     requires len > 0 ∧ buf ≢ \null ⇒ \valid_read(buf + (0 .. len - 1));
     ensures \result < 0 ∨ \result ≡ 0;
     ensures
-      \result ≡ 0 ⇒
-      \old(len) ≥ 2 ∧ \old(lb) ≤ \old(len) - 2 ≤ \old(ub);
+      \result ≡ 0 ⇒ \old(len) ≥ 2 ∧ \old(lb) ≤ \old(len) - 2 ≤ \old(ub);
     ensures \old(len) ≡ 0 ⇒ \result < 0;
     ensures \old(buf) ≡ \null ⇒ \result < 0;
     assigns \nothing;
@@ -5247,8 +5237,7 @@ static int parse_nine_bit_named_bit_list(u8 const *buf, u16 len, u16 *val)
     k = (u8)0;
     /*@ loop invariant 0 ≤ k ≤ 8;
         loop assigns k, *val;
-        loop variant 8 - k;
-    */
+        loop variant 8 - k; */
     while ((int)k < 8) {
       *val = (u16)((int)*val | ((((int)*(buf + 1) >> (int)k) & 0x1) << (
                                 7 - (int)k)));
@@ -5268,8 +5257,7 @@ static int parse_nine_bit_named_bit_list(u8 const *buf, u16 len, u16 *val)
     k = (u8)0;
     /*@ loop invariant 0 ≤ k ≤ 8;
         loop assigns k, *val;
-        loop variant 8 - k;
-    */
+        loop variant 8 - k; */
     while ((int)k < 8) {
       *val = (u16)((int)*val | ((((int)*(buf + 1) >> (int)k) & 0x1) << (
                                 7 - (int)k)));
@@ -7652,8 +7640,7 @@ static int parse_x509_signatureValue(u8 const *buf, u16 len,
     ret = -9080;
     goto out;
   }
-  /*@ assert sig_alg->parse_sig ∈ {&parse_sig_ecdsa, &parse_sig_generic};
-   */
+  /*@ assert sig_alg->parse_sig ∈ {&parse_sig_ecdsa, &parse_sig_generic}; */
   ;
   /*@ calls parse_sig_ecdsa, parse_sig_generic; */
   ret = (*(sig_alg->parse_sig))(buf,len,eaten);

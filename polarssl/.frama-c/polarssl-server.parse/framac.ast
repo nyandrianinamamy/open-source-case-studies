@@ -1225,8 +1225,7 @@ static void aes_gen_tables(void)
     requires \valid_read(key + (0 .. 31));
     requires keysize ≡ 128 ∨ keysize ≡ 192 ∨ keysize ≡ 256;
     ensures \initialized(&\old(ctx)->rk);
-    ensures
-      \old(ctx)->nr ≡ 10 ∨ \old(ctx)->nr ≡ 12 ∨ \old(ctx)->nr ≡ 14;
+    ensures \old(ctx)->nr ≡ 10 ∨ \old(ctx)->nr ≡ 12 ∨ \old(ctx)->nr ≡ 14;
     assigns ctx->nr, ctx->rk, _state;
     assigns ctx->nr \from keysize;
     assigns ctx->rk \from _state;
@@ -1321,8 +1320,7 @@ int aes_setkey_enc(aes_context *ctx, unsigned char const *key,
     requires \valid_read(key + (0 .. 31));
     requires keysize ≡ 128 ∨ keysize ≡ 192 ∨ keysize ≡ 256;
     ensures \initialized(&\old(ctx)->rk);
-    ensures
-      \old(ctx)->nr ≡ 10 ∨ \old(ctx)->nr ≡ 12 ∨ \old(ctx)->nr ≡ 14;
+    ensures \old(ctx)->nr ≡ 10 ∨ \old(ctx)->nr ≡ 12 ∨ \old(ctx)->nr ≡ 14;
     assigns ctx->nr, ctx->rk, _state;
     assigns ctx->nr \from keysize;
     assigns ctx->rk \from _state;
@@ -21867,8 +21865,7 @@ char *debug_fmt(char const *format, void * const *__va_params)
     requires valid_read_string(param2);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -21898,8 +21895,7 @@ void debug_print_msg(ssl_context const *ssl, int level, char const *file,
     requires valid_read_string(param2);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -21931,8 +21927,7 @@ void debug_print_ret(ssl_context const *ssl, int level, char const *file,
     requires valid_read_string(param2);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -21948,8 +21943,7 @@ int snprintf_va_3(char * restrict s, size_t n, char const * restrict format,
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -21964,8 +21958,7 @@ int snprintf_va_4(char * restrict s, size_t n, char const * restrict format,
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))), (indirect: param0);
@@ -22009,8 +22002,7 @@ void debug_print_buf(ssl_context const *ssl, int level, char const *file,
     requires valid_read_string(param2);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -22027,8 +22019,7 @@ int snprintf_va_6(char * restrict s, size_t n, char const * restrict format,
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -22042,8 +22033,7 @@ int snprintf_va_7(char * restrict s, size_t n, char const * restrict format,
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))), (indirect: param0);
@@ -22056,8 +22046,7 @@ int snprintf_va_8(char * restrict s, size_t n, char const * restrict format,
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -22139,8 +22128,7 @@ void debug_print_mpi(ssl_context const *ssl, int level, char const *file,
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -22157,8 +22145,7 @@ int snprintf_va_10(char * restrict s, size_t n, char const * restrict format,
     requires valid_read_string(param4);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -41142,8 +41129,7 @@ int x509parse_dhmfile(dhm_context *dhm, char const *path)
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -41153,8 +41139,7 @@ int snprintf_va_12(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -41164,8 +41149,7 @@ int snprintf_va_13(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -41175,8 +41159,7 @@ int snprintf_va_14(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -41186,8 +41169,7 @@ int snprintf_va_15(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -41197,8 +41179,7 @@ int snprintf_va_16(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -41208,8 +41189,7 @@ int snprintf_va_17(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -41219,8 +41199,7 @@ int snprintf_va_18(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))), (indirect: param0);
@@ -41232,8 +41211,7 @@ int snprintf_va_19(char * restrict s, size_t n, char const * restrict format,
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -41243,8 +41221,7 @@ int snprintf_va_20(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))), (indirect: param0);
@@ -41256,8 +41233,7 @@ int snprintf_va_21(char * restrict s, size_t n, char const * restrict format,
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -41268,8 +41244,7 @@ int snprintf_va_22(char * restrict s, size_t n, char const * restrict format);
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -41428,8 +41403,7 @@ int x509parse_dn_gets(char *buf, size_t size, x509_name const *dn)
 /*@ requires valid_read_string(param1);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -41443,8 +41417,7 @@ int snprintf_va_24(char * restrict s, size_t n, char const * restrict format,
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -41511,8 +41484,7 @@ int x509parse_serial_gets(char *buf, size_t size, x509_buf const *serial)
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -41527,8 +41499,7 @@ int snprintf_va_26(char * restrict s, size_t n, char const * restrict format,
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -41542,8 +41513,7 @@ int snprintf_va_27(char * restrict s, size_t n, char const * restrict format,
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -41557,8 +41527,7 @@ int snprintf_va_28(char * restrict s, size_t n, char const * restrict format,
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -41572,8 +41541,7 @@ int snprintf_va_29(char * restrict s, size_t n, char const * restrict format,
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -41591,8 +41559,7 @@ int snprintf_va_30(char * restrict s, size_t n, char const * restrict format,
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -41610,8 +41577,7 @@ int snprintf_va_31(char * restrict s, size_t n, char const * restrict format,
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -41624,8 +41590,7 @@ int snprintf_va_32(char * restrict s, size_t n, char const * restrict format,
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -41635,8 +41600,7 @@ int snprintf_va_33(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -41646,8 +41610,7 @@ int snprintf_va_34(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -41657,8 +41620,7 @@ int snprintf_va_35(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -41668,8 +41630,7 @@ int snprintf_va_36(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -41679,8 +41640,7 @@ int snprintf_va_37(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -41690,8 +41650,7 @@ int snprintf_va_38(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -41701,8 +41660,7 @@ int snprintf_va_39(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -41712,8 +41670,7 @@ int snprintf_va_40(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -41724,8 +41681,7 @@ int snprintf_va_41(char * restrict s, size_t n, char const * restrict format);
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -42008,8 +41964,7 @@ char const *x509_oid_get_description(x509_buf *oid)
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -42022,8 +41977,7 @@ int snprintf_va_43(char * restrict s, size_t n, char const * restrict format,
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))), (indirect: param0);
@@ -42087,8 +42041,7 @@ int x509_oid_get_numeric_string(char *buf, size_t size, x509_buf *oid)
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -42103,8 +42056,7 @@ int snprintf_va_45(char * restrict s, size_t n, char const * restrict format,
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -42118,8 +42070,7 @@ int snprintf_va_46(char * restrict s, size_t n, char const * restrict format,
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -42137,8 +42088,7 @@ int snprintf_va_47(char * restrict s, size_t n, char const * restrict format,
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -42156,8 +42106,7 @@ int snprintf_va_48(char * restrict s, size_t n, char const * restrict format,
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -42171,8 +42120,7 @@ int snprintf_va_49(char * restrict s, size_t n, char const * restrict format,
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -42185,8 +42133,7 @@ int snprintf_va_50(char * restrict s, size_t n, char const * restrict format,
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -42203,8 +42150,7 @@ int snprintf_va_51(char * restrict s, size_t n, char const * restrict format,
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -42217,8 +42163,7 @@ int snprintf_va_52(char * restrict s, size_t n, char const * restrict format,
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -42228,8 +42173,7 @@ int snprintf_va_53(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -42239,8 +42183,7 @@ int snprintf_va_54(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -42250,8 +42193,7 @@ int snprintf_va_55(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -42261,8 +42203,7 @@ int snprintf_va_56(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -42272,8 +42213,7 @@ int snprintf_va_57(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -42283,8 +42223,7 @@ int snprintf_va_58(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -42294,8 +42233,7 @@ int snprintf_va_59(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -42305,8 +42243,7 @@ int snprintf_va_60(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))
@@ -42316,8 +42253,7 @@ int snprintf_va_61(char * restrict s, size_t n, char const * restrict format);
 
 /*@ requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: n), (indirect: *(format + (0 ..)));
     assigns *(s + (0 ..))

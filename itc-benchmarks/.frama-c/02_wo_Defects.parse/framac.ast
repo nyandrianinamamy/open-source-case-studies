@@ -4825,8 +4825,7 @@ void memory_allocation_failure_007(void)
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
@@ -7992,8 +7991,7 @@ void uninit_memory_access_010(void)
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);
     requires
-      \valid(s + (0 .. n - 1)) ∨
-      \valid(s + (0 .. format_length(format) - 1));
+      \valid(s + (0 .. n - 1)) ∨ \valid(s + (0 .. format_length(format) - 1));
     assigns \result, *(s + (0 ..));
     assigns \result
       \from (indirect: n), (indirect: *(format + (0 ..))),
