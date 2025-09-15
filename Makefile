@@ -86,6 +86,7 @@ TARGETS=\
   qlz \
   safestringlib \
   semver \
+  snprintf \
   solitaire \
   stmr \
   tsvc \

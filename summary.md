@@ -34,6 +34,7 @@
 |qlz|Fast compression library|http://www.quicklz.com|4|197|7|963|HAS_DYN_ALLOC(tests), NO_RECURSION, NO_FLOAT|library|
 |safestringlib|Library for handling strings securely|https://github.com/intel/safestringlib|1|533|148|14922|NO_DYN_ALLOC, NO_RECURSION, NO_FLOAT|library|
 |semver|Parser and renderer for semantic versioning 2.0.0|https://github.com/h2non/semver.c|1|97|4|1034|HAS_DYN_ALLOC, NO_RECURSION, NO_FLOAT|executable|
+|snprintf|Lightweight implementation of snprintf|https://github.com/mirtoto/snprintf|66|3|4|1068|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|library|
 |solitaire|Implementation of Bruce Schneier's card cipher, Solitaire (aka Pontifex)|http://www.ciphergoth.org/crypto/solitaire/|1|173|1|263|NO_DYN_ALLOC, NO_RECURSION, NO_FLOAT|executable|
 |stmr|Martin Porter's Stemming algorithm as a C library|https://github.com/wooorm/stmr.c|1|74|3|497|HAS_DYN_ALLOC, HAS_RECURSION, NO_FLOAT|library|
 |tsvc|Test suite for vectorizing compilers|http://polaris.cs.uiuc.edu/~maleki1/TSVC.tar.gz|1|49|2|4041|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|test suite|
