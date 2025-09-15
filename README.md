@@ -221,6 +221,7 @@ when available. We also summarize the license of each directory below.
 - `qlz`: GPL
 - `safestringlib`: MIT
 - `semver`: MIT
+- `snprintf`: GPL, see `LICENSE`
 - `solitaire`: public domain, see `solitaire.c`
 - `stmr`: MIT
 - `tsvc`: MIT, see `license.txt`
