@@ -1,4 +1,4 @@
-[metrics] Eva coverage statistics
+[metrics:eva:coverage] Eva coverage statistics
 =======================
 Syntactically reachable functions = 95 (out of 199)
 Semantically reached functions = 65
@@ -17,7 +17,7 @@ Unreached functions (30) =
   <net.c>: redisContextSetTimeout; redisNetRead; redisNetWrite;
     redisSetReuseAddr; 
   <sds.h>: sdslen; sdslen_0; sdslen_1;
-[metrics] References to non-analyzed functions
+[metrics:eva:unreached] References to non-analyzed functions
 ------------------------------------
 Function redisConnectWithOptions calls redisContextSetTimeout (at hiredis.c:771)
 Function redisCreateSocket calls redisSetReuseAddr (at net.c:124)
@@ -25,7 +25,7 @@ Initializer of redisContextDefaultFuncs references redisAsyncRead (at hiredis.c:
 Initializer of redisContextDefaultFuncs references redisAsyncWrite (at hiredis.c:50)
 Initializer of redisContextDefaultFuncs references redisNetRead (at hiredis.c:51)
 Initializer of redisContextDefaultFuncs references redisNetWrite (at hiredis.c:52)
-[metrics] Statements analyzed by Eva
+[metrics:eva:reached-stmts] Statements analyzed by Eva
 --------------------------
 1914 stmts in analyzed functions, 1782 stmts analyzed (93.1%)
 __redisReaderSetError: 21 stmts out of 21 (100.0%)

@@ -1,4 +1,4 @@
-[metrics] Eva coverage statistics
+[metrics:eva:coverage] Eva coverage statistics
 =======================
 Syntactically reachable functions = 317 (out of 466)
 Semantically reached functions = 133
@@ -67,7 +67,7 @@ Unreached functions (184) =
     x509_hash; x509parse_crt_der; x509parse_crt_der_core; x509parse_revoked;
     x509parse_time_expired; x509parse_verify; x509parse_verifycrl; 
   <programs/ssl/ssl_server.c>: my_debug;
-[metrics] References to non-analyzed functions
+[metrics:eva:unreached] References to non-analyzed functions
 ------------------------------------
 Function aes_setkey_enc calls aes_gen_tables (at library/aes.c:450)
 Function camellia_crypt_cbc calls camellia_crypt_ecb (at library/camellia.c:563)
@@ -262,7 +262,7 @@ Initializer of sha512_info references sha512_hmac_reset_wrap (at library/md_wrap
 Initializer of sha512_info references sha512_hmac_wrap (at library/md_wrap.c:708)
 Initializer of sha512_info references sha512_ctx_alloc (at library/md_wrap.c:709)
 Initializer of sha512_info references sha512_ctx_free (at library/md_wrap.c:710)
-[metrics] Statements analyzed by Eva
+[metrics:eva:reached-stmts] Statements analyzed by Eva
 --------------------------
 5722 stmts in analyzed functions, 2836 stmts analyzed (49.6%)
 arc4_setup: 26 stmts out of 26 (100.0%)

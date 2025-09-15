@@ -1,4 +1,4 @@
-[metrics] Eva coverage statistics
+[metrics:eva:coverage] Eva coverage statistics
 =======================
 Syntactically reachable functions = 8 (out of 10)
 Semantically reached functions = 5
@@ -6,13 +6,13 @@ Coverage estimation = 62.5%
 
 Unreached functions (3) =
   <src/stack.c>: stk_free_alt; stk_num_elements; stk_pop;
-[metrics] References to non-analyzed functions
+[metrics:eva:unreached] References to non-analyzed functions
 ------------------------------------
 Function main calls stk_pop (at examples/stack_example.c:63)
 Function main calls stk_num_elements (at examples/stack_example.c:65)
 Function main calls stk_num_elements (at examples/stack_example.c:72)
 Function main calls stk_free_alt (at examples/stack_example.c:74)
-[metrics] Statements analyzed by Eva
+[metrics:eva:reached-stmts] Statements analyzed by Eva
 --------------------------
 90 stmts in analyzed functions, 54 stmts analyzed (60.0%)
 stk_first_node: 2 stmts out of 2 (100.0%)

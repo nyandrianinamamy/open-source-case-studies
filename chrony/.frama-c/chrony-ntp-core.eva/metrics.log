@@ -1,4 +1,4 @@
-[metrics] Eva coverage statistics
+[metrics:eva:coverage] Eva coverage statistics
 =======================
 Syntactically reachable functions = 385 (out of 541)
 Semantically reached functions = 333
@@ -27,7 +27,7 @@ Unreached functions (52) =
   <stubs.c>: NSD_GetAuthDelay; NSD_SignAndSendPacket; 
   <util.c>: UTI_CompareIPs; UTI_IPAndPortToSockaddr; UTI_IPToHash;
     UTI_RefidToString; UTI_SockaddrToIPAndPort; UTI_TimevalToTimespec;
-[metrics] References to non-analyzed functions
+[metrics:eva:unreached] References to non-analyzed functions
 ------------------------------------
 Function check_packet_auth calls KEY_CheckAuth (at ntp_core.c:1353)
 Function check_packet_auth calls is_zero_data (at ntp_core.c:1393)
@@ -72,7 +72,7 @@ Function transmit_packet calls NSD_GetAuthDelay (at ntp_core.c:1079)
 Function transmit_packet calls NSD_SignAndSendPacket (at ntp_core.c:1102)
 Function update_leap_status calls LCL_SetSystemLeap (at reference.c:807)
 Function write_log calls UTI_RefidToString (at reference.c:860)
-[metrics] Statements analyzed by Eva
+[metrics:eva:reached-stmts] Statements analyzed by Eva
 --------------------------
 7606 stmts in analyzed functions, 6646 stmts analyzed (87.4%)
 ADF_Allow: 2 stmts out of 2 (100.0%)

@@ -20,7 +20,7 @@ CPPFLAGS    += \
 
 ## General flags
 FCFLAGS     += \
-  -json-compilation-database .. \
+  -compilation-db .. \
   -add-symbolic-path=..:. \
   -kernel-warn-key annot:missing-spec=abort \
   -kernel-warn-key typing:implicit-function-declaration=abort \

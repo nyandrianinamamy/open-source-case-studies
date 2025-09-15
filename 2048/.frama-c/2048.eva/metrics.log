@@ -1,4 +1,4 @@
-[metrics] Eva coverage statistics
+[metrics:eva:coverage] Eva coverage statistics
 =======================
 Syntactically reachable functions = 17 (out of 18)
 Semantically reached functions = 16
@@ -6,10 +6,10 @@ Coverage estimation = 94.1%
 
 Unreached functions (1) =
   <2048.c>: signal_callback_handler;
-[metrics] References to non-analyzed functions
+[metrics:eva:unreached] References to non-analyzed functions
 ------------------------------------
 Function main references signal_callback_handler (at 2048.c:383)
-[metrics] Statements analyzed by Eva
+[metrics:eva:reached-stmts] Statements analyzed by Eva
 --------------------------
 328 stmts in analyzed functions, 325 stmts analyzed (99.1%)
 addRandom: 32 stmts out of 32 (100.0%)

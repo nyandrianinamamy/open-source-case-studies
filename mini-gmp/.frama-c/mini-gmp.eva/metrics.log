@@ -1,4 +1,4 @@
-[metrics] Eva coverage statistics
+[metrics:eva:coverage] Eva coverage statistics
 =======================
 Syntactically reachable functions = 59 (out of 257)
 Semantically reached functions = 42
@@ -10,7 +10,7 @@ Unreached functions (17) =
   <mini-gmp.c>: mpn_copyi; mpn_div_qr_1_invert; mpn_div_qr_1_preinv;
     mpn_get_base_info; mpn_get_str_other; mpn_invert_3by2; mpn_limb_get_str;
     mpn_lshift; mpn_mul_1; mpn_set_str_other;
-[metrics] References to non-analyzed functions
+[metrics:eva:unreached] References to non-analyzed functions
 ------------------------------------
 Function hex_random_op3 calls __gmpz_sub (at tests/hex-random.c:163)
 Function hex_random_op3 calls __gmpz_mul (at tests/hex-random.c:166)
@@ -31,7 +31,7 @@ Function mpz_set_str calls mpn_set_str_other (at mini-gmp.c:4179)
 Function mpz_sizeinbase calls mpn_copyi (at mini-gmp.c:4016)
 Function mpz_sizeinbase calls mpn_div_qr_1_invert (at mini-gmp.c:4017)
 Function mpz_sizeinbase calls mpn_div_qr_1_preinv (at mini-gmp.c:4023)
-[metrics] Statements analyzed by Eva
+[metrics:eva:reached-stmts] Statements analyzed by Eva
 --------------------------
 626 stmts in analyzed functions, 497 stmts analyzed (79.4%)
 dump: 4 stmts out of 4 (100.0%)

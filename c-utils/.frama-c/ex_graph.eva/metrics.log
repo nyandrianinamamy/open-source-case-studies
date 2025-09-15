@@ -1,4 +1,4 @@
-[metrics] Eva coverage statistics
+[metrics:eva:coverage] Eva coverage statistics
 =======================
 Syntactically reachable functions = 31 (out of 43)
 Semantically reached functions = 28
@@ -7,12 +7,12 @@ Coverage estimation = 90.3%
 Unreached functions (3) =
   <src/graph.c>: __graph_edges_grow; __graph_vertices_grow;
     __vertex_edges_grow;
-[metrics] References to non-analyzed functions
+[metrics:eva:unreached] References to non-analyzed functions
 ------------------------------------
 Function g_edge_add calls __graph_edges_grow (at src/graph.c:231)
 Function g_edge_add calls __vertex_edges_grow (at src/graph.c:245)
 Function g_vertex_add_alt calls __graph_vertices_grow (at src/graph.c:161)
-[metrics] Statements analyzed by Eva
+[metrics:eva:reached-stmts] Statements analyzed by Eva
 --------------------------
 393 stmts in analyzed functions, 350 stmts analyzed (89.1%)
 __add_city_as_vertex: 6 stmts out of 6 (100.0%)

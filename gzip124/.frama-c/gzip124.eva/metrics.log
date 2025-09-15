@@ -1,4 +1,4 @@
-[metrics] Eva coverage statistics
+[metrics:eva:coverage] Eva coverage statistics
 =======================
 Syntactically reachable functions = 95 (out of 97)
 Semantically reached functions = 93
@@ -7,11 +7,11 @@ Coverage estimation = 97.9%
 Unreached functions (2) =
   <lzw.c>: lzw; 
   <trees.c>: set_file_type;
-[metrics] References to non-analyzed functions
+[metrics:eva:unreached] References to non-analyzed functions
 ------------------------------------
 Function flush_block calls set_file_type (at trees.c:864)
 Function main references lzw (at gzip.c:573)
-[metrics] Statements analyzed by Eva
+[metrics:eva:reached-stmts] Statements analyzed by Eva
 --------------------------
 4844 stmts in analyzed functions, 4728 stmts analyzed (97.6%)
 bi_init: 6 stmts out of 6 (100.0%)

@@ -1,4 +1,4 @@
-[metrics] Eva coverage statistics
+[metrics:eva:coverage] Eva coverage statistics
 =======================
 Syntactically reachable functions = 14 (out of 20)
 Semantically reached functions = 7
@@ -7,10 +7,10 @@ Coverage estimation = 50.0%
 Unreached functions (7) =
   <quicklz.c>: hash_func; hashat; memcpy_up; qlz_decompress_core;
     qlz_size_compressed; update_hash; update_hash_upto;
-[metrics] References to non-analyzed functions
+[metrics:eva:unreached] References to non-analyzed functions
 ------------------------------------
 Function qlz_decompress calls qlz_decompress_core (at quicklz.c:820)
-[metrics] Statements analyzed by Eva
+[metrics:eva:reached-stmts] Statements analyzed by Eva
 --------------------------
 70 stmts in analyzed functions, 55 stmts analyzed (78.6%)
 qlz_size_decompressed: 6 stmts out of 6 (100.0%)

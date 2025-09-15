@@ -1,4 +1,4 @@
-[metrics] Eva coverage statistics
+[metrics:eva:coverage] Eva coverage statistics
 =======================
 Syntactically reachable functions = 8 (out of 11)
 Semantically reached functions = 6
@@ -6,12 +6,12 @@ Coverage estimation = 75.0%
 
 Unreached functions (2) =
   <src/llist.c>: ll_free_alt; ll_num_elements;
-[metrics] References to non-analyzed functions
+[metrics:eva:unreached] References to non-analyzed functions
 ------------------------------------
 Function main calls ll_num_elements (at examples/linkedlist_example.c:70)
 Function main calls ll_num_elements (at examples/linkedlist_example.c:77)
 Function main calls ll_free_alt (at examples/linkedlist_example.c:79)
-[metrics] Statements analyzed by Eva
+[metrics:eva:reached-stmts] Statements analyzed by Eva
 --------------------------
 135 stmts in analyzed functions, 75 stmts analyzed (55.6%)
 ll_first_node: 6 stmts out of 6 (100.0%)

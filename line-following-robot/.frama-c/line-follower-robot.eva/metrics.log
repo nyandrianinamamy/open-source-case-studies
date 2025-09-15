@@ -1,4 +1,4 @@
-[metrics] Eva coverage statistics
+[metrics:eva:coverage] Eva coverage statistics
 =======================
 Syntactically reachable functions = 39 (out of 42)
 Semantically reached functions = 32
@@ -8,7 +8,7 @@ Unreached functions (7) =
   <sources/eeprom_stubs.c>: eeprom_read_byte; eeprom_read_word;
     eeprom_update_byte; eeprom_update_word; 
   <sources/main.c>: Gravar; Init_Reproducao; Reproduzir;
-[metrics] References to non-analyzed functions
+[metrics:eva:unreached] References to non-analyzed functions
 ------------------------------------
 Function main calls Init_Reproducao (at sources/main.c:514)
 Function main calls Reproduzir (at sources/main.c:519)
@@ -17,7 +17,7 @@ Function Motores calls eeprom_update_byte (at sources/main.c:752)
 Function Motores calls eeprom_update_byte (at sources/main.c:754)
 Function Motores calls eeprom_update_word (at sources/main.c:756)
 Function Motores calls eeprom_update_byte (at sources/main.c:758)
-[metrics] Statements analyzed by Eva
+[metrics:eva:reached-stmts] Statements analyzed by Eva
 --------------------------
 851 stmts in analyzed functions, 805 stmts analyzed (94.6%)
 Bateria_Fraca: 19 stmts out of 19 (100.0%)

@@ -1,4 +1,4 @@
-[metrics] Eva coverage statistics
+[metrics:eva:coverage] Eva coverage statistics
 =======================
 Syntactically reachable functions = 44 (out of 113)
 Semantically reached functions = 37
@@ -8,7 +8,7 @@ Unreached functions (7) =
   <src/modbus-tcp.c>: _modbus_set_slave_0; _modbus_tcp_build_response_basis;
     _modbus_tcp_flush; _modbus_tcp_prepare_response_tid; _modbus_tcp_receive; 
   <src/modbus.c>: _sleep_response_timeout; modbus_flush;
-[metrics] References to non-analyzed functions
+[metrics:eva:unreached] References to non-analyzed functions
 ------------------------------------
 Function _modbus_receive_msg calls _sleep_response_timeout (at src/modbus.c:387)
 Function _modbus_receive_msg calls modbus_flush (at src/modbus.c:388)
@@ -28,7 +28,7 @@ Initializer of _modbus_tcp_backend references _modbus_tcp_build_response_basis (
 Initializer of _modbus_tcp_backend references _modbus_tcp_prepare_response_tid (at src/modbus-tcp.c:744)
 Initializer of _modbus_tcp_backend references _modbus_tcp_receive (at src/modbus-tcp.c:747)
 Initializer of _modbus_tcp_backend references _modbus_tcp_flush (at src/modbus-tcp.c:753)
-[metrics] Statements analyzed by Eva
+[metrics:eva:reached-stmts] Statements analyzed by Eva
 --------------------------
 1068 stmts in analyzed functions, 861 stmts analyzed (80.6%)
 _connect: 26 stmts out of 26 (100.0%)

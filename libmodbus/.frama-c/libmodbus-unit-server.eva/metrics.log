@@ -1,4 +1,4 @@
-[metrics] Eva coverage statistics
+[metrics:eva:coverage] Eva coverage statistics
 =======================
 Syntactically reachable functions = 68 (out of 113)
 Semantically reached functions = 58
@@ -11,7 +11,7 @@ Unreached functions (10) =
     _modbus_tcp_build_request_basis; _modbus_tcp_connect;
     _modbus_tcp_pi_connect; _modbus_tcp_pre_check_confirmation;
     _modbus_tcp_set_ipv4_options;
-[metrics] References to non-analyzed functions
+[metrics:eva:unreached] References to non-analyzed functions
 ------------------------------------
 Function modbus_new_rtu references _modbus_rtu_ioctl_rts (at src/modbus-rtu.c:1266)
 Initializer of _modbus_rtu_backend references _modbus_rtu_build_request_basis (at src/modbus-rtu.c:1194)
@@ -24,7 +24,7 @@ Initializer of _modbus_tcp_pi_backend references _modbus_set_slave_0 (at src/mod
 Initializer of _modbus_tcp_pi_backend references _modbus_tcp_build_request_basis (at src/modbus-tcp.c:765)
 Initializer of _modbus_tcp_pi_backend references _modbus_tcp_pre_check_confirmation (at src/modbus-tcp.c:773)
 Initializer of _modbus_tcp_pi_backend references _modbus_tcp_pi_connect (at src/modbus-tcp.c:774)
-[metrics] Statements analyzed by Eva
+[metrics:eva:reached-stmts] Statements analyzed by Eva
 --------------------------
 1581 stmts in analyzed functions, 1277 stmts analyzed (80.8%)
 _error_print: 9 stmts out of 9 (100.0%)

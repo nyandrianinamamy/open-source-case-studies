@@ -1,4 +1,4 @@
-[metrics] Eva coverage statistics
+[metrics:eva:coverage] Eva coverage statistics
 =======================
 Syntactically reachable functions = 108 (out of 204)
 Semantically reached functions = 70
@@ -33,7 +33,7 @@ Unreached functions (38) =
     mip_gps_ned_vel_byteswap; mip_gps_time_byteswap; 
   <MIPSDK/C/Library/Source/mip_sdk_inteface.c>:
     mip_interface_add_descriptor_set_callback;
-[metrics] References to non-analyzed functions
+[metrics:eva:unreached] References to non-analyzed functions
 ------------------------------------
 Function main calls mip_filter_external_gps_update (at MIPSDK/C/Examples/Linux/GX4-45/GX4_45_Test/GX4-45_Test.c:1451)
 Function main calls mip_filter_heading_source (at MIPSDK/C/Examples/Linux/GX4-45/GX4_45_Test/GX4-45_Test.c:1472)
@@ -95,7 +95,7 @@ Function main calls mip_3dm_cmd_gps_message_format (at MIPSDK/C/Examples/Linux/G
 Function main calls mip_3dm_cmd_poll_gps (at MIPSDK/C/Examples/Linux/GX4-45/GX4_45_Test/GX4-45_Test.c:2242)
 Function main calls mip_3dm_cmd_filter_message_format (at MIPSDK/C/Examples/Linux/GX4-45/GX4_45_Test/GX4-45_Test.c:2265)
 Function main calls mip_3dm_cmd_poll_filter (at MIPSDK/C/Examples/Linux/GX4-45/GX4_45_Test/GX4-45_Test.c:2279)
-[metrics] Statements analyzed by Eva
+[metrics:eva:reached-stmts] Statements analyzed by Eva
 --------------------------
 3209 stmts in analyzed functions, 2415 stmts analyzed (75.3%)
 __mip_interface_command_response_handler: 24 stmts out of 24 (100.0%)

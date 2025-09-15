@@ -1,4 +1,4 @@
-[metrics] Eva coverage statistics
+[metrics:eva:coverage] Eva coverage statistics
 =======================
 Syntactically reachable functions = 29 (out of 60)
 Semantically reached functions = 27
@@ -6,10 +6,10 @@ Coverage estimation = 93.1%
 
 Unreached functions (2) =
   <miniz_tdef.c>: tdefl_compress_fast; TDEFL_READ_UNALIGNED_WORD32;
-[metrics] References to non-analyzed functions
+[metrics:eva:unreached] References to non-analyzed functions
 ------------------------------------
 Function tdefl_compress calls tdefl_compress_fast (at miniz_tdef.c:1287)
-[metrics] Statements analyzed by Eva
+[metrics:eva:reached-stmts] Statements analyzed by Eva
 --------------------------
 2073 stmts in analyzed functions, 1876 stmts analyzed (90.5%)
 TDEFL_READ_UNALIGNED_WORD: 2 stmts out of 2 (100.0%)

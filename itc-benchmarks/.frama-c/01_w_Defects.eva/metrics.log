@@ -1,4 +1,4 @@
-[metrics] Eva coverage statistics
+[metrics:eva:coverage] Eva coverage statistics
 =======================
 Syntactically reachable functions = 597 (out of 600)
 Semantically reached functions = 588
@@ -13,7 +13,7 @@ Unreached functions (9) =
     uninit_memory_access_011_func_001; 
   <01_w_Defects/uninit_pointer.c>: uninit_pointer_004_func_001;
     uninit_pointer_015_func_001;
-[metrics] References to non-analyzed functions
+[metrics:eva:unreached] References to non-analyzed functions
 ------------------------------------
 Function invalid_memory_access_013 calls invalid_memory_access_013_func_003 (at 01_w_Defects/invalid_memory_access.c:457)
 Function null_pointer_016 calls null_pointer_016_func_002 (at 01_w_Defects/null_pointer.c:301)
@@ -24,7 +24,7 @@ Function uninit_memory_access_007 calls uninit_memory_access_007_func_004 (at 01
 Function uninit_memory_access_011 calls uninit_memory_access_011_func_001 (at 01_w_Defects/uninit_memory_access.c:337)
 Function uninit_pointer_004 calls uninit_pointer_004_func_001 (at 01_w_Defects/uninit_pointer.c:70)
 Function uninit_pointer_015 calls uninit_pointer_015_func_001 (at 01_w_Defects/uninit_pointer.c:391)
-[metrics] Statements analyzed by Eva
+[metrics:eva:reached-stmts] Statements analyzed by Eva
 --------------------------
 6014 stmts in analyzed functions, 4837 stmts analyzed (80.4%)
 bit_shift_009: 5 stmts out of 5 (100.0%)

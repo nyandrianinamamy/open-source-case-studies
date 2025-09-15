@@ -1,4 +1,4 @@
-[metrics] Eva coverage statistics
+[metrics:eva:coverage] Eva coverage statistics
 =======================
 Syntactically reachable functions = 46 (out of 46)
 Semantically reached functions = 11
@@ -8,7 +8,7 @@ Unreached functions (35) =
   <2019/adamovsky/prog.c>: fA; fA1; fA2; fC; fCh; fD; fD0; fD1; fE; fI; fK0;
     fK1; fP; fR; fS0; fS1; fS2; fS21; fS22; fT; fV; fW; rA1; rA2; rC; rD; rE;
     rS1; rS2; rT; rY2; Y1; Y2; YE; Yt;
-[metrics] References to non-analyzed functions
+[metrics:eva:unreached] References to non-analyzed functions
 ------------------------------------
 Function D references fW (at 2019/adamovsky/prog.c:19)
 Function D references fCh (at 2019/adamovsky/prog.c:19)
@@ -44,7 +44,7 @@ Initializer of T references fW (at 2019/adamovsky/prog.c:60)
 Initializer of T references fS0 (at 2019/adamovsky/prog.c:60)
 Initializer of T references fV (at 2019/adamovsky/prog.c:60)
 Initializer of T references fP (at 2019/adamovsky/prog.c:60)
-[metrics] Statements analyzed by Eva
+[metrics:eva:reached-stmts] Statements analyzed by Eva
 --------------------------
 148 stmts in analyzed functions, 91 stmts analyzed (61.5%)
 C: 15 stmts out of 15 (100.0%)

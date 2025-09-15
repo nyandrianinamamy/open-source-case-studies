@@ -1,4 +1,4 @@
-[metrics] Eva coverage statistics
+[metrics:eva:coverage] Eva coverage statistics
 =======================
 Syntactically reachable functions = 591 (out of 600)
 Semantically reached functions = 589
@@ -8,11 +8,11 @@ Unreached functions (2) =
   <02_wo_Defects/memory_allocation_failure.c>:
     memory_allocation_failure_014_func_001; 
   <02_wo_Defects/st_underrun.c>: st_underrun_007_func_002;
-[metrics] References to non-analyzed functions
+[metrics:eva:unreached] References to non-analyzed functions
 ------------------------------------
 Function memory_allocation_failure_014 calls memory_allocation_failure_014_func_001 (at 02_wo_Defects/memory_allocation_failure.c:589)
 Function st_underrun_007 calls st_underrun_007_func_002 (at 02_wo_Defects/st_underrun.c:261)
-[metrics] Statements analyzed by Eva
+[metrics:eva:reached-stmts] Statements analyzed by Eva
 --------------------------
 6060 stmts in analyzed functions, 5823 stmts analyzed (96.1%)
 bit_shift_001: 4 stmts out of 4 (100.0%)

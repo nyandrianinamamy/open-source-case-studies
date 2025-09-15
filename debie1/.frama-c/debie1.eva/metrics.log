@@ -1,4 +1,4 @@
-[metrics] Eva coverage statistics
+[metrics:eva:coverage] Eva coverage statistics
 =======================
 Syntactically reachable functions = 183 (out of 191)
 Semantically reached functions = 180
@@ -7,12 +7,12 @@ Coverage estimation = 98.4%
 Unreached functions (3) =
   <code/measure.c>: AcquisitionTask; HitTriggerTask; 
   <code/tc_hand.c>: TelecommandExecutionTask;
-[metrics] References to non-analyzed functions
+[metrics:eva:unreached] References to non-analyzed functions
 ------------------------------------
 Initializer of acq_task references AcquisitionTask (at code/measure.c:544)
 Initializer of hit_task references HitTriggerTask (at code/measure.c:543)
 Initializer of TC_task references TelecommandExecutionTask (at code/tc_hand.c:1596)
-[metrics] Statements analyzed by Eva
+[metrics:eva:reached-stmts] Statements analyzed by Eva
 --------------------------
 3242 stmts in analyzed functions, 3171 stmts analyzed (97.8%)
 Acquire_Hit: 10 stmts out of 10 (100.0%)
