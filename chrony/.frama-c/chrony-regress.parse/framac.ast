@@ -5374,7 +5374,6 @@ static void parse_allow_deny(char *line, ARR_Instance restrictions, int allow)
       if (n >= (unsigned long)1) {
         _LOR:
         {
-          /*@ assert n ≤ 4; */ ;
           new_node = (AllowDeny *)ARR_GetNewElement(restrictions);
           new_node->allow = allow;
           new_node->all = all;
@@ -5408,7 +5407,7 @@ static void parse_allow_deny(char *line, ARR_Instance restrictions, int allow)
                                                   c << 8)) | d);
               new_node->subnet_bits = 32;
               break;
-              default: __FC_assert(0 != 0,"conf.c",1073,"0");
+              default: __FC_assert(0 != 0,"conf.c",1070,"0");
             }
           }
           if (slashpos) {

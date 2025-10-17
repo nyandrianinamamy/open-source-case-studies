@@ -126,6 +126,28 @@
             eva_main
 [nonterm:unreachable] conf.c:273: Warning: unreachable implicit return
 [nonterm:unreachable] conf.c:283: Warning: unreachable implicit return
+[nonterm:stmt] conf.c:1070: Warning: 
+  non-terminating function call
+  stack 1: parse_allow_deny :: conf.c:472 <-
+           CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+           test_unit :: test/unit/test.c:70 <-
+           main :: fc_stubs.c:37 <-
+           eva_main
+  stack 2: parse_allow_deny :: conf.c:461 <-
+           CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+           test_unit :: test/unit/test.c:70 <-
+           main :: fc_stubs.c:37 <-
+           eva_main
+  stack 3: parse_allow_deny :: conf.c:459 <-
+           CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+           test_unit :: test/unit/test.c:70 <-
+           main :: fc_stubs.c:37 <-
+           eva_main
+  stack 4: parse_allow_deny :: conf.c:447 <-
+           CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+           test_unit :: test/unit/test.c:70 <-
+           main :: fc_stubs.c:37 <-
+           eva_main
 [nonterm:stmt] md5.c:155: Warning: 
   non-terminating loop
   stack 1: MD5Update :: hash_intmd5.c:56 <-

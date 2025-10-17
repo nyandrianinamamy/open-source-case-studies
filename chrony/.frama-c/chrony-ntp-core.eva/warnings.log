@@ -144,7 +144,7 @@
 [eva:alarm] cmdparse.c:249: Warning: 
   out of bounds write. assert \valid(tmp_0);
                        (tmp_0 from p++)
-  stack: CPS_SplitWord :: conf.c:1249 <-
+  stack: CPS_SplitWord :: conf.c:1246 <-
          parse_tempcomp :: conf.c:571 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -152,15 +152,15 @@
          eva_main
 [eva:alarm] cmdparse.c:255: Warning: 
   out of bounds write. assert \valid(p);
-  stack: CPS_SplitWord :: conf.c:1249 <-
+  stack: CPS_SplitWord :: conf.c:1246 <-
          parse_tempcomp :: conf.c:571 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1259: Warning: 
+[eva:alarm] conf.c:1256: Warning: 
   function sscanf_va_51: precondition valid_read_string(s) got status unknown.
-  stack: sscanf_va_51 :: conf.c:1259 <-
+  stack: sscanf_va_51 :: conf.c:1256 <-
          parse_tempcomp :: conf.c:571 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -170,7 +170,7 @@
   function strlen: precondition 'valid_string_s' got status unknown.
   stack: strlen :: FRAMAC_SHARE/libc/string.c:318 <-
          strdup :: memory.c:88 <-
-         Strdup :: conf.c:1263 <-
+         Strdup :: conf.c:1260 <-
          parse_tempcomp :: conf.c:571 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -180,7 +180,7 @@
   function memcpy: precondition 'valid_dest' got status unknown.
   stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
          strdup :: memory.c:88 <-
-         Strdup :: conf.c:1263 <-
+         Strdup :: conf.c:1260 <-
          parse_tempcomp :: conf.c:571 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -190,15 +190,15 @@
   function memcpy: precondition 'valid_src' got status unknown.
   stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
          strdup :: memory.c:88 <-
-         Strdup :: conf.c:1263 <-
+         Strdup :: conf.c:1260 <-
          parse_tempcomp :: conf.c:571 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1265: Warning: 
+[eva:alarm] conf.c:1262: Warning: 
   function sscanf_va_52: precondition valid_read_string(s) got status unknown.
-  stack: sscanf_va_52 :: conf.c:1265 <-
+  stack: sscanf_va_52 :: conf.c:1262 <-
          parse_tempcomp :: conf.c:571 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -208,7 +208,7 @@
   function strlen: precondition 'valid_string_s' got status unknown.
   stack: strlen :: FRAMAC_SHARE/libc/string.c:318 <-
          strdup :: memory.c:88 <-
-         Strdup :: conf.c:1274 <-
+         Strdup :: conf.c:1271 <-
          parse_tempcomp :: conf.c:571 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -218,7 +218,7 @@
   function memcpy: precondition 'valid_dest' got status unknown.
   stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
          strdup :: memory.c:88 <-
-         Strdup :: conf.c:1274 <-
+         Strdup :: conf.c:1271 <-
          parse_tempcomp :: conf.c:571 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -228,7 +228,7 @@
   function memcpy: precondition 'valid_src' got status unknown.
   stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
          strdup :: memory.c:88 <-
-         Strdup :: conf.c:1274 <-
+         Strdup :: conf.c:1271 <-
          parse_tempcomp :: conf.c:571 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -242,9 +242,9 @@
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1220: Warning: 
+[eva:alarm] conf.c:1217: Warning: 
   function sscanf_va_50: precondition valid_read_string(s) got status unknown.
-  stack: sscanf_va_50 :: conf.c:1220 <-
+  stack: sscanf_va_50 :: conf.c:1217 <-
          parse_smoothtime :: conf.c:567 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -252,7 +252,7 @@
          eva_main
 [eva:alarm] FRAMAC_SHARE/libc/string.c:176: Warning: 
   out of bounds read. assert \valid_read(s1 + i);
-  stack: strcasecmp :: conf.c:1229 <-
+  stack: strcasecmp :: conf.c:1226 <-
          parse_smoothtime :: conf.c:567 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -260,7 +260,7 @@
          eva_main
 [eva:alarm] FRAMAC_SHARE/libc/string.c:179: Warning: 
   out of bounds read. assert \valid_read(s1 + i);
-  stack: strcasecmp :: conf.c:1229 <-
+  stack: strcasecmp :: conf.c:1226 <-
          parse_smoothtime :: conf.c:567 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -268,7 +268,7 @@
          eva_main
 [eva:alarm] FRAMAC_SHARE/libc/string.c:180: Warning: 
   out of bounds read. assert \valid_read(s1 + i);
-  stack: strcasecmp :: conf.c:1229 <-
+  stack: strcasecmp :: conf.c:1226 <-
          parse_smoothtime :: conf.c:567 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -1681,7 +1681,7 @@
   function strlen: precondition 'valid_string_s' got status unknown.
   stack: strlen :: FRAMAC_SHARE/libc/string.c:318 <-
          strdup :: memory.c:88 <-
-         Strdup :: conf.c:1295 <-
+         Strdup :: conf.c:1292 <-
          parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -1691,7 +1691,7 @@
   function memcpy: precondition 'valid_dest' got status unknown.
   stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
          strdup :: memory.c:88 <-
-         Strdup :: conf.c:1295 <-
+         Strdup :: conf.c:1292 <-
          parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -1701,15 +1701,15 @@
   function memcpy: precondition 'valid_src' got status unknown.
   stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
          strdup :: memory.c:88 <-
-         Strdup :: conf.c:1295 <-
+         Strdup :: conf.c:1292 <-
          parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1327: Warning: 
+[eva:alarm] conf.c:1324: Warning: 
   function sscanf_va_53: precondition valid_read_string(s) got status unknown.
-  stack: sscanf_va_53 :: conf.c:1327 <-
+  stack: sscanf_va_53 :: conf.c:1324 <-
          parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -1717,7 +1717,7 @@
          eva_main
 [eva:alarm] FRAMAC_SHARE/libc/string.c:175: Warning: 
   accessing uninitialized left-value. assert \initialized(s1 + i);
-  stack: strcasecmp :: conf.c:1329 <-
+  stack: strcasecmp :: conf.c:1326 <-
          parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -1725,7 +1725,7 @@
          eva_main
 [eva:alarm] FRAMAC_SHARE/libc/string.c:176: Warning: 
   accessing uninitialized left-value. assert \initialized(s1 + i);
-  stack: strcasecmp :: conf.c:1329 <-
+  stack: strcasecmp :: conf.c:1326 <-
          parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -1733,7 +1733,7 @@
          eva_main
 [eva:alarm] FRAMAC_SHARE/libc/string.c:179: Warning: 
   accessing uninitialized left-value. assert \initialized(s1 + i);
-  stack: strcasecmp :: conf.c:1329 <-
+  stack: strcasecmp :: conf.c:1326 <-
          parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -1741,61 +1741,61 @@
          eva_main
 [eva:alarm] FRAMAC_SHARE/libc/string.c:180: Warning: 
   accessing uninitialized left-value. assert \initialized(s1 + i);
-  stack: strcasecmp :: conf.c:1329 <-
-         parse_hwtimestamp :: conf.c:484 <-
-         CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-         test_unit :: test/unit/test.c:70 <-
-         main :: fc_stubs.c:37 <-
-         eva_main
-[eva:alarm] conf.c:1324: Warning: 
-  function sscanf_va_54: precondition valid_read_string(s) got status unknown.
-  stack: sscanf_va_54 :: conf.c:1324 <-
+  stack: strcasecmp :: conf.c:1326 <-
          parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
 [eva:alarm] conf.c:1321: Warning: 
-  function sscanf_va_55: precondition valid_read_string(s) got status unknown.
-  stack: sscanf_va_55 :: conf.c:1321 <-
+  function sscanf_va_54: precondition valid_read_string(s) got status unknown.
+  stack: sscanf_va_54 :: conf.c:1321 <-
          parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
 [eva:alarm] conf.c:1318: Warning: 
-  function sscanf_va_56: precondition valid_read_string(s) got status unknown.
-  stack: sscanf_va_56 :: conf.c:1318 <-
+  function sscanf_va_55: precondition valid_read_string(s) got status unknown.
+  stack: sscanf_va_55 :: conf.c:1318 <-
          parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
 [eva:alarm] conf.c:1315: Warning: 
-  function sscanf_va_57: precondition valid_read_string(s) got status unknown.
-  stack: sscanf_va_57 :: conf.c:1315 <-
+  function sscanf_va_56: precondition valid_read_string(s) got status unknown.
+  stack: sscanf_va_56 :: conf.c:1315 <-
          parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
 [eva:alarm] conf.c:1312: Warning: 
-  function sscanf_va_58: precondition valid_read_string(s) got status unknown.
-  stack: sscanf_va_58 :: conf.c:1312 <-
+  function sscanf_va_57: precondition valid_read_string(s) got status unknown.
+  stack: sscanf_va_57 :: conf.c:1312 <-
          parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
 [eva:alarm] conf.c:1309: Warning: 
-  function sscanf_va_59: precondition valid_read_string(s) got status unknown.
-  stack: sscanf_va_59 :: conf.c:1309 <-
+  function sscanf_va_58: precondition valid_read_string(s) got status unknown.
+  stack: sscanf_va_58 :: conf.c:1309 <-
          parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1305: Warning: 
+[eva:alarm] conf.c:1306: Warning: 
+  function sscanf_va_59: precondition valid_read_string(s) got status unknown.
+  stack: sscanf_va_59 :: conf.c:1306 <-
+         parse_hwtimestamp :: conf.c:484 <-
+         CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] conf.c:1302: Warning: 
   out of bounds read. assert \valid_read(p);
   stack: parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
@@ -1941,51 +1941,58 @@
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1036: Warning: assertion got status unknown.
-[eva:alarm] conf.c:1043: Warning: 
+[eva:alarm] conf.c:1040: Warning: 
   accessing uninitialized left-value. assert \initialized(&ip_addr.family);
   stack: parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1050: Warning: 
+[eva:alarm] conf.c:1047: Warning: 
   accessing uninitialized left-value. assert \initialized(&a);
   stack: parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1051: Warning: 
+[eva:alarm] conf.c:1048: Warning: 
   accessing uninitialized left-value. assert \initialized(&b);
   stack: parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1052: Warning: 
+[eva:alarm] conf.c:1049: Warning: 
   accessing uninitialized left-value. assert \initialized(&c);
   stack: parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1053: Warning: 
+[eva:alarm] conf.c:1050: Warning: 
   accessing uninitialized left-value. assert \initialized(&d);
   stack: parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1079: Warning: 
-  function sscanf_va_47: precondition valid_read_string(s) got status unknown.
-  stack: sscanf_va_47 :: conf.c:1079 <-
+[eva:alarm] conf.c:1070: Warning: 
+  function __FC_assert: precondition 'nonnull_c' got status invalid.
+  stack: __FC_assert :: conf.c:1070 <-
          parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1093: Warning: 
+[eva:alarm] conf.c:1076: Warning: 
+  function sscanf_va_47: precondition valid_read_string(s) got status unknown.
+  stack: sscanf_va_47 :: conf.c:1076 <-
+         parse_allow_deny :: conf.c:472 <-
+         CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] conf.c:1090: Warning: 
   accessing uninitialized left-value. assert \initialized(&ip_addr.family);
   stack: parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
@@ -2040,9 +2047,17 @@
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1079: Warning: 
+[eva:alarm] conf.c:1070: Warning: 
+  function __FC_assert: precondition 'nonnull_c' got status invalid.
+  stack: __FC_assert :: conf.c:1070 <-
+         parse_allow_deny :: conf.c:461 <-
+         CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] conf.c:1076: Warning: 
   function sscanf_va_47: precondition valid_read_string(s) got status unknown.
-  stack: sscanf_va_47 :: conf.c:1079 <-
+  stack: sscanf_va_47 :: conf.c:1076 <-
          parse_allow_deny :: conf.c:461 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -2064,9 +2079,17 @@
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1079: Warning: 
+[eva:alarm] conf.c:1070: Warning: 
+  function __FC_assert: precondition 'nonnull_c' got status invalid.
+  stack: __FC_assert :: conf.c:1070 <-
+         parse_allow_deny :: conf.c:459 <-
+         CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] conf.c:1076: Warning: 
   function sscanf_va_47: precondition valid_read_string(s) got status unknown.
-  stack: sscanf_va_47 :: conf.c:1079 <-
+  stack: sscanf_va_47 :: conf.c:1076 <-
          parse_allow_deny :: conf.c:459 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -2080,9 +2103,9 @@
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1180: Warning: 
+[eva:alarm] conf.c:1177: Warning: 
   function sscanf_va_48: precondition valid_read_string(s) got status unknown.
-  stack: sscanf_va_48 :: conf.c:1180 <-
+  stack: sscanf_va_48 :: conf.c:1177 <-
          parse_broadcast :: conf.c:455 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -2091,15 +2114,15 @@
 [eva:alarm] util.c:345: Warning: 
   function sscanf_va_63: precondition valid_read_string(s) got status unknown.
   stack: sscanf_va_63 :: util.c:345 <-
-         UTI_StringToIP :: conf.c:1188 <-
+         UTI_StringToIP :: conf.c:1185 <-
          parse_broadcast :: conf.c:455 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1197: Warning: 
+[eva:alarm] conf.c:1194: Warning: 
   function sscanf_va_49: precondition valid_read_string(s) got status unknown.
-  stack: sscanf_va_49 :: conf.c:1197 <-
+  stack: sscanf_va_49 :: conf.c:1194 <-
          parse_broadcast :: conf.c:455 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -2110,7 +2133,7 @@
   stack: strlen :: FRAMAC_SHARE/libc/string.c:318 <-
          strdup :: memory.c:88 <-
          Strdup :: conf.c:591 <-
-         parse_string :: conf.c:1151 <-
+         parse_string :: conf.c:1148 <-
          parse_bindcmdaddress :: conf.c:453 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -2121,7 +2144,7 @@
   stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
          strdup :: memory.c:88 <-
          Strdup :: conf.c:591 <-
-         parse_string :: conf.c:1151 <-
+         parse_string :: conf.c:1148 <-
          parse_bindcmdaddress :: conf.c:453 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -2132,7 +2155,7 @@
   stack: memcpy :: FRAMAC_SHARE/libc/string.c:324 <-
          strdup :: memory.c:88 <-
          Strdup :: conf.c:591 <-
-         parse_string :: conf.c:1151 <-
+         parse_string :: conf.c:1148 <-
          parse_bindcmdaddress :: conf.c:453 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -2140,7 +2163,7 @@
          eva_main
 [eva:alarm] FRAMAC_SHARE/libc/string.c:132: Warning: 
   accessing uninitialized left-value. assert \initialized(s1 + i);
-  stack: strcmp :: conf.c:1153 <-
+  stack: strcmp :: conf.c:1150 <-
          parse_bindcmdaddress :: conf.c:453 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -2149,7 +2172,7 @@
 [eva:alarm] FRAMAC_SHARE/libc/string.c:135: Warning: 
   accessing uninitialized left-value.
   assert \initialized((unsigned char *)s1 + i);
-  stack: strcmp :: conf.c:1153 <-
+  stack: strcmp :: conf.c:1150 <-
          parse_bindcmdaddress :: conf.c:453 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -2158,13 +2181,13 @@
 [eva:alarm] util.c:345: Warning: 
   function sscanf_va_63: precondition valid_read_string(s) got status unknown.
   stack: sscanf_va_63 :: util.c:345 <-
-         UTI_StringToIP :: conf.c:1155 <-
+         UTI_StringToIP :: conf.c:1152 <-
          parse_bindcmdaddress :: conf.c:453 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1156: Warning: 
+[eva:alarm] conf.c:1153: Warning: 
   accessing uninitialized left-value. assert \initialized(&ip.family);
   stack: parse_bindcmdaddress :: conf.c:453 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
@@ -2174,13 +2197,13 @@
 [eva:alarm] util.c:345: Warning: 
   function sscanf_va_63: precondition valid_read_string(s) got status unknown.
   stack: sscanf_va_63 :: util.c:345 <-
-         UTI_StringToIP :: conf.c:1130 <-
+         UTI_StringToIP :: conf.c:1127 <-
          parse_bindaddress :: conf.c:451 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1131: Warning: 
+[eva:alarm] conf.c:1128: Warning: 
   accessing uninitialized left-value. assert \initialized(&ip.family);
   stack: parse_bindaddress :: conf.c:451 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
@@ -2190,13 +2213,13 @@
 [eva:alarm] util.c:345: Warning: 
   function sscanf_va_63: precondition valid_read_string(s) got status unknown.
   stack: sscanf_va_63 :: util.c:345 <-
-         UTI_StringToIP :: conf.c:1112 <-
+         UTI_StringToIP :: conf.c:1109 <-
          parse_bindacqaddress :: conf.c:449 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1113: Warning: 
+[eva:alarm] conf.c:1110: Warning: 
   accessing uninitialized left-value. assert \initialized(&ip.family);
   stack: parse_bindacqaddress :: conf.c:449 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
@@ -2219,9 +2242,17 @@
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1079: Warning: 
+[eva:alarm] conf.c:1070: Warning: 
+  function __FC_assert: precondition 'nonnull_c' got status invalid.
+  stack: __FC_assert :: conf.c:1070 <-
+         parse_allow_deny :: conf.c:447 <-
+         CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] conf.c:1076: Warning: 
   function sscanf_va_47: precondition valid_read_string(s) got status unknown.
-  stack: sscanf_va_47 :: conf.c:1079 <-
+  stack: sscanf_va_47 :: conf.c:1076 <-
          parse_allow_deny :: conf.c:447 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -2449,146 +2480,146 @@
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: array.c:94 <-
          ARR_GetElement :: array.c:88 <-
-         ARR_GetNewElement :: conf.c:1294 <-
+         ARR_GetNewElement :: conf.c:1291 <-
          parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1295: Warning: 
+[eva:alarm] conf.c:1292: Warning: 
   out of bounds write. assert \valid(&iface->name);
   stack: parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1296: Warning: 
+[eva:alarm] conf.c:1293: Warning: 
   out of bounds write. assert \valid(&iface->minpoll);
   stack: parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1297: Warning: 
+[eva:alarm] conf.c:1294: Warning: 
   out of bounds write. assert \valid(&iface->min_samples);
   stack: parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1298: Warning: 
+[eva:alarm] conf.c:1295: Warning: 
   out of bounds write. assert \valid(&iface->max_samples);
   stack: parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1299: Warning: 
+[eva:alarm] conf.c:1296: Warning: 
   out of bounds write. assert \valid(&iface->nocrossts);
   stack: parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1300: Warning: 
+[eva:alarm] conf.c:1297: Warning: 
   out of bounds write. assert \valid(&iface->rxfilter);
   stack: parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1301: Warning: 
+[eva:alarm] conf.c:1298: Warning: 
   out of bounds write. assert \valid(&iface->precision);
   stack: parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1302: Warning: 
+[eva:alarm] conf.c:1299: Warning: 
   out of bounds write. assert \valid(&iface->tx_comp);
   stack: parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1303: Warning: 
+[eva:alarm] conf.c:1300: Warning: 
   out of bounds write. assert \valid(&iface->rx_comp);
   stack: parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1339: Warning: 
+[eva:alarm] conf.c:1336: Warning: 
   out of bounds write. assert \valid(&iface->nocrossts);
   stack: parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1334: Warning: 
+[eva:alarm] conf.c:1331: Warning: 
   out of bounds write. assert \valid(&iface->rxfilter);
   stack: parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1332: Warning: 
+[eva:alarm] conf.c:1329: Warning: 
   out of bounds write. assert \valid(&iface->rxfilter);
   stack: parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1330: Warning: 
+[eva:alarm] conf.c:1327: Warning: 
   out of bounds write. assert \valid(&iface->rxfilter);
   stack: parse_hwtimestamp :: conf.c:484 <-
-         CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-         test_unit :: test/unit/test.c:70 <-
-         main :: fc_stubs.c:37 <-
-         eva_main
-[eva:alarm] conf.c:1324: Warning: 
-  function sscanf_va_54: precondition \valid(param0) got status unknown.
-  stack: sscanf_va_54 :: conf.c:1324 <-
-         parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
 [eva:alarm] conf.c:1321: Warning: 
-  function sscanf_va_55: precondition \valid(param0) got status unknown.
-  stack: sscanf_va_55 :: conf.c:1321 <-
+  function sscanf_va_54: precondition \valid(param0) got status unknown.
+  stack: sscanf_va_54 :: conf.c:1321 <-
          parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
 [eva:alarm] conf.c:1318: Warning: 
-  function sscanf_va_56: precondition \valid(param0) got status unknown.
-  stack: sscanf_va_56 :: conf.c:1318 <-
+  function sscanf_va_55: precondition \valid(param0) got status unknown.
+  stack: sscanf_va_55 :: conf.c:1318 <-
          parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
 [eva:alarm] conf.c:1315: Warning: 
-  function sscanf_va_57: precondition \valid(param0) got status unknown.
-  stack: sscanf_va_57 :: conf.c:1315 <-
+  function sscanf_va_56: precondition \valid(param0) got status unknown.
+  stack: sscanf_va_56 :: conf.c:1315 <-
          parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
 [eva:alarm] conf.c:1312: Warning: 
-  function sscanf_va_58: precondition \valid(param0) got status unknown.
-  stack: sscanf_va_58 :: conf.c:1312 <-
+  function sscanf_va_57: precondition \valid(param0) got status unknown.
+  stack: sscanf_va_57 :: conf.c:1312 <-
          parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
 [eva:alarm] conf.c:1309: Warning: 
+  function sscanf_va_58: precondition \valid(param0) got status unknown.
+  stack: sscanf_va_58 :: conf.c:1309 <-
+         parse_hwtimestamp :: conf.c:484 <-
+         CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] conf.c:1306: Warning: 
   function sscanf_va_59: precondition \valid(param0) got status unknown.
-  stack: sscanf_va_59 :: conf.c:1309 <-
+  stack: sscanf_va_59 :: conf.c:1306 <-
          parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -2636,104 +2667,104 @@
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: array.c:94 <-
          ARR_GetElement :: array.c:88 <-
-         ARR_GetNewElement :: conf.c:1037 <-
+         ARR_GetNewElement :: conf.c:1034 <-
          parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1038: Warning: 
+[eva:alarm] conf.c:1035: Warning: 
   out of bounds write. assert \valid(&new_node->allow);
+  stack: parse_allow_deny :: conf.c:472 <-
+         CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] conf.c:1036: Warning: 
+  out of bounds write. assert \valid(&new_node->all);
   stack: parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
 [eva:alarm] conf.c:1039: Warning: 
-  out of bounds write. assert \valid(&new_node->all);
-  stack: parse_allow_deny :: conf.c:472 <-
-         CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-         test_unit :: test/unit/test.c:70 <-
-         main :: fc_stubs.c:37 <-
-         eva_main
-[eva:alarm] conf.c:1042: Warning: 
   out of bounds write. assert \valid(&new_node->ip);
   stack: parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1046: Warning: 
+[eva:alarm] conf.c:1043: Warning: 
   out of bounds write. assert \valid(&new_node->subnet_bits);
   stack: parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1048: Warning: 
+[eva:alarm] conf.c:1045: Warning: 
   out of bounds write. assert \valid(&new_node->ip.family);
   stack: parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1057: Warning: 
+[eva:alarm] conf.c:1054: Warning: 
   out of bounds write. assert \valid(&new_node->ip.addr.in4);
+  stack: parse_allow_deny :: conf.c:472 <-
+         CNF_ParseLine :: test/unit/ntp_core.c:317 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] conf.c:1055: Warning: 
+  out of bounds write. assert \valid(&new_node->subnet_bits);
   stack: parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
 [eva:alarm] conf.c:1058: Warning: 
-  out of bounds write. assert \valid(&new_node->subnet_bits);
+  out of bounds write. assert \valid(&new_node->ip.addr.in4);
   stack: parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1061: Warning: 
-  out of bounds write. assert \valid(&new_node->ip.addr.in4);
+[eva:alarm] conf.c:1059: Warning: 
+  out of bounds write. assert \valid(&new_node->subnet_bits);
   stack: parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
 [eva:alarm] conf.c:1062: Warning: 
-  out of bounds write. assert \valid(&new_node->subnet_bits);
+  out of bounds write. assert \valid(&new_node->ip.addr.in4);
   stack: parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1065: Warning: 
-  out of bounds write. assert \valid(&new_node->ip.addr.in4);
+[eva:alarm] conf.c:1063: Warning: 
+  out of bounds write. assert \valid(&new_node->subnet_bits);
   stack: parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
 [eva:alarm] conf.c:1066: Warning: 
-  out of bounds write. assert \valid(&new_node->subnet_bits);
-  stack: parse_allow_deny :: conf.c:472 <-
-         CNF_ParseLine :: test/unit/ntp_core.c:317 <-
-         test_unit :: test/unit/test.c:70 <-
-         main :: fc_stubs.c:37 <-
-         eva_main
-[eva:alarm] conf.c:1069: Warning: 
   out of bounds write. assert \valid(&new_node->ip.addr.in4);
   stack: parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1070: Warning: 
+[eva:alarm] conf.c:1067: Warning: 
   out of bounds write. assert \valid(&new_node->subnet_bits);
   stack: parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1081: Warning: 
+[eva:alarm] conf.c:1078: Warning: 
   out of bounds write. assert \valid(&new_node->subnet_bits);
   stack: parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
@@ -2744,34 +2775,34 @@
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: array.c:94 <-
          ARR_GetElement :: array.c:88 <-
-         ARR_GetNewElement :: conf.c:1089 <-
+         ARR_GetNewElement :: conf.c:1086 <-
          parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1090: Warning: 
+[eva:alarm] conf.c:1087: Warning: 
   out of bounds write. assert \valid(&new_node->allow);
   stack: parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1091: Warning: 
+[eva:alarm] conf.c:1088: Warning: 
   out of bounds write. assert \valid(&new_node->all);
   stack: parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1092: Warning: 
+[eva:alarm] conf.c:1089: Warning: 
   out of bounds write. assert \valid(&new_node->ip);
   stack: parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1096: Warning: 
+[eva:alarm] conf.c:1093: Warning: 
   out of bounds write. assert \valid(&new_node->subnet_bits);
   stack: parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
@@ -2792,7 +2823,7 @@
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: array.c:94 <-
          ARR_GetElement :: array.c:88 <-
-         ARR_GetNewElement :: conf.c:1037 <-
+         ARR_GetNewElement :: conf.c:1034 <-
          parse_allow_deny :: conf.c:461 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -2802,7 +2833,7 @@
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: array.c:94 <-
          ARR_GetElement :: array.c:88 <-
-         ARR_GetNewElement :: conf.c:1089 <-
+         ARR_GetNewElement :: conf.c:1086 <-
          parse_allow_deny :: conf.c:461 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -2822,7 +2853,7 @@
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: array.c:94 <-
          ARR_GetElement :: array.c:88 <-
-         ARR_GetNewElement :: conf.c:1037 <-
+         ARR_GetNewElement :: conf.c:1034 <-
          parse_allow_deny :: conf.c:459 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -2832,7 +2863,7 @@
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: array.c:94 <-
          ARR_GetElement :: array.c:88 <-
-         ARR_GetNewElement :: conf.c:1089 <-
+         ARR_GetNewElement :: conf.c:1086 <-
          parse_allow_deny :: conf.c:459 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -2842,27 +2873,27 @@
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: array.c:94 <-
          ARR_GetElement :: array.c:88 <-
-         ARR_GetNewElement :: conf.c:1206 <-
+         ARR_GetNewElement :: conf.c:1203 <-
          parse_broadcast :: conf.c:455 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1207: Warning: 
+[eva:alarm] conf.c:1204: Warning: 
   out of bounds write. assert \valid(&destination->addr);
   stack: parse_broadcast :: conf.c:455 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1208: Warning: 
+[eva:alarm] conf.c:1205: Warning: 
   out of bounds write. assert \valid(&destination->port);
   stack: parse_broadcast :: conf.c:455 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1209: Warning: 
+[eva:alarm] conf.c:1206: Warning: 
   out of bounds write. assert \valid(&destination->interval);
   stack: parse_broadcast :: conf.c:455 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
@@ -2883,7 +2914,7 @@
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: array.c:94 <-
          ARR_GetElement :: array.c:88 <-
-         ARR_GetNewElement :: conf.c:1037 <-
+         ARR_GetNewElement :: conf.c:1034 <-
          parse_allow_deny :: conf.c:447 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -2893,7 +2924,7 @@
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: array.c:94 <-
          ARR_GetElement :: array.c:88 <-
-         ARR_GetNewElement :: conf.c:1089 <-
+         ARR_GetNewElement :: conf.c:1086 <-
          parse_allow_deny :: conf.c:447 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -2913,7 +2944,7 @@
   marking variable `__malloc_strdup_l319_28' as weak
   stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
          strdup :: memory.c:88 <-
-         Strdup :: conf.c:1263 <-
+         Strdup :: conf.c:1260 <-
          parse_tempcomp :: conf.c:571 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -2923,7 +2954,7 @@
   marking variable `__malloc_strdup_l319_29' as weak
   stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
          strdup :: memory.c:88 <-
-         Strdup :: conf.c:1274 <-
+         Strdup :: conf.c:1271 <-
          parse_tempcomp :: conf.c:571 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -3157,7 +3188,7 @@
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: array.c:69 <-
          realloc_array :: array.c:87 <-
-         ARR_GetNewElement :: conf.c:1294 <-
+         ARR_GetNewElement :: conf.c:1291 <-
          parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -3169,7 +3200,7 @@
          Realloc :: memory.c:80 <-
          Realloc2 :: array.c:80 <-
          realloc_array :: array.c:87 <-
-         ARR_GetNewElement :: conf.c:1294 <-
+         ARR_GetNewElement :: conf.c:1291 <-
          parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -3179,7 +3210,7 @@
   marking variable `__malloc_strdup_l319_43' as weak
   stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
          strdup :: memory.c:88 <-
-         Strdup :: conf.c:1295 <-
+         Strdup :: conf.c:1292 <-
          parse_hwtimestamp :: conf.c:484 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -3241,7 +3272,7 @@
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: array.c:69 <-
          realloc_array :: array.c:87 <-
-         ARR_GetNewElement :: conf.c:1037 <-
+         ARR_GetNewElement :: conf.c:1034 <-
          parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -3253,7 +3284,7 @@
          Realloc :: memory.c:80 <-
          Realloc2 :: array.c:80 <-
          realloc_array :: array.c:87 <-
-         ARR_GetNewElement :: conf.c:1037 <-
+         ARR_GetNewElement :: conf.c:1034 <-
          parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -3263,7 +3294,7 @@
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: array.c:69 <-
          realloc_array :: array.c:87 <-
-         ARR_GetNewElement :: conf.c:1089 <-
+         ARR_GetNewElement :: conf.c:1086 <-
          parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -3275,7 +3306,7 @@
          Realloc :: memory.c:80 <-
          Realloc2 :: array.c:80 <-
          realloc_array :: array.c:87 <-
-         ARR_GetNewElement :: conf.c:1089 <-
+         ARR_GetNewElement :: conf.c:1086 <-
          parse_allow_deny :: conf.c:472 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -3307,7 +3338,7 @@
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: array.c:69 <-
          realloc_array :: array.c:87 <-
-         ARR_GetNewElement :: conf.c:1037 <-
+         ARR_GetNewElement :: conf.c:1034 <-
          parse_allow_deny :: conf.c:461 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -3319,7 +3350,7 @@
          Realloc :: memory.c:80 <-
          Realloc2 :: array.c:80 <-
          realloc_array :: array.c:87 <-
-         ARR_GetNewElement :: conf.c:1037 <-
+         ARR_GetNewElement :: conf.c:1034 <-
          parse_allow_deny :: conf.c:461 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -3329,7 +3360,7 @@
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: array.c:69 <-
          realloc_array :: array.c:87 <-
-         ARR_GetNewElement :: conf.c:1089 <-
+         ARR_GetNewElement :: conf.c:1086 <-
          parse_allow_deny :: conf.c:461 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -3341,7 +3372,7 @@
          Realloc :: memory.c:80 <-
          Realloc2 :: array.c:80 <-
          realloc_array :: array.c:87 <-
-         ARR_GetNewElement :: conf.c:1089 <-
+         ARR_GetNewElement :: conf.c:1086 <-
          parse_allow_deny :: conf.c:461 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -3373,7 +3404,7 @@
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: array.c:69 <-
          realloc_array :: array.c:87 <-
-         ARR_GetNewElement :: conf.c:1037 <-
+         ARR_GetNewElement :: conf.c:1034 <-
          parse_allow_deny :: conf.c:459 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -3385,7 +3416,7 @@
          Realloc :: memory.c:80 <-
          Realloc2 :: array.c:80 <-
          realloc_array :: array.c:87 <-
-         ARR_GetNewElement :: conf.c:1037 <-
+         ARR_GetNewElement :: conf.c:1034 <-
          parse_allow_deny :: conf.c:459 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -3395,7 +3426,7 @@
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: array.c:69 <-
          realloc_array :: array.c:87 <-
-         ARR_GetNewElement :: conf.c:1089 <-
+         ARR_GetNewElement :: conf.c:1086 <-
          parse_allow_deny :: conf.c:459 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -3407,7 +3438,7 @@
          Realloc :: memory.c:80 <-
          Realloc2 :: array.c:80 <-
          realloc_array :: array.c:87 <-
-         ARR_GetNewElement :: conf.c:1089 <-
+         ARR_GetNewElement :: conf.c:1086 <-
          parse_allow_deny :: conf.c:459 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -3417,7 +3448,7 @@
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: array.c:69 <-
          realloc_array :: array.c:87 <-
-         ARR_GetNewElement :: conf.c:1206 <-
+         ARR_GetNewElement :: conf.c:1203 <-
          parse_broadcast :: conf.c:455 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -3429,7 +3460,7 @@
          Realloc :: memory.c:80 <-
          Realloc2 :: array.c:80 <-
          realloc_array :: array.c:87 <-
-         ARR_GetNewElement :: conf.c:1206 <-
+         ARR_GetNewElement :: conf.c:1203 <-
          parse_broadcast :: conf.c:455 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -3440,7 +3471,7 @@
   stack: malloc :: FRAMAC_SHARE/libc/string.c:319 <-
          strdup :: memory.c:88 <-
          Strdup :: conf.c:591 <-
-         parse_string :: conf.c:1151 <-
+         parse_string :: conf.c:1148 <-
          parse_bindcmdaddress :: conf.c:453 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -3472,7 +3503,7 @@
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: array.c:69 <-
          realloc_array :: array.c:87 <-
-         ARR_GetNewElement :: conf.c:1037 <-
+         ARR_GetNewElement :: conf.c:1034 <-
          parse_allow_deny :: conf.c:447 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -3484,7 +3515,7 @@
          Realloc :: memory.c:80 <-
          Realloc2 :: array.c:80 <-
          realloc_array :: array.c:87 <-
-         ARR_GetNewElement :: conf.c:1037 <-
+         ARR_GetNewElement :: conf.c:1034 <-
          parse_allow_deny :: conf.c:447 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -3494,7 +3525,7 @@
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: array.c:69 <-
          realloc_array :: array.c:87 <-
-         ARR_GetNewElement :: conf.c:1089 <-
+         ARR_GetNewElement :: conf.c:1086 <-
          parse_allow_deny :: conf.c:447 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -3506,7 +3537,7 @@
          Realloc :: memory.c:80 <-
          Realloc2 :: array.c:80 <-
          realloc_array :: array.c:87 <-
-         ARR_GetNewElement :: conf.c:1089 <-
+         ARR_GetNewElement :: conf.c:1086 <-
          parse_allow_deny :: conf.c:447 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -3607,7 +3638,7 @@
 [eva:alarm] array.c:94: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: array.c:94 <-
-         ARR_GetElement :: conf.c:2041 <-
+         ARR_GetElement :: conf.c:2038 <-
          CNF_GetHwTsInterface :: ntp_io.c:373 <-
          NIO_Initialise :: test/unit/ntp_core.c:323 <-
          test_unit :: test/unit/test.c:70 <-
@@ -4720,30 +4751,30 @@
 [eva:alarm] array.c:94: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: array.c:94 <-
-         ARR_GetElement :: conf.c:1794 <-
+         ARR_GetElement :: conf.c:1791 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1795: Warning: 
+[eva:alarm] conf.c:1792: Warning: 
   accessing uninitialized left-value. assert \initialized(&node->all);
   stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1795: Warning: 
+[eva:alarm] conf.c:1792: Warning: 
   accessing uninitialized left-value. assert \initialized(&node->allow);
   stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1795: Warning: 
+[eva:alarm] conf.c:1792: Warning: 
   accessing uninitialized left-value. assert \initialized(&node->subnet_bits);
   stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1795: Warning: 
+[eva:alarm] conf.c:1792: Warning: 
   out of bounds read. assert \valid_read(&node->all);
   stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
@@ -4753,7 +4784,7 @@
   accessing uninitialized left-value. assert \initialized(&ip_addr->family);
   stack: set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -4764,7 +4795,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -4774,7 +4805,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -4785,7 +4816,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -4796,7 +4827,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -4807,7 +4838,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -4817,7 +4848,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -4827,7 +4858,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -4841,7 +4872,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -4852,7 +4883,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -4863,7 +4894,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -4874,7 +4905,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -4893,7 +4924,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -4904,7 +4935,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -4915,7 +4946,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -4927,7 +4958,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -4939,7 +4970,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -4950,7 +4981,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -4960,7 +4991,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -4970,7 +5001,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -4980,7 +5011,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -4994,7 +5025,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5005,7 +5036,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5015,7 +5046,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5025,7 +5056,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5035,7 +5066,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5047,7 +5078,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5058,7 +5089,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5069,7 +5100,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5080,7 +5111,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5091,7 +5122,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5101,7 +5132,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5112,7 +5143,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5124,7 +5155,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5136,7 +5167,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5148,7 +5179,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5160,7 +5191,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5172,7 +5203,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5182,7 +5213,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5192,7 +5223,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5206,7 +5237,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:267 <-
          ADF_Allow :: ntp_core.c:2520 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5216,7 +5247,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:267 <-
          ADF_Allow :: ntp_core.c:2520 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5230,7 +5261,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:267 <-
          ADF_Allow :: ntp_core.c:2520 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5241,7 +5272,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:267 <-
          ADF_Allow :: ntp_core.c:2520 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5255,7 +5286,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:298 <-
          ADF_DenyAll :: ntp_core.c:2524 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5267,7 +5298,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:298 <-
          ADF_DenyAll :: ntp_core.c:2524 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5281,7 +5312,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:298 <-
          ADF_DenyAll :: ntp_core.c:2524 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5292,7 +5323,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:298 <-
          ADF_DenyAll :: ntp_core.c:2524 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5304,7 +5335,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:298 <-
          ADF_DenyAll :: ntp_core.c:2524 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5318,7 +5349,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:288 <-
          ADF_Deny :: ntp_core.c:2526 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5332,7 +5363,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:288 <-
          ADF_Deny :: ntp_core.c:2526 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5343,7 +5374,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:288 <-
          ADF_Deny :: ntp_core.c:2526 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5353,18 +5384,18 @@
   assert ¬\dangling(&node->extended);
   stack: is_any_allowed :: addrfilt.c:414 <-
          ADF_IsAnyAllowed :: ntp_core.c:2538 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1795: Warning: 
+[eva:alarm] conf.c:1792: Warning: 
   out of bounds read. assert \valid_read(&node->allow);
   stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1795: Warning: 
+[eva:alarm] conf.c:1792: Warning: 
   out of bounds read. assert \valid_read(&node->subnet_bits);
   stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
@@ -5374,7 +5405,7 @@
   out of bounds read. assert \valid_read(&ip_addr->family);
   stack: set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5385,7 +5416,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5396,7 +5427,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5407,7 +5438,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5418,7 +5449,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5430,7 +5461,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5442,7 +5473,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5454,7 +5485,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5466,7 +5497,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5478,7 +5509,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5489,7 +5520,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5500,7 +5531,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5511,7 +5542,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5522,7 +5553,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5533,7 +5564,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5543,7 +5574,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5553,7 +5584,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5563,7 +5594,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5573,7 +5604,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5583,7 +5614,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5594,7 +5625,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5605,7 +5636,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5616,7 +5647,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5627,7 +5658,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5638,7 +5669,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5648,7 +5679,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5658,7 +5689,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5668,7 +5699,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5678,7 +5709,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5689,7 +5720,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5700,7 +5731,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5711,7 +5742,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5721,7 +5752,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5731,7 +5762,7 @@
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5741,7 +5772,7 @@
   stack: __FC_assert :: addrfilt.c:387 <-
          is_any_allowed :: addrfilt.c:414 <-
          ADF_IsAnyAllowed :: ntp_core.c:2538 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5751,7 +5782,7 @@
   assert \aligned(node->extended,alignof(struct _TableNode));
   stack: is_any_allowed :: addrfilt.c:414 <-
          ADF_IsAnyAllowed :: ntp_core.c:2538 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5761,7 +5792,7 @@
   assert \pointer_comparable((void *)0, (void *)node->extended);
   stack: is_any_allowed :: addrfilt.c:414 <-
          ADF_IsAnyAllowed :: ntp_core.c:2538 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5771,7 +5802,7 @@
   stack: __FC_assert :: addrfilt.c:387 <-
          is_any_allowed :: addrfilt.c:416 <-
          ADF_IsAnyAllowed :: ntp_core.c:2543 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5785,7 +5816,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5797,7 +5828,7 @@
          set_subnet :: addrfilt.c:253 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5809,7 +5840,7 @@
          set_subnet :: addrfilt.c:254 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5823,7 +5854,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:267 <-
          ADF_Allow :: ntp_core.c:2520 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5837,7 +5868,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:298 <-
          ADF_DenyAll :: ntp_core.c:2524 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5849,7 +5880,7 @@
          set_subnet :: addrfilt.c:254 <-
          set_subnet_ :: addrfilt.c:298 <-
          ADF_DenyAll :: ntp_core.c:2524 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5863,7 +5894,7 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:288 <-
          ADF_Deny :: ntp_core.c:2526 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5873,46 +5904,46 @@
   assert ¬\dangling(&node->state);
   stack: is_any_allowed :: addrfilt.c:414 <-
          ADF_IsAnyAllowed :: ntp_core.c:2538 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
 [eva:alarm] util.c:291: Warning: 
   accessing uninitialized left-value. assert \initialized(&addr->family);
-  stack: UTI_IPToString :: conf.c:1797 <-
+  stack: UTI_IPToString :: conf.c:1794 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
 [eva:alarm] util.c:291: Warning: 
   out of bounds read. assert \valid_read(&addr->family);
-  stack: UTI_IPToString :: conf.c:1797 <-
+  stack: UTI_IPToString :: conf.c:1794 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
 [eva:alarm] util.c:296: Warning: 
   accessing uninitialized left-value. assert \initialized(&addr->addr.in4);
-  stack: UTI_IPToString :: conf.c:1797 <-
+  stack: UTI_IPToString :: conf.c:1794 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
 [eva:alarm] util.c:296: Warning: 
   out of bounds read. assert \valid_read(&addr->addr.in4);
-  stack: UTI_IPToString :: conf.c:1797 <-
+  stack: UTI_IPToString :: conf.c:1794 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1797: Warning: 
+[eva:alarm] conf.c:1794: Warning: 
   accessing uninitialized left-value. assert \initialized(&node->subnet_bits);
   stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1797: Warning: 
+[eva:alarm] conf.c:1794: Warning: 
   out of bounds read. assert \valid_read(&node->subnet_bits);
   stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
@@ -5921,45 +5952,45 @@
 [eva:alarm] array.c:94: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: array.c:94 <-
-         ARR_GetElement :: conf.c:1802 <-
+         ARR_GetElement :: conf.c:1799 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1803: Warning: 
+[eva:alarm] conf.c:1800: Warning: 
   accessing uninitialized left-value. assert \initialized(&node->all);
   stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1803: Warning: 
+[eva:alarm] conf.c:1800: Warning: 
   accessing uninitialized left-value. assert \initialized(&node->allow);
   stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1803: Warning: 
+[eva:alarm] conf.c:1800: Warning: 
   accessing uninitialized left-value. assert \initialized(&node->subnet_bits);
   stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1803: Warning: 
+[eva:alarm] conf.c:1800: Warning: 
   out of bounds read. assert \valid_read(&node->all);
   stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[kernel:annot:missing-spec] conf.c:1803: Warning: 
+[kernel:annot:missing-spec] conf.c:1800: Warning: 
   Neither code nor specification for function CAM_AddAccessRestriction,
    generating default assigns. See -generated-spec-* options for more info
-[eva:alarm] conf.c:1803: Warning: 
+[eva:alarm] conf.c:1800: Warning: 
   out of bounds read. assert \valid_read(&node->allow);
   stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1803: Warning: 
+[eva:alarm] conf.c:1800: Warning: 
   out of bounds read. assert \valid_read(&node->subnet_bits);
   stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
@@ -5968,14 +5999,14 @@
 [eva:alarm] util.c:310: Warning: 
   accessing uninitialized left-value.
   assert \initialized(ip6 + (unsigned long)(2 * a));
-  stack: UTI_IPToString :: conf.c:1805 <-
+  stack: UTI_IPToString :: conf.c:1802 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
 [eva:alarm] util.c:310: Warning: 
   out of bounds read. assert \valid_read(ip6 + (unsigned long)(2 * a));
-  stack: UTI_IPToString :: conf.c:1805 <-
+  stack: UTI_IPToString :: conf.c:1802 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5983,7 +6014,7 @@
 [eva:alarm] util.c:310: Warning: 
   accessing uninitialized left-value.
   assert \initialized(ip6 + (unsigned long)((unsigned long)(2 * a) + 1));
-  stack: UTI_IPToString :: conf.c:1805 <-
+  stack: UTI_IPToString :: conf.c:1802 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -5991,18 +6022,18 @@
 [eva:alarm] util.c:310: Warning: 
   out of bounds read.
   assert \valid_read(ip6 + (unsigned long)((unsigned long)(2 * a) + 1));
-  stack: UTI_IPToString :: conf.c:1805 <-
+  stack: UTI_IPToString :: conf.c:1802 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1805: Warning: 
+[eva:alarm] conf.c:1802: Warning: 
   accessing uninitialized left-value. assert \initialized(&node->subnet_bits);
   stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] conf.c:1805: Warning: 
+[eva:alarm] conf.c:1802: Warning: 
   out of bounds read. assert \valid_read(&node->subnet_bits);
   stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-

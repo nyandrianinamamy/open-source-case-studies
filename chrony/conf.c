@@ -1031,9 +1031,6 @@ parse_allow_deny(char *line, ARR_Instance restrictions, int allow)
     n = 0;
     if (UTI_StringToIP(p, &ip_addr) ||
         (n = sscanf(p, "%lu.%lu.%lu.%lu", &a, &b, &c, &d)) >= 1) {
-      // FRAMAC-C/EVA patch: hopefully the next Frama-C release will be able
-      // to ensure that n <= 4 via Variadic
-      //@ assert n <= 4;
       new_node = (AllowDeny *)ARR_GetNewElement(restrictions);
       new_node->allow = allow;
       new_node->all = all;
