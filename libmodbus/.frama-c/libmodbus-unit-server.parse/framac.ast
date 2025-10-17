@@ -5419,19 +5419,8 @@ int main(int argc, char **argv)
             else 
               if (((int)*(query + (header_length + 1)) << 8) + (int)*(
                   query + ((header_length + 1) + 1)) == (int)UT_REGISTERS_ADDRESS_BYTE_SLEEP_5_MS) {
-                uint8_t req[12] =
-                  {(uint8_t)'\000',
-                   (uint8_t)'\034',
-                   (uint8_t)'\000',
-                   (uint8_t)'\000',
-                   (uint8_t)'\000',
-                   (uint8_t)'\005',
-                   (uint8_t)'\377',
-                   (uint8_t)'\003',
-                   (uint8_t)'\002',
-                   (uint8_t)'\000',
-                   (uint8_t)'\000',
-                   (uint8_t)'\000'};
+                uint8_t req[12UL] =
+                  "\000\034\000\000\000\005\377\003\002\000\000";
                 int req_length = 11;
                 int w_s = modbus_get_socket(ctx);
                 if (w_s == -1) {

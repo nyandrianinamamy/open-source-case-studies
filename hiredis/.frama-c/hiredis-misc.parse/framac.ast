@@ -2040,16 +2040,8 @@ static size_t bulklen(size_t len)
   return __retres;
 }
 
-static char const redisvFormatCommand_intfmts[7] =
-  {(char)'d',
-   (char)'i',
-   (char)'o',
-   (char)'u',
-   (char)'x',
-   (char)'X',
-   (char)'\000'};
-static char const redisvFormatCommand_flags[6] =
-  {(char)'#', (char)'0', (char)'-', (char)'+', (char)' ', (char)'\000'};
+static char const redisvFormatCommand_intfmts[7U] = "diouxX";
+static char const redisvFormatCommand_flags[6U] = "#0-+ ";
 /*@ requires valid_read_string(format);
     assigns \result, *(s + (0 ..));
     assigns \result \from (indirect: *(format + (0 ..))), (indirect: param0);

@@ -4180,7 +4180,7 @@ static void tdefl_start_dynamic_block(tdefl_compressor *d)
       tmp_41 = packed_code_sizes_index;
       packed_code_sizes_index ++;
       mz_uint bits_5 = (mz_uint)packed_code_sizes[tmp_41];
-      mz_uint len_5 = (mz_uint)*("\002\003\a" + (code - (mz_uint)16));
+      mz_uint len_5 = (mz_uint)"\002\003\a"[code - (mz_uint)16];
       __FC_assert((bits_5 <= (1U << len_5) - 1U) != 0,"miniz_tdef.c",423,
                   "bits <= ((1U << len) - 1U)");
       d->m_bit_buffer |= bits_5 << d->m_bits_in;
@@ -6635,7 +6635,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
           else {
             counter = (mz_uint32)0;
             while (counter < (mz_uint32)3) {
-              if (num_bits < (mz_uint)*("\005\005\004" + counter)) 
+              if (num_bits < (mz_uint)"\005\005\004"[counter]) 
                 while (1) {
                   {
                     mz_uint c_3;
@@ -6656,13 +6656,13 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                     bit_buf |= (tinfl_bit_buf_t)c_3 << num_bits;
                     num_bits += (mz_uint32)8;
                   }
-                  if (! (num_bits < (mz_uint)*("\005\005\004" + counter))) 
+                  if (! (num_bits < (mz_uint)"\005\005\004"[counter])) 
                     break;
                 }
               r->m_table_sizes[counter] = (mz_uint32)(bit_buf & (unsigned long)(
-                                                      (1 << (int)*("\005\005\004" + counter)) - 1));
-              bit_buf >>= (int)*("\005\005\004" + counter);
-              num_bits -= (mz_uint32)*("\005\005\004" + counter);
+                                                      (1 << (int)"\005\005\004"[counter]) - 1));
+              bit_buf >>= (int)"\005\005\004"[counter];
+              num_bits -= (mz_uint32)"\005\005\004"[counter];
               r->m_table_sizes[counter] += (mz_uint32)tinfl_decompress_s_min_table_sizes[counter];
               counter ++;
             }
@@ -6901,7 +6901,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                           goto common_exit;
                           case (mz_uint32)17: ;
                         }
-                    num_extra = (mz_uint32)*("\002\003\a" + (dist - (mz_uint32)16));
+                    num_extra = (mz_uint32)"\002\003\a"[dist - (mz_uint32)16];
                     if (num_bits < num_extra) 
                       while (1) {
                         {
@@ -6928,7 +6928,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                     s_0 = (mz_uint)(bit_buf & (unsigned long)((1 << num_extra) - 1));
                     bit_buf >>= num_extra;
                     num_bits -= num_extra;
-                    s_0 += (mz_uint)*("\003\003\v" + (dist - (mz_uint32)16));
+                    s_0 += (mz_uint)"\003\003\v"[dist - (mz_uint32)16];
                     ;
                     if (dist == (mz_uint32)16) tmp_28 = (int)r->m_len_codes[
                                                counter - (mz_uint32)1];

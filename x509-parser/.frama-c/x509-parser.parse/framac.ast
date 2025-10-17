@@ -245,8 +245,9 @@ static int get_identifier(u8 const *buf, u16 len, tag_class *cls, u8 *prim,
     u16 tag_len = (u16)0;
     /*@
     assert
-    len ≥ rbytes ∧ len - rbytes ≤ 65535 ∧
-    \valid_read(buf + (rbytes .. len - 1)); */
+      len ≥ rbytes ∧ len - rbytes ≤ 65535 ∧
+      \valid_read(buf + (rbytes .. len - 1));
+     */
     ;
     ret = _extract_complex_tag(buf + (int)rbytes,
                                (u16)((int)len - (int)rbytes),& t,& tag_len);
@@ -798,42 +799,8 @@ static int parse_algoid_params_generic(u8 const *buf, u16 len,
 
 static int parse_algoid_params_rsa(u8 const *buf, u16 len, alg_param *param);
 
-static u8 const _ecdsa_sha1_name[16] =
-  {(u8)'e',
-   (u8)'c',
-   (u8)'d',
-   (u8)'s',
-   (u8)'a',
-   (u8)'-',
-   (u8)'w',
-   (u8)'i',
-   (u8)'t',
-   (u8)'h',
-   (u8)'-',
-   (u8)'S',
-   (u8)'H',
-   (u8)'A',
-   (u8)'1',
-   (u8)'\000'};
-static u8 const _ecdsa_sha1_printable_oid[18] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'8',
-   (u8)'4',
-   (u8)'0',
-   (u8)'.',
-   (u8)'1',
-   (u8)'0',
-   (u8)'0',
-   (u8)'4',
-   (u8)'5',
-   (u8)'.',
-   (u8)'4',
-   (u8)'.',
-   (u8)'1',
-   (u8)'\000'};
+static u8 const _ecdsa_sha1_name[16UL] = "ecdsa-with-SHA1";
+static u8 const _ecdsa_sha1_printable_oid[18UL] = "1.2.840.10045.4.1";
 static u8 const _ecdsa_sha1_der_oid[9] =
   {(u8)0x06,
    (u8)0x07,
@@ -853,46 +820,8 @@ static _alg_id const _ecdsa_sha1_alg =
    .parse_sig = & parse_sig_ecdsa,
    .parse_subjectpubkey = (int (*)(u8 const *buf, u16 len, alg_param *param))0,
    .parse_algoid_params = & parse_algoid_params_ecdsa_with};
-static u8 const _ecdsa_sha224_name[18] =
-  {(u8)'e',
-   (u8)'c',
-   (u8)'d',
-   (u8)'s',
-   (u8)'a',
-   (u8)'-',
-   (u8)'w',
-   (u8)'i',
-   (u8)'t',
-   (u8)'h',
-   (u8)'-',
-   (u8)'S',
-   (u8)'H',
-   (u8)'A',
-   (u8)'2',
-   (u8)'2',
-   (u8)'4',
-   (u8)'\000'};
-static u8 const _ecdsa_sha224_printable_oid[20] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'8',
-   (u8)'4',
-   (u8)'0',
-   (u8)'.',
-   (u8)'1',
-   (u8)'0',
-   (u8)'0',
-   (u8)'4',
-   (u8)'5',
-   (u8)'.',
-   (u8)'4',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'1',
-   (u8)'\000'};
+static u8 const _ecdsa_sha224_name[18UL] = "ecdsa-with-SHA224";
+static u8 const _ecdsa_sha224_printable_oid[20UL] = "1.2.840.10045.4.3.1";
 static u8 const _ecdsa_sha224_der_oid[10] =
   {(u8)0x06,
    (u8)0x08,
@@ -913,46 +842,8 @@ static _alg_id const _ecdsa_sha224_alg =
    .parse_sig = & parse_sig_ecdsa,
    .parse_subjectpubkey = (int (*)(u8 const *buf, u16 len, alg_param *param))0,
    .parse_algoid_params = & parse_algoid_params_ecdsa_with};
-static u8 const _ecdsa_sha256_name[18] =
-  {(u8)'e',
-   (u8)'c',
-   (u8)'d',
-   (u8)'s',
-   (u8)'a',
-   (u8)'-',
-   (u8)'w',
-   (u8)'i',
-   (u8)'t',
-   (u8)'h',
-   (u8)'-',
-   (u8)'S',
-   (u8)'H',
-   (u8)'A',
-   (u8)'2',
-   (u8)'5',
-   (u8)'6',
-   (u8)'\000'};
-static u8 const _ecdsa_sha256_printable_oid[20] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'8',
-   (u8)'4',
-   (u8)'0',
-   (u8)'.',
-   (u8)'1',
-   (u8)'0',
-   (u8)'0',
-   (u8)'4',
-   (u8)'5',
-   (u8)'.',
-   (u8)'4',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'2',
-   (u8)'\000'};
+static u8 const _ecdsa_sha256_name[18UL] = "ecdsa-with-SHA256";
+static u8 const _ecdsa_sha256_printable_oid[20UL] = "1.2.840.10045.4.3.2";
 static u8 const _ecdsa_sha256_der_oid[10] =
   {(u8)0x06,
    (u8)0x08,
@@ -973,46 +864,8 @@ static _alg_id const _ecdsa_sha256_alg =
    .parse_sig = & parse_sig_ecdsa,
    .parse_subjectpubkey = (int (*)(u8 const *buf, u16 len, alg_param *param))0,
    .parse_algoid_params = & parse_algoid_params_ecdsa_with};
-static u8 const _ecdsa_sha384_name[18] =
-  {(u8)'e',
-   (u8)'c',
-   (u8)'d',
-   (u8)'s',
-   (u8)'a',
-   (u8)'-',
-   (u8)'w',
-   (u8)'i',
-   (u8)'t',
-   (u8)'h',
-   (u8)'-',
-   (u8)'S',
-   (u8)'H',
-   (u8)'A',
-   (u8)'3',
-   (u8)'8',
-   (u8)'4',
-   (u8)'\000'};
-static u8 const _ecdsa_sha384_printable_oid[20] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'8',
-   (u8)'4',
-   (u8)'0',
-   (u8)'.',
-   (u8)'1',
-   (u8)'0',
-   (u8)'0',
-   (u8)'4',
-   (u8)'5',
-   (u8)'.',
-   (u8)'4',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'3',
-   (u8)'\000'};
+static u8 const _ecdsa_sha384_name[18UL] = "ecdsa-with-SHA384";
+static u8 const _ecdsa_sha384_printable_oid[20UL] = "1.2.840.10045.4.3.3";
 static u8 const _ecdsa_sha384_der_oid[10] =
   {(u8)0x06,
    (u8)0x08,
@@ -1033,46 +886,8 @@ static _alg_id const _ecdsa_sha384_alg =
    .parse_sig = & parse_sig_ecdsa,
    .parse_subjectpubkey = (int (*)(u8 const *buf, u16 len, alg_param *param))0,
    .parse_algoid_params = & parse_algoid_params_ecdsa_with};
-static u8 const _ecdsa_sha512_name[18] =
-  {(u8)'e',
-   (u8)'c',
-   (u8)'d',
-   (u8)'s',
-   (u8)'a',
-   (u8)'-',
-   (u8)'w',
-   (u8)'i',
-   (u8)'t',
-   (u8)'h',
-   (u8)'-',
-   (u8)'S',
-   (u8)'H',
-   (u8)'A',
-   (u8)'5',
-   (u8)'1',
-   (u8)'2',
-   (u8)'\000'};
-static u8 const _ecdsa_sha512_printable_oid[20] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'8',
-   (u8)'4',
-   (u8)'0',
-   (u8)'.',
-   (u8)'1',
-   (u8)'0',
-   (u8)'0',
-   (u8)'4',
-   (u8)'5',
-   (u8)'.',
-   (u8)'4',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'4',
-   (u8)'\000'};
+static u8 const _ecdsa_sha512_name[18UL] = "ecdsa-with-SHA512";
+static u8 const _ecdsa_sha512_printable_oid[20UL] = "1.2.840.10045.4.3.4";
 static u8 const _ecdsa_sha512_der_oid[10] =
   {(u8)0x06,
    (u8)0x08,
@@ -1093,38 +908,8 @@ static _alg_id const _ecdsa_sha512_alg =
    .parse_sig = & parse_sig_ecdsa,
    .parse_subjectpubkey = (int (*)(u8 const *buf, u16 len, alg_param *param))0,
    .parse_algoid_params = & parse_algoid_params_ecdsa_with};
-static u8 const _ecpublickey_name[12] =
-  {(u8)'e',
-   (u8)'c',
-   (u8)'P',
-   (u8)'u',
-   (u8)'b',
-   (u8)'l',
-   (u8)'i',
-   (u8)'c',
-   (u8)'K',
-   (u8)'e',
-   (u8)'y',
-   (u8)'\000'};
-static u8 const _ecpublickey_printable_oid[18] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'8',
-   (u8)'4',
-   (u8)'0',
-   (u8)'.',
-   (u8)'1',
-   (u8)'0',
-   (u8)'0',
-   (u8)'4',
-   (u8)'5',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'1',
-   (u8)'\000'};
+static u8 const _ecpublickey_name[12UL] = "ecPublicKey";
+static u8 const _ecpublickey_printable_oid[18UL] = "1.2.840.10045.2.1";
 static u8 const _ecpublickey_der_oid[9] =
   {(u8)0x06,
    (u8)0x07,
@@ -1144,50 +929,8 @@ static _alg_id const _ecpublickey_alg =
    .parse_sig = (int (*)(u8 const *buf, u16 len, u16 *eaten))0,
    .parse_subjectpubkey = & parse_subjectpubkey_ec,
    .parse_algoid_params = & parse_algoid_params_ecPublicKey};
-static u8 const _rsa_md2_name[21] =
-  {(u8)'m',
-   (u8)'d',
-   (u8)'2',
-   (u8)'W',
-   (u8)'i',
-   (u8)'t',
-   (u8)'h',
-   (u8)'R',
-   (u8)'S',
-   (u8)'A',
-   (u8)'E',
-   (u8)'n',
-   (u8)'c',
-   (u8)'r',
-   (u8)'y',
-   (u8)'p',
-   (u8)'t',
-   (u8)'i',
-   (u8)'o',
-   (u8)'n',
-   (u8)'\000'};
-static u8 const _rsa_md2_printable_oid[21] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'8',
-   (u8)'4',
-   (u8)'0',
-   (u8)'.',
-   (u8)'1',
-   (u8)'1',
-   (u8)'3',
-   (u8)'5',
-   (u8)'4',
-   (u8)'9',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'2',
-   (u8)'\000'};
+static u8 const _rsa_md2_name[21UL] = "md2WithRSAEncryption";
+static u8 const _rsa_md2_printable_oid[21UL] = "1.2.840.113549.1.1.2";
 static u8 const _rsa_md2_der_oid[11] =
   {(u8)0x06,
    (u8)0x09,
@@ -1209,50 +952,8 @@ static _alg_id const _rsa_md2_alg =
    .parse_sig = & parse_sig_generic,
    .parse_subjectpubkey = (int (*)(u8 const *buf, u16 len, alg_param *param))0,
    .parse_algoid_params = & parse_algoid_params_generic};
-static u8 const _rsa_md4_name[21] =
-  {(u8)'m',
-   (u8)'d',
-   (u8)'4',
-   (u8)'W',
-   (u8)'i',
-   (u8)'t',
-   (u8)'h',
-   (u8)'R',
-   (u8)'S',
-   (u8)'A',
-   (u8)'E',
-   (u8)'n',
-   (u8)'c',
-   (u8)'r',
-   (u8)'y',
-   (u8)'p',
-   (u8)'t',
-   (u8)'i',
-   (u8)'o',
-   (u8)'n',
-   (u8)'\000'};
-static u8 const _rsa_md4_printable_oid[21] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'8',
-   (u8)'4',
-   (u8)'0',
-   (u8)'.',
-   (u8)'1',
-   (u8)'1',
-   (u8)'3',
-   (u8)'5',
-   (u8)'4',
-   (u8)'9',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'3',
-   (u8)'\000'};
+static u8 const _rsa_md4_name[21UL] = "md4WithRSAEncryption";
+static u8 const _rsa_md4_printable_oid[21UL] = "1.2.840.113549.1.1.3";
 static u8 const _rsa_md4_der_oid[11] =
   {(u8)0x06,
    (u8)0x09,
@@ -1274,50 +975,8 @@ static _alg_id const _rsa_md4_alg =
    .parse_sig = & parse_sig_generic,
    .parse_subjectpubkey = (int (*)(u8 const *buf, u16 len, alg_param *param))0,
    .parse_algoid_params = & parse_algoid_params_generic};
-static u8 const _rsa_md5_name[21] =
-  {(u8)'m',
-   (u8)'d',
-   (u8)'5',
-   (u8)'W',
-   (u8)'i',
-   (u8)'t',
-   (u8)'h',
-   (u8)'R',
-   (u8)'S',
-   (u8)'A',
-   (u8)'E',
-   (u8)'n',
-   (u8)'c',
-   (u8)'r',
-   (u8)'y',
-   (u8)'p',
-   (u8)'t',
-   (u8)'i',
-   (u8)'o',
-   (u8)'n',
-   (u8)'\000'};
-static u8 const _rsa_md5_printable_oid[21] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'8',
-   (u8)'4',
-   (u8)'0',
-   (u8)'.',
-   (u8)'1',
-   (u8)'1',
-   (u8)'3',
-   (u8)'5',
-   (u8)'4',
-   (u8)'9',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'4',
-   (u8)'\000'};
+static u8 const _rsa_md5_name[21UL] = "md5WithRSAEncryption";
+static u8 const _rsa_md5_printable_oid[21UL] = "1.2.840.113549.1.1.4";
 static u8 const _rsa_md5_der_oid[11] =
   {(u8)0x06,
    (u8)0x09,
@@ -1339,51 +998,8 @@ static _alg_id const _rsa_md5_alg =
    .parse_sig = & parse_sig_generic,
    .parse_subjectpubkey = (int (*)(u8 const *buf, u16 len, alg_param *param))0,
    .parse_algoid_params = & parse_algoid_params_rsa};
-static u8 const _rsa_sha1_name[22] =
-  {(u8)'s',
-   (u8)'h',
-   (u8)'a',
-   (u8)'1',
-   (u8)'W',
-   (u8)'i',
-   (u8)'t',
-   (u8)'h',
-   (u8)'R',
-   (u8)'S',
-   (u8)'A',
-   (u8)'E',
-   (u8)'n',
-   (u8)'c',
-   (u8)'r',
-   (u8)'y',
-   (u8)'p',
-   (u8)'t',
-   (u8)'i',
-   (u8)'o',
-   (u8)'n',
-   (u8)'\000'};
-static u8 const _rsa_sha1_printable_oid[21] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'8',
-   (u8)'4',
-   (u8)'0',
-   (u8)'.',
-   (u8)'1',
-   (u8)'1',
-   (u8)'3',
-   (u8)'5',
-   (u8)'4',
-   (u8)'9',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'5',
-   (u8)'\000'};
+static u8 const _rsa_sha1_name[22UL] = "sha1WithRSAEncryption";
+static u8 const _rsa_sha1_printable_oid[21UL] = "1.2.840.113549.1.1.5";
 static u8 const _rsa_sha1_der_oid[11] =
   {(u8)0x06,
    (u8)0x09,
@@ -1405,54 +1021,8 @@ static _alg_id const _rsa_sha1_alg =
    .parse_sig = & parse_sig_generic,
    .parse_subjectpubkey = (int (*)(u8 const *buf, u16 len, alg_param *param))0,
    .parse_algoid_params = & parse_algoid_params_rsa};
-static u8 const _rsa_sha256_name[24] =
-  {(u8)'s',
-   (u8)'h',
-   (u8)'a',
-   (u8)'2',
-   (u8)'5',
-   (u8)'6',
-   (u8)'W',
-   (u8)'i',
-   (u8)'t',
-   (u8)'h',
-   (u8)'R',
-   (u8)'S',
-   (u8)'A',
-   (u8)'E',
-   (u8)'n',
-   (u8)'c',
-   (u8)'r',
-   (u8)'y',
-   (u8)'p',
-   (u8)'t',
-   (u8)'i',
-   (u8)'o',
-   (u8)'n',
-   (u8)'\000'};
-static u8 const _rsa_sha256_printable_oid[22] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'8',
-   (u8)'4',
-   (u8)'0',
-   (u8)'.',
-   (u8)'1',
-   (u8)'1',
-   (u8)'3',
-   (u8)'5',
-   (u8)'4',
-   (u8)'9',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'1',
-   (u8)'1',
-   (u8)'\000'};
+static u8 const _rsa_sha256_name[24UL] = "sha256WithRSAEncryption";
+static u8 const _rsa_sha256_printable_oid[22UL] = "1.2.840.113549.1.1.11";
 static u8 const _rsa_sha256_der_oid[11] =
   {(u8)0x06,
    (u8)0x09,
@@ -1474,54 +1044,8 @@ static _alg_id const _rsa_sha256_alg =
    .parse_sig = & parse_sig_generic,
    .parse_subjectpubkey = (int (*)(u8 const *buf, u16 len, alg_param *param))0,
    .parse_algoid_params = & parse_algoid_params_generic};
-static u8 const _rsa_sha224_name[24] =
-  {(u8)'s',
-   (u8)'h',
-   (u8)'a',
-   (u8)'2',
-   (u8)'2',
-   (u8)'4',
-   (u8)'W',
-   (u8)'i',
-   (u8)'t',
-   (u8)'h',
-   (u8)'R',
-   (u8)'S',
-   (u8)'A',
-   (u8)'E',
-   (u8)'n',
-   (u8)'c',
-   (u8)'r',
-   (u8)'y',
-   (u8)'p',
-   (u8)'t',
-   (u8)'i',
-   (u8)'o',
-   (u8)'n',
-   (u8)'\000'};
-static u8 const _rsa_sha224_printable_oid[22] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'8',
-   (u8)'4',
-   (u8)'0',
-   (u8)'.',
-   (u8)'1',
-   (u8)'1',
-   (u8)'3',
-   (u8)'5',
-   (u8)'4',
-   (u8)'9',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'1',
-   (u8)'4',
-   (u8)'\000'};
+static u8 const _rsa_sha224_name[24UL] = "sha224WithRSAEncryption";
+static u8 const _rsa_sha224_printable_oid[22UL] = "1.2.840.113549.1.1.14";
 static u8 const _rsa_sha224_der_oid[11] =
   {(u8)0x06,
    (u8)0x09,
@@ -1543,54 +1067,8 @@ static _alg_id const _rsa_sha224_alg =
    .parse_sig = & parse_sig_generic,
    .parse_subjectpubkey = (int (*)(u8 const *buf, u16 len, alg_param *param))0,
    .parse_algoid_params = & parse_algoid_params_generic};
-static u8 const _rsa_sha384_name[24] =
-  {(u8)'s',
-   (u8)'h',
-   (u8)'a',
-   (u8)'3',
-   (u8)'8',
-   (u8)'4',
-   (u8)'W',
-   (u8)'i',
-   (u8)'t',
-   (u8)'h',
-   (u8)'R',
-   (u8)'S',
-   (u8)'A',
-   (u8)'E',
-   (u8)'n',
-   (u8)'c',
-   (u8)'r',
-   (u8)'y',
-   (u8)'p',
-   (u8)'t',
-   (u8)'i',
-   (u8)'o',
-   (u8)'n',
-   (u8)'\000'};
-static u8 const _rsa_sha384_printable_oid[22] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'8',
-   (u8)'4',
-   (u8)'0',
-   (u8)'.',
-   (u8)'1',
-   (u8)'1',
-   (u8)'3',
-   (u8)'5',
-   (u8)'4',
-   (u8)'9',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'1',
-   (u8)'2',
-   (u8)'\000'};
+static u8 const _rsa_sha384_name[24UL] = "sha384WithRSAEncryption";
+static u8 const _rsa_sha384_printable_oid[22UL] = "1.2.840.113549.1.1.12";
 static u8 const _rsa_sha384_der_oid[11] =
   {(u8)0x06,
    (u8)0x09,
@@ -1612,54 +1090,8 @@ static _alg_id const _rsa_sha384_alg =
    .parse_sig = & parse_sig_generic,
    .parse_subjectpubkey = (int (*)(u8 const *buf, u16 len, alg_param *param))0,
    .parse_algoid_params = & parse_algoid_params_generic};
-static u8 const _rsa_sha512_name[24] =
-  {(u8)'s',
-   (u8)'h',
-   (u8)'a',
-   (u8)'5',
-   (u8)'1',
-   (u8)'2',
-   (u8)'W',
-   (u8)'i',
-   (u8)'t',
-   (u8)'h',
-   (u8)'R',
-   (u8)'S',
-   (u8)'A',
-   (u8)'E',
-   (u8)'n',
-   (u8)'c',
-   (u8)'r',
-   (u8)'y',
-   (u8)'p',
-   (u8)'t',
-   (u8)'i',
-   (u8)'o',
-   (u8)'n',
-   (u8)'\000'};
-static u8 const _rsa_sha512_printable_oid[22] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'8',
-   (u8)'4',
-   (u8)'0',
-   (u8)'.',
-   (u8)'1',
-   (u8)'1',
-   (u8)'3',
-   (u8)'5',
-   (u8)'4',
-   (u8)'9',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'1',
-   (u8)'3',
-   (u8)'\000'};
+static u8 const _rsa_sha512_name[24UL] = "sha512WithRSAEncryption";
+static u8 const _rsa_sha512_printable_oid[22UL] = "1.2.840.113549.1.1.13";
 static u8 const _rsa_sha512_der_oid[11] =
   {(u8)0x06,
    (u8)0x09,
@@ -1681,34 +1113,8 @@ static _alg_id const _rsa_sha512_alg =
    .parse_sig = & parse_sig_generic,
    .parse_subjectpubkey = (int (*)(u8 const *buf, u16 len, alg_param *param))0,
    .parse_algoid_params = & parse_algoid_params_generic};
-static u8 const _dsa_sha1_name[12] =
-  {(u8)'d',
-   (u8)'s',
-   (u8)'a',
-   (u8)'W',
-   (u8)'i',
-   (u8)'t',
-   (u8)'h',
-   (u8)'S',
-   (u8)'H',
-   (u8)'A',
-   (u8)'1',
-   (u8)'\000'};
-static u8 const _dsa_sha1_printable_oid[14] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'1',
-   (u8)'4',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'2',
-   (u8)'7',
-   (u8)'\000'};
+static u8 const _dsa_sha1_name[12UL] = "dsaWithSHA1";
+static u8 const _dsa_sha1_printable_oid[14UL] = "1.3.14.3.2.27";
 static u8 const _dsa_sha1_der_oid[9] =
   {(u8)0x06,
    (u8)0x07,
@@ -1728,50 +1134,9 @@ static _alg_id const _dsa_sha1_alg =
    .parse_sig = & parse_sig_generic,
    .parse_subjectpubkey = (int (*)(u8 const *buf, u16 len, alg_param *param))0,
    .parse_algoid_params = & parse_algoid_params_generic};
-static u8 const _pkcs1_rsaEncryption_name[21] =
-  {(u8)'P',
-   (u8)'K',
-   (u8)'C',
-   (u8)'S',
-   (u8)'-',
-   (u8)'1',
-   (u8)' ',
-   (u8)'r',
-   (u8)'s',
-   (u8)'a',
-   (u8)'E',
-   (u8)'n',
-   (u8)'c',
-   (u8)'r',
-   (u8)'y',
-   (u8)'p',
-   (u8)'t',
-   (u8)'i',
-   (u8)'o',
-   (u8)'n',
-   (u8)'\000'};
-static u8 const _pkcs1_rsaEncryption_printable_oid[21] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'8',
-   (u8)'4',
-   (u8)'0',
-   (u8)'.',
-   (u8)'1',
-   (u8)'1',
-   (u8)'3',
-   (u8)'5',
-   (u8)'4',
-   (u8)'9',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'1',
-   (u8)'\000'};
+static u8 const _pkcs1_rsaEncryption_name[21UL] = "PKCS-1 rsaEncryption";
+static u8 const _pkcs1_rsaEncryption_printable_oid[21UL] =
+  "1.2.840.113549.1.1.1";
 static u8 const _pkcs1_rsaEncryption_der_oid[11] =
   {(u8)0x06,
    (u8)0x09,
@@ -1793,41 +1158,8 @@ static _alg_id const _pkcs1_rsaEncryption_alg =
    .parse_sig = (int (*)(u8 const *buf, u16 len, u16 *eaten))0,
    .parse_subjectpubkey = & parse_subjectpubkey_rsa,
    .parse_algoid_params = & parse_algoid_params_rsa};
-static u8 const _rsassapss_name[11] =
-  {(u8)'R',
-   (u8)'S',
-   (u8)'A',
-   (u8)'S',
-   (u8)'S',
-   (u8)'A',
-   (u8)'-',
-   (u8)'P',
-   (u8)'S',
-   (u8)'S',
-   (u8)'\000'};
-static u8 const _rsassapss_printable_oid[22] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'8',
-   (u8)'4',
-   (u8)'0',
-   (u8)'.',
-   (u8)'1',
-   (u8)'1',
-   (u8)'3',
-   (u8)'5',
-   (u8)'4',
-   (u8)'9',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'1',
-   (u8)'0',
-   (u8)'\000'};
+static u8 const _rsassapss_name[11UL] = "RSASSA-PSS";
+static u8 const _rsassapss_printable_oid[22UL] = "1.2.840.113549.1.1.10";
 static u8 const _rsassapss_der_oid[11] =
   {(u8)0x06,
    (u8)0x09,
@@ -1849,49 +1181,8 @@ static _alg_id const _rsassapss_alg =
    .parse_sig = & parse_sig_generic,
    .parse_subjectpubkey = (int (*)(u8 const *buf, u16 len, alg_param *param))0,
    .parse_algoid_params = & parse_algoid_params_generic};
-static u8 const _odd1_name[27] =
-  {(u8)'o',
-   (u8)'i',
-   (u8)'w',
-   (u8)'-',
-   (u8)'s',
-   (u8)'h',
-   (u8)'a',
-   (u8)'-',
-   (u8)'1',
-   (u8)'W',
-   (u8)'i',
-   (u8)'t',
-   (u8)'h',
-   (u8)'R',
-   (u8)'S',
-   (u8)'A',
-   (u8)'E',
-   (u8)'n',
-   (u8)'c',
-   (u8)'r',
-   (u8)'y',
-   (u8)'p',
-   (u8)'t',
-   (u8)'i',
-   (u8)'o',
-   (u8)'n',
-   (u8)'\000'};
-static u8 const _odd1_printable_oid[14] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'1',
-   (u8)'4',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'2',
-   (u8)'9',
-   (u8)'\000'};
+static u8 const _odd1_name[27UL] = "oiw-sha-1WithRSAEncryption";
+static u8 const _odd1_printable_oid[14UL] = "1.3.14.3.2.29";
 static u8 const _odd1_der_oid[7] =
   {(u8)0x06, (u8)0x05, (u8)0x2b, (u8)0x0e, (u8)0x03, (u8)0x02, (u8)0x1d};
 static _alg_id const _odd1_alg =
@@ -1903,46 +1194,8 @@ static _alg_id const _odd1_alg =
    .parse_sig = & parse_sig_generic,
    .parse_subjectpubkey = (int (*)(u8 const *buf, u16 len, alg_param *param))0,
    .parse_algoid_params = & parse_algoid_params_generic};
-static u8 const _odd2_name[24] =
-  {(u8)'o',
-   (u8)'i',
-   (u8)'w',
-   (u8)'-',
-   (u8)'s',
-   (u8)'h',
-   (u8)'a',
-   (u8)'W',
-   (u8)'i',
-   (u8)'t',
-   (u8)'h',
-   (u8)'R',
-   (u8)'S',
-   (u8)'A',
-   (u8)'S',
-   (u8)'i',
-   (u8)'g',
-   (u8)'n',
-   (u8)'a',
-   (u8)'t',
-   (u8)'u',
-   (u8)'r',
-   (u8)'e',
-   (u8)'\000'};
-static u8 const _odd2_printable_oid[14] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'1',
-   (u8)'4',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'1',
-   (u8)'5',
-   (u8)'\000'};
+static u8 const _odd2_name[24UL] = "oiw-shaWithRSASignature";
+static u8 const _odd2_printable_oid[14UL] = "1.3.14.3.2.15";
 static u8 const _odd2_der_oid[7] =
   {(u8)0x06, (u8)0x05, (u8)0x2b, (u8)0x0e, (u8)0x03, (u8)0x02, (u8)0x0f};
 static _alg_id const _odd2_alg =
@@ -1954,32 +1207,8 @@ static _alg_id const _odd2_alg =
    .parse_sig = & parse_sig_generic,
    .parse_subjectpubkey = (int (*)(u8 const *buf, u16 len, alg_param *param))0,
    .parse_algoid_params = & parse_algoid_params_generic};
-static u8 const _odd3_name[10] =
-  {(u8)'o',
-   (u8)'i',
-   (u8)'w',
-   (u8)'-',
-   (u8)'S',
-   (u8)'H',
-   (u8)'A',
-   (u8)'-',
-   (u8)'1',
-   (u8)'\000'};
-static u8 const _odd3_printable_oid[14] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'1',
-   (u8)'4',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'2',
-   (u8)'6',
-   (u8)'\000'};
+static u8 const _odd3_name[10UL] = "oiw-SHA-1";
+static u8 const _odd3_printable_oid[14UL] = "1.3.14.3.2.26";
 static u8 const _odd3_der_oid[7] =
   {(u8)0x06, (u8)0x05, (u8)0x2b, (u8)0x0e, (u8)0x03, (u8)0x02, (u8)0x1a};
 static _alg_id const _odd3_alg =
@@ -1991,38 +1220,8 @@ static _alg_id const _odd3_alg =
    .parse_sig = & parse_sig_generic,
    .parse_subjectpubkey = (int (*)(u8 const *buf, u16 len, alg_param *param))0,
    .parse_algoid_params = & parse_algoid_params_generic};
-static u8 const _odd4_name[16] =
-  {(u8)'o',
-   (u8)'i',
-   (u8)'w',
-   (u8)'-',
-   (u8)'d',
-   (u8)'s',
-   (u8)'a',
-   (u8)'W',
-   (u8)'i',
-   (u8)'t',
-   (u8)'h',
-   (u8)'S',
-   (u8)'H',
-   (u8)'A',
-   (u8)'1',
-   (u8)'\000'};
-static u8 const _odd4_printable_oid[14] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'1',
-   (u8)'4',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'2',
-   (u8)'7',
-   (u8)'\000'};
+static u8 const _odd4_name[16UL] = "oiw-dsaWithSHA1";
+static u8 const _odd4_printable_oid[14UL] = "1.3.14.3.2.27";
 static u8 const _odd4_der_oid[7] =
   {(u8)0x06, (u8)0x05, (u8)0x2b, (u8)0x0e, (u8)0x03, (u8)0x02, (u8)0x1b};
 static _alg_id const _odd4_alg =
@@ -2034,55 +1233,8 @@ static _alg_id const _odd4_alg =
    .parse_sig = & parse_sig_generic,
    .parse_subjectpubkey = (int (*)(u8 const *buf, u16 len, alg_param *param))0,
    .parse_algoid_params = & parse_algoid_params_generic};
-static u8 const _gost1_name[33] =
-  {(u8)'g',
-   (u8)'o',
-   (u8)'s',
-   (u8)'t',
-   (u8)'R',
-   (u8)'3',
-   (u8)'4',
-   (u8)'1',
-   (u8)'1',
-   (u8)'-',
-   (u8)'9',
-   (u8)'4',
-   (u8)'-',
-   (u8)'w',
-   (u8)'i',
-   (u8)'t',
-   (u8)'h',
-   (u8)'-',
-   (u8)'g',
-   (u8)'o',
-   (u8)'s',
-   (u8)'t',
-   (u8)'R',
-   (u8)'3',
-   (u8)'4',
-   (u8)'1',
-   (u8)'0',
-   (u8)'-',
-   (u8)'2',
-   (u8)'0',
-   (u8)'0',
-   (u8)'1',
-   (u8)'\000'};
-static u8 const _gost1_printable_oid[14] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'6',
-   (u8)'4',
-   (u8)'3',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'3',
-   (u8)'\000'};
+static u8 const _gost1_name[33UL] = "gostR3411-94-with-gostR3410-2001";
+static u8 const _gost1_printable_oid[14UL] = "1.2.643.2.2.3";
 static u8 const _gost1_der_oid[8] =
   {(u8)0x06,
    (u8)0x06,
@@ -2101,53 +1253,8 @@ static _alg_id const _gost1_alg =
    .parse_sig = & parse_sig_generic,
    .parse_subjectpubkey = (int (*)(u8 const *buf, u16 len, alg_param *param))0,
    .parse_algoid_params = & parse_algoid_params_generic};
-static u8 const _gost2_name[31] =
-  {(u8)'g',
-   (u8)'o',
-   (u8)'s',
-   (u8)'t',
-   (u8)'R',
-   (u8)'3',
-   (u8)'4',
-   (u8)'1',
-   (u8)'1',
-   (u8)'-',
-   (u8)'9',
-   (u8)'4',
-   (u8)'-',
-   (u8)'w',
-   (u8)'i',
-   (u8)'t',
-   (u8)'h',
-   (u8)'-',
-   (u8)'g',
-   (u8)'o',
-   (u8)'s',
-   (u8)'t',
-   (u8)'R',
-   (u8)'3',
-   (u8)'4',
-   (u8)'1',
-   (u8)'0',
-   (u8)'-',
-   (u8)'9',
-   (u8)'4',
-   (u8)'\000'};
-static u8 const _gost2_printable_oid[14] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'6',
-   (u8)'4',
-   (u8)'3',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'4',
-   (u8)'\000'};
+static u8 const _gost2_name[31UL] = "gostR3411-94-with-gostR3410-94";
+static u8 const _gost2_printable_oid[14UL] = "1.2.643.2.2.4";
 static u8 const _gost2_der_oid[8] =
   {(u8)0x06,
    (u8)0x06,
@@ -2166,49 +1273,8 @@ static _alg_id const _gost2_alg =
    .parse_sig = & parse_sig_generic,
    .parse_subjectpubkey = (int (*)(u8 const *buf, u16 len, alg_param *param))0,
    .parse_algoid_params = & parse_algoid_params_generic};
-static u8 const _rsa_ripemd160_name[26] =
-  {(u8)'r',
-   (u8)'s',
-   (u8)'a',
-   (u8)'S',
-   (u8)'i',
-   (u8)'g',
-   (u8)'n',
-   (u8)'a',
-   (u8)'t',
-   (u8)'u',
-   (u8)'r',
-   (u8)'e',
-   (u8)'W',
-   (u8)'i',
-   (u8)'t',
-   (u8)'h',
-   (u8)'r',
-   (u8)'i',
-   (u8)'p',
-   (u8)'e',
-   (u8)'m',
-   (u8)'d',
-   (u8)'1',
-   (u8)'6',
-   (u8)'0',
-   (u8)'\000'};
-static u8 const _rsa_ripemd160_printable_oid[15] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'3',
-   (u8)'6',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'2',
-   (u8)'\000'};
+static u8 const _rsa_ripemd160_name[26UL] = "rsaSignatureWithripemd160";
+static u8 const _rsa_ripemd160_printable_oid[15UL] = "1.3.36.3.3.1.2";
 static u8 const _rsa_ripemd160_der_oid[8] =
   {(u8)0x06,
    (u8)0x06,
@@ -2227,48 +1293,8 @@ static _alg_id const _rsa_ripemd160_alg =
    .parse_sig = & parse_sig_generic,
    .parse_subjectpubkey = (int (*)(u8 const *buf, u16 len, alg_param *param))0,
    .parse_algoid_params = & parse_algoid_params_generic};
-static u8 const _weird1_name[17] =
-  {(u8)'w',
-   (u8)'e',
-   (u8)'i',
-   (u8)'r',
-   (u8)'d',
-   (u8)'1',
-   (u8)'-',
-   (u8)'a',
-   (u8)'v',
-   (u8)'e',
-   (u8)'s',
-   (u8)'t',
-   (u8)'-',
-   (u8)'p',
-   (u8)'l',
-   (u8)'c',
-   (u8)'\000'};
-static u8 const _weird1_printable_oid[23] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'6',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'4',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'1',
-   (u8)'2',
-   (u8)'6',
-   (u8)'5',
-   (u8)'6',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'3',
-   (u8)'6',
-   (u8)'\000'};
+static u8 const _weird1_name[17UL] = "weird1-avest-plc";
+static u8 const _weird1_printable_oid[23UL] = "1.3.6.1.4.1.12656.1.36";
 static u8 const _weird1_der_oid[11] =
   {(u8)0x06,
    (u8)0x09,
@@ -2290,48 +1316,8 @@ static _alg_id const _weird1_alg =
    .parse_sig = & parse_sig_generic,
    .parse_subjectpubkey = (int (*)(u8 const *buf, u16 len, alg_param *param))0,
    .parse_algoid_params = & parse_algoid_params_generic};
-static u8 const _weird2_name[17] =
-  {(u8)'w',
-   (u8)'e',
-   (u8)'i',
-   (u8)'r',
-   (u8)'d',
-   (u8)'2',
-   (u8)'-',
-   (u8)'a',
-   (u8)'v',
-   (u8)'e',
-   (u8)'s',
-   (u8)'t',
-   (u8)'-',
-   (u8)'p',
-   (u8)'l',
-   (u8)'c',
-   (u8)'\000'};
-static u8 const _weird2_printable_oid[23] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'6',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'4',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'1',
-   (u8)'2',
-   (u8)'6',
-   (u8)'5',
-   (u8)'6',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'4',
-   (u8)'0',
-   (u8)'\000'};
+static u8 const _weird2_name[17UL] = "weird2-avest-plc";
+static u8 const _weird2_printable_oid[23UL] = "1.3.6.1.4.1.12656.1.40";
 static u8 const _weird2_der_oid[11] =
   {(u8)0x06,
    (u8)0x09,
@@ -2353,48 +1339,8 @@ static _alg_id const _weird2_alg =
    .parse_sig = & parse_sig_generic,
    .parse_subjectpubkey = (int (*)(u8 const *buf, u16 len, alg_param *param))0,
    .parse_algoid_params = & parse_algoid_params_generic};
-static u8 const _weird3_name[17] =
-  {(u8)'w',
-   (u8)'e',
-   (u8)'i',
-   (u8)'r',
-   (u8)'d',
-   (u8)'3',
-   (u8)'-',
-   (u8)'a',
-   (u8)'v',
-   (u8)'e',
-   (u8)'s',
-   (u8)'t',
-   (u8)'-',
-   (u8)'p',
-   (u8)'l',
-   (u8)'c',
-   (u8)'\000'};
-static u8 const _weird3_printable_oid[23] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'6',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'4',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'1',
-   (u8)'2',
-   (u8)'6',
-   (u8)'5',
-   (u8)'6',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'4',
-   (u8)'3',
-   (u8)'\000'};
+static u8 const _weird3_name[17UL] = "weird3-avest-plc";
+static u8 const _weird3_printable_oid[23UL] = "1.3.6.1.4.1.12656.1.43";
 static u8 const _weird3_der_oid[11] =
   {(u8)0x06,
    (u8)0x09,
@@ -2469,38 +1415,8 @@ static int parse_algoid_params_ecdsa_with(u8 const *buf, u16 len,
   return ret;
 }
 
-static u8 const _curve_secp256r1_name[10] =
-  {(u8)'s',
-   (u8)'e',
-   (u8)'c',
-   (u8)'p',
-   (u8)'2',
-   (u8)'5',
-   (u8)'6',
-   (u8)'r',
-   (u8)'1',
-   (u8)'\000'};
-static u8 const _curve_secp256r1_printable_oid[20] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'8',
-   (u8)'4',
-   (u8)'0',
-   (u8)'.',
-   (u8)'1',
-   (u8)'0',
-   (u8)'0',
-   (u8)'4',
-   (u8)'5',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'7',
-   (u8)'\000'};
+static u8 const _curve_secp256r1_name[10UL] = "secp256r1";
+static u8 const _curve_secp256r1_printable_oid[20UL] = "1.2.840.10045.3.1.7";
 static u8 const _curve_secp256r1_der_oid[10] =
   {(u8)0x06,
    (u8)0x08,
@@ -2518,31 +1434,8 @@ static _curve const _curve_secp256r1 =
    .crv_der_oid = _curve_secp256r1_der_oid,
    .crv_der_oid_len = (u8)sizeof(_curve_secp256r1_der_oid),
    .crv_order_bit_len = (u16)256};
-static u8 const _curve_secp384r1_name[10] =
-  {(u8)'s',
-   (u8)'e',
-   (u8)'c',
-   (u8)'p',
-   (u8)'3',
-   (u8)'8',
-   (u8)'4',
-   (u8)'r',
-   (u8)'1',
-   (u8)'\000'};
-static u8 const _curve_secp384r1_printable_oid[13] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'1',
-   (u8)'3',
-   (u8)'2',
-   (u8)'.',
-   (u8)'0',
-   (u8)'.',
-   (u8)'3',
-   (u8)'4',
-   (u8)'\000'};
+static u8 const _curve_secp384r1_name[10UL] = "secp384r1";
+static u8 const _curve_secp384r1_printable_oid[13UL] = "1.3.132.0.34";
 static u8 const _curve_secp384r1_der_oid[7] =
   {(u8)0x06, (u8)0x05, (u8)0x2b, (u8)0x81, (u8)0x04, (u8)0x00, (u8)0x22};
 static _curve const _curve_secp384r1 =
@@ -2551,31 +1444,8 @@ static _curve const _curve_secp384r1 =
    .crv_der_oid = _curve_secp384r1_der_oid,
    .crv_der_oid_len = (u8)sizeof(_curve_secp384r1_der_oid),
    .crv_order_bit_len = (u16)384};
-static u8 const _curve_secp521r1_name[10] =
-  {(u8)'s',
-   (u8)'e',
-   (u8)'c',
-   (u8)'p',
-   (u8)'5',
-   (u8)'2',
-   (u8)'1',
-   (u8)'r',
-   (u8)'1',
-   (u8)'\000'};
-static u8 const _curve_secp521r1_printable_oid[13] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'1',
-   (u8)'3',
-   (u8)'2',
-   (u8)'.',
-   (u8)'0',
-   (u8)'.',
-   (u8)'3',
-   (u8)'5',
-   (u8)'\000'};
+static u8 const _curve_secp521r1_name[10UL] = "secp521r1";
+static u8 const _curve_secp521r1_printable_oid[13UL] = "1.3.132.0.35";
 static u8 const _curve_secp521r1_der_oid[7] =
   {(u8)0x06, (u8)0x05, (u8)0x2b, (u8)0x81, (u8)0x04, (u8)0x00, (u8)0x23};
 static _curve const _curve_secp521r1 =
@@ -2584,45 +1454,9 @@ static _curve const _curve_secp521r1 =
    .crv_der_oid = _curve_secp521r1_der_oid,
    .crv_der_oid_len = (u8)sizeof(_curve_secp521r1_der_oid),
    .crv_order_bit_len = (u16)521};
-static u8 const _curve_brainpoolP256R1_name[16] =
-  {(u8)'b',
-   (u8)'r',
-   (u8)'a',
-   (u8)'i',
-   (u8)'n',
-   (u8)'p',
-   (u8)'o',
-   (u8)'o',
-   (u8)'l',
-   (u8)'P',
-   (u8)'2',
-   (u8)'5',
-   (u8)'6',
-   (u8)'R',
-   (u8)'1',
-   (u8)'\000'};
-static u8 const _curve_brainpoolP256R1_printable_oid[21] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'3',
-   (u8)'6',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'8',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'7',
-   (u8)'\000'};
+static u8 const _curve_brainpoolP256R1_name[16UL] = "brainpoolP256R1";
+static u8 const _curve_brainpoolP256R1_printable_oid[21UL] =
+  "1.3.36.3.3.2.8.1.1.7";
 static u8 const _curve_brainpoolP256R1_der_oid[11] =
   {(u8)0x06,
    (u8)0x05,
@@ -2641,46 +1475,9 @@ static _curve const _curve_brainpoolP256R1 =
    .crv_der_oid = _curve_brainpoolP256R1_der_oid,
    .crv_der_oid_len = (u8)sizeof(_curve_brainpoolP256R1_der_oid),
    .crv_order_bit_len = (u16)256};
-static u8 const _curve_brainpoolP384R1_name[16] =
-  {(u8)'b',
-   (u8)'r',
-   (u8)'a',
-   (u8)'i',
-   (u8)'n',
-   (u8)'p',
-   (u8)'o',
-   (u8)'o',
-   (u8)'l',
-   (u8)'P',
-   (u8)'3',
-   (u8)'8',
-   (u8)'4',
-   (u8)'R',
-   (u8)'1',
-   (u8)'\000'};
-static u8 const _curve_brainpoolP384R1_printable_oid[22] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'3',
-   (u8)'6',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'8',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'1',
-   (u8)'1',
-   (u8)'\000'};
+static u8 const _curve_brainpoolP384R1_name[16UL] = "brainpoolP384R1";
+static u8 const _curve_brainpoolP384R1_printable_oid[22UL] =
+  "1.3.36.3.3.2.8.1.1.11";
 static u8 const _curve_brainpoolP384R1_der_oid[11] =
   {(u8)0x06,
    (u8)0x05,
@@ -2699,46 +1496,9 @@ static _curve const _curve_brainpoolP384R1 =
    .crv_der_oid = _curve_brainpoolP384R1_der_oid,
    .crv_der_oid_len = (u8)sizeof(_curve_brainpoolP384R1_der_oid),
    .crv_order_bit_len = (u16)384};
-static u8 const _curve_brainpoolP512R1_name[16] =
-  {(u8)'b',
-   (u8)'r',
-   (u8)'a',
-   (u8)'i',
-   (u8)'n',
-   (u8)'p',
-   (u8)'o',
-   (u8)'o',
-   (u8)'l',
-   (u8)'P',
-   (u8)'5',
-   (u8)'1',
-   (u8)'2',
-   (u8)'R',
-   (u8)'1',
-   (u8)'\000'};
-static u8 const _curve_brainpoolP512R1_printable_oid[22] =
-  {(u8)'1',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'3',
-   (u8)'6',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'3',
-   (u8)'.',
-   (u8)'2',
-   (u8)'.',
-   (u8)'8',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'1',
-   (u8)'.',
-   (u8)'1',
-   (u8)'3',
-   (u8)'\000'};
+static u8 const _curve_brainpoolP512R1_name[16UL] = "brainpoolP512R1";
+static u8 const _curve_brainpoolP512R1_printable_oid[22UL] =
+  "1.3.36.3.3.2.8.1.1.13";
 static u8 const _curve_brainpoolP512R1_der_oid[11] =
   {(u8)0x06,
    (u8)0x05,
@@ -3160,9 +1920,10 @@ static int parse_x509_AlgorithmIdentifier(u8 const *buf, u16 len,
   param_len = (u16)((int)data_len - (int)oid_len);
   /*@
   assert
-  talg->parse_algoid_params ∈
-  {&parse_algoid_params_generic, &parse_algoid_params_ecdsa_with,
-   &parse_algoid_params_ecPublicKey, &parse_algoid_params_rsa}; */
+    talg->parse_algoid_params ∈
+    {&parse_algoid_params_generic, &parse_algoid_params_ecdsa_with,
+     &parse_algoid_params_ecPublicKey, &parse_algoid_params_rsa};
+   */
   ;
   /*@ calls parse_algoid_params_generic, parse_algoid_params_ecdsa_with,
             parse_algoid_params_ecPublicKey, parse_algoid_params_rsa;
@@ -4137,11 +2898,12 @@ static int parse_AttributeTypeAndValue(u8 const *buf, u16 len, u16 *eaten)
   buf += (int)oid_len;
   /*@
   assert
-  cur->parse_rdn_val ∈
-  {&parse_rdn_val_cn, &parse_rdn_val_org, &parse_rdn_val_org_unit,
-   &parse_rdn_val_title, &parse_rdn_val_dn_qual, &parse_rdn_val_pseudo,
-   &parse_rdn_val_dc, &parse_rdn_val_x520name, &parse_rdn_val_serial,
-   &parse_rdn_val_country, &parse_rdn_val_locality, &parse_rdn_val_state}; */
+    cur->parse_rdn_val ∈
+    {&parse_rdn_val_cn, &parse_rdn_val_org, &parse_rdn_val_org_unit,
+     &parse_rdn_val_title, &parse_rdn_val_dn_qual, &parse_rdn_val_pseudo,
+     &parse_rdn_val_dc, &parse_rdn_val_x520name, &parse_rdn_val_serial,
+     &parse_rdn_val_country, &parse_rdn_val_locality, &parse_rdn_val_state};
+   */
   ;
   /*@ calls parse_rdn_val_cn, parse_rdn_val_x520name, parse_rdn_val_serial,
             parse_rdn_val_country, parse_rdn_val_locality,
@@ -4713,8 +3475,9 @@ static int parse_x509_subjectPublicKeyInfo(u8 const *buf, u16 len, u16 *eaten)
   }
   /*@
   assert
-  alg->parse_subjectpubkey ∈
-  {&parse_subjectpubkey_ec, &parse_subjectpubkey_rsa}; */
+    alg->parse_subjectpubkey ∈
+    {&parse_subjectpubkey_ec, &parse_subjectpubkey_rsa};
+   */
   ;
   /*@ calls parse_subjectpubkey_ec, parse_subjectpubkey_rsa; */
   ret = (*(alg->parse_subjectpubkey))(buf,remain,& param);
@@ -7117,8 +5880,8 @@ static int parse_x509_Extension(u8 const *buf, u16 len,
   int critical = 0;
   /*@
   assert
-  \initialized(parsed_oid_list +
-               (0 .. sizeof(known_ext_oids) / sizeof(known_ext_oids[0]) - 1));
+    \initialized(parsed_oid_list +
+                 (0 .. sizeof(known_ext_oids) / sizeof(known_ext_oids[0]) - 1));
    */
   ;
   remain = len;
@@ -7130,16 +5893,16 @@ static int parse_x509_Extension(u8 const *buf, u16 len,
   saved_ext_len = (u16)((int)ext_hdr_len + (int)ext_data_len);
   /*@
   assert
-  \initialized(parsed_oid_list +
-               (0 .. sizeof(known_ext_oids) / sizeof(known_ext_oids[0]) - 1));
+    \initialized(parsed_oid_list +
+                 (0 .. sizeof(known_ext_oids) / sizeof(known_ext_oids[0]) - 1));
    */
   ;
   ret = parse_OID(buf,ext_data_len,& oid_len);
   if (ret) goto out;
   /*@
   assert
-  \initialized(parsed_oid_list +
-               (0 .. sizeof(known_ext_oids) / sizeof(known_ext_oids[0]) - 1));
+    \initialized(parsed_oid_list +
+                 (0 .. sizeof(known_ext_oids) / sizeof(known_ext_oids[0]) - 1));
    */
   ;
   ext = find_ext_by_oid(buf,oid_len);
@@ -7149,8 +5912,8 @@ static int parse_x509_Extension(u8 const *buf, u16 len,
   }
   /*@
   assert
-  \initialized(parsed_oid_list +
-               (0 .. sizeof(known_ext_oids) / sizeof(known_ext_oids[0]) - 1));
+    \initialized(parsed_oid_list +
+                 (0 .. sizeof(known_ext_oids) / sizeof(known_ext_oids[0]) - 1));
    */
   ;
   ret = check_record_ext_unknown(ext,parsed_oid_list);
@@ -7182,12 +5945,14 @@ static int parse_x509_Extension(u8 const *buf, u16 len,
   }
   /*@
   assert
-  ext->parse_ext_params ∈
-  {&parse_ext_AIA, &parse_ext_AKI, &parse_ext_SKI, &parse_ext_keyUsage,
-   &parse_ext_certPolicies, &parse_ext_policyMapping, &parse_ext_SAN,
-   &parse_ext_IAN, &parse_ext_subjectDirAttr, &parse_ext_basicConstraints,
-   &parse_ext_nameConstraints, &parse_ext_policyConstraints, &parse_ext_EKU,
-   &parse_ext_CRLDP, &parse_ext_inhibitAnyPolicy, &parse_ext_bad_oid}; */
+    ext->parse_ext_params ∈
+    {&parse_ext_AIA, &parse_ext_AKI, &parse_ext_SKI, &parse_ext_keyUsage,
+     &parse_ext_certPolicies, &parse_ext_policyMapping, &parse_ext_SAN,
+     &parse_ext_IAN, &parse_ext_subjectDirAttr, &parse_ext_basicConstraints,
+     &parse_ext_nameConstraints, &parse_ext_policyConstraints,
+     &parse_ext_EKU, &parse_ext_CRLDP, &parse_ext_inhibitAnyPolicy,
+     &parse_ext_bad_oid};
+   */
   ;
   /*@ calls parse_ext_AIA, parse_ext_AKI, parse_ext_SKI, parse_ext_keyUsage,
             parse_ext_certPolicies, parse_ext_policyMapping, parse_ext_SAN,
@@ -7263,9 +6028,9 @@ static int parse_x509_Extensions(u8 const *buf, u16 len, u16 *eaten,
   }
   /*@
   assert
-  \initialized(&parsed_oid_list[0 ..
-                                sizeof(known_ext_oids) /
-                                sizeof(known_ext_oids[0]) - 1]);
+    \initialized(&parsed_oid_list[0 ..
+                                  sizeof(known_ext_oids) /
+                                  sizeof(known_ext_oids[0]) - 1]);
    */
   ;
   /*@ loop invariant remain ≢ 0 ⇒ \valid_read(buf + (0 .. remain - 1));

@@ -47,7 +47,7 @@ directory	file	line	function	property kind	status	property
 .	miniz_tinfl.c	292	tinfl_decompress	initialization	Unknown	\initialized(tmp_20)
 .	miniz_tinfl.c	292	tinfl_decompress	mem_access	Unknown	\valid_read(tmp_20)
 .	miniz_tinfl.c	292	tinfl_decompress	shift	Unknown	0 ≤ num_bits < 64
-.	miniz_tinfl.c	292	tinfl_decompress	mem_access	Unknown	\valid_read("\005\005\004" + counter)
+.	miniz_tinfl.c	292	tinfl_decompress	index_bound	Unknown	counter < 4
 .	miniz_tinfl.c	292	tinfl_decompress	index_bound	Unknown	counter < TINFL_MAX_HUFF_TABLES
 .	miniz_tinfl.c	293	tinfl_decompress	initialization	Unknown	\initialized(&r->m_table_sizes[counter])
 .	miniz_tinfl.c	296	tinfl_decompress	initialization	Unknown	\initialized(&r->m_table_sizes[2])
@@ -109,12 +109,12 @@ directory	file	line	function	property kind	status	property
 .	miniz_tinfl.c	371	tinfl_decompress	shift	Unknown	0 ≤ tmp_25 < 64
 .	miniz_tinfl.c	371	tinfl_decompress	shift	Unknown	0 ≤ code_len < 64
 .	miniz_tinfl.c	374	tinfl_decompress	index_bound	Unknown	tmp_26 < (int)((int)(TINFL_MAX_HUFF_SYMBOLS_0 + TINFL_MAX_HUFF_SYMBOLS_1) + 137)
-.	miniz_tinfl.c	381	tinfl_decompress	mem_access	Unknown	\valid_read("\002\003\a" + (mz_uint32)(dist - 16))
+.	miniz_tinfl.c	381	tinfl_decompress	index_bound	Unknown	(mz_uint32)(dist - 16) < 4
 .	miniz_tinfl.c	382	tinfl_decompress	ptr_comparison	Unknown	\pointer_comparable((void *)pIn_buf_cur, (void *)pIn_buf_end)
 .	miniz_tinfl.c	382	tinfl_decompress	initialization	Unknown	\initialized(tmp_27)
 .	miniz_tinfl.c	382	tinfl_decompress	mem_access	Unknown	\valid_read(tmp_27)
 .	miniz_tinfl.c	382	tinfl_decompress	shift	Unknown	0 ≤ num_bits < 64
-.	miniz_tinfl.c	383	tinfl_decompress	mem_access	Unknown	\valid_read("\003\003\v" + (mz_uint32)(dist - 16))
+.	miniz_tinfl.c	383	tinfl_decompress	index_bound	Unknown	(mz_uint32)(dist - 16) < 4
 .	miniz_tinfl.c	384	tinfl_decompress	precondition of memset	Unknown	valid_s: valid_or_empty(s, n)
 .	miniz_tinfl.c	384	tinfl_decompress	initialization	Unknown	\initialized(&r->m_len_codes[(mz_uint32)(counter - 1)])
 .	miniz_tinfl.c	384	tinfl_decompress	index_bound	Unknown	(mz_uint32)(counter - 1) < (int)((int)(TINFL_MAX_HUFF_SYMBOLS_0 + TINFL_MAX_HUFF_SYMBOLS_1) + 137)

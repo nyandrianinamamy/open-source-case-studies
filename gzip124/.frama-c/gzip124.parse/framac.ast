@@ -3551,7 +3551,7 @@ static void shorten_name(char *name)
     trunc --;
   }
   else {
-    trunc = strrchr((char const *)name,(int)*("." + 0));
+    trunc = strrchr((char const *)name,(int)"."[0]);
     if (trunc == (char *)0) error((char *)"internal error in shorten_name");
     if ((int)*(trunc + 1) == '\000') trunc --;
   }
@@ -7752,14 +7752,14 @@ int zip(int in, int out)
     unsigned int tmp;
     tmp = outcnt;
     outcnt ++;
-    outbuf[tmp] = (uch)*("\037\213" + 0);
+    outbuf[tmp] = (uch)"\037\213"[0];
     if (outcnt == (unsigned int)16384) flush_outbuf();
   }
   {
     unsigned int tmp_0;
     tmp_0 = outcnt;
     outcnt ++;
-    outbuf[tmp_0] = (uch)*("\037\213" + 1);
+    outbuf[tmp_0] = (uch)"\037\213"[1];
     if (outcnt == (unsigned int)16384) flush_outbuf();
   }
   {

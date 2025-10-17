@@ -733,9 +733,11 @@ test.c:256:[eva:locals-escaping] warning: locals {__va_arg0_152, __va_arg1_154, 
 [eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
   sds.c:523: assigns clause on addresses
     (read in 168 statements, propagated through 114 statements)
-    garbled mix of &{__va_arg0_80; __va_arg1_82; __va_args_84; __va_arg0_86;
-                     __va_arg1_88; __va_args_90; __va_arg0_92; __va_arg1_94;
-                     __va_args_96; __va_arg0_98; __va_arg1_100;
+    garbled mix of &{"hello"; "hello"; "hello"; "hello"; "hello"; "hello";
+                     "hello"; "hello"; "hello"; "hello"; "hello"; "hello";
+                     "foo"; __va_arg0_80; __va_arg1_82; __va_args_84;
+                     __va_arg0_86; __va_arg1_88; __va_args_90; __va_arg0_92;
+                     __va_arg1_94; __va_args_96; __va_arg0_98; __va_arg1_100;
                      __va_args_102; __va_arg0_104; __va_arg1_106;
                      __va_args_108; __va_arg0_110; __va_arg1_112;
                      __va_args_114; __va_arg0_116; __va_arg1_118;
@@ -745,10 +747,7 @@ test.c:256:[eva:locals-escaping] warning: locals {__va_arg0_152, __va_arg1_154, 
                      __va_args_138; __va_arg0_140; __va_arg1_142;
                      __va_args_144; __va_arg0_146; __va_arg1_148;
                      __va_args_150; __va_arg0_152; __va_arg1_154;
-                     __va_arg2_156; __va_args_158; "hello"; "hello"; 
-                     "hello"; "hello"; "hello"; "hello"; "hello"; "hello";
-                     "hello"; "hello"; "hello"; "hello"; "foo";
-                     __malloc_sdsnewlen_l91_13;
+                     __va_arg2_156; __va_args_158; __malloc_sdsnewlen_l91_13;
                      __realloc_w_sdsMakeRoomFor_l221_12;
                      __malloc_w_sdsnewlen_l91_14;
                      __realloc_w_sdsMakeRoomFor_l221_13;

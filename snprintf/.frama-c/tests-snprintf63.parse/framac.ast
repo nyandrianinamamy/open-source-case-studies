@@ -2042,24 +2042,7 @@ static int test_int_hex_uppercase(void)
 static int test_int_hex_negative(void)
 {
   int __retres;
-  char const expected[17] =
-    {(char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'8',
-     (char)'5',
-     (char)'\000'};
+  char const expected[17UL] = "ffffffffffffff85";
   int x = -123;
   int __va_arg0 = x;
   void *__va_args[1] = {& __va_arg0};
@@ -2205,40 +2188,7 @@ static int test_long_hex_alternative(void)
 static int test_long_hex_width_as_type(void)
 {
   int __retres;
-  char const expected[33] =
-    {(char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'1',
-     (char)'e',
-     (char)'0',
-     (char)'7',
-     (char)'8',
-     (char)'\000'};
+  char const expected[33UL] = "0000000000000000000000000001e078";
   long x = 123000l;
   int __va_arg0 = (int)(sizeof(x) * (unsigned long)2);
   long __va_arg1 = x;
@@ -2396,40 +2346,7 @@ static int test_long_long_hex_alternative(void)
 static int test_long_long_hex_width_as_type(void)
 {
   int __retres;
-  char const expected[33] =
-    {(char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'0',
-     (char)'1',
-     (char)'c',
-     (char)'a',
-     (char)'3',
-     (char)'5',
-     (char)'f',
-     (char)'0',
-     (char)'e',
-     (char)'0',
-     (char)'0',
-     (char)'\000'};
+  char const expected[33UL] = "00000000000000000000001ca35f0e00";
   long long x = 123000000000ll;
   int __va_arg0 = (int)(sizeof(x) * (unsigned long)2);
   long long __va_arg1 = x;
@@ -2463,40 +2380,7 @@ static int test_long_long_hex_width_as_type(void)
 static int test_long_long_hex_max(void)
 {
   int __retres;
-  char expected[33] =
-    {(char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'f',
-     (char)'\000'};
+  char expected[33UL] = "ffffffffffffffffffffffffffffffff";
   unsigned long long x = 18446744073709551615ULL;
   unsigned long long __va_arg0 = x;
   void *__va_args[1] = {& __va_arg0};

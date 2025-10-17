@@ -216,8 +216,8 @@ int semver_parse(char const *str, semver_t *ver)
     goto return_label;
   }
   strcpy(buf,str);
-  ver->metadata = parse_slice(buf,*("+" + 0));
-  ver->prerelease = parse_slice(buf,*("-" + 0));
+  ver->metadata = parse_slice(buf,"+"[0]);
+  ver->prerelease = parse_slice(buf,"-"[0]);
   res = semver_parse_version((char const *)buf,ver);
   free((void *)buf);
   __retres = res;
@@ -244,7 +244,7 @@ int semver_parse_version(char const *str, semver_t *ver)
       if (! (tmp < 4)) break;
     }
     else break;
-    next = strchr((char const *)slice,(int)*("." + 0));
+    next = strchr((char const *)slice,(int)"."[0]);
     if (next == (char *)0) len = strlen((char const *)slice);
     else len = (size_t)(next - slice);
     if (len > (size_t)50) {
@@ -313,9 +313,9 @@ static int compare_prerelease(char *x, char *y)
   tmp_0 = strlen((char const *)y);
   ylen = (int)tmp_0;
   while (1) {
-    xptr = strchr((char const *)lastx,(int)*("." + 0));
+    xptr = strchr((char const *)lastx,(int)"."[0]);
     if (xptr == (char *)0) xptr = x + xlen;
-    yptr = strchr((char const *)lasty,(int)*("." + 0));
+    yptr = strchr((char const *)lasty,(int)"."[0]);
     if (yptr == (char *)0) yptr = y + ylen;
     xnum = (int)strtol((char const *)lastx,& endptr,10);
     if (endptr == xptr) xisnum = 1; else xisnum = 0;
@@ -826,14 +826,7 @@ void test_parse_simple(void)
 {
   semver_t ver;
   printf("\n# Test: %s\n",(char *)"parse_simple"); /* printf_va_1 */
-  char buf[7] =
-    {(char)'1',
-     (char)'.',
-     (char)'2',
-     (char)'.',
-     (char)'1',
-     (char)'2',
-     (char)'\000'};
+  char buf[7U] = "1.2.12";
   int error = semver_parse((char const *)(buf),& ver);
   __FC_assert((error == 0) != 0,"semver_test.c",68,"error == 0");
   __FC_assert((ver.major == 1) != 0,"semver_test.c",69,"ver.major == 1");
@@ -873,7 +866,7 @@ int printf_va_4(char const * restrict format);
 void test_parse_major(void)
 {
   printf("\n# Test: %s\n",(char *)"parse_major"); /* printf_va_3 */
-  char buf[2] = {(char)'2', (char)'\000'};
+  char buf[2U] = "2";
   semver_t ver =
     {.major = 0,
      .minor = 0,
@@ -919,7 +912,7 @@ int printf_va_6(char const * restrict format);
 void test_parse_minor(void)
 {
   printf("\n# Test: %s\n",(char *)"parse_minor"); /* printf_va_5 */
-  char buf[4] = {(char)'1', (char)'.', (char)'2', (char)'\000'};
+  char buf[4U] = "1.2";
   semver_t ver =
     {.major = 0,
      .minor = 0,
@@ -966,29 +959,7 @@ void test_parse_prerelease(void)
 {
   int tmp_0;
   printf("\n# Test: %s\n",(char *)"parse_prerelease"); /* printf_va_7 */
-  char buf[22] =
-    {(char)'1',
-     (char)'.',
-     (char)'2',
-     (char)'.',
-     (char)'1',
-     (char)'2',
-     (char)'-',
-     (char)'b',
-     (char)'e',
-     (char)'t',
-     (char)'a',
-     (char)'.',
-     (char)'a',
-     (char)'l',
-     (char)'p',
-     (char)'h',
-     (char)'a',
-     (char)'.',
-     (char)'1',
-     (char)'.',
-     (char)'1',
-     (char)'\000'};
+  char buf[22U] = "1.2.12-beta.alpha.1.1";
   semver_t ver =
     {.major = 0,
      .minor = 0,
@@ -1038,29 +1009,7 @@ void test_parse_metadata(void)
 {
   int tmp_0;
   printf("\n# Test: %s\n",(char *)"parse_metadata"); /* printf_va_9 */
-  char buf[22] =
-    {(char)'1',
-     (char)'.',
-     (char)'2',
-     (char)'.',
-     (char)'1',
-     (char)'2',
-     (char)'+',
-     (char)'2',
-     (char)'0',
-     (char)'1',
-     (char)'3',
-     (char)'0',
-     (char)'3',
-     (char)'1',
-     (char)'3',
-     (char)'1',
-     (char)'4',
-     (char)'4',
-     (char)'7',
-     (char)'0',
-     (char)'0',
-     (char)'\000'};
+  char buf[22U] = "1.2.12+20130313144700";
   semver_t ver =
     {.major = 0,
      .minor = 0,
@@ -1111,37 +1060,7 @@ void test_parse_prerelerease_metadata(void)
   int tmp_0;
   int tmp_1;
   printf("\n# Test: %s\n",(char *)"parse_prerelease_metadata"); /* printf_va_11 */
-  char buf[30] =
-    {(char)'1',
-     (char)'.',
-     (char)'2',
-     (char)'.',
-     (char)'1',
-     (char)'2',
-     (char)'-',
-     (char)'a',
-     (char)'l',
-     (char)'p',
-     (char)'h',
-     (char)'a',
-     (char)'.',
-     (char)'1',
-     (char)'+',
-     (char)'2',
-     (char)'0',
-     (char)'1',
-     (char)'3',
-     (char)'0',
-     (char)'3',
-     (char)'1',
-     (char)'3',
-     (char)'1',
-     (char)'4',
-     (char)'4',
-     (char)'7',
-     (char)'0',
-     (char)'0',
-     (char)'\000'};
+  char buf[30U] = "1.2.12-alpha.1+20130313144700";
   semver_t ver =
     {.major = 0,
      .minor = 0,
@@ -2381,43 +2300,13 @@ void test_clean(void)
   int tmp;
   int tmp_0;
   printf("\n# Test: %s\n",(char *)"clean"); /* printf_va_47 */
-  char str[6] =
-    {(char)'1', (char)'.', (char)'2', (char)'.', (char)'3', (char)'\000'};
+  char str[6U] = "1.2.3";
   error = semver_clean(str);
   tmp = strcmp((char const *)(str),"1.2.3");
   __FC_assert((tmp == 0) != 0,"semver_test.c",665,
               "strcmp(str, \"1.2.3\") == 0");
   __FC_assert((error == 0) != 0,"semver_test.c",666,"error == 0");
-  char str2[29] =
-    {(char)' ',
-     (char)'1',
-     (char)'.',
-     (char)'@',
-     (char)'2',
-     (char)'.',
-     (char)'3',
-     (char)'-',
-     (char)'b',
-     (char)'e',
-     (char)'t',
-     (char)'a',
-     (char)' ',
-     (char)'#',
-     (char)'.',
-     (char)'a',
-     (char)'l',
-     (char)'p',
-     (char)'h',
-     (char)'a',
-     (char)'+',
-     (char)'1',
-     (char)'2',
-     (char)'@',
-     (char)'3',
-     (char)'4',
-     (char)' ',
-     (char)' ',
-     (char)'\000'};
+  char str2[29U] = " 1.@2.3-beta #.alpha+12@34  ";
   error = semver_clean(str2);
   tmp_0 = strcmp((char const *)(str2),"1.2.3-beta.alpha+1234");
   __FC_assert((tmp_0 == 0) != 0,"semver_test.c",670,

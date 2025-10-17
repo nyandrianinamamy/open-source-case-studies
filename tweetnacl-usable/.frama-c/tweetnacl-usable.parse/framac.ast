@@ -634,23 +634,7 @@ int crypto_core_hsalsa20_tweet(unsigned char *out, unsigned char const *in,
   return __retres;
 }
 
-static u8 const sigma[16] =
-  {(u8)'e',
-   (u8)'x',
-   (u8)'p',
-   (u8)'a',
-   (u8)'n',
-   (u8)'d',
-   (u8)' ',
-   (u8)'3',
-   (u8)'2',
-   (u8)'-',
-   (u8)'b',
-   (u8)'y',
-   (u8)'t',
-   (u8)'e',
-   (u8)' ',
-   (u8)'k'};
+static u8 const sigma[16] = "expand 32-byte k";
 int crypto_stream_salsa20_tweet_xor(unsigned char *c, unsigned char const *m,
                                     unsigned long long b,
                                     unsigned char const *n,

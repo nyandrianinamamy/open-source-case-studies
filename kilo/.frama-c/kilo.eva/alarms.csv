@@ -558,8 +558,8 @@ FRAMAC_SHARE/libc	ctype.h	80	isdigit	precondition	Unknown	c_uchar_or_eof: (0 ≤
 FRAMAC_SHARE/libc	ctype.h	120	isprint	precondition	Unknown	c_uchar_or_eof: (0 ≤ c ≤ 255) ∨ c ≡ -1
 FRAMAC_SHARE/libc	ctype.h	147	isspace	precondition	Unknown	c_uchar_or_eof: (0 ≤ c ≤ 255) ∨ c ≡ -1
 FRAMAC_SHARE/libc	fcntl.h	148	__va_open_mode_t	precondition	Unknown	valid_filename: valid_read_string(filename)
-FRAMAC_SHARE/libc	stdio.c	80	getline	mem_access	Unknown	\valid(*lineptr + tmp_2)
-FRAMAC_SHARE/libc	stdio.c	83	getline	mem_access	Unknown	\valid(*lineptr + cur)
+FRAMAC_SHARE/libc	stdio.c	70	getline	mem_access	Unknown	\valid(*lineptr + tmp_2)
+FRAMAC_SHARE/libc	stdio.c	73	getline	mem_access	Unknown	\valid(*lineptr + cur)
 FRAMAC_SHARE/libc	stdio.h	239	snprintf_va_4	precondition	Unknown	valid_read_nstring(param0, 20)
 FRAMAC_SHARE/libc	stdio.h	243	sscanf_va_1	precondition	Unknown	valid_read_string(s)
 FRAMAC_SHARE/libc	stdlib.h	575	free	precondition	Unknown	freeable: p ≡ \null ∨ \freeable(p)
