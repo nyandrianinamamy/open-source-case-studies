@@ -377,6 +377,7 @@ ADF_IsAllowed(ADF_AuthTable table,
 volatile int nondet;
 #endif
 
+/*@ assigns \result \from indirect:*node, indirect:parent; */
 static int
 is_any_allowed(TableNode *node, State parent)
 {
@@ -389,13 +390,8 @@ is_any_allowed(TableNode *node, State parent)
   if (node->extended) {
     //@ loop unroll 16;
     for (i = 0; i < TABLE_SIZE; i++) {
-#ifdef __FRAMAC__
-      // Frama-C/Eva: commented recursive call
-      if (nondet) return 1;
-#else
       if (is_any_allowed(&node->extended[i], state))
         return 1;
-#endif
     }
   } else if (state == ALLOW) {
     return 1;

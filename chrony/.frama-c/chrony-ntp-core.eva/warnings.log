@@ -5379,16 +5379,20 @@
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] addrfilt.c:389: Warning: 
+[eva:alarm] addrfilt.c:390: Warning: 
   accessing left-value that contains escaping addresses.
   assert ¬\dangling(&node->extended);
-  stack: is_any_allowed :: addrfilt.c:414 <-
+  stack: is_any_allowed :: addrfilt.c:410 <-
          ADF_IsAnyAllowed :: ntp_core.c:2538 <-
          NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
+[eva] addrfilt.c:393: Warning: 
+  Using specification of function is_any_allowed for recursive calls.
+  Analysis of function is_any_allowed is thus incomplete and its soundness
+  relies on the written specification.
 [eva:alarm] conf.c:1792: Warning: 
   out of bounds read. assert \valid_read(&node->allow);
   stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
@@ -5767,40 +5771,50 @@
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] addrfilt.c:387: Warning: 
+[eva:alarm] addrfilt.c:388: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
-  stack: __FC_assert :: addrfilt.c:387 <-
-         is_any_allowed :: addrfilt.c:414 <-
+  stack: __FC_assert :: addrfilt.c:388 <-
+         is_any_allowed :: addrfilt.c:410 <-
          ADF_IsAnyAllowed :: ntp_core.c:2538 <-
          NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] addrfilt.c:389: Warning: 
+[eva:alarm] addrfilt.c:390: Warning: 
   unaligned pointer creation.
   assert \aligned(node->extended,alignof(struct _TableNode));
-  stack: is_any_allowed :: addrfilt.c:414 <-
+  stack: is_any_allowed :: addrfilt.c:410 <-
          ADF_IsAnyAllowed :: ntp_core.c:2538 <-
          NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] addrfilt.c:389: Warning: 
+[eva:alarm] addrfilt.c:390: Warning: 
   pointer comparison.
   assert \pointer_comparable((void *)0, (void *)node->extended);
-  stack: is_any_allowed :: addrfilt.c:414 <-
+  stack: is_any_allowed :: addrfilt.c:410 <-
          ADF_IsAnyAllowed :: ntp_core.c:2538 <-
          NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] addrfilt.c:387: Warning: 
+[eva:alarm] addrfilt.c:393: Warning: 
+  unaligned pointer creation.
+  assert \aligned(node->extended,alignof(struct _TableNode));
+  stack: is_any_allowed :: addrfilt.c:410 <-
+         ADF_IsAnyAllowed :: ntp_core.c:2538 <-
+         NCR_AddAccessRestriction :: conf.c:1792 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:388: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
-  stack: __FC_assert :: addrfilt.c:387 <-
-         is_any_allowed :: addrfilt.c:416 <-
+  stack: __FC_assert :: addrfilt.c:388 <-
+         is_any_allowed :: addrfilt.c:412 <-
          ADF_IsAnyAllowed :: ntp_core.c:2543 <-
          NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
@@ -5899,10 +5913,10 @@
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] addrfilt.c:386: Warning: 
+[eva:alarm] addrfilt.c:387: Warning: 
   accessing left-value that contains escaping addresses.
   assert ¬\dangling(&node->state);
-  stack: is_any_allowed :: addrfilt.c:414 <-
+  stack: is_any_allowed :: addrfilt.c:410 <-
          ADF_IsAnyAllowed :: ntp_core.c:2538 <-
          NCR_AddAccessRestriction :: conf.c:1792 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
@@ -14691,7 +14705,7 @@
                        __malloc_SST_CreateInstance_l215_5;
                        __malloc_SST_CreateInstance_l215_6}
     addrfilt.c:189: imprecise merge of addresses
-      (read in 12 statements, propagated through 6 statements)
+      (read in 13 statements, propagated through 7 statements)
       garbled mix of &{__malloc_ADF_CreateTable_l91; __malloc_open_node_l137;
                        __malloc_w_open_node_l137_0; __malloc_open_node_l137_1;
                        __malloc_w_open_node_l137_2; __malloc_open_node_l137_3;
@@ -14711,7 +14725,7 @@
                        __malloc_w_open_node_l137_21;
                        __malloc_w_open_node_l137_22}
     addrfilt.c:259: imprecise merge of addresses
-      (read in 6 statements, propagated through 2 statements)
+      (read in 7 statements, propagated through 3 statements)
       garbled mix of &{__malloc_w_open_node_l137_19;
                        __malloc_w_open_node_l137_20;
                        __malloc_w_open_node_l137_21;

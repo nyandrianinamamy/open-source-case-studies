@@ -80,11 +80,11 @@ directory	file	line	function	property kind	status	property
 .	addrfilt.c	329	check_ip_in_node	ptr_comparison	Unknown	\pointer_comparable((void *)0, (void *)node->extended)
 .	addrfilt.c	332	check_ip_in_node	signed_overflow	Unknown	bits_consumed + 4 ≤ 2147483647
 .	addrfilt.c	347	check_ip_in_node	precondition of __FC_assert	Invalid or unreachable	nonnull_c: c ≢ 0
-.	addrfilt.c	386	is_any_allowed	dangling_pointer	Unknown	¬\dangling(&node->state)
-.	addrfilt.c	387	is_any_allowed	precondition of __FC_assert	Unknown	nonnull_c: c ≢ 0
-.	addrfilt.c	389	is_any_allowed	dangling_pointer	Unknown	¬\dangling(&node->extended)
-.	addrfilt.c	389	is_any_allowed	pointer_alignment	Unknown	\aligned(node->extended,alignof(struct _TableNode))
-.	addrfilt.c	389	is_any_allowed	ptr_comparison	Unknown	\pointer_comparable((void *)0, (void *)node->extended)
+.	addrfilt.c	387	is_any_allowed	dangling_pointer	Unknown	¬\dangling(&node->state)
+.	addrfilt.c	388	is_any_allowed	precondition of __FC_assert	Unknown	nonnull_c: c ≢ 0
+.	addrfilt.c	390	is_any_allowed	dangling_pointer	Unknown	¬\dangling(&node->extended)
+.	addrfilt.c	390	is_any_allowed	pointer_alignment	Unknown	\aligned(node->extended,alignof(struct _TableNode))
+.	addrfilt.c	390	is_any_allowed	ptr_comparison	Unknown	\pointer_comparable((void *)0, (void *)node->extended)
 .	array.c	69	realloc_array	precondition of __FC_assert	Unknown	nonnull_c: c ≢ 0
 .	array.c	94	ARR_GetElement	precondition of __FC_assert	Unknown	nonnull_c: c ≢ 0
 .	array.c	103	ARR_GetElements	precondition of __FC_assert	Unknown	nonnull_c: c ≢ 0
