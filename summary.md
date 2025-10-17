@@ -26,7 +26,7 @@
 |mbedtls|Implementation of the TLS and SSL protocols (formerly PolarSSL)|https://github.com/Mbed-TLS/mbedtls|179|-1|423|138478|HAS_DYN_ALLOC, HAS_RECURSION, NO_FLOAT|library|
 |microstrain|Driver for a LORD/Microstrain Inertial Measurement Unit (IMU) sensor|https://github.com/ros-drivers/microstrain_mips|1|715|69|19075|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|library|
 |mini-gmp|Implementation of a subset of GNU's Multiple Precision Arithmetic library|https://gmplib.org/|1|69|35|8686|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|library|
-|miniz|Compression library in a single source file, implementing zlib and Deflate|https://github.com/richgel999/miniz|6|5936|26|8299|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|library|
+|miniz|Compression library in a single source file, implementing zlib and Deflate|https://github.com/richgel999/miniz|6|5974|26|8299|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|library|
 |monocypher|Small, self-contained cryptographic library|https://monocypher.org|1|113|42|23680|HAS_DYN_ALLOC(tests), NO_RECURSION, NO_FLOAT|library|
 |papabench|Real time benchmark based on the Paparazzi unmanned aerial vehicle (UAV) code|https://github.com/t-crest/patmos-benchmarks/tree/master/PapaBench-0.4|1|40|80|7251|NO_DYN_ALLOC, UNUSED_RECURSION, HAS_FLOAT|executable|
 |polarssl|Implementation of the TLS and SSL protocols (formerly PolarSSL)|https://github.com/ARMmbed/mbedtls|1|132|119|29184|HAS_DYN_ALLOC, REM_RECURSION, NO_FLOAT|library|

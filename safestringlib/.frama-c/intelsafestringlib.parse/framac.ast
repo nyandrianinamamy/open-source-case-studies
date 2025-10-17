@@ -7217,49 +7217,8 @@ int main(void)
   test_wmemmove_s();
   test_wmemset_s();
   test_wmemcmp_s();
-  char str[21] =
-    {(char)'T',
-     (char)'h',
-     (char)'i',
-     (char)'s',
-     (char)' ',
-     (char)'i',
-     (char)'s',
-     (char)' ',
-     (char)'a',
-     (char)' ',
-     (char)'c',
-     (char)'h',
-     (char)'a',
-     (char)'r',
-     (char)' ',
-     (char)'a',
-     (char)'r',
-     (char)'r',
-     (char)'a',
-     (char)'y',
-     (char)'\000'};
-  char str2_16[20] =
-    {(char)'.',
-     (char)'.',
-     (char)'.',
-     (char)'A',
-     (char)'n',
-     (char)'d',
-     (char)' ',
-     (char)'a',
-     (char)'n',
-     (char)'o',
-     (char)'t',
-     (char)'h',
-     (char)'e',
-     (char)'r',
-     (char)' ',
-     (char)'o',
-     (char)'n',
-     (char)'e',
-     (char)'.',
-     (char)'\000'};
+  char str[21U] = "This is a char array";
+  char str2_16[20U] = "...And another one.";
   int indicator = -1;
   strcpy_s(dest_0,dmax,(char const *)(str));
   char *ret =
@@ -28487,9 +28446,7 @@ int test_wcpcpy_s(void)
                                   (unsigned int)rc); /* printf_va_863 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_864 */
-  wcscpy_s(str1_11,(rsize_t)128,L"a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a"
-           "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a"
-           "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" );
+  wcscpy_s(str1_11,(rsize_t)128,L"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
   ret = wcpcpy_s(str1_11,(rsize_t)5,(wchar_t const *)0,& rc);
   if (rc != 400) printf("%s %u   Error rc=%u \n",(char *)"test_wcpcpy_s",
                         (unsigned int)151,(unsigned int)rc); /* printf_va_865 */
@@ -28501,9 +28458,7 @@ int test_wcpcpy_s(void)
                                (unsigned int)rc); /* printf_va_867 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_868 */
-  wcscpy_s(str1_11,(rsize_t)128,L"a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a"
-           "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a"
-           "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" );
+  wcscpy_s(str1_11,(rsize_t)128,L"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
   ret = wcpcpy_s(str1_11,(rsize_t)5,(wchar_t const *)(str1_11),& rc);
   if (rc != 403) printf("%s %u   Error rc=%u \n",(char *)"test_wcpcpy_s",
                         (unsigned int)183,(unsigned int)rc); /* printf_va_869 */
@@ -28512,9 +28467,7 @@ int test_wcpcpy_s(void)
                                   (unsigned int)rc); /* printf_va_870 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_871 */
-  wcscpy_s(str1_11,(rsize_t)128,L"a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a"
-           "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a"
-           "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" );
+  wcscpy_s(str1_11,(rsize_t)128,L"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
   ret = wcpcpy_s(str1_11,(rsize_t)128,(wchar_t const *)(str1_11),& rc);
   if (rc != 0) printf("%s %u   Error rc=%u \n",(char *)"test_wcpcpy_s",
                       (unsigned int)201,(unsigned int)rc); /* printf_va_872 */
@@ -28532,8 +28485,7 @@ int test_wcpcpy_s(void)
     }
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_874 */
-  wcscpy_s(str1_11,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str1_11,(rsize_t)128,L"keep it simple");
   sz = wcsnlen_s((wchar_t const *)(str1_11),(rsize_t)128);
   ret = wcpcpy_s(str1_11,(rsize_t)128,(wchar_t const *)(& str1_11[5]),& rc);
   if (rc != 404) printf("%s %u   Error rc=%u \n",(char *)"test_wcpcpy_s",
@@ -28546,8 +28498,7 @@ int test_wcpcpy_s(void)
                                (unsigned int)rc); /* printf_va_877 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_878 */
-  wcscpy_s(str1_11,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str1_11,(rsize_t)128,L"keep it simple");
   sz = wcsnlen_s((wchar_t const *)(str1_11),(rsize_t)128);
   ret = wcpcpy_s(& str1_11[5],(rsize_t)128,(wchar_t const *)(str1_11),& rc);
   if (rc != 404) printf("%s %u   Error rc=%u \n",(char *)"test_wcpcpy_s",
@@ -28560,9 +28511,7 @@ int test_wcpcpy_s(void)
                                (unsigned int)rc); /* printf_va_881 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_882 */
-  wcscpy_s(str1_11,(rsize_t)128,L"a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a"
-           "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a"
-           "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" );
+  wcscpy_s(str1_11,(rsize_t)128,L"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
   str2_11[0] = 0L;
   ret = wcpcpy_s(str1_11,(rsize_t)(128 / 2),(wchar_t const *)(str2_11),& rc);
   if (rc != 0) printf("%s %u   Error rc=%u \n",(char *)"test_wcpcpy_s",
@@ -28580,8 +28529,7 @@ int test_wcpcpy_s(void)
                                (unsigned int)rc); /* printf_va_885 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_886 */
-  wcscpy_s(str1_11,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str1_11,(rsize_t)128,L"keep it simple");
   memset_s((void *)(str2_11),(rsize_t)'\000',(uint8_t)30);
   ret = wcpcpy_s(str2_11,(rsize_t)128,(wchar_t const *)(str1_11),& rc);
   if (rc != 0) printf("%s %u   Error rc=%u \n",(char *)"test_wcpcpy_s",
@@ -28598,16 +28546,15 @@ int test_wcpcpy_s(void)
                                           (char *)"test_wcpcpy_s",
                                           (unsigned int)332,(unsigned int)rc); /* printf_va_888 */
     }
-  rc = memcmp_s((void const *)(str2_11),(rsize_t)128,(void const *)L"k" "e"
-                "e" "p" " " "i" "t" " " "s" "i" "m" "p" "l" "e" ,
+  rc = memcmp_s((void const *)(str2_11),(rsize_t)128,
+                (void const *)L"keep it simple",
                 (unsigned int)15 * sizeof(wchar_t),& ind);
   if (ind != 0) printf("%s %u   Error -%ls- \n",(char *)"test_wcpcpy_s",
                        (unsigned int)338,str1_11); /* printf_va_889 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_890 */
   memset_s((void *)(str1_11),(rsize_t)'\000',(uint8_t)50);
-  wcscpy_s(str2_11,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str2_11,(rsize_t)128,L"keep it simple");
   sz = wcsnlen_s((wchar_t const *)(str2_11),(rsize_t)128);
   ret = wcpcpy_s(str1_11,(rsize_t)128,(wchar_t const *)(str2_11),& rc);
   if (rc != 0) printf("%s %u   Error rc=%u \n",(char *)"test_wcpcpy_s",
@@ -28632,8 +28579,8 @@ int test_wcpcpy_s(void)
     }
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_894 */
-  wcscpy_s(str1_11,(rsize_t)128,L"x" "x" "x" "x" "x" "x" "x" "x" "x" "x" );
-  wcscpy_s(str2_11,(rsize_t)128,L"a" "b" "c" "d" "e" );
+  wcscpy_s(str1_11,(rsize_t)128,L"xxxxxxxxxx");
+  wcscpy_s(str2_11,(rsize_t)128,L"abcde");
   ret = wcpcpy_s(str1_11,(rsize_t)128,(wchar_t const *)(str2_11),& rc);
   if (rc != 0) printf("%s %u   Error rc=%u \n",(char *)"test_wcpcpy_s",
                       (unsigned int)378,(unsigned int)rc); /* printf_va_895 */
@@ -28660,10 +28607,8 @@ int test_wcpcpy_s(void)
                        str2_11,(unsigned long)sz,(unsigned int)rc); /* printf_va_898 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_899 */
-  wcscpy_s(str1_11,(rsize_t)128,L"q" "q" "w" "e" "q" "e" "q" "e" "q" "e" "q"
-           );
-  wcscpy_s(str2_11,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str1_11,(rsize_t)128,L"qqweqeqeqeq");
+  wcscpy_s(str2_11,(rsize_t)128,L"keep it simple");
   sz = wcsnlen_s((wchar_t const *)(str2_11),(rsize_t)128);
   ret = wcpcpy_s(str1_11,(rsize_t)14,(wchar_t const *)(str2_11),& rc);
   if (rc != 406) printf("%s %u   Error rc=%u \n",(char *)"test_wcpcpy_s",
@@ -28676,10 +28621,8 @@ int test_wcpcpy_s(void)
                                str1_11,(unsigned int)rc); /* printf_va_902 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_903 */
-  wcscpy_s(str1_11,(rsize_t)128,L"q" "q" "w" "e" "q" "e" "q" "e" "q" "e" "q"
-           );
-  wcscpy_s(str2_11,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str1_11,(rsize_t)128,L"qqweqeqeqeq");
+  wcscpy_s(str2_11,(rsize_t)128,L"keep it simple");
   sz = wcsnlen_s((wchar_t const *)(str2_11),(rsize_t)128);
   ret = wcpcpy_s(str2_11,(rsize_t)6,(wchar_t const *)(str1_11),& rc);
   if (rc != 406) printf("%s %u   Error rc=%u \n",(char *)"test_wcpcpy_s",
@@ -28692,9 +28635,8 @@ int test_wcpcpy_s(void)
                                str1_11,(unsigned int)rc); /* printf_va_906 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_907 */
-  wcscpy_s(str2_11,(rsize_t)128,L"q" "q" "w" "e" "q" "e" "q" "e" "q" "e" "q"
-           );
-  wcscpy_s(str1_11,(rsize_t)128,L"i" "t" );
+  wcscpy_s(str2_11,(rsize_t)128,L"qqweqeqeqeq");
+  wcscpy_s(str1_11,(rsize_t)128,L"it");
   ret = wcpcpy_s(str2_11,(rsize_t)3,(wchar_t const *)(str1_11),& rc);
   if (rc != 0) printf("%s %u   Error rc=%u \n",(char *)"test_wcpcpy_s",
                       (unsigned int)454,(unsigned int)rc); /* printf_va_908 */
@@ -28716,9 +28658,8 @@ int test_wcpcpy_s(void)
     }
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_911 */
-  wcscpy_s(str1_11,(rsize_t)128,L"q" "q" "1" "2" "3" "4" "5" "w" "e" "q" "e"
-           "q" "e" "q" "e" "q" );
-  wcscpy_s(str2_11,(rsize_t)128,L"i" "t" );
+  wcscpy_s(str1_11,(rsize_t)128,L"qq12345weqeqeqeq");
+  wcscpy_s(str2_11,(rsize_t)128,L"it");
   ret = wcpcpy_s(str1_11,(rsize_t)10,(wchar_t const *)(str2_11),& rc);
   if (rc != 0) printf("%s %u   Error rc=%u \n",(char *)"test_wcpcpy_s",
                       (unsigned int)477,(unsigned int)rc); /* printf_va_912 */
@@ -28740,9 +28681,8 @@ int test_wcpcpy_s(void)
                        (unsigned int)487,str1_11,(unsigned int)rc); /* printf_va_914 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_915 */
-  wcscpy_s(str2_11,(rsize_t)128,L"q" "q" "w" "e" "q" "e" "q" "e" "q" "e" "q"
-           );
-  wcscpy_s(str1_11,(rsize_t)128,L"i" "t" );
+  wcscpy_s(str2_11,(rsize_t)128,L"qqweqeqeqeq");
+  wcscpy_s(str1_11,(rsize_t)128,L"it");
   sz = wcsnlen_s((wchar_t const *)(str2_11),(rsize_t)128);
   ret = wcpcpy_s(str2_11,(rsize_t)2,(wchar_t const *)(str1_11),& rc);
   if (rc != 406) printf("%s %u   Error rc=%u \n",(char *)"test_wcpcpy_s",
@@ -29681,8 +29621,7 @@ int test_wcscat_s(void)
                         (unsigned int)92,(unsigned int)rc); /* printf_va_927 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_928 */
-  wcscpy_s(str1_12,(rsize_t)128,L"1" "2" "3" "4" "5" "6" "7" "8" "9" "0" "1"
-           "2" "3" "4" "5" "6" "7" "8" "9" "0" );
+  wcscpy_s(str1_12,(rsize_t)128,L"12345678901234567890");
   rc = wcscat_s(str1_12,(rsize_t)8,(wchar_t const *)(& str1_12[7]));
   if (rc != 404) printf("%s %u   Error rc=%u \n",(char *)"test_wcscat_s",
                         (unsigned int)105,(unsigned int)rc); /* printf_va_929 */
@@ -29690,9 +29629,8 @@ int test_wcscat_s(void)
                                (char *)"test_wcscat_s",(unsigned int)110); /* printf_va_930 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_931 */
-  wcscpy_s(str1_12,(rsize_t)128,L"a" "a" "a" "a" "a" "a" "a" "a" "a" "a" );
-  wcscpy_s(str2_12,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str1_12,(rsize_t)128,L"aaaaaaaaaa");
+  wcscpy_s(str2_12,(rsize_t)128,L"keep it simple");
   rc = wcscat_s(str1_12,(rsize_t)1,(wchar_t const *)(str2_12));
   if (rc != 407) printf("%s %u   Error rc=%u \n",(char *)"test_wcscat_s",
                         (unsigned int)123,(unsigned int)rc); /* printf_va_932 */
@@ -29700,9 +29638,8 @@ int test_wcscat_s(void)
                                (char *)"test_wcscat_s",(unsigned int)128); /* printf_va_933 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_934 */
-  wcscpy_s(str1_12,(rsize_t)128,L"a" "a" "a" "a" "a" "a" "a" "a" "a" "a" );
-  wcscpy_s(str2_12,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str1_12,(rsize_t)128,L"aaaaaaaaaa");
+  wcscpy_s(str2_12,(rsize_t)128,L"keep it simple");
   rc = wcscat_s(str1_12,(rsize_t)10,(wchar_t const *)(str2_12));
   if (rc != 407) printf("%s %u   Error rc=%u \n",(char *)"test_wcscat_s",
                         (unsigned int)141,(unsigned int)rc); /* printf_va_935 */
@@ -29710,10 +29647,8 @@ int test_wcscat_s(void)
                                (char *)"test_wcscat_s",(unsigned int)146); /* printf_va_936 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_937 */
-  wcscpy_s(str1_12,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
-  wcscpy_s(& str1_12[20],(rsize_t)128,L"a" "a" "a" "a" "a" "a" "a" "a" "a"
-           "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" );
+  wcscpy_s(str1_12,(rsize_t)128,L"keep it simple");
+  wcscpy_s(& str1_12[20],(rsize_t)128,L"aaaaaaaaaaaaaaaaaaaa");
   rc = wcscat_s(str1_12,(rsize_t)30,(wchar_t const *)(& str1_12[20]));
   if (rc != 404) printf("%s %u   Error rc=%u \n",(char *)"test_wcscat_s",
                         (unsigned int)159,(unsigned int)rc); /* printf_va_938 */
@@ -29721,9 +29656,8 @@ int test_wcscat_s(void)
                                (char *)"test_wcscat_s",(unsigned int)164); /* printf_va_939 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_940 */
-  wcscpy_s(str1_12,(rsize_t)128,L"a" "a" "a" "a" "a" "a" "a" "a" "a" "a" );
-  wcscpy_s(str2_12,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str1_12,(rsize_t)128,L"aaaaaaaaaa");
+  wcscpy_s(str2_12,(rsize_t)128,L"keep it simple");
   tmp = wcsnlen_s((wchar_t const *)(str1_12),(rsize_t)128);
   len1 = (int32_t)tmp;
   tmp_0 = wcsnlen_s((wchar_t const *)(str2_12),(rsize_t)128);
@@ -29740,8 +29674,7 @@ int test_wcscat_s(void)
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_943 */
   str1_12[0] = (wchar_t)'\000';
-  wcscpy_s(str2_12,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str2_12,(rsize_t)128,L"keep it simple");
   rc = wcscat_s(str1_12,(rsize_t)1,(wchar_t const *)(str2_12));
   if (rc != 406) printf("%s %u   Error rc=%u \n",(char *)"test_wcscat_s",
                         (unsigned int)200,(unsigned int)rc); /* printf_va_944 */
@@ -29750,8 +29683,7 @@ int test_wcscat_s(void)
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_946 */
   str1_12[0] = (wchar_t)'\000';
-  wcscpy_s(str2_12,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str2_12,(rsize_t)128,L"keep it simple");
   rc = wcscat_s(str1_12,(rsize_t)11,(wchar_t const *)(str2_12));
   if (rc != 406) printf("%s %u   Error rc=%u \n",(char *)"test_wcscat_s",
                         (unsigned int)218,(unsigned int)rc); /* printf_va_947 */
@@ -29760,8 +29692,7 @@ int test_wcscat_s(void)
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_949 */
   str1_12[0] = (wchar_t)'\000';
-  wcscpy_s(str2_12,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str2_12,(rsize_t)128,L"keep it simple");
   rc = wcscat_s(str1_12,(rsize_t)20,(wchar_t const *)(str2_12));
   if (rc != 0) printf("%s %u   Error rc=%u \n",(char *)"test_wcscat_s",
                       (unsigned int)236,(unsigned int)rc); /* printf_va_950 */
@@ -29782,56 +29713,50 @@ int test_wcscat_s(void)
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_955 */
   str1_12[0] = (wchar_t)'\000';
-  wcscpy_s(str2_12,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str2_12,(rsize_t)128,L"keep it simple");
   rc = wcscat_s(str2_12,(rsize_t)128,(wchar_t const *)(str1_12));
   if (rc != 0) printf("%s %u   Error rc=%u \n",(char *)"test_wcscat_s",
                       (unsigned int)274,(unsigned int)rc); /* printf_va_956 */
-  rc = memcmp_s((void const *)(str2_12),(rsize_t)128,(void const *)L"k" "e"
-                "e" "p" " " "i" "t" " " "s" "i" "m" "p" "l" "e" ,
+  rc = memcmp_s((void const *)(str2_12),(rsize_t)128,
+                (void const *)L"keep it simple",
                 (unsigned int)15 * sizeof(wchar_t),& ind);
   if (ind != 0) printf("%s %u   Error -%ls- \n",(char *)"test_wcscat_s",
                        (unsigned int)280,str1_12); /* printf_va_957 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_958 */
-  wcscpy_s(str1_12,(rsize_t)128,L"q" "q" "w" "e" "q" "q" );
-  wcscpy_s(str2_12,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str1_12,(rsize_t)128,L"qqweqq");
+  wcscpy_s(str2_12,(rsize_t)128,L"keep it simple");
   rc = wcscat_s(str1_12,(rsize_t)128,(wchar_t const *)(str2_12));
   if (rc != 0) printf("%s %u   Error rc=%u \n",(char *)"test_wcscat_s",
                       (unsigned int)293,(unsigned int)rc); /* printf_va_959 */
-  rc = memcmp_s((void const *)(str1_12),(rsize_t)128,(void const *)L"q" "q"
-                "w" "e" "q" "q" "k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-                "p" "l" "e" ,(unsigned int)20 * sizeof(wchar_t),& ind);
+  rc = memcmp_s((void const *)(str1_12),(rsize_t)128,
+                (void const *)L"qqweqqkeep it simple",
+                (unsigned int)20 * sizeof(wchar_t),& ind);
   if (ind != 0) printf("%s %u   Error -%ls- \n",(char *)"test_wcscat_s",
                        (unsigned int)299,str1_12); /* printf_va_960 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_961 */
-  wcscpy_s(str1_12,(rsize_t)128,L"1" "2" "3" "4" );
-  wcscpy_s(str2_12,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str1_12,(rsize_t)128,L"1234");
+  wcscpy_s(str2_12,(rsize_t)128,L"keep it simple");
   rc = wcscat_s(str2_12,(rsize_t)16,(wchar_t const *)(str1_12));
   if (rc != 406) printf("%s %u   Error rc=%u \n",(char *)"test_wcscat_s",
                         (unsigned int)312,(unsigned int)rc); /* printf_va_962 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_963 */
-  wcscpy_s(str1_12,(rsize_t)128,L"1" "2" "3" "4" );
-  wcscpy_s(str2_12,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str1_12,(rsize_t)128,L"1234");
+  wcscpy_s(str2_12,(rsize_t)128,L"keep it simple");
   rc = wcscat_s(str2_12,(rsize_t)19,(wchar_t const *)(str1_12));
   if (rc != 0) printf("%s %u   Error rc=%u \n",(char *)"test_wcscat_s",
                       (unsigned int)325,(unsigned int)rc); /* printf_va_964 */
-  rc = memcmp_s((void const *)(str2_12),(rsize_t)128,(void const *)L"k" "e"
-                "e" "p" " " "i" "t" " " "s" "i" "m" "p" "l" "e" "1" "2" "3"
-                "4" ,(unsigned int)19 * sizeof(wchar_t),& ind);
+  rc = memcmp_s((void const *)(str2_12),(rsize_t)128,
+                (void const *)L"keep it simple1234",
+                (unsigned int)19 * sizeof(wchar_t),& ind);
   if (ind != 0) printf("%s %u   Error -%ls- \n",(char *)"test_wcscat_s",
                        (unsigned int)331,str1_12); /* printf_va_965 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_966 */
-  wcscpy_s(str1_12,(rsize_t)128,L"1" "2" "3" "4" "5" "6" "7" "8" "9" "1" "2"
-           "3" "4" "5" "6" "7" "8" "9" );
-  wcscpy_s(& str1_12[13],(rsize_t)128,L"A" "B" "C" "D" "E" "F" "G" "H" "I"
-           "J" "K" "L" "M" "N" "O" "P" "1" "2" "3" "4" "5" "6" "7" "8" "9" );
+  wcscpy_s(str1_12,(rsize_t)128,L"123456789123456789");
+  wcscpy_s(& str1_12[13],(rsize_t)128,L"ABCDEFGHIJKLMNOP123456789");
   rc = wcscat_s(& str1_12[13],(rsize_t)128,(wchar_t const *)(str1_12));
   if (rc != 404) printf("%s %u   Error rc=%u \n",(char *)"test_wcscat_s",
                         (unsigned int)345,(unsigned int)rc); /* printf_va_967 */
@@ -29839,33 +29764,32 @@ int test_wcscat_s(void)
                                 (char *)"test_wcscat_s",(unsigned int)350); /* printf_va_968 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_969 */
-  wcscpy_s(str2_12,(rsize_t)128,L"1" "2" "3" );
-  wcscpy_s(str1_12,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str2_12,(rsize_t)128,L"123");
+  wcscpy_s(str1_12,(rsize_t)128,L"keep it simple");
   rc = wcscat_s(str2_12,(rsize_t)31,(wchar_t const *)(str1_12));
   if (rc != 0) printf("%s %u   Error rc=%u \n",(char *)"test_wcscat_s",
                       (unsigned int)363,(unsigned int)rc); /* printf_va_970 */
-  rc = memcmp_s((void const *)(str2_12),(rsize_t)128,(void const *)L"1" "2"
-                "3" "k" "e" "e" "p" " " "i" "t" " " "s" "i" "m" "p" "l" "e" ,
+  rc = memcmp_s((void const *)(str2_12),(rsize_t)128,
+                (void const *)L"123keep it simple",
                 (unsigned int)17 * sizeof(wchar_t),& ind);
   if (ind != 0) printf("%s %u   Error -%ls- \n",(char *)"test_wcscat_s",
                        (unsigned int)369,str1_12); /* printf_va_971 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_972 */
-  wcscpy_s(str2_12,(rsize_t)128,L"1" "2" "3" "4" );
-  wcscpy_s(str1_12,(rsize_t)128,L"5" "6" "7" "8" "9" );
+  wcscpy_s(str2_12,(rsize_t)128,L"1234");
+  wcscpy_s(str1_12,(rsize_t)128,L"56789");
   rc = wcscat_s(str2_12,(rsize_t)10,(wchar_t const *)(str1_12));
   if (rc != 0) printf("%s %u   Error rc=%u \n",(char *)"test_wcscat_s",
                       (unsigned int)382,(unsigned int)rc); /* printf_va_973 */
-  rc = memcmp_s((void const *)(str2_12),(rsize_t)128,(void const *)L"1" "2"
-                "3" "4" "5" "6" "7" "8" "9" ,
-                (unsigned int)9 * sizeof(wchar_t),& ind);
+  rc = memcmp_s((void const *)(str2_12),(rsize_t)128,
+                (void const *)L"123456789",(unsigned int)9 * sizeof(wchar_t),
+                & ind);
   if (ind != 0) printf("%s %u   Error -%ls- \n",(char *)"test_wcscat_s",
                        (unsigned int)389,str1_12); /* printf_va_974 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_975 */
-  wcscpy_s(str2_12,(rsize_t)128,L"1" "2" "3" "4" );
-  wcscpy_s(str1_12,(rsize_t)128,L"5" "6" "7" "8" "9" );
+  wcscpy_s(str2_12,(rsize_t)128,L"1234");
+  wcscpy_s(str1_12,(rsize_t)128,L"56789");
   rc = wcscat_s(str2_12,(rsize_t)9,(wchar_t const *)(str1_12));
   if (rc != 406) printf("%s %u   Error rc=%u \n",(char *)"test_wcscat_s",
                         (unsigned int)402,(unsigned int)rc); /* printf_va_976 */
@@ -30645,7 +30569,7 @@ int test_wcscpy_s(void)
                         (unsigned int)124,(unsigned int)rc); /* printf_va_984 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_985 */
-  wmemcpy_s(str1_13,(rsize_t)(128 * 4),L"a" "a" "a" "a" "a" ,(rsize_t)5);
+  wmemcpy_s(str1_13,(rsize_t)(128 * 4),L"aaaaa",(rsize_t)5);
   rc = wcscpy_s(str1_13,(rsize_t)5,(wchar_t const *)0);
   if (rc != 400) printf("%s %u   Error rc=%u \n",(char *)"test_wcscpy_s",
                         (unsigned int)136,(unsigned int)rc); /* printf_va_986 */
@@ -30654,28 +30578,22 @@ int test_wcscpy_s(void)
                                (unsigned int)rc); /* printf_va_987 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_988 */
-  wmemcpy_s(str1_13,(rsize_t)(128 * 4),L"a" "a" "a" "a" "a" "a" "a" "a" "a"
-            "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a"
-            "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" ,
-            (rsize_t)42);
+  wmemcpy_s(str1_13,(rsize_t)(128 * 4),
+            L"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",(rsize_t)42);
   rc = wcscpy_s(str1_13,(rsize_t)5,(wchar_t const *)(str1_13));
   if (rc != 403) printf("%s %u   Error rc=%u \n",(char *)"test_wcscpy_s",
                         (unsigned int)163,(unsigned int)rc); /* printf_va_989 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_990 */
-  wmemcpy_s(str1_13,(rsize_t)(128 * 4),L"a" "a" "a" "a" "a" "a" "a" "a" "a"
-            "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a"
-            "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" ,
-            (rsize_t)42);
+  wmemcpy_s(str1_13,(rsize_t)(128 * 4),
+            L"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",(rsize_t)42);
   rc = wcscpy_s(str1_13,(rsize_t)(128 * 4),(wchar_t const *)(str1_13));
   if (rc != 0) printf("%s %u   Error rc=%u \n",(char *)"test_wcscpy_s",
                       (unsigned int)175,(unsigned int)rc); /* printf_va_991 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_992 */
-  wmemcpy_s(str1_13,(rsize_t)(128 * 4),L"k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" "-" "-" "k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" "-" "-" "k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" ,(rsize_t)47);
+  wmemcpy_s(str1_13,(rsize_t)(128 * 4),
+            L"keep it simple--keep it simple--keep it simple",(rsize_t)47);
   rc = wcscpy_s(str1_13,(rsize_t)(128 * 4),(wchar_t const *)(& str1_13[5]));
   if (rc != 404) printf("%s %u   Error rc=%u \n",(char *)"test_wcscpy_s",
                         (unsigned int)190,(unsigned int)rc); /* printf_va_993 */
@@ -30684,10 +30602,8 @@ int test_wcscpy_s(void)
                                (unsigned int)rc); /* printf_va_994 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_995 */
-  wmemcpy_s(str1_13,(rsize_t)(128 * 4),L"k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" "-" "-" "k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" "-" "-" "k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" ,(rsize_t)47);
+  wmemcpy_s(str1_13,(rsize_t)(128 * 4),
+            L"keep it simple--keep it simple--keep it simple",(rsize_t)47);
   sz = wcsnlen_s((wchar_t const *)(str1_13),(rsize_t)(128 * 4));
   rc = wcscpy_s(& str1_13[8],(rsize_t)(128 * 4),(wchar_t const *)(str1_13));
   if (rc != 404) printf("%s %u   Error rc=%u \n",(char *)"test_wcscpy_s",
@@ -30697,10 +30613,8 @@ int test_wcscpy_s(void)
                                (unsigned int)rc); /* printf_va_997 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_998 */
-  wmemcpy_s(str1_13,(rsize_t)(128 * 4),L"a" "a" "a" "a" "a" "a" "a" "a" "a"
-            "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a"
-            "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" ,
-            (rsize_t)41);
+  wmemcpy_s(str1_13,(rsize_t)(128 * 4),
+            L"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",(rsize_t)41);
   str2_13[0] = 0L;
   rc = wcscpy_s(str1_13,(rsize_t)((128 * 4) / 2),(wchar_t const *)(str2_13));
   if (rc != 0) printf("%s %u   Error rc=%u \n",(char *)"test_wcscpy_s",
@@ -30710,10 +30624,8 @@ int test_wcscpy_s(void)
                                (unsigned int)rc); /* printf_va_1000 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1001 */
-  wmemcpy_s(str1_13,(rsize_t)(128 * 4),L"k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" "-" "-" "k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" "-" "-" "k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" ,(rsize_t)47);
+  wmemcpy_s(str1_13,(rsize_t)(128 * 4),
+            L"keep it simple--keep it simple--keep it simple",(rsize_t)47);
   sz = wcsnlen_s((wchar_t const *)(str1_13),(rsize_t)(128 * 4));
   memset_s((void *)(str2_13),(rsize_t)'\000',(uint8_t)30);
   rc = wcscpy_s(str2_13,(rsize_t)(128 * 4),(wchar_t const *)(str1_13));
@@ -30728,10 +30640,8 @@ int test_wcscpy_s(void)
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1004 */
   memset_s((void *)(str1_13),(rsize_t)'\000',(uint8_t)50);
-  wmemcpy_s(str2_13,(rsize_t)(128 * 4),L"k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" "-" "-" "k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" "-" "-" "k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" ,(rsize_t)47);
+  wmemcpy_s(str2_13,(rsize_t)(128 * 4),
+            L"keep it simple--keep it simple--keep it simple",(rsize_t)47);
   sz = wcsnlen_s((wchar_t const *)(str2_13),(rsize_t)(128 * 4));
   rc = wcscpy_s(str1_13,(rsize_t)(128 * 4),(wchar_t const *)(str2_13));
   if (rc != 0) printf("%s %u   Error rc=%u \n",(char *)"test_wcscpy_s",
@@ -30744,8 +30654,7 @@ int test_wcscpy_s(void)
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1007 */
   wmemset_s(str1_13,120L,(rsize_t)20);
-  wmemcpy_s(str2_13,(rsize_t)(128 * 4),L"k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" ,(rsize_t)15);
+  wmemcpy_s(str2_13,(rsize_t)(128 * 4),L"keep it simple",(rsize_t)15);
   sz_orig = wcsnlen_s((wchar_t const *)(str2_13),(rsize_t)(128 * 4));
   rc = wcscpy_s(str1_13,(rsize_t)(128 * 4),(wchar_t const *)(str2_13));
   if (rc != 0) printf("%s %u   Error rc=%u \n",(char *)"test_wcscpy_s",
@@ -30763,8 +30672,7 @@ int test_wcscpy_s(void)
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1011 */
   wmemset_s(str1_13,120L,(rsize_t)20);
-  wmemcpy_s(str2_13,(rsize_t)(128 * 4),L"k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" ,(rsize_t)15);
+  wmemcpy_s(str2_13,(rsize_t)(128 * 4),L"keep it simple",(rsize_t)15);
   rc = wcscpy_s(str1_13,(rsize_t)14,(wchar_t const *)(str2_13));
   if (rc != 406) printf("%s %u   Error rc=%u \n",(char *)"test_wcscpy_s",
                         (unsigned int)346,(unsigned int)rc); /* printf_va_1012 */
@@ -30774,8 +30682,7 @@ int test_wcscpy_s(void)
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1014 */
   wmemset_s(str1_13,120L,(rsize_t)20);
-  wmemcpy_s(str2_13,(rsize_t)(128 * 4),L"k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" ,(rsize_t)15);
+  wmemcpy_s(str2_13,(rsize_t)(128 * 4),L"keep it simple",(rsize_t)15);
   rc = wcscpy_s(str2_13,(rsize_t)6,(wchar_t const *)(str1_13));
   if (rc != 406) printf("%s %u   Error rc=%u \n",(char *)"test_wcscpy_s",
                         (unsigned int)364,(unsigned int)rc); /* printf_va_1015 */
@@ -30784,9 +30691,8 @@ int test_wcscpy_s(void)
                                str1_13,(unsigned int)rc); /* printf_va_1016 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1017 */
-  wmemcpy_s(str1_13,(rsize_t)(128 * 4),L"i" "t" ,(rsize_t)3);
-  wmemcpy_s(str2_13,(rsize_t)(128 * 4),L"q" "q" "w" "e" "q" "e" "q" "e" "q"
-            "e" "q" ,(rsize_t)12);
+  wmemcpy_s(str1_13,(rsize_t)(128 * 4),L"it",(rsize_t)3);
+  wmemcpy_s(str2_13,(rsize_t)(128 * 4),L"qqweqeqeqeq",(rsize_t)12);
   rc = wcscpy_s(str2_13,(rsize_t)3,(wchar_t const *)(str1_13));
   if (rc != 0) printf("%s %u   Error rc=%u \n",(char *)"test_wcscpy_s",
                       (unsigned int)383,(unsigned int)rc); /* printf_va_1018 */
@@ -30797,9 +30703,8 @@ int test_wcscpy_s(void)
                        (unsigned int)389,str1_13,(unsigned int)rc); /* printf_va_1019 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1020 */
-  wmemcpy_s(str1_13,(rsize_t)(128 * 4),L"q" "q" "1" "2" "3" "4" "5" "w" "e"
-            "q" "e" "q" "e" "q" "e" "q" ,(rsize_t)17);
-  wmemcpy_s(str2_13,(rsize_t)(128 * 4),L"i" "t" ,(rsize_t)3);
+  wmemcpy_s(str1_13,(rsize_t)(128 * 4),L"qq12345weqeqeqeq",(rsize_t)17);
+  wmemcpy_s(str2_13,(rsize_t)(128 * 4),L"it",(rsize_t)3);
   sz_orig = wcsnlen_s((wchar_t const *)(str2_13),(rsize_t)(128 * 4));
   rc = wcscpy_s(str1_13,(rsize_t)10,(wchar_t const *)(str2_13));
   if (rc != 0) printf("%s %u   Error rc=%u \n",(char *)"test_wcscpy_s",
@@ -30811,9 +30716,8 @@ int test_wcscpy_s(void)
                        (unsigned int)410,str1_13,(unsigned int)rc); /* printf_va_1022 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1023 */
-  wmemcpy_s(str1_13,(rsize_t)(128 * 4),L"i" "t" ,(rsize_t)3);
-  wmemcpy_s(str2_13,(rsize_t)(128 * 4),L"q" "q" "w" "e" "q" "e" "q" "e" "q"
-            "e" "q" ,(rsize_t)12);
+  wmemcpy_s(str1_13,(rsize_t)(128 * 4),L"it",(rsize_t)3);
+  wmemcpy_s(str2_13,(rsize_t)(128 * 4),L"qqweqeqeqeq",(rsize_t)12);
   sz = wcsnlen_s((wchar_t const *)(str2_13),(rsize_t)(128 * 4));
   rc = wcscpy_s(str2_13,(rsize_t)2,(wchar_t const *)(str1_13));
   if (rc != 406) printf("%s %u   Error rc=%u \n",(char *)"test_wcscpy_s",
@@ -31838,8 +31742,7 @@ int test_wcsncat_s(void)
                         (unsigned int)144,(unsigned int)rc); /* printf_va_1036 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1037 */
-  wcscpy_s(str1_14,(rsize_t)128,L"a" "a" "a" "a" "a" "a" "a" "a" "a" "a" " "
-           "k" "e" "e" "p" " " "i" "t" " " "s" "i" "m" "p" "l" "e" );
+  wcscpy_s(str1_14,(rsize_t)128,L"aaaaaaaaaa keep it simple");
   rc = wcsncat_s(str1_14,(rsize_t)128,(wchar_t const *)(& str1_14[11]),
                  (rsize_t)128);
   if (rc != 404) printf("%s %u   Error rc=%u \n",(char *)"test_wcsncat_s",
@@ -31849,8 +31752,7 @@ int test_wcsncat_s(void)
                                             (unsigned int)163); /* printf_va_1039 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1040 */
-  wcscpy_s(str1_14,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str1_14,(rsize_t)128,L"keep it simple");
   rc = wcsncat_s(str1_14,(rsize_t)2,(wchar_t const *)(& str1_14[20]),
                  (rsize_t)128);
   if (rc != 407) printf("%s %u   Error rc=%u \n",(char *)"test_wcsncat_s",
@@ -31860,10 +31762,8 @@ int test_wcsncat_s(void)
                                             (unsigned int)180); /* printf_va_1042 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1043 */
-  wcscpy_s(str1_14,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
-  wcscpy_s(& str1_14[20],(rsize_t)128,L"a" "a" "a" "a" "a" "a" "a" "a" "a"
-           "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" );
+  wcscpy_s(str1_14,(rsize_t)128,L"keep it simple");
+  wcscpy_s(& str1_14[20],(rsize_t)128,L"aaaaaaaaaaaaaaaaaaaa");
   rc = wcsncat_s(str1_14,(rsize_t)30,(wchar_t const *)(& str1_14[20]),
                  (rsize_t)128);
   if (rc != 404) printf("%s %u   Error rc=%u \n",(char *)"test_wcsncat_s",
@@ -31873,9 +31773,8 @@ int test_wcsncat_s(void)
                                             (unsigned int)198); /* printf_va_1045 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1046 */
-  wcscpy_s(str1_14,(rsize_t)128,L"a" "a" "a" "a" "a" "a" "a" "a" "a" "a" );
-  wcscpy_s(str2_14,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str1_14,(rsize_t)128,L"aaaaaaaaaa");
+  wcscpy_s(str2_14,(rsize_t)128,L"keep it simple");
   tmp = wcsnlen_s((wchar_t const *)(str1_14),(rsize_t)128);
   len1 = (int32_t)tmp;
   len2 = 10;
@@ -31889,17 +31788,15 @@ int test_wcsncat_s(void)
                                   (char *)"test_wcsncat_s",(unsigned int)220,
                                   (unsigned int)len1,(unsigned int)len2,
                                   (unsigned int)len3); /* printf_va_1048 */
-  rc = memcmp_s((void const *)(str1_14),(rsize_t)128,(void const *)L"a" "a"
-                "a" "a" "a" "a" "a" "a" "a" "a" "k" "e" "e" "p" " " "i" "t"
-                " " "s" "i" ,(unsigned int)(len3 + 1) * sizeof(wchar_t),
-                & ind);
+  rc = memcmp_s((void const *)(str1_14),(rsize_t)128,
+                (void const *)L"aaaaaaaaaakeep it si",
+                (unsigned int)(len3 + 1) * sizeof(wchar_t),& ind);
   if (ind != 0) printf("%s %u   Error -%ls- \n",(char *)"test_wcsncat_s",
                        (unsigned int)226,str1_14); /* printf_va_1049 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1050 */
-  wcscpy_s(str1_14,(rsize_t)128,L"a" "a" "a" "a" "a" "a" "a" "a" "a" "a" );
-  wcscpy_s(str2_14,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str1_14,(rsize_t)128,L"aaaaaaaaaa");
+  wcscpy_s(str2_14,(rsize_t)128,L"keep it simple");
   tmp_1 = wcsnlen_s((wchar_t const *)(str1_14),(rsize_t)128);
   len1 = (int32_t)tmp_1;
   tmp_2 = wcsnlen_s((wchar_t const *)(str2_14),(rsize_t)128);
@@ -31913,17 +31810,15 @@ int test_wcsncat_s(void)
                                   (char *)"test_wcsncat_s",(unsigned int)248,
                                   (unsigned int)len1,(unsigned int)len2,
                                   (unsigned int)len3); /* printf_va_1052 */
-  rc = memcmp_s((void const *)(str1_14),(rsize_t)128,(void const *)L"a" "a"
-                "a" "a" "a" "a" "a" "a" "a" "a" "k" "e" "e" "p" " " "i" "t"
-                " " "s" "i" "m" "p" "l" "e" ,
+  rc = memcmp_s((void const *)(str1_14),(rsize_t)128,
+                (void const *)L"aaaaaaaaaakeep it simple",
                 (unsigned int)(len3 + 1) * sizeof(wchar_t),& ind);
   if (ind != 0) printf("%s %u   Error -%ls- \n",(char *)"test_wcsncat_s",
                        (unsigned int)254,str1_14); /* printf_va_1053 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1054 */
   str1_14[0] = (wchar_t)'\000';
-  wcscpy_s(str2_14,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str2_14,(rsize_t)128,L"keep it simple");
   rc = wcsncat_s(str1_14,(rsize_t)1,(wchar_t const *)(str2_14),(rsize_t)128);
   if (rc != 406) printf("%s %u   Error rc=%u \n",(char *)"test_wcsncat_s",
                         (unsigned int)268,(unsigned int)rc); /* printf_va_1055 */
@@ -31933,8 +31828,7 @@ int test_wcsncat_s(void)
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1057 */
   str1_14[0] = (wchar_t)'\000';
-  wcscpy_s(str2_14,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str2_14,(rsize_t)128,L"keep it simple");
   rc = wcsncat_s(str1_14,(rsize_t)14,(wchar_t const *)(str2_14),(rsize_t)128);
   if (rc != 406) printf("%s %u   Error rc=%u \n",(char *)"test_wcsncat_s",
                         (unsigned int)286,(unsigned int)rc); /* printf_va_1058 */
@@ -31944,8 +31838,7 @@ int test_wcsncat_s(void)
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1060 */
   str1_14[0] = (wchar_t)'\000';
-  wcscpy_s(str2_14,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str2_14,(rsize_t)128,L"keep it simple");
   rc = wcsncat_s(str1_14,(rsize_t)20,(wchar_t const *)(str2_14),(rsize_t)128);
   if (rc != 0) printf("%s %u   Error rc=%u \n",(char *)"test_wcsncat_s",
                       (unsigned int)304,(unsigned int)rc); /* printf_va_1061 */
@@ -31968,36 +31861,33 @@ int test_wcsncat_s(void)
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1066 */
   str1_14[0] = (wchar_t)'\000';
-  wcscpy_s(str2_14,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str2_14,(rsize_t)128,L"keep it simple");
   rc = wcsncat_s(str2_14,(rsize_t)128,(wchar_t const *)(str1_14),
                  (rsize_t)128);
   if (rc != 0) printf("%s %u   Error rc=%u \n",(char *)"test_wcsncat_s",
                       (unsigned int)342,(unsigned int)rc); /* printf_va_1067 */
-  rc = memcmp_s((void const *)(str2_14),(rsize_t)128,(void const *)L"k" "e"
-                "e" "p" " " "i" "t" " " "s" "i" "m" "p" "l" "e" ,
+  rc = memcmp_s((void const *)(str2_14),(rsize_t)128,
+                (void const *)L"keep it simple",
                 (unsigned int)15 * sizeof(wchar_t),& ind);
   if (ind != 0) printf("%s %u   Error -%ls- \n",(char *)"test_wcsncat_s",
                        (unsigned int)348,str1_14); /* printf_va_1068 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1069 */
-  wcscpy_s(str2_14,(rsize_t)128,L"q" "q" "w" "e" "q" "q" );
-  wcscpy_s(str1_14,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str2_14,(rsize_t)128,L"qqweqq");
+  wcscpy_s(str1_14,(rsize_t)128,L"keep it simple");
   rc = wcsncat_s(str2_14,(rsize_t)128,(wchar_t const *)(str1_14),
                  (rsize_t)128);
   if (rc != 0) printf("%s %u   Error rc=%u \n",(char *)"test_wcsncat_s",
                       (unsigned int)361,(unsigned int)rc); /* printf_va_1070 */
-  rc = memcmp_s((void const *)(str2_14),(rsize_t)128,(void const *)L"q" "q"
-                "w" "e" "q" "q" "k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-                "p" "l" "e" ,(unsigned int)20 * sizeof(wchar_t),& ind);
+  rc = memcmp_s((void const *)(str2_14),(rsize_t)128,
+                (void const *)L"qqweqqkeep it simple",
+                (unsigned int)20 * sizeof(wchar_t),& ind);
   if (ind != 0) printf("%s %u   Error -%ls- \n",(char *)"test_wcsncat_s",
                        (unsigned int)367,str1_14); /* printf_va_1071 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1072 */
-  wcscpy_s(str1_14,(rsize_t)128,L"1" "2" "3" "4" );
-  wcscpy_s(str2_14,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str1_14,(rsize_t)128,L"1234");
+  wcscpy_s(str2_14,(rsize_t)128,L"keep it simple");
   rc = wcsncat_s(str2_14,(rsize_t)12,(wchar_t const *)(str1_14),(rsize_t)128);
   if (rc != 407) printf("%s %u   Error rc=%u \n",(char *)"test_wcsncat_s",
                         (unsigned int)380,(unsigned int)rc); /* printf_va_1073 */
@@ -32006,9 +31896,8 @@ int test_wcsncat_s(void)
                                             (unsigned int)385); /* printf_va_1074 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1075 */
-  wcscpy_s(str1_14,(rsize_t)128,L"1" "2" "3" "4" );
-  wcscpy_s(str2_14,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str1_14,(rsize_t)128,L"1234");
+  wcscpy_s(str2_14,(rsize_t)128,L"keep it simple");
   rc = wcsncat_s(str2_14,(rsize_t)16,(wchar_t const *)(str1_14),(rsize_t)128);
   if (rc != 406) printf("%s %u   Error rc=%u \n",(char *)"test_wcsncat_s",
                         (unsigned int)398,(unsigned int)rc); /* printf_va_1076 */
@@ -32017,8 +31906,7 @@ int test_wcsncat_s(void)
                                             (unsigned int)403); /* printf_va_1077 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1078 */
-  wcscpy_s(str1_14,(rsize_t)128,L"1" "2" "3" "4" "5" "6" "7" "8" "9" "0" "1"
-           "2" "3" "4" "5" "6" "7" "8" "9" "0" );
+  wcscpy_s(str1_14,(rsize_t)128,L"12345678901234567890");
   rc = wcsncat_s(& str1_14[7],(rsize_t)128,(wchar_t const *)(str1_14),
                  (rsize_t)128);
   if (rc != 404) printf("%s %u   Error rc=%u \n",(char *)"test_wcsncat_s",
@@ -32028,34 +31916,32 @@ int test_wcsncat_s(void)
                                             (unsigned int)420); /* printf_va_1080 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1081 */
-  wcscpy_s(str1_14,(rsize_t)128,L"1" "2" "3" "4" );
-  wcscpy_s(str2_14,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str1_14,(rsize_t)128,L"1234");
+  wcscpy_s(str2_14,(rsize_t)128,L"keep it simple");
   rc = wcsncat_s(str2_14,(rsize_t)19,(wchar_t const *)(str1_14),(rsize_t)128);
   if (rc != 0) printf("%s %u   Error rc=%u \n",(char *)"test_wcsncat_s",
                       (unsigned int)433,(unsigned int)rc); /* printf_va_1082 */
-  rc = memcmp_s((void const *)(str2_14),(rsize_t)128,(void const *)L"k" "e"
-                "e" "p" " " "i" "t" " " "s" "i" "m" "p" "l" "e" "1" "2" "3"
-                "4" ,(unsigned int)19 * sizeof(wchar_t),& ind);
+  rc = memcmp_s((void const *)(str2_14),(rsize_t)128,
+                (void const *)L"keep it simple1234",
+                (unsigned int)19 * sizeof(wchar_t),& ind);
   if (ind != 0) printf("%s %u   Error -%ls- \n",(char *)"test_wcsncat_s",
                        (unsigned int)439,str1_14); /* printf_va_1083 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1084 */
-  wcscpy_s(str2_14,(rsize_t)128,L"1" "2" "3" "4" "5" "6" "7" "8" "9" );
-  wcscpy_s(str1_14,(rsize_t)128,L"k" "e" "e" "p" " " "i" "t" " " "s" "i" "m"
-           "p" "l" "e" );
+  wcscpy_s(str2_14,(rsize_t)128,L"123456789");
+  wcscpy_s(str1_14,(rsize_t)128,L"keep it simple");
   rc = wcsncat_s(str2_14,(rsize_t)128,(wchar_t const *)(str1_14),(rsize_t)7);
   if (rc != 0) printf("%s %u   Error rc=%u \n",(char *)"test_wcsncat_s",
                       (unsigned int)452,(unsigned int)rc); /* printf_va_1085 */
-  rc = memcmp_s((void const *)(str2_14),(rsize_t)128,(void const *)L"1" "2"
-                "3" "4" "5" "6" "7" "8" "9" "k" "e" "e" "p" " " "i" "t" ,
+  rc = memcmp_s((void const *)(str2_14),(rsize_t)128,
+                (void const *)L"123456789keep it",
                 (unsigned int)17 * sizeof(wchar_t),& ind);
   if (ind != 0) printf("%s %u   Error -%ls- \n",(char *)"test_wcsncat_s",
                        (unsigned int)458,str1_14); /* printf_va_1086 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1087 */
-  wcscpy_s(str2_14,(rsize_t)128,L"1" "2" "3" "4" );
-  wcscpy_s(str1_14,(rsize_t)128,L"5" "6" "7" "8" "9" );
+  wcscpy_s(str2_14,(rsize_t)128,L"1234");
+  wcscpy_s(str1_14,(rsize_t)128,L"56789");
   rc = wcsncat_s(str2_14,(rsize_t)9,(wchar_t const *)(str1_14),(rsize_t)128);
   if (rc != 406) printf("%s %u   Error rc=%u \n",(char *)"test_wcsncat_s",
                         (unsigned int)471,(unsigned int)rc); /* printf_va_1088 */
@@ -32978,7 +32864,7 @@ int test_wcsncpy_s(void)
                         (unsigned int)124,(unsigned int)rc); /* printf_va_1096 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1097 */
-  wmemcpy_s(str1_15,(rsize_t)(128 * 4),L"a" "a" "a" "a" "a" ,(rsize_t)5);
+  wmemcpy_s(str1_15,(rsize_t)(128 * 4),L"aaaaa",(rsize_t)5);
   rc = wcsncpy_s(str1_15,(rsize_t)5,(wchar_t const *)0,(rsize_t)(128 * 4));
   if (rc != 400) printf("%s %u   Error rc=%u \n",(char *)"test_wcsncpy_s",
                         (unsigned int)136,(unsigned int)rc); /* printf_va_1098 */
@@ -33005,10 +32891,8 @@ int test_wcsncpy_s(void)
                                (unsigned int)rc); /* printf_va_1105 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1106 */
-  wmemcpy_s(str1_15,(rsize_t)(128 * 4),L"a" "a" "a" "a" "a" "a" "a" "a" "a"
-            "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a"
-            "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" ,
-            (rsize_t)42);
+  wmemcpy_s(str1_15,(rsize_t)(128 * 4),
+            L"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",(rsize_t)42);
   rc = wcsncpy_s(str1_15,(rsize_t)5,(wchar_t const *)(str1_15),
                  (rsize_t)(128 * 4));
   if (rc != 404) printf("%s %u   Error rc=%u \n",(char *)"test_wcsncpy_s",
@@ -33018,10 +32902,8 @@ int test_wcsncpy_s(void)
                                (unsigned int)rc); /* printf_va_1108 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1109 */
-  wmemcpy_s(str1_15,(rsize_t)(128 * 4),L"a" "a" "a" "a" "a" "a" "a" "a" "a"
-            "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a"
-            "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" ,
-            (rsize_t)42);
+  wmemcpy_s(str1_15,(rsize_t)(128 * 4),
+            L"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",(rsize_t)42);
   rc = wcsncpy_s(str1_15,(rsize_t)(128 * 4),(wchar_t const *)(& str1_15[5]),
                  (rsize_t)30);
   if (rc != 404) printf("%s %u   Error rc=%u \n",(char *)"test_wcsncpy_s",
@@ -33031,10 +32913,8 @@ int test_wcsncpy_s(void)
                                (unsigned int)rc); /* printf_va_1111 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1112 */
-  wmemcpy_s(str2_15,(rsize_t)(128 * 4),L"k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" "-" "-" "k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" "-" "-" "k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" ,(rsize_t)47);
+  wmemcpy_s(str2_15,(rsize_t)(128 * 4),
+            L"keep it simple--keep it simple--keep it simple",(rsize_t)47);
   wmemset_s(str1_15,0L,(rsize_t)20);
   rc = wcsncpy_s(str1_15,(rsize_t)(128 * 4),(wchar_t const *)(str2_15),
                  (rsize_t)10);
@@ -33053,10 +32933,8 @@ int test_wcsncpy_s(void)
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1116 */
   wmemset_s(str1_15,0L,(rsize_t)20);
-  wmemcpy_s(str2_15,(rsize_t)(128 * 4),L"k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" "-" "-" "k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" "-" "-" "k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" ,(rsize_t)47);
+  wmemcpy_s(str2_15,(rsize_t)(128 * 4),
+            L"keep it simple--keep it simple--keep it simple",(rsize_t)47);
   sz = wcsnlen_s((wchar_t const *)(str2_15),(rsize_t)(128 * 4));
   rc = wcsncpy_s(str1_15,(rsize_t)(128 * 4),(wchar_t const *)(str2_15),
                  (rsize_t)(128 * 4));
@@ -33074,10 +32952,8 @@ int test_wcsncpy_s(void)
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1120 */
   wmemset_s(str1_15,0L,(rsize_t)20);
-  wmemcpy_s(str2_15,(rsize_t)(128 * 4),L"k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" "-" "-" "k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" "-" "-" "k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" ,(rsize_t)47);
+  wmemcpy_s(str2_15,(rsize_t)(128 * 4),
+            L"keep it simple--keep it simple--keep it simple",(rsize_t)47);
   sz = wcsnlen_s((wchar_t const *)(str2_15),(rsize_t)(128 * 4));
   rc = wcsncpy_s(str1_15,sz - (rsize_t)5,(wchar_t const *)(str2_15),
                  (rsize_t)(128 * 4));
@@ -33088,10 +32964,8 @@ int test_wcsncpy_s(void)
                                (unsigned int)rc); /* printf_va_1122 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1123 */
-  wmemcpy_s(str1_15,(rsize_t)(128 * 4),L"a" "a" "a" "a" "a" "a" "a" "a" "a"
-            "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a"
-            "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" ,
-            (rsize_t)42);
+  wmemcpy_s(str1_15,(rsize_t)(128 * 4),
+            L"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",(rsize_t)42);
   rc = wcsncpy_s(& str1_15[5],(rsize_t)(128 * 4),(wchar_t const *)(str1_15),
                  (rsize_t)30);
   if (rc != 404) printf("%s %u   Error rc=%u \n",(char *)"test_wcsncpy_s",
@@ -33101,10 +32975,8 @@ int test_wcsncpy_s(void)
                                (unsigned int)rc); /* printf_va_1125 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1126 */
-  wmemcpy_s(str1_15,(rsize_t)(128 * 4),L"k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" "-" "-" "k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" "-" "-" "k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" ,(rsize_t)47);
+  wmemcpy_s(str1_15,(rsize_t)(128 * 4),
+            L"keep it simple--keep it simple--keep it simple",(rsize_t)47);
   wmemset_s(str2_15,0L,(rsize_t)20);
   rc = wcsncpy_s(str2_15,(rsize_t)(128 * 4),(wchar_t const *)(str1_15),
                  (rsize_t)17);
@@ -33123,10 +32995,8 @@ int test_wcsncpy_s(void)
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1130 */
   wmemset_s(str2_15,0L,(rsize_t)20);
-  wmemcpy_s(str1_15,(rsize_t)(128 * 4),L"k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" "-" "-" "k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" "-" "-" "k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" ,(rsize_t)47);
+  wmemcpy_s(str1_15,(rsize_t)(128 * 4),
+            L"keep it simple--keep it simple--keep it simple",(rsize_t)47);
   sz = wcsnlen_s((wchar_t const *)(str1_15),(rsize_t)(128 * 4));
   rc = wcsncpy_s(str2_15,(rsize_t)(128 * 4),(wchar_t const *)(str1_15),
                  (rsize_t)(128 * 4));
@@ -33144,10 +33014,8 @@ int test_wcsncpy_s(void)
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1134 */
   wmemset_s(str2_15,0L,(rsize_t)20);
-  wmemcpy_s(str1_15,(rsize_t)(128 * 4),L"k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" "-" "-" "k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" "-" "-" "k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" ,(rsize_t)47);
+  wmemcpy_s(str1_15,(rsize_t)(128 * 4),
+            L"keep it simple--keep it simple--keep it simple",(rsize_t)47);
   sz = wcsnlen_s((wchar_t const *)(str1_15),(rsize_t)(128 * 4));
   rc = wcsncpy_s(str2_15,sz - (rsize_t)5,(wchar_t const *)(str1_15),
                  (rsize_t)(128 * 4));
@@ -33159,8 +33027,7 @@ int test_wcsncpy_s(void)
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1137 */
   wmemset_s(str1_15,120L,(rsize_t)20);
-  wmemcpy_s(str2_15,(rsize_t)(128 * 4),L"k" "e" "e" "p" " " "i" "t" " " "s"
-            "i" "m" "p" "l" "e" ,(rsize_t)15);
+  wmemcpy_s(str2_15,(rsize_t)(128 * 4),L"keep it simple",(rsize_t)15);
   sz_orig = wcsnlen_s((wchar_t const *)(str2_15),(rsize_t)(128 * 4));
   rc = wcsncpy_s(str1_15,(rsize_t)(128 * 4),(wchar_t const *)(str2_15),
                  (rsize_t)(128 * 4));
@@ -33178,9 +33045,8 @@ int test_wcsncpy_s(void)
                        str2_15,(unsigned long)sz,(unsigned int)rc); /* printf_va_1140 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1141 */
-  wmemcpy_s(str1_15,(rsize_t)(128 * 4),L"i" "t" ,(rsize_t)3);
-  wmemcpy_s(str2_15,(rsize_t)(128 * 4),L"q" "q" "w" "e" "q" "e" "q" "e" "q"
-            "e" "q" ,(rsize_t)12);
+  wmemcpy_s(str1_15,(rsize_t)(128 * 4),L"it",(rsize_t)3);
+  wmemcpy_s(str2_15,(rsize_t)(128 * 4),L"qqweqeqeqeq",(rsize_t)12);
   rc = wcsncpy_s(str2_15,(rsize_t)3,(wchar_t const *)(str1_15),
                  (rsize_t)(128 * 4));
   if (rc != 0) printf("%s %u   Error rc=%u \n",(char *)"test_wcsncpy_s",
@@ -33193,9 +33059,8 @@ int test_wcsncpy_s(void)
                        (unsigned int)rc); /* printf_va_1143 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1144 */
-  wmemcpy_s(str1_15,(rsize_t)(128 * 4),L"i" "t" ,(rsize_t)3);
-  wmemcpy_s(str2_15,(rsize_t)(128 * 4),L"q" "q" "w" "e" "q" "e" "q" "e" "q"
-            "e" "q" ,(rsize_t)12);
+  wmemcpy_s(str1_15,(rsize_t)(128 * 4),L"it",(rsize_t)3);
+  wmemcpy_s(str2_15,(rsize_t)(128 * 4),L"qqweqeqeqeq",(rsize_t)12);
   sz = wcsnlen_s((wchar_t const *)(str2_15),(rsize_t)(128 * 4));
   rc = wcsncpy_s(str2_15,(rsize_t)2,(wchar_t const *)(str1_15),
                  (rsize_t)(128 * 4));
@@ -33452,20 +33317,16 @@ int test_wcsnlen_s(void)
                       (unsigned int)88,(unsigned int)rc); /* printf_va_1151 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1152 */
-  wmemcpy_s(str1_16,(rsize_t)(128 * 4),L"a" "a" "a" "a" "a" "a" "a" "a" "a"
-            "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a"
-            "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" ,
-            (rsize_t)42);
+  wmemcpy_s(str1_16,(rsize_t)(128 * 4),
+            L"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",(rsize_t)42);
   tmp_1 = wcsnlen_s((wchar_t const *)(str1_16),(rsize_t)41);
   rc = (errno_t)tmp_1;
   if (rc != 40) printf("%s %u   Error rc=%u \n",(char *)"test_wcsnlen_s",
                        (unsigned int)100,(unsigned int)rc); /* printf_va_1153 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1154 */
-  wmemcpy_s(str1_16,(rsize_t)(128 * 4),L"a" "a" "a" "a" "a" "a" "a" "a" "a"
-            "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a"
-            "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" ,
-            (rsize_t)42);
+  wmemcpy_s(str1_16,(rsize_t)(128 * 4),
+            L"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",(rsize_t)42);
   tmp_2 = wcsnlen_s((wchar_t const *)(str1_16),(rsize_t)20);
   rc = (errno_t)tmp_2;
   if (rc != 20) printf("%s %u   Error rc=%u \n",(char *)"test_wcsnlen_s",
@@ -33487,7 +33348,7 @@ int test_wcsnlen_s(void)
                       (unsigned int)138,(unsigned int)rc); /* printf_va_1159 */
   testno ++;
   printf("Test #%d:\n",(int)testno); /* printf_va_1160 */
-  wmemcpy_s(str1_16,(rsize_t)(128 * 4),L"1" "2" ,(rsize_t)3);
+  wmemcpy_s(str1_16,(rsize_t)(128 * 4),L"12",(rsize_t)3);
   tmp_5 = wcsnlen_s((wchar_t const *)(str1_16),(rsize_t)(128 * 4));
   rc = (errno_t)tmp_5;
   if (rc != 2) printf("%s %u   Error rc=%u \n",(char *)"test_wcsnlen_s",

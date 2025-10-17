@@ -4132,7 +4132,7 @@ static void tdefl_start_dynamic_block(tdefl_compressor *d)
       tmp_41 = packed_code_sizes_index;
       packed_code_sizes_index ++;
       mz_uint bits_5 = (mz_uint)packed_code_sizes[tmp_41];
-      mz_uint len_5 = (mz_uint)*("\002\003\a" + (code - (mz_uint)16));
+      mz_uint len_5 = (mz_uint)"\002\003\a"[code - (mz_uint)16];
       __FC_assert((bits_5 <= (1U << len_5) - 1U) != 0,"miniz_tdef.c",423,
                   "bits <= ((1U << len) - 1U)");
       d->m_bit_buffer |= bits_5 << d->m_bits_in;

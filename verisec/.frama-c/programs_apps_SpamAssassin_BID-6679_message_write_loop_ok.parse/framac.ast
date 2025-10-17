@@ -49,15 +49,7 @@ void message_write(char *msg, int len)
 int main(void)
 {
   int __retres;
-  char msg[(2 + 2) + 5] =
-    {(char)'m',
-     (char)'e',
-     (char)'s',
-     (char)'s',
-     (char)'a',
-     (char)'\n',
-     (char)'.',
-     (char)'\000'};
+  char msg[(2 + 2) + 5] = "messa\n.";
   message_write(msg,(2 + 2) + 5);
   __retres = 0;
   return __retres;

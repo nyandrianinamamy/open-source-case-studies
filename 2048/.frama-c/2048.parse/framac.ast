@@ -399,7 +399,7 @@ void drawBoard(uint8_t board[4][4])
   uint8_t y;
   char c;
   char color[40];
-  char reset[4] = {(char)'\033', (char)'[', (char)'m', (char)'\000'};
+  char reset[4U] = "\033[m";
   printf("\033[H"); /* printf_va_1 */
   printf("2048.c %17d pts\n\n",(int)score); /* printf_va_2 */
   y = (uint8_t)0;

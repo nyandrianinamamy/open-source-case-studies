@@ -12,14 +12,7 @@ struct wint {
 int f1char(void)
 {
   int __retres;
-  char s[9] =
-    {(char)'n',
-     (char)'o',
-     (char)'n',
-     (char)'o',
-     (char)'n',
-     (char)'o',
-     (char)'\000'};
+  char s[9] = "nonono";
   struct wchar q = {.data = (char *)"bugs", .mem = {(char)0}};
   __retres = ! s[0];
   return __retres;
@@ -28,14 +21,7 @@ int f1char(void)
 int f1int(void)
 {
   int __retres;
-  char s[9] =
-    {(char)'n',
-     (char)'o',
-     (char)'n',
-     (char)'o',
-     (char)'n',
-     (char)'o',
-     (char)'\000'};
+  char s[9] = "nonono";
   struct wint q = {.data = (char *)"bugs", .mem = {0}};
   __retres = ! s[0];
   return __retres;
@@ -71,14 +57,7 @@ int main(void)
 {
   int __retres;
   int tmp;
-  char s[9] =
-    {(char)'n',
-     (char)'o',
-     (char)'n',
-     (char)'o',
-     (char)'n',
-     (char)'o',
-     (char)'\000'};
+  char s[9] = "nonono";
   tmp = f1char();
   if (tmp) printf("bla\n"); /* printf_va_1 */
   else {

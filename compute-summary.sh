@@ -13,30 +13,30 @@ echo "| Directory | Description | URL | #Eva targets | #Eva alarms | #.c/.h file
 echo "| --------- | ----------- | --- |          --- |         --- |          --- |  --- | ---  | ---  |" >> $out
 for t in $targets
 do
-    if [ ! -d $t/.frama-c -o ! -f $t/OSCS-README.txt ]; then
+    if [ ! -d "$t/.frama-c" ] || [ ! -f "$t/OSCS-README.txt" ]; then
         echo "$t: no .frama-c or OSCS-README.txt, skipping"
         continue
     fi
     echo "Processing $t..."
-    csv="$(cd $t && git ls-files '*.[ch]' | ../cloc-2.00.pl --list-file=- --csv | grep -A9999 ^files | tail -1)"
-    desc="$(cd $t && sed '1!d' OSCS-README.txt)"
-    url="$(cd $t && sed '2!d' OSCS-README.txt)"
-    ntargets="$(cd $t && make -C .frama-c display-targets --no-print-directory | wc -w | tr -d "[:blank:]")"
+    csv="$(cd "$t" && git ls-files '*.[ch]' | ../cloc-2.00.pl --list-file=- --csv | grep -A9999 ^files | tail -1)"
+    desc="$(cd "$t" && sed '1!d' OSCS-README.txt)"
+    url="$(cd "$t" && sed '2!d' OSCS-README.txt)"
+    ntargets="$(cd "$t" && make -C .frama-c display-targets --no-print-directory | wc -w | tr -d "[:blank:]")"
     # special case: mbedtls is not currently run by the CI, so we skip it
     if [ "$t" == "mbedtls" ]; then
         nalarms=-1
     else
         # Note: we add /dev/null to the list of files to ensure wc will display
         #       the 'total' line even if there is only one '.eva' directory
-        ncsvlines=$(cd $t && \
+        ncsvlines=$(cd "$t" && \
                         wc -l /dev/null .frama-c/*.eva/alarms.csv | \
                             grep "total$" | sed 's/ */ /' | cut -d' ' -f2)
-        nalarms="$(($ncsvlines - $ntargets))"
+        nalarms="$((ncsvlines - ntargets))"
     fi
-    nfiles=$(echo $csv | cut -d',' -f1)
-    loc=$(echo $csv | cut -d',' -f5)
-    tags="$(cd $t && sed '3!d' OSCS-README.txt)"
-    kind="$(cd $t && sed '4!d' OSCS-README.txt)"
+    nfiles=$(echo "$csv" | cut -d',' -f1)
+    loc=$(echo "$csv" | cut -d',' -f5)
+    tags="$(cd "$t" && sed '3!d' OSCS-README.txt)"
+    kind="$(cd "$t" && sed '4!d' OSCS-README.txt)"
     echo "|$t|$desc|$url|$ntargets|$nalarms|$nfiles|$loc|$tags|$kind|" >> $out
 done
 
