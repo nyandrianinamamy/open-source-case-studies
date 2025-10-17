@@ -4846,7 +4846,7 @@
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] addrfilt.c:112: Warning: 
+[eva:alarm] addrfilt.c:113: Warning: 
   accessing uninitialized left-value. assert \initialized(&node->extended);
   stack: close_node :: addrfilt.c:187 <-
          set_subnet :: addrfilt.c:244 <-
@@ -4857,7 +4857,7 @@
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] addrfilt.c:112: Warning: 
+[eva:alarm] addrfilt.c:113: Warning: 
   out of bounds read. assert \valid_read(&node->extended);
   stack: close_node :: addrfilt.c:187 <-
          set_subnet :: addrfilt.c:244 <-
@@ -4868,8 +4868,38 @@
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] addrfilt.c:115: Warning: 
+[eva:alarm] addrfilt.c:116: Warning: 
   accessing uninitialized left-value. assert \initialized(&node->extended);
+  stack: close_node :: addrfilt.c:187 <-
+         set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva] addrfilt.c:117: Warning: 
+  Using specification of function close_node for recursive calls.
+  Analysis of function close_node is thus incomplete and its soundness
+  relies on the written specification.
+[eva:garbled-mix:assigns] addrfilt.c:117: Warning: 
+  The specification of function close_node
+  has generated a garbled mix of addresses for assigns clause *node.
+[eva:alarm] addrfilt.c:116: Warning: 
+  unaligned pointer creation.
+  assert \aligned(node->extended,alignof(struct _TableNode));
+  stack: close_node :: addrfilt.c:187 <-
+         set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:117: Warning: 
+  unaligned pointer creation. assert \aligned(child_node,alignof(TableNode));
   stack: close_node :: addrfilt.c:187 <-
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
@@ -4882,6 +4912,30 @@
 [eva:alarm] addrfilt.c:119: Warning: 
   accessing uninitialized left-value. assert \initialized(&node->extended);
   stack: close_node :: addrfilt.c:187 <-
+         set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:119: Warning: 
+  unaligned pointer creation.
+  assert \aligned(node->extended,alignof(struct _TableNode));
+  stack: close_node :: addrfilt.c:187 <-
+         set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:119: Warning: 
+  function free: precondition 'freeable' got status unknown.
+  stack: free :: addrfilt.c:119 <-
+         close_node :: addrfilt.c:187 <-
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
@@ -4986,6 +5040,18 @@
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
+[eva:alarm] addrfilt.c:119: Warning: 
+  function free: precondition 'freeable' got status unknown.
+  stack: free :: addrfilt.c:119 <-
+         close_node :: addrfilt.c:220 <-
+         set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
 [eva:alarm] addrfilt.c:222: Warning: 
   accessing left-value that contains escaping addresses.
   assert ¬\dangling(&this_node);
@@ -5019,7 +5085,39 @@
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] addrfilt.c:112: Warning: 
+[eva:alarm] addrfilt.c:218: Warning: 
+  unaligned pointer creation.
+  assert \aligned(node->extended,alignof(struct _TableNode));
+  stack: set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:220: Warning: 
+  unaligned pointer creation. assert \aligned(this_node,alignof(TableNode));
+  stack: set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:113: Warning: 
+  unaligned pointer creation. assert \aligned(node,alignof(TableNode));
+  stack: close_node :: addrfilt.c:220 <-
+         set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:113: Warning: 
   accessing left-value that contains escaping addresses.
   assert ¬\dangling(&node->extended);
   stack: close_node :: addrfilt.c:220 <-
@@ -5031,7 +5129,31 @@
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] addrfilt.c:115: Warning: 
+[eva:alarm] addrfilt.c:113: Warning: 
+  unaligned pointer creation.
+  assert \aligned(node->extended,alignof(struct _TableNode));
+  stack: close_node :: addrfilt.c:220 <-
+         set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:113: Warning: 
+  pointer comparison.
+  assert \pointer_comparable((void *)node->extended, (void *)0);
+  stack: close_node :: addrfilt.c:220 <-
+         set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:116: Warning: 
   accessing left-value that contains escaping addresses.
   assert ¬\dangling(&node->extended);
   stack: close_node :: addrfilt.c:220 <-
@@ -5048,6 +5170,26 @@
   assert ¬\dangling(&node->extended);
   stack: close_node :: addrfilt.c:220 <-
          set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:222: Warning: 
+  unaligned pointer creation. assert \aligned(this_node,alignof(TableNode));
+  stack: set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:222: Warning: 
+  out of bounds write. assert \valid(&this_node->state);
+  stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
          NCR_AddAccessRestriction :: conf.c:1795 <-
@@ -5104,22 +5246,24 @@
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] addrfilt.c:222: Warning: 
-  out of bounds write. assert \valid(&this_node->state);
-  stack: set_subnet :: addrfilt.c:244 <-
-         set_subnet_ :: addrfilt.c:267 <-
-         ADF_Allow :: ntp_core.c:2520 <-
-         NCR_AddAccessRestriction :: conf.c:1795 <-
-         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
-         test_unit :: test/unit/test.c:70 <-
-         main :: fc_stubs.c:37 <-
-         eva_main
 [eva:malloc:weak] memory.c:38: Warning: 
   marking variable `__malloc_open_node_l137_10' as weak
   stack: malloc :: memory.c:38 <-
          Malloc :: memory.c:74 <-
          Malloc2 :: addrfilt.c:137 <-
          open_node :: addrfilt.c:179 <-
+         set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:298 <-
+         ADF_DenyAll :: ntp_core.c:2524 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:119: Warning: 
+  function free: precondition 'freeable' got status unknown.
+  stack: free :: addrfilt.c:119 <-
+         close_node :: addrfilt.c:187 <-
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:298 <-
          ADF_DenyAll :: ntp_core.c:2524 <-
@@ -5145,6 +5289,18 @@
 [eva:alarm] addrfilt.c:210: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: addrfilt.c:210 <-
+         set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:298 <-
+         ADF_DenyAll :: ntp_core.c:2524 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:119: Warning: 
+  function free: precondition 'freeable' got status unknown.
+  stack: free :: addrfilt.c:119 <-
+         close_node :: addrfilt.c:220 <-
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:298 <-
          ADF_DenyAll :: ntp_core.c:2524 <-
@@ -5245,9 +5401,55 @@
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
+[eva:alarm] addrfilt.c:178: Warning: 
+  unaligned pointer creation.
+  assert \aligned(node->extended,alignof(struct _TableNode));
+  stack: set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:178: Warning: 
+  pointer comparison.
+  assert \pointer_comparable((void *)0, (void *)node->extended);
+  stack: set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
 [eva:alarm] addrfilt.c:135: Warning: 
   accessing left-value that contains escaping addresses.
   assert ¬\dangling(&node->extended);
+  stack: open_node :: addrfilt.c:179 <-
+         set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:135: Warning: 
+  unaligned pointer creation.
+  assert \aligned(node->extended,alignof(struct _TableNode));
+  stack: open_node :: addrfilt.c:179 <-
+         set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:135: Warning: 
+  pointer comparison.
+  assert \pointer_comparable((void *)node->extended, (void *)0);
   stack: open_node :: addrfilt.c:179 <-
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
@@ -5269,9 +5471,115 @@
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
+[eva:alarm] addrfilt.c:141: Warning: 
+  unaligned pointer creation.
+  assert \aligned(node->extended,alignof(struct _TableNode));
+  stack: open_node :: addrfilt.c:179 <-
+         set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:142: Warning: 
+  unaligned pointer creation. assert \aligned(child_node,alignof(TableNode));
+  stack: open_node :: addrfilt.c:179 <-
+         set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:143: Warning: 
+  unaligned pointer creation. assert \aligned(child_node,alignof(TableNode));
+  stack: open_node :: addrfilt.c:179 <-
+         set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:143: Warning: 
+  out of bounds write. assert \valid(&child_node->extended);
+  stack: open_node :: addrfilt.c:179 <-
+         set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
 [eva:alarm] addrfilt.c:181: Warning: 
   accessing left-value that contains escaping addresses.
   assert ¬\dangling(&node->extended);
+  stack: set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:181: Warning: 
+  unaligned pointer creation.
+  assert \aligned(node->extended,alignof(struct _TableNode));
+  stack: set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:178: Warning: 
+  unaligned pointer creation. assert \aligned(node,alignof(TableNode));
+  stack: set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:179: Warning: 
+  unaligned pointer creation. assert \aligned(node,alignof(TableNode));
+  stack: set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:181: Warning: 
+  unaligned pointer creation. assert \aligned(node,alignof(TableNode));
+  stack: set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:187: Warning: 
+  unaligned pointer creation. assert \aligned(node,alignof(TableNode));
+  stack: set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:189: Warning: 
+  unaligned pointer creation. assert \aligned(node,alignof(TableNode));
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
@@ -5291,9 +5599,82 @@
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
+[eva:alarm] addrfilt.c:198: Warning: 
+  unaligned pointer creation.
+  assert \aligned(node->extended,alignof(struct _TableNode));
+  stack: set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:198: Warning: 
+  pointer comparison.
+  assert \pointer_comparable((void *)0, (void *)node->extended);
+  stack: set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
 [eva:alarm] addrfilt.c:201: Warning: 
   accessing left-value that contains escaping addresses.
   assert ¬\dangling(&node->extended);
+  stack: set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:201: Warning: 
+  unaligned pointer creation.
+  assert \aligned(node->extended,alignof(struct _TableNode));
+  stack: set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:198: Warning: 
+  unaligned pointer creation. assert \aligned(node,alignof(TableNode));
+  stack: set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:199: Warning: 
+  unaligned pointer creation. assert \aligned(node,alignof(TableNode));
+  stack: set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:201: Warning: 
+  unaligned pointer creation. assert \aligned(node,alignof(TableNode));
+  stack: set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:212: Warning: 
+  unaligned pointer creation. assert \aligned(node,alignof(TableNode));
   stack: set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
@@ -5313,6 +5694,88 @@
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
+[eva:alarm] addrfilt.c:212: Warning: 
+  unaligned pointer creation.
+  assert \aligned(node->extended,alignof(struct _TableNode));
+  stack: set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:212: Warning: 
+  pointer comparison.
+  assert \pointer_comparable((void *)0, (void *)node->extended);
+  stack: set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:213: Warning: 
+  unaligned pointer creation. assert \aligned(node,alignof(TableNode));
+  stack: set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:218: Warning: 
+  unaligned pointer creation. assert \aligned(node,alignof(TableNode));
+  stack: set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:387: Warning: 
+  function __FC_assert: precondition 'nonnull_c' got status unknown.
+  stack: __FC_assert :: addrfilt.c:387 <-
+         is_any_allowed :: addrfilt.c:414 <-
+         ADF_IsAnyAllowed :: ntp_core.c:2538 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:389: Warning: 
+  unaligned pointer creation.
+  assert \aligned(node->extended,alignof(struct _TableNode));
+  stack: is_any_allowed :: addrfilt.c:414 <-
+         ADF_IsAnyAllowed :: ntp_core.c:2538 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:389: Warning: 
+  pointer comparison.
+  assert \pointer_comparable((void *)0, (void *)node->extended);
+  stack: is_any_allowed :: addrfilt.c:414 <-
+         ADF_IsAnyAllowed :: ntp_core.c:2538 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:387: Warning: 
+  function __FC_assert: precondition 'nonnull_c' got status unknown.
+  stack: __FC_assert :: addrfilt.c:387 <-
+         is_any_allowed :: addrfilt.c:416 <-
+         ADF_IsAnyAllowed :: ntp_core.c:2543 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
 [eva:malloc:weak] memory.c:38: Warning: 
   marking variable `__malloc_open_node_l137_19' as weak
   stack: malloc :: memory.c:38 <-
@@ -5320,6 +5783,30 @@
          Malloc2 :: addrfilt.c:137 <-
          open_node :: addrfilt.c:213 <-
          set_subnet :: addrfilt.c:244 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:119: Warning: 
+  function free: precondition 'freeable' got status unknown.
+  stack: free :: addrfilt.c:119 <-
+         close_node :: addrfilt.c:187 <-
+         set_subnet :: addrfilt.c:253 <-
+         set_subnet_ :: addrfilt.c:278 <-
+         ADF_AllowAll :: ntp_core.c:2518 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:119: Warning: 
+  function free: precondition 'freeable' got status unknown.
+  stack: free :: addrfilt.c:119 <-
+         close_node :: addrfilt.c:187 <-
+         set_subnet :: addrfilt.c:254 <-
          set_subnet_ :: addrfilt.c:278 <-
          ADF_AllowAll :: ntp_core.c:2518 <-
          NCR_AddAccessRestriction :: conf.c:1795 <-
@@ -5355,6 +5842,18 @@
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
+[eva:alarm] addrfilt.c:119: Warning: 
+  function free: precondition 'freeable' got status unknown.
+  stack: free :: addrfilt.c:119 <-
+         close_node :: addrfilt.c:187 <-
+         set_subnet :: addrfilt.c:254 <-
+         set_subnet_ :: addrfilt.c:298 <-
+         ADF_DenyAll :: ntp_core.c:2524 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
 [eva:malloc:weak] memory.c:38: Warning: 
   marking variable `__malloc_open_node_l137_22' as weak
   stack: malloc :: memory.c:38 <-
@@ -5364,6 +5863,16 @@
          set_subnet :: addrfilt.c:244 <-
          set_subnet_ :: addrfilt.c:288 <-
          ADF_Deny :: ntp_core.c:2526 <-
+         NCR_AddAccessRestriction :: conf.c:1795 <-
+         CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:386: Warning: 
+  accessing left-value that contains escaping addresses.
+  assert ¬\dangling(&node->state);
+  stack: is_any_allowed :: addrfilt.c:414 <-
+         ADF_IsAnyAllowed :: ntp_core.c:2538 <-
          NCR_AddAccessRestriction :: conf.c:1795 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
@@ -6312,6 +6821,17 @@
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
+[eva:alarm] addrfilt.c:326: Warning: 
+  accessing left-value that contains escaping addresses.
+  assert ¬\dangling(&node->state);
+  stack: check_ip_in_node :: addrfilt.c:365 <-
+         ADF_IsAllowed :: ntp_core.c:2105 <-
+         NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
+         NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+         process_response :: test/unit/ntp_core.c:381 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
 [eva:alarm] addrfilt.c:329: Warning: 
   accessing left-value that contains escaping addresses.
   assert ¬\dangling(&node->extended);
@@ -6323,8 +6843,71 @@
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
+[eva:alarm] addrfilt.c:329: Warning: 
+  unaligned pointer creation.
+  assert \aligned(node->extended,alignof(struct _TableNode));
+  stack: check_ip_in_node :: addrfilt.c:365 <-
+         ADF_IsAllowed :: ntp_core.c:2105 <-
+         NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
+         NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+         process_response :: test/unit/ntp_core.c:381 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:329: Warning: 
+  pointer comparison.
+  assert \pointer_comparable((void *)0, (void *)node->extended);
+  stack: check_ip_in_node :: addrfilt.c:365 <-
+         ADF_IsAllowed :: ntp_core.c:2105 <-
+         NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
+         NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+         process_response :: test/unit/ntp_core.c:381 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:331: Warning: 
+  unaligned pointer creation.
+  assert \aligned(node->extended,alignof(struct _TableNode));
+  stack: check_ip_in_node :: addrfilt.c:365 <-
+         ADF_IsAllowed :: ntp_core.c:2105 <-
+         NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
+         NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+         process_response :: test/unit/ntp_core.c:381 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:326: Warning: 
+  unaligned pointer creation. assert \aligned(node,alignof(TableNode));
+  stack: check_ip_in_node :: addrfilt.c:365 <-
+         ADF_IsAllowed :: ntp_core.c:2105 <-
+         NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
+         NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+         process_response :: test/unit/ntp_core.c:381 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
 [eva:alarm] addrfilt.c:326: Warning: 
   accessing uninitialized left-value. assert \initialized(&node->state);
+  stack: check_ip_in_node :: addrfilt.c:365 <-
+         ADF_IsAllowed :: ntp_core.c:2105 <-
+         NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
+         NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+         process_response :: test/unit/ntp_core.c:381 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:326: Warning: 
+  out of bounds read. assert \valid_read(&node->state);
+  stack: check_ip_in_node :: addrfilt.c:365 <-
+         ADF_IsAllowed :: ntp_core.c:2105 <-
+         NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
+         NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+         process_response :: test/unit/ntp_core.c:381 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:327: Warning: 
+  unaligned pointer creation. assert \aligned(node,alignof(TableNode));
   stack: check_ip_in_node :: addrfilt.c:365 <-
          ADF_IsAllowed :: ntp_core.c:2105 <-
          NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
@@ -6343,8 +6926,39 @@
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
+[eva:alarm] addrfilt.c:327: Warning: 
+  accessing left-value that contains escaping addresses.
+  assert ¬\dangling(&node->state);
+  stack: check_ip_in_node :: addrfilt.c:365 <-
+         ADF_IsAllowed :: ntp_core.c:2105 <-
+         NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
+         NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+         process_response :: test/unit/ntp_core.c:381 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:329: Warning: 
+  unaligned pointer creation. assert \aligned(node,alignof(TableNode));
+  stack: check_ip_in_node :: addrfilt.c:365 <-
+         ADF_IsAllowed :: ntp_core.c:2105 <-
+         NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
+         NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+         process_response :: test/unit/ntp_core.c:381 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
 [eva:alarm] addrfilt.c:329: Warning: 
   accessing uninitialized left-value. assert \initialized(&node->extended);
+  stack: check_ip_in_node :: addrfilt.c:365 <-
+         ADF_IsAllowed :: ntp_core.c:2105 <-
+         NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
+         NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+         process_response :: test/unit/ntp_core.c:381 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:329: Warning: 
+  out of bounds read. assert \valid_read(&node->extended);
   stack: check_ip_in_node :: addrfilt.c:365 <-
          ADF_IsAllowed :: ntp_core.c:2105 <-
          NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
@@ -6366,16 +6980,6 @@
 [eva:alarm] addrfilt.c:331: Warning: 
   accessing left-value that contains escaping addresses.
   assert ¬\dangling(&node->extended);
-  stack: check_ip_in_node :: addrfilt.c:365 <-
-         ADF_IsAllowed :: ntp_core.c:2105 <-
-         NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
-         NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-         process_response :: test/unit/ntp_core.c:381 <-
-         test_unit :: test/unit/test.c:70 <-
-         main :: fc_stubs.c:37 <-
-         eva_main
-[eva:alarm] addrfilt.c:326: Warning: 
-  out of bounds read. assert \valid_read(&node->state);
   stack: check_ip_in_node :: addrfilt.c:365 <-
          ADF_IsAllowed :: ntp_core.c:2105 <-
          NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
@@ -6398,100 +7002,6 @@
          eva_main
 [eva:alarm] addrfilt.c:332: Warning: 
   signed overflow. assert bits_consumed + 4 ≤ 2147483647;
-  stack: check_ip_in_node :: addrfilt.c:365 <-
-         ADF_IsAllowed :: ntp_core.c:2105 <-
-         NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
-         NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-         process_response :: test/unit/ntp_core.c:381 <-
-         test_unit :: test/unit/test.c:70 <-
-         main :: fc_stubs.c:37 <-
-         eva_main
-[eva:alarm] addrfilt.c:326: Warning: 
-  unaligned pointer creation. assert \aligned(node,alignof(TableNode));
-  stack: check_ip_in_node :: addrfilt.c:365 <-
-         ADF_IsAllowed :: ntp_core.c:2105 <-
-         NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
-         NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-         process_response :: test/unit/ntp_core.c:381 <-
-         test_unit :: test/unit/test.c:70 <-
-         main :: fc_stubs.c:37 <-
-         eva_main
-[eva:alarm] addrfilt.c:326: Warning: 
-  accessing left-value that contains escaping addresses.
-  assert ¬\dangling(&node->state);
-  stack: check_ip_in_node :: addrfilt.c:365 <-
-         ADF_IsAllowed :: ntp_core.c:2105 <-
-         NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
-         NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-         process_response :: test/unit/ntp_core.c:381 <-
-         test_unit :: test/unit/test.c:70 <-
-         main :: fc_stubs.c:37 <-
-         eva_main
-[eva:alarm] addrfilt.c:327: Warning: 
-  unaligned pointer creation. assert \aligned(node,alignof(TableNode));
-  stack: check_ip_in_node :: addrfilt.c:365 <-
-         ADF_IsAllowed :: ntp_core.c:2105 <-
-         NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
-         NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-         process_response :: test/unit/ntp_core.c:381 <-
-         test_unit :: test/unit/test.c:70 <-
-         main :: fc_stubs.c:37 <-
-         eva_main
-[eva:alarm] addrfilt.c:327: Warning: 
-  accessing left-value that contains escaping addresses.
-  assert ¬\dangling(&node->state);
-  stack: check_ip_in_node :: addrfilt.c:365 <-
-         ADF_IsAllowed :: ntp_core.c:2105 <-
-         NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
-         NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-         process_response :: test/unit/ntp_core.c:381 <-
-         test_unit :: test/unit/test.c:70 <-
-         main :: fc_stubs.c:37 <-
-         eva_main
-[eva:garbled-mix:write] addrfilt.c:327: Warning: 
-  Assigning imprecise value to state because of misaligned read of addresses.
-  stack: check_ip_in_node :: addrfilt.c:365 <-
-         ADF_IsAllowed :: ntp_core.c:2105 <-
-         NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
-         NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-         process_response :: test/unit/ntp_core.c:381 <-
-         test_unit :: test/unit/test.c:70 <-
-         main :: fc_stubs.c:37 <-
-         eva_main
-[eva:alarm] addrfilt.c:329: Warning: 
-  unaligned pointer creation. assert \aligned(node,alignof(TableNode));
-  stack: check_ip_in_node :: addrfilt.c:365 <-
-         ADF_IsAllowed :: ntp_core.c:2105 <-
-         NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
-         NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-         process_response :: test/unit/ntp_core.c:381 <-
-         test_unit :: test/unit/test.c:70 <-
-         main :: fc_stubs.c:37 <-
-         eva_main
-[eva:alarm] addrfilt.c:329: Warning: 
-  out of bounds read. assert \valid_read(&node->extended);
-  stack: check_ip_in_node :: addrfilt.c:365 <-
-         ADF_IsAllowed :: ntp_core.c:2105 <-
-         NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
-         NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-         process_response :: test/unit/ntp_core.c:381 <-
-         test_unit :: test/unit/test.c:70 <-
-         main :: fc_stubs.c:37 <-
-         eva_main
-[eva:alarm] addrfilt.c:329: Warning: 
-  unaligned pointer creation.
-  assert \aligned(node->extended,alignof(struct _TableNode));
-  stack: check_ip_in_node :: addrfilt.c:365 <-
-         ADF_IsAllowed :: ntp_core.c:2105 <-
-         NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
-         NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
-         process_response :: test/unit/ntp_core.c:381 <-
-         test_unit :: test/unit/test.c:70 <-
-         main :: fc_stubs.c:37 <-
-         eva_main
-[eva:alarm] addrfilt.c:331: Warning: 
-  unaligned pointer creation.
-  assert \aligned(node->extended,alignof(struct _TableNode));
   stack: check_ip_in_node :: addrfilt.c:365 <-
          ADF_IsAllowed :: ntp_core.c:2105 <-
          NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
@@ -6548,6 +7058,17 @@
   accessing uninitialized left-value.
   assert \initialized(&ip->addr.in6[(int)((int)(i * 4) + 3)]);
   stack: split_ip6 :: addrfilt.c:367 <-
+         ADF_IsAllowed :: ntp_core.c:2105 <-
+         NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
+         NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
+         process_response :: test/unit/ntp_core.c:381 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
+[eva:alarm] addrfilt.c:347: Warning: 
+  function __FC_assert: precondition 'nonnull_c' got status invalid.
+  stack: __FC_assert :: addrfilt.c:347 <-
+         check_ip_in_node :: addrfilt.c:368 <-
          ADF_IsAllowed :: ntp_core.c:2105 <-
          NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
@@ -13850,6 +14371,15 @@
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
+[eva:alarm] addrfilt.c:119: Warning: 
+  function free: precondition 'freeable' got status unknown.
+  stack: free :: addrfilt.c:119 <-
+         close_node :: addrfilt.c:307 <-
+         ADF_DestroyTable :: ntp_core.c:422 <-
+         NCR_Finalise :: test/unit/ntp_core.c:494 <-
+         test_unit :: test/unit/test.c:70 <-
+         main :: fc_stubs.c:37 <-
+         eva_main
 [eva:alarm] array.c:94: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: array.c:94 <-
@@ -14093,11 +14623,8 @@
                        __realloc_realloc_array_l80_47;
                        __malloc_w_KEY_Reload_l235_0;
                        __realloc_w_realloc_array_l80_48}
-    sched.c:185: imprecise merge of addresses
-      (read in 4 statements, propagated through 0 statements)
-      garbled mix of &{read_from_socket}
-    addrfilt.c:82: misaligned read of addresses
-      (read in 3 statements, propagated through 3 statements)
+    addrfilt.c:117: misaligned read of addresses
+      (read in 21 statements, propagated through 11 statements)
       garbled mix of &{__malloc_ADF_CreateTable_l91; __malloc_open_node_l137;
                        __malloc_w_open_node_l137_0; __malloc_open_node_l137_1;
                        __malloc_w_open_node_l137_2; __malloc_open_node_l137_3;
@@ -14105,36 +14632,6 @@
                        __malloc_open_node_l137_6; __malloc_w_open_node_l137_7;
                        __malloc_open_node_l137_8; __malloc_open_node_l137_9;
                        __malloc_w_open_node_l137_10;
-                       __malloc_open_node_l137_11;
-                       __malloc_w_open_node_l137_12;
-                       __malloc_open_node_l137_13; __malloc_open_node_l137_14;
-                       __malloc_w_open_node_l137_15;
-                       __malloc_open_node_l137_16;
-                       __malloc_w_open_node_l137_17;
-                       __malloc_open_node_l137_18;
-                       __malloc_w_open_node_l137_19;
-                       __malloc_w_open_node_l137_20;
-                       __malloc_w_open_node_l137_21;
-                       __malloc_w_open_node_l137_22;
-                       __malloc_NCR_GetInstance_l520;
-                       __malloc_SRC_CreateNewInstance_l229;
-                       __malloc_NCR_GetInstance_l520_0;
-                       __malloc_SRC_CreateNewInstance_l229_0;
-                       __malloc_NCR_GetInstance_l520_1;
-                       __malloc_SRC_CreateNewInstance_l229_1;
-                       __malloc_NCR_GetInstance_l520_2;
-                       __malloc_SRC_CreateNewInstance_l229_2}
-    reference.c:657: misaligned read of addresses
-      (read in 2 statements, propagated through 2 statements)
-      garbled mix of &{S_tm_zone___fc_time_tm}
-    addrfilt.c:327: misaligned read of addresses
-      (read in 1 statement, propagated through 1 statement)
-      garbled mix of &{__malloc_open_node_l137; __malloc_w_open_node_l137_0;
-                       __malloc_open_node_l137_1; __malloc_w_open_node_l137_2;
-                       __malloc_open_node_l137_3; __malloc_open_node_l137_4;
-                       __malloc_w_open_node_l137_5; __malloc_open_node_l137_6;
-                       __malloc_w_open_node_l137_7; __malloc_open_node_l137_8;
-                       __malloc_open_node_l137_9; __malloc_w_open_node_l137_10;
                        __malloc_open_node_l137_11;
                        __malloc_w_open_node_l137_12;
                        __malloc_open_node_l137_13; __malloc_open_node_l137_14;
@@ -14162,3 +14659,44 @@
                        __malloc_SST_CreateInstance_l215_4;
                        __malloc_SST_CreateInstance_l215_5;
                        __malloc_SST_CreateInstance_l215_6}
+    addrfilt.c:189: imprecise merge of addresses
+      (read in 12 statements, propagated through 6 statements)
+      garbled mix of &{__malloc_ADF_CreateTable_l91; __malloc_open_node_l137;
+                       __malloc_w_open_node_l137_0; __malloc_open_node_l137_1;
+                       __malloc_w_open_node_l137_2; __malloc_open_node_l137_3;
+                       __malloc_open_node_l137_4; __malloc_w_open_node_l137_5;
+                       __malloc_open_node_l137_6; __malloc_w_open_node_l137_7;
+                       __malloc_open_node_l137_8; __malloc_open_node_l137_9;
+                       __malloc_w_open_node_l137_10;
+                       __malloc_open_node_l137_11;
+                       __malloc_w_open_node_l137_12;
+                       __malloc_open_node_l137_13; __malloc_open_node_l137_14;
+                       __malloc_w_open_node_l137_15;
+                       __malloc_open_node_l137_16;
+                       __malloc_w_open_node_l137_17;
+                       __malloc_open_node_l137_18;
+                       __malloc_w_open_node_l137_19;
+                       __malloc_w_open_node_l137_20;
+                       __malloc_w_open_node_l137_21;
+                       __malloc_w_open_node_l137_22}
+    addrfilt.c:259: imprecise merge of addresses
+      (read in 6 statements, propagated through 2 statements)
+      garbled mix of &{__malloc_w_open_node_l137_19;
+                       __malloc_w_open_node_l137_20;
+                       __malloc_w_open_node_l137_21;
+                       __malloc_w_open_node_l137_22}
+    sched.c:185: imprecise merge of addresses
+      (read in 4 statements, propagated through 0 statements)
+      garbled mix of &{read_from_socket}
+    addrfilt.c:82: misaligned read of addresses
+      (read in 2 statements, propagated through 2 statements)
+      garbled mix of &{__malloc_SRC_CreateNewInstance_l229;
+                       __malloc_SRC_CreateNewInstance_l229_0;
+                       __malloc_SRC_CreateNewInstance_l229_1;
+                       __malloc_SRC_CreateNewInstance_l229_2}
+    reference.c:657: misaligned read of addresses
+      (read in 2 statements, propagated through 2 statements)
+      garbled mix of &{S_tm_zone___fc_time_tm}
+    addrfilt.c:222: imprecise merge of addresses
+      (read in 1 statement, propagated through 0 statements)
+      garbled mix of &{__malloc_w_open_node_l137_2; __malloc_open_node_l137_3}

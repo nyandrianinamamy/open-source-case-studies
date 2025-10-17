@@ -103,6 +103,7 @@ ADF_CreateTable(void)
 /* This function deletes all definitions of child nodes, in effect
    pruning a whole subnet definition back to a single parent
    record. */
+/*@ assigns *node \from *node; */
 static void
 close_node(TableNode *node)
 {
@@ -113,8 +114,7 @@ close_node(TableNode *node)
     //@ loop unroll 16;
     for (i=0; i<TABLE_SIZE; i++) {
       child_node = &(node->extended[i]);
-      // Frama-C/Eva: commented recursive call
-      //close_node(child_node);
+      close_node(child_node);
     }
     Free(node->extended);
     node->extended = NULL;

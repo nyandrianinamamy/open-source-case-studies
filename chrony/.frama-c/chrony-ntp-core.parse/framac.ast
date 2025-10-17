@@ -1188,6 +1188,8 @@ ADF_AuthTable ADF_CreateTable(void)
   return result;
 }
 
+/*@ assigns *node;
+    assigns *node \from *node; */
 static void close_node(TableNode *node)
 {
   int i;
@@ -1197,6 +1199,7 @@ static void close_node(TableNode *node)
     /*@ loop \eva::unroll 16; */
     while ((unsigned long)i < 1UL << 4) {
       child_node = node->extended + i;
+      close_node(child_node);
       i ++;
     }
     free((void *)node->extended);
