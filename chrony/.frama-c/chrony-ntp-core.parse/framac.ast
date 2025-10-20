@@ -1423,7 +1423,6 @@ int ADF_IsAllowed(ADF_AuthTable table, IPAddr *ip_addr)
   return_label: return __retres;
 }
 
-int volatile nondet;
 /*@ assigns \result;
     assigns \result \from (indirect: *node), (indirect: parent);
  */
@@ -1434,7 +1433,7 @@ static int is_any_allowed(TableNode *node, State parent)
   int i;
   if (node->state != (unsigned int)AS_PARENT) state = node->state;
   else state = parent;
-  __FC_assert((state != (unsigned int)AS_PARENT) != 0,"addrfilt.c",388,
+  __FC_assert((state != (unsigned int)AS_PARENT) != 0,"addrfilt.c",384,
               "state != AS_PARENT");
   if (node->extended) {
     i = 0;

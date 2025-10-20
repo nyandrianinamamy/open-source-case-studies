@@ -6,7 +6,7 @@
 |c-testsuite|Part of a collaborative database of compiler test cases|https://github.com/c-testsuite/c-testsuite|215|37|220|4959|HAS_DYN_ALLOC, HAS_RECURSION, HAS_FLOAT|test suite|
 |c-utils|c-utils is a collection of utility libraries.|https://github.com/barrust/c-utils|13|34|43|6392|HAS_DYN_ALLOC, HAS_RECURSION, HAS_FLOAT|library|
 |cerberus|Test suite related to the Cerberus project|https://www.cl.cam.ac.uk/~pes20/cerberus/|192|335|191|2520|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|test suite|
-|chrony|Implementation of the Network Time Protocol|https://chrony.tuxfamily.org/|2|852|122|25455|HAS_DYN_ALLOC, REM_RECURSION, HAS_FLOAT|executable|
+|chrony|Implementation of the Network Time Protocol|https://chrony.tuxfamily.org/|2|898|122|25461|HAS_DYN_ALLOC, REM_RECURSION, HAS_FLOAT|executable|
 |debie1|Benchmark based on the DEBIE-1 satellite instrument|http://www.tidorum.fi/debie1/|1|1|48|6269|NO_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|executable|
 |genann|Simple neural network library|https://github.com/codeplea/genann|1|75|8|690|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|library|
 |gnugo|Go game|https://ftp.gnu.org/gnu/gnugo/|1|110|27|2048|NO_DYN_ALLOC, HAS_RECURSION, NO_FLOAT|executable|

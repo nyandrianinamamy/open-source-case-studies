@@ -373,10 +373,6 @@ ADF_IsAllowed(ADF_AuthTable table,
 
 /* ================================================== */
 
-#ifdef __FRAMAC__
-volatile int nondet;
-#endif
-
 /*@ assigns \result \from indirect:*node, indirect:parent; */
 static int
 is_any_allowed(TableNode *node, State parent)

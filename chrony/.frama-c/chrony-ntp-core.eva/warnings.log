@@ -5456,17 +5456,17 @@
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] addrfilt.c:390: Warning: 
+[eva:alarm] addrfilt.c:386: Warning: 
   accessing left-value that contains escaping addresses.
   assert ¬\dangling(&node->extended);
-  stack: is_any_allowed :: addrfilt.c:410 <-
+  stack: is_any_allowed :: addrfilt.c:406 <-
          ADF_IsAnyAllowed :: ntp_core.c:2538 <-
          NCR_AddAccessRestriction :: conf.c:1810 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva] addrfilt.c:393: Warning: 
+[eva] addrfilt.c:389: Warning: 
   Using specification of function is_any_allowed for recursive calls.
   Analysis of function is_any_allowed is thus incomplete and its soundness
   relies on the written specification.
@@ -5848,50 +5848,50 @@
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] addrfilt.c:388: Warning: 
+[eva:alarm] addrfilt.c:384: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
-  stack: __FC_assert :: addrfilt.c:388 <-
-         is_any_allowed :: addrfilt.c:410 <-
+  stack: __FC_assert :: addrfilt.c:384 <-
+         is_any_allowed :: addrfilt.c:406 <-
          ADF_IsAnyAllowed :: ntp_core.c:2538 <-
          NCR_AddAccessRestriction :: conf.c:1810 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] addrfilt.c:390: Warning: 
+[eva:alarm] addrfilt.c:386: Warning: 
   unaligned pointer creation.
   assert \aligned(node->extended,alignof(struct _TableNode));
-  stack: is_any_allowed :: addrfilt.c:410 <-
+  stack: is_any_allowed :: addrfilt.c:406 <-
          ADF_IsAnyAllowed :: ntp_core.c:2538 <-
          NCR_AddAccessRestriction :: conf.c:1810 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] addrfilt.c:390: Warning: 
+[eva:alarm] addrfilt.c:386: Warning: 
   pointer comparison.
   assert \pointer_comparable((void *)0, (void *)node->extended);
-  stack: is_any_allowed :: addrfilt.c:410 <-
+  stack: is_any_allowed :: addrfilt.c:406 <-
          ADF_IsAnyAllowed :: ntp_core.c:2538 <-
          NCR_AddAccessRestriction :: conf.c:1810 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] addrfilt.c:393: Warning: 
+[eva:alarm] addrfilt.c:389: Warning: 
   unaligned pointer creation.
   assert \aligned(node->extended,alignof(struct _TableNode));
-  stack: is_any_allowed :: addrfilt.c:410 <-
+  stack: is_any_allowed :: addrfilt.c:406 <-
          ADF_IsAnyAllowed :: ntp_core.c:2538 <-
          NCR_AddAccessRestriction :: conf.c:1810 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] addrfilt.c:388: Warning: 
+[eva:alarm] addrfilt.c:384: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
-  stack: __FC_assert :: addrfilt.c:388 <-
-         is_any_allowed :: addrfilt.c:412 <-
+  stack: __FC_assert :: addrfilt.c:384 <-
+         is_any_allowed :: addrfilt.c:408 <-
          ADF_IsAnyAllowed :: ntp_core.c:2543 <-
          NCR_AddAccessRestriction :: conf.c:1810 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
@@ -5990,10 +5990,10 @@
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
-[eva:alarm] addrfilt.c:387: Warning: 
+[eva:alarm] addrfilt.c:383: Warning: 
   accessing left-value that contains escaping addresses.
   assert ¬\dangling(&node->state);
-  stack: is_any_allowed :: addrfilt.c:410 <-
+  stack: is_any_allowed :: addrfilt.c:406 <-
          ADF_IsAnyAllowed :: ntp_core.c:2538 <-
          NCR_AddAccessRestriction :: conf.c:1810 <-
          CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
