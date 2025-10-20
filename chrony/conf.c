@@ -394,6 +394,19 @@ CNF_Finalise(void)
 
 /* ================================================== */
 
+// Frama-C/Eva: CNF_ReadFile is part of a recursive cycle
+// (test_unit -> CNF_ParseLine -> parse_include -> CNF_ReadFile -> CNF_ParseLine)
+// If we call it, we will need to write an assigns for some functions, and
+// doing so for CNF_ParseLine is virtually impossible (too many variables,
+// memory accesses, etc). So we 'skip' the call, knowing that the
+// overapproximations elsewhere result in its behavior being "covered"
+// nevertheless. We use a global variable to "keep track" of whether the
+// call is recursive. This ensures maximum code coverage.
+#ifdef __FRAMAC__
+static int __fc_inside_ParseLine;
+#endif
+
+
 /* Read the configuration file */
 void
 CNF_ReadFile(const char *filename)
@@ -412,7 +425,10 @@ CNF_ReadFile(const char *filename)
   DEBUG_LOG("Reading %s", filename);
 
   for (i = 1; fgets(line, sizeof(line), in); i++) {
-    CNF_ParseLine(filename, i, line);
+#ifdef __FRAMAC__
+    if (!__fc_inside_ParseLine)
+#endif
+      CNF_ParseLine(filename, i, line);
   }
 
   fclose(in);
@@ -483,7 +499,13 @@ CNF_ParseLine(const char *filename, int number, char *line)
   } else if (!strcasecmp(command, "hwtimestamp")) {
     parse_hwtimestamp(p);
   } else if (!strcasecmp(command, "include")) {
+#ifdef __FRAMAC__
+    __fc_inside_ParseLine = 1;
+#endif
     parse_include(p);
+#ifdef __FRAMAC__
+    __fc_inside_ParseLine = 0;
+#endif
   } else if (!strcasecmp(command, "initstepslew")) {
     parse_initstepslew(p);
   } else if (!strcasecmp(command, "keyfile")) {
@@ -1345,10 +1367,6 @@ parse_hwtimestamp(char *line)
 
 /* ================================================== */
 
-// EVA: function skipped to avoid recursive call
-/*@
-  assigns \nothing;
-*/
 static void
 parse_include(char *line)
 {

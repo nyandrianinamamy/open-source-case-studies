@@ -3898,6 +3898,7 @@ void CNF_Finalise(void)
   return;
 }
 
+static int __fc_inside_ParseLine;
 void CNF_ReadFile(char const *filename)
 {
   FILE *in;
@@ -3925,7 +3926,7 @@ void CNF_ReadFile(char const *filename)
     char *tmp_0;
     tmp_0 = fgets(line,(int)sizeof(line),in);
     if (! tmp_0) break;
-    CNF_ParseLine(filename,i,line);
+    if (! __fc_inside_ParseLine) CNF_ParseLine(filename,i,line);
     i ++;
   }
   fclose(in);
@@ -4463,7 +4464,11 @@ void CNF_ParseLine(char const *filename, int number, char *line)
                                             }
                                             else parse_initstepslew(p);
                                           }
-                                          else parse_include(p);
+                                          else {
+                                            __fc_inside_ParseLine = 1;
+                                            parse_include(p);
+                                            __fc_inside_ParseLine = 0;
+                                          }
                                         }
                                         else parse_hwtimestamp(p);
                                       }
@@ -5600,7 +5605,7 @@ static void parse_allow_deny(char *line, ARR_Instance restrictions, int allow)
                                                   c << 8)) | d);
               new_node->subnet_bits = 32;
               break;
-              default: __FC_assert(0 != 0,"conf.c",1070,"0");
+              default: __FC_assert(0 != 0,"conf.c",1092,"0");
             }
           }
           if (slashpos) {
@@ -6122,7 +6127,6 @@ static void parse_hwtimestamp(char *line)
   return_label: return;
 }
 
-/*@ assigns \nothing; */
 static void parse_include(char *line)
 {
   glob_t gl;
