@@ -1,10 +1,13 @@
-provenance_via_io_auto.c:8:[eva:garbled-mix:assigns] warning: The specification of function printf_va_1
-has generated a garbled mix of addresses
-for assigns clause __fc_stdout->__fc_FILE_data.
-provenance_via_io_auto.c:10:[eva:garbled-mix:assigns] warning: The specification of function fprintf_va_1
-has generated a garbled mix of addresses
-for assigns clause stream->__fc_FILE_data.
-[eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
-  provenance_via_io_auto.c:10: assigns clause on addresses
-    (read in 3 statements, propagated through 5 statements)
-    garbled mix of &{y}
+[eva:garbled-mix:assigns] provenance_via_io_auto.c:8: Warning: 
+  The specification of function printf_va_1
+  has generated a garbled mix of addresses
+  for assigns clause __fc_stdout->__fc_FILE_data.
+[eva:garbled-mix:assigns] provenance_via_io_auto.c:10: Warning: 
+  The specification of function fprintf_va_1
+  has generated a garbled mix of addresses
+  for assigns clause stream->__fc_FILE_data.
+[eva:garbled-mix:summary] Warning: 
+  Origins of garbled mix generated during analysis:
+    provenance_via_io_auto.c:10: assigns clause on addresses
+      (read in 3 statements, propagated through 5 statements)
+      garbled mix of &{y}

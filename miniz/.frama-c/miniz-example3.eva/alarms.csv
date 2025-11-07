@@ -139,6 +139,7 @@ directory	file	line	function	property kind	status	property
 .	miniz_tdef.c	476	tdefl_compress_lz_codes	mem_access	Unknown	\valid_read(pLZ_codes + 0)
 .	miniz_tdef.c	476	tdefl_compress_lz_codes	initialization	Unknown	\initialized((mz_uint16 const *)(pLZ_codes + 1))
 .	miniz_tdef.c	476	tdefl_compress_lz_codes	mem_access	Unknown	\valid_read((mz_uint16 const *)(pLZ_codes + 1))
+.	miniz_tdef.c	476	tdefl_compress_lz_codes	pointer_alignment	Unknown	\aligned(pLZ_codes + 1,alignof(mz_uint16 const))
 .	miniz_tdef.c	479	tdefl_compress_lz_codes	initialization	Unknown	\initialized(&d->m_huff_code_sizes[0][s_tdefl_len_sym[match_len]])
 .	miniz_tdef.c	479	tdefl_compress_lz_codes	precondition of __FC_assert	Unknown	nonnull_c: c ≢ 0
 .	miniz_tdef.c	480	tdefl_compress_lz_codes	initialization	Unknown	\initialized(&d->m_huff_codes[0][s_tdefl_len_sym[match_len]])
@@ -168,6 +169,7 @@ directory	file	line	function	property kind	status	property
 .	miniz_tdef.c	513	tdefl_compress_lz_codes	initialization	Unknown	\initialized(&d->m_huff_codes[0][lit])
 .	miniz_tdef.c	513	tdefl_compress_lz_codes	shift	Unknown	0 ≤ bits_in < 64
 .	miniz_tdef.c	518	tdefl_compress_lz_codes	ptr_comparison	Unknown	\pointer_comparable((void *)pOutput_buf, (void *)d->m_pOutput_buf_end)
+.	miniz_tdef.c	521	tdefl_compress_lz_codes	pointer_alignment	Unknown	\aligned(pOutput_buf,alignof(mz_uint64))
 .	miniz_tdef.c	521	tdefl_compress_lz_codes	mem_access	Unknown	\valid((mz_uint64 *)pOutput_buf)
 .	miniz_tdef.c	523	tdefl_compress_lz_codes	shift	Unknown	0 ≤ (unsigned int)(bits_in & (unsigned int)((int)(~7))) < 64
 .	miniz_tdef.c	536	tdefl_compress_lz_codes	precondition of __FC_assert	Unknown	nonnull_c: c ≢ 0
@@ -242,10 +244,12 @@ directory	file	line	function	property kind	status	property
 .	miniz_tdef.c	749	TDEFL_READ_UNALIGNED_WORD2	precondition of memcpy	Unknown	valid_src: valid_read_or_empty(src, n)
 .	miniz_tdef.c	750	TDEFL_READ_UNALIGNED_WORD2	initialization	Unknown	\initialized(&ret)
 .	miniz_tdef.c	759	tdefl_find_match	initialization	Unknown	\initialized(&d->m_max_probes[(int)(match_len ≥ 32 ? 1 : 0)])
+.	miniz_tdef.c	760	tdefl_find_match	pointer_alignment	Unknown	\aligned(&d->m_dict[pos],alignof(mz_uint16 const))
 .	miniz_tdef.c	762	tdefl_find_match	precondition of __FC_assert	Unknown	nonnull_c: c ≢ 0
 .	miniz_tdef.c	778	tdefl_find_match	initialization	Unknown	\initialized(&d->m_next[probe_pos])
 .	miniz_tdef.c	779	tdefl_find_match	initialization	Unknown	\initialized(&d->m_next[probe_pos])
 .	miniz_tdef.c	780	tdefl_find_match	initialization	Unknown	\initialized(&d->m_next[probe_pos])
+.	miniz_tdef.c	784	tdefl_find_match	pointer_alignment	Unknown	\aligned(&d->m_dict[probe_pos],alignof(mz_uint16 const))
 .	miniz_tdef.c	799	tdefl_find_match	initialization	Unknown	\initialized((mz_uint8 const *)p)
 .	miniz_tdef.c	799	tdefl_find_match	initialization	Unknown	\initialized((mz_uint8 const *)q)
 .	miniz_tdef.c	799	tdefl_find_match	mem_access	Unknown	\valid_read((mz_uint8 const *)p)
@@ -262,6 +266,8 @@ directory	file	line	function	property kind	status	property
 .	miniz_tdef.c	883	tdefl_compress_fast	precondition of memcpy	Unknown	valid_src: valid_read_or_empty(src, n)
 .	miniz_tdef.c	885	tdefl_compress_fast	precondition of memcpy	Unknown	valid_src: valid_read_or_empty(src, n)
 .	miniz_tdef.c	901	tdefl_compress_fast	initialization	Unknown	\initialized(&d->m_hash[hash])
+.	miniz_tdef.c	906	tdefl_compress_fast	pointer_alignment	Unknown	\aligned(pCur_dict,alignof(mz_uint16 const))
+.	miniz_tdef.c	907	tdefl_compress_fast	pointer_alignment	Unknown	\aligned(&d->m_dict[probe_pos],alignof(mz_uint16 const))
 .	miniz_tdef.c	913	tdefl_compress_fast	initialization	Unknown	\initialized((mz_uint8 const *)p)
 .	miniz_tdef.c	913	tdefl_compress_fast	initialization	Unknown	\initialized((mz_uint8 const *)q)
 .	miniz_tdef.c	913	tdefl_compress_fast	mem_access	Unknown	\valid_read((mz_uint8 const *)p)
@@ -496,6 +502,7 @@ directory	file	line	function	property kind	status	property
 .	miniz_tinfl.c	405	tinfl_decompress	ptr_comparison	Unknown	\pointer_comparable((void *)pOut_buf_cur, (void *)pOut_buf_end)
 .	miniz_tinfl.c	409	tinfl_decompress	mem_access	Unknown	\valid(tmp_32)
 .	miniz_tinfl.c	418	tinfl_decompress	mem_access	Unknown	\valid_read((mz_uint32 const *)pIn_buf_cur)
+.	miniz_tinfl.c	418	tinfl_decompress	pointer_alignment	Unknown	\aligned(pIn_buf_cur,alignof(mz_uint32 const))
 .	miniz_tinfl.c	430	tinfl_decompress	initialization	Unknown	\initialized(&r->m_tables[0].m_look_up[(unsigned long)(bit_buf & (unsigned long)((int)(TINFL_FAST_LOOKUP_SIZE - 1)))])
 .	miniz_tinfl.c	437	tinfl_decompress	initialization	Unknown	\initialized(&r->m_tables[0].m_tree[(unsigned long)((unsigned long)((int)(~sym2)) + (unsigned long)((tinfl_bit_buf_t)(bit_buf >> tmp_33) & 1))])
 .	miniz_tinfl.c	437	tinfl_decompress	index_bound	Unknown	(unsigned long)((unsigned long)((int)(~sym2)) + (unsigned long)((tinfl_bit_buf_t)(bit_buf >> tmp_33) & 1)) < (int)(TINFL_MAX_HUFF_SYMBOLS_0 * 2)

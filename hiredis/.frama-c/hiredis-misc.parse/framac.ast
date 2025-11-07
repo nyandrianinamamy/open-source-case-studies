@@ -6193,6 +6193,1282 @@ static int skips = 0;
     assigns \result
       \from (indirect: __fc_stdout->__fc_FILE_id),
             (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_1(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_2(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_3(char const * restrict format);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param0 + (0 ..));
+ */
+int printf_va_4(char const * restrict format, char *param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_5(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_6(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_7(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_8(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_9(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_10(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_11(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_12(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_13(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_14(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_15(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_16(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_17(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_18(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_19(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_20(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_21(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_22(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_23(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_24(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_25(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_26(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_27(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_28(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_29(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_30(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_31(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_32(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_33(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_34(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_35(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_36(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_37(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_38(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_39(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_40(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_41(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_42(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_43(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_44(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_45(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_46(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_47(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_48(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_49(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_50(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_51(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_52(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_53(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_54(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_55(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_56(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_57(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_58(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_59(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_60(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_61(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_62(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_63(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_64(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_65(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_66(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_67(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_68(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_69(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_70(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_71(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_72(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_73(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_74(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_75(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_76(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_77(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_78(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_79(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_80(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_81(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_82(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_83(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_84(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_85(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_86(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_87(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_88(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_89(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_90(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_91(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_92(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_93(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_94(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_95(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_96(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_97(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_98(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_99(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_100(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_101(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_102(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_103(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_104(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
             (indirect: *(format + (0 ..))), (indirect: param0);
     assigns __fc_stdout->__fc_FILE_data
       \from (indirect: __fc_stdout->__fc_FILE_id),
@@ -7760,6 +9036,1047 @@ static void test_blocking_connection_errors(void)
   redisFree(c);
   return;
 }
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_194(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_195(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_196(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_197(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_198(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_199(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_200(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_201(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_202(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_203(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_204(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_205(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_206(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_207(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_208(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_209(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_210(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_211(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_212(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_213(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_214(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_215(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_216(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_217(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_218(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_219(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_220(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_221(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_222(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_223(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_224(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_225(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_226(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_227(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_228(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_229(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_230(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_231(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_232(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_233(char const * restrict format);
+
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(format);
+    assigns \result, stream->__fc_FILE_data;
+    assigns \result
+      \from (indirect: stream->__fc_FILE_id),
+            (indirect: stream->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param0 + (0 ..)));
+    assigns stream->__fc_FILE_data
+      \from (indirect: stream->__fc_FILE_id), stream->__fc_FILE_data,
+            (indirect: *(format + (0 ..))), *(param0 + (0 ..));
+ */
+int fprintf_va_1(FILE * restrict stream, char const * restrict format,
+                 char *param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_234(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_235(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_236(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_237(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_238(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_239(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_240(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_241(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_242(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_243(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_244(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_245(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_246(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_247(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_248(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_249(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_250(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_251(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_252(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_253(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_254(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_255(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_256(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_257(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_258(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_259(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_260(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_261(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_262(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_263(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_264(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_265(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_266(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_267(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_268(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_269(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_270(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param1),
+            (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param1, param0;
+ */
+int printf_va_271(char const * restrict format, int param0, double param1);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param1),
+            (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param1, param0;
+ */
+int printf_va_272(char const * restrict format, int param0, double param1);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param1),
+            (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param1, param0;
+ */
+int printf_va_273(char const * restrict format, int param0, double param1);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param1),
+            (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param1, param0;
+ */
+int printf_va_274(char const * restrict format, int param0, double param1);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param1),
+            (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param1, param0;
+ */
+int printf_va_275(char const * restrict format, int param0, double param1);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param1),
+            (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param1, param0;
+ */
+int printf_va_276(char const * restrict format, int param0, double param1);
 
 /*@ requires valid_read_string(param0);
     requires valid_read_string(format);

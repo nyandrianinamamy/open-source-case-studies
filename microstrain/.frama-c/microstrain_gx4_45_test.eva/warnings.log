@@ -1,32 +1,27 @@
-MIPSDK/C/Library/Source/ring_buffer.c:438:[eva:garbled-mix:write] warning: Assigning imprecise value to *(entry + i)
-because of misaligned read of addresses.
-stack: ring_buffer_read :: MIPSDK/C/Library/Source/mip_sdk_inteface.c:461 <-
-       __mip_interface_parse_input_buffer :: MIPSDK/C/Library/Source/mip_sdk_inteface.c:209 <-
-       mip_interface_update :: MIPSDK/C/Library/Source/mip_sdk_inteface.c:1076 <-
-       __mip_interface_wait_for_response :: MIPSDK/C/Library/Source/mip_sdk_inteface.c:1013 <-
-       mip_interface_send_preformatted_command_with_response :: MIPSDK/C/Library/Source/mip_sdk_inteface.c:938 <-
-       mip_interface_send_command_with_response :: MIPSDK/C/Library/Source/mip_sdk_system.c:99 <-
-       mip_system_com_mode :: MIPSDK/C/Examples/Linux/GX4-45/GX4_45_Test/GX4-45_Test.c:196 <-
-       main :: fc_stubs.c:21 <-
-       eva_main
-MIPSDK/C/Library/Source/mip_sdk_3dm.c:518:[eva] warning: all target addresses were invalid. This path is assumed to be dead.
-stack: mip_3dm_cmd_ahrs_message_format :: MIPSDK/C/Examples/Linux/GX4-45/GX4_45_Test/GX4-45_Test.c:598 <-
-       main :: fc_stubs.c:21 <-
-       eva_main
-[eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
-  MIPSDK/C/Library/Source/ring_buffer.c:390: imprecise merge of addresses
-    (read in 458 statements, propagated through 553 statements)
-    garbled mix of &{__mip_interface_command_response_handler;
-                     device_interface; mip_sdk_port_open_local_port_handle}
-  MIPSDK/C/Library/Source/ring_buffer.c:438: misaligned read of addresses
-    (read in 57 statements, propagated through 36 statements)
-    garbled mix of &{__mip_interface_command_response_handler;
-                     device_interface; mip_sdk_port_open_local_port_handle}
-  MIPSDK/C/Library/Source/mip_sdk_inteface.c:756: misaligned write of addresses
-    (read in 10 statements, propagated through 8 statements)
-    garbled mix of &{__mip_interface_command_response_handler;
-                     device_interface}
-  MIPSDK/C/Library/Source/mip_sdk_inteface.c:735: imprecise merge of addresses
-    (read in 3 statements, propagated through 1 statement)
-    garbled mix of &{__mip_interface_command_response_handler;
-                     device_interface; mip_sdk_port_open_local_port_handle}
+[kernel] Warning: Unknown alignment of base __mip_interface_command_response_handler: Undefined alignof on a function.
+[eva:garbled-mix:write] MIPSDK/C/Library/Source/ring_buffer.c:438: Warning: 
+  Assigning imprecise value to *(entry + i)
+  because of misaligned read of addresses.
+  stack: ring_buffer_read :: MIPSDK/C/Library/Source/mip_sdk_inteface.c:461 <-
+         __mip_interface_parse_input_buffer :: MIPSDK/C/Library/Source/mip_sdk_inteface.c:209 <-
+         mip_interface_update :: MIPSDK/C/Library/Source/mip_sdk_inteface.c:1076 <-
+         __mip_interface_wait_for_response :: MIPSDK/C/Library/Source/mip_sdk_inteface.c:1013 <-
+         mip_interface_send_preformatted_command_with_response :: MIPSDK/C/Library/Source/mip_sdk_inteface.c:938 <-
+         mip_interface_send_command_with_response :: MIPSDK/C/Library/Source/mip_sdk_system.c:99 <-
+         mip_system_com_mode :: MIPSDK/C/Examples/Linux/GX4-45/GX4_45_Test/GX4-45_Test.c:196 <-
+         main :: fc_stubs.c:21 <-
+         eva_main
+[eva:garbled-mix:summary] Warning: 
+  Origins of garbled mix generated during analysis:
+    MIPSDK/C/Library/Source/ring_buffer.c:390: imprecise merge of addresses
+      (read in 458 statements, propagated through 553 statements)
+      garbled mix of &{__mip_interface_command_response_handler;
+                       device_interface; mip_sdk_port_open_local_port_handle}
+    MIPSDK/C/Library/Source/ring_buffer.c:438: misaligned read of addresses
+      (read in 58 statements, propagated through 37 statements)
+      garbled mix of &{__mip_interface_command_response_handler;
+                       device_interface; mip_sdk_port_open_local_port_handle}
+    MIPSDK/C/Library/Source/mip_sdk_inteface.c:735: imprecise merge of addresses
+      (read in 3 statements, propagated through 1 statement)
+      garbled mix of &{__mip_interface_command_response_handler;
+                       device_interface; mip_sdk_port_open_local_port_handle}

@@ -18,7 +18,7 @@ int x = 1;
             __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
             *(param2 + (0 ..)), param1, param0;
  */
-int printf_va_1(char const * restrict format, int param0, int param1,
+int printf_va_1(char const * __restrict format, int param0, int param1,
                 char *param2);
 
 int main(void)
@@ -27,14 +27,14 @@ int main(void)
   char const *tmp;
   int *p = & x;
   uintptr_t i = (uintptr_t)p;
-  __FC_assert((__alignof__(int) >= (unsigned int)4) != 0,
+  __FC_assert((_Alignof(int) >= (unsigned __int64)4) != 0,
               "provenance_tag_bits_via_uintptr_t_1.c",7,
               "__alignof(int) >= 4");
-  __FC_assert(((i & 3u) == 0u) != 0,"provenance_tag_bits_via_uintptr_t_1.c",
-              8,"(i & 3u) == 0u");
-  i |= 1u;
+  __FC_assert(((i & (unsigned __int64)3u) == (unsigned __int64)0u) != 0,
+              "provenance_tag_bits_via_uintptr_t_1.c",8,"(i & 3u) == 0u");
+  i |= (unsigned __int64)1u;
   int *q = (int *)i;
-  uintptr_t j = (uintptr_t)q & ~ 3u;
+  uintptr_t j = (uintptr_t)q & ~ ((uintptr_t)3u);
   int *r = (int *)j;
   *r = 11;
   _Bool b = (_Bool)(r == p);

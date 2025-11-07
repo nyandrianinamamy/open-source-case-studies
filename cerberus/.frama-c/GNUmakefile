@@ -234,6 +234,10 @@ write_union_same_prefix_visible.eva \
 # Redefines memcpy
 # compcertMMv2-6.eva
 
+cheri_06_mask.parse: MACHDEP := msvc_x86_64
+provenance_tag_bits_via_uintptr_t_1_no_assert.parse: MACHDEP := msvc_x86_64
+provenance_tag_bits_via_uintptr_t_1.parse: MACHDEP := msvc_x86_64
+
 ### Each target <t>.eva needs a rule <t>.parse with source files as prerequisites
 besson_blazy_wilke_6_2.parse: ../besson_blazy_wilke_6_2.c
 besson_blazy_wilke_bitfields_1.parse: ../besson_blazy_wilke_bitfields_1.c

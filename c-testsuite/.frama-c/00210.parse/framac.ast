@@ -13,6 +13,8 @@ int ( __attribute__((__noinline__)) actual_function)(void)
   return __retres;
 }
 
+extern int printf(char const * , ...);
+
 /*@ assigns \result;
     assigns \result \from (indirect: *(param0 + (0 ..))), (indirect: param1);
  */

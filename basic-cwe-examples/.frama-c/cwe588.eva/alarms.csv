@@ -1,2 +1,4 @@
 directory	file	line	function	property kind	status	property
+.	cwe588.c	9	main	pointer_alignment	Unknown	\aligned(&main,alignof(struct foo))
 .	cwe588.c	10	main	mem_access	Invalid or unreachable	\valid(&foo->i)
+.	cwe588.c	10	main	pointer_alignment	Unknown	\aligned(foo,alignof(struct foo))

@@ -1,20 +1,22 @@
-library/ssl_tls.c:1339:[nonterm:stmt] warning: non-terminating loop
-stack 1: ssl_write_certificate :: library/ssl_srv.c:958 <-
-         ssl_handshake_server :: library/ssl_tls.c:2212 <-
-         ssl_handshake :: programs/ssl/ssl_server.c:407 <-
-         main
-stack 2: ssl_write_certificate :: library/ssl_srv.c:958 <-
-         ssl_handshake_server :: library/ssl_tls.c:2212 <-
-         ssl_handshake :: library/ssl_tls.c:2305 <-
-         ssl_write :: programs/ssl/ssl_server.c:469 <-
-         main
-library/ssl_tls.c:1353:[nonterm:stmt] warning: non-terminating function call
-stack 1: ssl_write_certificate :: library/ssl_srv.c:958 <-
-         ssl_handshake_server :: library/ssl_tls.c:2212 <-
-         ssl_handshake :: programs/ssl/ssl_server.c:407 <-
-         main
-stack 2: ssl_write_certificate :: library/ssl_srv.c:958 <-
-         ssl_handshake_server :: library/ssl_tls.c:2212 <-
-         ssl_handshake :: library/ssl_tls.c:2305 <-
-         ssl_write :: programs/ssl/ssl_server.c:469 <-
-         main
+[nonterm:stmt] library/ssl_tls.c:1339: Warning: 
+  non-terminating loop
+  stack 1: ssl_write_certificate :: library/ssl_srv.c:958 <-
+           ssl_handshake_server :: library/ssl_tls.c:2212 <-
+           ssl_handshake :: programs/ssl/ssl_server.c:407 <-
+           main
+  stack 2: ssl_write_certificate :: library/ssl_srv.c:958 <-
+           ssl_handshake_server :: library/ssl_tls.c:2212 <-
+           ssl_handshake :: library/ssl_tls.c:2305 <-
+           ssl_write :: programs/ssl/ssl_server.c:469 <-
+           main
+[nonterm:stmt] library/ssl_tls.c:1353: Warning: 
+  non-terminating function call
+  stack 1: ssl_write_certificate :: library/ssl_srv.c:958 <-
+           ssl_handshake_server :: library/ssl_tls.c:2212 <-
+           ssl_handshake :: programs/ssl/ssl_server.c:407 <-
+           main
+  stack 2: ssl_write_certificate :: library/ssl_srv.c:958 <-
+           ssl_handshake_server :: library/ssl_tls.c:2212 <-
+           ssl_handshake :: library/ssl_tls.c:2305 <-
+           ssl_write :: programs/ssl/ssl_server.c:469 <-
+           main

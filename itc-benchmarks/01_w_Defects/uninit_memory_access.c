@@ -465,11 +465,12 @@ uninit_memory_access_014_u_001 * uninit_memory_access_014_func_001 ()
 			// so a 'signed downcast' alarm is emitted. Since
 			// the actual pointer value is not used in the test
 			// anyway, neither tested for its signedness,
-			// we replace the (-1) with 1.
+			// we replace the (-1) with 0x100 (to ensure an aligned
+			// access).
 #ifndef __FRAMAC__
 			return (uninit_memory_access_014_u_001 *)(-1);
 #else
-			return (uninit_memory_access_014_u_001 *)(1);
+			return (uninit_memory_access_014_u_001 *)(0x100);
 #endif
 	}
 }

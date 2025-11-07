@@ -1,7 +1,9 @@
-pointer_copy_user_dataflow_direct_bitwise.c:10:[eva:garbled-mix:write] warning: Assigning imprecise value to bit
-because of arithmetic operation on addresses.
-stack: main
-[eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
-  pointer_copy_user_dataflow_direct_bitwise.c:10: arithmetic operation on addresses
-    (read in 3 statements, propagated through 3 statements)
-    garbled mix of &{x}
+[eva:garbled-mix:write] pointer_copy_user_dataflow_direct_bitwise.c:10: Warning: 
+  Assigning imprecise value to bit
+  because of arithmetic operation on addresses.
+  stack: main
+[eva:garbled-mix:summary] Warning: 
+  Origins of garbled mix generated during analysis:
+    pointer_copy_user_dataflow_direct_bitwise.c:10: arithmetic operation on addresses
+      (read in 3 statements, propagated through 3 statements)
+      garbled mix of &{x}

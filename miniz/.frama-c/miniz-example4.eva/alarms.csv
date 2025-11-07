@@ -148,6 +148,7 @@ directory	file	line	function	property kind	status	property
 .	miniz_tinfl.c	409	tinfl_decompress	mem_access	Unknown	\valid(tmp_32)
 .	miniz_tinfl.c	418	tinfl_decompress	initialization	Unknown	\initialized((mz_uint32 const *)pIn_buf_cur)
 .	miniz_tinfl.c	418	tinfl_decompress	mem_access	Unknown	\valid_read((mz_uint32 const *)pIn_buf_cur)
+.	miniz_tinfl.c	418	tinfl_decompress	pointer_alignment	Unknown	\aligned(pIn_buf_cur,alignof(mz_uint32 const))
 .	miniz_tinfl.c	430	tinfl_decompress	initialization	Unknown	\initialized(&r->m_tables[0].m_look_up[(unsigned long)(bit_buf & (unsigned long)((int)(TINFL_FAST_LOOKUP_SIZE - 1)))])
 .	miniz_tinfl.c	437	tinfl_decompress	initialization	Unknown	\initialized(&r->m_tables[0].m_tree[(unsigned long)((unsigned long)((int)(~sym2)) + (unsigned long)((tinfl_bit_buf_t)(bit_buf >> tmp_33) & 1))])
 .	miniz_tinfl.c	437	tinfl_decompress	index_bound	Unknown	(unsigned long)((unsigned long)((int)(~sym2)) + (unsigned long)((tinfl_bit_buf_t)(bit_buf >> tmp_33) & 1)) < (int)(TINFL_MAX_HUFF_SYMBOLS_0 * 2)

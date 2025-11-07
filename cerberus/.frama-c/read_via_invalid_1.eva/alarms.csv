@@ -1,2 +1,2 @@
 directory	file	line	function	property kind	status	property
-.	read_via_invalid_1.c	4	main	mem_access	Invalid or unreachable	\valid_read((int *)0x654321)
+.	read_via_invalid_1.c	4	main	pointer_alignment	Invalid or unreachable	\aligned((void *)0x654321,alignof(int))

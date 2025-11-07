@@ -1,57 +1,61 @@
-util.c:311:[eva] warning: calloc out of bounds: assert(nmemb * size <= SIZE_MAX)
-gzip.c:675:[eva:locals-escaping] warning: locals {attr} escaping the scope of zip through file_type
-gzip.c:817:[eva:locals-escaping] warning: locals {attr} escaping the scope of zip through file_type
-[eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
-  inflate.c:446: imprecise merge of addresses
-    (read in 428 statements, propagated through 350 statements)
-    garbled mix of &{d_buf; window; prev; ll; pt_table;
-                     __malloc_w_huft_build_l403;
-                     __malloc_w_huft_build_l403_0;
-                     __malloc_w_huft_build_l403_1;
-                     __malloc_w_huft_build_l403_2;
-                     __malloc_w_huft_build_l403_3;
-                     __malloc_w_huft_build_l403_4;
-                     __malloc_w_huft_build_l403_5;
-                     __malloc_w_huft_build_l403_6;
-                     __malloc_w_huft_build_l403_7;
-                     __malloc_w_huft_build_l403_8;
-                     __malloc_w_huft_build_l403_9;
-                     __malloc_w_huft_build_l403_10;
-                     __malloc_w_huft_build_l403_11;
-                     __malloc_w_huft_build_l403_12;
-                     __malloc_w_huft_build_l403_13}
-  inflate.c:423: misaligned read of addresses
-    (read in 43 statements, propagated through 30 statements)
-    garbled mix of &{__malloc_w_huft_build_l403;
-                     __malloc_w_huft_build_l403_2;
-                     __malloc_w_huft_build_l403_4;
-                     __malloc_w_huft_build_l403_7;
-                     __malloc_w_huft_build_l403_9;
-                     __malloc_w_huft_build_l403_12}
-  inflate.c:382: imprecise merge of addresses
-    (read in 1 statement, propagated through 1 statement)
-    garbled mix of &{__malloc_w_huft_build_l403;
-                     __malloc_w_huft_build_l403_0;
-                     __malloc_w_huft_build_l403_1;
-                     __malloc_w_huft_build_l403_2;
-                     __malloc_w_huft_build_l403_3;
-                     __malloc_w_huft_build_l403_4;
-                     __malloc_w_huft_build_l403_5;
-                     __malloc_w_huft_build_l403_6;
-                     __malloc_w_huft_build_l403_7;
-                     __malloc_w_huft_build_l403_8;
-                     __malloc_w_huft_build_l403_9;
-                     __malloc_w_huft_build_l403_10;
-                     __malloc_w_huft_build_l403_11;
-                     __malloc_w_huft_build_l403_12;
-                     __malloc_w_huft_build_l403_13}
-  inflate.c:444: imprecise merge of addresses
-    (read in 1 statement, propagated through 1 statement)
-    garbled mix of &{__malloc_w_huft_build_l403_0;
-                     __malloc_w_huft_build_l403_5;
-                     __malloc_w_huft_build_l403_10}
-  inflate.c:445: imprecise merge of addresses
-    (read in 1 statement, propagated through 1 statement)
-    garbled mix of &{__malloc_w_huft_build_l403_1;
-                     __malloc_w_huft_build_l403_6;
-                     __malloc_w_huft_build_l403_11}
+[eva] util.c:311: Warning: 
+  calloc out of bounds: assert(nmemb * size <= SIZE_MAX)
+[eva:locals-escaping] gzip.c:675: Warning: 
+  locals {attr} escaping the scope of zip through file_type
+[eva:locals-escaping] gzip.c:817: Warning: 
+  locals {attr} escaping the scope of zip through file_type
+[eva:garbled-mix:summary] Warning: 
+  Origins of garbled mix generated during analysis:
+    inflate.c:446: imprecise merge of addresses
+      (read in 428 statements, propagated through 350 statements)
+      garbled mix of &{d_buf; window; prev; ll; pt_table;
+                       __malloc_w_huft_build_l403;
+                       __malloc_w_huft_build_l403_0;
+                       __malloc_w_huft_build_l403_1;
+                       __malloc_w_huft_build_l403_2;
+                       __malloc_w_huft_build_l403_3;
+                       __malloc_w_huft_build_l403_4;
+                       __malloc_w_huft_build_l403_5;
+                       __malloc_w_huft_build_l403_6;
+                       __malloc_w_huft_build_l403_7;
+                       __malloc_w_huft_build_l403_8;
+                       __malloc_w_huft_build_l403_9;
+                       __malloc_w_huft_build_l403_10;
+                       __malloc_w_huft_build_l403_11;
+                       __malloc_w_huft_build_l403_12;
+                       __malloc_w_huft_build_l403_13}
+    inflate.c:423: misaligned read of addresses
+      (read in 43 statements, propagated through 30 statements)
+      garbled mix of &{__malloc_w_huft_build_l403;
+                       __malloc_w_huft_build_l403_2;
+                       __malloc_w_huft_build_l403_4;
+                       __malloc_w_huft_build_l403_7;
+                       __malloc_w_huft_build_l403_9;
+                       __malloc_w_huft_build_l403_12}
+    inflate.c:382: imprecise merge of addresses
+      (read in 1 statement, propagated through 1 statement)
+      garbled mix of &{__malloc_w_huft_build_l403;
+                       __malloc_w_huft_build_l403_0;
+                       __malloc_w_huft_build_l403_1;
+                       __malloc_w_huft_build_l403_2;
+                       __malloc_w_huft_build_l403_3;
+                       __malloc_w_huft_build_l403_4;
+                       __malloc_w_huft_build_l403_5;
+                       __malloc_w_huft_build_l403_6;
+                       __malloc_w_huft_build_l403_7;
+                       __malloc_w_huft_build_l403_8;
+                       __malloc_w_huft_build_l403_9;
+                       __malloc_w_huft_build_l403_10;
+                       __malloc_w_huft_build_l403_11;
+                       __malloc_w_huft_build_l403_12;
+                       __malloc_w_huft_build_l403_13}
+    inflate.c:444: imprecise merge of addresses
+      (read in 1 statement, propagated through 1 statement)
+      garbled mix of &{__malloc_w_huft_build_l403_0;
+                       __malloc_w_huft_build_l403_5;
+                       __malloc_w_huft_build_l403_10}
+    inflate.c:445: imprecise merge of addresses
+      (read in 1 statement, propagated through 1 statement)
+      garbled mix of &{__malloc_w_huft_build_l403_1;
+                       __malloc_w_huft_build_l403_6;
+                       __malloc_w_huft_build_l403_11}
