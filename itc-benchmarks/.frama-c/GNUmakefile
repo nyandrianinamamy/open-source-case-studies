@@ -27,7 +27,6 @@ FCFLAGS     += \
 
 ## Eva-specific flags
 EVAFLAGS    += \
-  -eva-warn-key builtins:missing-spec=abort \
   -eva-no-alloc-returns-null \
   -eva-mlevel 10 \
   -main eva_main \
