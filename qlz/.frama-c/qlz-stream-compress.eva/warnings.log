@@ -1,23 +1,42 @@
-quicklz.c:117:[eva:garbled-mix:write] warning: Assigning imprecise value to __retres
-because of misaligned read of addresses.
-stack: fast_read :: quicklz.c:126 <-
-       hashat :: quicklz.c:431 <-
-       qlz_compress_core :: quicklz.c:770 <-
-       qlz_compress :: stream_compress.c:37 <-
-       main :: fc_stubs.c:21 <-
-       eva_main
-quicklz.c:432:[eva:garbled-mix:write] warning: Assigning imprecise value to tmp_2 because of misaligned read of addresses.
-stack: qlz_compress_core :: quicklz.c:770 <-
-       qlz_compress :: stream_compress.c:37 <-
-       main :: fc_stubs.c:21 <-
-       eva_main
-[eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
-  quicklz.c:432: misaligned read of addresses
-    (read in 68 statements, propagated through 47 statements)
-    garbled mix of &{__malloc_main_l19; __malloc_main_l24}
-  quicklz.c:419: misaligned write of addresses
-    (read in 14 statements, propagated through 15 statements)
-    garbled mix of &{__malloc_main_l24}
-  quicklz.c:117: misaligned read of addresses
-    (read in 8 statements, propagated through 7 statements)
-    garbled mix of &{__malloc_main_l19}
+[eva] quicklz.c:161: Warning: 
+  all target addresses were invalid. This path is assumed to be dead.
+  stack: fast_write :: quicklz.c:279 <-
+         qlz_compress_core :: quicklz.c:770 <-
+         qlz_compress :: stream_compress.c:37 <-
+         main :: fc_stubs.c:21 <-
+         eva_main
+[eva] quicklz.c:161: Warning: 
+  all target addresses were invalid. This path is assumed to be dead.
+  stack: fast_write :: quicklz.c:795 <-
+         qlz_compress :: stream_compress.c:37 <-
+         main :: fc_stubs.c:21 <-
+         eva_main
+[eva] quicklz.c:167: Warning: 
+  all target addresses were invalid. This path is assumed to be dead.
+  stack: fast_write :: quicklz.c:447 <-
+         qlz_compress_core :: quicklz.c:770 <-
+         qlz_compress :: stream_compress.c:37 <-
+         main :: fc_stubs.c:21 <-
+         eva_main
+[eva] quicklz.c:164: Warning: 
+  all target addresses were invalid. This path is assumed to be dead.
+  stack: fast_write :: quicklz.c:460 <-
+         qlz_compress_core :: quicklz.c:770 <-
+         qlz_compress :: stream_compress.c:37 <-
+         main :: fc_stubs.c:21 <-
+         eva_main
+[eva] quicklz.c:161: Warning: 
+  all target addresses were invalid. This path is assumed to be dead.
+  stack: fast_write :: quicklz.c:466 <-
+         qlz_compress_core :: quicklz.c:770 <-
+         qlz_compress :: stream_compress.c:37 <-
+         main :: fc_stubs.c:21 <-
+         eva_main
+[eva:garbled-mix:summary] Warning: 
+  Origins of garbled mix generated during analysis:
+    quicklz.c:769: imprecise merge of addresses
+      (read in 67 statements, propagated through 46 statements)
+      garbled mix of &{__malloc_main_l19; __malloc_main_l24}
+    quicklz.c:419: misaligned write of addresses
+      (read in 8 statements, propagated through 7 statements)
+      garbled mix of &{__malloc_main_l24}

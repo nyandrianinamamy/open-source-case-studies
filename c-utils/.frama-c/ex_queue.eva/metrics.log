@@ -1,22 +1,25 @@
-[metrics:eva:coverage] Eva coverage statistics
-=======================
-Syntactically reachable functions = 10 (out of 11)
-Semantically reached functions = 6
-Coverage estimation = 60.0% 
-
-Unreached functions (4) =
-  <src/queue.c>: q_first_node; q_free; q_free_alt; q_pop;
-[metrics:eva:unreached] References to non-analyzed functions
-------------------------------------
-Function main calls q_first_node (at examples/queue_example.c:62)
-Function main calls q_pop (at examples/queue_example.c:68)
-Function main calls q_free (at examples/queue_example.c:76)
-[metrics:eva:reached-stmts] Statements analyzed by Eva
---------------------------
-114 stmts in analyzed functions, 74 stmts analyzed (64.9%)
-q_init: 5 stmts out of 5 (100.0%)
-q_last_node: 2 stmts out of 2 (100.0%)
-q_num_elements: 2 stmts out of 2 (100.0%)
-eva_main: 12 stmts out of 13 (92.3%)
-q_push: 13 stmts out of 16 (81.2%)
-main: 40 stmts out of 76 (52.6%)
+[metrics:eva:coverage] 
+  Eva coverage statistics
+  =======================
+  Syntactically reachable functions = 10 (out of 11)
+  Semantically reached functions = 6
+  Coverage estimation = 60.0% 
+  
+  Unreached functions (4) =
+    <src/queue.c>: q_first_node; q_free; q_free_alt; q_pop;
+[metrics:eva:unreached] 
+  References to non-analyzed functions
+  ------------------------------------
+  Function main calls q_first_node (at examples/queue_example.c:62)
+  Function main calls q_pop (at examples/queue_example.c:68)
+  Function main calls q_free (at examples/queue_example.c:76)
+[metrics:eva:reached-stmts] 
+  Statements analyzed by Eva
+  --------------------------
+  114 stmts in analyzed functions, 74 stmts analyzed (64.9%)
+  q_init: 5 stmts out of 5 (100.0%)
+  q_last_node: 2 stmts out of 2 (100.0%)
+  q_num_elements: 2 stmts out of 2 (100.0%)
+  eva_main: 12 stmts out of 13 (92.3%)
+  q_push: 13 stmts out of 16 (81.2%)
+  main: 40 stmts out of 76 (52.6%)

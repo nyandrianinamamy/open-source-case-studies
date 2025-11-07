@@ -1,22 +1,25 @@
-[metrics:eva:coverage] Eva coverage statistics
-=======================
-Syntactically reachable functions = 8 (out of 11)
-Semantically reached functions = 6
-Coverage estimation = 75.0% 
-
-Unreached functions (2) =
-  <src/llist.c>: ll_free_alt; ll_num_elements;
-[metrics:eva:unreached] References to non-analyzed functions
-------------------------------------
-Function main calls ll_num_elements (at examples/linkedlist_example.c:70)
-Function main calls ll_num_elements (at examples/linkedlist_example.c:77)
-Function main calls ll_free_alt (at examples/linkedlist_example.c:79)
-[metrics:eva:reached-stmts] Statements analyzed by Eva
---------------------------
-135 stmts in analyzed functions, 75 stmts analyzed (55.6%)
-ll_first_node: 6 stmts out of 6 (100.0%)
-ll_init: 4 stmts out of 4 (100.0%)
-eva_main: 12 stmts out of 13 (92.3%)
-main: 35 stmts out of 60 (58.3%)
-ll_insert: 13 stmts out of 30 (43.3%)
-ll_remove: 5 stmts out of 22 (22.7%)
+[metrics:eva:coverage] 
+  Eva coverage statistics
+  =======================
+  Syntactically reachable functions = 8 (out of 11)
+  Semantically reached functions = 6
+  Coverage estimation = 75.0% 
+  
+  Unreached functions (2) =
+    <src/llist.c>: ll_free_alt; ll_num_elements;
+[metrics:eva:unreached] 
+  References to non-analyzed functions
+  ------------------------------------
+  Function main calls ll_num_elements (at examples/linkedlist_example.c:70)
+  Function main calls ll_num_elements (at examples/linkedlist_example.c:77)
+  Function main calls ll_free_alt (at examples/linkedlist_example.c:79)
+[metrics:eva:reached-stmts] 
+  Statements analyzed by Eva
+  --------------------------
+  135 stmts in analyzed functions, 75 stmts analyzed (55.6%)
+  ll_first_node: 6 stmts out of 6 (100.0%)
+  ll_init: 4 stmts out of 4 (100.0%)
+  eva_main: 12 stmts out of 13 (92.3%)
+  main: 35 stmts out of 60 (58.3%)
+  ll_insert: 13 stmts out of 30 (43.3%)
+  ll_remove: 5 stmts out of 22 (22.7%)

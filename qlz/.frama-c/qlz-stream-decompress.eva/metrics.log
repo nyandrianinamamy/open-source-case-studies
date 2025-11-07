@@ -1,20 +1,22 @@
-[metrics:eva:coverage] Eva coverage statistics
-=======================
-Syntactically reachable functions = 10 (out of 17)
-Semantically reached functions = 10
-Coverage estimation = 100.0%
-[metrics:eva:unreached] References to non-analyzed functions
-------------------------------------
-[metrics:eva:reached-stmts] Statements analyzed by Eva
---------------------------
-162 stmts in analyzed functions, 154 stmts analyzed (95.1%)
-eva_main: 13 stmts out of 13 (100.0%)
-main: 20 stmts out of 20 (100.0%)
-memcpy_up: 8 stmts out of 8 (100.0%)
-qlz_decompress_core: 61 stmts out of 61 (100.0%)
-qlz_size_compressed: 6 stmts out of 6 (100.0%)
-qlz_size_decompressed: 6 stmts out of 6 (100.0%)
-qlz_size_header: 5 stmts out of 5 (100.0%)
-qlz_decompress: 28 stmts out of 29 (96.6%)
-fast_read: 6 stmts out of 12 (50.0%)
-reset_table_decompress: 1 stmts out of 2 (50.0%)
+[metrics:eva:coverage] 
+  Eva coverage statistics
+  =======================
+  Syntactically reachable functions = 10 (out of 17)
+  Semantically reached functions = 4
+  Coverage estimation = 40.0% 
+  
+  Unreached functions (6) =
+    <quicklz.c>: memcpy_up; qlz_decompress; qlz_decompress_core;
+      qlz_size_decompressed; qlz_size_header; reset_table_decompress;
+[metrics:eva:unreached] 
+  References to non-analyzed functions
+  ------------------------------------
+  Function main calls qlz_decompress (at stream_decompress.c:43)
+[metrics:eva:reached-stmts] 
+  Statements analyzed by Eva
+  --------------------------
+  51 stmts in analyzed functions, 37 stmts analyzed (72.5%)
+  eva_main: 13 stmts out of 13 (100.0%)
+  main: 16 stmts out of 20 (80.0%)
+  qlz_size_compressed: 4 stmts out of 6 (66.7%)
+  fast_read: 4 stmts out of 12 (33.3%)

@@ -1,9 +1,13 @@
-sources/Lcd.h:32:[kernel:typing:no-proto] warning: Function Reset_Lcd is declared without prototype.
-Its formals will be inferred from actual arguments at first call.
-Declare it as Reset_Lcd(void) if the function does not take any parameters.
-sources/Lcd.h:34:[kernel:typing:incompatible-types-call] warning: implicit conversion between incompatible function types:
-void (*)(unsigned char )
-and
-int (*)(char , struct __file *)
-[kernel:libc:frama-c] warning: Unable to locate global __fc_stdout which should be in the Frama-C LibC. Correct specifications can't be generated.
-sources/main.c:570:[kernel:asm:clobber] warning: Clobber list contains "memory" argument. Assuming no side effects beyond those mentioned in operands.
+[kernel:typing:no-proto] sources/Lcd.h:32: Warning: 
+  Function Reset_Lcd is declared without prototype.
+  Its formals will be inferred from actual arguments at first call.
+  Declare it as Reset_Lcd(void) if the function does not take any parameters.
+[kernel:typing:incompatible-types-call] sources/Lcd.h:34: Warning: 
+  implicit conversion between incompatible function types:
+  void (*)(unsigned char )
+  and
+  int (*)(char , struct __file *)
+[kernel:libc:frama-c] Warning: 
+  Unable to locate global __fc_stdout which should be in the Frama-C LibC. Correct specifications can't be generated.
+[kernel:asm:clobber] sources/main.c:570: Warning: 
+  Clobber list contains "memory" argument. Assuming no side effects beyond those mentioned in operands.

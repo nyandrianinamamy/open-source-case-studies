@@ -1,22 +1,25 @@
-[metrics:eva:coverage] Eva coverage statistics
-=======================
-Syntactically reachable functions = 10 (out of 12)
-Semantically reached functions = 7
-Coverage estimation = 70.0% 
-
-Unreached functions (3) =
-  <src/dllist.c>: dll_free; dll_free_alt; dll_remove;
-[metrics:eva:unreached] References to non-analyzed functions
-------------------------------------
-Function main calls dll_remove (at examples/doublylinkedlist_example.c:74)
-Function main calls dll_free (at examples/doublylinkedlist_example.c:82)
-[metrics:eva:reached-stmts] Statements analyzed by Eva
---------------------------
-150 stmts in analyzed functions, 105 stmts analyzed (70.0%)
-dll_first_node: 2 stmts out of 2 (100.0%)
-dll_init: 5 stmts out of 5 (100.0%)
-dll_last_node: 2 stmts out of 2 (100.0%)
-dll_num_elements: 2 stmts out of 2 (100.0%)
-eva_main: 12 stmts out of 13 (92.3%)
-dll_insert: 42 stmts out of 50 (84.0%)
-main: 40 stmts out of 76 (52.6%)
+[metrics:eva:coverage] 
+  Eva coverage statistics
+  =======================
+  Syntactically reachable functions = 10 (out of 12)
+  Semantically reached functions = 7
+  Coverage estimation = 70.0% 
+  
+  Unreached functions (3) =
+    <src/dllist.c>: dll_free; dll_free_alt; dll_remove;
+[metrics:eva:unreached] 
+  References to non-analyzed functions
+  ------------------------------------
+  Function main calls dll_remove (at examples/doublylinkedlist_example.c:74)
+  Function main calls dll_free (at examples/doublylinkedlist_example.c:82)
+[metrics:eva:reached-stmts] 
+  Statements analyzed by Eva
+  --------------------------
+  150 stmts in analyzed functions, 105 stmts analyzed (70.0%)
+  dll_first_node: 2 stmts out of 2 (100.0%)
+  dll_init: 5 stmts out of 5 (100.0%)
+  dll_last_node: 2 stmts out of 2 (100.0%)
+  dll_num_elements: 2 stmts out of 2 (100.0%)
+  eva_main: 12 stmts out of 13 (92.3%)
+  dll_insert: 42 stmts out of 50 (84.0%)
+  main: 40 stmts out of 76 (52.6%)

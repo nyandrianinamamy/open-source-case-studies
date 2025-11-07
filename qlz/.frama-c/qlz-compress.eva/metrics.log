@@ -1,17 +1,25 @@
-[metrics:eva:coverage] Eva coverage statistics
-=======================
-Syntactically reachable functions = 9 (out of 20)
-Semantically reached functions = 9
-Coverage estimation = 100.0%
-[metrics:eva:reached-stmts] Statements analyzed by Eva
---------------------------
-229 stmts in analyzed functions, 219 stmts analyzed (95.6%)
-eva_main: 13 stmts out of 13 (100.0%)
-hash_func: 2 stmts out of 2 (100.0%)
-main: 17 stmts out of 17 (100.0%)
-qlz_compress_core: 115 stmts out of 115 (100.0%)
-reset_table_compress: 8 stmts out of 8 (100.0%)
-same: 10 stmts out of 10 (100.0%)
-qlz_compress: 37 stmts out of 38 (97.4%)
-fast_write: 11 stmts out of 14 (78.6%)
-fast_read: 6 stmts out of 12 (50.0%)
+[metrics:eva:coverage] 
+  Eva coverage statistics
+  =======================
+  Syntactically reachable functions = 9 (out of 20)
+  Semantically reached functions = 8
+  Coverage estimation = 88.9% 
+  
+  Unreached functions (1) =
+    <quicklz.c>: same;
+[metrics:eva:unreached] 
+  References to non-analyzed functions
+  ------------------------------------
+  Function qlz_compress_core calls same (at quicklz.c:299)
+[metrics:eva:reached-stmts] 
+  Statements analyzed by Eva
+  --------------------------
+  219 stmts in analyzed functions, 117 stmts analyzed (53.4%)
+  eva_main: 13 stmts out of 13 (100.0%)
+  hash_func: 2 stmts out of 2 (100.0%)
+  main: 17 stmts out of 17 (100.0%)
+  reset_table_compress: 8 stmts out of 8 (100.0%)
+  fast_read: 6 stmts out of 12 (50.0%)
+  qlz_compress_core: 53 stmts out of 115 (46.1%)
+  qlz_compress: 16 stmts out of 38 (42.1%)
+  fast_write: 2 stmts out of 14 (14.3%)

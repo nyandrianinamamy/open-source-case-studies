@@ -1,0 +1,37 @@
+[nonterm:stmt] miniz_zip.c:739: Warning: 
+  non-terminating statement
+  stack 1: mz_zip_reader_read_central_dir :: miniz_zip.c:1028 <-
+           mz_zip_reader_init_file_v2 :: miniz_zip.c:980 <-
+           mz_zip_reader_init_file :: examples/example2.c:83 <-
+           main :: stubs.c:21 <-
+           eva_main
+  stack 2: mz_zip_reader_read_central_dir :: miniz_zip.c:1028 <-
+           mz_zip_reader_init_file_v2 :: miniz_zip.c:980 <-
+           mz_zip_reader_init_file :: examples/example2.c:121 <-
+           main :: stubs.c:21 <-
+           eva_main
+  stack 3: mz_zip_reader_read_central_dir :: miniz_zip.c:1028 <-
+           mz_zip_reader_init_file_v2 :: miniz_zip.c:4410 <-
+           mz_zip_add_mem_to_archive_file_in_place_v2 :: miniz_zip.c:4365 <-
+           mz_zip_add_mem_to_archive_file_in_place :: examples/example2.c:73 <-
+           main :: stubs.c:21 <-
+           eva_main
+[nonterm:stmt] miniz_zip.c:1083: Warning: 
+  non-terminating statement
+  stack: mz_zip_get_cdh :: miniz_zip.c:4709 <-
+         mz_zip_reader_file_stat :: examples/example2.c:94 <-
+         main :: stubs.c:21 <-
+         eva_main
+[nonterm:stmt] miniz_zip.c:1337: Warning: 
+  non-terminating statement
+  stack: mz_zip_locate_file_binary_search :: miniz_zip.c:1381 <-
+         mz_zip_reader_locate_file_v2 :: miniz_zip.c:1636 <-
+         mz_zip_reader_extract_file_to_heap :: examples/example2.c:134 <-
+         main :: stubs.c:21 <-
+         eva_main
+[nonterm:stmt] miniz_zip.c:1395: Warning: 
+  non-terminating statement
+  stack: mz_zip_reader_locate_file_v2 :: miniz_zip.c:1636 <-
+         mz_zip_reader_extract_file_to_heap :: examples/example2.c:134 <-
+         main :: stubs.c:21 <-
+         eva_main

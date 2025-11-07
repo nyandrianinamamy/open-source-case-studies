@@ -1,4 +1,6 @@
 directory	file	line	function	property kind	status	property
 .	provenance_via_io_uintptr_t_global.c	10	main	precondition of rewind	Unknown	valid_stream: \valid(stream)
+.	provenance_via_io_uintptr_t_global.c	16	main	pointer_alignment	Unknown	\aligned((void *)k,alignof(int))
 .	provenance_via_io_uintptr_t_global.c	18	main	mem_access	Unknown	\valid(r)
+.	provenance_via_io_uintptr_t_global.c	18	main	pointer_alignment	Unknown	\aligned(r,alignof(int))
 FRAMAC_SHARE/libc	stdio.h	464	rewind	precondition	Unknown	valid_stream: \valid(stream)

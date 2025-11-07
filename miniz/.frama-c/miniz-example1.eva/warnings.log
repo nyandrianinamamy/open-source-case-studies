@@ -1,18 +1,25 @@
-miniz.c:335:[eva:locals-escaping] warning: locals {in_bytes} escaping the scope of mz_deflate through __malloc_miniz_def_alloc_func_l169
-miniz.c:335:[eva:locals-escaping] warning: locals {out_bytes} escaping the scope of mz_deflate through __malloc_miniz_def_alloc_func_l169
-miniz.c:335:[eva:locals-escaping] warning: locals {in_bytes, out_bytes} escaping the scope of mz_deflate through stream
-miniz.c:335:[eva:locals-escaping] warning: locals {in_bytes, out_bytes} escaping the scope of mz_deflate through __malloc_main_l34
-miniz.c:335:[eva:locals-escaping] warning: locals {in_bytes, out_bytes} escaping the scope of mz_deflate through __malloc_w_miniz_def_alloc_func_l169
-miniz.c:335:[eva:locals-escaping] warning: locals {in_bytes, out_bytes} escaping the scope of mz_deflate through __malloc_w_miniz_def_alloc_func_l169_0
-[eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
-  miniz_tdef.c:1042: imprecise merge of addresses
-    (read in 1325 statements, propagated through 904 statements)
-    garbled mix of &{"Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.";
-                     in_bytes; out_bytes; __malloc_main_l34;
-                     __malloc_main_l35; __malloc_w_miniz_def_alloc_func_l169;
-                     __malloc_w_miniz_def_alloc_func_l169_0}
-  miniz_tdef.c:1060: imprecise merge of addresses
-    (read in 9 statements, propagated through 6 statements)
-    garbled mix of &{"Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.";
-                     in_bytes; out_bytes; __malloc_main_l34;
-                     __malloc_w_miniz_def_alloc_func_l169}
+[eva:locals-escaping] miniz.c:335: Warning: 
+  locals {in_bytes} escaping the scope of mz_deflate through __malloc_miniz_def_alloc_func_l169
+[eva:locals-escaping] miniz.c:335: Warning: 
+  locals {out_bytes} escaping the scope of mz_deflate through __malloc_miniz_def_alloc_func_l169
+[eva:locals-escaping] miniz.c:335: Warning: 
+  locals {in_bytes, out_bytes} escaping the scope of mz_deflate through stream
+[eva:locals-escaping] miniz.c:335: Warning: 
+  locals {in_bytes, out_bytes} escaping the scope of mz_deflate through __malloc_main_l34
+[eva:locals-escaping] miniz.c:335: Warning: 
+  locals {in_bytes, out_bytes} escaping the scope of mz_deflate through __malloc_w_miniz_def_alloc_func_l169
+[eva:locals-escaping] miniz.c:335: Warning: 
+  locals {in_bytes, out_bytes} escaping the scope of mz_deflate through __malloc_w_miniz_def_alloc_func_l169_0
+[eva:garbled-mix:summary] Warning: 
+  Origins of garbled mix generated during analysis:
+    miniz_tdef.c:1042: imprecise merge of addresses
+      (read in 1325 statements, propagated through 904 statements)
+      garbled mix of &{"Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.";
+                       in_bytes; out_bytes; __malloc_main_l34;
+                       __malloc_main_l35; __malloc_w_miniz_def_alloc_func_l169;
+                       __malloc_w_miniz_def_alloc_func_l169_0}
+    miniz_tdef.c:1060: imprecise merge of addresses
+      (read in 9 statements, propagated through 6 statements)
+      garbled mix of &{"Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.Good morning Dr. Chandra. This is Hal. I am ready for my first lesson.";
+                       in_bytes; out_bytes; __malloc_main_l34;
+                       __malloc_w_miniz_def_alloc_func_l169}

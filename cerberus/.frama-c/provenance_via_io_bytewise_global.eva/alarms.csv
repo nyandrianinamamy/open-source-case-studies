@@ -1,5 +1,6 @@
 directory	file	line	function	property kind	status	property
 .	provenance_via_io_bytewise_global.c	8	main	precondition of fwrite	Unknown	valid_stream: \valid(stream)
 .	provenance_via_io_bytewise_global.c	14	main	initialization	Unknown	\initialized(&r)
+.	provenance_via_io_bytewise_global.c	14	main	pointer_alignment	Unknown	\aligned(r,alignof(int))
 .	provenance_via_io_bytewise_global.c	16	main	mem_access	Invalid or unreachable	\valid(r)
 FRAMAC_SHARE/libc	stdio.h	393	fwrite	precondition	Unknown	valid_stream: \valid(stream)

@@ -1,125 +1,128 @@
-[metrics:eva:coverage] Eva coverage statistics
-=======================
-Syntactically reachable functions = 83 (out of 83)
-Semantically reached functions = 5
-Coverage estimation = 6.0% 
-
-Unreached functions (78) =
-  <src/snprintf.c>: conv_flags; decimal; exponent; floating; floattoa; hex;
-    integral; inttoa; log_10; octal; pow_10; strings; strtoi; 
-  <src/tests-snprintf.c>: test_buffer_length_0; test_buffer_length_2;
-    test_buffer_length_3; test_buffer_null; test_char_dec;
-    test_char_dec_min_and_max; test_char_dec_negative; test_chars;
-    test_counters; test_double_e; test_double_e_precision_0;
-    test_double_e_precision_2_3; test_double_e_zero; test_double_f;
-    test_double_f_precision_0; test_double_f_precision_2_3; test_double_g;
-    test_double_g_precision_0; test_double_g_precision_2_7; test_int_dec;
-    test_int_dec_min_and_max; test_int_dec_negative;
-    test_int_dec_precision_0; test_int_dec_random; test_int_dec_width_10;
-    test_int_dec_width_2; test_int_dec_width_20_precision_10;
-    test_int_dec_width_31_and_0_padded; test_int_dec_width_31_and_align_left;
-    test_int_dec_width_as_parameter; test_int_hex; test_int_hex_negative;
-    test_int_hex_precision_0; test_int_hex_uppercase; test_long_dec;
-    test_long_hex; test_long_hex_alternative; test_long_hex_width_as_type;
-    test_long_long_dec; test_long_long_dec_max; test_long_long_dec_min;
-    test_long_long_hex; test_long_long_hex_alternative;
-    test_long_long_hex_max; test_long_long_hex_width_as_type; test_percent;
-    test_pointer; test_pointer_null; test_short_dec;
-    test_short_dec_min_and_max; test_short_dec_negative; test_string;
-    test_string_empty; test_string_precision_as_parameter;
-    test_string_too_long; test_string_width_20;
-    test_string_width_20_and_align_left; test_string_width_20_precision_2;
-    test_string_width_20_precision_20;
-    test_string_width_and_precision_as_parameter;
-    test_string_width_as_parameter; test_string_width_as_parameter_negative;
-    test_string_with_less_than_input;
-    test_string_with_less_than_input_precision_equal_width; test_strings;
-[metrics:eva:unreached] References to non-analyzed functions
-------------------------------------
-Function my_vsnprintf calls conv_flags (at src/snprintf.c:798)
-Function my_vsnprintf calls floating (at src/snprintf.c:812)
-Function my_vsnprintf calls exponent (at src/snprintf.c:821)
-Function my_vsnprintf calls log_10 (at src/snprintf.c:831)
-Function my_vsnprintf calls floating (at src/snprintf.c:836)
-Function my_vsnprintf calls exponent (at src/snprintf.c:838)
-Function my_vsnprintf calls decimal (at src/snprintf.c:847)
-Function my_vsnprintf calls decimal (at src/snprintf.c:856)
-Function my_vsnprintf calls octal (at src/snprintf.c:864)
-Function my_vsnprintf calls hex (at src/snprintf.c:873)
-Function my_vsnprintf calls strings (at src/snprintf.c:887)
-Function my_vsnprintf calls strings (at src/snprintf.c:895)
-Function my_vsnprintf calls hex (at src/snprintf.c:897)
-Function my_vsnprintf calls conv_flags (at src/snprintf.c:945)
-Function run calls test_buffer_null (at src/tests-snprintf.c:440)
-Function run calls test_buffer_length_0 (at src/tests-snprintf.c:441)
-Function run calls test_buffer_length_2 (at src/tests-snprintf.c:443)
-Function run calls test_buffer_length_3 (at src/tests-snprintf.c:444)
-Function run calls test_char_dec (at src/tests-snprintf.c:446)
-Function run calls test_char_dec_min_and_max (at src/tests-snprintf.c:447)
-Function run calls test_char_dec_negative (at src/tests-snprintf.c:448)
-Function run calls test_short_dec (at src/tests-snprintf.c:450)
-Function run calls test_short_dec_min_and_max (at src/tests-snprintf.c:451)
-Function run calls test_short_dec_negative (at src/tests-snprintf.c:452)
-Function run calls test_int_dec (at src/tests-snprintf.c:454)
-Function run calls test_int_dec_min_and_max (at src/tests-snprintf.c:455)
-Function run calls test_int_dec_negative (at src/tests-snprintf.c:456)
-Function run calls test_int_dec_width_10 (at src/tests-snprintf.c:457)
-Function run calls test_int_dec_width_31_and_0_padded (at src/tests-snprintf.c:458)
-Function run calls test_int_dec_width_31_and_align_left (at src/tests-snprintf.c:459)
-Function run calls test_int_dec_width_2 (at src/tests-snprintf.c:460)
-Function run calls test_int_dec_width_20_precision_10 (at src/tests-snprintf.c:461)
-Function run calls test_int_dec_precision_0 (at src/tests-snprintf.c:462)
-Function run calls test_int_dec_width_as_parameter (at src/tests-snprintf.c:463)
-Function run calls test_int_dec_random (at src/tests-snprintf.c:464)
-Function run calls test_int_hex (at src/tests-snprintf.c:466)
-Function run calls test_int_hex_uppercase (at src/tests-snprintf.c:467)
-Function run calls test_int_hex_negative (at src/tests-snprintf.c:468)
-Function run calls test_int_hex_precision_0 (at src/tests-snprintf.c:469)
-Function run calls test_long_dec (at src/tests-snprintf.c:471)
-Function run calls test_long_hex (at src/tests-snprintf.c:472)
-Function run calls test_long_hex_alternative (at src/tests-snprintf.c:473)
-Function run calls test_long_hex_width_as_type (at src/tests-snprintf.c:474)
-Function run calls test_long_long_dec (at src/tests-snprintf.c:476)
-Function run calls test_long_long_dec_min (at src/tests-snprintf.c:477)
-Function run calls test_long_long_dec_max (at src/tests-snprintf.c:478)
-Function run calls test_long_long_hex (at src/tests-snprintf.c:479)
-Function run calls test_long_long_hex_alternative (at src/tests-snprintf.c:480)
-Function run calls test_long_long_hex_width_as_type (at src/tests-snprintf.c:481)
-Function run calls test_long_long_hex_max (at src/tests-snprintf.c:482)
-Function run calls test_double_f (at src/tests-snprintf.c:484)
-Function run calls test_double_f_precision_0 (at src/tests-snprintf.c:485)
-Function run calls test_double_f_precision_2_3 (at src/tests-snprintf.c:486)
-Function run calls test_double_e (at src/tests-snprintf.c:487)
-Function run calls test_double_e_zero (at src/tests-snprintf.c:488)
-Function run calls test_double_e_precision_0 (at src/tests-snprintf.c:489)
-Function run calls test_double_e_precision_2_3 (at src/tests-snprintf.c:490)
-Function run calls test_double_g (at src/tests-snprintf.c:491)
-Function run calls test_double_g_precision_0 (at src/tests-snprintf.c:492)
-Function run calls test_double_g_precision_2_7 (at src/tests-snprintf.c:493)
-Function run calls test_string (at src/tests-snprintf.c:495)
-Function run calls test_string_empty (at src/tests-snprintf.c:496)
-Function run calls test_string_width_20 (at src/tests-snprintf.c:497)
-Function run calls test_string_width_20_and_align_left (at src/tests-snprintf.c:498)
-Function run calls test_string_width_20_precision_2 (at src/tests-snprintf.c:499)
-Function run calls test_string_width_20_precision_20 (at src/tests-snprintf.c:500)
-Function run calls test_string_with_less_than_input (at src/tests-snprintf.c:501)
-Function run calls test_string_with_less_than_input_precision_equal_width (at src/tests-snprintf.c:502)
-Function run calls test_string_width_as_parameter (at src/tests-snprintf.c:503)
-Function run calls test_string_precision_as_parameter (at src/tests-snprintf.c:504)
-Function run calls test_string_width_and_precision_as_parameter (at src/tests-snprintf.c:505)
-Function run calls test_string_width_as_parameter_negative (at src/tests-snprintf.c:506)
-Function run calls test_string_too_long (at src/tests-snprintf.c:507)
-Function run calls test_strings (at src/tests-snprintf.c:509)
-Function run calls test_chars (at src/tests-snprintf.c:510)
-Function run calls test_pointer_null (at src/tests-snprintf.c:512)
-Function run calls test_pointer (at src/tests-snprintf.c:513)
-Function run calls test_percent (at src/tests-snprintf.c:515)
-Function run calls test_counters (at src/tests-snprintf.c:516)
-[metrics:eva:reached-stmts] Statements analyzed by Eva
---------------------------
-880 stmts in analyzed functions, 235 stmts analyzed (26.7%)
-main: 2 stmts out of 2 (100.0%)
-my_snprintf: 3 stmts out of 3 (100.0%)
-test_buffer_length_1: 13 stmts out of 22 (59.1%)
-run: 203 stmts out of 531 (38.2%)
-my_vsnprintf: 14 stmts out of 322 (4.3%)
+[metrics:eva:coverage] 
+  Eva coverage statistics
+  =======================
+  Syntactically reachable functions = 83 (out of 83)
+  Semantically reached functions = 5
+  Coverage estimation = 6.0% 
+  
+  Unreached functions (78) =
+    <src/snprintf.c>: conv_flags; decimal; exponent; floating; floattoa; hex;
+      integral; inttoa; log_10; octal; pow_10; strings; strtoi; 
+    <src/tests-snprintf.c>: test_buffer_length_0; test_buffer_length_2;
+      test_buffer_length_3; test_buffer_null; test_char_dec;
+      test_char_dec_min_and_max; test_char_dec_negative; test_chars;
+      test_counters; test_double_e; test_double_e_precision_0;
+      test_double_e_precision_2_3; test_double_e_zero; test_double_f;
+      test_double_f_precision_0; test_double_f_precision_2_3; test_double_g;
+      test_double_g_precision_0; test_double_g_precision_2_7; test_int_dec;
+      test_int_dec_min_and_max; test_int_dec_negative;
+      test_int_dec_precision_0; test_int_dec_random; test_int_dec_width_10;
+      test_int_dec_width_2; test_int_dec_width_20_precision_10;
+      test_int_dec_width_31_and_0_padded; test_int_dec_width_31_and_align_left;
+      test_int_dec_width_as_parameter; test_int_hex; test_int_hex_negative;
+      test_int_hex_precision_0; test_int_hex_uppercase; test_long_dec;
+      test_long_hex; test_long_hex_alternative; test_long_hex_width_as_type;
+      test_long_long_dec; test_long_long_dec_max; test_long_long_dec_min;
+      test_long_long_hex; test_long_long_hex_alternative;
+      test_long_long_hex_max; test_long_long_hex_width_as_type; test_percent;
+      test_pointer; test_pointer_null; test_short_dec;
+      test_short_dec_min_and_max; test_short_dec_negative; test_string;
+      test_string_empty; test_string_precision_as_parameter;
+      test_string_too_long; test_string_width_20;
+      test_string_width_20_and_align_left; test_string_width_20_precision_2;
+      test_string_width_20_precision_20;
+      test_string_width_and_precision_as_parameter;
+      test_string_width_as_parameter; test_string_width_as_parameter_negative;
+      test_string_with_less_than_input;
+      test_string_with_less_than_input_precision_equal_width; test_strings;
+[metrics:eva:unreached] 
+  References to non-analyzed functions
+  ------------------------------------
+  Function my_vsnprintf calls conv_flags (at src/snprintf.c:798)
+  Function my_vsnprintf calls floating (at src/snprintf.c:812)
+  Function my_vsnprintf calls exponent (at src/snprintf.c:821)
+  Function my_vsnprintf calls log_10 (at src/snprintf.c:831)
+  Function my_vsnprintf calls floating (at src/snprintf.c:836)
+  Function my_vsnprintf calls exponent (at src/snprintf.c:838)
+  Function my_vsnprintf calls decimal (at src/snprintf.c:847)
+  Function my_vsnprintf calls decimal (at src/snprintf.c:856)
+  Function my_vsnprintf calls octal (at src/snprintf.c:864)
+  Function my_vsnprintf calls hex (at src/snprintf.c:873)
+  Function my_vsnprintf calls strings (at src/snprintf.c:887)
+  Function my_vsnprintf calls strings (at src/snprintf.c:895)
+  Function my_vsnprintf calls hex (at src/snprintf.c:897)
+  Function my_vsnprintf calls conv_flags (at src/snprintf.c:945)
+  Function run calls test_buffer_null (at src/tests-snprintf.c:440)
+  Function run calls test_buffer_length_0 (at src/tests-snprintf.c:441)
+  Function run calls test_buffer_length_2 (at src/tests-snprintf.c:443)
+  Function run calls test_buffer_length_3 (at src/tests-snprintf.c:444)
+  Function run calls test_char_dec (at src/tests-snprintf.c:446)
+  Function run calls test_char_dec_min_and_max (at src/tests-snprintf.c:447)
+  Function run calls test_char_dec_negative (at src/tests-snprintf.c:448)
+  Function run calls test_short_dec (at src/tests-snprintf.c:450)
+  Function run calls test_short_dec_min_and_max (at src/tests-snprintf.c:451)
+  Function run calls test_short_dec_negative (at src/tests-snprintf.c:452)
+  Function run calls test_int_dec (at src/tests-snprintf.c:454)
+  Function run calls test_int_dec_min_and_max (at src/tests-snprintf.c:455)
+  Function run calls test_int_dec_negative (at src/tests-snprintf.c:456)
+  Function run calls test_int_dec_width_10 (at src/tests-snprintf.c:457)
+  Function run calls test_int_dec_width_31_and_0_padded (at src/tests-snprintf.c:458)
+  Function run calls test_int_dec_width_31_and_align_left (at src/tests-snprintf.c:459)
+  Function run calls test_int_dec_width_2 (at src/tests-snprintf.c:460)
+  Function run calls test_int_dec_width_20_precision_10 (at src/tests-snprintf.c:461)
+  Function run calls test_int_dec_precision_0 (at src/tests-snprintf.c:462)
+  Function run calls test_int_dec_width_as_parameter (at src/tests-snprintf.c:463)
+  Function run calls test_int_dec_random (at src/tests-snprintf.c:464)
+  Function run calls test_int_hex (at src/tests-snprintf.c:466)
+  Function run calls test_int_hex_uppercase (at src/tests-snprintf.c:467)
+  Function run calls test_int_hex_negative (at src/tests-snprintf.c:468)
+  Function run calls test_int_hex_precision_0 (at src/tests-snprintf.c:469)
+  Function run calls test_long_dec (at src/tests-snprintf.c:471)
+  Function run calls test_long_hex (at src/tests-snprintf.c:472)
+  Function run calls test_long_hex_alternative (at src/tests-snprintf.c:473)
+  Function run calls test_long_hex_width_as_type (at src/tests-snprintf.c:474)
+  Function run calls test_long_long_dec (at src/tests-snprintf.c:476)
+  Function run calls test_long_long_dec_min (at src/tests-snprintf.c:477)
+  Function run calls test_long_long_dec_max (at src/tests-snprintf.c:478)
+  Function run calls test_long_long_hex (at src/tests-snprintf.c:479)
+  Function run calls test_long_long_hex_alternative (at src/tests-snprintf.c:480)
+  Function run calls test_long_long_hex_width_as_type (at src/tests-snprintf.c:481)
+  Function run calls test_long_long_hex_max (at src/tests-snprintf.c:482)
+  Function run calls test_double_f (at src/tests-snprintf.c:484)
+  Function run calls test_double_f_precision_0 (at src/tests-snprintf.c:485)
+  Function run calls test_double_f_precision_2_3 (at src/tests-snprintf.c:486)
+  Function run calls test_double_e (at src/tests-snprintf.c:487)
+  Function run calls test_double_e_zero (at src/tests-snprintf.c:488)
+  Function run calls test_double_e_precision_0 (at src/tests-snprintf.c:489)
+  Function run calls test_double_e_precision_2_3 (at src/tests-snprintf.c:490)
+  Function run calls test_double_g (at src/tests-snprintf.c:491)
+  Function run calls test_double_g_precision_0 (at src/tests-snprintf.c:492)
+  Function run calls test_double_g_precision_2_7 (at src/tests-snprintf.c:493)
+  Function run calls test_string (at src/tests-snprintf.c:495)
+  Function run calls test_string_empty (at src/tests-snprintf.c:496)
+  Function run calls test_string_width_20 (at src/tests-snprintf.c:497)
+  Function run calls test_string_width_20_and_align_left (at src/tests-snprintf.c:498)
+  Function run calls test_string_width_20_precision_2 (at src/tests-snprintf.c:499)
+  Function run calls test_string_width_20_precision_20 (at src/tests-snprintf.c:500)
+  Function run calls test_string_with_less_than_input (at src/tests-snprintf.c:501)
+  Function run calls test_string_with_less_than_input_precision_equal_width (at src/tests-snprintf.c:502)
+  Function run calls test_string_width_as_parameter (at src/tests-snprintf.c:503)
+  Function run calls test_string_precision_as_parameter (at src/tests-snprintf.c:504)
+  Function run calls test_string_width_and_precision_as_parameter (at src/tests-snprintf.c:505)
+  Function run calls test_string_width_as_parameter_negative (at src/tests-snprintf.c:506)
+  Function run calls test_string_too_long (at src/tests-snprintf.c:507)
+  Function run calls test_strings (at src/tests-snprintf.c:509)
+  Function run calls test_chars (at src/tests-snprintf.c:510)
+  Function run calls test_pointer_null (at src/tests-snprintf.c:512)
+  Function run calls test_pointer (at src/tests-snprintf.c:513)
+  Function run calls test_percent (at src/tests-snprintf.c:515)
+  Function run calls test_counters (at src/tests-snprintf.c:516)
+[metrics:eva:reached-stmts] 
+  Statements analyzed by Eva
+  --------------------------
+  880 stmts in analyzed functions, 235 stmts analyzed (26.7%)
+  main: 2 stmts out of 2 (100.0%)
+  my_snprintf: 3 stmts out of 3 (100.0%)
+  test_buffer_length_1: 13 stmts out of 22 (59.1%)
+  run: 203 stmts out of 531 (38.2%)
+  my_vsnprintf: 14 stmts out of 322 (4.3%)

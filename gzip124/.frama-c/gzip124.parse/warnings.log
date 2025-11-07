@@ -1,21 +1,31 @@
-getopt.c:180:[kernel:typing:no-proto] warning: Function getenv is declared without prototype.
-Its formals will be inferred from actual arguments at first call.
-Declare it as getenv(void) if the function does not take any parameters.
-gzip.c:448:[kernel:typing:incompatible-types-call] warning: implicit conversion between incompatible function types:
-void (*)(void)
-and
-void (*)(int )
-gzip.c:452:[kernel:typing:incompatible-types-call] warning: implicit conversion between incompatible function types:
-void (*)(void)
-and
-void (*)(int )
-gzip.c:457:[kernel:typing:incompatible-types-call] warning: implicit conversion between incompatible function types:
-void (*)(void)
-and
-void (*)(int )
-gzip.c:1207:[kernel:typing:variadic] warning: Incorrect type for argument 5. The argument will be cast from int to unsigned int.
-gzip.c:1348:[kernel:typing:variadic] warning: Incorrect type for argument 2. The argument will be cast from long to unsigned long.
-gzip.c:1348:[kernel:typing:variadic] warning: Incorrect type for argument 3. The argument will be cast from long to unsigned long.
-unlzw.c:218:[kernel:typing:variadic] warning: Incorrect type for argument 5. The argument will be cast from int to unsigned int.
-unzip.c:134:[kernel:typing:variadic] warning: Incorrect type for argument 3. The argument will be cast from ulg to long.
-unzip.c:134:[kernel:typing:variadic] warning: Incorrect type for argument 4. The argument will be cast from unsigned long to long.
+[kernel:typing:no-proto] getopt.c:180: Warning: 
+  Function getenv is declared without prototype.
+  Its formals will be inferred from actual arguments at first call.
+  Declare it as getenv(void) if the function does not take any parameters.
+[kernel:typing:incompatible-types-call] gzip.c:448: Warning: 
+  implicit conversion between incompatible function types:
+  void (*)(void)
+  and
+  void (*)(int )
+[kernel:typing:incompatible-types-call] gzip.c:452: Warning: 
+  implicit conversion between incompatible function types:
+  void (*)(void)
+  and
+  void (*)(int )
+[kernel:typing:incompatible-types-call] gzip.c:457: Warning: 
+  implicit conversion between incompatible function types:
+  void (*)(void)
+  and
+  void (*)(int )
+[kernel:typing:variadic] gzip.c:1207: Warning: 
+  Incorrect type for argument 5. The argument will be cast from int to unsigned int.
+[kernel:typing:variadic] gzip.c:1348: Warning: 
+  Incorrect type for argument 2. The argument will be cast from long to unsigned long.
+[kernel:typing:variadic] gzip.c:1348: Warning: 
+  Incorrect type for argument 3. The argument will be cast from long to unsigned long.
+[kernel:typing:variadic] unlzw.c:218: Warning: 
+  Incorrect type for argument 5. The argument will be cast from int to unsigned int.
+[kernel:typing:variadic] unzip.c:134: Warning: 
+  Incorrect type for argument 3. The argument will be cast from ulg to long.
+[kernel:typing:variadic] unzip.c:134: Warning: 
+  Incorrect type for argument 4. The argument will be cast from unsigned long to long.

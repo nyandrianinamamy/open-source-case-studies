@@ -1,9 +1,12 @@
-klw-itp14-1.c:4:[eva:garbled-mix:write] warning: Assigning imprecise value to *tmp because of misaligned read of addresses.
-stack: my_memcpy :: klw-itp14-1.c:8 <- main
-klw-itp14-1.c:9:[eva:garbled-mix:write] warning: Assigning imprecise value to __retres
-because of misaligned read of addresses.
-stack: main
-[eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
-  klw-itp14-1.c:4: misaligned read of addresses
-    (read in 1 statement, propagated through 1 statement) garbled mix of &
-    {s}
+[eva:garbled-mix:write] klw-itp14-1.c:4: Warning: 
+  Assigning imprecise value to *tmp because of misaligned read of addresses.
+  stack: my_memcpy :: klw-itp14-1.c:8 <- main
+[eva:garbled-mix:write] klw-itp14-1.c:9: Warning: 
+  Assigning imprecise value to __retres
+  because of misaligned read of addresses.
+  stack: main
+[eva:garbled-mix:summary] Warning: 
+  Origins of garbled mix generated during analysis:
+    klw-itp14-1.c:4: misaligned read of addresses
+      (read in 1 statement, propagated through 1 statement) garbled mix of &
+      {s}

@@ -1,9 +1,12 @@
-pointer_copy_user_ctrlflow_bitwise.c:10:[eva:garbled-mix:write] warning: Assigning imprecise value to bit
-because of arithmetic operation on addresses.
-stack: main
-pointer_copy_user_ctrlflow_bitwise.c:17:[eva] warning: all target addresses were invalid. This path is assumed to be dead.
-stack: main
-[eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
-  pointer_copy_user_ctrlflow_bitwise.c:10: arithmetic operation on addresses
-    (read in 1 statement, propagated through 1 statement) garbled mix of &
-    {x}
+[eva:garbled-mix:write] pointer_copy_user_ctrlflow_bitwise.c:10: Warning: 
+  Assigning imprecise value to bit
+  because of arithmetic operation on addresses.
+  stack: main
+[eva] pointer_copy_user_ctrlflow_bitwise.c:17: Warning: 
+  all target addresses were invalid. This path is assumed to be dead.
+  stack: main
+[eva:garbled-mix:summary] Warning: 
+  Origins of garbled mix generated during analysis:
+    pointer_copy_user_ctrlflow_bitwise.c:10: arithmetic operation on addresses
+      (read in 1 statement, propagated through 1 statement) garbled mix of &
+      {x}

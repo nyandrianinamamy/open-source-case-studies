@@ -3,6 +3,13 @@ sw/airborne/autopilot	estimator.c	116	estimator_update_state_infrared	is_nan	Unk
 sw/airborne/autopilot	estimator.c	118	estimator_update_state_infrared	is_nan	Unknown	¬\is_NaN(\mul_float(rad_of_ir, (float)ir_pitch))
 sw/airborne/autopilot	estimator.c	158	estimator_update_ir_estim	is_nan	Unknown	¬\is_NaN(\div_float(estimator_update_ir_estim_sum_xy, estimator_update_ir_estim_sum_xx))
 sw/airborne/autopilot	estimator.c	166	estimator_update_ir_estim	is_nan	Unknown	¬\is_NaN(\mul_double(\mul_double((double)100., (double)estimator_rad_of_ir), (double)init_ir2))
+sw/airborne/autopilot	gps_ubx.c	105	parse_gps_msg	pointer_alignment	Unknown	\aligned(&ubx_msg_buf[4],alignof(int32_t))
+sw/airborne/autopilot	gps_ubx.c	106	parse_gps_msg	pointer_alignment	Unknown	\aligned(&ubx_msg_buf[8],alignof(int32_t))
+sw/airborne/autopilot	gps_ubx.c	107	parse_gps_msg	pointer_alignment	Unknown	\aligned(&ubx_msg_buf[12],alignof(int32_t))
+sw/airborne/autopilot	gps_ubx.c	111	parse_gps_msg	pointer_alignment	Unknown	\aligned(&ubx_msg_buf[20],alignof(uint32_t))
+sw/airborne/autopilot	gps_ubx.c	112	parse_gps_msg	pointer_alignment	Unknown	\aligned(&ubx_msg_buf[12],alignof(int32_t))
+sw/airborne/autopilot	gps_ubx.c	113	parse_gps_msg	pointer_alignment	Unknown	\aligned(&ubx_msg_buf[24],alignof(int32_t))
+sw/airborne/autopilot	gps_ubx.c	114	parse_gps_msg	pointer_alignment	Unknown	\aligned(&ubx_msg_buf[0],alignof(uint32_t))
 sw/airborne/autopilot	gps_ubx.c	242	parse_ubx	index_bound	Unknown	ubx_msg_idx < 255
 sw/airborne/autopilot	main.c	122	ground_calibrate__fc_inline	index_bound	Unknown	tx_tail < 255
 sw/airborne/autopilot	main.c	130	ground_calibrate__fc_inline	index_bound	Unknown	tx_tail < 255

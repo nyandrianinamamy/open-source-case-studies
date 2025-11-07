@@ -1,37 +1,48 @@
-kgflags.h:522:[eva:garbled-mix:write] warning: Assigning imprecise value to __retres
-because of misaligned read of addresses.
-stack: kgflags_string_array_get_item :: examples/full_api.c:41 <-
-       main :: fc_stubs.c:21 <-
-       eva_main
-kgflags.h:533:[eva:garbled-mix:write] warning: Assigning imprecise value to str because of misaligned read of addresses.
-stack: kgflags_int_array_get_item :: examples/full_api.c:46 <-
-       main :: fc_stubs.c:21 <-
-       eva_main
-kgflags.h:550:[eva:garbled-mix:write] warning: Assigning imprecise value to str because of misaligned read of addresses.
-stack: kgflags_double_array_get_item :: examples/full_api.c:51 <-
-       main :: fc_stubs.c:21 <-
-       eva_main
-fc_stubs.c:21:[eva:locals-escaping] warning: locals {string_val} escaping the scope of main through _kgflags_g
-fc_stubs.c:21:[eva:locals-escaping] warning: locals {bool_val, int_val, double_val, string_arr, int_arr, double_arr} escaping the scope of main through _kgflags_g
-fc_stubs.c:21:[eva:locals-escaping] warning: locals {int_val, double_val, string_arr, int_arr, double_arr} escaping the scope of main through _kgflags_g
-fc_stubs.c:21:[eva:locals-escaping] warning: locals {double_val, string_arr, int_arr, double_arr} escaping the scope of main through _kgflags_g
-fc_stubs.c:21:[eva:locals-escaping] warning: locals {string_arr, int_arr, double_arr} escaping the scope of main through _kgflags_g
-fc_stubs.c:21:[eva:locals-escaping] warning: locals {int_arr, double_arr} escaping the scope of main through _kgflags_g
-fc_stubs.c:21:[eva:locals-escaping] warning: locals {double_arr} escaping the scope of main through _kgflags_g
-[eva:garbled-mix:summary] warning: Origins of garbled mix generated during analysis:
-  kgflags.h:657: misaligned read of addresses
-    (read in 9 statements, propagated through 8 statements)
-    garbled mix of &{argv1; argv2; argv3; argv4; "string"; "bool"; "int";
-                     "double"; "string-array"; "int-array"; "double-array"}
-  kgflags.h:849: imprecise merge of addresses
-    (read in 4 statements, propagated through 8 statements)
-    garbled mix of &{argv}
-  kgflags.h:522: misaligned read of addresses
-    (read in 2 statements, propagated through 3 statements)
-    garbled mix of &{argv0; argv1; argv2; argv3; argv4}
-  kgflags.h:533: misaligned read of addresses
-    (read in 2 statements, propagated through 3 statements)
-    garbled mix of &{argv0; argv1; argv2; argv3; argv4}
-  kgflags.h:550: misaligned read of addresses
-    (read in 2 statements, propagated through 3 statements)
-    garbled mix of &{argv0; argv1; argv2; argv3; argv4}
+[eva:garbled-mix:write] kgflags.h:522: Warning: 
+  Assigning imprecise value to __retres
+  because of misaligned read of addresses.
+  stack: kgflags_string_array_get_item :: examples/full_api.c:41 <-
+         main :: fc_stubs.c:21 <-
+         eva_main
+[eva:garbled-mix:write] kgflags.h:533: Warning: 
+  Assigning imprecise value to str because of misaligned read of addresses.
+  stack: kgflags_int_array_get_item :: examples/full_api.c:46 <-
+         main :: fc_stubs.c:21 <-
+         eva_main
+[eva:garbled-mix:write] kgflags.h:550: Warning: 
+  Assigning imprecise value to str because of misaligned read of addresses.
+  stack: kgflags_double_array_get_item :: examples/full_api.c:51 <-
+         main :: fc_stubs.c:21 <-
+         eva_main
+[eva:locals-escaping] fc_stubs.c:21: Warning: 
+  locals {string_val} escaping the scope of main through _kgflags_g
+[eva:locals-escaping] fc_stubs.c:21: Warning: 
+  locals {bool_val, int_val, double_val, string_arr, int_arr, double_arr} escaping the scope of main through _kgflags_g
+[eva:locals-escaping] fc_stubs.c:21: Warning: 
+  locals {int_val, double_val, string_arr, int_arr, double_arr} escaping the scope of main through _kgflags_g
+[eva:locals-escaping] fc_stubs.c:21: Warning: 
+  locals {double_val, string_arr, int_arr, double_arr} escaping the scope of main through _kgflags_g
+[eva:locals-escaping] fc_stubs.c:21: Warning: 
+  locals {string_arr, int_arr, double_arr} escaping the scope of main through _kgflags_g
+[eva:locals-escaping] fc_stubs.c:21: Warning: 
+  locals {int_arr, double_arr} escaping the scope of main through _kgflags_g
+[eva:locals-escaping] fc_stubs.c:21: Warning: 
+  locals {double_arr} escaping the scope of main through _kgflags_g
+[eva:garbled-mix:summary] Warning: 
+  Origins of garbled mix generated during analysis:
+    kgflags.h:657: misaligned read of addresses
+      (read in 9 statements, propagated through 8 statements)
+      garbled mix of &{argv1; argv2; argv3; argv4; "string"; "bool"; "int";
+                       "double"; "string-array"; "int-array"; "double-array"}
+    kgflags.h:849: imprecise merge of addresses
+      (read in 4 statements, propagated through 8 statements)
+      garbled mix of &{argv}
+    kgflags.h:522: misaligned read of addresses
+      (read in 2 statements, propagated through 3 statements)
+      garbled mix of &{argv0; argv1; argv2; argv3; argv4}
+    kgflags.h:533: misaligned read of addresses
+      (read in 2 statements, propagated through 3 statements)
+      garbled mix of &{argv0; argv1; argv2; argv3; argv4}
+    kgflags.h:550: misaligned read of addresses
+      (read in 2 statements, propagated through 3 statements)
+      garbled mix of &{argv0; argv1; argv2; argv3; argv4}

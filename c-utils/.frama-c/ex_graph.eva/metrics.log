@@ -1,45 +1,48 @@
-[metrics:eva:coverage] Eva coverage statistics
-=======================
-Syntactically reachable functions = 31 (out of 43)
-Semantically reached functions = 28
-Coverage estimation = 90.3% 
-
-Unreached functions (3) =
-  <src/graph.c>: __graph_edges_grow; __graph_vertices_grow;
-    __vertex_edges_grow;
-[metrics:eva:unreached] References to non-analyzed functions
-------------------------------------
-Function g_edge_add calls __graph_edges_grow (at src/graph.c:231)
-Function g_edge_add calls __vertex_edges_grow (at src/graph.c:245)
-Function g_vertex_add_alt calls __graph_vertices_grow (at src/graph.c:161)
-[metrics:eva:reached-stmts] Statements analyzed by Eva
---------------------------
-393 stmts in analyzed functions, 350 stmts analyzed (89.1%)
-__add_city_as_vertex: 6 stmts out of 6 (100.0%)
-__add_highway_as_edge: 4 stmts out of 4 (100.0%)
-__free_city: 5 stmts out of 5 (100.0%)
-__print_city: 2 stmts out of 2 (100.0%)
-__traverse_depth_first: 19 stmts out of 19 (100.0%)
-eva_main: 13 stmts out of 13 (100.0%)
-g_breadth_first_traverse: 44 stmts out of 44 (100.0%)
-g_depth_first_traverse: 16 stmts out of 16 (100.0%)
-g_edge_dest: 2 stmts out of 2 (100.0%)
-g_free: 2 stmts out of 2 (100.0%)
-g_free_alt: 32 stmts out of 32 (100.0%)
-g_init: 2 stmts out of 2 (100.0%)
-g_num_vertices: 2 stmts out of 2 (100.0%)
-g_vertex_add: 6 stmts out of 6 (100.0%)
-g_vertex_free_alt: 11 stmts out of 11 (100.0%)
-g_vertex_id: 2 stmts out of 2 (100.0%)
-g_vertex_metadata: 2 stmts out of 2 (100.0%)
-g_vertex_metadata_update: 2 stmts out of 2 (100.0%)
-g_vertex_num_edges_out: 2 stmts out of 2 (100.0%)
-g_vertices_inserted: 2 stmts out of 2 (100.0%)
-main: 88 stmts out of 92 (95.7%)
-g_init_alt: 20 stmts out of 23 (87.0%)
-g_edge_free_alt: 9 stmts out of 11 (81.8%)
-__str_duplicate: 7 stmts out of 10 (70.0%)
-g_vertex_add_alt: 17 stmts out of 25 (68.0%)
-g_edge_add: 27 stmts out of 44 (61.4%)
-g_vertex_edge: 3 stmts out of 6 (50.0%)
-g_vertex_get: 3 stmts out of 6 (50.0%)
+[metrics:eva:coverage] 
+  Eva coverage statistics
+  =======================
+  Syntactically reachable functions = 31 (out of 43)
+  Semantically reached functions = 28
+  Coverage estimation = 90.3% 
+  
+  Unreached functions (3) =
+    <src/graph.c>: __graph_edges_grow; __graph_vertices_grow;
+      __vertex_edges_grow;
+[metrics:eva:unreached] 
+  References to non-analyzed functions
+  ------------------------------------
+  Function g_edge_add calls __graph_edges_grow (at src/graph.c:231)
+  Function g_edge_add calls __vertex_edges_grow (at src/graph.c:245)
+  Function g_vertex_add_alt calls __graph_vertices_grow (at src/graph.c:161)
+[metrics:eva:reached-stmts] 
+  Statements analyzed by Eva
+  --------------------------
+  393 stmts in analyzed functions, 350 stmts analyzed (89.1%)
+  __add_city_as_vertex: 6 stmts out of 6 (100.0%)
+  __add_highway_as_edge: 4 stmts out of 4 (100.0%)
+  __free_city: 5 stmts out of 5 (100.0%)
+  __print_city: 2 stmts out of 2 (100.0%)
+  __traverse_depth_first: 19 stmts out of 19 (100.0%)
+  eva_main: 13 stmts out of 13 (100.0%)
+  g_breadth_first_traverse: 44 stmts out of 44 (100.0%)
+  g_depth_first_traverse: 16 stmts out of 16 (100.0%)
+  g_edge_dest: 2 stmts out of 2 (100.0%)
+  g_free: 2 stmts out of 2 (100.0%)
+  g_free_alt: 32 stmts out of 32 (100.0%)
+  g_init: 2 stmts out of 2 (100.0%)
+  g_num_vertices: 2 stmts out of 2 (100.0%)
+  g_vertex_add: 6 stmts out of 6 (100.0%)
+  g_vertex_free_alt: 11 stmts out of 11 (100.0%)
+  g_vertex_id: 2 stmts out of 2 (100.0%)
+  g_vertex_metadata: 2 stmts out of 2 (100.0%)
+  g_vertex_metadata_update: 2 stmts out of 2 (100.0%)
+  g_vertex_num_edges_out: 2 stmts out of 2 (100.0%)
+  g_vertices_inserted: 2 stmts out of 2 (100.0%)
+  main: 88 stmts out of 92 (95.7%)
+  g_init_alt: 20 stmts out of 23 (87.0%)
+  g_edge_free_alt: 9 stmts out of 11 (81.8%)
+  __str_duplicate: 7 stmts out of 10 (70.0%)
+  g_vertex_add_alt: 17 stmts out of 25 (68.0%)
+  g_edge_add: 27 stmts out of 44 (61.4%)
+  g_vertex_edge: 3 stmts out of 6 (50.0%)
+  g_vertex_get: 3 stmts out of 6 (50.0%)

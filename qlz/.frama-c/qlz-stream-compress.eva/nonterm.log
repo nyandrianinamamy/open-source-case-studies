@@ -1,0 +1,25 @@
+[nonterm:stmt] quicklz.c:117: Warning: 
+  non-terminating statement
+  stack: fast_read :: quicklz.c:126 <-
+         hashat :: quicklz.c:431 <-
+         qlz_compress_core :: quicklz.c:748 <-
+         qlz_compress :: stream_compress.c:37 <-
+         main :: fc_stubs.c:21 <-
+         eva_main
+[nonterm:stmt] quicklz.c:161: Warning: 
+  non-terminating statement
+  stack 1: fast_write :: quicklz.c:795 <-
+           qlz_compress :: stream_compress.c:37 <-
+           main :: fc_stubs.c:21 <-
+           eva_main
+  stack 2: fast_write :: quicklz.c:279 <-
+           qlz_compress_core :: quicklz.c:770 <-
+           qlz_compress :: stream_compress.c:37 <-
+           main :: fc_stubs.c:21 <-
+           eva_main
+[nonterm:stmt] quicklz.c:429: Warning: 
+  non-terminating loop
+  stack: qlz_compress_core :: quicklz.c:748 <-
+         qlz_compress :: stream_compress.c:37 <-
+         main :: fc_stubs.c:21 <-
+         eva_main

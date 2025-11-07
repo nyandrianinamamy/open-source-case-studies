@@ -57,6 +57,10 @@ void eeprom_update_word(uint16_t *__p, uint16_t __value);
 
 struct __file *__iob[3];
 
+extern int printf(char const *__fmt , ...);
+
+extern int sprintf(char *__s, char const *__fmt , ...);
+
 void lcd_command(char cmd);
 
 void lcd_init(void);

@@ -1,4 +1,8 @@
 directory	file	line	function	property kind	status	property
 .	cheri_06_mask.c	9	main	precondition of __FC_assert	Unknown	nonnull_c: c ≢ 0
+.	cheri_06_mask.c	13	main	pointer_alignment	Unknown	\aligned((void *)i,alignof(int))
+.	cheri_06_mask.c	15	main	pointer_alignment	Unknown	\aligned(q,alignof(int))
+.	cheri_06_mask.c	17	main	pointer_alignment	Unknown	\aligned((void *)j,alignof(int))
 .	cheri_06_mask.c	20	main	mem_access	Unknown	\valid_read(r)
+.	cheri_06_mask.c	20	main	pointer_alignment	Unknown	\aligned(r,alignof(int))
 FRAMAC_SHARE/libc	assert.h	17	__FC_assert	precondition	Unknown	nonnull_c: c ≢ 0

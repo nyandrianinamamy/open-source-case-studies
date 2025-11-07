@@ -1,32 +1,33 @@
-fc_stubs.c:21:[nonterm:unreachable] warning: unreachable return
-gzip.c:602:[nonterm:unreachable] warning: unreachable return
-gzip.c:1747:[nonterm:unreachable] warning: unreachable return
-inflate.c:439:[nonterm:stmt] warning: non-terminating statement
-stack 1: huft_build :: inflate.c:763 <-
-         inflate_dynamic :: inflate.c:900 <-
-         inflate_block :: inflate.c:931 <-
-         inflate :: unzip.c:120 <-
-         unzip :: gzip.c:675 <-
-         treat_stdin :: gzip.c:596 <-
-         main :: fc_stubs.c:21 <-
-         eva_main
-stack 2: huft_build :: inflate.c:763 <-
-         inflate_dynamic :: inflate.c:900 <-
-         inflate_block :: inflate.c:931 <-
-         inflate :: unzip.c:120 <-
-         unzip :: gzip.c:817 <-
-         treat_file :: gzip.c:593 <-
-         main :: fc_stubs.c:21 <-
-         eva_main
-stack 3: huft_build :: inflate.c:763 <-
-         inflate_dynamic :: inflate.c:900 <-
-         inflate_block :: inflate.c:931 <-
-         inflate :: unzip.c:120 <-
-         unzip :: gzip.c:675 <-
-         treat_stdin :: gzip.c:710 <-
-         treat_file :: gzip.c:593 <-
-         main :: fc_stubs.c:21 <-
-         eva_main
-util.c:341:[nonterm:unreachable] warning: unreachable return
-util.c:358:[nonterm:unreachable] warning: unreachable return
-util.c:365:[nonterm:unreachable] warning: unreachable return
+[nonterm:unreachable] fc_stubs.c:21: Warning: unreachable return
+[nonterm:unreachable] gzip.c:602: Warning: unreachable return
+[nonterm:unreachable] gzip.c:1747: Warning: unreachable return
+[nonterm:stmt] inflate.c:439: Warning: 
+  non-terminating statement
+  stack 1: huft_build :: inflate.c:763 <-
+           inflate_dynamic :: inflate.c:900 <-
+           inflate_block :: inflate.c:931 <-
+           inflate :: unzip.c:120 <-
+           unzip :: gzip.c:675 <-
+           treat_stdin :: gzip.c:596 <-
+           main :: fc_stubs.c:21 <-
+           eva_main
+  stack 2: huft_build :: inflate.c:763 <-
+           inflate_dynamic :: inflate.c:900 <-
+           inflate_block :: inflate.c:931 <-
+           inflate :: unzip.c:120 <-
+           unzip :: gzip.c:817 <-
+           treat_file :: gzip.c:593 <-
+           main :: fc_stubs.c:21 <-
+           eva_main
+  stack 3: huft_build :: inflate.c:763 <-
+           inflate_dynamic :: inflate.c:900 <-
+           inflate_block :: inflate.c:931 <-
+           inflate :: unzip.c:120 <-
+           unzip :: gzip.c:675 <-
+           treat_stdin :: gzip.c:710 <-
+           treat_file :: gzip.c:593 <-
+           main :: fc_stubs.c:21 <-
+           eva_main
+[nonterm:unreachable] util.c:341: Warning: unreachable return
+[nonterm:unreachable] util.c:358: Warning: unreachable return
+[nonterm:unreachable] util.c:365: Warning: unreachable return
