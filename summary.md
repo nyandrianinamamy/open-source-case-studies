@@ -10,6 +10,7 @@
 |debie1|Benchmark based on the DEBIE-1 satellite instrument|http://www.tidorum.fi/debie1/|1|1|48|6269|NO_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|executable|
 |genann|Simple neural network library|https://github.com/codeplea/genann|1|75|8|690|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|library|
 |gnugo|Go game|https://ftp.gnu.org/gnu/gnugo/|1|110|27|2048|NO_DYN_ALLOC, HAS_RECURSION, NO_FLOAT|executable|
+|grayskull|Minimalist, dependency-free computer vision library for microcontrollers|https://github.com/zserge/grayskull|2|260|5|2133|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|library|
 |gzip124|Data compression program|https://www.gnu.org/software/gzip/|1|1014|35|5826|HAS_DYN_ALLOC, REM_RECURSION, NO_FLOAT|executable|
 |hiredis|Minimalistic client library for the Redis database|https://github.com/redis/hiredis|2|617|45|6622|HAS_DYN_ALLOC, REM_RECURSION, HAS_FLOAT|library|
 |icpc|Fake application developed for a programming challenge, for ICPC2011|http://icpc2011.cs.usask.ca/conf_site/IndustrialTrack.html|1|1|15|965|NO_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|executable|

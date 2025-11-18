@@ -1,0 +1,261 @@
+directory	file	line	function	property kind	status	property
+.	grayskull.h	66	gs_valid	initialization	Unknown	\initialized(&img.data)
+.	grayskull.h	66	gs_valid	ptr_comparison	Unknown	\pointer_comparable((void *)0, (void *)img.data)
+.	grayskull.h	66	gs_valid	initialization	Unknown	\initialized(&img.w)
+.	grayskull.h	66	gs_valid	initialization	Unknown	\initialized(&img.h)
+.	grayskull.h	119	gs_read_pgm	precondition of fread	Unknown	valid_ptr_block: \valid((char *)ptr + (0 .. nmemb * size - 1))
+.	grayskull.h	130	gs_write_pgm	mem_access	Unknown	\valid_read(path + 0)
+.	grayskull.h	133	gs_write_pgm	precondition of fwrite	Unknown	valid_ptr_block: \valid_read((char *)ptr + (0 .. nmemb * size - 1))
+.	grayskull.h	144	gs_get	initialization	Unknown	\initialized(&img.data)
+.	grayskull.h	144	gs_get	mem_access	Unknown	\valid_read(img.data + (unsigned int)((unsigned int)(y * img.w) + x))
+.	grayskull.h	147	gs_set	mem_access	Unknown	\valid(img.data + (unsigned int)((unsigned int)(y * img.w) + x))
+.	grayskull.h	178	gs_resize	float_to_int	Unknown	-1 < sx
+.	grayskull.h	178	gs_resize	float_to_int	Unknown	sx < 4294967296
+.	grayskull.h	178	gs_resize	float_to_int	Unknown	-1 < sy
+.	grayskull.h	178	gs_resize	float_to_int	Unknown	sy < 4294967296
+.	grayskull.h	183	gs_resize	float_to_int	Unknown	-1 < \add_float(\add_float(\mul_float(\mul_float((float)c00, \sub_float((float)1, dx)), \sub_float((float)1, dy)), \mul_float(\mul_float((float)c01, dx), \sub_float((float)1, dy))), \mul_float(\mul_float((float)c10, \sub_float((float)1, dx)), dy)) + \mul_float(\mul_float((float)c11, dx), dy)
+.	grayskull.h	183	gs_resize	float_to_int	Unknown	\add_float(\add_float(\mul_float(\mul_float((float)c00, \sub_float((float)1, dx)), \sub_float((float)1, dy)), \mul_float(\mul_float((float)c01, dx), \sub_float((float)1, dy))), \mul_float(\mul_float((float)c10, \sub_float((float)1, dx)), dy)) + \mul_float(\mul_float((float)c11, dx), dy) < 256
+.	grayskull.h	202	gs_histogram	mem_access	Unknown	\valid_read(img.data + i_0)
+.	grayskull.h	219	gs_otsu_threshold	is_nan_or_infinite	Unknown	\is_finite(\mul_float(\mul_float((float)wb, (float)wf), \sub_float(mB, mF)))
+.	grayskull.h	219	gs_otsu_threshold	is_nan_or_infinite	Unknown	\is_finite(\mul_float(\mul_float(\mul_float((float)wb, (float)wf), \sub_float(mB, mF)), \sub_float(mB, mF)))
+.	grayskull.h	219	gs_otsu_threshold	is_nan_or_infinite	Unknown	\is_finite(\sub_float(mB, mF))
+.	grayskull.h	227	gs_threshold	mem_access	Unknown	\valid(img.data + i)
+.	grayskull.h	227	gs_threshold	mem_access	Unknown	\valid_read(img.data + i)
+.	grayskull.h	235	gs_adaptive_threshold	signed_overflow	Unknown	dy + 1 ≤ 2147483647
+.	grayskull.h	236	gs_adaptive_threshold	signed_overflow	Unknown	dx + 1 ≤ 2147483647
+.	grayskull.h	237	gs_adaptive_threshold	signed_overflow	Unknown	(int)y + dy ≤ 2147483647
+.	grayskull.h	237	gs_adaptive_threshold	signed_overflow	Unknown	-2147483648 ≤ (int)y + dy
+.	grayskull.h	237	gs_adaptive_threshold	signed_overflow	Unknown	(int)x + dx ≤ 2147483647
+.	grayskull.h	237	gs_adaptive_threshold	signed_overflow	Unknown	-2147483648 ≤ (int)x + dx
+.	grayskull.h	244	gs_adaptive_threshold	division_by_zero	Unknown	count ≢ 0
+.	grayskull.h	272	gs_blur	signed_overflow	Unknown	dy + 1 ≤ 2147483647
+.	grayskull.h	273	gs_blur	signed_overflow	Unknown	dx + 1 ≤ 2147483647
+.	grayskull.h	281	gs_blur	division_by_zero	Unknown	count ≢ 0
+.	grayskull.h	292	gs_morph	signed_overflow	Unknown	(int)y + dy ≤ 2147483647
+.	grayskull.h	292	gs_morph	signed_overflow	Unknown	-2147483648 ≤ (int)y + dy
+.	grayskull.h	292	gs_morph	signed_overflow	Unknown	(int)x + dx ≤ 2147483647
+.	grayskull.h	310	gs_sobel	mem_access	Unknown	\valid_read(src.data + (unsigned int)((unsigned int)((unsigned int)(y + 1) * src.w) + (unsigned int)(x + 1)))
+.	grayskull.h	310	gs_sobel	mem_access	Unknown	\valid_read(src.data + (unsigned int)((unsigned int)((unsigned int)(y + 1) * src.w) + (unsigned int)(x - 1)))
+.	grayskull.h	310	gs_sobel	mem_access	Unknown	\valid_read(src.data + (unsigned int)((unsigned int)((unsigned int)(y - 1) * src.w) + (unsigned int)(x + 1)))
+.	grayskull.h	310	gs_sobel	mem_access	Unknown	\valid_read(src.data + (unsigned int)((unsigned int)((unsigned int)(y - 1) * src.w) + (unsigned int)(x - 1)))
+.	grayskull.h	310	gs_sobel	mem_access	Unknown	\valid_read(src.data + (unsigned int)((unsigned int)(y * src.w) + (unsigned int)(x + 1)))
+.	grayskull.h	310	gs_sobel	mem_access	Unknown	\valid_read(src.data + (unsigned int)((unsigned int)(y * src.w) + (unsigned int)(x - 1)))
+.	grayskull.h	313	gs_sobel	mem_access	Unknown	\valid_read(src.data + (unsigned int)((unsigned int)((unsigned int)(y + 1) * src.w) + x))
+.	grayskull.h	313	gs_sobel	mem_access	Unknown	\valid_read(src.data + (unsigned int)((unsigned int)((unsigned int)(y - 1) * src.w) + x))
+.	grayskull.h	317	gs_sobel	mem_access	Unknown	\valid(dst.data + (unsigned int)((unsigned int)(y * dst.w) + x))
+.	grayskull.h	326	gs_root	initialization	Unknown	\initialized(parents + x)
+.	grayskull.h	326	gs_root	mem_access	Unknown	\valid_read(parents + x)
+.	grayskull.h	326	gs_root	mem_access	Unknown	\valid(parents + x)
+.	grayskull.h	326	gs_root	initialization	Unknown	\initialized(parents + *(parents + x))
+.	grayskull.h	326	gs_root	mem_access	Unknown	\valid_read(parents + *(parents + x))
+.	grayskull.h	336	gs_blobs	mem_access	Unknown	\valid(labels + i)
+.	grayskull.h	338	gs_blobs	mem_access	Unknown	\valid(blobs_0 + i_0)
+.	grayskull.h	339	gs_blobs	mem_access	Unknown	\valid(parents + i_1)
+.	grayskull.h	343	gs_blobs	mem_access	Unknown	\valid_read(labels + (unsigned int)((unsigned int)(y * w) + (unsigned int)(x - 1)))
+.	grayskull.h	344	gs_blobs	mem_access	Unknown	\valid_read(labels + (unsigned int)((unsigned int)((unsigned int)(y - 1) * w) + x))
+.	grayskull.h	349	gs_blobs	mem_access	Unknown	\valid(blobs_0 + (int)((int)next - 1))
+.	grayskull.h	350	gs_blobs	mem_access	Unknown	\valid(cx + (int)((int)next - 1))
+.	grayskull.h	350	gs_blobs	mem_access	Unknown	\valid(cy + (int)((int)next - 1))
+.	grayskull.h	351	gs_blobs	mem_access	Unknown	\valid(labels + (unsigned int)((unsigned int)(y * w) + x))
+.	grayskull.h	353	gs_blobs	mem_access	Unknown	\valid(labels + (unsigned int)((unsigned int)(y * w) + x))
+.	grayskull.h	355	gs_blobs	initialization	Unknown	\initialized(cx + (int)((int)n - 1))
+.	grayskull.h	355	gs_blobs	mem_access	Unknown	\valid(cx + (int)((int)n - 1))
+.	grayskull.h	355	gs_blobs	initialization	Unknown	\initialized(cy + (int)((int)n - 1))
+.	grayskull.h	355	gs_blobs	mem_access	Unknown	\valid(cy + (int)((int)n - 1))
+.	grayskull.h	356	gs_blobs	initialization	Unknown	\initialized(&b->area)
+.	grayskull.h	356	gs_blobs	mem_access	Unknown	\valid(&b->area)
+.	grayskull.h	357	gs_blobs	initialization	Unknown	\initialized(&b->box.x)
+.	grayskull.h	357	gs_blobs	mem_access	Unknown	\valid(&b->box.x)
+.	grayskull.h	357	gs_blobs	mem_access	Unknown	\valid_read(&b->box.x)
+.	grayskull.h	357	gs_blobs	initialization	Unknown	\initialized(&b->box.y)
+.	grayskull.h	357	gs_blobs	mem_access	Unknown	\valid(&b->box.y)
+.	grayskull.h	357	gs_blobs	mem_access	Unknown	\valid_read(&b->box.y)
+.	grayskull.h	359	gs_blobs	initialization	Unknown	\initialized(&b->box.w)
+.	grayskull.h	359	gs_blobs	mem_access	Unknown	\valid(&b->box.w)
+.	grayskull.h	359	gs_blobs	mem_access	Unknown	\valid_read(&b->box.w)
+.	grayskull.h	359	gs_blobs	initialization	Unknown	\initialized(&b->box.h)
+.	grayskull.h	359	gs_blobs	mem_access	Unknown	\valid(&b->box.h)
+.	grayskull.h	359	gs_blobs	mem_access	Unknown	\valid_read(&b->box.h)
+.	grayskull.h	363	gs_blobs	mem_access	Unknown	\valid(parents + tmp_10)
+.	grayskull.h	369	gs_blobs	initialization	Unknown	\initialized(&(blobs_0 + i_2)->label)
+.	grayskull.h	369	gs_blobs	mem_access	Unknown	\valid_read(&(blobs_0 + i_2)->label)
+.	grayskull.h	372	gs_blobs	initialization	Unknown	\initialized(&(blobs_0 + i_2)->area)
+.	grayskull.h	372	gs_blobs	initialization	Unknown	\initialized(&broot->area)
+.	grayskull.h	372	gs_blobs	mem_access	Unknown	\valid(&broot->area)
+.	grayskull.h	372	gs_blobs	mem_access	Unknown	\valid_read(&(blobs_0 + i_2)->area)
+.	grayskull.h	373	gs_blobs	initialization	Unknown	\initialized(&(blobs_0 + i_2)->box.x)
+.	grayskull.h	373	gs_blobs	initialization	Unknown	\initialized(&broot->box.x)
+.	grayskull.h	373	gs_blobs	mem_access	Unknown	\valid(&broot->box.x)
+.	grayskull.h	373	gs_blobs	mem_access	Unknown	\valid_read(&(blobs_0 + i_2)->box.x)
+.	grayskull.h	373	gs_blobs	mem_access	Unknown	\valid_read(&broot->box.x)
+.	grayskull.h	374	gs_blobs	initialization	Unknown	\initialized(&(blobs_0 + i_2)->box.y)
+.	grayskull.h	374	gs_blobs	initialization	Unknown	\initialized(&broot->box.y)
+.	grayskull.h	374	gs_blobs	mem_access	Unknown	\valid(&broot->box.y)
+.	grayskull.h	374	gs_blobs	mem_access	Unknown	\valid_read(&(blobs_0 + i_2)->box.y)
+.	grayskull.h	374	gs_blobs	mem_access	Unknown	\valid_read(&broot->box.y)
+.	grayskull.h	375	gs_blobs	initialization	Unknown	\initialized(&(blobs_0 + i_2)->box.w)
+.	grayskull.h	375	gs_blobs	initialization	Unknown	\initialized(&broot->box.w)
+.	grayskull.h	375	gs_blobs	mem_access	Unknown	\valid(&broot->box.w)
+.	grayskull.h	375	gs_blobs	mem_access	Unknown	\valid_read(&(blobs_0 + i_2)->box.w)
+.	grayskull.h	375	gs_blobs	mem_access	Unknown	\valid_read(&broot->box.w)
+.	grayskull.h	376	gs_blobs	initialization	Unknown	\initialized(&(blobs_0 + i_2)->box.h)
+.	grayskull.h	376	gs_blobs	initialization	Unknown	\initialized(&broot->box.h)
+.	grayskull.h	376	gs_blobs	mem_access	Unknown	\valid(&broot->box.h)
+.	grayskull.h	376	gs_blobs	mem_access	Unknown	\valid_read(&(blobs_0 + i_2)->box.h)
+.	grayskull.h	376	gs_blobs	mem_access	Unknown	\valid_read(&broot->box.h)
+.	grayskull.h	377	gs_blobs	initialization	Unknown	\initialized(cx + (int)((int)root - 1))
+.	grayskull.h	377	gs_blobs	initialization	Unknown	\initialized(cx + i_2)
+.	grayskull.h	377	gs_blobs	mem_access	Unknown	\valid(cx + (int)((int)root - 1))
+.	grayskull.h	377	gs_blobs	mem_access	Unknown	\valid_read(cx + i_2)
+.	grayskull.h	377	gs_blobs	initialization	Unknown	\initialized(cy + (int)((int)root - 1))
+.	grayskull.h	377	gs_blobs	initialization	Unknown	\initialized(cy + i_2)
+.	grayskull.h	377	gs_blobs	mem_access	Unknown	\valid(cy + (int)((int)root - 1))
+.	grayskull.h	377	gs_blobs	mem_access	Unknown	\valid_read(cy + i_2)
+.	grayskull.h	378	gs_blobs	mem_access	Unknown	\valid(&(blobs_0 + i_2)->area)
+.	grayskull.h	383	gs_blobs	mem_access	Unknown	\valid_read(labels + (unsigned int)((unsigned int)(y_0 * w) + x_0))
+.	grayskull.h	384	gs_blobs	mem_access	Unknown	\valid(labels + (unsigned int)((unsigned int)(y_0 * w) + x_0))
+.	grayskull.h	390	gs_blobs	initialization	Unknown	\initialized(&(blobs_0 + i_3)->area)
+.	grayskull.h	390	gs_blobs	mem_access	Unknown	\valid_read(&(blobs_0 + i_3)->area)
+.	grayskull.h	392	gs_blobs	initialization	Unknown	\initialized(&(blobs_0 + i_3)->box.w)
+.	grayskull.h	392	gs_blobs	initialization	Unknown	\initialized(&(blobs_0 + i_3)->box.x)
+.	grayskull.h	392	gs_blobs	mem_access	Unknown	\valid(&(blobs_0 + i_3)->box.w)
+.	grayskull.h	392	gs_blobs	mem_access	Unknown	\valid_read(&(blobs_0 + i_3)->box.w)
+.	grayskull.h	392	gs_blobs	mem_access	Unknown	\valid_read(&(blobs_0 + i_3)->box.x)
+.	grayskull.h	393	gs_blobs	initialization	Unknown	\initialized(&(blobs_0 + i_3)->box.h)
+.	grayskull.h	393	gs_blobs	initialization	Unknown	\initialized(&(blobs_0 + i_3)->box.y)
+.	grayskull.h	393	gs_blobs	mem_access	Unknown	\valid(&(blobs_0 + i_3)->box.h)
+.	grayskull.h	393	gs_blobs	mem_access	Unknown	\valid_read(&(blobs_0 + i_3)->box.h)
+.	grayskull.h	393	gs_blobs	mem_access	Unknown	\valid_read(&(blobs_0 + i_3)->box.y)
+.	grayskull.h	395	gs_blobs	initialization	Unknown	\initialized(&(blobs_0 + i_3)->area)
+.	grayskull.h	395	gs_blobs	initialization	Unknown	\initialized(cx + i_3)
+.	grayskull.h	395	gs_blobs	mem_access	Unknown	\valid(&(blobs_0 + i_3)->centroid.x)
+.	grayskull.h	395	gs_blobs	mem_access	Unknown	\valid_read(cx + i_3)
+.	grayskull.h	395	gs_blobs	division_by_zero	Unknown	(blobs_0 + i_3)->area ≢ 0
+.	grayskull.h	396	gs_blobs	initialization	Unknown	\initialized(&(blobs_0 + i_3)->area)
+.	grayskull.h	396	gs_blobs	initialization	Unknown	\initialized(cy + i_3)
+.	grayskull.h	396	gs_blobs	mem_access	Unknown	\valid(&(blobs_0 + i_3)->centroid.y)
+.	grayskull.h	396	gs_blobs	mem_access	Unknown	\valid_read(cy + i_3)
+.	grayskull.h	396	gs_blobs	division_by_zero	Unknown	(blobs_0 + i_3)->area ≢ 0
+.	grayskull.h	398	gs_blobs	mem_access	Unknown	\valid(blobs_0 + tmp_12)
+.	grayskull.h	398	gs_blobs	mem_access	Unknown	\valid_read(blobs_0 + i_3)
+.	grayskull.h	409	gs_blob_corners	initialization	Unknown	\initialized(&b->box.y)
+.	grayskull.h	409	gs_blob_corners	initialization	Unknown	\initialized(&b->box.h)
+.	grayskull.h	410	gs_blob_corners	initialization	Unknown	\initialized(&b->box.x)
+.	grayskull.h	410	gs_blob_corners	initialization	Unknown	\initialized(&b->box.w)
+.	grayskull.h	412	gs_blob_corners	initialization	Unknown	\initialized(&b->label)
+.	grayskull.h	412	gs_blob_corners	mem_access	Unknown	\valid_read(labels + (unsigned int)((unsigned int)(y * img.w) + x))
+.	grayskull.h	413	gs_blob_corners	signed_overflow	Unknown	(int)x + (int)y ≤ 2147483647
+.	grayskull.h	413	gs_blob_corners	signed_overflow	Unknown	-2147483648 ≤ (int)x + (int)y
+.	grayskull.h	413	gs_blob_corners	signed_overflow	Unknown	(int)x - (int)y ≤ 2147483647
+.	grayskull.h	413	gs_blob_corners	signed_overflow	Unknown	-2147483648 ≤ (int)x - (int)y
+.	grayskull.h	428	gs_perspective_correct	initialization	Unknown	\initialized(&(c + 0)->x)
+.	grayskull.h	428	gs_perspective_correct	initialization	Unknown	\initialized(&(c + 1)->x)
+.	grayskull.h	429	gs_perspective_correct	initialization	Unknown	\initialized(&(c + 0)->y)
+.	grayskull.h	429	gs_perspective_correct	initialization	Unknown	\initialized(&(c + 1)->y)
+.	grayskull.h	430	gs_perspective_correct	initialization	Unknown	\initialized(&(c + 2)->x)
+.	grayskull.h	430	gs_perspective_correct	initialization	Unknown	\initialized(&(c + 3)->x)
+.	grayskull.h	431	gs_perspective_correct	initialization	Unknown	\initialized(&(c + 2)->y)
+.	grayskull.h	431	gs_perspective_correct	initialization	Unknown	\initialized(&(c + 3)->y)
+.	grayskull.h	436	gs_perspective_correct	float_to_int	Unknown	-1 < src_x
+.	grayskull.h	436	gs_perspective_correct	float_to_int	Unknown	src_x < 4294967296
+.	grayskull.h	436	gs_perspective_correct	float_to_int	Unknown	-1 < src_y
+.	grayskull.h	436	gs_perspective_correct	float_to_int	Unknown	src_y < 4294967296
+.	grayskull.h	441	gs_perspective_correct	mem_access	Unknown	\valid(dst.data + (unsigned int)((unsigned int)(y * dst.w) + x))
+.	grayskull.h	441	gs_perspective_correct	float_to_int	Unknown	-1 < \add_float(\add_float(\mul_float(\mul_float((float)c00, \sub_float((float)1, dx)), \sub_float((float)1, dy)), \mul_float(\mul_float((float)c01, dx), \sub_float((float)1, dy))), \mul_float(\mul_float((float)c10, \sub_float((float)1, dx)), dy)) + \mul_float(\mul_float((float)c11, dx), dy)
+.	grayskull.h	441	gs_perspective_correct	float_to_int	Unknown	\add_float(\add_float(\mul_float(\mul_float((float)c00, \sub_float((float)1, dx)), \sub_float((float)1, dy)), \mul_float(\mul_float((float)c01, dx), \sub_float((float)1, dy))), \mul_float(\mul_float((float)c10, \sub_float((float)1, dx)), dy)) + \mul_float(\mul_float((float)c11, dx), dy) < 256
+.	grayskull.h	530	gs_fast	mem_access	Unknown	\valid(kps + tmp_5)
+.	grayskull.h	626	gs_brief_descriptor	is_nan_or_infinite	Unknown	\is_finite(kp->angle)
+.	grayskull.h	633	gs_brief_descriptor	signed_overflow	Unknown	-2147483648 ≤ x + (int)dx1
+.	grayskull.h	633	gs_brief_descriptor	signed_overflow	Unknown	x + (int)dx1 ≤ 2147483647
+.	grayskull.h	633	gs_brief_descriptor	signed_overflow	Unknown	-2147483648 ≤ y + (int)dy1
+.	grayskull.h	633	gs_brief_descriptor	signed_overflow	Unknown	y + (int)dy1 ≤ 2147483647
+.	grayskull.h	633	gs_brief_descriptor	signed_overflow	Unknown	-2147483648 ≤ x + (int)dx2
+.	grayskull.h	633	gs_brief_descriptor	signed_overflow	Unknown	x + (int)dx2 ≤ 2147483647
+.	grayskull.h	633	gs_brief_descriptor	signed_overflow	Unknown	-2147483648 ≤ y + (int)dy2
+.	grayskull.h	633	gs_brief_descriptor	signed_overflow	Unknown	y + (int)dy2 ≤ 2147483647
+.	grayskull.h	642	gs_sort_keypoints	mem_access	Unknown	\valid_read(&(kps + (unsigned int)(j + 1))->response)
+.	grayskull.h	642	gs_sort_keypoints	mem_access	Unknown	\valid_read(&(kps + j)->response)
+.	grayskull.h	653	gs_orb_extract	ptr_comparison	Unknown	\pointer_comparable((void *)0, (void *)kps)
+.	grayskull.h	653	gs_orb_extract	ptr_comparison	Unknown	\pointer_comparable((void *)0, (void *)scoremap_buffer)
+.	grayskull.h	654	gs_orb_extract	initialization	Unknown	\initialized(&img.h)
+.	grayskull.h	654	gs_orb_extract	initialization	Unknown	\initialized(&img.w)
+.	grayskull.h	660	gs_orb_extract	index_bound	Unknown	i < 5000
+.	grayskull.h	662	gs_orb_extract	mem_access	Unknown	\valid(kps + n_orb)
+.	grayskull.h	674	gs_hamming_distance	mem_access	Unknown	\valid_read(desc1 + i)
+.	grayskull.h	674	gs_hamming_distance	mem_access	Unknown	\valid_read(desc2 + i)
+.	grayskull.h	750	gs_integral	mem_access	Unknown	\valid(ii + (unsigned int)((unsigned int)(y * src.w) + x))
+.	grayskull.h	750	gs_integral	mem_access	Unknown	\valid_read(ii + (unsigned int)((unsigned int)((unsigned int)(y - 1) * src.w) + x))
+.	grayskull.h	758	gs_integral_sum	mem_access	Unknown	\valid_read(ii + (unsigned int)((unsigned int)((unsigned int)(y - 1) * iw) + (unsigned int)(x - 1)))
+.	grayskull.h	759	gs_integral_sum	mem_access	Unknown	\valid_read(ii + (unsigned int)((unsigned int)((unsigned int)(y - 1) * iw) + x2))
+.	grayskull.h	760	gs_integral_sum	mem_access	Unknown	\valid_read(ii + (unsigned int)((unsigned int)(y2 * iw) + (unsigned int)(x - 1)))
+.	grayskull.h	761	gs_integral_sum	mem_access	Unknown	\valid_read(ii + (unsigned int)((unsigned int)(y2 * iw) + x2))
+.	grayskull.h	772	gs_lbp_code	signed_overflow	Unknown	x + fx ≤ 2147483647
+.	grayskull.h	772	gs_lbp_code	signed_overflow	Unknown	y + fy ≤ 2147483647
+.	grayskull.h	773	gs_lbp_code	signed_overflow	Unknown	(int)(x + fx) + fw ≤ 2147483647
+.	grayskull.h	774	gs_lbp_code	signed_overflow	Unknown	(int)(x + fx) + (int)(2 * fw) ≤ 2147483647
+.	grayskull.h	775	gs_lbp_code	signed_overflow	Unknown	(int)(y + fy) + fh ≤ 2147483647
+.	grayskull.h	778	gs_lbp_code	signed_overflow	Unknown	(int)(y + fy) + (int)(2 * fh) ≤ 2147483647
+.	grayskull.h	787	gs_lbp_match	signed_overflow	Unknown	1 << bit ≤ 2147483647
+.	grayskull.h	793	gs_lbp_window	signed_overflow	Unknown	x + win_w ≤ 2147483647
+.	grayskull.h	793	gs_lbp_window	signed_overflow	Unknown	y + win_h ≤ 2147483647
+.	grayskull.h	822	gs_lbp_detect	signed_overflow	Unknown	y + win_h ≤ 2147483647
+.	grayskull.h	822	gs_lbp_detect	signed_overflow	Unknown	y + step ≤ 2147483647
+.	grayskull.h	823	gs_lbp_detect	signed_overflow	Unknown	x + win_w ≤ 2147483647
+.	grayskull.h	823	gs_lbp_detect	signed_overflow	Unknown	x + step ≤ 2147483647
+FRAMAC_SHARE/libc	stdio.h	233	fprintf_va_44	precondition	Unknown	valid_read_string(param0)
+FRAMAC_SHARE/libc	stdio.h	379	fread	precondition	Unknown	valid_ptr_block: \valid((char *)ptr + (0 .. nmemb * size - 1))
+FRAMAC_SHARE/libc	stdio.h	392	fwrite	precondition	Unknown	valid_ptr_block: \valid_read((char *)ptr + (0 .. nmemb * size - 1))
+FRAMAC_SHARE/libc	stdlib.c	21	abs	signed_overflow	Unknown	-i ≤ 2147483647
+FRAMAC_SHARE/libc	stdlib.c	31	atoi	mem_access	Unknown	\valid_read(up)
+FRAMAC_SHARE/libc	stdlib.c	33	atoi	mem_access	Unknown	\valid_read(up)
+FRAMAC_SHARE/libc	stdlib.c	39	atoi	mem_access	Unknown	\valid_read(up)
+FRAMAC_SHARE/libc	stdlib.c	44	atoi	mem_access	Unknown	\valid_read(up)
+FRAMAC_SHARE/libc	stdlib.c	45	atoi	signed_overflow	Unknown	-2147483648 ≤ n * 10
+FRAMAC_SHARE/libc	stdlib.c	45	atoi	signed_overflow	Unknown	n * 10 ≤ 2147483647
+FRAMAC_SHARE/libc	stdlib.c	46	atoi	signed_overflow	Unknown	-2147483648 ≤ n + (int)((int)'0' - c)
+FRAMAC_SHARE/libc	stdlib.c	46	atoi	signed_overflow	Unknown	n + (int)((int)'0' - c) ≤ 2147483647
+FRAMAC_SHARE/libc	stdlib.c	48	atoi	signed_overflow	Unknown	-n ≤ 2147483647
+examples/nanomagick	nanomagick.c	25	view	initialization	Unknown	\initialized(&w.ws_col)
+examples/nanomagick	nanomagick.c	27	view	division_by_zero	Unknown	(unsigned int)(img.w * (unsigned int)tmp_3) ≢ 0
+examples/nanomagick	nanomagick.c	29	view	signed_overflow	Unknown	y + 2 ≤ 2147483647
+examples/nanomagick	nanomagick.c	34	view	mem_access	Unknown	\valid_read(img.data + (unsigned int)((unsigned int)((unsigned int)iy1 * img.w) + (unsigned int)ix))
+examples/nanomagick	nanomagick.c	35	view	mem_access	Unknown	\valid_read(img.data + (unsigned int)((unsigned int)((unsigned int)iy2 * img.w) + (unsigned int)ix))
+examples/nanomagick	nanomagick.c	48	view	mem_access	Unknown	\valid_read(img.data + (unsigned int)((unsigned int)((unsigned int)img_y * img.w) + (unsigned int)img_x))
+examples/nanomagick	nanomagick.c	162	blobs	mem_access	Unknown	\valid_read(&(blobs_0 + i)->box.x)
+examples/nanomagick	nanomagick.c	162	blobs	signed_overflow	Unknown	-2147483648 ≤ (int)(blobs_0 + i)->box.x - 2
+examples/nanomagick	nanomagick.c	162	blobs	mem_access	Unknown	\valid_read(&(blobs_0 + i)->box.y)
+examples/nanomagick	nanomagick.c	162	blobs	signed_overflow	Unknown	-2147483648 ≤ (int)(blobs_0 + i)->box.y - 2
+examples/nanomagick	nanomagick.c	163	blobs	mem_access	Unknown	\valid_read(&(blobs_0 + i)->box.w)
+examples/nanomagick	nanomagick.c	164	blobs	mem_access	Unknown	\valid_read(&(blobs_0 + i)->box.h)
+examples/nanomagick	nanomagick.c	166	blobs	mem_access	Unknown	\valid(out->data + (unsigned int)((unsigned int)(y * out->w) + x))
+examples/nanomagick	nanomagick.c	169	blobs	mem_access	Unknown	\valid_read(img.data + (unsigned int)((unsigned int)(y_0 * out->w) + x_0))
+examples/nanomagick	nanomagick.c	169	blobs	mem_access	Unknown	\valid(out->data + (unsigned int)((unsigned int)(y_0 * img.w) + x_0))
+examples/nanomagick	nanomagick.c	174	draw_line	signed_overflow	Unknown	(int)x2 - (int)x1 ≤ 2147483647
+examples/nanomagick	nanomagick.c	174	draw_line	signed_overflow	Unknown	-2147483648 ≤ (int)x2 - (int)x1
+examples/nanomagick	nanomagick.c	174	draw_line	signed_overflow	Unknown	(int)y2 - (int)y1 ≤ 2147483647
+examples/nanomagick	nanomagick.c	174	draw_line	signed_overflow	Unknown	-2147483648 ≤ (int)y2 - (int)y1
+examples/nanomagick	nanomagick.c	178	draw_line	mem_access	Unknown	\valid(img.data + (unsigned int)((unsigned int)((unsigned int)y * img.w) + (unsigned int)x))
+examples/nanomagick	nanomagick.c	180	draw_line	signed_overflow	Unknown	-2147483648 ≤ 2 * err
+examples/nanomagick	nanomagick.c	180	draw_line	signed_overflow	Unknown	2 * err ≤ 2147483647
+examples/nanomagick	nanomagick.c	181	draw_line	signed_overflow	Unknown	-2147483648 ≤ err - dy
+examples/nanomagick	nanomagick.c	181	draw_line	signed_overflow	Unknown	-2147483648 ≤ x + sx
+examples/nanomagick	nanomagick.c	181	draw_line	signed_overflow	Unknown	x + sx ≤ 2147483647
+examples/nanomagick	nanomagick.c	182	draw_line	signed_overflow	Unknown	err + dx ≤ 2147483647
+examples/nanomagick	nanomagick.c	182	draw_line	signed_overflow	Unknown	-2147483648 ≤ y + sy
+examples/nanomagick	nanomagick.c	182	draw_line	signed_overflow	Unknown	y + sy ≤ 2147483647
+examples/nanomagick	nanomagick.c	199	scan	initialization	Unknown	\initialized(&blobs_0[i].area)
+examples/nanomagick	nanomagick.c	199	scan	initialization	Unknown	\initialized(&blobs_0[largest].area)
+examples/nanomagick	nanomagick.c	199	scan	index_bound	Unknown	i < 1000
+examples/nanomagick	nanomagick.c	236	keypoints	mem_access	Unknown	\valid_read(&(kps + i)->pt.x)
+examples/nanomagick	nanomagick.c	279	extract_pyramid_orb_nm	initialization	Unknown	\initialized(&scoremaps[level_1])
+examples/nanomagick	nanomagick.c	284	extract_pyramid_orb_nm	mem_access	Unknown	\valid(&(kps + i)->pt.x)
+examples/nanomagick	nanomagick.c	317	orb	index_bound	Unknown	j < 300
+examples/nanomagick	nanomagick.c	325	orb	mem_access	Unknown	\valid(out->data + i_0)
+examples/nanomagick	nanomagick.c	330	orb	mem_access	Unknown	\valid(out->data + (unsigned int)((unsigned int)(y * out->w) + x))
+examples/nanomagick	nanomagick.c	330	orb	mem_access	Unknown	\valid_read(template.data + (unsigned int)((unsigned int)(y * template.w) + x))
+examples/nanomagick	nanomagick.c	333	orb	mem_access	Unknown	\valid(out->data + (unsigned int)((unsigned int)(y_0 * out->w) + (unsigned int)(template.w + x_0)))
+examples/nanomagick	nanomagick.c	333	orb	mem_access	Unknown	\valid_read(img.data + (unsigned int)((unsigned int)(y_0 * img.w) + x_0))
+examples/nanomagick	nanomagick.c	338	orb	index_bound	Unknown	orb_matches[i_1].idx1 < 5000
+examples/nanomagick	nanomagick.c	339	orb	index_bound	Unknown	orb_matches[i_1].idx2 < 5000
+examples/nanomagick	nanomagick.c	370	faces	index_bound	Unknown	i < 100
+examples/nanomagick	nanomagick.c	437	main	precondition of fprintf_va_44	Unknown	valid_read_string(param0)

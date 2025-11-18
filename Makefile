@@ -63,6 +63,7 @@ TARGETS=\
   debie1 \
   genann \
   gnugo \
+  grayskull \
   gzip124 \
   hiredis \
   icpc \
