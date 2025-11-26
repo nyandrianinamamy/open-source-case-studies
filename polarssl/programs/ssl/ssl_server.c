@@ -40,7 +40,7 @@
 
 // Commenting out unsupported functions with varargs
 #ifdef __FRAMAC__
-# define printf(...)
+
 # define snprintf(...)
 
 //@ ghost volatile int _state;

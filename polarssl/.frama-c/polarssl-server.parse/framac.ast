@@ -34281,6 +34281,345 @@ static int my_set_session(ssl_context *ssl)
   return_label: return __retres;
 }
 
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_142(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_143(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_144(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_145(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_146(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_147(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_148(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_149(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_150(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_151(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_152(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_153(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_154(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_155(char const * restrict format);
+
+/*@ requires valid_read_string(param1);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param1 + (0 ..))),
+            (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param1 + (0 ..)), param0;
+ */
+int printf_va_156(char const * restrict format, int param0, char *param1);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_157(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_158(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_159(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_160(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_161(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_162(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_163(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_164(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_165(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_166(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(param1);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param1 + (0 ..))),
+            (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param1 + (0 ..)), param0;
+ */
+int printf_va_167(char const * restrict format, int param0, char *param1);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_168(char const * restrict format);
+
 /*@ requires valid_read_string(param0);
     requires valid_read_string(param1);
     requires valid_read_string(format);
@@ -34294,6 +34633,61 @@ static int my_set_session(ssl_context *ssl)
  */
 int sprintf_va_2(char * restrict s, char const * restrict format,
                  char *param0, char *param1);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..)));
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..)));
+ */
+int printf_va_169(char const * restrict format);
+
+/*@ requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            param0;
+ */
+int printf_va_170(char const * restrict format, int param0);
+
+/*@ requires valid_read_string(param1);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param1 + (0 ..))),
+            (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param1 + (0 ..)), param0;
+ */
+int printf_va_171(char const * restrict format, int param0, char *param1);
+
+/*@ requires valid_read_string(param1);
+    requires valid_read_string(format);
+    assigns \result, __fc_stdout->__fc_FILE_data;
+    assigns \result
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            (indirect: __fc_stdout->__fc_FILE_data),
+            (indirect: *(format + (0 ..))), (indirect: *(param1 + (0 ..))),
+            (indirect: param0);
+    assigns __fc_stdout->__fc_FILE_data
+      \from (indirect: __fc_stdout->__fc_FILE_id),
+            __fc_stdout->__fc_FILE_data, (indirect: *(format + (0 ..))),
+            *(param1 + (0 ..)), param0;
+ */
+int printf_va_172(char const * restrict format, int param0, char *param1);
 
 int main(int argc, char **argv)
 {
@@ -34316,32 +34710,57 @@ int main(int argc, char **argv)
   char const *tmp_3;
   int client_fd = -1;
   char *pers = (char *)"ssl_server";
+  printf("\n  . Loading the server cert. and key..."); /* printf_va_142 */
   fflush(__fc_stdout);
   memset((void *)(& srvcert),0,sizeof(x509_cert));
   tmp = strlen(test_srv_crt);
   ret = x509parse_crt(& srvcert,(unsigned char const *)(test_srv_crt),tmp);
-  if (ret != 0) goto exit;
+  if (ret != 0) {
+    printf(" failed\n  !  x509parse_crt returned %d\n\n",ret); /* printf_va_143 */
+    goto exit;
+  }
   tmp_0 = strlen(test_ca_crt);
   ret = x509parse_crt(& srvcert,(unsigned char const *)(test_ca_crt),tmp_0);
-  if (ret != 0) goto exit;
+  if (ret != 0) {
+    printf(" failed\n  !  x509parse_crt returned %d\n\n",ret); /* printf_va_144 */
+    goto exit;
+  }
   rsa_init(& rsa,0,0);
   tmp_1 = strlen(test_srv_key);
   ret = x509parse_key(& rsa,(unsigned char const *)(test_srv_key),tmp_1,
                       (unsigned char const *)0,(size_t)0);
-  if (ret != 0) goto exit;
+  if (ret != 0) {
+    printf(" failed\n  !  x509parse_key returned %d\n\n",ret); /* printf_va_145 */
+    goto exit;
+  }
+  printf(" ok\n"); /* printf_va_146 */
+  printf("  . Bind on https://localhost:4433/ ..."); /* printf_va_147 */
   fflush(__fc_stdout);
   ret = net_bind(& listen_fd,(char const *)0,4433);
-  if (ret != 0) goto exit;
+  if (ret != 0) {
+    printf(" failed\n  ! net_bind returned %d\n\n",ret); /* printf_va_148 */
+    goto exit;
+  }
+  printf(" ok\n"); /* printf_va_149 */
+  printf("  . Seeding the random number generator..."); /* printf_va_150 */
   fflush(__fc_stdout);
   entropy_init(& entropy);
   tmp_2 = strlen((char const *)pers);
   ;
   ret = ctr_drbg_init(& ctr_drbg,& entropy_func,(void *)(& entropy),
                       (unsigned char const *)pers,tmp_2);
-  if (ret != 0) goto exit;
+  if (ret != 0) {
+    printf(" failed\n  ! ctr_drbg_init returned %d\n",ret); /* printf_va_151 */
+    goto exit;
+  }
+  printf(" ok\n"); /* printf_va_152 */
+  printf("  . Setting up the SSL data...."); /* printf_va_153 */
   fflush(__fc_stdout);
   ret = ssl_init(& ssl);
-  if (ret != 0) goto exit;
+  if (ret != 0) {
+    printf(" failed\n  ! ssl_init returned %d\n\n",ret); /* printf_va_154 */
+    goto exit;
+  }
   ssl_set_endpoint(& ssl,1);
   ssl_set_authmode(& ssl,0);
   ssl_set_rng(& ssl,& ctr_drbg_random,(void *)(& ctr_drbg));
@@ -34353,26 +34772,39 @@ int main(int argc, char **argv)
   ssl_set_ca_chain(& ssl,srvcert.next,(x509_crl *)0,(char const *)0);
   ssl_set_own_cert(& ssl,& srvcert,& rsa);
   ssl_set_dh_param(& ssl,(char const *)my_dhm_P,(char const *)my_dhm_G);
+  printf(" ok\n"); /* printf_va_155 */
   reset: ;
   if (ret != 0) {
     char error_buf[100];
     error_strerror(ret,error_buf,(size_t)100);
+    printf("Last error was: %d - %s\n\n",ret,error_buf); /* printf_va_156 */
   }
   if (client_fd != -1) net_close(client_fd);
   ssl_session_reset(& ssl);
   client_fd = -1;
+  printf("  . Waiting for a remote connection ..."); /* printf_va_157 */
   fflush(__fc_stdout);
   ret = net_accept(listen_fd,& client_fd,(void *)0);
-  if (ret != 0) goto exit;
+  if (ret != 0) {
+    printf(" failed\n  ! net_accept returned %d\n\n",ret); /* printf_va_158 */
+    goto exit;
+  }
   ssl_set_bio(& ssl,& net_recv,(void *)(& client_fd),& net_send,
               (void *)(& client_fd));
+  printf(" ok\n"); /* printf_va_159 */
+  printf("  . Performing the SSL/TLS handshake..."); /* printf_va_160 */
   fflush(__fc_stdout);
   while (1) {
     ret = ssl_handshake(& ssl);
     if (! (ret != 0)) break;
     if (ret != -0x0052) 
-      if (ret != -0x0054) goto reset;
+      if (ret != -0x0054) {
+        printf(" failed\n  ! ssl_handshake returned %d\n\n",ret); /* printf_va_161 */
+        goto reset;
+      }
   }
+  printf(" ok\n"); /* printf_va_162 */
+  printf("  < Read from client:"); /* printf_va_163 */
   fflush(__fc_stdout);
   while (1) {
     len = (int)(sizeof(buf) - (unsigned int)1);
@@ -34383,18 +34815,22 @@ int main(int argc, char **argv)
       if (ret == -0x0054) goto __Cont;
     if (ret <= 0) {
       switch (ret) {
-        case -0x7880: ;
+        case -0x7880:
+        printf(" connection was closed gracefully\n"); /* printf_va_164 */
         break;
-        case -0x0050: ;
+        case -0x0050:
+        printf(" connection was reset by peer\n"); /* printf_va_165 */
         break;
-        default: ;
+        default: printf(" ssl_read returned %d\n",ret); /* printf_va_166 */
         break;
       }
       break;
     }
     len = ret;
+    printf(" %d bytes read\n\n%s",len,(char *)(buf)); /* printf_va_167 */
     __Cont: break;
   }
+  printf("  > Write to client:"); /* printf_va_168 */
   fflush(__fc_stdout);
   time(& t);
   stime = ctime((time_t const *)(& t));
@@ -34406,11 +34842,18 @@ int main(int argc, char **argv)
   while (1) {
     ret = ssl_write(& ssl,(unsigned char const *)(buf),(size_t)len);
     if (! (ret <= 0)) break;
-    if (ret == -0x0050) goto reset;
+    if (ret == -0x0050) {
+      printf(" failed\n  ! peer closed the connection\n\n"); /* printf_va_169 */
+      goto reset;
+    }
     if (ret != -0x0052) 
-      if (ret != -0x0054) goto exit;
+      if (ret != -0x0054) {
+        printf(" failed\n  ! ssl_write returned %d\n\n",ret); /* printf_va_170 */
+        goto exit;
+      }
   }
   len = ret;
+  printf(" %d bytes written\n\n%s\n",len,(char *)(buf)); /* printf_va_171 */
   ssl_close_notify(& ssl);
   ret = 0;
   goto reset;
@@ -34418,6 +34861,7 @@ int main(int argc, char **argv)
   if (ret != 0) {
     char error_buf_0[100];
     error_strerror(ret,error_buf_0,(size_t)100);
+    printf("Last error was: %d - %s\n\n",ret,error_buf_0); /* printf_va_172 */
   }
   net_close(client_fd);
   x509_free(& srvcert);
