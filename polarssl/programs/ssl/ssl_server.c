@@ -38,10 +38,10 @@
 
 #include "polarssl/config.h"
 
-// Commenting out unsupported functions with varargs
+
 #ifdef __FRAMAC__
 
-# define snprintf(...)
+
 
 //@ ghost volatile int _state;
 
