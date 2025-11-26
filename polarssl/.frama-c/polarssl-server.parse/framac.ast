@@ -34180,15 +34180,6 @@ int xtea_self_test(int verbose)
   return_label: return __retres;
 }
 
-/*@ requires \valid(str + (0 .. 5));
-    ensures \initialized(\old(str) + (0 .. 5));
-    assigns \result, _state, *(str + (0 .. 5));
-    assigns \result \from _state;
-    assigns _state \from _state;
-    assigns *(str + (0 .. 5)) \from _state;
- */
-int my_sprintf(char *str);
-
 char *my_dhm_P =
   (char *)"E4004C1F94182000103D883A448B3F802CE4B44A83301270002C20D0321CFD0011CCEF784C26A400F43DFB901BCA7538F2C6B176001CF5A0FD16D2C48B1D0C1CF6AC8E1DA6BCC3B4E1F96B0564965300FFA1D0B601EB2800F489AA512C4B248C01F76949A60BB7F00A40B1EAB64BDD48E8A700D60B7F1200FA8E77B0A979DABF";
 char *my_dhm_G = (char *)"4";
@@ -34290,6 +34281,20 @@ static int my_set_session(ssl_context *ssl)
   return_label: return __retres;
 }
 
+/*@ requires valid_read_string(param0);
+    requires valid_read_string(param1);
+    requires valid_read_string(format);
+    assigns \result, *(s + (0 ..));
+    assigns \result
+      \from (indirect: *(format + (0 ..))), (indirect: *(param1 + (0 ..))),
+            (indirect: *(param0 + (0 ..)));
+    assigns *(s + (0 ..))
+      \from (indirect: *(format + (0 ..))), *(param1 + (0 ..)),
+            *(param0 + (0 ..));
+ */
+int sprintf_va_2(char * restrict s, char const * restrict format,
+                 char *param0, char *param1);
+
 int main(int argc, char **argv)
 {
   int ret;
@@ -34308,6 +34313,7 @@ int main(int argc, char **argv)
   size_t tmp_0;
   size_t tmp_1;
   size_t tmp_2;
+  char const *tmp_3;
   int client_fd = -1;
   char *pers = (char *)"ssl_server";
   fflush(__fc_stdout);
@@ -34392,7 +34398,11 @@ int main(int argc, char **argv)
   fflush(__fc_stdout);
   time(& t);
   stime = ctime((time_t const *)(& t));
-  len = my_sprintf((char *)(buf));
+  tmp_3 = ssl_get_ciphersuite((ssl_context const *)(& ssl));
+  ;
+  len = sprintf((char *)(buf),
+                "HTTP/1.0 200 OK\r\nContent-Type: text/html\r\n\r\n<html>\r\n<body>\r\n<h2>This is a test server</h2>\r\n<h2>Current server time: %s</h2>\r\n<p>Successful connection using: %s</p>\r\n</body>\r\n</html>\r\n",
+                stime,(char *)tmp_3); /* sprintf_va_2 */
   while (1) {
     ret = ssl_write(& ssl,(unsigned char const *)(buf),(size_t)len);
     if (! (ret <= 0)) break;

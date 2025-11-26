@@ -42,14 +42,14 @@
 #ifdef __FRAMAC__
 # define printf(...)
 # define snprintf(...)
-# define sprintf(buf, ...) my_sprintf(buf)
+
 //@ ghost volatile int _state;
-/*@
-  requires \valid(str+(0 .. 5)); // we define an arbitrary length
-  assigns \result, _state, *(str + (0 .. 5)) \from _state;
-  ensures \initialized(str + (0 .. 5));
- */
-int my_sprintf(char *str);
+
+
+
+
+
+
 #endif
 
 #include "polarssl/entropy.h"
