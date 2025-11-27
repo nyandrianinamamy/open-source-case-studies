@@ -30,7 +30,7 @@
 |miniz|Compression library in a single source file, implementing zlib and Deflate|https://github.com/richgel999/miniz|6|5674|26|8299|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|library|
 |monocypher|Small, self-contained cryptographic library|https://monocypher.org|1|113|42|23680|HAS_DYN_ALLOC(tests), NO_RECURSION, NO_FLOAT|library|
 |papabench|Real time benchmark based on the Paparazzi unmanned aerial vehicle (UAV) code|https://github.com/t-crest/patmos-benchmarks/tree/master/PapaBench-0.4|1|47|80|7251|NO_DYN_ALLOC, UNUSED_RECURSION, HAS_FLOAT|executable|
-|polarssl|Implementation of the TLS and SSL protocols (formerly PolarSSL)|https://github.com/ARMmbed/mbedtls|1|132|119|29184|HAS_DYN_ALLOC, REM_RECURSION, NO_FLOAT|library|
+|polarssl|Implementation of the TLS and SSL protocols (formerly PolarSSL)|https://github.com/ARMmbed/mbedtls|1|139|118|28873|HAS_DYN_ALLOC, REM_RECURSION, NO_FLOAT|library|
 |powerwindow|Distributed power window control, by CoSys-Lab, part of TACLeBench|https://github.com/tacle/tacle-bench/tree/master/bench/app/powerwindow|1|0|39|2918|NO_DYN_ALLOC, NO_RECURSION, NO_FLOAT|executable|
 |qlz|Fast compression library|http://www.quicklz.com|4|118|7|963|HAS_DYN_ALLOC(tests), NO_RECURSION, NO_FLOAT|library|
 |safestringlib|Library for handling strings securely|https://github.com/intel/safestringlib|1|592|148|14922|NO_DYN_ALLOC, NO_RECURSION, NO_FLOAT|library|

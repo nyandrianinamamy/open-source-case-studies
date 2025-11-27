@@ -400,3 +400,9 @@ int fc_recv( void *ctx, unsigned char *buf, size_t len );
   assigns ctx->buffer[0 .. 127] \from input[0 .. 127], indirect:ilen;
  */
 void sha4_update( sha4_context *ctx, const unsigned char *input, size_t ilen );
+
+/*@
+  requires \valid(buf+(0 .. buflen-1));
+  assigns buf[0 .. buflen-1] \from indirect:ret;
+*/
+void error_strerror( int ret, char *buf, size_t buflen );

@@ -122,10 +122,10 @@
 
 #include <string.h>
 
-// Commenting out unsupported functions with varargs
-#ifdef __FRAMAC__
-# define snprintf(...) 
-#endif
+
+
+
+
 
 #if defined _MSC_VER && !defined  snprintf
 #define  snprintf  _snprintf
