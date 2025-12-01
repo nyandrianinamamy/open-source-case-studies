@@ -35,6 +35,10 @@ directory	file	line	function	property kind	status	property
 .	fc_stubs.h	356	des3_crypt_cbc	precondition	Unknown	\initialized(input + (0 .. length - 1))
 .	fc_stubs.h	361	des3_crypt_cbc	postcondition	Unknown	\initialized(\old(output) + (0 .. \old(length) - 1))
 .	fc_stubs.h	362	des3_crypt_cbc	postcondition	Unknown	\result ≡ 0
+FRAMAC_SHARE/libc	stdio.h	237	printf_va_156	precondition	Unknown	valid_read_string(param1)
+FRAMAC_SHARE/libc	stdio.h	237	printf_va_171	precondition	Unknown	valid_read_string(param1)
+FRAMAC_SHARE/libc	stdio.h	237	printf_va_172	precondition	Unknown	valid_read_string(param1)
+FRAMAC_SHARE/libc	stdio.h	241	sprintf_va_2	precondition	Unknown	valid_read_string(param0)
 FRAMAC_SHARE/libc	string.h	108	memcpy	precondition	Unknown	valid_dest: valid_or_empty(dest, n)
 FRAMAC_SHARE/libc	string.h	109	memcpy	precondition	Invalid or unreachable	valid_src: valid_read_or_empty(src, n)
 FRAMAC_SHARE/libc	string.h	133	memmove	precondition	Unknown	valid_dest: valid_or_empty(dest, n)
@@ -53,7 +57,6 @@ library	dhm.c	276	dhm_calc_secret	user assertion	Unknown	0 ≤ *olen ≤ 256
 library	dhm.c	283	dhm_calc_secret	signed_overflow	Unknown	-2147483648 ≤ (int)(-0x3300) + ret
 library	entropy.c	94	entropy_update	precondition of sha4	Unknown	\initialized(input + (0 .. ilen - 1))
 library	entropy.c	167	entropy_func	signed_overflow	Unknown	count + 1 ≤ 2147483647
-library	error.c	142	error_strerror	signed_overflow	Unknown	-ret ≤ 2147483647
 library	md5.c	233	md5_update	precondition of md5_process	Unknown	\valid_read(data + (0 .. 63))
 library	md5.c	240	md5_update	precondition of memcpy	Unknown	valid_src: valid_read_or_empty(src, n)
 library	md5.c	350	md5_hmac_starts	initialization	Unknown	\initialized(key + i)
@@ -131,3 +134,7 @@ library	ssl_tls.c	1092	ssl_read_record	precondition of memmove	Unknown	valid_src
 library	ssl_tls.c	1353	ssl_write_certificate	precondition of memcpy	Invalid or unreachable	valid_src: valid_read_or_empty(src, n)
 library	ssl_tls.c	2327	ssl_write	precondition of memcpy	Unknown	valid_src: valid_read_or_empty(src, n)
 programs/ssl	ssl_server.c	133	my_get_session	postcondition	Unknown	\result ≡ 0 ∨ \result ≡ 1
+programs/ssl	ssl_server.c	351	main	precondition of printf_va_156	Unknown	valid_read_string(param1)
+programs/ssl	ssl_server.c	466	main	precondition of sprintf_va_2	Unknown	valid_read_string(param0)
+programs/ssl	ssl_server.c	485	main	precondition of printf_va_171	Unknown	valid_read_string(param1)
+programs/ssl	ssl_server.c	498	main	precondition of printf_va_172	Unknown	valid_read_string(param1)

@@ -76,6 +76,7 @@ USE_SPEC  += \
   camellia_crypt_cbc \
   camellia_feistel \
   sha4 \
+  error_strerror \
 
 ## GUI-only flags
 FCGUIFLAGS += \

@@ -190,7 +190,7 @@
    ssl_close_notify (1 call); ssl_decrypt_buf (1 call);
    ssl_derive_keys (4 calls); ssl_encrypt_buf (1 call);
    ssl_fetch_input (5 calls); ssl_flush_output (5 calls); ssl_free (1 call);
-   ssl_get_bytes_avail (0 call); ssl_get_ciphersuite (0 call);
+   ssl_get_bytes_avail (0 call); ssl_get_ciphersuite (1 call);
    ssl_get_ciphersuite_id (0 call); ssl_get_ciphersuite_name (1 call);
    ssl_get_verify_result (0 call); ssl_get_version (0 call);
    ssl_handshake (3 calls); ssl_handshake_client (1 call);
@@ -243,9 +243,9 @@
    x509parse_verifycrl (2 calls); xtea_crypt_cbc (0 call);
    xtea_crypt_ecb (3 calls); xtea_self_test (0 call); xtea_setup (1 call); 
   
-  Specified-only functions (2)
+  Specified-only functions (1)
   ============================
-   fc_recv (0 call); my_sprintf (1 call); 
+   fc_recv (0 call); 
   
   Undefined and unspecified functions (0)
   =======================================
@@ -255,7 +255,7 @@
   =============================
    
   
-  Potential entry points (78)
+  Potential entry points (77)
   ===========================
    aes_self_test; arc4_self_test; base64_self_test; camellia_self_test;
     cipher_finish; cipher_free_ctx; cipher_info_from_string; cipher_init_ctx;
@@ -269,7 +269,7 @@
     md_info_from_string; md_list; mpi_get_bit; mpi_read_file; mpi_self_test;
     mpi_set_bit; mpi_write_file; net_connect; net_set_block; net_set_nonblock;
     net_usleep; rsa_gen_key; rsa_self_test; set_alarm; sha1_self_test;
-    sha2_self_test; sha4_self_test; ssl_get_bytes_avail; ssl_get_ciphersuite;
+    sha2_self_test; sha4_self_test; ssl_get_bytes_avail;
     ssl_get_ciphersuite_id; ssl_get_verify_result; ssl_get_version;
     ssl_set_dh_param_ctx; ssl_set_hostname; ssl_set_max_version;
     ssl_set_verify; version_get_number; version_get_string;
@@ -280,15 +280,15 @@
   
   Global metrics
   ============== 
-  Sloc = 15559
-  Decision point = 2475
+  Sloc = 15724
+  Decision point = 2606
   Global variables = 179
-  If = 2287
+  If = 2418
   Loop = 295
   Goto = 1290
-  Assignment = 7003
+  Assignment = 6874
   Exit point = 464
-  Function = 466
-  Function call = 2384
+  Function = 465
+  Function call = 2549
   Pointer dereferencing = 4395
-  Cyclomatic complexity = 2939
+  Cyclomatic complexity = 3070
