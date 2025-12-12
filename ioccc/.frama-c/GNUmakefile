@@ -89,10 +89,10 @@ NOT_HANDLED=\
 ### Each target <t>.eva needs a rule <t>.parse with source files as prerequisites
 
 2020_burton_prog.parse: ../2020/burton/prog.c
-2020_burton_prog.parse: FCFLAGS += -json-compilation-database ../2020/burton \
+2020_burton_prog.parse: FCFLAGS += -compilation-db ../2020/burton \
 
 #2020_carlini_prog.parse: ../2020/carlini/prog.c #  missing spec for scanf with non-static format argument
-#2020_carlini_prog.parse: FCFLAGS += -json-compilation-database ../2020/carlini \
+#2020_carlini_prog.parse: FCFLAGS += -compilation-db ../2020/carlini \
 
 #2020_endoh1_prog.parse: ../2020/endoh1/prog.c # requires <ncurses.h>
 
@@ -154,10 +154,10 @@ NOT_HANDLED=\
 2019_adamovsky_progSpoiler.parse: ../2019/adamovsky/progSpoiler.c
 
 2019_burton_prog_clean.parse: ../2019/burton/prog.clean.c
-2019_burton_prog_clean.parse: FCFLAGS += -json-compilation-database ../2019/burton
+2019_burton_prog_clean.parse: FCFLAGS += -compilation-db ../2019/burton
 
 #2019_burton_prog.parse: ../2019/burton/prog.c # invalid in C99: implicit int variables
-#2019_burton_prog.parse: FCFLAGS += -json-compilation-database ../2019/burton
+#2019_burton_prog.parse: FCFLAGS += -compilation-db ../2019/burton
 
 #2019_ciura_prog.parse: ../2019/ciura/prog.c # missing spec for wchar.h's getwchar
 
@@ -170,7 +170,7 @@ NOT_HANDLED=\
 #2019_dogon_prog.parse: ../2019/dogon/prog.c # requires <X11/Xlib.h>
 
 2019_duble_prog.parse: ../2019/duble/prog.c
-2019_duble_prog.parse: FCFLAGS += -kernel-warn-key pp=error -json-compilation-database ../2019/duble
+2019_duble_prog.parse: FCFLAGS += -kernel-warn-key pp=error -compilation-db ../2019/duble
 
 2019_endoh_prog.parse: ../2019/endoh/prog.c
 
@@ -183,7 +183,7 @@ NOT_HANDLED=\
 2019_lynn_prog.parse: ../2019/lynn/prog.c
 
 #2019_mills_prog.parse: ../2019/mills/prog.c # missing spec for tanh
-#2019_mills_prog.parse: FCFLAGS += -json-compilation-database ../2019/mills
+#2019_mills_prog.parse: FCFLAGS += -compilation-db ../2019/mills
 
 #2019_poikola_prog.parse: ../2019/poikola/prog.c # missing spec for fstat
 
