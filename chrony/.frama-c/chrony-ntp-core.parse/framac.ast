@@ -1188,6 +1188,8 @@ ADF_AuthTable ADF_CreateTable(void)
   return result;
 }
 
+/*@ assigns *node;
+    assigns *node \from *node; */
 static void close_node(TableNode *node)
 {
   int i;
@@ -1197,6 +1199,7 @@ static void close_node(TableNode *node)
     /*@ loop \eva::unroll 16; */
     while ((unsigned long)i < 1UL << 4) {
       child_node = node->extended + i;
+      close_node(child_node);
       i ++;
     }
     free((void *)node->extended);
@@ -1420,7 +1423,9 @@ int ADF_IsAllowed(ADF_AuthTable table, IPAddr *ip_addr)
   return_label: return __retres;
 }
 
-int volatile nondet;
+/*@ assigns \result;
+    assigns \result \from (indirect: *node), (indirect: parent);
+ */
 static int is_any_allowed(TableNode *node, State parent)
 {
   int __retres;
@@ -1428,15 +1433,19 @@ static int is_any_allowed(TableNode *node, State parent)
   int i;
   if (node->state != (unsigned int)AS_PARENT) state = node->state;
   else state = parent;
-  __FC_assert((state != (unsigned int)AS_PARENT) != 0,"addrfilt.c",387,
+  __FC_assert((state != (unsigned int)AS_PARENT) != 0,"addrfilt.c",384,
               "state != AS_PARENT");
   if (node->extended) {
     i = 0;
     /*@ loop \eva::unroll 16; */
     while ((unsigned long)i < 1UL << 4) {
-      if (nondet) {
-        __retres = 1;
-        goto return_label;
+      {
+        int tmp;
+        tmp = is_any_allowed(node->extended + i,state);
+        if (tmp) {
+          __retres = 1;
+          goto return_label;
+        }
       }
       i ++;
     }
@@ -3888,6 +3897,7 @@ void CNF_Finalise(void)
   return;
 }
 
+static int __fc_inside_ParseLine;
 void CNF_ReadFile(char const *filename)
 {
   FILE *in;
@@ -3915,7 +3925,7 @@ void CNF_ReadFile(char const *filename)
     char *tmp_0;
     tmp_0 = fgets(line,(int)sizeof(line),in);
     if (! tmp_0) break;
-    CNF_ParseLine(filename,i,line);
+    if (! __fc_inside_ParseLine) CNF_ParseLine(filename,i,line);
     i ++;
   }
   fclose(in);
@@ -4453,7 +4463,11 @@ void CNF_ParseLine(char const *filename, int number, char *line)
                                             }
                                             else parse_initstepslew(p);
                                           }
-                                          else parse_include(p);
+                                          else {
+                                            __fc_inside_ParseLine = 1;
+                                            parse_include(p);
+                                            __fc_inside_ParseLine = 0;
+                                          }
                                         }
                                         else parse_hwtimestamp(p);
                                       }
@@ -5557,7 +5571,6 @@ static void parse_allow_deny(char *line, ARR_Instance restrictions, int allow)
       if (n >= (unsigned long)1) {
         _LOR:
         {
-          /*@ assert n ≤ 4; */ ;
           new_node = (AllowDeny *)ARR_GetNewElement(restrictions);
           new_node->allow = allow;
           new_node->all = all;
@@ -5591,7 +5604,7 @@ static void parse_allow_deny(char *line, ARR_Instance restrictions, int allow)
                                                   c << 8)) | d);
               new_node->subnet_bits = 32;
               break;
-              default: __FC_assert(0 != 0,"conf.c",1073,"0");
+              default: __FC_assert(0 != 0,"conf.c",1092,"0");
             }
           }
           if (slashpos) {
@@ -6113,7 +6126,6 @@ static void parse_hwtimestamp(char *line)
   return_label: return;
 }
 
-/*@ assigns \nothing; */
 static void parse_include(char *line)
 {
   glob_t gl;
