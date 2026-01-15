@@ -11,11 +11,11 @@ import subprocess as sp
 from shutil import which, rmtree
 from pathlib import Path
 
-frama_c_config = which("frama-c-config")
+frama_c = which("frama-c")
 make = which("make")
 
-if frama_c_config is None:
-    sys.exit("error: cannot find frama-c-config in the path")
+if frama_c is None:
+    sys.exit("error: cannot find frama-c in the path")
 
 
 def run_and_check(args):
@@ -26,7 +26,7 @@ def run_and_check(args):
         return out.decode()
 
 
-frama_c_lib = Path(run_and_check([frama_c_config, "-print-lib-path"]))
+frama_c_lib = Path(run_and_check([frama_c, "-print-lib-path"]))
 
 sys.path.append(str(frama_c_lib / "analysis-scripts"))
 
