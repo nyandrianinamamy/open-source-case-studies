@@ -1,12 +1,12 @@
 [kernel:annot:missing-spec] test/unit/test.c:53: Warning: 
-  Neither code nor specification for function LOG_SetDebugLevel,
-   generating default assigns. See -generated-spec-* options for more info
+  Neither code nor specification for function LOG_SetDebugLevel, generating
+  default assigns. See -generated-spec-* options for more info.
 [kernel:annot:missing-spec] test/unit/test.c:68: Warning: 
-  Neither code nor specification for function LOG_Initialise,
-   generating default assigns. See -generated-spec-* options for more info
+  Neither code nor specification for function LOG_Initialise, generating
+  default assigns. See -generated-spec-* options for more info.
 [kernel:annot:missing-spec] memory.c:40: Warning: 
-  Neither code nor specification for function LOG_Message,
-   generating default assigns. See -generated-spec-* options for more info
+  Neither code nor specification for function LOG_Message, generating default
+  assigns. See -generated-spec-* options for more info.
 [eva:alarm] cmdparse.c:216: Warning: 
   out of bounds write. assert \valid(tmp);
                        (tmp from q++)
@@ -3931,8 +3931,8 @@
          main :: fc_stubs.c:37 <-
          eva_main
 [kernel:annot:missing-spec] ntp_core.c:394: Warning: 
-  Neither code nor specification for function LOG_FileOpen,
-   generating default assigns. See -generated-spec-* options for more info
+  Neither code nor specification for function LOG_FileOpen, generating default
+  assigns. See -generated-spec-* options for more info.
 [eva:alarm] reference.c:202: Warning: 
   function fopen: precondition 'valid_filename' got status unknown.
   stack: fopen :: reference.c:202 <-
@@ -4125,11 +4125,11 @@
          main :: fc_stubs.c:37 <-
          eva_main
 [kernel:annot:missing-spec] reference.c:856: Warning: 
-  Neither code nor specification for function LOG_FileWrite,
-   generating default assigns. See -generated-spec-* options for more info
+  Neither code nor specification for function LOG_FileWrite, generating default
+  assigns. See -generated-spec-* options for more info.
 [kernel:annot:missing-spec] test/unit/test.c:81: Warning: 
-  Neither code nor specification for function LOG_OpenFileLog,
-   generating default assigns. See -generated-spec-* options for more info
+  Neither code nor specification for function LOG_OpenFileLog, generating
+  default assigns. See -generated-spec-* options for more info.
 [eva:alarm] keys.c:204: Warning: 
   function fopen: precondition 'valid_filename' got status unknown.
   stack: fopen :: keys.c:204 <-
@@ -6074,7 +6074,7 @@
          eva_main
 [kernel:annot:missing-spec] conf.c:1818: Warning: 
   Neither code nor specification for function CAM_AddAccessRestriction,
-   generating default assigns. See -generated-spec-* options for more info
+  generating default assigns. See -generated-spec-* options for more info.
 [eva:alarm] conf.c:1818: Warning: 
   out of bounds read. assert \valid_read(&node->allow);
   stack: CNF_SetupAccessRestrictions :: test/unit/ntp_core.c:331 <-
@@ -6308,11 +6308,11 @@
          main :: fc_stubs.c:37 <-
          eva_main
 [kernel:annot:missing-spec] ntp_core.c:608: Warning: 
-  Neither code nor specification for function SPF_CreateInstance,
-   generating default assigns. See -generated-spec-* options for more info
+  Neither code nor specification for function SPF_CreateInstance, generating
+  default assigns. See -generated-spec-* options for more info.
 [kernel:annot:missing-spec] ntp_core.c:697: Warning: 
-  Neither code nor specification for function SPF_DropSamples,
-   generating default assigns. See -generated-spec-* options for more info
+  Neither code nor specification for function SPF_DropSamples, generating
+  default assigns. See -generated-spec-* options for more info.
 [eva:alarm] reference.c:1212: Warning: 
   signed overflow. assert -9223372036854775808 ≤ ref_time->tv_sec - 1;
   stack: REF_GetReferenceParams :: reference.c:1250 <-
@@ -6555,14 +6555,14 @@
          main :: fc_stubs.c:37 <-
          eva_main
 [kernel:annot:missing-spec] ntp_core.c:1480: Warning: 
-  Neither code nor specification for function SPF_AccumulateSample,
-   generating default assigns. See -generated-spec-* options for more info
+  Neither code nor specification for function SPF_AccumulateSample, generating
+  default assigns. See -generated-spec-* options for more info.
 [kernel:annot:missing-spec] ntp_core.c:1482: Warning: 
   Neither code nor specification for function SPF_GetNumberOfSamples,
-   generating default assigns. See -generated-spec-* options for more info
+  generating default assigns. See -generated-spec-* options for more info.
 [kernel:annot:missing-spec] ntp_core.c:1484: Warning: 
-  Neither code nor specification for function SPF_GetFilteredSample,
-   generating default assigns. See -generated-spec-* options for more info
+  Neither code nor specification for function SPF_GetFilteredSample, generating
+  default assigns. See -generated-spec-* options for more info.
 [eva:alarm] util.c:181: Warning: 
   accessing uninitialized left-value. assert \initialized(&b->tv_sec);
   stack: UTI_DiffTimespecsToDouble :: ntp_core.c:1487 <-
@@ -11577,8 +11577,8 @@
          main :: fc_stubs.c:37 <-
          eva_main
 [kernel:annot:missing-spec] ntp_core.c:648: Warning: 
-  Neither code nor specification for function SPF_DestroyInstance,
-   generating default assigns. See -generated-spec-* options for more info
+  Neither code nor specification for function SPF_DestroyInstance, generating
+  default assigns. See -generated-spec-* options for more info.
 [eva:alarm] util.c:310: Warning: 
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
@@ -14735,8 +14735,8 @@
 [eva:locals-escaping] test/unit/test.c:70: Warning: 
   locals {conf} escaping the scope of test_unit through processed_command
 [kernel:annot:missing-spec] test/unit/test.c:72: Warning: 
-  Neither code nor specification for function LOG_Finalise,
-   generating default assigns. See -generated-spec-* options for more info
+  Neither code nor specification for function LOG_Finalise, generating default
+  assigns. See -generated-spec-* options for more info.
 [eva:garbled-mix:summary] Warning: 
   Origins of garbled mix generated during analysis:
     array.c:116: misaligned read of addresses
