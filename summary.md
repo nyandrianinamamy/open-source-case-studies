@@ -12,7 +12,7 @@
 |gnugo|Go game|https://ftp.gnu.org/gnu/gnugo/|1|110|27|2048|NO_DYN_ALLOC, HAS_RECURSION, NO_FLOAT|executable|
 |grayskull|Minimalist, dependency-free computer vision library for microcontrollers|https://github.com/zserge/grayskull|2|260|5|2133|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|library|
 |gzip124|Data compression program|https://www.gnu.org/software/gzip/|1|1014|35|5826|HAS_DYN_ALLOC, REM_RECURSION, NO_FLOAT|executable|
-|hiredis|Minimalistic client library for the Redis database|https://github.com/redis/hiredis|2|617|45|6622|HAS_DYN_ALLOC, REM_RECURSION, HAS_FLOAT|library|
+|hiredis|Minimalistic client library for the Redis database|https://github.com/redis/hiredis|2|614|45|6622|HAS_DYN_ALLOC, REM_RECURSION, HAS_FLOAT|library|
 |icpc|Fake application developed for a programming challenge, for ICPC2011|http://icpc2011.cs.usask.ca/conf_site/IndustrialTrack.html|1|1|15|965|NO_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|executable|
 |ioccc|Some winners of the International Obfuscated C Code Contest (IOCCC)|https://github.com/ioccc-src/winner|21|875|55|3909|HAS_DYN_ALLOC, UNUSED_RECURSION, HAS_FLOAT|executable|
 |itc-benchmarks|Static analysis benchmark from Toyota ITC|https://github.com/regehr/itc-benchmarks|2|482|107|29633|HAS_DYN_ALLOC, REM_RECURSION, HAS_FLOAT|test suite|
