@@ -4,7 +4,7 @@
 ### Prologue. Do not modify this block. #######################################
 -include path.mk
 FRAMAC ?= frama-c
-include $(shell $(FRAMAC)-config -print-lib-path)/analysis-scripts/prologue.mk
+include $(shell $(FRAMAC) -print-lib-path)/analysis-scripts/prologue.mk
 ###############################################################################
 
 # Edit below as needed. Suggested flags are optional.
@@ -86,7 +86,7 @@ EACSL_SCRIPT:=$(shell dirname $(shell which $(FRAMAC)))/e-acsl-gcc.sh
 	$^ -O $@ -o x509-parser.stack.frama.c
 
 ### Epilogue. Do not modify this block. #######################################
-include $(shell $(FRAMAC)-config -print-lib-path)/analysis-scripts/epilogue.mk
+include $(shell $(FRAMAC) -print-lib-path)/analysis-scripts/epilogue.mk
 ###############################################################################
 
 # optional, for OSCS

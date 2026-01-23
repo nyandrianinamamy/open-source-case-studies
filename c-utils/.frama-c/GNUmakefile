@@ -4,7 +4,7 @@
 ### Prologue. Do not modify this block. #######################################
 -include path.mk
 FRAMAC ?= frama-c
-include $(shell $(FRAMAC)-config -print-lib-path)/analysis-scripts/prologue.mk
+include $(shell $(FRAMAC) -print-lib-path)/analysis-scripts/prologue.mk
 ###############################################################################
 
 # Edit below as needed. Suggested flags are optional.
@@ -76,7 +76,7 @@ ex_doublylinkedlist_6.parse: \
 # ex_fileutils.parse: \
 #   ../examples/fileutils_example.c \
 #   ../src/fileutils.c \
-#   $(shell $(FRAMAC)-config -print-share-path)/libc/stdlib.c \
+#   $(shell $(FRAMAC) -print-share-path)/libc/stdlib.c \
 
 ex_graph.eva: EVAFLAGS += -eva-no-alloc-returns-null
 ex_graph.eva: EVAFLAGS += -eva-precision 5
@@ -86,8 +86,8 @@ ex_graph.parse: \
   ../examples/graph_example.c \
   ../src/graph.c \
   fc_stubs.c \
-  $(shell $(FRAMAC)-config -print-share-path)/libc/stdlib.c \
-  $(shell $(FRAMAC)-config -print-share-path)/libc/string.c \
+  $(shell $(FRAMAC) -print-share-path)/libc/stdlib.c \
+  $(shell $(FRAMAC) -print-share-path)/libc/string.c \
 
 ex_linkedlist.eva: EVAFLAGS += -eva-no-alloc-returns-null
 ex_linkedlist.eva: EVAFLAGS += -main eva_main
@@ -159,7 +159,7 @@ ex_stringlib.parse: \
   ../examples/stringlib_example.c \
   ../src/stringlib.c \
   fc_stubs.c \
-  $(shell $(FRAMAC)-config -print-share-path)/libc/string.c \
+  $(shell $(FRAMAC) -print-share-path)/libc/string.c \
 
 ex_timing.eva: EVAFLAGS += -eva-no-alloc-returns-null
 ex_timing.eva: EVAFLAGS += -eva-precision 5
@@ -168,7 +168,7 @@ ex_timing.parse: \
   ../examples/timing_example.c \
 
 ### Epilogue. Do not modify this block. #######################################
-include $(shell $(FRAMAC)-config -print-lib-path)/analysis-scripts/epilogue.mk
+include $(shell $(FRAMAC) -print-lib-path)/analysis-scripts/epilogue.mk
 ###############################################################################
 
 # optional, for OSCS

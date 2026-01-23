@@ -4,7 +4,7 @@
 ### Prologue. Do not modify this block. #######################################
 -include path.mk
 FRAMAC ?= frama-c
-include $(shell $(FRAMAC)-config -print-lib-path)/analysis-scripts/prologue.mk
+include $(shell $(FRAMAC) -print-lib-path)/analysis-scripts/prologue.mk
 ###############################################################################
 
 # Edit below as needed. Suggested flags are optional.
@@ -33,7 +33,7 @@ TARGETS = gnugo.eva
 
 ### Each target <t>.eva needs a rule <t>.parse with source files as prerequisites
 gnugo.parse: \
-  $(shell $(FRAMAC)-config -print-share-path)/libc/string.c \
+  $(shell $(FRAMAC) -print-share-path)/libc/string.c \
   ../count.c \
   ../countlib.c \
   ../endgame.c \
@@ -60,7 +60,7 @@ gnugo.parse: \
   ../suicide.c \
 
 ### Epilogue. Do not modify this block. #######################################
-include $(shell $(FRAMAC)-config -print-lib-path)/analysis-scripts/epilogue.mk
+include $(shell $(FRAMAC) -print-lib-path)/analysis-scripts/epilogue.mk
 ###############################################################################
 
 # optional, for OSCS

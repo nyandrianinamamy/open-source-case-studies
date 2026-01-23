@@ -4,7 +4,7 @@
 ### Prologue. Do not modify this block. #######################################
 -include path.mk
 FRAMAC ?= frama-c
-include $(shell $(FRAMAC)-config -print-lib-path)/analysis-scripts/prologue.mk
+include $(shell $(FRAMAC) -print-lib-path)/analysis-scripts/prologue.mk
 ###############################################################################
 
 # Edit below as needed. Suggested flags are optional.
@@ -13,12 +13,12 @@ MACHDEP = x86_32
 
 ## Preprocessing flags (for -cpp-extra-args)
 CPPFLAGS    += \
-  -include$(shell $(FRAMAC)-config -print-share-path)/libc/string.h \
+  -include$(shell $(FRAMAC) -print-share-path)/libc/string.h \
   -DSTDC_HEADERS=1 \
   -DHAVE_UNISTD_H=1 \
   -DDIRENT=1 \
   -DNO_UTIME=1 \
-  -I$(shell $(FRAMAC)-config -print-share-path)/libc \
+  -I$(shell $(FRAMAC) -print-share-path)/libc \
   -I$(DIR) \
 
 ## General flags
@@ -45,7 +45,7 @@ FCGUIFLAGS += \
 TARGETS = gzip124.eva
 
 gzip124.parse: \
-  $(shell $(FRAMAC)-config -print-share-path)/libc/stdlib.c \
+  $(shell $(FRAMAC) -print-share-path)/libc/stdlib.c \
   fc_stubs.c \
   ../bits.c \
   ../crypt.c \
@@ -63,7 +63,7 @@ gzip124.parse: \
   ../zip.c \
 
 ### Epilogue. Do not modify this block. #######################################
-include $(shell $(FRAMAC)-config -print-lib-path)/analysis-scripts/epilogue.mk
+include $(shell $(FRAMAC) -print-lib-path)/analysis-scripts/epilogue.mk
 ###############################################################################
 
 # optional, for OSCS

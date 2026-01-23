@@ -4,7 +4,7 @@
 ### Prologue. Do not modify this block. #######################################
 -include path.mk
 FRAMAC ?= frama-c
-include $(shell $(FRAMAC)-config -print-lib-path)/analysis-scripts/prologue.mk
+include $(shell $(FRAMAC) -print-lib-path)/analysis-scripts/prologue.mk
 ###############################################################################
 
 # Edit below as needed. Suggested flags are optional.
@@ -1202,13 +1202,13 @@ programs_apps_wu-ftpd_CVE-2003-0466_fb_realpath_symlinks_bad.parse: \
   ../programs/apps/wu-ftpd/CVE-2003-0466/fb_realpath/symlinks_bad.c \
   ../programs/apps/wu-ftpd/CVE-1999-0368/wu-ftpd.c \
   fc_stubs.c \
-  $(shell $(FRAMAC)-config -print-share-path)/libc/string.c \
+  $(shell $(FRAMAC) -print-share-path)/libc/string.c \
 
 programs_apps_wu-ftpd_CVE-2003-0466_fb_realpath_symlinks_ok.parse: \
   ../programs/apps/wu-ftpd/CVE-2003-0466/fb_realpath/symlinks_ok.c \
   ../programs/apps/wu-ftpd/CVE-1999-0368/wu-ftpd.c \
   fc_stubs.c \
-  $(shell $(FRAMAC)-config -print-share-path)/libc/string.c \
+  $(shell $(FRAMAC) -print-share-path)/libc/string.c \
 
 # phony target to quickly check sanity: *_ok tests must have no errors,
 # *_bad tests must have errors.
@@ -1218,7 +1218,7 @@ check:
 .PHONY: check
 
 ### Epilogue. Do not modify this block. #######################################
-include $(shell $(FRAMAC)-config -print-lib-path)/analysis-scripts/epilogue.mk
+include $(shell $(FRAMAC) -print-lib-path)/analysis-scripts/epilogue.mk
 ###############################################################################
 
 # optional, for OSCS
