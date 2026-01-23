@@ -8,7 +8,7 @@
 FRAMAC ?= frama-c # FRAMAC is defined in path.mk when it is included, but the
                   # user can override it in the command-line.
 ifeq ($(FRAMAC_LIB),)
-  FRAMAC_LIB := $(shell $(FRAMAC)-config -print-lib-path)
+  FRAMAC_LIB := $(shell $(FRAMAC) -print-lib-path)
 endif
 include $(FRAMAC_LIB)/analysis-scripts/prologue.mk
 ###############################################################################
@@ -46,8 +46,8 @@ TARGETS = \
 ### Each target <t>.eva needs a rule <t>.parse with source files as prerequisites
 grayskull-nanomagick.parse: \
   ../examples/nanomagick/nanomagick.c \
-  $(shell $(FRAMAC)-config -print-share-path)/libc/eva_stubs.c \
-  $(shell $(FRAMAC)-config -print-share-path)/libc/stdlib.c \
+  $(shell $(FRAMAC) -print-share-path)/libc/eva_stubs.c \
+  $(shell $(FRAMAC) -print-share-path)/libc/stdlib.c \
 
 grayskull-nanomagick.parse: \
   FCFLAGS += \

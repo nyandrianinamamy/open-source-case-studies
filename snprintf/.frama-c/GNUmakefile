@@ -4,7 +4,7 @@
 ### Prologue. Do not modify this block. #######################################
 -include path.mk
 FRAMAC ?= frama-c
-include $(shell $(FRAMAC)-config -print-lib-path)/analysis-scripts/prologue.mk
+include $(shell $(FRAMAC) -print-lib-path)/analysis-scripts/prologue.mk
 ###############################################################################
 
 # Edit below as needed. Suggested flags are optional.
@@ -114,7 +114,7 @@ TARGETS = \
 SRCS := \
   ../src/snprintf.c \
   ../src/tests-snprintf.c \
-  $(shell $(FRAMAC)-config -print-share-path)/libc/string.c
+  $(shell $(FRAMAC) -print-share-path)/libc/string.c
 
 tests-snprintf1.parse: $(SRCS)
 tests-snprintf1.parse: CPPFLAGS += -DCUR_TEST=1
@@ -315,7 +315,7 @@ tests-snprintf66.parse: $(SRCS)
 tests-snprintf66.parse: CPPFLAGS += -DCUR_TEST=66
 
 ### Epilogue. Do not modify this block. #######################################
-include $(shell $(FRAMAC)-config -print-lib-path)/analysis-scripts/epilogue.mk
+include $(shell $(FRAMAC) -print-lib-path)/analysis-scripts/epilogue.mk
 ###############################################################################
 
 # optional, for OSCS

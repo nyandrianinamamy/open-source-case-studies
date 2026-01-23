@@ -4,7 +4,7 @@
 ### Prologue. Do not modify this block. #######################################
 -include path.mk
 FRAMAC ?= frama-c
-include $(shell $(FRAMAC)-config -print-lib-path)/analysis-scripts/prologue.mk
+include $(shell $(FRAMAC) -print-lib-path)/analysis-scripts/prologue.mk
 ###############################################################################
 
 # Edit below as needed. Suggested flags are optional.
@@ -76,18 +76,18 @@ SUBDIR_SRCS=\
 
 01_w_Defects.parse: \
   fc_stubs.c \
-  $(shell $(FRAMAC)-config -print-share-path)/libc/stdio.c \
-  $(shell $(FRAMAC)-config -print-share-path)/libc/string.c \
+  $(shell $(FRAMAC) -print-share-path)/libc/stdio.c \
+  $(shell $(FRAMAC) -print-share-path)/libc/string.c \
   $(foreach file,$(SUBDIR_SRCS),$(wildcard ../01_w_Defects/$(file))) \
 
 02_wo_Defects.parse: \
   fc_stubs.c \
-  $(shell $(FRAMAC)-config -print-share-path)/libc/stdio.c \
-  $(shell $(FRAMAC)-config -print-share-path)/libc/string.c \
+  $(shell $(FRAMAC) -print-share-path)/libc/stdio.c \
+  $(shell $(FRAMAC) -print-share-path)/libc/string.c \
   $(foreach file,$(SUBDIR_SRCS),$(wildcard ../02_wo_Defects/$(file))) \
 
 ### Epilogue. Do not modify this block. #######################################
-include $(shell $(FRAMAC)-config -print-lib-path)/analysis-scripts/epilogue.mk
+include $(shell $(FRAMAC) -print-lib-path)/analysis-scripts/epilogue.mk
 ###############################################################################
 
 # optional, for OSCS
