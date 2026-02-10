@@ -1,0 +1,9 @@
+[kernel:typing:implicit-conv-void-ptr] tests/src/nonzero_heap_stack.c:49: Warning: 
+  implicit conversion from void * to void (*)(void *)
+[kernel:typing:incompatible-types-call] thpool.c:312: Warning: 
+  implicit conversion between incompatible function types:
+  void *(*)(struct thread *thread_p)
+  and
+  void *(*)(void *)
+[kernel:typing:variadic] tests/src/nonzero_heap_stack.c:12: Warning: 
+  Incorrect type for argument 2. The argument will be cast from int to unsigned int.

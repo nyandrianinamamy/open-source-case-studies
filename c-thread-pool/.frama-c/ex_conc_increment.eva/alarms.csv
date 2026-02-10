@@ -1,0 +1,9 @@
+directory	file	line	function	property kind	status	property
+FRAMAC_SHARE/libc	stdlib.h	157	strtol	precondition	Unknown	valid_string_nptr: valid_read_string(nptr)
+FRAMAC_SHARE/libc	stdlib.h	158	strtol	precondition	Unknown	separation: \separated(nptr, endptr)
+FRAMAC_SHARE/libc	stdlib.h	159	strtol	precondition	Unknown	base_range: base ≡ 0 ∨ (2 ≤ base ≤ 36)
+FRAMAC_SHARE/libc	stdlib.h	188	strtol	precondition	Unknown	valid_endptr: \valid(endptr)
+FRAMAC_SHARE/libc	stdlib.h	207	strtol	precondition	Unknown	valid_endptr: \valid(endptr)
+tests/src	conc_increment.c	26	main	mem_access	Unknown	\valid_read(argv + 1)
+tests/src	conc_increment.c	26	main	precondition of strtol	Unknown	valid_string_nptr: valid_read_string(nptr)
+tests/src	conc_increment.c	27	main	mem_access	Invalid or unreachable	\valid_read(argv + 2)

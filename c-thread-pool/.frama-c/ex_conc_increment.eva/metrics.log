@@ -1,0 +1,25 @@
+[metrics:eva:coverage] 
+  Eva coverage statistics
+  =======================
+  Syntactically reachable functions = 17 (out of 23)
+  Semantically reached functions = 1
+  Coverage estimation = 5.9% 
+  
+  Unreached functions (16) =
+    <tests/src/conc_increment.c>: increment; 
+    <thpool.c>: bsem_init; bsem_post; bsem_reset; bsem_wait; jobqueue_clear;
+      jobqueue_destroy; jobqueue_init; jobqueue_pull; jobqueue_push;
+      thpool_add_work; thpool_init; thpool_wait; thread_do; thread_hold;
+      thread_init;
+[metrics:eva:unreached] 
+  References to non-analyzed functions
+  ------------------------------------
+  Function main calls thpool_init (at tests/src/conc_increment.c:29)
+  Function main calls thpool_add_work (at tests/src/conc_increment.c:33)
+  Function main references increment (at tests/src/conc_increment.c:33)
+  Function main calls thpool_wait (at tests/src/conc_increment.c:36)
+[metrics:eva:reached-stmts] 
+  Statements analyzed by Eva
+  --------------------------
+  17 stmts in analyzed functions, 5 stmts analyzed (29.4%)
+  main: 5 stmts out of 17 (29.4%)

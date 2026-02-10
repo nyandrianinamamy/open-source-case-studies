@@ -1,0 +1,39 @@
+[metrics:eva:coverage] 
+  Eva coverage statistics
+  =======================
+  Syntactically reachable functions = 17 (out of 23)
+  Semantically reached functions = 15
+  Coverage estimation = 88.2% 
+  
+  Unreached functions (2) =
+    <tests/src/api.c>: sleep_2_secs; 
+    <thpool.c>: thread_hold;
+[metrics:eva:unreached] 
+  References to non-analyzed functions
+  ------------------------------------
+  Function main references sleep_2_secs (at tests/src/api.c:21)
+  Function main references sleep_2_secs (at tests/src/api.c:22)
+  Function main references sleep_2_secs (at tests/src/api.c:23)
+  Function main references sleep_2_secs (at tests/src/api.c:24)
+  Function main references sleep_2_secs (at tests/src/api.c:34)
+  Function main references sleep_2_secs (at tests/src/api.c:35)
+  Function thread_do references thread_hold (at thpool.c:361)
+[metrics:eva:reached-stmts] 
+  Statements analyzed by Eva
+  --------------------------
+  212 stmts in analyzed functions, 202 stmts analyzed (95.3%)
+  bsem_post: 5 stmts out of 5 (100.0%)
+  bsem_reset: 4 stmts out of 4 (100.0%)
+  bsem_wait: 9 stmts out of 9 (100.0%)
+  jobqueue_clear: 11 stmts out of 11 (100.0%)
+  jobqueue_destroy: 3 stmts out of 3 (100.0%)
+  jobqueue_init: 12 stmts out of 12 (100.0%)
+  jobqueue_push: 12 stmts out of 12 (100.0%)
+  main: 26 stmts out of 26 (100.0%)
+  thpool_add_work: 11 stmts out of 11 (100.0%)
+  thpool_num_threads_working: 2 stmts out of 2 (100.0%)
+  thread_init: 12 stmts out of 12 (100.0%)
+  thpool_init: 40 stmts out of 41 (97.6%)
+  thread_do: 38 stmts out of 41 (92.7%)
+  jobqueue_pull: 11 stmts out of 13 (84.6%)
+  bsem_init: 6 stmts out of 10 (60.0%)

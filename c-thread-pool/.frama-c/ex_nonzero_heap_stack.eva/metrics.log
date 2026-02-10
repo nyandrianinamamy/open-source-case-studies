@@ -1,0 +1,38 @@
+[metrics:eva:coverage] 
+  Eva coverage statistics
+  =======================
+  Syntactically reachable functions = 21 (out of 25)
+  Semantically reached functions = 19
+  Coverage estimation = 90.5% 
+  
+  Unreached functions (2) =
+    <tests/src/nonzero_heap_stack.c>: task; 
+    <thpool.c>: thread_hold;
+[metrics:eva:unreached] 
+  References to non-analyzed functions
+  ------------------------------------
+  Function main references task (at tests/src/nonzero_heap_stack.c:49)
+  Function thread_do references thread_hold (at thpool.c:361)
+[metrics:eva:reached-stmts] 
+  Statements analyzed by Eva
+  --------------------------
+  260 stmts in analyzed functions, 252 stmts analyzed (96.9%)
+  bsem_post: 5 stmts out of 5 (100.0%)
+  bsem_post_all: 5 stmts out of 5 (100.0%)
+  bsem_reset: 4 stmts out of 4 (100.0%)
+  bsem_wait: 9 stmts out of 9 (100.0%)
+  jobqueue_clear: 11 stmts out of 11 (100.0%)
+  jobqueue_destroy: 3 stmts out of 3 (100.0%)
+  jobqueue_init: 12 stmts out of 12 (100.0%)
+  jobqueue_pull: 13 stmts out of 13 (100.0%)
+  jobqueue_push: 12 stmts out of 12 (100.0%)
+  main: 16 stmts out of 16 (100.0%)
+  nonzero_heap: 17 stmts out of 17 (100.0%)
+  nonzero_stack: 2 stmts out of 2 (100.0%)
+  thpool_add_work: 11 stmts out of 11 (100.0%)
+  thpool_destroy: 34 stmts out of 34 (100.0%)
+  thread_destroy: 2 stmts out of 2 (100.0%)
+  thread_init: 12 stmts out of 12 (100.0%)
+  thpool_init: 40 stmts out of 41 (97.6%)
+  thread_do: 38 stmts out of 41 (92.7%)
+  bsem_init: 6 stmts out of 10 (60.0%)

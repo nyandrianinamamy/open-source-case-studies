@@ -50,6 +50,8 @@ Note: the 'Tags' column refers to code features that may be found in the code.
 - UNUSED_RECURSION: the code contains recursive calls (either in the main
   application/library, or in test cases), but the current Eva targets do
   not call them.
+- USES_PTHREAD: the code makes use of concurrency primitives with Pthreads.
+
 EOF
 
 echo "Saved table to $out."

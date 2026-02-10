@@ -1,0 +1,9 @@
+[kernel:typing:implicit-conv-void-ptr] tests/src/pause_resume.c:37: Warning: 
+  implicit conversion from void * to void (*)(void *)
+[kernel:typing:implicit-conv-void-ptr] tests/src/pause_resume.c:38: Warning: 
+  implicit conversion from void * to void (*)(void *)
+[kernel:typing:incompatible-types-call] thpool.c:312: Warning: 
+  implicit conversion between incompatible function types:
+  void *(*)(struct thread *thread_p)
+  and
+  void *(*)(void *)

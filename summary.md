@@ -4,6 +4,7 @@
 |basic-cwe-examples|Small test cases based on "buggy" CWE demonstrative examples|https://cwe.mitre.org/data/|17|55|10|309|HAS_DYN_ALLOC, NO_RECURSION, NO_FLOAT|test suite|
 |bench-moerman2018|Test suite used to evaluate static analysis tools|https://github.com/JMoerman/JM2018TS/|400|276|433|18532|HAS_DYN_ALLOC, UNUSED_RECURSION, NO_FLOAT|test suite|
 |c-testsuite|Part of a collaborative database of compiler test cases|https://github.com/c-testsuite/c-testsuite|215|37|220|4959|HAS_DYN_ALLOC, HAS_RECURSION, HAS_FLOAT|test suite|
+|c-thread-pool|Console version of C-Thread-Pool|https://github.com/Pithikos/C-Thread-Pool/tree/master|7|341|11|588|HAS_DYN_ALLOC, NO_RECURSION, NO_FLOAT, USES_PTHREAD|executable|
 |c-utils|c-utils is a collection of utility libraries.|https://github.com/barrust/c-utils|13|34|43|6392|HAS_DYN_ALLOC, HAS_RECURSION, HAS_FLOAT|library|
 |cerberus|Test suite related to the Cerberus project|https://www.cl.cam.ac.uk/~pes20/cerberus/|192|335|191|2520|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|test suite|
 |chrony|Implementation of the Network Time Protocol|https://chrony.tuxfamily.org/|2|898|122|25461|HAS_DYN_ALLOC, REM_RECURSION, HAS_FLOAT|executable|
@@ -52,3 +53,5 @@ Note: the 'Tags' column refers to code features that may be found in the code.
 - UNUSED_RECURSION: the code contains recursive calls (either in the main
   application/library, or in test cases), but the current Eva targets do
   not call them.
+- USES_PTHREAD: the code makes use of concurrency primitives with Pthreads.
+
