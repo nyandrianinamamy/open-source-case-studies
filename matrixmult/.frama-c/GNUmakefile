@@ -1,0 +1,53 @@
+# Makefile template for Frama-C/Eva case studies.
+# For details and usage information, see the Frama-C User Manual.
+
+### Prologue. Do not modify this block. #######################################
+-include path.mk
+FRAMAC ?= frama-c
+include $(shell $(FRAMAC) -print-lib-path)/analysis-scripts/prologue.mk
+###############################################################################
+
+# Edit below as needed. Suggested flags are optional.
+
+MACHDEP = x86_32
+
+## Preprocessing flags (for -cpp-extra-args)
+CPPFLAGS    += \
+  -CC \
+  -I/usr/include \
+
+## General flags
+FCFLAGS     += \
+  -add-symbolic-path=..:. \
+  -kernel-warn-key annot:missing-spec=abort \
+  -kernel-warn-key typing:implicit-function-declaration=abort \
+  -mt-threads-lib pthreads \
+
+## Eva-specific flags
+EVAFLAGS    += \
+  -eva-warn-key builtins:missing-spec=abort \
+  -no-eva \
+  -mthread \
+  -mt-keep-analyses last \
+  -mt-shared-accesses-synchronization \
+  -eva-precision 4 \
+  -kernel-msg-key project \
+
+## GUI-only flags
+FCGUIFLAGS += \
+
+## Analysis targets (suffixed with .eva))
+TARGETS = \
+  matrix.eva \
+
+### Each target <t>.eva needs a rule <t>.parse with source files as prerequisites
+matrix.parse: \
+  ../main.c \
+
+
+### Epilogue. Do not modify this block. #######################################
+include $(shell $(FRAMAC) -print-lib-path)/analysis-scripts/epilogue.mk
+###############################################################################
+
+# optional, for OSCS
+-include ../../Makefile.common

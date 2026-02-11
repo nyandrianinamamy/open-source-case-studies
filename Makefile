@@ -77,6 +77,7 @@ TARGETS=\
   libspng \
   libyaml \
   line-follower-robot \
+  matrixmult \
   microstrain \
   mini-gmp \
   miniz \
