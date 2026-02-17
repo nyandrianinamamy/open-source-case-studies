@@ -24,6 +24,7 @@
 |libspng|Library for writing and reading PNG files|https://github.com/randy408/libspng|1|186|5|3337|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|library|
 |libyaml|Library for parsing and emitting YAML|https://github.com/yaml/libyaml|2|151|25|10548|HAS_DYN_ALLOC, UNUSED_RECURSION, NO_FLOAT|library|
 |line-follower-robot|Very simple AVR-based robot (student project)|https://github.com/Fabio-Morais/Line-Follower-Robot|1|0|21|3560|NO_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|executable|
+|matrixmult|Implementation of a multi-threaded matrix multiplication.|https://github.com/mohamedhassan279/Matrix-Multiplication|1|132|1|257|HAS_DYN_ALLOC, NO_RECURSION, NO_FLOAT|executable|
 |mbedtls|Implementation of the TLS and SSL protocols (formerly PolarSSL)|https://github.com/Mbed-TLS/mbedtls|179|-1|423|138478|HAS_DYN_ALLOC, HAS_RECURSION, NO_FLOAT|library|
 |microstrain|Driver for a LORD/Microstrain Inertial Measurement Unit (IMU) sensor|https://github.com/ros-drivers/microstrain_mips|1|789|69|19075|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|library|
 |mini-gmp|Implementation of a subset of GNU's Multiple Precision Arithmetic library|https://gmplib.org/|1|69|35|8686|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|library|
