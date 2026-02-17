@@ -1,14 +1,40 @@
-[nonterm:unreachable] FRAMAC_SHARE/mt/mthread_pthread.c:18: Warning: 
-  unreachable return
-[nonterm:unreachable] FRAMAC_SHARE/mt/mthread_pthread.c:64: Warning: 
-  unreachable return
-[nonterm:unreachable] FRAMAC_SHARE/mt/mthread_pthread.c:71: Warning: 
-  unreachable return
-[nonterm:unreachable] main.c:59: Warning: unreachable return
-[nonterm:unreachable] main.c:98: Warning: unreachable return
+[nonterm:stmt] FRAMAC_SHARE/mt/mthread_pthread.c:17: Warning: 
+  non-terminating function call (initializer)
+  stack: pthread_create :: main.c:212 <-
+         thread_per_element_main :: main.c:281 <-
+         main
+[nonterm:stmt] FRAMAC_SHARE/mt/mthread_pthread.c:64: Warning: 
+  non-terminating function call
+  stack 1: pthread_exit :: main.c:114 <- thread_per_matrix
+  stack 2: pthread_exit :: main.c:153 <- thread_per_row
+  stack 3: pthread_exit :: main.c:153 <- thread_per_row
+  stack 4: pthread_exit :: main.c:153 <- thread_per_row
+  stack 5: pthread_exit :: main.c:153 <- thread_per_row
+  stack 6: pthread_exit :: main.c:153 <- thread_per_row
+  stack 7: pthread_exit :: main.c:153 <- thread_per_row
+  stack 8: pthread_exit :: main.c:153 <- thread_per_row
+  stack 9: pthread_exit :: main.c:153 <- thread_per_row
+  stack 10: pthread_exit :: main.c:153 <- thread_per_row
+  stack 11: pthread_exit :: main.c:153 <- thread_per_row
+  stack 12: pthread_exit :: main.c:153 <- thread_per_row
+  stack 13: pthread_exit :: main.c:153 <- thread_per_row
+  stack 14: pthread_exit :: main.c:153 <- thread_per_row
+  stack 15: pthread_exit :: main.c:153 <- thread_per_row
+  stack 16: pthread_exit :: main.c:153 <- thread_per_row
+  stack 17: pthread_exit :: main.c:153 <- thread_per_row
+  stack 18: pthread_exit :: main.c:153 <- thread_per_row
+  stack 19: pthread_exit :: main.c:153 <- thread_per_row
+  stack 20: pthread_exit :: main.c:153 <- thread_per_row
+  stack 21: pthread_exit :: main.c:153 <- thread_per_row
+  stack 22: pthread_exit :: main.c:153 <- thread_per_row
+  stack 23: pthread_exit :: main.c:153 <- thread_per_row
+  stack 24: pthread_exit :: main.c:153 <- thread_per_row
+  stack 25: pthread_exit :: main.c:153 <- thread_per_row
+  stack 26: pthread_exit :: main.c:153 <- thread_per_row
+  stack 27: pthread_exit :: main.c:153 <- thread_per_row
+  stack 28: pthread_exit :: main.c:153 <- thread_per_row
+  stack 29: pthread_exit :: main.c:153 <- thread_per_row
+  stack 30: pthread_exit :: main.c:153 <- thread_per_row
+  stack 31: pthread_exit :: main.c:153 <- thread_per_row
 [nonterm:unreachable] main.c:115: Warning: unreachable return
-[nonterm:unreachable] main.c:139: Warning: unreachable return
 [nonterm:unreachable] main.c:154: Warning: unreachable return
-[nonterm:unreachable] main.c:183: Warning: unreachable return
-[nonterm:unreachable] main.c:230: Warning: unreachable return
-[nonterm:unreachable] main.c:296: Warning: unreachable return

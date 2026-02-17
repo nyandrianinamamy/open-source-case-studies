@@ -197,7 +197,7 @@ void *thread_per_element(void *args) {
 // main function of the method of per element
 void thread_per_element_main(struct matrix *A, struct matrix *B) {
     int rows = A->rows, cols = B->cols;
-    pthread_t threads[rows][cols];
+    pthread_t threads[rows * cols];
     int **res = (int **) calloc(A->rows, sizeof(int *));
     for (int i = 0; i < A->rows; i++) {
         res[i] = (int *) calloc(B->cols, sizeof(int));
@@ -209,7 +209,7 @@ void thread_per_element_main(struct matrix *A, struct matrix *B) {
             struct multiplication *per_element = malloc(sizeof(struct multiplication));
             per_element->row = i; per_element->col = j;
             per_element->A = A; per_element->B = B; per_element->C = C;
-            if (pthread_create(&threads[i][j], NULL, thread_per_element, (void *) per_element)) {
+            if (pthread_create(&threads[i*cols + j], NULL, thread_per_element, (void *) per_element)) {
                 printf("Can not create a thread\n");
                 exit(1);
             }
@@ -217,7 +217,7 @@ void thread_per_element_main(struct matrix *A, struct matrix *B) {
     }
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            pthread_join(threads[i][j], NULL);
+            pthread_join(threads[i*cols + j], NULL);
         }
     }
     write_matrix(2, C);
