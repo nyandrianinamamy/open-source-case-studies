@@ -30,8 +30,9 @@ EVAFLAGS    += \
   -mthread \
   -mt-keep-analyses last \
   -mt-shared-accesses-synchronization \
+  -mt-verbose 3 \
+  -eva-verbose 3 \
   -eva-precision 4 \
-  -kernel-msg-key project \
 
 ## GUI-only flags
 FCGUIFLAGS += \
