@@ -29,9 +29,9 @@ int main(void)
   uintptr_t i = (uintptr_t)p;
   __FC_assert((_Alignof(int) >= (unsigned __int64)4) != 0,"cheri_06_mask.c",
               8,"__alignof(int) >= 4");
-  __FC_assert(((i & (unsigned __int64)3u) == (unsigned __int64)0u) != 0,
-              "cheri_06_mask.c",9,"(i & 3u) == 0u");
-  i |= (unsigned __int64)1u;
+  __FC_assert(((i & (uintptr_t)3u) == (uintptr_t)0u) != 0,"cheri_06_mask.c",
+              9,"(i & 3u) == 0u");
+  i |= (uintptr_t)1u;
   int *q = (int *)i;
   uintptr_t j = (uintptr_t)q & ~ ((uintptr_t)3u);
   int *r = (int *)j;

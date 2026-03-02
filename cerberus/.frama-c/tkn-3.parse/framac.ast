@@ -124,9 +124,8 @@ int main(void)
   void *c;
   int n = 10;
   void *r = malloc((size_t)(1024 * (n + 1)));
-  if (((word_t)r & (unsigned long)(1024 - 1)) != (unsigned long)0) r = (void *)(
-                                                                   ((word_t)r & ~ ((word_t)(
-                                                                    1024 - 1))) + (word_t)1024);
+  if (((word_t)r & (word_t)(1024 - 1)) != (word_t)0) r = (void *)(((word_t)r & ~ ((word_t)(
+                                                                   1024 - 1))) + (word_t)1024);
   i = 0;
   /*@ loop \eva::unroll 9; */
   while (i < n - 1) {

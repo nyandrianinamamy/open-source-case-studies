@@ -57,24 +57,24 @@ int main(void)
         else tmp_1 = (int64_t)128;
         tmp_2 = tmp_1;
       }
-      x = (uint32_t)((tmp_2 << 24) | (long)(x >> 8));
+      x = (uint32_t)((tmp_2 << 24) | (int64_t)(x >> 8));
       h[tmp / (int64_t)4 + (int64_t)4] = x;
     }
     while (1) {
-      unsigned int tmp_6;
+      uint32_t tmp_6;
       uint32_t tmp_7;
       double tmp_9;
       double tmp_8;
       x = i >> 4;
       if (! (x < (uint32_t)4)) break;
-      n = (int64_t)((((((i | (unsigned int)12) * (unsigned int)152) % (unsigned int)543) % (unsigned int)82) % (unsigned int)4 + 
-                     ((i % (unsigned int)4) * (unsigned int)43) / (unsigned int)8) + (unsigned int)4);
+      n = (int64_t)((((((i | (uint32_t)12) * (uint32_t)152) % (uint32_t)543) % (uint32_t)82) % (uint32_t)4 + 
+                     ((i % (uint32_t)4) * (uint32_t)43) / (uint32_t)8) + (uint32_t)4);
       if (x > (uint32_t)2) tmp_6 = ~ d | b;
       else {
-        unsigned int tmp_5;
+        uint32_t tmp_5;
         if (x > (uint32_t)1) tmp_5 = b ^ d;
         else {
-          unsigned int tmp_4;
+          uint32_t tmp_4;
           if (x) tmp_4 = (b ^ c) & d; else tmp_4 = (c ^ d) & ~ b;
           tmp_5 = tmp_4;
         }
@@ -82,8 +82,8 @@ int main(void)
       }
       tmp_7 = i;
       i ++;
-      x = (a + (tmp_6 ^ c)) + h[(((x * (uint32_t)7) / (uint32_t)2 & (unsigned int)5) - 
-                                 ~ (x * (uint32_t)5 & (unsigned int)6) * tmp_7) % (unsigned int)16 + (unsigned int)4];
+      x = (a + (tmp_6 ^ c)) + h[(((x * (uint32_t)7) / (uint32_t)2 & (uint32_t)5) - 
+                                 ~ (x * (uint32_t)5 & (uint32_t)6) * tmp_7) % (uint32_t)16 + (uint32_t)4];
       tmp_8 = sin((double)i);
       tmp_9 = fabs(tmp_8);
       a = (uint32_t)((tmp_9 * (double)8) * (double)(8 << 26));
@@ -97,7 +97,7 @@ int main(void)
   while (n < (int64_t)33) {
     uint32_t tmp_12;
     int64_t tmp_10;
-    a = (h[n / (int64_t)8] >> ((n % (long)8) * (long)4 ^ (long)4)) & (unsigned int)15;
+    a = (h[n / (int64_t)8] >> ((n % (int64_t)8) * (int64_t)4 ^ (int64_t)4)) & (uint32_t)15;
     tmp_10 = n;
     n ++;
     ;

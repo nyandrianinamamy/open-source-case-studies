@@ -26,7 +26,7 @@ int main(void)
   int *p = malloc(sizeof(int));
   *p = 0;
   tmp_0 = hash((void *)p);
-  int *q = (int *)((uintptr_t)p | (unsigned int)((int)tmp_0 & 0xF));
+  int *q = (int *)((uintptr_t)p | (uintptr_t)((int)tmp_0 & 0xF));
   int *r = (int *)(((uintptr_t)q >> 4) << 4);
   __retres = *r;
   return __retres;

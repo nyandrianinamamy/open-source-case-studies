@@ -444,7 +444,7 @@ static gf const I =
 static u32 L32(u32 x, int c)
 {
   u32 __retres;
-  __retres = (x << c) | ((x & (unsigned long)0xffffffff) >> (32 - c));
+  __retres = (x << c) | ((x & (u32)0xffffffff) >> (32 - c));
   return __retres;
 }
 
@@ -452,9 +452,9 @@ static u32 ld32(u8 const *x)
 {
   u32 __retres;
   u32 u = (u32)*(x + 3);
-  u = (u << 8) | (unsigned long)*(x + 2);
-  u = (u << 8) | (unsigned long)*(x + 1);
-  __retres = (u << 8) | (unsigned long)*(x + 0);
+  u = (u << 8) | (u32)*(x + 2);
+  u = (u << 8) | (u32)*(x + 1);
+  __retres = (u << 8) | (u32)*(x + 0);
   return __retres;
 }
 
@@ -464,7 +464,7 @@ static u64 dl64(u8 const *x)
   u64 u = (u64)0;
   i = (u64)0;
   while (i < (u64)8) {
-    u = (u << 8) | (unsigned long long)*(x + i);
+    u = (u << 8) | (u64)*(x + i);
     i ++;
   }
   return u;
@@ -501,10 +501,10 @@ static int vn(u8 const *x, u8 const *y, int n)
   u32 d = (u32)0;
   i = (u32)0;
   while (i < (u32)n) {
-    d |= (unsigned long)((int)*(x + i) ^ (int)*(y + i));
+    d |= (u32)((int)*(x + i) ^ (int)*(y + i));
     i ++;
   }
-  __retres = (int)(((unsigned long)1 & ((d - (u32)1) >> 8)) - (unsigned long)1);
+  __retres = (int)(((u32)1 & ((d - (u32)1) >> 8)) - (u32)1);
   return __retres;
 }
 
@@ -735,7 +735,7 @@ static void add1305(u32 *h, u32 const *c)
   j = (u32)0;
   while (j < (u32)17) {
     u += *(h + j) + *(c + j);
-    *(h + j) = u & (unsigned long)255;
+    *(h + j) = u & (u32)255;
     u >>= 8;
     j ++;
   }
@@ -788,13 +788,13 @@ int crypto_onetimeauth_poly1305_tweet(unsigned char *out,
     r[j] = (u32)*(k + j);
     j ++;
   }
-  r[3] &= (unsigned long)15;
-  r[4] &= (unsigned long)252;
-  r[7] &= (unsigned long)15;
-  r[8] &= (unsigned long)252;
-  r[11] &= (unsigned long)15;
-  r[12] &= (unsigned long)252;
-  r[15] &= (unsigned long)15;
+  r[3] &= (u32)15;
+  r[4] &= (u32)252;
+  r[7] &= (u32)15;
+  r[8] &= (u32)252;
+  r[11] &= (u32)15;
+  r[12] &= (u32)252;
+  r[15] &= (u32)15;
   /*@ loop \eva::unroll 5; */
   while (n > (unsigned long long)0) {
     j = (u32)0;
@@ -837,17 +837,17 @@ int crypto_onetimeauth_poly1305_tweet(unsigned char *out,
     j = (u32)0;
     while (j < (u32)16) {
       u += h[j];
-      h[j] = u & (unsigned long)255;
+      h[j] = u & (u32)255;
       u >>= 8;
       j ++;
     }
     u += h[16];
-    h[16] = u & (unsigned long)3;
+    h[16] = u & (u32)3;
     u = (u32)5 * (u >> 2);
     j = (u32)0;
     while (j < (u32)16) {
       u += h[j];
-      h[j] = u & (unsigned long)255;
+      h[j] = u & (u32)255;
       u >>= 8;
       j ++;
     }
@@ -1013,19 +1013,19 @@ static void pack25519(u8 *o, i64 const n[16])
     m[0] = t[0] - (i64)0xffed;
     i = 1;
     while (i < 15) {
-      m[i] = (t[i] - (i64)0xffff) - ((m[i - 1] >> 16) & (long long)1);
-      m[i - 1] &= (long long)0xffff;
+      m[i] = (t[i] - (i64)0xffff) - ((m[i - 1] >> 16) & (i64)1);
+      m[i - 1] &= (i64)0xffff;
       i ++;
     }
-    m[15] = (t[15] - (i64)0x7fff) - ((m[14] >> 16) & (long long)1);
-    b = (int)((m[15] >> 16) & (long long)1);
-    m[14] &= (long long)0xffff;
+    m[15] = (t[15] - (i64)0x7fff) - ((m[14] >> 16) & (i64)1);
+    b = (int)((m[15] >> 16) & (i64)1);
+    m[14] &= (i64)0xffff;
     sel25519(t,m,1 - b);
     j ++;
   }
   i = 0;
   while (i < 16) {
-    *(o + 2 * i) = (u8)(t[i] & (long long)0xff);
+    *(o + 2 * i) = (u8)(t[i] & (i64)0xff);
     *(o + (2 * i + 1)) = (u8)(t[i] >> 8);
     i ++;
   }
@@ -1061,7 +1061,7 @@ static void unpack25519(i64 o[16], u8 const *n)
     *(o + i) = (i64)*(n + 2 * i) + ((i64)*(n + (2 * i + 1)) << 8);
     i ++;
   }
-  *(o + 15) &= (long long)0x7fff;
+  *(o + 15) &= (i64)0x7fff;
   return;
 }
 
@@ -1215,7 +1215,7 @@ int crypto_scalarmult_curve25519_tweet(unsigned char *q,
   a[0] = d[0];
   i = (i64)254;
   while (i >= (i64)0) {
-    r = (i64)(((int)z[i >> 3] >> (i & (long long)7)) & 1);
+    r = (i64)(((int)z[i >> 3] >> (i & (i64)7)) & 1);
     sel25519(a,b,(int)r);
     sel25519(c,d,(int)r);
     A(e,(i64 const *)(a),(i64 const *)(c));
@@ -1845,7 +1845,7 @@ static void modL(u8 *r, i64 x[64])
   while (j < (i64)32) {
     *(x + j) = (i64)((u64)*(x + j) + ((u64)carry - (u64)(*(x + 31) >> 4) * L[j]));
     carry = *(x + j) >> 8;
-    *(x + j) &= (long long)255;
+    *(x + j) &= (i64)255;
     j ++;
   }
   j = (i64)0;
@@ -1856,7 +1856,7 @@ static void modL(u8 *r, i64 x[64])
   i = (i64)0;
   while (i < (i64)32) {
     *(x + (i + (i64)1)) += *(x + i) >> 8;
-    *(r + i) = (u8)(*(x + i) & (long long)255);
+    *(r + i) = (u8)(*(x + i) & (i64)255);
     i ++;
   }
   return;

@@ -86,7 +86,7 @@ void ad7714_start_transmitting(struct AdMsg const *amsg)
 void ad7714_on_spi_it(void)
 {
   uint8_t spi_read = *((uint8_t volatile *)(0x0F + 0x20));
-  if ((void *)msg == (void *)(& ad7714_read)) 
+  if (msg == (struct AdMsg *)(& ad7714_read)) 
     if ((int)idx == 1) ad7714_sample = (uint16_t)((int)spi_read << 8);
     else 
       if ((int)idx == 2) {

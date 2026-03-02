@@ -1723,7 +1723,7 @@ int aes_crypt_cbc(aes_context *ctx, int mode, size_t length,
   int __retres;
   int i;
   unsigned char temp[16];
-  if (length % (unsigned int)16) {
+  if (length % (size_t)16) {
     __retres = -0x0022;
     goto return_label;
   }
@@ -1783,7 +1783,7 @@ int aes_crypt_cfb128(aes_context *ctx, int mode, size_t length,
         output ++;
         *tmp_0 = (unsigned char)(c ^ (int)*(iv + n));
         *(iv + n) = (unsigned char)c;
-        n = (n + (size_t)1) & (unsigned int)0x0F;
+        n = (n + (size_t)1) & (size_t)0x0F;
       }
     }
   else 
@@ -1805,7 +1805,7 @@ int aes_crypt_cfb128(aes_context *ctx, int mode, size_t length,
         tmp_3 = (unsigned char)((int)*(iv + n) ^ (int)*tmp_4);
         *tmp_2 = tmp_3;
         *(iv + n) = tmp_3;
-        n = (n + (size_t)1) & (unsigned int)0x0F;
+        n = (n + (size_t)1) & (size_t)0x0F;
       }
     }
   *iv_off = n;
@@ -1855,7 +1855,7 @@ int aes_crypt_ctr(aes_context *ctx, size_t length, size_t *nc_off,
       tmp_1 = output;
       output ++;
       *tmp_1 = (unsigned char)(c ^ (int)*(stream_block + n));
-      n = (n + (size_t)1) & (unsigned int)0x0F;
+      n = (n + (size_t)1) & (size_t)0x0F;
     }
   }
   *nc_off = n;
@@ -3377,7 +3377,7 @@ int arc4_self_test(int verbose)
 int asn1_get_len(unsigned char **p, unsigned char const *end, size_t *len)
 {
   int __retres;
-  if (end - *p < 1) {
+  if (end - (unsigned char const *)*p < 1) {
     __retres = -0x0014;
     goto return_label;
   }
@@ -3390,7 +3390,7 @@ int asn1_get_len(unsigned char **p, unsigned char const *end, size_t *len)
   else 
     switch ((int)*(*p) & 0x7F) {
       case 1: ;
-      if (end - *p < 2) {
+      if (end - (unsigned char const *)*p < 2) {
         __retres = -0x0014;
         goto return_label;
       }
@@ -3398,7 +3398,7 @@ int asn1_get_len(unsigned char **p, unsigned char const *end, size_t *len)
       *p += 2;
       break;
       case 2: ;
-      if (end - *p < 3) {
+      if (end - (unsigned char const *)*p < 3) {
         __retres = -0x0014;
         goto return_label;
       }
@@ -3406,7 +3406,7 @@ int asn1_get_len(unsigned char **p, unsigned char const *end, size_t *len)
       *p += 3;
       break;
       case 3: ;
-      if (end - *p < 4) {
+      if (end - (unsigned char const *)*p < 4) {
         __retres = -0x0014;
         goto return_label;
       }
@@ -3415,7 +3415,7 @@ int asn1_get_len(unsigned char **p, unsigned char const *end, size_t *len)
       *p += 4;
       break;
       case 4: ;
-      if (end - *p < 5) {
+      if (end - (unsigned char const *)*p < 5) {
         __retres = -0x0014;
         goto return_label;
       }
@@ -3426,7 +3426,7 @@ int asn1_get_len(unsigned char **p, unsigned char const *end, size_t *len)
       default: __retres = -0x0018;
       goto return_label;
     }
-  if (*len > (size_t)(end - *p)) {
+  if (*len > (size_t)(end - (unsigned char const *)*p)) {
     __retres = -0x0014;
     goto return_label;
   }
@@ -3439,7 +3439,7 @@ int asn1_get_tag(unsigned char **p, unsigned char const *end, size_t *len,
 {
   int __retres;
   int tmp;
-  if (end - *p < 1) {
+  if (end - (unsigned char const *)*p < 1) {
     __retres = -0x0014;
     goto return_label;
   }
@@ -3545,7 +3545,7 @@ int asn1_get_bitstring(unsigned char **p, unsigned char const *end,
   (*p) ++;
   bs->p = *p;
   *p += bs->len;
-  if ((void *)*p != (void *)end) {
+  if (*p != (unsigned char *)end) {
     __retres = -0x001A;
     goto return_label;
   }
@@ -3565,11 +3565,11 @@ int asn1_get_sequence_of(unsigned char **p, unsigned char const *end,
     __retres = ret;
     goto return_label;
   }
-  if ((void *)(*p + len) != (void *)end) {
+  if (*p + len != (unsigned char *)end) {
     __retres = -0x001A;
     goto return_label;
   }
-  while ((void *)*p < (void *)end) {
+  while (*p < (unsigned char *)end) {
     buf = & cur_0->buf;
     buf->tag = (int)*(*p);
     ret = asn1_get_tag(p,end,& buf->len,tag);
@@ -3579,7 +3579,7 @@ int asn1_get_sequence_of(unsigned char **p, unsigned char const *end,
     }
     buf->p = *p;
     *p += buf->len;
-    if ((void *)*p < (void *)end) {
+    if (*p < (unsigned char *)end) {
       cur_0->next = (struct _asn1_sequence *)malloc(sizeof(asn1_sequence));
       if (cur_0->next == (struct _asn1_sequence *)0) {
         __retres = -0x001E;
@@ -3589,7 +3589,7 @@ int asn1_get_sequence_of(unsigned char **p, unsigned char const *end,
     }
   }
   cur_0->next = (struct _asn1_sequence *)0;
-  if ((void *)*p != (void *)end) {
+  if (*p != (unsigned char *)end) {
     __retres = -0x001A;
     goto return_label;
   }
@@ -4236,7 +4236,7 @@ int mpi_copy(mpi *X, mpi const *Y)
   int __retres;
   int ret;
   size_t i;
-  if ((void *)X == (void *)Y) {
+  if (X == (mpi *)Y) {
     __retres = 0;
     goto return_label;
   }
@@ -4285,7 +4285,7 @@ int mpi_get_bit(mpi *X, size_t pos)
     __retres = 0;
     goto return_label;
   }
-  __retres = (int)((*(X->p + pos / (sizeof(t_uint) << 3)) >> pos % (sizeof(t_uint) << 3)) & (unsigned long)0x01);
+  __retres = (int)((*(X->p + pos / (sizeof(t_uint) << 3)) >> pos % (sizeof(t_uint) << 3)) & (t_uint)0x01);
   return_label: return __retres;
 }
 
@@ -4308,7 +4308,7 @@ int mpi_set_bit(mpi *X, size_t pos, unsigned char val)
     ret = mpi_grow(X,off + (size_t)1);
     if (ret != 0) goto cleanup;
   }
-  *(X->p + off) = (*(X->p + off) & (unsigned long)(~ (0x01 << idx))) | (unsigned long)(
+  *(X->p + off) = (*(X->p + off) & (t_uint)(~ (0x01 << idx))) | (t_uint)(
                   (int)val << idx);
   cleanup: ;
   __retres = ret;
@@ -4325,7 +4325,7 @@ size_t mpi_lsb(mpi const *X)
   while (i < X->n) {
     j = (size_t)0;
     while (j < sizeof(t_uint) << 3) {
-      if (((*(X->p + i) >> j) & (unsigned long)1) != (unsigned long)0) {
+      if (((*(X->p + i) >> j) & (t_uint)1) != (t_uint)0) {
         __retres = count;
         goto return_label;
       }
@@ -4355,7 +4355,7 @@ size_t mpi_msb(mpi const *X)
   }
   j = sizeof(t_uint) << 3;
   while (j > (size_t)0) {
-    if (((*(X->p + i) >> (j - (size_t)1)) & (unsigned long)1) != (unsigned long)0) 
+    if (((*(X->p + i) >> (j - (size_t)1)) & (t_uint)1) != (t_uint)0) 
       break;
     j --;
   }
@@ -4571,7 +4571,7 @@ int mpi_write_string(mpi const *X, int radix, char *s, size_t *slen)
       while (j > (size_t)0) {
         {
           int tmp_0;
-          c = (int)((*(X->p + (i - (size_t)1)) >> ((j - (size_t)1) << 3)) & (unsigned long)0xFF);
+          c = (int)((*(X->p + (i - (size_t)1)) >> ((j - (size_t)1) << 3)) & (t_uint)0xFF);
           if (c == 0) 
             if (k == (size_t)0) 
               if ((i + j) + (size_t)3 != (size_t)0) goto __Cont;
@@ -4998,12 +4998,12 @@ int mpi_add_abs(mpi *X, mpi const *A, mpi const *B)
   t_uint *o;
   t_uint *p;
   t_uint c;
-  if ((void *)X == (void *)B) {
+  if (X == (mpi *)B) {
     mpi const *T = A;
     A = (mpi const *)X;
     B = T;
   }
-  if ((void *)X != (void *)A) {
+  if (X != (mpi *)A) {
     ret = mpi_copy(X,A);
     if (ret != 0) goto cleanup;
   }
@@ -5091,12 +5091,12 @@ int mpi_sub_abs(mpi *X, mpi const *A, mpi const *B)
     goto return_label;
   }
   mpi_init(& TB);
-  if ((void *)X == (void *)B) {
+  if (X == (mpi *)B) {
     ret = mpi_copy(& TB,B);
     if (ret != 0) goto cleanup;
     B = (mpi const *)(& TB);
   }
-  if ((void *)X != (void *)A) {
+  if (X != (mpi *)A) {
     ret = mpi_copy(X,A);
     if (ret != 0) goto cleanup;
   }
@@ -5879,12 +5879,12 @@ int mpi_mul_mpi(mpi *X, mpi const *A, mpi const *B)
   mpi TB;
   mpi_init(& TA);
   mpi_init(& TB);
-  if ((void *)X == (void *)A) {
+  if (X == (mpi *)A) {
     ret = mpi_copy(& TA,A);
     if (ret != 0) goto cleanup;
     A = (mpi const *)(& TA);
   }
-  if ((void *)X == (void *)B) {
+  if (X == (mpi *)B) {
     ret = mpi_copy(& TB,B);
     if (ret != 0) goto cleanup;
     B = (mpi const *)(& TB);
@@ -6194,7 +6194,7 @@ int mpi_mod_int(t_uint *r, mpi const *A, t_sint b)
     goto return_label;
   }
   if (b == (t_sint)2) {
-    *r = *(A->p + 0) & (unsigned long)1;
+    *r = *(A->p + 0) & (t_uint)1;
     __retres = 0;
     goto return_label;
   }
@@ -6223,7 +6223,7 @@ static void mpi_montg_init(t_uint *mm, mpi const *N)
   t_uint x;
   t_uint m0 = *(N->p + 0);
   x = m0;
-  x += ((m0 + (t_uint)2) & (unsigned long)4) << 1;
+  x += ((m0 + (t_uint)2) & (t_uint)4) << 1;
   x *= (t_uint)2 - m0 * x;
   if (sizeof(t_uint) << 3 >= (unsigned int)16) x *= (t_uint)2 - m0 * x;
   if (sizeof(t_uint) << 3 >= (unsigned int)32) x *= (t_uint)2 - m0 * x;
@@ -6317,7 +6317,7 @@ int mpi_exp_mod(mpi *X, mpi const *A, mpi const *E, mpi const *N, mpi *_RR)
     goto return_label;
   }
   else 
-    if ((*(N->p + 0) & (unsigned long)1) == (unsigned long)0) {
+    if ((*(N->p + 0) & (t_uint)1) == (t_uint)0) {
       __retres = -0x0004;
       goto return_label;
     }
@@ -6421,7 +6421,7 @@ int mpi_exp_mod(mpi *X, mpi const *A, mpi const *E, mpi const *N, mpi *_RR)
       bufsize = sizeof(t_uint) << 3;
     }
     bufsize --;
-    ei = (*(E->p + nblimbs) >> bufsize) & (unsigned long)1;
+    ei = (*(E->p + nblimbs) >> bufsize) & (t_uint)1;
     if (ei == (t_uint)0) 
       if (state == (t_uint)0) continue;
     if (ei == (t_uint)0) 
@@ -6431,7 +6431,7 @@ int mpi_exp_mod(mpi *X, mpi const *A, mpi const *E, mpi const *N, mpi *_RR)
       }
     state = (t_uint)2;
     nbits ++;
-    wbits = (size_t)((unsigned long)wbits | (ei << (wsize - nbits)));
+    wbits = (size_t)((t_uint)wbits | (ei << (wsize - nbits)));
     if (nbits == wsize) {
       i = (size_t)0;
       while (i < wsize) {
@@ -6448,10 +6448,10 @@ int mpi_exp_mod(mpi *X, mpi const *A, mpi const *E, mpi const *N, mpi *_RR)
   while (i < nbits) {
     mpi_montmul(X,(mpi const *)X,N,mm,(mpi const *)(& T));
     wbits <<= 1;
-    if ((wbits & (one << wsize)) != (unsigned int)0) mpi_montmul(X,
-                                                                 (mpi const *)(& W[1]),
-                                                                 N,mm,
-                                                                 (mpi const *)(& T));
+    if ((wbits & (one << wsize)) != (size_t)0) mpi_montmul(X,
+                                                           (mpi const *)(& W[1]),
+                                                           N,mm,
+                                                           (mpi const *)(& T));
     i ++;
   }
   mpi_montred(X,N,mm,(mpi const *)(& T));
@@ -6614,12 +6614,12 @@ int mpi_inv_mod(mpi *X, mpi const *A, mpi const *N)
     int tmp_2;
     {
       int tmp_1;
-      while ((*(TU.p + 0) & (unsigned long)1) == (unsigned long)0) {
+      while ((*(TU.p + 0) & (t_uint)1) == (t_uint)0) {
         ret = mpi_shift_r(& TU,(size_t)1);
         if (ret != 0) goto cleanup;
-        if ((*(U1.p + 0) & (unsigned long)1) != (unsigned long)0) goto _LOR;
+        if ((*(U1.p + 0) & (t_uint)1) != (t_uint)0) goto _LOR;
         else 
-          if ((*(U2.p + 0) & (unsigned long)1) != (unsigned long)0) {
+          if ((*(U2.p + 0) & (t_uint)1) != (t_uint)0) {
             _LOR:
             {
               ret = mpi_add_mpi(& U1,(mpi const *)(& U1),(mpi const *)(& TB));
@@ -6633,12 +6633,12 @@ int mpi_inv_mod(mpi *X, mpi const *A, mpi const *N)
         ret = mpi_shift_r(& U2,(size_t)1);
         if (ret != 0) goto cleanup;
       }
-      while ((*(TV.p + 0) & (unsigned long)1) == (unsigned long)0) {
+      while ((*(TV.p + 0) & (t_uint)1) == (t_uint)0) {
         ret = mpi_shift_r(& TV,(size_t)1);
         if (ret != 0) goto cleanup;
-        if ((*(V1.p + 0) & (unsigned long)1) != (unsigned long)0) goto _LOR_0;
+        if ((*(V1.p + 0) & (t_uint)1) != (t_uint)0) goto _LOR_0;
         else 
-          if ((*(V2.p + 0) & (unsigned long)1) != (unsigned long)0) {
+          if ((*(V2.p + 0) & (t_uint)1) != (t_uint)0) {
             _LOR_0:
             {
               ret = mpi_add_mpi(& V1,(mpi const *)(& V1),(mpi const *)(& TB));
@@ -6913,7 +6913,7 @@ int mpi_is_prime(mpi *X, int (*f_rng)(void *, unsigned char *, size_t ),
   mpi_init(& RR);
   xs = X->s;
   X->s = 1;
-  if ((*(X->p + 0) & (unsigned long)1) == (unsigned long)0) {
+  if ((*(X->p + 0) & (t_uint)1) == (t_uint)0) {
     __retres = -0x000E;
     goto return_label;
   }
@@ -6988,7 +6988,7 @@ int mpi_is_prime(mpi *X, int (*f_rng)(void *, unsigned char *, size_t ),
         ret = mpi_shift_r(& A,j + (size_t)1);
         if (ret != 0) goto cleanup;
       }
-      *(A.p + 0) |= (unsigned long)3;
+      *(A.p + 0) |= (t_uint)3;
       ret = mpi_exp_mod(& A,(mpi const *)(& A),(mpi const *)(& R),
                         (mpi const *)X,& RR);
       if (ret != 0) goto cleanup;
@@ -7073,7 +7073,7 @@ int mpi_gen_prime(mpi *X, size_t nbits, int dh_flag,
     ret = mpi_shift_r(X,k - nbits);
     if (ret != 0) goto cleanup;
   }
-  *(X->p + 0) |= (unsigned long)3;
+  *(X->p + 0) |= (t_uint)3;
   if (dh_flag == 0) 
     while (1) {
       ret = mpi_is_prime(X,f_rng,p_rng);
@@ -8749,14 +8749,14 @@ static void camellia_feistel(uint32_t const x[2], uint32_t const k[2],
   uint32_t I1;
   I0 = *(x + 0) ^ *(k + 0);
   I1 = *(x + 1) ^ *(k + 1);
-  I0 = (uint32_t)(((((int)FSb_0[(I0 >> 24) & (unsigned int)0xFF] << 24) | (
-                    (int)FSb2[(I0 >> 16) & (unsigned int)0xFF] << 16)) | (
-                   (int)FSb3[(I0 >> 8) & (unsigned int)0xFF] << 8)) | (int)FSb4[
-                  I0 & (unsigned int)0xFF]);
-  I1 = (uint32_t)(((((int)FSb2[(I1 >> 24) & (unsigned int)0xFF] << 24) | (
-                    (int)FSb3[(I1 >> 16) & (unsigned int)0xFF] << 16)) | (
-                   (int)FSb4[(I1 >> 8) & (unsigned int)0xFF] << 8)) | (int)FSb_0[
-                  I1 & (unsigned int)0xFF]);
+  I0 = (uint32_t)(((((int)FSb_0[(I0 >> 24) & (uint32_t)0xFF] << 24) | (
+                    (int)FSb2[(I0 >> 16) & (uint32_t)0xFF] << 16)) | (
+                   (int)FSb3[(I0 >> 8) & (uint32_t)0xFF] << 8)) | (int)FSb4[
+                  I0 & (uint32_t)0xFF]);
+  I1 = (uint32_t)(((((int)FSb2[(I1 >> 24) & (uint32_t)0xFF] << 24) | (
+                    (int)FSb3[(I1 >> 16) & (uint32_t)0xFF] << 16)) | (
+                   (int)FSb4[(I1 >> 8) & (uint32_t)0xFF] << 8)) | (int)FSb_0[
+                  I1 & (uint32_t)0xFF]);
   I0 ^= (I1 << 8) | (I1 >> 24);
   I1 ^= (I0 << 16) | (I0 >> 16);
   I0 ^= (I1 >> 8) | (I1 << 24);
@@ -8867,14 +8867,14 @@ int camellia_setkey_enc(camellia_context *ctx, unsigned char const *key,
   /*@ loop \eva::unroll 4; */
   while (i <= (size_t)4) {
     if (shifts[idx][0][i - (size_t)1]) {
-      *(& TK[i * (size_t)4] + 0) = (TK[0] << ((size_t)15 * i) % (unsigned int)32) ^ (
-                                   TK[1] >> ((unsigned int)32 - ((size_t)15 * i) % (unsigned int)32));
-      *(& TK[i * (size_t)4] + 1) = (TK[1] << ((size_t)15 * i) % (unsigned int)32) ^ (
-                                   TK[2] >> ((unsigned int)32 - ((size_t)15 * i) % (unsigned int)32));
-      *(& TK[i * (size_t)4] + 2) = (TK[2] << ((size_t)15 * i) % (unsigned int)32) ^ (
-                                   TK[3] >> ((unsigned int)32 - ((size_t)15 * i) % (unsigned int)32));
-      *(& TK[i * (size_t)4] + 3) = (TK[3] << ((size_t)15 * i) % (unsigned int)32) ^ (
-                                   TK[0] >> ((unsigned int)32 - ((size_t)15 * i) % (unsigned int)32));
+      *(& TK[i * (size_t)4] + 0) = (TK[0] << ((size_t)15 * i) % (size_t)32) ^ (
+                                   TK[1] >> ((size_t)32 - ((size_t)15 * i) % (size_t)32));
+      *(& TK[i * (size_t)4] + 1) = (TK[1] << ((size_t)15 * i) % (size_t)32) ^ (
+                                   TK[2] >> ((size_t)32 - ((size_t)15 * i) % (size_t)32));
+      *(& TK[i * (size_t)4] + 2) = (TK[2] << ((size_t)15 * i) % (size_t)32) ^ (
+                                   TK[3] >> ((size_t)32 - ((size_t)15 * i) % (size_t)32));
+      *(& TK[i * (size_t)4] + 3) = (TK[3] << ((size_t)15 * i) % (size_t)32) ^ (
+                                   TK[0] >> ((size_t)32 - ((size_t)15 * i) % (size_t)32));
     }
     i ++;
   }
@@ -8893,14 +8893,14 @@ int camellia_setkey_enc(camellia_context *ctx, unsigned char const *key,
     /*@ loop \eva::unroll 4; */
     while (i <= (size_t)4) {
       if (shifts[idx][1][i - (size_t)1]) {
-        *(& TK[i * (size_t)4] + 0) = (TK[0] << ((size_t)15 * i) % (unsigned int)32) ^ (
-                                     TK[1] >> ((unsigned int)32 - ((size_t)15 * i) % (unsigned int)32));
-        *(& TK[i * (size_t)4] + 1) = (TK[1] << ((size_t)15 * i) % (unsigned int)32) ^ (
-                                     TK[2] >> ((unsigned int)32 - ((size_t)15 * i) % (unsigned int)32));
-        *(& TK[i * (size_t)4] + 2) = (TK[2] << ((size_t)15 * i) % (unsigned int)32) ^ (
-                                     TK[3] >> ((unsigned int)32 - ((size_t)15 * i) % (unsigned int)32));
-        *(& TK[i * (size_t)4] + 3) = (TK[3] << ((size_t)15 * i) % (unsigned int)32) ^ (
-                                     TK[0] >> ((unsigned int)32 - ((size_t)15 * i) % (unsigned int)32));
+        *(& TK[i * (size_t)4] + 0) = (TK[0] << ((size_t)15 * i) % (size_t)32) ^ (
+                                     TK[1] >> ((size_t)32 - ((size_t)15 * i) % (size_t)32));
+        *(& TK[i * (size_t)4] + 1) = (TK[1] << ((size_t)15 * i) % (size_t)32) ^ (
+                                     TK[2] >> ((size_t)32 - ((size_t)15 * i) % (size_t)32));
+        *(& TK[i * (size_t)4] + 2) = (TK[2] << ((size_t)15 * i) % (size_t)32) ^ (
+                                     TK[3] >> ((size_t)32 - ((size_t)15 * i) % (size_t)32));
+        *(& TK[i * (size_t)4] + 3) = (TK[3] << ((size_t)15 * i) % (size_t)32) ^ (
+                                     TK[0] >> ((size_t)32 - ((size_t)15 * i) % (size_t)32));
       }
       i ++;
     }
@@ -8919,14 +8919,14 @@ int camellia_setkey_enc(camellia_context *ctx, unsigned char const *key,
   /*@ loop \eva::unroll 4; */
   while (i <= (size_t)4) {
     if (shifts[idx][2][i - (size_t)1]) {
-      *(& TK[i * (size_t)4] + 0) = (TK[0] << ((size_t)15 * i) % (unsigned int)32) ^ (
-                                   TK[1] >> ((unsigned int)32 - ((size_t)15 * i) % (unsigned int)32));
-      *(& TK[i * (size_t)4] + 1) = (TK[1] << ((size_t)15 * i) % (unsigned int)32) ^ (
-                                   TK[2] >> ((unsigned int)32 - ((size_t)15 * i) % (unsigned int)32));
-      *(& TK[i * (size_t)4] + 2) = (TK[2] << ((size_t)15 * i) % (unsigned int)32) ^ (
-                                   TK[3] >> ((unsigned int)32 - ((size_t)15 * i) % (unsigned int)32));
-      *(& TK[i * (size_t)4] + 3) = (TK[3] << ((size_t)15 * i) % (unsigned int)32) ^ (
-                                   TK[0] >> ((unsigned int)32 - ((size_t)15 * i) % (unsigned int)32));
+      *(& TK[i * (size_t)4] + 0) = (TK[0] << ((size_t)15 * i) % (size_t)32) ^ (
+                                   TK[1] >> ((size_t)32 - ((size_t)15 * i) % (size_t)32));
+      *(& TK[i * (size_t)4] + 1) = (TK[1] << ((size_t)15 * i) % (size_t)32) ^ (
+                                   TK[2] >> ((size_t)32 - ((size_t)15 * i) % (size_t)32));
+      *(& TK[i * (size_t)4] + 2) = (TK[2] << ((size_t)15 * i) % (size_t)32) ^ (
+                                   TK[3] >> ((size_t)32 - ((size_t)15 * i) % (size_t)32));
+      *(& TK[i * (size_t)4] + 3) = (TK[3] << ((size_t)15 * i) % (size_t)32) ^ (
+                                   TK[0] >> ((size_t)32 - ((size_t)15 * i) % (size_t)32));
     }
     i ++;
   }
@@ -8945,14 +8945,14 @@ int camellia_setkey_enc(camellia_context *ctx, unsigned char const *key,
     /*@ loop \eva::unroll 4; */
     while (i <= (size_t)4) {
       if (shifts[idx][3][i - (size_t)1]) {
-        *(& TK[i * (size_t)4] + 0) = (TK[0] << ((size_t)15 * i) % (unsigned int)32) ^ (
-                                     TK[1] >> ((unsigned int)32 - ((size_t)15 * i) % (unsigned int)32));
-        *(& TK[i * (size_t)4] + 1) = (TK[1] << ((size_t)15 * i) % (unsigned int)32) ^ (
-                                     TK[2] >> ((unsigned int)32 - ((size_t)15 * i) % (unsigned int)32));
-        *(& TK[i * (size_t)4] + 2) = (TK[2] << ((size_t)15 * i) % (unsigned int)32) ^ (
-                                     TK[3] >> ((unsigned int)32 - ((size_t)15 * i) % (unsigned int)32));
-        *(& TK[i * (size_t)4] + 3) = (TK[3] << ((size_t)15 * i) % (unsigned int)32) ^ (
-                                     TK[0] >> ((unsigned int)32 - ((size_t)15 * i) % (unsigned int)32));
+        *(& TK[i * (size_t)4] + 0) = (TK[0] << ((size_t)15 * i) % (size_t)32) ^ (
+                                     TK[1] >> ((size_t)32 - ((size_t)15 * i) % (size_t)32));
+        *(& TK[i * (size_t)4] + 1) = (TK[1] << ((size_t)15 * i) % (size_t)32) ^ (
+                                     TK[2] >> ((size_t)32 - ((size_t)15 * i) % (size_t)32));
+        *(& TK[i * (size_t)4] + 2) = (TK[2] << ((size_t)15 * i) % (size_t)32) ^ (
+                                     TK[3] >> ((size_t)32 - ((size_t)15 * i) % (size_t)32));
+        *(& TK[i * (size_t)4] + 3) = (TK[3] << ((size_t)15 * i) % (size_t)32) ^ (
+                                     TK[0] >> ((size_t)32 - ((size_t)15 * i) % (size_t)32));
       }
       i ++;
     }
@@ -9208,7 +9208,7 @@ int camellia_crypt_cbc(camellia_context *ctx, int mode, size_t length,
   int __retres;
   int i;
   unsigned char temp[16];
-  if (length % (unsigned int)16) {
+  if (length % (size_t)16) {
     __retres = -0x0026;
     goto return_label;
   }
@@ -9269,7 +9269,7 @@ int camellia_crypt_cfb128(camellia_context *ctx, int mode, size_t length,
         output ++;
         *tmp_0 = (unsigned char)(c ^ (int)*(iv + n));
         *(iv + n) = (unsigned char)c;
-        n = (n + (size_t)1) & (unsigned int)0x0F;
+        n = (n + (size_t)1) & (size_t)0x0F;
       }
     }
   else 
@@ -9292,7 +9292,7 @@ int camellia_crypt_cfb128(camellia_context *ctx, int mode, size_t length,
         tmp_3 = (unsigned char)((int)*(iv + n) ^ (int)*tmp_4);
         *tmp_2 = tmp_3;
         *(iv + n) = tmp_3;
-        n = (n + (size_t)1) & (unsigned int)0x0F;
+        n = (n + (size_t)1) & (size_t)0x0F;
       }
     }
   *iv_off = n;
@@ -9342,7 +9342,7 @@ int camellia_crypt_ctr(camellia_context *ctx, size_t length, size_t *nc_off,
       tmp_1 = output;
       output ++;
       *tmp_1 = (unsigned char)(c ^ (int)*(stream_block + n));
-      n = (n + (size_t)1) & (unsigned int)0x0F;
+      n = (n + (size_t)1) & (size_t)0x0F;
     }
   }
   *nc_off = n;
@@ -11012,7 +11012,7 @@ int cipher_update(cipher_context_t *ctx, unsigned char const *input,
     else 
       if ((size_t *)0 == olen) goto _LOR;
       else 
-        if ((void *)input == (void *)output) {
+        if (input == (unsigned char const *)output) {
           _LOR: {
                   __retres = -0x6100;
                   goto return_label;
@@ -11781,16 +11781,16 @@ int block_cipher_df(unsigned char *output, unsigned char const *data,
   p = & buf[16];
   tmp_0 = p;
   p ++;
-  *tmp_0 = (unsigned char)((data_len >> 24) & (unsigned int)0xff);
+  *tmp_0 = (unsigned char)((data_len >> 24) & (size_t)0xff);
   tmp_1 = p;
   p ++;
-  *tmp_1 = (unsigned char)((data_len >> 16) & (unsigned int)0xff);
+  *tmp_1 = (unsigned char)((data_len >> 16) & (size_t)0xff);
   tmp_2 = p;
   p ++;
-  *tmp_2 = (unsigned char)((data_len >> 8) & (unsigned int)0xff);
+  *tmp_2 = (unsigned char)((data_len >> 8) & (size_t)0xff);
   tmp_3 = p;
   p ++;
-  *tmp_3 = (unsigned char)(data_len & (unsigned int)0xff);
+  *tmp_3 = (unsigned char)(data_len & (size_t)0xff);
   p += 3;
   tmp_4 = p;
   p ++;
@@ -12723,7 +12723,7 @@ void debug_print_buf(ssl_context const *ssl, int level, char const *file,
   i = (size_t)0;
   while (i < len) {
     if (i >= (size_t)4096) break;
-    if (i % (unsigned int)16 == (unsigned int)0) {
+    if (i % (size_t)16 == (size_t)0) {
       if (i > (size_t)0) (*(ssl->f_dbg))(ssl->p_dbg,level,"\n");
       snprintf(str,maxlen,"%s(%04d): %04x: ",(char *)file,line,i); /* snprintf_va_4 */
       str[maxlen] = (char)'\000';
@@ -12818,8 +12818,7 @@ void debug_print_mpi(ssl_context const *ssl, int level, char const *file,
   }
   j = (int)((sizeof(t_uint) << 3) - (unsigned int)1);
   while (j >= 0) {
-    if (((*(X->p + n) >> j) & (unsigned long)1) != (unsigned long)0) 
-      break;
+    if (((*(X->p + n) >> j) & (t_uint)1) != (t_uint)0) break;
     j --;
   }
   snprintf(str,(size_t)maxlen,"%s(%04d): value of \'%s\' (%lu bits) is:\n",
@@ -12835,7 +12834,7 @@ void debug_print_mpi(ssl_context const *ssl, int level, char const *file,
     k = (int)(sizeof(t_uint) - (unsigned int)1);
     while (k >= 0) {
       if (zeros) {
-        if (((*(X->p + (i - (size_t)1)) >> (k << 3)) & (unsigned long)0xFF) == (unsigned long)0) 
+        if (((*(X->p + (i - (size_t)1)) >> (k << 3)) & (t_uint)0xFF) == (t_uint)0) 
           goto __Cont_0;
         else zeros = 0;
       }
@@ -14108,7 +14107,7 @@ int des_crypt_cbc(des_context *ctx, int mode, size_t length,
   int __retres;
   int i;
   unsigned char temp[8];
-  if (length % (unsigned int)8) {
+  if (length % (size_t)8) {
     __retres = -0x0032;
     goto return_label;
   }
@@ -14349,7 +14348,7 @@ int des3_crypt_cbc(des3_context *ctx, int mode, size_t length,
   int __retres;
   int i;
   unsigned char temp[8];
-  if (length % (unsigned int)8) {
+  if (length % (size_t)8) {
     __retres = -0x0032;
     goto return_label;
   }
@@ -14800,13 +14799,13 @@ static int dhm_read_bignum(mpi *X, unsigned char **p,
   int __retres;
   int ret;
   int n;
-  if (end - *p < 2) {
+  if (end - (unsigned char const *)*p < 2) {
     __retres = -0x3080;
     goto return_label;
   }
   n = ((int)*(*p + 0) << 8) | (int)*(*p + 1);
   *p += 2;
-  if (end - *p < n) {
+  if (end - (unsigned char const *)*p < n) {
     __retres = -0x3080;
     goto return_label;
   }
@@ -14879,13 +14878,13 @@ int dhm_read_params(dhm_context *ctx, unsigned char **p,
     goto return_label;
   }
   ctx->len = mpi_size((mpi const *)(& ctx->P));
-  if (end - *p < 2) {
+  if (end - (unsigned char const *)*p < 2) {
     __retres = -0x3080;
     goto return_label;
   }
   n = ((int)*(*p + 0) << 8) | (int)*(*p + 1);
   *p += 2;
-  if ((void *)end != (void *)(*p + n)) {
+  if (end != (unsigned char const *)(*p + n)) {
     __retres = -0x3080;
     goto return_label;
   }
@@ -15209,7 +15208,7 @@ int entropy_update(entropy_context *ctx, unsigned char source_id,
     use_len = (size_t)64;
   }
   header[0] = source_id;
-  header[1] = (unsigned char)(use_len & (unsigned int)0xFF);
+  header[1] = (unsigned char)(use_len & (size_t)0xFF);
   sha4_update(& ctx->accumulator,(unsigned char const *)(header),(size_t)2);
   sha4_update(& ctx->accumulator,p,use_len);
   __retres = 0;
@@ -19622,8 +19621,8 @@ static int pem_get_iv(unsigned char const *s, unsigned char *iv,
         }
       }
     }
-    if ((i & (unsigned int)1) != (unsigned int)0) k = j; else k = j << 4;
-    *(iv + (i >> 1)) = (unsigned char)((unsigned int)*(iv + (i >> 1)) | k);
+    if ((i & (size_t)1) != (size_t)0) k = j; else k = j << 4;
+    *(iv + (i >> 1)) = (unsigned char)((size_t)*(iv + (i >> 1)) | k);
     i ++;
     s ++;
   }
@@ -20036,12 +20035,12 @@ int rsa_check_pubkey(rsa_context const *ctx)
       __retres = -0x4200;
       goto return_label;
     }
-  if ((*(ctx->N.p + 0) & (unsigned long)1) == (unsigned long)0) {
+  if ((*(ctx->N.p + 0) & (t_uint)1) == (t_uint)0) {
     __retres = -0x4200;
     goto return_label;
   }
   else 
-    if ((*(ctx->E.p + 0) & (unsigned long)1) == (unsigned long)0) {
+    if ((*(ctx->E.p + 0) & (t_uint)1) == (t_uint)0) {
       __retres = -0x4200;
       goto return_label;
     }
@@ -20517,7 +20516,7 @@ int rsa_pkcs1_decrypt(rsa_context *ctx, int mode, size_t *olen,
         q ++;
         pad_count += (size_t)((int)*tmp_5 != 0);
       }
-      correct = (int)((unsigned int)correct | (pad_count & (unsigned int)0x100000));
+      correct = (int)((size_t)correct | (pad_count & (size_t)0x100000));
       p ++;
     }
     else {
@@ -20543,7 +20542,7 @@ int rsa_pkcs1_decrypt(rsa_context *ctx, int mode, size_t *olen,
         q ++;
         pad_count += (size_t)((int)*tmp_8 != 0);
       }
-      correct = (int)((unsigned int)correct | (pad_count & (unsigned int)0x100000));
+      correct = (int)((size_t)correct | (pad_count & (size_t)0x100000));
       p ++;
     }
     if (correct == 0) {
@@ -20807,7 +20806,7 @@ int rsa_pkcs1_sign(rsa_context *ctx,
     md_update(& md_ctx,hash,hashlen);
     md_update(& md_ctx,(unsigned char const *)(salt),slen);
     md_finish(& md_ctx,p);
-    if (msb % (unsigned int)8 == (unsigned int)0) offset = (unsigned int)1;
+    if (msb % (size_t)8 == (size_t)0) offset = (unsigned int)1;
     mgf_mask(sig + offset,((olen - hlen) - (size_t)1) - offset,p,hlen,
              & md_ctx);
     md_free_ctx(& md_ctx);
@@ -21076,7 +21075,7 @@ int rsa_pkcs1_verify(rsa_context *ctx, int mode, int hash_id,
     memset((void *)(zeros),0,(size_t)8);
     tmp_11 = mpi_msb((mpi const *)(& ctx->N));
     msb = tmp_11 - (size_t)1;
-    if (msb % (unsigned int)8 == (unsigned int)0) {
+    if (msb % (size_t)8 == (size_t)0) {
       p ++;
       siglen -= (size_t)1;
     }
@@ -28440,10 +28439,10 @@ static int ssl_write_client_hello(ssl_context *ssl)
     unsigned char *tmp_23;
     tmp_13 = p;
     p ++;
-    *tmp_13 = (unsigned char)(((ssl->hostname_len + (size_t)9) >> 8) & (unsigned int)0xFF);
+    *tmp_13 = (unsigned char)(((ssl->hostname_len + (size_t)9) >> 8) & (size_t)0xFF);
     tmp_14 = p;
     p ++;
-    *tmp_14 = (unsigned char)((ssl->hostname_len + (size_t)9) & (unsigned int)0xFF);
+    *tmp_14 = (unsigned char)((ssl->hostname_len + (size_t)9) & (size_t)0xFF);
     tmp_15 = p;
     p ++;
     *tmp_15 = (unsigned char)((0 >> 8) & 0xFF);
@@ -28452,25 +28451,25 @@ static int ssl_write_client_hello(ssl_context *ssl)
     *tmp_16 = (unsigned char)(0 & 0xFF);
     tmp_17 = p;
     p ++;
-    *tmp_17 = (unsigned char)(((ssl->hostname_len + (size_t)5) >> 8) & (unsigned int)0xFF);
+    *tmp_17 = (unsigned char)(((ssl->hostname_len + (size_t)5) >> 8) & (size_t)0xFF);
     tmp_18 = p;
     p ++;
-    *tmp_18 = (unsigned char)((ssl->hostname_len + (size_t)5) & (unsigned int)0xFF);
+    *tmp_18 = (unsigned char)((ssl->hostname_len + (size_t)5) & (size_t)0xFF);
     tmp_19 = p;
     p ++;
-    *tmp_19 = (unsigned char)(((ssl->hostname_len + (size_t)3) >> 8) & (unsigned int)0xFF);
+    *tmp_19 = (unsigned char)(((ssl->hostname_len + (size_t)3) >> 8) & (size_t)0xFF);
     tmp_20 = p;
     p ++;
-    *tmp_20 = (unsigned char)((ssl->hostname_len + (size_t)3) & (unsigned int)0xFF);
+    *tmp_20 = (unsigned char)((ssl->hostname_len + (size_t)3) & (size_t)0xFF);
     tmp_21 = p;
     p ++;
     *tmp_21 = (unsigned char)(0 & 0xFF);
     tmp_22 = p;
     p ++;
-    *tmp_22 = (unsigned char)((ssl->hostname_len >> 8) & (unsigned int)0xFF);
+    *tmp_22 = (unsigned char)((ssl->hostname_len >> 8) & (size_t)0xFF);
     tmp_23 = p;
     p ++;
-    *tmp_23 = (unsigned char)(ssl->hostname_len & (unsigned int)0xFF);
+    *tmp_23 = (unsigned char)(ssl->hostname_len & (size_t)0xFF);
     memcpy((void *)p,(void const *)ssl->hostname,ssl->hostname_len);
     p += ssl->hostname_len;
   }
@@ -29390,10 +29389,10 @@ static int ssl_parse_client_key_exchange(ssl_context *ssl)
             ssl->pmslen = (size_t)48;
             if (ssl->minor_ver != 0) {
               i += (size_t)2;
-              if ((unsigned int)*(ssl->in_msg + 4) != ((n >> 8) & (unsigned int)0xFF)) 
+              if ((size_t)*(ssl->in_msg + 4) != ((n >> 8) & (size_t)0xFF)) 
                 goto _LOR_0;
               else 
-                if ((unsigned int)*(ssl->in_msg + 5) != (n & (unsigned int)0xFF)) {
+                if ((size_t)*(ssl->in_msg + 5) != (n & (size_t)0xFF)) {
                   _LOR_0: {
                             __retres = -0x7C00;
                             goto return_label;
@@ -29576,8 +29575,7 @@ static int tls1_prf(unsigned char *secret, size_t slen, char *label,
              (size_t)16 + nb,h_i);
     md5_hmac((unsigned char const *)S1,hs,(unsigned char const *)(& tmp[4]),
              (size_t)16,& tmp[4]);
-    if (i + (size_t)16 > dlen) k = dlen % (unsigned int)16;
-    else k = (size_t)16;
+    if (i + (size_t)16 > dlen) k = dlen % (size_t)16; else k = (size_t)16;
     j = (size_t)0;
     /*@ loop \eva::unroll 16; */
     while (j < k) {
@@ -29595,8 +29593,7 @@ static int tls1_prf(unsigned char *secret, size_t slen, char *label,
               (size_t)20 + nb,h_i);
     sha1_hmac((unsigned char const *)S2,hs,(unsigned char const *)(tmp),
               (size_t)20,tmp);
-    if (i + (size_t)20 > dlen) k = dlen % (unsigned int)20;
-    else k = (size_t)20;
+    if (i + (size_t)20 > dlen) k = dlen % (size_t)20; else k = (size_t)20;
     j = (size_t)0;
     /*@ loop \eva::unroll 20; */
     while (j < k) {
@@ -30013,7 +30010,7 @@ static int ssl_decrypt_buf(ssl_context *ssl)
     unsigned char *dec_msg_result;
     size_t dec_msglen;
     size_t minlen = (size_t)0;
-    if (ssl->in_msglen % ssl->ivlen != (unsigned int)0) {
+    if (ssl->in_msglen % ssl->ivlen != (size_t)0) {
       __retres = -0x7180;
       goto return_label;
     }
@@ -30106,8 +30103,8 @@ static int ssl_decrypt_buf(ssl_context *ssl)
                                    padlen - (size_t)1);
         i ++;
       }
-      correct &= (unsigned int)(pad_count == padlen);
-      correct &= (unsigned int)(pad_count + fake_pad_count < (size_t)512);
+      correct &= (size_t)(pad_count == padlen);
+      correct &= (size_t)(pad_count + fake_pad_count < (size_t)512);
       padlen &= correct * (size_t)0x1FF;
     }
   }
@@ -30128,7 +30125,7 @@ static int ssl_decrypt_buf(ssl_context *ssl)
     int extra_run = 0;
     extra_run = (int)(((((size_t)13 + ssl->in_msglen) + padlen) + (size_t)8) / (size_t)64 - 
                       (((size_t)13 + ssl->in_msglen) + (size_t)8) / (size_t)64);
-    extra_run = (int)((unsigned int)extra_run & correct * (size_t)0xFF);
+    extra_run = (int)((size_t)extra_run & correct * (size_t)0xFF);
     if (ssl->maclen == (size_t)16) {
       md5_context ctx;
       md5_hmac_starts(& ctx,(unsigned char const *)(ssl->mac_dec),(size_t)16);
@@ -31368,7 +31365,7 @@ static int x509_get_version(unsigned char **p, unsigned char const *end,
     __retres = -0x2200 + ret;
     goto return_label;
   }
-  if ((void *)*p != (void *)end) {
+  if (*p != (unsigned char *)end) {
     __retres = -0x2200 + -0x001A;
     goto return_label;
   }
@@ -31401,7 +31398,7 @@ static int x509_get_serial(unsigned char **p, unsigned char const *end,
   int __retres;
   int ret;
   unsigned char *tmp;
-  if (end - *p < 1) {
+  if (end - (unsigned char const *)*p < 1) {
     __retres = -0x2280 + -0x0014;
     goto return_label;
   }
@@ -31444,7 +31441,7 @@ static int x509_get_alg(unsigned char **p, unsigned char const *end,
   }
   alg->p = *p;
   *p += alg->len;
-  if ((void *)*p == (void *)end) {
+  if (*p == (unsigned char *)end) {
     __retres = 0;
     goto return_label;
   }
@@ -31453,7 +31450,7 @@ static int x509_get_alg(unsigned char **p, unsigned char const *end,
     __retres = -0x2300 + ret;
     goto return_label;
   }
-  if ((void *)*p != (void *)end) {
+  if (*p != (unsigned char *)end) {
     __retres = -0x2300 + -0x001A;
     goto return_label;
   }
@@ -31485,7 +31482,7 @@ static int x509_get_attr_type_value(unsigned char **p,
   }
   oid->p = *p;
   *p += oid->len;
-  if (end - *p < 1) {
+  if (end - (unsigned char const *)*p < 1) {
     __retres = -0x2380 + -0x0014;
     goto return_label;
   }
@@ -31537,7 +31534,7 @@ static int x509_get_name(unsigned char **p, unsigned char const *end,
       __retres = ret;
       goto return_label;
     }
-    if ((void *)*p != (void *)end) {
+    if (*p != (unsigned char *)end) {
       use->next = (struct _x509_name *)malloc(sizeof(x509_name));
       if (use->next == (struct _x509_name *)0) {
         __retres = -0x2A80;
@@ -31546,9 +31543,9 @@ static int x509_get_name(unsigned char **p, unsigned char const *end,
       memset((void *)use->next,0,sizeof(x509_name));
       use = use->next;
     }
-    if (! ((void *)*p != (void *)end)) break;
+    if (! (*p != (unsigned char *)end)) break;
   }
-  if ((void *)*p == (void *)end2) {
+  if (*p == (unsigned char *)end2) {
     __retres = 0;
     goto return_label;
   }
@@ -31639,7 +31636,7 @@ static int x509_get_time(unsigned char **p, unsigned char const *end,
   size_t len;
   char date[64];
   unsigned char tag;
-  if (end - *p < 1) {
+  if (end - (unsigned char const *)*p < 1) {
     __retres = -0x2400 + -0x0014;
     goto return_label;
   }
@@ -31726,7 +31723,7 @@ static int x509_get_dates(unsigned char **p, unsigned char const *end,
     __retres = ret;
     goto return_label;
   }
-  if ((void *)*p != (void *)end) {
+  if (*p != (unsigned char *)end) {
     __retres = -0x2400 + -0x001A;
     goto return_label;
   }
@@ -31781,7 +31778,7 @@ static int x509_get_pubkey(unsigned char **p, unsigned char const *end,
     __retres = -0x2480 + ret;
     goto return_label;
   }
-  if (end - *p < 1) {
+  if (end - (unsigned char const *)*p < 1) {
     __retres = -0x2480 + -0x0014;
     goto return_label;
   }
@@ -31814,7 +31811,7 @@ static int x509_get_pubkey(unsigned char **p, unsigned char const *end,
       goto return_label;
     }
   }
-  if ((void *)*p != (void *)end) {
+  if (*p != (unsigned char *)end) {
     __retres = -0x2480 + -0x001A;
     goto return_label;
   }
@@ -31861,7 +31858,7 @@ static int x509_get_uid(unsigned char **p, unsigned char const *end,
 {
   int __retres;
   int ret;
-  if ((void *)*p == (void *)end) {
+  if (*p == (unsigned char *)end) {
     __retres = 0;
     goto return_label;
   }
@@ -31887,7 +31884,7 @@ static int x509_get_ext(unsigned char **p, unsigned char const *end,
   int __retres;
   int ret;
   size_t len;
-  if ((void *)*p == (void *)end) {
+  if (*p == (unsigned char *)end) {
     __retres = 0;
     goto return_label;
   }
@@ -31904,7 +31901,7 @@ static int x509_get_ext(unsigned char **p, unsigned char const *end,
     __retres = -0x2580 + ret;
     goto return_label;
   }
-  if ((void *)end != (void *)(*p + len)) {
+  if (end != (unsigned char const *)(*p + len)) {
     __retres = -0x2580 + -0x001A;
     goto return_label;
   }
@@ -31927,7 +31924,7 @@ static int x509_get_crl_ext(unsigned char **p, unsigned char const *end,
     __retres = ret;
     goto return_label;
   }
-  while ((void *)*p < (void *)end) {
+  while (*p < (unsigned char *)end) {
     ret = asn1_get_tag(p,end,& len,0x20 | 0x10);
     if (ret != 0) {
       __retres = -0x2580 + ret;
@@ -31935,7 +31932,7 @@ static int x509_get_crl_ext(unsigned char **p, unsigned char const *end,
     }
     *p += len;
   }
-  if ((void *)*p != (void *)end) {
+  if (*p != (unsigned char *)end) {
     __retres = -0x2580 + -0x001A;
     goto return_label;
   }
@@ -31949,7 +31946,7 @@ static int x509_get_crl_entry_ext(unsigned char **p,
   int __retres;
   int ret;
   size_t len = (size_t)0;
-  if ((void *)end <= (void *)*p) {
+  if (end <= (unsigned char const *)*p) {
     __retres = 0;
     goto return_label;
   }
@@ -31966,11 +31963,11 @@ static int x509_get_crl_entry_ext(unsigned char **p,
     goto return_label;
   }
   end = (unsigned char const *)(*p + ext->len);
-  if ((void *)end != (void *)(*p + ext->len)) {
+  if (end != (unsigned char const *)(*p + ext->len)) {
     __retres = -0x2580 + -0x001A;
     goto return_label;
   }
-  while ((void *)*p < (void *)end) {
+  while (*p < (unsigned char *)end) {
     ret = asn1_get_tag(p,end,& len,0x20 | 0x10);
     if (ret != 0) {
       __retres = -0x2580 + ret;
@@ -31978,7 +31975,7 @@ static int x509_get_crl_entry_ext(unsigned char **p,
     }
     *p += len;
   }
-  if ((void *)*p != (void *)end) {
+  if (*p != (unsigned char *)end) {
     __retres = -0x2580 + -0x001A;
     goto return_label;
   }
@@ -32000,7 +31997,7 @@ static int x509_get_basic_constraints(unsigned char **p,
     __retres = -0x2580 + ret;
     goto return_label;
   }
-  if ((void *)*p == (void *)end) {
+  if (*p == (unsigned char *)end) {
     __retres = 0;
     goto return_label;
   }
@@ -32013,7 +32010,7 @@ static int x509_get_basic_constraints(unsigned char **p,
     }
     if (*ca_istrue != 0) *ca_istrue = 1;
   }
-  if ((void *)*p == (void *)end) {
+  if (*p == (unsigned char *)end) {
     __retres = 0;
     goto return_label;
   }
@@ -32022,7 +32019,7 @@ static int x509_get_basic_constraints(unsigned char **p,
     __retres = -0x2580 + ret;
     goto return_label;
   }
-  if ((void *)*p != (void *)end) {
+  if (*p != (unsigned char *)end) {
     __retres = -0x2580 + -0x001A;
     goto return_label;
   }
@@ -32113,7 +32110,7 @@ static int x509_get_crt_ext(unsigned char **p, unsigned char const *end,
     __retres = ret;
     goto return_label;
   }
-  while ((void *)*p < (void *)end) {
+  while (*p < (unsigned char *)end) {
     x509_buf extn_oid =
       {.tag = 0, .len = (size_t)0, .p = (unsigned char *)0};
     int is_critical = 0;
@@ -32131,7 +32128,7 @@ static int x509_get_crt_ext(unsigned char **p, unsigned char const *end,
     }
     extn_oid.p = *p;
     *p += extn_oid.len;
-    if (end - *p < 1) {
+    if (end - (unsigned char const *)*p < 1) {
       __retres = -0x2580 + -0x0014;
       goto return_label;
     }
@@ -32234,7 +32231,7 @@ static int x509_get_crt_ext(unsigned char **p, unsigned char const *end,
       }
     }
   }
-  if ((void *)*p != (void *)end) {
+  if (*p != (unsigned char *)end) {
     __retres = -0x2580 + -0x001A;
     goto return_label;
   }
@@ -32249,7 +32246,7 @@ static int x509_get_entries(unsigned char **p, unsigned char const *end,
   int ret;
   size_t entry_len;
   x509_crl_entry *cur_entry = entry;
-  if ((void *)*p == (void *)end) {
+  if (*p == (unsigned char *)end) {
     __retres = 0;
     goto return_label;
   }
@@ -32263,7 +32260,7 @@ static int x509_get_entries(unsigned char **p, unsigned char const *end,
     goto return_label;
   }
   end = (unsigned char const *)(*p + entry_len);
-  while ((void *)*p < (void *)end) {
+  while (*p < (unsigned char *)end) {
     size_t len2;
     unsigned char const *end2;
     ret = asn1_get_tag(p,end,& len2,0x10 | 0x20);
@@ -32290,7 +32287,7 @@ static int x509_get_entries(unsigned char **p, unsigned char const *end,
       __retres = ret;
       goto return_label;
     }
-    if ((void *)*p < (void *)end) {
+    if (*p < (unsigned char *)end) {
       cur_entry->next = (struct _x509_crl_entry *)malloc(sizeof(x509_crl_entry));
       if (cur_entry->next == (struct _x509_crl_entry *)0) {
         __retres = -0x2A80;
@@ -35313,9 +35310,9 @@ int xtea_crypt_ecb(xtea_context *ctx, int mode, unsigned char input[8],
     uint32_t delta = 0x9E3779B9;
     i = (uint32_t)0;
     while (i < (uint32_t)32) {
-      v0 += (((v1 << 4) ^ (v1 >> 5)) + v1) ^ (sum + *(k + (sum & (unsigned int)3)));
+      v0 += (((v1 << 4) ^ (v1 >> 5)) + v1) ^ (sum + *(k + (sum & (uint32_t)3)));
       sum += delta;
-      v1 += (((v0 << 4) ^ (v0 >> 5)) + v0) ^ (sum + *(k + ((sum >> 11) & (unsigned int)3)));
+      v1 += (((v0 << 4) ^ (v0 >> 5)) + v0) ^ (sum + *(k + ((sum >> 11) & (uint32_t)3)));
       i ++;
     }
   }
@@ -35324,9 +35321,9 @@ int xtea_crypt_ecb(xtea_context *ctx, int mode, unsigned char input[8],
     uint32_t sum_0 = delta_0 * (uint32_t)32;
     i = (uint32_t)0;
     while (i < (uint32_t)32) {
-      v1 -= (((v0 << 4) ^ (v0 >> 5)) + v0) ^ (sum_0 + *(k + ((sum_0 >> 11) & (unsigned int)3)));
+      v1 -= (((v0 << 4) ^ (v0 >> 5)) + v0) ^ (sum_0 + *(k + ((sum_0 >> 11) & (uint32_t)3)));
       sum_0 -= delta_0;
-      v0 -= (((v1 << 4) ^ (v1 >> 5)) + v1) ^ (sum_0 + *(k + (sum_0 & (unsigned int)3)));
+      v0 -= (((v1 << 4) ^ (v1 >> 5)) + v1) ^ (sum_0 + *(k + (sum_0 & (uint32_t)3)));
       i ++;
     }
   }
@@ -35349,7 +35346,7 @@ int xtea_crypt_cbc(xtea_context *ctx, int mode, size_t length,
   int __retres;
   int i;
   unsigned char temp[8];
-  if (length % (unsigned int)8) {
+  if (length % (size_t)8) {
     __retres = -0x0028;
     goto return_label;
   }

@@ -51,7 +51,7 @@ int C(u1 *c, u4 *a)
   *a = tmp_0;
   while ((int)d < (int)s >> k) {
     b = *(c + d);
-    *a |= (unsigned int)((int)b & (int)p);
+    *a |= (u4)((int)b & (int)p);
     if (! ((int)b >> l)) {
       u4 tmp_1;
       tmp_1 = k;
@@ -107,7 +107,7 @@ int F(u4 a, u1 *c)
   c += (int)b;
   c --;
   while (a) {
-    *c = (u1)(a & (unsigned int)p);
+    *c = (u1)(a & (u4)p);
     a >>= l;
     c --;
   }
@@ -184,7 +184,7 @@ u1 *H(u1 *c, u4 *a)
   if ((int)*(c + n) != (int)m) exit((int)q);
   tmp = A(c + (int)q);
   tmp_0 = A(c + ((int)m >> (int)q));
-  b = ((u4)tmp << (int)q * (int)q) | (unsigned int)tmp_0;
+  b = ((u4)tmp << (int)q * (int)q) | (u4)tmp_0;
   c += l;
   d = c + b;
   while (c < d) {
@@ -228,12 +228,12 @@ u1 *J(u1 *c, u4 a, u4 b)
   }
   d = (u1)(l + (u4)r);
   e = o;
-  if (! (a % (unsigned int)m)) {
+  if (! (a % (u4)m)) {
     d = (u1)(l - (u4)m);
     e = (u1)((u4)o + l);
   }
   else 
-    if (a % (unsigned int)m == (unsigned int)r) {
+    if (a % (u4)m == (u4)r) {
       d = (u1)l;
       e = (u1)(n + (u4)o);
     }
@@ -311,7 +311,7 @@ void K(u1 *c, u4 a)
   r = (u1)l;
   l ++;
   if (! b) exit((int)r);
-  *b = (u1)((l << n) | (unsigned int)q);
+  *b = (u1)((l << n) | (u4)q);
   *(b + ! k) = (u1)((int)*b + (int)r);
   *(b + n) = (u1)((u4)((int)*b << n) + n);
   tmp_7 = r;

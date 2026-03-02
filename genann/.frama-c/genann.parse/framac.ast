@@ -451,8 +451,8 @@ double const *genann_run(genann const *ann, double const *inputs)
     }
     j ++;
   }
-  __FC_assert((w - ann->weight == (long)ann->total_weights) != 0,"genann.c",
-              271,"w - ann->weight == ann->total_weights");
+  __FC_assert((w - (double const *)ann->weight == (long)ann->total_weights) != 0,
+              "genann.c",271,"w - ann->weight == ann->total_weights");
   __FC_assert((o - ann->output == (long)ann->total_neurons) != 0,"genann.c",
               272,"o - ann->output == ann->total_neurons");
   __retres = ret_0;
@@ -471,9 +471,12 @@ void genann_train(genann const *ann, double const *inputs,
       (double const *)((ann->output + ann->inputs) + ann->hidden * ann->hidden_layers);
     double *d = ann->delta + ann->hidden * ann->hidden_layers;
     double const *t = desired_outputs;
-    if (& genann_act_output_indirect == & genann_act_linear) goto _LOR;
+    if (& genann_act_output_indirect == (double (*)(struct genann const *ann,
+                                                    double a))(& genann_act_linear)) 
+      goto _LOR;
     else 
-      if (ann->activation_output == & genann_act_linear) {
+      if (ann->activation_output == (double (*)(struct genann const *ann,
+                                                double a))(& genann_act_linear)) {
         _LOR:
         {
           j = 0;

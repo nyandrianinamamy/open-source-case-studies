@@ -156,10 +156,10 @@ int enableRawMode(int fd)
   tmp_0 = tcgetattr(fd,& orig_termios);
   if (tmp_0 == -1) goto fatal;
   raw = orig_termios;
-  raw.c_iflag &= (unsigned int)(~ ((((0000002 | 0000400) | 0000020) | 0000040) | 0002000));
-  raw.c_oflag &= (unsigned int)(~ 0000001);
-  raw.c_cflag |= (unsigned int)0000060;
-  raw.c_lflag &= (unsigned int)(~ (((0000010 | 0000002) | 0001000) | 0000001));
+  raw.c_iflag &= (tcflag_t)(~ ((((0000002 | 0000400) | 0000020) | 0000040) | 0002000));
+  raw.c_oflag &= (tcflag_t)(~ 0000001);
+  raw.c_cflag |= (tcflag_t)0000060;
+  raw.c_lflag &= (tcflag_t)(~ (((0000010 | 0000002) | 0001000) | 0000001));
   raw.c_cc[6] = (cc_t)0;
   raw.c_cc[5] = (cc_t)1;
   tmp_1 = tcsetattr(fd,2,& raw);

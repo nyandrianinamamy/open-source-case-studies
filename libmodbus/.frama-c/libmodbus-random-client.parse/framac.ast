@@ -437,8 +437,7 @@ void modbus_set_float_badc(float f, uint16_t *dest)
   }
   *(dest + 0) = (uint16_t)tmp;
   {
-    register unsigned short __x_0 =
-      (unsigned short)(i & (unsigned int)0xFFFF);
+    register unsigned short __x_0 = (unsigned short)(i & (uint32_t)0xFFFF);
     tmp_0 = (((int)__x_0 >> 8) & 0xff) | (((int)__x_0 & 0xff) << 8);
   }
   *(dest + 1) = (uint16_t)tmp_0;
@@ -1406,35 +1405,35 @@ static int _modbus_rtu_connect(modbus_t *ctx)
             }
     }
   }
-  tios.c_cflag |= (unsigned int)(0000200 | 0004000);
-  tios.c_cflag &= (unsigned int)(~ 0000060);
+  tios.c_cflag |= (tcflag_t)(0000200 | 0004000);
+  tios.c_cflag &= (tcflag_t)(~ 0000060);
   switch ((int)ctx_rtu->data_bit) {
-    case 5: tios.c_cflag |= (unsigned int)0000000;
+    case 5: tios.c_cflag |= (tcflag_t)0000000;
     break;
-    case 6: tios.c_cflag |= (unsigned int)0000020;
+    case 6: tios.c_cflag |= (tcflag_t)0000020;
     break;
-    case 7: tios.c_cflag |= (unsigned int)0000040;
+    case 7: tios.c_cflag |= (tcflag_t)0000040;
     break;
-    case 8: default: tios.c_cflag |= (unsigned int)0000060;
+    case 8: default: tios.c_cflag |= (tcflag_t)0000060;
     break;
   }
-  if ((int)ctx_rtu->stop_bit == 1) tios.c_cflag &= (unsigned int)(~ 0000100);
-  else tios.c_cflag |= (unsigned int)0000100;
-  if ((int)ctx_rtu->parity == 'N') tios.c_cflag &= (unsigned int)(~ 0000400);
+  if ((int)ctx_rtu->stop_bit == 1) tios.c_cflag &= (tcflag_t)(~ 0000100);
+  else tios.c_cflag |= (tcflag_t)0000100;
+  if ((int)ctx_rtu->parity == 'N') tios.c_cflag &= (tcflag_t)(~ 0000400);
   else 
     if ((int)ctx_rtu->parity == 'E') {
-      tios.c_cflag |= (unsigned int)0000400;
-      tios.c_cflag &= (unsigned int)(~ 0001000);
+      tios.c_cflag |= (tcflag_t)0000400;
+      tios.c_cflag &= (tcflag_t)(~ 0001000);
     }
     else {
-      tios.c_cflag |= (unsigned int)0000400;
-      tios.c_cflag |= (unsigned int)0001000;
+      tios.c_cflag |= (tcflag_t)0000400;
+      tios.c_cflag |= (tcflag_t)0001000;
     }
-  tios.c_lflag &= (unsigned int)(~ (((0000002 | 0000010) | 0000020) | 0000001));
-  if ((int)ctx_rtu->parity == 'N') tios.c_iflag &= (unsigned int)(~ 0000020);
-  else tios.c_iflag |= (unsigned int)0000020;
-  tios.c_iflag &= (unsigned int)(~ ((0002000 | 0010000) | 0004000));
-  tios.c_oflag &= (unsigned int)(~ 0000001);
+  tios.c_lflag &= (tcflag_t)(~ (((0000002 | 0000010) | 0000020) | 0000001));
+  if ((int)ctx_rtu->parity == 'N') tios.c_iflag &= (tcflag_t)(~ 0000020);
+  else tios.c_iflag |= (tcflag_t)0000020;
+  tios.c_iflag &= (tcflag_t)(~ ((0002000 | 0010000) | 0004000));
+  tios.c_oflag &= (tcflag_t)(~ 0000001);
   tios.c_cc[6] = (cc_t)0;
   tios.c_cc[5] = (cc_t)0;
   tmp_2 = tcsetattr(ctx->s,0,& tios);
@@ -1984,8 +1983,6 @@ static int _modbus_tcp_set_ipv4_options(int s)
     __retres = -1;
     goto return_label;
   }
-  option = 1;
-  ioctl(s,0x5421,(void *)(& option)); /* __va_ioctl_ptr */
   option = 0x10;
   rc = setsockopt(s,IPPROTO_IP,1,(void const *)(& option),
                   (socklen_t)sizeof(int));
@@ -2058,6 +2055,7 @@ static int _modbus_tcp_connect(modbus_t *ctx)
   modbus_tcp_t *ctx_tcp = (modbus_tcp_t *)ctx->backend_data;
   int flags = 1;
   flags |= 02000000;
+  flags |= 00004000;
   ctx->s = socket(2,flags,0);
   if (ctx->s == -1) {
     __retres = -1;
@@ -2153,6 +2151,7 @@ static int _modbus_tcp_pi_connect(modbus_t *ctx)
       int s;
       int flags = ai_ptr->ai_socktype;
       flags |= 02000000;
+      flags |= 00004000;
       s = socket(ai_ptr->ai_family,flags,ai_ptr->ai_protocol);
       if (s < 0) goto __Cont;
       if (ai_ptr->ai_family == 2) _modbus_tcp_set_ipv4_options(s);

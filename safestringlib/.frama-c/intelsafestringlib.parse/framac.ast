@@ -915,7 +915,7 @@ void mem_prim_move(void *dest_0, void const *src, uint32_t len)
 
 void mem_prim_move8(uint8_t *dp, uint8_t const *sp, uint32_t len)
 {
-  if ((void *)dp < (void *)sp) 
+  if (dp < (uint8_t *)sp) 
     while (len != (uint32_t)0) 
       switch (len) {
         uint8_t *tmp;
@@ -1329,7 +1329,7 @@ void mem_prim_move8(uint8_t *dp, uint8_t const *sp, uint32_t len)
 
 void mem_prim_move16(uint16_t *dp, uint16_t const *sp, uint32_t len)
 {
-  if ((void *)dp < (void *)sp) 
+  if (dp < (uint16_t *)sp) 
     while (len != (uint32_t)0) 
       switch (len) {
         uint16_t *tmp;
@@ -1743,7 +1743,7 @@ void mem_prim_move16(uint16_t *dp, uint16_t const *sp, uint32_t len)
 
 void mem_prim_move32(uint32_t *dp, uint32_t const *sp, uint32_t len)
 {
-  if ((void *)dp < (void *)sp) 
+  if (dp < (uint32_t *)sp) 
     while (len != (uint32_t)0) 
       switch (len) {
         uint32_t *tmp;
@@ -2413,13 +2413,13 @@ errno_t memcpy16_s(uint16_t *dest_0, rsize_t dmax, uint16_t const *src,
     __retres = 400;
     goto return_label;
   }
-  if ((void *)dest_0 > (void *)src) {
-    if ((void *)dest_0 < (void *)(src + smax)) goto _LOR; else goto _LAND;
+  if (dest_0 > (uint16_t *)src) {
+    if (dest_0 < (uint16_t *)(src + smax)) goto _LOR; else goto _LAND;
   }
   else {
     _LAND: ;
-    if ((void *)src > (void *)dest_0) 
-      if ((void *)src < (void *)(dest_0 + dmax)) {
+    if (src > (uint16_t const *)dest_0) 
+      if (src < (uint16_t const *)(dest_0 + dmax)) {
         _LOR:
         {
           mem_prim_set16(dest_0,dmax,(uint16_t)0);
@@ -2476,13 +2476,13 @@ errno_t memcpy32_s(uint32_t *dest_0, rsize_t dmax, uint32_t const *src,
     __retres = 400;
     goto return_label;
   }
-  if ((void *)dest_0 > (void *)src) {
-    if ((void *)dest_0 < (void *)(src + smax)) goto _LOR; else goto _LAND;
+  if (dest_0 > (uint32_t *)src) {
+    if (dest_0 < (uint32_t *)(src + smax)) goto _LOR; else goto _LAND;
   }
   else {
     _LAND: ;
-    if ((void *)src > (void *)dest_0) 
-      if ((void *)src < (void *)(dest_0 + dmax)) {
+    if (src > (uint32_t const *)dest_0) 
+      if (src < (uint32_t const *)(dest_0 + dmax)) {
         _LOR:
         {
           mem_prim_set32(dest_0,dmax,(uint32_t)0);
@@ -2541,13 +2541,13 @@ errno_t memcpy_s(void *dest_0, rsize_t dmax, void const *src, rsize_t smax)
     __retres = 400;
     goto return_label;
   }
-  if ((void *)dp > (void *)sp) {
-    if ((void *)dp < (void *)(sp + smax)) goto _LOR; else goto _LAND;
+  if (dp > (uint8_t *)sp) {
+    if (dp < (uint8_t *)(sp + smax)) goto _LOR; else goto _LAND;
   }
   else {
     _LAND: ;
-    if ((void *)sp > (void *)dp) 
-      if ((void *)sp < (void *)(dp + dmax)) {
+    if (sp > (uint8_t const *)dp) 
+      if (sp < (uint8_t const *)(dp + dmax)) {
         _LOR:
         {
           mem_prim_set((void *)dp,dmax,(uint8_t)0);
@@ -3309,7 +3309,7 @@ char *stpcpy_s(char *dest_0, rsize_t dmax, char const *src, errno_t *err)
   }
   orig_dmax = dmax;
   orig_dest = dest_0;
-  if ((void *)dest_0 == (void *)src) {
+  if (dest_0 == (char *)src) {
     while (dmax > (rsize_t)0) {
       if ((int)*dest_0 == '\000') {
         *err = 0;
@@ -3325,10 +3325,10 @@ char *stpcpy_s(char *dest_0, rsize_t dmax, char const *src, errno_t *err)
     __retres = (char *)0;
     goto return_label;
   }
-  if ((void *)dest_0 < (void *)src) {
+  if (dest_0 < (char *)src) {
     overlap_bumper = src;
     while (dmax > (rsize_t)0) {
-      if ((void *)dest_0 == (void *)overlap_bumper) {
+      if (dest_0 == (char *)overlap_bumper) {
         handle_error_1(orig_dest,orig_dmax,
                        (char *)"stpcpy_s: overlapping objects",404);
         *err = 404;
@@ -3432,8 +3432,8 @@ char *stpncpy_s(char *dest_0, rsize_t dmax, char const *src, rsize_t smax,
     __retres = (char *)0;
     goto return_label;
   }
-  if ((void *)src < (void *)dest_0) 
-    if ((void *)(src + smax) >= (void *)dest_0) {
+  if (src < (char const *)dest_0) 
+    if (src + smax >= (char const *)dest_0) {
       invoke_safe_str_constraint_handler("stpncpy_s: src+smax overlaps into dest",
                                          (void *)0,404);
       *err = 404;
@@ -3441,8 +3441,8 @@ char *stpncpy_s(char *dest_0, rsize_t dmax, char const *src, rsize_t smax,
       __retres = (char *)0;
       goto return_label;
     }
-  if ((void *)dest_0 < (void *)src) 
-    if ((void *)(dest_0 + smax) >= (void *)src) {
+  if (dest_0 < (char *)src) 
+    if (dest_0 + smax >= (char *)src) {
       invoke_safe_str_constraint_handler("stpncpy_s: dest+smax overlaps into src",
                                          (void *)0,404);
       *err = 404;
@@ -3460,7 +3460,7 @@ char *stpncpy_s(char *dest_0, rsize_t dmax, char const *src, rsize_t smax,
   }
   orig_dmax = dmax;
   orig_dest = dest_0;
-  if ((void *)dest_0 == (void *)src) {
+  if (dest_0 == (char *)src) {
     while (dmax > (rsize_t)0) {
       if ((int)*dest_0 == '\000') {
         char *filler = dest_0;
@@ -3628,7 +3628,7 @@ errno_t strcasestr_s(char *dest_0, rsize_t dmax, char const *src,
   }
   if ((int)*src == '\000') goto _LOR;
   else 
-    if ((void *)dest_0 == (void *)src) {
+    if (dest_0 == (char *)src) {
       _LOR: {
               *substring = dest_0;
               __retres = 0;
@@ -3715,10 +3715,10 @@ errno_t strcat_s(char *dest_0, rsize_t dmax, char const *src)
   }
   orig_dmax = dmax;
   orig_dest = dest_0;
-  if ((void *)dest_0 < (void *)src) {
+  if (dest_0 < (char *)src) {
     overlap_bumper = src;
     while ((int)*dest_0 != '\000') {
-      if ((void *)dest_0 == (void *)overlap_bumper) {
+      if (dest_0 == (char *)overlap_bumper) {
         handle_error_5(orig_dest,orig_dmax,
                        (char *)"strcat_s: overlapping objects",404);
         __retres = 404;
@@ -3734,7 +3734,7 @@ errno_t strcat_s(char *dest_0, rsize_t dmax, char const *src)
       }
     }
     while (dmax > (rsize_t)0) {
-      if ((void *)dest_0 == (void *)overlap_bumper) {
+      if (dest_0 == (char *)overlap_bumper) {
         handle_error_5(orig_dest,orig_dmax,
                        (char *)"strcat_s: overlapping objects",404);
         __retres = 404;
@@ -3919,16 +3919,16 @@ errno_t strcpy_s(char *dest_0, rsize_t dmax, char const *src)
     __retres = 400;
     goto return_label;
   }
-  if ((void *)dest_0 == (void *)src) {
+  if (dest_0 == (char *)src) {
     __retres = 0;
     goto return_label;
   }
   orig_dmax = dmax;
   orig_dest = dest_0;
-  if ((void *)dest_0 < (void *)src) {
+  if (dest_0 < (char *)src) {
     overlap_bumper = src;
     while (dmax > (rsize_t)0) {
-      if ((void *)dest_0 == (void *)overlap_bumper) {
+      if (dest_0 == (char *)overlap_bumper) {
         handle_error_8(orig_dest,orig_dmax,
                        (char *)"strcpy_s: overlapping objects",404);
         __retres = 404;
@@ -4028,12 +4028,12 @@ errno_t strcpyfld_s(char *dest_0, rsize_t dmax, char const *src, rsize_t slen)
   }
   orig_dmax = dmax;
   orig_dest = dest_0;
-  if ((void *)dest_0 < (void *)src) {
+  if (dest_0 < (char *)src) {
     overlap_bumper = src;
     while (slen > (rsize_t)0) {
       char *tmp;
       char const *tmp_0;
-      if ((void *)dest_0 == (void *)overlap_bumper) {
+      if (dest_0 == (char *)overlap_bumper) {
         dmax = orig_dmax;
         dest_0 = orig_dest;
         while (dmax) {
@@ -4151,7 +4151,7 @@ errno_t strcpyfldin_s(char *dest_0, rsize_t dmax, char const *src,
   }
   orig_dmax = dmax;
   orig_dest = dest_0;
-  if ((void *)dest_0 < (void *)src) {
+  if (dest_0 < (char *)src) {
     overlap_bumper = src;
     while (1) {
       if (dmax > (rsize_t)0) {
@@ -4161,7 +4161,7 @@ errno_t strcpyfldin_s(char *dest_0, rsize_t dmax, char const *src,
       {
         char *tmp;
         char const *tmp_0;
-        if ((void *)dest_0 == (void *)overlap_bumper) {
+        if (dest_0 == (char *)overlap_bumper) {
           dmax = orig_dmax;
           dest_0 = orig_dest;
           while (dmax) {
@@ -4284,7 +4284,7 @@ errno_t strcpyfldout_s(char *dest_0, rsize_t dmax, char const *src,
   }
   orig_dmax = dmax;
   orig_dest = dest_0;
-  if ((void *)dest_0 < (void *)src) {
+  if (dest_0 < (char *)src) {
     overlap_bumper = src;
     while (1) {
       if (dmax > (rsize_t)1) {
@@ -4294,7 +4294,7 @@ errno_t strcpyfldout_s(char *dest_0, rsize_t dmax, char const *src,
       {
         char *tmp;
         char const *tmp_0;
-        if ((void *)dest_0 == (void *)overlap_bumper) {
+        if (dest_0 == (char *)overlap_bumper) {
           dmax = orig_dmax;
           dest_0 = orig_dest;
           while (dmax) {
@@ -5351,10 +5351,10 @@ errno_t strncat_s(char *dest_0, rsize_t dmax, char const *src, rsize_t slen)
   }
   orig_dmax = dmax;
   orig_dest = dest_0;
-  if ((void *)dest_0 < (void *)src) {
+  if (dest_0 < (char *)src) {
     overlap_bumper = src;
     while ((int)*dest_0 != '\000') {
-      if ((void *)dest_0 == (void *)overlap_bumper) {
+      if (dest_0 == (char *)overlap_bumper) {
         handle_error_28(orig_dest,orig_dmax,
                         (char *)"strncat_s: overlapping objects",404);
         __retres = 404;
@@ -5370,7 +5370,7 @@ errno_t strncat_s(char *dest_0, rsize_t dmax, char const *src, rsize_t slen)
       }
     }
     while (dmax > (rsize_t)0) {
-      if ((void *)dest_0 == (void *)overlap_bumper) {
+      if (dest_0 == (char *)overlap_bumper) {
         handle_error_28(orig_dest,orig_dmax,
                         (char *)"strncat_s: overlapping objects",404);
         __retres = 404;
@@ -5484,10 +5484,10 @@ errno_t strncpy_s(char *dest_0, rsize_t dmax, char const *src, rsize_t slen)
     __retres = 403;
     goto return_label;
   }
-  if ((void *)dest_0 < (void *)src) {
+  if (dest_0 < (char *)src) {
     overlap_bumper = src;
     while (dmax > (rsize_t)0) {
-      if ((void *)dest_0 == (void *)overlap_bumper) {
+      if (dest_0 == (char *)overlap_bumper) {
         handle_error_29(orig_dest,orig_dmax,
                         (char *)"strncpy_s: overlapping objects",404);
         __retres = 404;
@@ -5932,7 +5932,7 @@ errno_t strstr_s(char *dest_0, rsize_t dmax, char const *src, rsize_t slen,
   }
   if ((int)*src == '\000') goto _LOR;
   else 
-    if ((void *)dest_0 == (void *)src) {
+    if (dest_0 == (char *)src) {
       _LOR: {
               *substring = dest_0;
               __retres = 0;
@@ -6230,7 +6230,7 @@ wchar_t *wcpcpy_s(wchar_t *dest_0, rsize_t dmax, wchar_t const *src,
     __retres = (wchar_t *)0;
     goto return_label;
   }
-  if ((void *)dest_0 == (void *)src) {
+  if (dest_0 == (wchar_t *)src) {
     while (1) {
       if (dmax) {
         if (! (*dest_0 != 0L)) break;
@@ -6252,10 +6252,10 @@ wchar_t *wcpcpy_s(wchar_t *dest_0, rsize_t dmax, wchar_t const *src,
   }
   orig_dmax = dmax;
   orig_dest = dest_0;
-  if ((void *)dest_0 < (void *)src) {
+  if (dest_0 < (wchar_t *)src) {
     overlap_bumper = src;
     while (dmax > (rsize_t)0) {
-      if ((void *)dest_0 == (void *)overlap_bumper) {
+      if (dest_0 == (wchar_t *)overlap_bumper) {
         handle_wc_error_41(orig_dest,orig_dmax,
                            (char *)"wcpcpy_s: overlapping objects",404);
         *err = 404;
@@ -6341,10 +6341,10 @@ errno_t wcscat_s(wchar_t *dest_0, rsize_t dmax, wchar_t const *src)
   }
   orig_dmax = dmax;
   orig_dest = dest_0;
-  if ((void *)dest_0 < (void *)src) {
+  if (dest_0 < (wchar_t *)src) {
     overlap_bumper = src;
     while (*dest_0 != 0L) {
-      if ((void *)dest_0 == (void *)overlap_bumper) {
+      if (dest_0 == (wchar_t *)overlap_bumper) {
         handle_wc_error_42(orig_dest,orig_dmax,
                            (char *)"wcscat_s: overlapping objects",404);
         __retres = 404;
@@ -6360,7 +6360,7 @@ errno_t wcscat_s(wchar_t *dest_0, rsize_t dmax, wchar_t const *src)
       }
     }
     while (dmax > (rsize_t)0) {
-      if ((void *)dest_0 == (void *)overlap_bumper) {
+      if (dest_0 == (wchar_t *)overlap_bumper) {
         handle_wc_error_42(orig_dest,orig_dmax,
                            (char *)"wcscat_s: overlapping objects",404);
         __retres = 404;
@@ -6450,7 +6450,7 @@ errno_t wcscpy_s(wchar_t *dest_0, rsize_t dmax, wchar_t const *src)
     __retres = 400;
     goto return_label;
   }
-  if ((void *)dest_0 == (void *)src) {
+  if (dest_0 == (wchar_t *)src) {
     while (1) {
       if (*src != 0L) {
         if (! (dmax != (rsize_t)0)) break;
@@ -6470,10 +6470,10 @@ errno_t wcscpy_s(wchar_t *dest_0, rsize_t dmax, wchar_t const *src)
   }
   orig_dmax = dmax;
   orig_dest = dest_0;
-  if ((void *)dest_0 < (void *)src) {
+  if (dest_0 < (wchar_t *)src) {
     overlap_bumper = src;
     while (dmax > (rsize_t)0) {
-      if ((void *)dest_0 == (void *)overlap_bumper) {
+      if (dest_0 == (wchar_t *)overlap_bumper) {
         handle_wc_error_43(orig_dest,orig_dmax,
                            (char *)"wcscpy_s: overlapping objects",404);
         __retres = 404;
@@ -6562,10 +6562,10 @@ errno_t wcsncat_s(wchar_t *dest_0, rsize_t dmax, wchar_t const *src,
   }
   orig_dmax = dmax;
   orig_dest = dest_0;
-  if ((void *)dest_0 < (void *)src) {
+  if (dest_0 < (wchar_t *)src) {
     overlap_bumper = src;
     while (*dest_0 != 0L) {
-      if ((void *)dest_0 == (void *)overlap_bumper) {
+      if (dest_0 == (wchar_t *)overlap_bumper) {
         handle_wc_error_44(orig_dest,orig_dmax,
                            (char *)"wcsncat_s: overlapping objects",404);
         __retres = 404;
@@ -6581,7 +6581,7 @@ errno_t wcsncat_s(wchar_t *dest_0, rsize_t dmax, wchar_t const *src,
       }
     }
     while (dmax > (rsize_t)0) {
-      if ((void *)dest_0 == (void *)overlap_bumper) {
+      if (dest_0 == (wchar_t *)overlap_bumper) {
         handle_wc_error_44(orig_dest,orig_dmax,
                            (char *)"wcsncat_s: overlapping objects",404);
         __retres = 404;
@@ -6698,10 +6698,10 @@ errno_t wcsncpy_s(wchar_t *dest_0, rsize_t dmax, wchar_t const *src,
     __retres = 403;
     goto return_label;
   }
-  if ((void *)dest_0 < (void *)src) {
+  if (dest_0 < (wchar_t *)src) {
     overlap_bumper = src;
     while (dmax > (rsize_t)0) {
-      if ((void *)dest_0 == (void *)overlap_bumper) {
+      if (dest_0 == (wchar_t *)overlap_bumper) {
         handle_wc_error_45(orig_dest,orig_dmax,
                            (char *)"wcsncpy_s: overlapping objects",404);
         __retres = 404;
@@ -6901,13 +6901,13 @@ errno_t wmemcpy_s(wchar_t *dest_0, rsize_t dmax, wchar_t const *src,
     __retres = 400;
     goto return_label;
   }
-  if ((void *)dp > (void *)sp) {
-    if ((void *)dp < (void *)(sp + smax)) goto _LOR; else goto _LAND;
+  if (dp > (wchar_t *)sp) {
+    if (dp < (wchar_t *)(sp + smax)) goto _LOR; else goto _LAND;
   }
   else {
     _LAND: ;
-    if ((void *)sp > (void *)dp) 
-      if ((void *)sp < (void *)(dp + dmax)) {
+    if (sp > (wchar_t const *)dp) 
+      if (sp < (wchar_t const *)(dp + dmax)) {
         _LOR:
         {
           mem_prim_set((void *)dp,dmax * sizeof(wchar_t),(uint8_t)0);

@@ -368,7 +368,7 @@ int main(int F_0, char **D_0)
       ;
       if (! (tmp_39 - 4)) break;
       tcgetattr(1,& o);
-      o.c_lflag ^= (unsigned int)11;
+      o.c_lflag ^= (tcflag_t)11;
       tcsetattr(1,0,& o);
       while (F_0 - 4) {
         int tmp_2;

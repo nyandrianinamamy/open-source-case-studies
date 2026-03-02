@@ -6062,16 +6062,16 @@ u16 mip_sdk_port_open(void **port_handle, char const *portstr, int baudrate)
   tcgetattr(mip_sdk_port_open_local_port_handle,& options);
   cfsetospeed(& options,(speed_t)hardware_bit_baud);
   cfsetispeed(& options,(speed_t)hardware_bit_baud);
-  options.c_cflag &= (unsigned int)(~ 0000060);
-  options.c_cflag |= (unsigned int)0000060;
-  options.c_cflag &= (unsigned int)(~ 0000100);
-  options.c_cflag &= (unsigned int)(~ 0000400);
+  options.c_cflag &= (tcflag_t)(~ 0000060);
+  options.c_cflag |= (tcflag_t)0000060;
+  options.c_cflag &= (tcflag_t)(~ 0000100);
+  options.c_cflag &= (tcflag_t)(~ 0000400);
   options.c_iflag = (tcflag_t)0000004;
   options.c_oflag = (tcflag_t)0;
   options.c_lflag = (tcflag_t)0;
   options.c_cc[6] = (cc_t)0;
   options.c_cc[5] = (cc_t)1;
-  options.c_cflag |= (unsigned int)(0004000 | 0000200);
+  options.c_cflag |= (tcflag_t)(0004000 | 0000200);
   tmp = purge(mip_sdk_port_open_local_port_handle);
   if ((int)tmp != 0) {
     printf("Flushing old serial buffer data failed\n"); /* printf_va_4 */

@@ -30,9 +30,9 @@ int main(void)
   __FC_assert((_Alignof(int) >= (unsigned __int64)4) != 0,
               "provenance_tag_bits_via_uintptr_t_1.c",7,
               "__alignof(int) >= 4");
-  __FC_assert(((i & (unsigned __int64)3u) == (unsigned __int64)0u) != 0,
+  __FC_assert(((i & (uintptr_t)3u) == (uintptr_t)0u) != 0,
               "provenance_tag_bits_via_uintptr_t_1.c",8,"(i & 3u) == 0u");
-  i |= (unsigned __int64)1u;
+  i |= (uintptr_t)1u;
   int *q = (int *)i;
   uintptr_t j = (uintptr_t)q & ~ ((uintptr_t)3u);
   int *r = (int *)j;

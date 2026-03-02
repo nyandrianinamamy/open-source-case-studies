@@ -1908,7 +1908,7 @@ static int check_png_keyword(char const str[80])
     __retres = 1;
     goto return_label;
   }
-  if ((void *)end == (void *)str) {
+  if (end == (char *)str) {
     __retres = 1;
     goto return_label;
   }
@@ -1925,7 +1925,7 @@ static int check_png_keyword(char const str[80])
     __retres = 1;
     goto return_label;
   }
-  while ((void *)str != (void *)end) {
+  while (str != (char const *)end) {
     memcpy((void *)(& c),(void const *)str,(size_t)1);
     if ((int)c >= 32) {
       if ((int)c <= 126) str ++; else goto _LAND;
@@ -2159,7 +2159,7 @@ static int read_chunks_before_idat(spng_ctx *ctx)
         else {
           int tmp_3;
           size_t i;
-          if (chunk.length % (unsigned int)3 != (unsigned int)0) {
+          if (chunk.length % (uint32_t)3 != (uint32_t)0) {
             __retres = SPNG_ECHUNK_SIZE;
             goto return_label;
           }
@@ -2390,7 +2390,7 @@ static int read_chunks_before_idat(spng_ctx *ctx)
                                   }
                                 }
                                 if ((int)(ctx->splt_list + i_0)->sample_depth == 16) {
-                                  if (((chunk.length - keyword_len) - (uint32_t)2) % (unsigned int)10 != (unsigned int)0) {
+                                  if (((chunk.length - keyword_len) - (uint32_t)2) % (uint32_t)10 != (uint32_t)0) {
                                     __retres = SPNG_ECHUNK_SIZE;
                                     goto return_label;
                                   }
@@ -2399,7 +2399,7 @@ static int read_chunks_before_idat(spng_ctx *ctx)
                                 }
                                 else 
                                   if ((int)(ctx->splt_list + i_0)->sample_depth == 8) {
-                                    if (((chunk.length - keyword_len) - (uint32_t)2) % (unsigned int)6 != (unsigned int)0) {
+                                    if (((chunk.length - keyword_len) - (uint32_t)2) % (uint32_t)6 != (uint32_t)0) {
                                       __retres = SPNG_ECHUNK_SIZE;
                                       goto return_label;
                                     }
@@ -3253,13 +3253,13 @@ static int calculate_subimages(struct spng_subimage sub[7],
       __retres = SPNG_EOVERFLOW;
       goto return_label;
     }
-    if (scanline_width % (unsigned int)8 != (unsigned int)0) {
+    if (scanline_width % (size_t)8 != (size_t)0) {
       scanline_width += (size_t)8;
       if (scanline_width < (size_t)8) {
         __retres = SPNG_EOVERFLOW;
         goto return_label;
       }
-      scanline_width -= scanline_width % (unsigned int)8;
+      scanline_width -= scanline_width % (size_t)8;
     }
     scanline_width /= (size_t)8;
     (sub + i)->scanline_width = scanline_width;

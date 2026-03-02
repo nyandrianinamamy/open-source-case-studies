@@ -220,7 +220,7 @@ void kgflags_bool(char const *name, _Bool default_value,
   *out_res = (_Bool)0;
   tmp = strstr(name,"no-");
   ;
-  if ((void *)tmp == (void *)name) {
+  if (tmp == (char *)name) {
     _kgflags_add_error(KGFLAGS_ERROR_KIND_PREFIX_NO,name,(char const *)0);
     goto return_label;
   }
@@ -1183,7 +1183,7 @@ static _kgflags_flag_t *_kgflags_get_flag(char const *name,
           char *tmp_1;
           tmp_1 = strstr(name,"no-");
           ;
-          if ((void *)tmp_1 == (void *)name) {
+          if (tmp_1 == (char *)name) {
             int tmp_0;
             tmp_0 = strcmp(name + 3,flag->name);
             if (tmp_0 == 0) {
@@ -1207,7 +1207,7 @@ static int _kgflags_parse_int(char const *str, _Bool *out_ok)
   *out_ok = (_Bool)0;
   char *end = (char *)0;
   long res_l = strtol(str,& end,10);
-  if ((void *)end == (void *)str) goto _LOR;
+  if (end == (char *)str) goto _LOR;
   else 
     if ((int)*end != '\000') goto _LOR;
     else 
@@ -1239,7 +1239,7 @@ static double _kgflags_parse_double(char const *str, _Bool *out_ok)
   *out_ok = (_Bool)0;
   char *end = (char *)0;
   double res = strtod(str,& end);
-  if ((void *)end == (void *)str) goto _LOR;
+  if (end == (char *)str) goto _LOR;
   else 
     if ((int)*end != '\000') goto _LOR;
     else 

@@ -733,7 +733,7 @@ int s_find(char const *s, char const c)
     __retres = -1;
     goto return_label;
   }
-  __retres = (int)(loc - s);
+  __retres = (int)(loc - (char *)s);
   return_label: return __retres;
 }
 
@@ -749,7 +749,7 @@ int s_find_reverse(char const *s, char const c)
     __retres = -1;
     goto return_label;
   }
-  __retres = (int)(loc - s);
+  __retres = (int)(loc - (char *)s);
   return_label: return __retres;
 }
 
@@ -789,7 +789,7 @@ int s_find_alt(char const *s, char const c, int idx)
     __retres = -1;
     goto return_label;
   }
-  __retres = (int)(loc - s);
+  __retres = (int)(loc - (char *)s);
   return_label: return __retres;
 }
 
@@ -810,7 +810,7 @@ int s_find_str(char const *s, char const *sub)
     __retres = -1;
     goto return_label;
   }
-  __retres = (int)(loc - s);
+  __retres = (int)(loc - (char *)s);
   return_label: return __retres;
 }
 
@@ -856,7 +856,7 @@ int s_find_str_reverse(char const *s, char const *sub)
     __retres = -1;
     goto return_label;
   }
-  __retres = (int)(loc - s);
+  __retres = (int)(loc - (char *)s);
   return_label: return __retres;
 }
 
@@ -912,7 +912,7 @@ int s_find_alt_str(char const *s, char const *sub, int idx)
     __retres = -1;
     goto return_label;
   }
-  __retres = (int)(loc - s);
+  __retres = (int)(loc - (char *)s);
   return_label: return __retres;
 }
 
@@ -933,7 +933,7 @@ int s_find_any(char const *s, char const *s2)
     __retres = -1;
     goto return_label;
   }
-  __retres = (int)(loc - s);
+  __retres = (int)(loc - (char *)s);
   return_label: return __retres;
 }
 
@@ -959,7 +959,7 @@ int s_find_any_reverse(char const *s, char const *s2)
     res = loc;
     loc = strpbrk((char const *)(loc + 1),s2);
   }
-  __retres = (int)(res - s);
+  __retres = (int)(res - (char *)s);
   return_label: return __retres;
 }
 
@@ -1009,7 +1009,7 @@ int s_find_alt_any(char const *s, char const *s2, int idx)
     __retres = -1;
     goto return_label;
   }
-  __retres = (int)(loc - s);
+  __retres = (int)(loc - (char *)s);
   return_label: return __retres;
 }
 

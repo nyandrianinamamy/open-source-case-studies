@@ -2171,7 +2171,7 @@ __inline static unsigned int gs_hamming_distance(uint32_t const desc1[8],
       {
         uint32_t eor = *(desc1 + i) ^ *(desc2 + i);
         while (eor) {
-          dist += eor & (unsigned int)1;
+          dist += eor & (uint32_t)1;
           eor >>= 1;
         }
       }

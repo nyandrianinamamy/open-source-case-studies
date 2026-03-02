@@ -741,7 +741,7 @@ static int dictDelete(dict *ht, void const *key)
     if ((ht->type)->keyCompare) tmp_1 = (*((ht->type)->keyCompare))(ht->privdata,
                                                                     key,
                                                                     (void const *)de->key);
-    else tmp_1 = (void *)key == de->key;
+    else tmp_1 = key == (void const *)de->key;
     if (tmp_1) {
       if (prevde) prevde->next = de->next; else *(ht->table + h) = de->next;
       if ((ht->type)->keyDestructor) (*((ht->type)->keyDestructor))(ht->privdata,
@@ -819,7 +819,7 @@ static dictEntry *dictFind(dict *ht, void const *key)
     if ((ht->type)->keyCompare) tmp_1 = (*((ht->type)->keyCompare))(ht->privdata,
                                                                     key,
                                                                     (void const *)he->key);
-    else tmp_1 = (void *)key == he->key;
+    else tmp_1 = key == (void const *)he->key;
     if (tmp_1) {
       __retres = he;
       goto return_label;
@@ -923,7 +923,7 @@ static int _dictKeyIndex(dict *ht, void const *key)
     if ((ht->type)->keyCompare) tmp_2 = (*((ht->type)->keyCompare))(ht->privdata,
                                                                     key,
                                                                     (void const *)he->key);
-    else tmp_2 = (void *)key == he->key;
+    else tmp_2 = key == (void const *)he->key;
     if (tmp_2) {
       __retres = -1;
       goto return_label;
@@ -3574,12 +3574,12 @@ static int _redisContextConnectTcp(redisContext *c, char const *addr,
   servinfo = (struct addrinfo *)0;
   c->connection_type = REDIS_CONN_TCP;
   c->tcp.port = port;
-  if ((void *)c->tcp.host != (void *)addr) {
+  if (c->tcp.host != (char *)addr) {
     free((void *)c->tcp.host);
     c->tcp.host = hi_strdup(addr);
   }
   if (timeout) {
-    if ((void *)c->timeout != (void *)timeout) {
+    if (c->timeout != (struct timeval *)timeout) {
       if (c->timeout == (struct timeval *)0) c->timeout = (struct timeval *)hi_malloc
                                              (sizeof(struct timeval));
       memcpy((void *)c->timeout,(void const *)timeout,sizeof(struct timeval));
@@ -3599,7 +3599,7 @@ static int _redisContextConnectTcp(redisContext *c, char const *addr,
     c->tcp.source_addr = (char *)0;
   }
   else 
-    if ((void *)c->tcp.source_addr != (void *)source_addr) {
+    if (c->tcp.source_addr != (char *)source_addr) {
       free((void *)c->tcp.source_addr);
       c->tcp.source_addr = hi_strdup(source_addr);
     }
@@ -3779,10 +3779,9 @@ int redisContextConnectUnix(redisContext *c, char const *path,
     goto return_label;
   }
   c->connection_type = REDIS_CONN_UNIX;
-  if ((void *)c->unix_sock.path != (void *)path) c->unix_sock.path = hi_strdup
-                                                 (path);
+  if (c->unix_sock.path != (char *)path) c->unix_sock.path = hi_strdup(path);
   if (timeout) {
-    if ((void *)c->timeout != (void *)timeout) {
+    if (c->timeout != (struct timeval *)timeout) {
       if (c->timeout == (struct timeval *)0) c->timeout = (struct timeval *)hi_malloc
                                              (sizeof(struct timeval));
       memcpy((void *)c->timeout,(void const *)timeout,sizeof(struct timeval));
@@ -4799,7 +4798,7 @@ __inline static void sdssetlen_3(sds s, size_t newlen)
     case 0:
     {
       unsigned char *fp = (unsigned char *)s - 1;
-      *fp = (unsigned char)((unsigned int)0 | (newlen << 3));
+      *fp = (unsigned char)((size_t)0 | (newlen << 3));
     }
     break;
     case 1:
@@ -4953,11 +4952,10 @@ sds sdsnewlen(void const *init, size_t initlen)
   s = (char *)sh + hdrlen;
   fp = (unsigned char *)s - 1;
   switch ((int)type) {
-    case 0:
-    {
-      *fp = (unsigned char)((unsigned int)type | (initlen << 3));
-      break;
-    }
+    case 0: {
+              *fp = (unsigned char)((size_t)type | (initlen << 3));
+              break;
+            }
     case 1:
     {
       struct sdshdr8 *sh_0 = (struct sdshdr8 *)(s - sizeof(struct sdshdr8));

@@ -1315,9 +1315,9 @@ mz_ulong __attribute__((__visibility__("default"))) mz_adler32(mz_ulong adler,
 {
   mz_ulong __attribute__((__visibility__("default"))) __retres;
   mz_uint32 i;
-  mz_uint32 s1 = (mz_uint32)(adler & (unsigned long)0xffff);
+  mz_uint32 s1 = (mz_uint32)(adler & (mz_ulong)0xffff);
   mz_uint32 s2 = (mz_uint32)(adler >> 16);
-  size_t block_len = buf_len % (unsigned long)5552;
+  size_t block_len = buf_len % (size_t)5552;
   if (! ptr) {
     __retres = (mz_ulong __attribute__((__visibility__("default"))))1;
     goto return_label;
@@ -1626,20 +1626,20 @@ mz_ulong __attribute__((__visibility__("default"))) mz_crc32(mz_ulong crc,
   mz_uint32 mz_crc32_0 = (mz_uint32)crc ^ 0xFFFFFFFF;
   mz_uint8 const *pByte_buf = ptr;
   while (buf_len >= (size_t)4) {
-    mz_crc32_0 = (mz_crc32_0 >> 8) ^ mz_crc32_s_crc_table[(mz_crc32_0 ^ (unsigned int)*(
-                                                           pByte_buf + 0)) & (unsigned int)0xFF];
-    mz_crc32_0 = (mz_crc32_0 >> 8) ^ mz_crc32_s_crc_table[(mz_crc32_0 ^ (unsigned int)*(
-                                                           pByte_buf + 1)) & (unsigned int)0xFF];
-    mz_crc32_0 = (mz_crc32_0 >> 8) ^ mz_crc32_s_crc_table[(mz_crc32_0 ^ (unsigned int)*(
-                                                           pByte_buf + 2)) & (unsigned int)0xFF];
-    mz_crc32_0 = (mz_crc32_0 >> 8) ^ mz_crc32_s_crc_table[(mz_crc32_0 ^ (unsigned int)*(
-                                                           pByte_buf + 3)) & (unsigned int)0xFF];
+    mz_crc32_0 = (mz_crc32_0 >> 8) ^ mz_crc32_s_crc_table[(mz_crc32_0 ^ (mz_uint32)*(
+                                                           pByte_buf + 0)) & (mz_uint32)0xFF];
+    mz_crc32_0 = (mz_crc32_0 >> 8) ^ mz_crc32_s_crc_table[(mz_crc32_0 ^ (mz_uint32)*(
+                                                           pByte_buf + 1)) & (mz_uint32)0xFF];
+    mz_crc32_0 = (mz_crc32_0 >> 8) ^ mz_crc32_s_crc_table[(mz_crc32_0 ^ (mz_uint32)*(
+                                                           pByte_buf + 2)) & (mz_uint32)0xFF];
+    mz_crc32_0 = (mz_crc32_0 >> 8) ^ mz_crc32_s_crc_table[(mz_crc32_0 ^ (mz_uint32)*(
+                                                           pByte_buf + 3)) & (mz_uint32)0xFF];
     pByte_buf += 4;
     buf_len -= (size_t)4;
   }
   while (buf_len) {
-    mz_crc32_0 = (mz_crc32_0 >> 8) ^ mz_crc32_s_crc_table[(mz_crc32_0 ^ (unsigned int)*(
-                                                           pByte_buf + 0)) & (unsigned int)0xFF];
+    mz_crc32_0 = (mz_crc32_0 >> 8) ^ mz_crc32_s_crc_table[(mz_crc32_0 ^ (mz_uint32)*(
+                                                           pByte_buf + 0)) & (mz_uint32)0xFF];
     pByte_buf ++;
     buf_len --;
   }
@@ -1704,7 +1704,7 @@ int __attribute__((__visibility__("default"))) mz_deflateInit2(mz_streamp pStrea
   tdefl_status __attribute__((__visibility__("default"))) tmp_1;
   tmp = tdefl_create_comp_flags_from_zip_params(level,window_bits,strategy);
   mz_uint comp_flags =
-    (unsigned int __attribute__((__visibility__("default"))))TDEFL_COMPUTE_ADLER32 | tmp;
+    (mz_uint __attribute__((__visibility__("default"))))TDEFL_COMPUTE_ADLER32 | tmp;
   if (! pStream) {
     __retres = MZ_STREAM_ERROR;
     goto return_label;
@@ -1922,7 +1922,7 @@ int __attribute__((__visibility__("default"))) mz_compress2(unsigned char *pDest
   mz_stream stream;
   int __attribute__((__visibility__("default"))) tmp_0;
   memset((void *)(& stream),0,sizeof(stream));
-  if ((source_len | *pDest_len) > (unsigned long)0xFFFFFFFFU) {
+  if ((source_len | *pDest_len) > (mz_ulong)0xFFFFFFFFU) {
     __retres = MZ_PARAM_ERROR;
     goto return_label;
   }
@@ -2085,7 +2085,7 @@ int __attribute__((__visibility__("default"))) mz_inflate(mz_streamp pStream,
         goto return_label;
       }
   pState = (inflate_state *)pStream->state;
-  if (pState->m_window_bits > 0) decomp_flags |= (unsigned int)TINFL_FLAG_PARSE_ZLIB_HEADER;
+  if (pState->m_window_bits > 0) decomp_flags |= (mz_uint)TINFL_FLAG_PARSE_ZLIB_HEADER;
   orig_avail_in = (size_t)pStream->avail_in;
   first_call = pState->m_first_call;
   pState->m_first_call = (mz_uint)0;
@@ -2098,11 +2098,11 @@ int __attribute__((__visibility__("default"))) mz_inflate(mz_streamp pStream,
       __retres = MZ_STREAM_ERROR;
       goto return_label;
     }
-  pState->m_has_flushed |= (unsigned int)(flush == MZ_FINISH);
+  pState->m_has_flushed |= (mz_uint)(flush == MZ_FINISH);
   if (flush == MZ_FINISH) 
     if (first_call) {
       tinfl_status __attribute__((__visibility__("default"))) tmp;
-      decomp_flags |= (unsigned int)TINFL_FLAG_USING_NON_WRAPPING_OUTPUT_BUF;
+      decomp_flags |= (mz_uint)TINFL_FLAG_USING_NON_WRAPPING_OUTPUT_BUF;
       in_bytes = (size_t)pStream->avail_in;
       out_bytes = (size_t)pStream->avail_out;
       tmp = tinfl_decompress(& pState->m_decomp,pStream->next_in,& in_bytes,
@@ -2130,7 +2130,7 @@ int __attribute__((__visibility__("default"))) mz_inflate(mz_streamp pStream,
       __retres = MZ_STREAM_END;
       goto return_label;
     }
-  if (flush != MZ_FINISH) decomp_flags |= (unsigned int)TINFL_FLAG_HAS_MORE_INPUT;
+  if (flush != MZ_FINISH) decomp_flags |= (mz_uint)TINFL_FLAG_HAS_MORE_INPUT;
   if (pState->m_dict_avail) {
     int tmp_0;
     if (pState->m_dict_avail < pStream->avail_out) n = pState->m_dict_avail;
@@ -2141,7 +2141,7 @@ int __attribute__((__visibility__("default"))) mz_inflate(mz_streamp pStream,
     pStream->avail_out -= n;
     pStream->total_out += (mz_ulong)n;
     pState->m_dict_avail -= n;
-    pState->m_dict_ofs = (pState->m_dict_ofs + n) & (unsigned int)(32768 - 1);
+    pState->m_dict_ofs = (pState->m_dict_ofs + n) & (mz_uint)(32768 - 1);
     if (pState->m_last_status == TINFL_STATUS_DONE) 
       if (! pState->m_dict_avail) tmp_0 = MZ_STREAM_END; else tmp_0 = MZ_OK;
     else tmp_0 = MZ_OK;
@@ -2171,7 +2171,7 @@ int __attribute__((__visibility__("default"))) mz_inflate(mz_streamp pStream,
     pStream->avail_out -= n;
     pStream->total_out += (mz_ulong)n;
     pState->m_dict_avail -= n;
-    pState->m_dict_ofs = (pState->m_dict_ofs + n) & (unsigned int)(32768 - 1);
+    pState->m_dict_ofs = (pState->m_dict_ofs + n) & (mz_uint)(32768 - 1);
     if (status < 0) {
       __retres = MZ_DATA_ERROR;
       goto return_label;
@@ -2242,7 +2242,7 @@ int __attribute__((__visibility__("default"))) mz_uncompress2(unsigned char *pDe
   int status;
   int __attribute__((__visibility__("default"))) tmp_0;
   memset((void *)(& stream),0,sizeof(stream));
-  if ((*pSource_len | *pDest_len) > (unsigned long)0xFFFFFFFFU) {
+  if ((*pSource_len | *pDest_len) > (mz_ulong)0xFFFFFFFFU) {
     __retres = MZ_PARAM_ERROR;
     goto return_label;
   }
@@ -4123,8 +4123,8 @@ static tdefl_sym_freq *tdefl_radix_sort_syms(mz_uint num_syms,
   while (i < num_syms) {
     {
       mz_uint freq = (mz_uint)(pSyms0 + i)->m_key;
-      (hist[freq & (unsigned int)0xFF]) ++;
-      (hist[(unsigned int)256 + ((freq >> 8) & (unsigned int)0xFF)]) ++;
+      (hist[freq & (mz_uint)0xFF]) ++;
+      (hist[(mz_uint)256 + ((freq >> 8) & (mz_uint)0xFF)]) ++;
     }
     i ++;
   }
@@ -4383,7 +4383,7 @@ static void tdefl_optimize_huffman_table(tdefl_compressor *d, int table_num,
       code = tmp_0;
       l = (int)code_size;
       while (l > 0) {
-        rev_code = (rev_code << 1) | (code & (unsigned int)1);
+        rev_code = (rev_code << 1) | (code & (mz_uint)1);
         l --;
         code >>= 1;
       }
@@ -4958,7 +4958,7 @@ static mz_bool tdefl_compress_lz_codes(tdefl_compressor *d)
       pLZ_codes ++;
       flags = (mz_uint)((int)*tmp | 0x100);
     }
-    if (flags & (unsigned int)1) {
+    if (flags & (mz_uint)1) {
       mz_uint s0;
       mz_uint s1;
       mz_uint n0;
@@ -4975,8 +4975,8 @@ static mz_bool tdefl_compress_lz_codes(tdefl_compressor *d)
       bits_in += (mz_uint)d->m_huff_code_sizes[0][s_tdefl_len_sym[match_len]];
       bit_buffer |= (mz_uint64)(match_len & mz_bitmasks[s_tdefl_len_extra[match_len]]) << bits_in;
       bits_in += (mz_uint)s_tdefl_len_extra[match_len];
-      s0 = (mz_uint)s_tdefl_small_dist_sym[match_dist & (unsigned int)511];
-      n0 = (mz_uint)s_tdefl_small_dist_extra[match_dist & (unsigned int)511];
+      s0 = (mz_uint)s_tdefl_small_dist_sym[match_dist & (mz_uint)511];
+      n0 = (mz_uint)s_tdefl_small_dist_extra[match_dist & (mz_uint)511];
       s1 = (mz_uint)s_tdefl_large_dist_sym[match_dist >> 8];
       n1 = (mz_uint)s_tdefl_large_dist_extra[match_dist >> 8];
       if (match_dist < (mz_uint)512) sym = s0; else sym = s1;
@@ -4998,7 +4998,7 @@ static mz_bool tdefl_compress_lz_codes(tdefl_compressor *d)
                   "d->m_huff_code_sizes[0][lit]");
       bit_buffer |= (mz_uint64)d->m_huff_codes[0][lit] << bits_in;
       bits_in += (mz_uint)d->m_huff_code_sizes[0][lit];
-      if ((flags & (unsigned int)2) == (unsigned int)0) 
+      if ((flags & (mz_uint)2) == (mz_uint)0) 
         if (pLZ_codes < pLZ_code_buf_end) {
           mz_uint8 *tmp_1;
           flags >>= 1;
@@ -5009,7 +5009,7 @@ static mz_bool tdefl_compress_lz_codes(tdefl_compressor *d)
                       505,"d->m_huff_code_sizes[0][lit]");
           bit_buffer |= (mz_uint64)d->m_huff_codes[0][lit] << bits_in;
           bits_in += (mz_uint)d->m_huff_code_sizes[0][lit];
-          if ((flags & (unsigned int)2) == (unsigned int)0) 
+          if ((flags & (mz_uint)2) == (mz_uint)0) 
             if (pLZ_codes < pLZ_code_buf_end) {
               mz_uint8 *tmp_2;
               flags >>= 1;
@@ -5029,8 +5029,8 @@ static mz_bool tdefl_compress_lz_codes(tdefl_compressor *d)
     }
     *((mz_uint64 *)pOutput_buf) = bit_buffer;
     pOutput_buf += bits_in >> 3;
-    bit_buffer >>= bits_in & (unsigned int)(~ 7);
-    bits_in &= (unsigned int)7;
+    bit_buffer >>= bits_in & (mz_uint)(~ 7);
+    bits_in &= (mz_uint)7;
     flags >>= 1;
   }
   d->m_pOutput_buf = pOutput_buf;
@@ -5102,7 +5102,7 @@ static int tdefl_flush_block(tdefl_compressor *d, int flush)
   int tmp;
   mz_uint8 *tmp_0;
   mz_bool comp_block_succeeded = 0;
-  if ((d->m_flags & (unsigned int)TDEFL_FORCE_ALL_RAW_BLOCKS) != (unsigned int)0) 
+  if ((d->m_flags & (mz_uint)TDEFL_FORCE_ALL_RAW_BLOCKS) != (mz_uint)0) 
     if (d->m_lookahead_pos - d->m_lz_code_buf_dict_pos <= d->m_dict_size) 
       tmp = 1;
     else tmp = 0;
@@ -5123,7 +5123,7 @@ static int tdefl_flush_block(tdefl_compressor *d, int flush)
   d->m_output_flush_remaining = (mz_uint)0;
   *(d->m_pLZ_flags) = (mz_uint8)((int)*(d->m_pLZ_flags) >> d->m_num_flags_left);
   d->m_pLZ_code_buf -= d->m_num_flags_left == (mz_uint)8;
-  if (d->m_flags & (unsigned int)TDEFL_WRITE_ZLIB_HEADER) 
+  if (d->m_flags & (mz_uint)TDEFL_WRITE_ZLIB_HEADER) 
     if (! d->m_block_index) {
       {
         mz_uint bits = (mz_uint)0x78;
@@ -5185,7 +5185,7 @@ static int tdefl_flush_block(tdefl_compressor *d, int flush)
   saved_bits_in = d->m_bits_in;
   if (! use_raw_block) {
     int tmp_4;
-    if (d->m_flags & (unsigned int)TDEFL_FORCE_ALL_STATIC_BLOCKS) tmp_4 = 1;
+    if (d->m_flags & (mz_uint)TDEFL_FORCE_ALL_STATIC_BLOCKS) tmp_4 = 1;
     else 
       if (d->m_total_lz_bytes < (mz_uint)48) tmp_4 = 1; else tmp_4 = 0;
     ;
@@ -5240,7 +5240,7 @@ static int tdefl_flush_block(tdefl_compressor *d, int flush)
           i = (mz_uint)2;
           while (i) {
             {
-              mz_uint bits_4 = d->m_total_lz_bytes & (unsigned int)0xFFFF;
+              mz_uint bits_4 = d->m_total_lz_bytes & (mz_uint)0xFFFF;
               mz_uint len_4 = (mz_uint)16;
               __FC_assert((bits_4 <= (1U << len_4) - 1U) != 0,"miniz_tdef.c",
                           650,"bits <= ((1U << len) - 1U)");
@@ -5258,13 +5258,13 @@ static int tdefl_flush_block(tdefl_compressor *d, int flush)
               }
             }
             i --;
-            d->m_total_lz_bytes ^= (unsigned int)0xFFFF;
+            d->m_total_lz_bytes ^= (mz_uint)0xFFFF;
           }
           i = (mz_uint)0;
           while (i < d->m_total_lz_bytes) {
             {
               mz_uint bits_5 =
-                (mz_uint)d->m_dict[(d->m_lz_code_buf_dict_pos + i) & (unsigned int)TDEFL_LZ_DICT_SIZE_MASK];
+                (mz_uint)d->m_dict[(d->m_lz_code_buf_dict_pos + i) & (mz_uint)TDEFL_LZ_DICT_SIZE_MASK];
               mz_uint len_5 = (mz_uint)8;
               __FC_assert((bits_5 <= (1U << len_5) - 1U) != 0,"miniz_tdef.c",
                           654,"bits <= ((1U << len) - 1U)");
@@ -5316,13 +5316,13 @@ static int tdefl_flush_block(tdefl_compressor *d, int flush)
           d->m_bits_in -= (mz_uint)8;
         }
       }
-      if (d->m_flags & (unsigned int)TDEFL_WRITE_ZLIB_HEADER) {
+      if (d->m_flags & (mz_uint)TDEFL_WRITE_ZLIB_HEADER) {
         mz_uint i_0;
         mz_uint a = d->m_adler32;
         i_0 = (mz_uint)0;
         while (i_0 < (mz_uint)4) {
           {
-            mz_uint bits_7 = (a >> 24) & (unsigned int)0xFF;
+            mz_uint bits_7 = (a >> 24) & (mz_uint)0xFF;
             mz_uint len_7 = (mz_uint)8;
             __FC_assert((bits_7 <= (1U << len_7) - 1U) != 0,"miniz_tdef.c",
                         678,"bits <= ((1U << len) - 1U)");
@@ -5386,7 +5386,7 @@ static int tdefl_flush_block(tdefl_compressor *d, int flush)
       i_1 = (mz_uint)2;
       while (i_1) {
         {
-          mz_uint bits_10 = z & (unsigned int)0xFFFF;
+          mz_uint bits_10 = z & (mz_uint)0xFFFF;
           mz_uint len_10 = (mz_uint)16;
           __FC_assert((bits_10 <= (1U << len_10) - 1U) != 0,"miniz_tdef.c",
                       693,"bits <= ((1U << len) - 1U)");
@@ -5404,7 +5404,7 @@ static int tdefl_flush_block(tdefl_compressor *d, int flush)
           }
         }
         i_1 --;
-        z ^= (unsigned int)0xFFFF;
+        z ^= (mz_uint)0xFFFF;
       }
     }
   __FC_assert((d->m_pOutput_buf < d->m_pOutput_buf_end) != 0,"miniz_tdef.c",
@@ -5480,7 +5480,7 @@ __inline static void tdefl_find_match(tdefl_compressor *d,
   mz_uint probe_len;
   mz_uint16 const *p;
   mz_uint16 const *q;
-  mz_uint pos = lookahead_pos & (unsigned int)TDEFL_LZ_DICT_SIZE_MASK;
+  mz_uint pos = lookahead_pos & (mz_uint)TDEFL_LZ_DICT_SIZE_MASK;
   mz_uint match_len = *pMatch_len;
   mz_uint probe_pos = pos;
   mz_uint num_probes_left = d->m_max_probes[match_len >= (mz_uint)32];
@@ -5507,7 +5507,7 @@ __inline static void tdefl_find_match(tdefl_compressor *d,
           ;
           if (dist > max_dist) goto return_label;
         }
-        probe_pos = next_probe_pos & (unsigned int)TDEFL_LZ_DICT_SIZE_MASK;
+        probe_pos = next_probe_pos & (mz_uint)TDEFL_LZ_DICT_SIZE_MASK;
         tmp_1 = TDEFL_READ_UNALIGNED_WORD((mz_uint8 const *)(& d->m_dict[
                                           (probe_pos + match_len) - (mz_uint)1]));
         ;
@@ -5519,7 +5519,7 @@ __inline static void tdefl_find_match(tdefl_compressor *d,
           ;
           if (dist > max_dist) goto return_label;
         }
-        probe_pos = next_probe_pos & (unsigned int)TDEFL_LZ_DICT_SIZE_MASK;
+        probe_pos = next_probe_pos & (mz_uint)TDEFL_LZ_DICT_SIZE_MASK;
         tmp_2 = TDEFL_READ_UNALIGNED_WORD((mz_uint8 const *)(& d->m_dict[
                                           (probe_pos + match_len) - (mz_uint)1]));
         ;
@@ -5531,7 +5531,7 @@ __inline static void tdefl_find_match(tdefl_compressor *d,
           ;
           if (dist > max_dist) goto return_label;
         }
-        probe_pos = next_probe_pos & (unsigned int)TDEFL_LZ_DICT_SIZE_MASK;
+        probe_pos = next_probe_pos & (mz_uint)TDEFL_LZ_DICT_SIZE_MASK;
         tmp_3 = TDEFL_READ_UNALIGNED_WORD((mz_uint8 const *)(& d->m_dict[
                                           (probe_pos + match_len) - (mz_uint)1]));
         ;
@@ -5629,7 +5629,7 @@ static mz_bool tdefl_compress_fast(tdefl_compressor *d)
   mz_uint num_flags_left = d->m_num_flags_left;
   mz_uint8 *pLZ_code_buf = d->m_pLZ_code_buf;
   mz_uint8 *pLZ_flags = d->m_pLZ_flags;
-  mz_uint cur_pos = lookahead_pos & (unsigned int)TDEFL_LZ_DICT_SIZE_MASK;
+  mz_uint cur_pos = lookahead_pos & (mz_uint)TDEFL_LZ_DICT_SIZE_MASK;
   while (1) {
     if (! d->m_src_buf_left) 
       if (d->m_flush) {
@@ -5640,7 +5640,7 @@ static mz_bool tdefl_compress_fast(tdefl_compressor *d)
       size_t tmp;
       mz_uint const TDEFL_COMP_FAST_LOOKAHEAD_SIZE = (mz_uint)4096;
       mz_uint dst_pos =
-        (lookahead_pos + lookahead_size) & (unsigned int)TDEFL_LZ_DICT_SIZE_MASK;
+        (lookahead_pos + lookahead_size) & (mz_uint)TDEFL_LZ_DICT_SIZE_MASK;
       if (d->m_src_buf_left < (size_t)(TDEFL_COMP_FAST_LOOKAHEAD_SIZE - lookahead_size)) 
         tmp = d->m_src_buf_left;
       else tmp = (size_t)(TDEFL_COMP_FAST_LOOKAHEAD_SIZE - lookahead_size);
@@ -5665,7 +5665,7 @@ static mz_bool tdefl_compress_fast(tdefl_compressor *d)
                  (void const *)d->m_pSrc,(size_t)tmp_1);
         }
         d->m_pSrc += n;
-        dst_pos = (dst_pos + n) & (unsigned int)TDEFL_LZ_DICT_SIZE_MASK;
+        dst_pos = (dst_pos + n) & (mz_uint)TDEFL_LZ_DICT_SIZE_MASK;
         num_bytes_to_process -= n;
       }
       if ((mz_uint)TDEFL_LZ_DICT_SIZE - lookahead_size < dict_size) dict_size = 
@@ -5679,20 +5679,20 @@ static mz_bool tdefl_compress_fast(tdefl_compressor *d)
         mz_uint cur_match_len = (mz_uint)1;
         mz_uint8 *pCur_dict = & d->m_dict[cur_pos];
         tmp_2 = TDEFL_READ_UNALIGNED_WORD32((mz_uint8 const *)pCur_dict);
-        mz_uint first_trigram = tmp_2 & (unsigned int)0xFFFFFF;
+        mz_uint first_trigram = tmp_2 & (mz_uint32)0xFFFFFF;
         mz_uint hash =
-          (first_trigram ^ (first_trigram >> (24 - (TDEFL_LZ_HASH_BITS - 8)))) & (unsigned int)TDEFL_LEVEL1_HASH_SIZE_MASK;
+          (first_trigram ^ (first_trigram >> (24 - (TDEFL_LZ_HASH_BITS - 8)))) & (mz_uint)TDEFL_LEVEL1_HASH_SIZE_MASK;
         mz_uint probe_pos = (mz_uint)d->m_hash[hash];
         d->m_hash[hash] = (mz_uint16)lookahead_pos;
         cur_match_dist = (mz_uint)((mz_uint16)(lookahead_pos - probe_pos));
         ;
         if (cur_match_dist <= dict_size) {
           mz_uint32 tmp_15;
-          probe_pos &= (unsigned int)TDEFL_LZ_DICT_SIZE_MASK;
+          probe_pos &= (mz_uint)TDEFL_LZ_DICT_SIZE_MASK;
           ;
           tmp_15 = TDEFL_READ_UNALIGNED_WORD32((mz_uint8 const *)(& d->m_dict[probe_pos]));
           ;
-          if ((tmp_15 & (unsigned int)0xFFFFFF) == first_trigram) {
+          if ((tmp_15 & (mz_uint32)0xFFFFFF) == first_trigram) {
             mz_uint16 const *p = (mz_uint16 const *)pCur_dict;
             mz_uint16 const *q = (mz_uint16 const *)(& d->m_dict[probe_pos]);
             mz_uint32 probe_len = (mz_uint32)32;
@@ -5784,7 +5784,7 @@ static mz_bool tdefl_compress_fast(tdefl_compressor *d)
                          sizeof(cur_match_dist));
                   pLZ_code_buf += 3;
                   *pLZ_flags = (mz_uint8)(((int)*pLZ_flags >> 1) | 0x80);
-                  s0 = (mz_uint32)s_tdefl_small_dist_sym[cur_match_dist & (unsigned int)511];
+                  s0 = (mz_uint32)s_tdefl_small_dist_sym[cur_match_dist & (mz_uint)511];
                   s1 = (mz_uint32)s_tdefl_large_dist_sym[cur_match_dist >> 8];
                   if (cur_match_dist < (mz_uint)512) tmp_13 = s0;
                   else tmp_13 = s1;
@@ -5821,7 +5821,7 @@ static mz_bool tdefl_compress_fast(tdefl_compressor *d)
         if (dict_size + cur_match_len < (mz_uint)TDEFL_LZ_DICT_SIZE) 
           dict_size += cur_match_len;
         else dict_size = (mz_uint)TDEFL_LZ_DICT_SIZE;
-        cur_pos = (cur_pos + cur_match_len) & (unsigned int)TDEFL_LZ_DICT_SIZE_MASK;
+        cur_pos = (cur_pos + cur_match_len) & (mz_uint)TDEFL_LZ_DICT_SIZE_MASK;
         __FC_assert((lookahead_size >= cur_match_len) != 0,"miniz_tdef.c",
                     966,"lookahead_size >= cur_match_len");
         lookahead_size -= cur_match_len;
@@ -5867,7 +5867,7 @@ static mz_bool tdefl_compress_fast(tdefl_compressor *d)
         lookahead_pos ++;
         if (dict_size + (mz_uint)1 < (mz_uint)TDEFL_LZ_DICT_SIZE) dict_size += (mz_uint)1;
         else dict_size = (mz_uint)TDEFL_LZ_DICT_SIZE;
-        cur_pos = (cur_pos + (mz_uint)1) & (unsigned int)TDEFL_LZ_DICT_SIZE_MASK;
+        cur_pos = (cur_pos + (mz_uint)1) & (mz_uint)TDEFL_LZ_DICT_SIZE_MASK;
         lookahead_size --;
         if (pLZ_code_buf > & d->m_lz_code_buf[TDEFL_LZ_CODE_BUF_SIZE - 8]) {
           int n_1;
@@ -5941,7 +5941,7 @@ __inline static void tdefl_record_match(tdefl_compressor *d,
   d->m_total_lz_bytes += match_len;
   *(d->m_pLZ_code_buf + 0) = (mz_uint8)(match_len - (mz_uint)TDEFL_MIN_MATCH_LEN);
   match_dist -= (mz_uint)1;
-  *(d->m_pLZ_code_buf + 1) = (mz_uint8)(match_dist & (unsigned int)0xFF);
+  *(d->m_pLZ_code_buf + 1) = (mz_uint8)(match_dist & (mz_uint)0xFF);
   *(d->m_pLZ_code_buf + 2) = (mz_uint8)(match_dist >> 8);
   d->m_pLZ_code_buf += 3;
   *(d->m_pLZ_flags) = (mz_uint8)(((int)*(d->m_pLZ_flags) >> 1) | 0x80);
@@ -5953,8 +5953,8 @@ __inline static void tdefl_record_match(tdefl_compressor *d,
     (d->m_pLZ_code_buf) ++;
     d->m_pLZ_flags = tmp_0;
   }
-  s0 = (mz_uint32)s_tdefl_small_dist_sym[match_dist & (unsigned int)511];
-  s1 = (mz_uint32)s_tdefl_large_dist_sym[(match_dist >> 8) & (unsigned int)127];
+  s0 = (mz_uint32)s_tdefl_small_dist_sym[match_dist & (mz_uint)511];
+  s1 = (mz_uint32)s_tdefl_large_dist_sym[(match_dist >> 8) & (mz_uint)127];
   if (match_dist < (mz_uint)512) tmp_1 = s0; else tmp_1 = s1;
   d->m_huff_count[1][tmp_1] = (mz_uint16)((int)d->m_huff_count[1][tmp_1] + 1);
   if (match_len >= (mz_uint)TDEFL_MIN_MATCH_LEN) d->m_huff_count[0][s_tdefl_len_sym[
@@ -5984,12 +5984,12 @@ static mz_bool tdefl_compress_normal(tdefl_compressor *d)
       if (d->m_lookahead_size + d->m_dict_size >= (mz_uint)(TDEFL_MIN_MATCH_LEN - 1)) {
         size_t tmp;
         mz_uint dst_pos =
-          (d->m_lookahead_pos + d->m_lookahead_size) & (unsigned int)TDEFL_LZ_DICT_SIZE_MASK;
+          (d->m_lookahead_pos + d->m_lookahead_size) & (mz_uint)TDEFL_LZ_DICT_SIZE_MASK;
         mz_uint ins_pos =
           (d->m_lookahead_pos + d->m_lookahead_size) - (mz_uint)2;
         mz_uint hash =
-          (mz_uint)(((int)d->m_dict[ins_pos & (unsigned int)TDEFL_LZ_DICT_SIZE_MASK] << TDEFL_LZ_HASH_SHIFT) ^ (int)d->m_dict[
-                    (ins_pos + (mz_uint)1) & (unsigned int)TDEFL_LZ_DICT_SIZE_MASK]);
+          (mz_uint)(((int)d->m_dict[ins_pos & (mz_uint)TDEFL_LZ_DICT_SIZE_MASK] << TDEFL_LZ_HASH_SHIFT) ^ (int)d->m_dict[
+                    (ins_pos + (mz_uint)1) & (mz_uint)TDEFL_LZ_DICT_SIZE_MASK]);
         if (src_buf_left < (size_t)((mz_uint)TDEFL_MAX_MATCH_LEN - d->m_lookahead_size)) 
           tmp = src_buf_left;
         else tmp = (size_t)((mz_uint)TDEFL_MAX_MATCH_LEN - d->m_lookahead_size);
@@ -6005,11 +6005,11 @@ static mz_bool tdefl_compress_normal(tdefl_compressor *d)
           d->m_dict[dst_pos] = c;
           if (dst_pos < (mz_uint)(TDEFL_MAX_MATCH_LEN - 1)) d->m_dict[
                                                             (mz_uint)TDEFL_LZ_DICT_SIZE + dst_pos] = c;
-          hash = ((hash << TDEFL_LZ_HASH_SHIFT) ^ (unsigned int)c) & (unsigned int)(
+          hash = ((hash << TDEFL_LZ_HASH_SHIFT) ^ (mz_uint)c) & (mz_uint)(
                  TDEFL_LZ_HASH_SIZE - 1);
-          d->m_next[ins_pos & (unsigned int)TDEFL_LZ_DICT_SIZE_MASK] = d->m_hash[hash];
+          d->m_next[ins_pos & (mz_uint)TDEFL_LZ_DICT_SIZE_MASK] = d->m_hash[hash];
           d->m_hash[hash] = (mz_uint16)ins_pos;
-          dst_pos = (dst_pos + (mz_uint)1) & (unsigned int)TDEFL_LZ_DICT_SIZE_MASK;
+          dst_pos = (dst_pos + (mz_uint)1) & (mz_uint)TDEFL_LZ_DICT_SIZE_MASK;
           ins_pos ++;
         }
       }
@@ -6026,7 +6026,7 @@ static mz_bool tdefl_compress_normal(tdefl_compressor *d)
             pSrc ++;
             mz_uint8 c_0 = *tmp_1;
             mz_uint dst_pos_0 =
-              (d->m_lookahead_pos + d->m_lookahead_size) & (unsigned int)TDEFL_LZ_DICT_SIZE_MASK;
+              (d->m_lookahead_pos + d->m_lookahead_size) & (mz_uint)TDEFL_LZ_DICT_SIZE_MASK;
             src_buf_left --;
             d->m_dict[dst_pos_0] = c_0;
             if (dst_pos_0 < (mz_uint)(TDEFL_MAX_MATCH_LEN - 1)) d->m_dict[
@@ -6037,11 +6037,11 @@ static mz_bool tdefl_compress_normal(tdefl_compressor *d)
               mz_uint ins_pos_0 =
                 (d->m_lookahead_pos + (d->m_lookahead_size - (mz_uint)1)) - (mz_uint)2;
               mz_uint hash_0 =
-                (mz_uint)(((((int)d->m_dict[ins_pos_0 & (unsigned int)TDEFL_LZ_DICT_SIZE_MASK] << 
+                (mz_uint)(((((int)d->m_dict[ins_pos_0 & (mz_uint)TDEFL_LZ_DICT_SIZE_MASK] << 
                              TDEFL_LZ_HASH_SHIFT * 2) ^ ((int)d->m_dict[
-                                                         (ins_pos_0 + (mz_uint)1) & (unsigned int)TDEFL_LZ_DICT_SIZE_MASK] << TDEFL_LZ_HASH_SHIFT)) ^ (int)c_0) & (
+                                                         (ins_pos_0 + (mz_uint)1) & (mz_uint)TDEFL_LZ_DICT_SIZE_MASK] << TDEFL_LZ_HASH_SHIFT)) ^ (int)c_0) & (
                           TDEFL_LZ_HASH_SIZE - 1));
-              d->m_next[ins_pos_0 & (unsigned int)TDEFL_LZ_DICT_SIZE_MASK] = d->m_hash[hash_0];
+              d->m_next[ins_pos_0 & (mz_uint)TDEFL_LZ_DICT_SIZE_MASK] = d->m_hash[hash_0];
               d->m_hash[hash_0] = (mz_uint16)ins_pos_0;
             }
           }
@@ -6055,12 +6055,12 @@ static mz_bool tdefl_compress_normal(tdefl_compressor *d)
       cur_match_dist = (mz_uint)0;
       if (d->m_saved_match_len) cur_match_len = d->m_saved_match_len;
       else cur_match_len = (mz_uint)(TDEFL_MIN_MATCH_LEN - 1);
-      cur_pos = d->m_lookahead_pos & (unsigned int)TDEFL_LZ_DICT_SIZE_MASK;
-      if (d->m_flags & (unsigned int)(TDEFL_RLE_MATCHES | TDEFL_FORCE_ALL_RAW_BLOCKS)) {
+      cur_pos = d->m_lookahead_pos & (mz_uint)TDEFL_LZ_DICT_SIZE_MASK;
+      if (d->m_flags & (mz_uint)(TDEFL_RLE_MATCHES | TDEFL_FORCE_ALL_RAW_BLOCKS)) {
         if (d->m_dict_size) 
-          if (! (d->m_flags & (unsigned int)TDEFL_FORCE_ALL_RAW_BLOCKS)) {
+          if (! (d->m_flags & (mz_uint)TDEFL_FORCE_ALL_RAW_BLOCKS)) {
             mz_uint8 c_1 =
-              d->m_dict[(cur_pos - (mz_uint)1) & (unsigned int)TDEFL_LZ_DICT_SIZE_MASK];
+              d->m_dict[(cur_pos - (mz_uint)1) & (mz_uint)TDEFL_LZ_DICT_SIZE_MASK];
             cur_match_len = (mz_uint)0;
             while (cur_match_len < d->m_lookahead_size) {
               if ((int)d->m_dict[cur_pos + cur_match_len] != (int)c_1) 
@@ -6081,7 +6081,7 @@ static mz_bool tdefl_compress_normal(tdefl_compressor *d)
         _LAND: ;
         if (cur_pos == cur_match_dist) goto _LOR;
         else 
-          if (d->m_flags & (unsigned int)TDEFL_FILTER_MATCHES) 
+          if (d->m_flags & (mz_uint)TDEFL_FILTER_MATCHES) 
             if (cur_match_len <= (mz_uint)5) {
               _LOR:
               {
@@ -6122,7 +6122,7 @@ static mz_bool tdefl_compress_normal(tdefl_compressor *d)
         else 
           if (d->m_greedy_parsing) goto _LOR_0;
           else 
-            if (d->m_flags & (unsigned int)TDEFL_RLE_MATCHES) goto _LOR_0;
+            if (d->m_flags & (mz_uint)TDEFL_RLE_MATCHES) goto _LOR_0;
             else 
               if (cur_match_len >= (mz_uint)128) {
                 _LOR_0:
@@ -6154,7 +6154,7 @@ static mz_bool tdefl_compress_normal(tdefl_compressor *d)
           if ((mz_uint)(d->m_pLZ_code_buf - d->m_lz_code_buf) * (mz_uint)115 >> 7 >= d->m_total_lz_bytes) 
             goto _LOR_2;
           else 
-            if (d->m_flags & (unsigned int)TDEFL_FORCE_ALL_RAW_BLOCKS) {
+            if (d->m_flags & (mz_uint)TDEFL_FORCE_ALL_RAW_BLOCKS) {
               _LOR_2:
               {
                 int n;
@@ -6262,7 +6262,7 @@ tdefl_status __attribute__((__visibility__("default"))) tdefl_compress
               }
         }
       }
-  d->m_wants_to_finish |= (unsigned int)(flush == (unsigned int)TDEFL_FINISH);
+  d->m_wants_to_finish |= (mz_uint)(flush == (unsigned int)TDEFL_FINISH);
   if (d->m_output_flush_remaining) goto _LOR_0;
   else 
     if (d->m_finished) {
@@ -6272,9 +6272,9 @@ tdefl_status __attribute__((__visibility__("default"))) tdefl_compress
       __retres = tmp_1;
       goto return_label;
     }
-  if ((d->m_flags & (unsigned int)TDEFL_MAX_PROBES_MASK) == (unsigned int)1) {
-    if ((d->m_flags & (unsigned int)TDEFL_GREEDY_PARSING_FLAG) != (unsigned int)0) {
-      if ((d->m_flags & (unsigned int)((TDEFL_FILTER_MATCHES | TDEFL_FORCE_ALL_RAW_BLOCKS) | TDEFL_RLE_MATCHES)) == (unsigned int)0) {
+  if ((d->m_flags & (mz_uint)TDEFL_MAX_PROBES_MASK) == (mz_uint)1) {
+    if ((d->m_flags & (mz_uint)TDEFL_GREEDY_PARSING_FLAG) != (mz_uint)0) {
+      if ((d->m_flags & (mz_uint)((TDEFL_FILTER_MATCHES | TDEFL_FORCE_ALL_RAW_BLOCKS) | TDEFL_RLE_MATCHES)) == (mz_uint)0) {
         mz_bool tmp_2;
         tmp_2 = tdefl_compress_fast(d);
         if (! tmp_2) {
@@ -6297,7 +6297,7 @@ tdefl_status __attribute__((__visibility__("default"))) tdefl_compress
       }
     }
   }
-  if (d->m_flags & (unsigned int)(TDEFL_WRITE_ZLIB_HEADER | TDEFL_COMPUTE_ADLER32)) 
+  if (d->m_flags & (mz_uint)(TDEFL_WRITE_ZLIB_HEADER | TDEFL_COMPUTE_ADLER32)) 
     if (pIn_buf) {
       mz_ulong __attribute__((__visibility__("default"))) tmp_4;
       tmp_4 = mz_adler32((mz_ulong)d->m_adler32,(mz_uint8 const *)pIn_buf,
@@ -6586,17 +6586,17 @@ mz_uint __attribute__((__visibility__("default"))) tdefl_create_comp_flags_from_
   }
   else tmp_0 = MZ_DEFAULT_LEVEL;
   if (level <= 3) tmp_1 = TDEFL_GREEDY_PARSING_FLAG; else tmp_1 = 0;
-  mz_uint comp_flags = s_tdefl_num_probes[tmp_0] | (unsigned int)tmp_1;
-  if (window_bits > 0) comp_flags |= (unsigned int)TDEFL_WRITE_ZLIB_HEADER;
-  if (! level) comp_flags |= (unsigned int)TDEFL_FORCE_ALL_RAW_BLOCKS;
+  mz_uint comp_flags = s_tdefl_num_probes[tmp_0] | (mz_uint)tmp_1;
+  if (window_bits > 0) comp_flags |= (mz_uint)TDEFL_WRITE_ZLIB_HEADER;
+  if (! level) comp_flags |= (mz_uint)TDEFL_FORCE_ALL_RAW_BLOCKS;
   else 
-    if (strategy == MZ_FILTERED) comp_flags |= (unsigned int)TDEFL_FILTER_MATCHES;
+    if (strategy == MZ_FILTERED) comp_flags |= (mz_uint)TDEFL_FILTER_MATCHES;
     else 
-      if (strategy == MZ_HUFFMAN_ONLY) comp_flags &= (unsigned int)(~ TDEFL_MAX_PROBES_MASK);
+      if (strategy == MZ_HUFFMAN_ONLY) comp_flags &= (mz_uint)(~ TDEFL_MAX_PROBES_MASK);
       else 
-        if (strategy == MZ_FIXED) comp_flags |= (unsigned int)TDEFL_FORCE_ALL_STATIC_BLOCKS;
+        if (strategy == MZ_FIXED) comp_flags |= (mz_uint)TDEFL_FORCE_ALL_STATIC_BLOCKS;
         else 
-          if (strategy == MZ_RLE) comp_flags |= (unsigned int)TDEFL_RLE_MATCHES;
+          if (strategy == MZ_RLE) comp_flags |= (mz_uint)TDEFL_RLE_MATCHES;
   return comp_flags;
 }
 
@@ -6659,7 +6659,7 @@ void __attribute__((__visibility__("default"))) *tdefl_write_image_to_png_file_i
   ;
   ;
   tdefl_init(pComp,& tdefl_output_buffer_putter,(void *)(& out_buf),
-             (int)(tdefl_write_image_to_png_file_in_memory_ex_s_tdefl_png_num_probes[tmp_2] | (unsigned int)TDEFL_WRITE_ZLIB_HEADER));
+             (int)(tdefl_write_image_to_png_file_in_memory_ex_s_tdefl_png_num_probes[tmp_2] | (mz_uint)TDEFL_WRITE_ZLIB_HEADER));
   y = 0;
   while (y < h) {
     {
@@ -6964,7 +6964,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
   mz_uint8 const * const pIn_buf_end = pIn_buf_next + *pIn_buf_size;
   mz_uint8 *pOut_buf_cur = pOut_buf_next;
   mz_uint8 * const pOut_buf_end = pOut_buf_next + *pOut_buf_size;
-  if (decomp_flags & (unsigned int)TINFL_FLAG_USING_NON_WRAPPING_OUTPUT_BUF) 
+  if (decomp_flags & (mz_uint32)TINFL_FLAG_USING_NON_WRAPPING_OUTPUT_BUF) 
     tmp = (size_t)(-1);
   else tmp = ((size_t)(pOut_buf_next - pOut_buf_start) + *pOut_buf_size) - (size_t)1;
   size_t out_buf_size_mask = tmp;
@@ -7006,13 +7006,12 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
     tmp_3 = (mz_uint32)1;
     r->m_check_adler32 = tmp_3;
     r->m_z_adler32 = tmp_3;
-    if (decomp_flags & (unsigned int)TINFL_FLAG_PARSE_ZLIB_HEADER) {
+    if (decomp_flags & (mz_uint32)TINFL_FLAG_PARSE_ZLIB_HEADER) {
       int tmp_6;
       {
         mz_uint8 const *tmp_4;
         while (pIn_buf_cur >= pIn_buf_end) {
-          if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
-            status = TINFL_STATUS_NEEDS_MORE_INPUT;
+          if (decomp_flags & (mz_uint32)TINFL_FLAG_HAS_MORE_INPUT) status = TINFL_STATUS_NEEDS_MORE_INPUT;
           else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
           r->m_state = (mz_uint32)1;
           goto common_exit;
@@ -7025,8 +7024,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
       {
         mz_uint8 const *tmp_5;
         while (pIn_buf_cur >= pIn_buf_end) {
-          if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
-            status = TINFL_STATUS_NEEDS_MORE_INPUT;
+          if (decomp_flags & (mz_uint32)TINFL_FLAG_HAS_MORE_INPUT) status = TINFL_STATUS_NEEDS_MORE_INPUT;
           else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
           r->m_state = (mz_uint32)2;
           goto common_exit;
@@ -7036,22 +7034,22 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
         pIn_buf_cur ++;
         r->m_zhdr1 = (mz_uint32)*tmp_5;
       }
-      if ((r->m_zhdr0 * (mz_uint32)256 + r->m_zhdr1) % (unsigned int)31 != (unsigned int)0) 
+      if ((r->m_zhdr0 * (mz_uint32)256 + r->m_zhdr1) % (mz_uint32)31 != (mz_uint32)0) 
         tmp_6 = 1;
       else 
-        if (r->m_zhdr1 & (unsigned int)32) tmp_6 = 1;
+        if (r->m_zhdr1 & (mz_uint32)32) tmp_6 = 1;
         else 
-          if ((r->m_zhdr0 & (unsigned int)15) != (unsigned int)8) tmp_6 = 1;
+          if ((r->m_zhdr0 & (mz_uint32)15) != (mz_uint32)8) tmp_6 = 1;
           else tmp_6 = 0;
       counter = (mz_uint32)tmp_6;
-      if (! (decomp_flags & (unsigned int)TINFL_FLAG_USING_NON_WRAPPING_OUTPUT_BUF)) {
+      if (! (decomp_flags & (mz_uint32)TINFL_FLAG_USING_NON_WRAPPING_OUTPUT_BUF)) {
         int tmp_7;
         if (1U << (8U + (r->m_zhdr0 >> 4)) > 32768U) tmp_7 = 1;
         else 
           if (out_buf_size_mask + (size_t)1 < (size_t)(1U << (8U + (r->m_zhdr0 >> 4)))) 
             tmp_7 = 1;
           else tmp_7 = 0;
-        counter |= (unsigned int)tmp_7;
+        counter |= (mz_uint32)tmp_7;
       }
       if (counter) 
         while (1) {
@@ -7069,7 +7067,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
             {
               mz_uint8 const *tmp_8;
               while (pIn_buf_cur >= pIn_buf_end) {
-                if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
+                if (decomp_flags & (mz_uint32)TINFL_FLAG_HAS_MORE_INPUT) 
                   status = TINFL_STATUS_NEEDS_MORE_INPUT;
                 else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
                 r->m_state = (mz_uint32)3;
@@ -7085,19 +7083,19 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
           }
           if (! (num_bits < (mz_uint)3)) break;
         }
-      r->m_final = (mz_uint32)(bit_buf & (unsigned long)((1 << 3) - 1));
+      r->m_final = (mz_uint32)(bit_buf & (tinfl_bit_buf_t)((1 << 3) - 1));
       bit_buf >>= 3;
       num_bits -= (mz_uint32)3;
       r->m_type = r->m_final >> 1;
       if (r->m_type == (mz_uint32)0) {
-        if (num_bits < (num_bits & (unsigned int)7)) 
+        if (num_bits < (num_bits & (mz_uint32)7)) 
           while (1) {
             {
               mz_uint c_0;
               {
                 mz_uint8 const *tmp_9;
                 while (pIn_buf_cur >= pIn_buf_end) {
-                  if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
+                  if (decomp_flags & (mz_uint32)TINFL_FLAG_HAS_MORE_INPUT) 
                     status = TINFL_STATUS_NEEDS_MORE_INPUT;
                   else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
                   r->m_state = (mz_uint32)5;
@@ -7111,10 +7109,10 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
               bit_buf |= (tinfl_bit_buf_t)c_0 << num_bits;
               num_bits += (mz_uint32)8;
             }
-            if (! (num_bits < (num_bits & (unsigned int)7))) break;
+            if (! (num_bits < (num_bits & (mz_uint32)7))) break;
           }
-        bit_buf >>= num_bits & (unsigned int)7;
-        num_bits -= num_bits & (unsigned int)7;
+        bit_buf >>= num_bits & (mz_uint32)7;
+        num_bits -= num_bits & (mz_uint32)7;
         counter = (mz_uint32)0;
         while (counter < (mz_uint32)4) {
           if (num_bits) {
@@ -7125,7 +7123,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                   {
                     mz_uint8 const *tmp_10;
                     while (pIn_buf_cur >= pIn_buf_end) {
-                      if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
+                      if (decomp_flags & (mz_uint32)TINFL_FLAG_HAS_MORE_INPUT) 
                         status = TINFL_STATUS_NEEDS_MORE_INPUT;
                       else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
                       r->m_state = (mz_uint32)6;
@@ -7141,7 +7139,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                 }
                 if (! (num_bits < (mz_uint)8)) break;
               }
-            r->m_raw_header[counter] = (mz_uint8)(bit_buf & (unsigned long)(
+            r->m_raw_header[counter] = (mz_uint8)(bit_buf & (tinfl_bit_buf_t)(
                                                   (1 << 8) - 1));
             bit_buf >>= 8;
             num_bits -= (mz_uint32)8;
@@ -7149,7 +7147,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
           else {
             mz_uint8 const *tmp_11;
             while (pIn_buf_cur >= pIn_buf_end) {
-              if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
+              if (decomp_flags & (mz_uint32)TINFL_FLAG_HAS_MORE_INPUT) 
                 status = TINFL_STATUS_NEEDS_MORE_INPUT;
               else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
               r->m_state = (mz_uint32)7;
@@ -7186,7 +7184,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                   {
                     mz_uint8 const *tmp_12;
                     while (pIn_buf_cur >= pIn_buf_end) {
-                      if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
+                      if (decomp_flags & (mz_uint32)TINFL_FLAG_HAS_MORE_INPUT) 
                         status = TINFL_STATUS_NEEDS_MORE_INPUT;
                       else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
                       r->m_state = (mz_uint32)51;
@@ -7202,7 +7200,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                 }
                 if (! (num_bits < (mz_uint)8)) break;
               }
-            dist = (mz_uint32)(bit_buf & (unsigned long)((1 << 8) - 1));
+            dist = (mz_uint32)(bit_buf & (tinfl_bit_buf_t)((1 << 8) - 1));
             bit_buf >>= 8;
             num_bits -= (mz_uint32)8;
             while (pOut_buf_cur >= pOut_buf_end) {
@@ -7227,7 +7225,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
             case (mz_uint32)9: ;
           }
           while (pIn_buf_cur >= pIn_buf_end) {
-            if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
+            if (decomp_flags & (mz_uint32)TINFL_FLAG_HAS_MORE_INPUT) 
               status = TINFL_STATUS_NEEDS_MORE_INPUT;
             else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
             r->m_state = (mz_uint32)38;
@@ -7307,7 +7305,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                     {
                       mz_uint8 const *tmp_20;
                       while (pIn_buf_cur >= pIn_buf_end) {
-                        if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
+                        if (decomp_flags & (mz_uint32)TINFL_FLAG_HAS_MORE_INPUT) 
                           status = TINFL_STATUS_NEEDS_MORE_INPUT;
                         else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
                         r->m_state = (mz_uint32)11;
@@ -7324,7 +7322,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                   if (! (num_bits < (mz_uint)"\005\005\004"[counter])) 
                     break;
                 }
-              r->m_table_sizes[counter] = (mz_uint32)(bit_buf & (unsigned long)(
+              r->m_table_sizes[counter] = (mz_uint32)(bit_buf & (tinfl_bit_buf_t)(
                                                       (1 << (int)"\005\005\004"[counter]) - 1));
               bit_buf >>= (int)"\005\005\004"[counter];
               num_bits -= (mz_uint32)"\005\005\004"[counter];
@@ -7344,7 +7342,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                       {
                         mz_uint8 const *tmp_21;
                         while (pIn_buf_cur >= pIn_buf_end) {
-                          if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
+                          if (decomp_flags & (mz_uint32)TINFL_FLAG_HAS_MORE_INPUT) 
                             status = TINFL_STATUS_NEEDS_MORE_INPUT;
                           else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
                           r->m_state = (mz_uint32)14;
@@ -7360,7 +7358,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                     }
                     if (! (num_bits < (mz_uint)3)) break;
                   }
-                s = (mz_uint)(bit_buf & (unsigned long)((1 << 3) - 1));
+                s = (mz_uint)(bit_buf & (tinfl_bit_buf_t)((1 << 3) - 1));
                 bit_buf >>= 3;
                 num_bits -= (mz_uint32)3;
                 r->m_tables[2].m_code_size[tinfl_decompress_s_length_dezigzag[counter]] = (mz_uint8)s;
@@ -7426,7 +7424,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                   cur_code = tmp_22;
                   l = code_size;
                   while (l > (mz_uint)0) {
-                    rev_code = (rev_code << 1) | (cur_code & (unsigned int)1);
+                    rev_code = (rev_code << 1) | (cur_code & (mz_uint)1);
                     l --;
                     cur_code >>= 1;
                   }
@@ -7438,10 +7436,10 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                     }
                     goto __Cont;
                   }
-                  tree_cur = (int)pTable->m_look_up[rev_code & (unsigned int)(
+                  tree_cur = (int)pTable->m_look_up[rev_code & (mz_uint)(
                                                     TINFL_FAST_LOOKUP_SIZE - 1)];
                   if (0 == tree_cur) {
-                    pTable->m_look_up[rev_code & (unsigned int)(TINFL_FAST_LOOKUP_SIZE - 1)] = (mz_int16)tree_next;
+                    pTable->m_look_up[rev_code & (mz_uint)(TINFL_FAST_LOOKUP_SIZE - 1)] = (mz_int16)tree_next;
                     tree_cur = tree_next;
                     tree_next -= 2;
                   }
@@ -7449,7 +7447,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                   j = code_size;
                   while (j > (mz_uint)(TINFL_FAST_LOOKUP_BITS + 1)) {
                     rev_code >>= 1;
-                    tree_cur = (int)((unsigned int)tree_cur - (rev_code & (unsigned int)1));
+                    tree_cur = (int)((mz_uint)tree_cur - (rev_code & (mz_uint)1));
                     if (! pTable->m_tree[- tree_cur - 1]) {
                       pTable->m_tree[- tree_cur - 1] = (mz_int16)tree_next;
                       tree_cur = tree_next;
@@ -7459,7 +7457,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                     j --;
                   }
                   rev_code >>= 1;
-                  tree_cur = (int)((unsigned int)tree_cur - (rev_code & (unsigned int)1));
+                  tree_cur = (int)((mz_uint)tree_cur - (rev_code & (mz_uint)1));
                   pTable->m_tree[- tree_cur - 1] = (mz_int16)sym_index;
                 }
                 __Cont: sym_index ++;
@@ -7477,7 +7475,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                       if (num_bits < (mz_uint32)15) 
                         if (pIn_buf_end - pIn_buf_cur < (long)2) 
                           while (1) {
-                            temp = (int)r->m_tables[2].m_look_up[bit_buf & (unsigned long)(
+                            temp = (int)r->m_tables[2].m_look_up[bit_buf & (tinfl_bit_buf_t)(
                                                                  TINFL_FAST_LOOKUP_SIZE - 1)];
                             if (temp >= 0) {
                               code_len = (mz_uint)(temp >> 9);
@@ -7493,7 +7491,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                                     tmp_23 = code_len;
                                     code_len ++;
                                     temp = (int)r->m_tables[2].m_tree[
-                                    (unsigned long)(~ temp) + ((bit_buf >> tmp_23) & (unsigned long)1)];
+                                    (tinfl_bit_buf_t)(~ temp) + ((bit_buf >> tmp_23) & (tinfl_bit_buf_t)1)];
                                   }
                                   if (temp < 0) {
                                     if (! (num_bits >= code_len + (mz_uint)1)) 
@@ -7506,7 +7504,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                             {
                               mz_uint8 const *tmp_24;
                               while (pIn_buf_cur >= pIn_buf_end) {
-                                if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
+                                if (decomp_flags & (mz_uint32)TINFL_FLAG_HAS_MORE_INPUT) 
                                   status = TINFL_STATUS_NEEDS_MORE_INPUT;
                                 else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
                                 r->m_state = (mz_uint32)16;
@@ -7528,7 +7526,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                           pIn_buf_cur += 2;
                           num_bits += (mz_uint32)16;
                         }
-                      temp = (int)r->m_tables[2].m_look_up[bit_buf & (unsigned long)(
+                      temp = (int)r->m_tables[2].m_look_up[bit_buf & (tinfl_bit_buf_t)(
                                                            TINFL_FAST_LOOKUP_SIZE - 1)];
                       if (temp >= 0) {
                         code_len = (mz_uint)(temp >> 9);
@@ -7541,8 +7539,8 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                             mz_uint tmp_25;
                             tmp_25 = code_len;
                             code_len ++;
-                            temp = (int)r->m_tables[2].m_tree[(unsigned long)(~ temp) + (
-                                                              (bit_buf >> tmp_25) & (unsigned long)1)];
+                            temp = (int)r->m_tables[2].m_tree[(tinfl_bit_buf_t)(~ temp) + (
+                                                              (bit_buf >> tmp_25) & (tinfl_bit_buf_t)1)];
                           }
                           if (! (temp < 0)) break;
                         }
@@ -7574,7 +7572,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                           {
                             mz_uint8 const *tmp_27;
                             while (pIn_buf_cur >= pIn_buf_end) {
-                              if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
+                              if (decomp_flags & (mz_uint32)TINFL_FLAG_HAS_MORE_INPUT) 
                                 status = TINFL_STATUS_NEEDS_MORE_INPUT;
                               else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
                               r->m_state = (mz_uint32)18;
@@ -7590,7 +7588,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                         }
                         if (! (num_bits < num_extra)) break;
                       }
-                    s_0 = (mz_uint)(bit_buf & (unsigned long)((1 << num_extra) - 1));
+                    s_0 = (mz_uint)(bit_buf & (tinfl_bit_buf_t)((1 << num_extra) - 1));
                     bit_buf >>= num_extra;
                     num_bits -= num_extra;
                     s_0 += (mz_uint)"\003\003\v"[dist - (mz_uint32)16];
@@ -7641,7 +7639,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                           if (pIn_buf_end - pIn_buf_cur < (long)2) 
                             while (1) {
                               temp_0 = (int)r->m_tables[0].m_look_up[
-                              bit_buf & (unsigned long)(TINFL_FAST_LOOKUP_SIZE - 1)];
+                              bit_buf & (tinfl_bit_buf_t)(TINFL_FAST_LOOKUP_SIZE - 1)];
                               if (temp_0 >= 0) {
                                 code_len_0 = (mz_uint)(temp_0 >> 9);
                                 if (code_len_0) 
@@ -7656,7 +7654,8 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                                       tmp_29 = code_len_0;
                                       code_len_0 ++;
                                       temp_0 = (int)r->m_tables[0].m_tree[
-                                      (unsigned long)(~ temp_0) + ((bit_buf >> tmp_29) & (unsigned long)1)];
+                                      (tinfl_bit_buf_t)(~ temp_0) + (
+                                      (bit_buf >> tmp_29) & (tinfl_bit_buf_t)1)];
                                     }
                                     if (temp_0 < 0) {
                                       if (! (num_bits >= code_len_0 + (mz_uint)1)) 
@@ -7669,7 +7668,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                               {
                                 mz_uint8 const *tmp_30;
                                 while (pIn_buf_cur >= pIn_buf_end) {
-                                  if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
+                                  if (decomp_flags & (mz_uint32)TINFL_FLAG_HAS_MORE_INPUT) 
                                     status = TINFL_STATUS_NEEDS_MORE_INPUT;
                                   else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
                                   r->m_state = (mz_uint32)23;
@@ -7691,7 +7690,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                             pIn_buf_cur += 2;
                             num_bits += (mz_uint32)16;
                           }
-                        temp_0 = (int)r->m_tables[0].m_look_up[bit_buf & (unsigned long)(
+                        temp_0 = (int)r->m_tables[0].m_look_up[bit_buf & (tinfl_bit_buf_t)(
                                                                TINFL_FAST_LOOKUP_SIZE - 1)];
                         if (temp_0 >= 0) {
                           code_len_0 = (mz_uint)(temp_0 >> 9);
@@ -7704,8 +7703,8 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                               mz_uint tmp_31;
                               tmp_31 = code_len_0;
                               code_len_0 ++;
-                              temp_0 = (int)r->m_tables[0].m_tree[(unsigned long)(~ temp_0) + (
-                                                                  (bit_buf >> tmp_31) & (unsigned long)1)];
+                              temp_0 = (int)r->m_tables[0].m_tree[(tinfl_bit_buf_t)(~ temp_0) + (
+                                                                  (bit_buf >> tmp_31) & (tinfl_bit_buf_t)1)];
                             }
                             if (! (temp_0 < 0)) break;
                           }
@@ -7734,7 +7733,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                       pIn_buf_cur += 4;
                       num_bits += (mz_uint32)32;
                     }
-                    sym2 = (int)r->m_tables[0].m_look_up[bit_buf & (unsigned long)(
+                    sym2 = (int)r->m_tables[0].m_look_up[bit_buf & (tinfl_bit_buf_t)(
                                                          TINFL_FAST_LOOKUP_SIZE - 1)];
                     if (sym2 >= 0) code_len_1 = (mz_uint)(sym2 >> 9);
                     else {
@@ -7744,8 +7743,8 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                           mz_uint tmp_33;
                           tmp_33 = code_len_1;
                           code_len_1 ++;
-                          sym2 = (int)r->m_tables[0].m_tree[(unsigned long)(~ sym2) + (
-                                                            (bit_buf >> tmp_33) & (unsigned long)1)];
+                          sym2 = (int)r->m_tables[0].m_tree[(tinfl_bit_buf_t)(~ sym2) + (
+                                                            (bit_buf >> tmp_33) & (tinfl_bit_buf_t)1)];
                         }
                         if (! (sym2 < 0)) break;
                       }
@@ -7753,8 +7752,8 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                     counter = (mz_uint32)sym2;
                     bit_buf >>= code_len_1;
                     num_bits -= code_len_1;
-                    if (counter & (unsigned int)256) break;
-                    sym2 = (int)r->m_tables[0].m_look_up[bit_buf & (unsigned long)(
+                    if (counter & (mz_uint32)256) break;
+                    sym2 = (int)r->m_tables[0].m_look_up[bit_buf & (tinfl_bit_buf_t)(
                                                          TINFL_FAST_LOOKUP_SIZE - 1)];
                     if (sym2 >= 0) code_len_1 = (mz_uint)(sym2 >> 9);
                     else {
@@ -7764,8 +7763,8 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                           mz_uint tmp_34;
                           tmp_34 = code_len_1;
                           code_len_1 ++;
-                          sym2 = (int)r->m_tables[0].m_tree[(unsigned long)(~ sym2) + (
-                                                            (bit_buf >> tmp_34) & (unsigned long)1)];
+                          sym2 = (int)r->m_tables[0].m_tree[(tinfl_bit_buf_t)(~ sym2) + (
+                                                            (bit_buf >> tmp_34) & (tinfl_bit_buf_t)1)];
                         }
                         if (! (sym2 < 0)) break;
                       }
@@ -7781,7 +7780,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                     *(pOut_buf_cur + 1) = (mz_uint8)sym2;
                     pOut_buf_cur += 2;
                   }
-              counter &= (unsigned int)511;
+              counter &= (mz_uint32)511;
               if (counter == (mz_uint32)256) break;
               num_extra = (mz_uint32)tinfl_decompress_s_length_extra[
               counter - (mz_uint32)257];
@@ -7795,7 +7794,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                       {
                         mz_uint8 const *tmp_35;
                         while (pIn_buf_cur >= pIn_buf_end) {
-                          if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
+                          if (decomp_flags & (mz_uint32)TINFL_FLAG_HAS_MORE_INPUT) 
                             status = TINFL_STATUS_NEEDS_MORE_INPUT;
                           else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
                           r->m_state = (mz_uint32)25;
@@ -7811,7 +7810,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                     }
                     if (! (num_bits < num_extra)) break;
                   }
-                extra_bits = (mz_uint)(bit_buf & (unsigned long)((1 << num_extra) - 1));
+                extra_bits = (mz_uint)(bit_buf & (tinfl_bit_buf_t)((1 << num_extra) - 1));
                 bit_buf >>= num_extra;
                 num_bits -= num_extra;
                 counter += extra_bits;
@@ -7823,7 +7822,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                 if (num_bits < (mz_uint32)15) 
                   if (pIn_buf_end - pIn_buf_cur < (long)2) 
                     while (1) {
-                      temp_1 = (int)r->m_tables[1].m_look_up[bit_buf & (unsigned long)(
+                      temp_1 = (int)r->m_tables[1].m_look_up[bit_buf & (tinfl_bit_buf_t)(
                                                              TINFL_FAST_LOOKUP_SIZE - 1)];
                       if (temp_1 >= 0) {
                         code_len_2 = (mz_uint)(temp_1 >> 9);
@@ -7838,8 +7837,8 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                               mz_uint tmp_36;
                               tmp_36 = code_len_2;
                               code_len_2 ++;
-                              temp_1 = (int)r->m_tables[1].m_tree[(unsigned long)(~ temp_1) + (
-                                                                  (bit_buf >> tmp_36) & (unsigned long)1)];
+                              temp_1 = (int)r->m_tables[1].m_tree[(tinfl_bit_buf_t)(~ temp_1) + (
+                                                                  (bit_buf >> tmp_36) & (tinfl_bit_buf_t)1)];
                             }
                             if (temp_1 < 0) {
                               if (! (num_bits >= code_len_2 + (mz_uint)1)) 
@@ -7852,7 +7851,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                       {
                         mz_uint8 const *tmp_37;
                         while (pIn_buf_cur >= pIn_buf_end) {
-                          if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
+                          if (decomp_flags & (mz_uint32)TINFL_FLAG_HAS_MORE_INPUT) 
                             status = TINFL_STATUS_NEEDS_MORE_INPUT;
                           else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
                           r->m_state = (mz_uint32)26;
@@ -7874,7 +7873,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                     pIn_buf_cur += 2;
                     num_bits += (mz_uint32)16;
                   }
-                temp_1 = (int)r->m_tables[1].m_look_up[bit_buf & (unsigned long)(
+                temp_1 = (int)r->m_tables[1].m_look_up[bit_buf & (tinfl_bit_buf_t)(
                                                        TINFL_FAST_LOOKUP_SIZE - 1)];
                 if (temp_1 >= 0) {
                   code_len_2 = (mz_uint)(temp_1 >> 9);
@@ -7887,8 +7886,8 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                       mz_uint tmp_38;
                       tmp_38 = code_len_2;
                       code_len_2 ++;
-                      temp_1 = (int)r->m_tables[1].m_tree[(unsigned long)(~ temp_1) + (
-                                                          (bit_buf >> tmp_38) & (unsigned long)1)];
+                      temp_1 = (int)r->m_tables[1].m_tree[(tinfl_bit_buf_t)(~ temp_1) + (
+                                                          (bit_buf >> tmp_38) & (tinfl_bit_buf_t)1)];
                     }
                     if (! (temp_1 < 0)) break;
                   }
@@ -7908,7 +7907,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                       {
                         mz_uint8 const *tmp_39;
                         while (pIn_buf_cur >= pIn_buf_end) {
-                          if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
+                          if (decomp_flags & (mz_uint32)TINFL_FLAG_HAS_MORE_INPUT) 
                             status = TINFL_STATUS_NEEDS_MORE_INPUT;
                           else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
                           r->m_state = (mz_uint32)27;
@@ -7924,7 +7923,8 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                     }
                     if (! (num_bits < num_extra)) break;
                   }
-                extra_bits_0 = (mz_uint)(bit_buf & (unsigned long)((1 << num_extra) - 1));
+                extra_bits_0 = (mz_uint)(bit_buf & (tinfl_bit_buf_t)(
+                                         (1 << num_extra) - 1));
                 bit_buf >>= num_extra;
                 num_bits -= num_extra;
                 dist += extra_bits_0;
@@ -7936,7 +7936,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                 else 
                   if (dist_from_out_buf_start == (size_t)0) {
                     _LOR_1: ;
-                    if (decomp_flags & (unsigned int)TINFL_FLAG_USING_NON_WRAPPING_OUTPUT_BUF) 
+                    if (decomp_flags & (mz_uint32)TINFL_FLAG_USING_NON_WRAPPING_OUTPUT_BUF) 
                       while (1) {
                         status = TINFL_STATUS_FAILED;
                         r->m_state = (mz_uint32)37;
@@ -7977,16 +7977,16 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                 if (counter >= (mz_uint32)9) 
                   if (counter <= dist) {
                     mz_uint8 const *pSrc_end =
-                      (mz_uint8 const *)(pSrc + (counter & (unsigned int)(~ 7)));
+                      (mz_uint8 const *)(pSrc + (counter & (mz_uint32)(~ 7)));
                     while (1) {
                       memcpy((void *)pOut_buf_cur,(void const *)pSrc,
                              sizeof(mz_uint32) * (unsigned long)2);
                       pOut_buf_cur += 8;
                       pSrc += 8;
                       ;
-                      if (! ((void *)pSrc < (void *)pSrc_end)) break;
+                      if (! (pSrc < (mz_uint8 *)pSrc_end)) break;
                     }
-                    counter &= (unsigned int)7;
+                    counter &= (mz_uint32)7;
                     if (counter < (mz_uint32)3) {
                       if (counter) {
                         *(pOut_buf_cur + 0) = *(pSrc + 0);
@@ -8014,16 +8014,16 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
             __Cont_1: ;
           }
         }
-      if (! (! (r->m_final & (unsigned int)1))) break;
+      if (! (! (r->m_final & (mz_uint32)1))) break;
     }
-    if (num_bits < (num_bits & (unsigned int)7)) 
+    if (num_bits < (num_bits & (mz_uint32)7)) 
       while (1) {
         {
           mz_uint c_11;
           {
             mz_uint8 const *tmp_44;
             while (pIn_buf_cur >= pIn_buf_end) {
-              if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
+              if (decomp_flags & (mz_uint32)TINFL_FLAG_HAS_MORE_INPUT) 
                 status = TINFL_STATUS_NEEDS_MORE_INPUT;
               else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
               r->m_state = (mz_uint32)32;
@@ -8037,10 +8037,10 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
           bit_buf |= (tinfl_bit_buf_t)c_11 << num_bits;
           num_bits += (mz_uint32)8;
         }
-        if (! (num_bits < (num_bits & (unsigned int)7))) break;
+        if (! (num_bits < (num_bits & (mz_uint32)7))) break;
       }
-    bit_buf >>= num_bits & (unsigned int)7;
-    num_bits -= num_bits & (unsigned int)7;
+    bit_buf >>= num_bits & (mz_uint32)7;
+    num_bits -= num_bits & (mz_uint32)7;
     while (1) {
       if (pIn_buf_cur > pIn_buf_next) {
         if (! (num_bits >= (mz_uint32)8)) break;
@@ -8051,7 +8051,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
     }
     bit_buf &= ((mz_uint64)1 << num_bits) - (mz_uint64)1;
     __FC_assert(! num_bits != 0,"miniz_tinfl.c",576,"!num_bits");
-    if (decomp_flags & (unsigned int)TINFL_FLAG_PARSE_ZLIB_HEADER) {
+    if (decomp_flags & (mz_uint32)TINFL_FLAG_PARSE_ZLIB_HEADER) {
       counter = (mz_uint32)0;
       while (counter < (mz_uint32)4) {
         {
@@ -8064,7 +8064,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                   {
                     mz_uint8 const *tmp_45;
                     while (pIn_buf_cur >= pIn_buf_end) {
-                      if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
+                      if (decomp_flags & (mz_uint32)TINFL_FLAG_HAS_MORE_INPUT) 
                         status = TINFL_STATUS_NEEDS_MORE_INPUT;
                       else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
                       r->m_state = (mz_uint32)41;
@@ -8080,14 +8080,14 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
                 }
                 if (! (num_bits < (mz_uint)8)) break;
               }
-            s_1 = (mz_uint)(bit_buf & (unsigned long)((1 << 8) - 1));
+            s_1 = (mz_uint)(bit_buf & (tinfl_bit_buf_t)((1 << 8) - 1));
             bit_buf >>= 8;
             num_bits -= (mz_uint32)8;
           }
           else {
             mz_uint8 const *tmp_46;
             while (pIn_buf_cur >= pIn_buf_end) {
-              if (decomp_flags & (unsigned int)TINFL_FLAG_HAS_MORE_INPUT) 
+              if (decomp_flags & (mz_uint32)TINFL_FLAG_HAS_MORE_INPUT) 
                 status = TINFL_STATUS_NEEDS_MORE_INPUT;
               else status = TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS;
               r->m_state = (mz_uint32)42;
@@ -8129,14 +8129,14 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
   r->m_dist_from_out_buf_start = dist_from_out_buf_start;
   *pIn_buf_size = (size_t)(pIn_buf_cur - pIn_buf_next);
   *pOut_buf_size = (size_t)(pOut_buf_cur - pOut_buf_next);
-  if (decomp_flags & (unsigned int)(TINFL_FLAG_PARSE_ZLIB_HEADER | TINFL_FLAG_COMPUTE_ADLER32)) 
+  if (decomp_flags & (mz_uint32)(TINFL_FLAG_PARSE_ZLIB_HEADER | TINFL_FLAG_COMPUTE_ADLER32)) 
     if (status >= 0) {
       mz_uint32 i_1;
       mz_uint8 const *ptr = (mz_uint8 const *)pOut_buf_next;
       size_t buf_len = *pOut_buf_size;
-      mz_uint32 s1 = r->m_check_adler32 & (unsigned int)0xffff;
+      mz_uint32 s1 = r->m_check_adler32 & (mz_uint32)0xffff;
       mz_uint32 s2 = r->m_check_adler32 >> 16;
-      size_t block_len = buf_len % (unsigned long)5552;
+      size_t block_len = buf_len % (size_t)5552;
       while (buf_len) {
         i_1 = (mz_uint32)0;
         while ((size_t)(i_1 + (mz_uint32)7) < block_len) {
@@ -8174,7 +8174,7 @@ tinfl_status __attribute__((__visibility__("default"))) tinfl_decompress
       }
       r->m_check_adler32 = (s2 << 16) + s1;
       if (status == TINFL_STATUS_DONE) 
-        if (decomp_flags & (unsigned int)TINFL_FLAG_PARSE_ZLIB_HEADER) 
+        if (decomp_flags & (mz_uint32)TINFL_FLAG_PARSE_ZLIB_HEADER) 
           if (r->m_check_adler32 != r->m_z_adler32) status = TINFL_STATUS_ADLER32_MISMATCH;
     }
   __retres = status;
@@ -8311,7 +8311,7 @@ int __attribute__((__visibility__("default"))) tinfl_decompress_mem_to_callback
       result = status == TINFL_STATUS_DONE;
       break;
     }
-    dict_ofs = (dict_ofs + dst_buf_size) & (unsigned long)(32768 - 1);
+    dict_ofs = (dict_ofs + dst_buf_size) & (size_t)(32768 - 1);
   }
   free((void *)pDict);
   *pIn_buf_size = in_buf_ofs;
@@ -8776,7 +8776,7 @@ static mz_bool mz_zip_reader_read_central_dir(mz_zip_archive *pZip,
   mz_int64 cur_file_ofs = (mz_int64)0;
   mz_uint8 *pBuf = (mz_uint8 *)(buf_u32);
   mz_bool sort_central_dir =
-    (flags & (unsigned int)MZ_ZIP_FLAG_DO_NOT_SORT_CENTRAL_DIRECTORY) == (unsigned int)0;
+    (flags & (mz_uint)MZ_ZIP_FLAG_DO_NOT_SORT_CENTRAL_DIRECTORY) == (mz_uint)0;
   mz_uint8 *pZip64_locator =
     (mz_uint8 *)(zip64_end_of_central_dir_locator_u32);
   mz_uint8 *pZip64_end_of_central_dir =
@@ -8906,7 +8906,7 @@ static mz_bool mz_zip_reader_read_central_dir(mz_zip_archive *pZip,
     __retres = tmp_13;
     goto return_label;
   }
-  if ((num_this_disk | cdir_disk_index) != (unsigned int)0) 
+  if ((num_this_disk | cdir_disk_index) != (mz_uint)0) 
     if (num_this_disk != (mz_uint)1) goto _LOR;
     else 
       if (cdir_disk_index != (mz_uint)1) {
@@ -9118,7 +9118,7 @@ static mz_bool mz_zip_reader_read_central_dir(mz_zip_archive *pZip,
             goto return_label;
           }
         bit_flags = (mz_uint)*((mz_uint16 const *)(p + MZ_ZIP_CDH_BIT_FLAG_OFS));
-        if (bit_flags & (unsigned int)MZ_ZIP_GENERAL_PURPOSE_BIT_FLAG_LOCAL_DIR_IS_MASKED) {
+        if (bit_flags & (mz_uint)MZ_ZIP_GENERAL_PURPOSE_BIT_FLAG_LOCAL_DIR_IS_MASKED) {
           mz_bool tmp_36;
           tmp_36 = mz_zip_set_error(pZip,MZ_ZIP_UNSUPPORTED_ENCRYPTION);
           __retres = tmp_36;
@@ -9497,7 +9497,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_reader_is_file_encrypt
     goto return_label;
   }
   m_bit_flag = (mz_uint)*((mz_uint16 const *)(p + MZ_ZIP_CDH_BIT_FLAG_OFS));
-  __retres = (m_bit_flag & (unsigned int)(MZ_ZIP_GENERAL_PURPOSE_BIT_FLAG_IS_ENCRYPTED | MZ_ZIP_GENERAL_PURPOSE_BIT_FLAG_USES_STRONG_ENCRYPTION)) != (unsigned int)0;
+  __retres = (m_bit_flag & (mz_uint)(MZ_ZIP_GENERAL_PURPOSE_BIT_FLAG_IS_ENCRYPTED | MZ_ZIP_GENERAL_PURPOSE_BIT_FLAG_USES_STRONG_ENCRYPTION)) != (mz_uint)0;
   return_label: return __retres;
 }
 
@@ -9521,12 +9521,12 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_reader_is_file_support
       __retres = 0;
       goto return_label;
     }
-  if (bit_flag & (unsigned int)(MZ_ZIP_GENERAL_PURPOSE_BIT_FLAG_IS_ENCRYPTED | MZ_ZIP_GENERAL_PURPOSE_BIT_FLAG_USES_STRONG_ENCRYPTION)) {
+  if (bit_flag & (mz_uint)(MZ_ZIP_GENERAL_PURPOSE_BIT_FLAG_IS_ENCRYPTED | MZ_ZIP_GENERAL_PURPOSE_BIT_FLAG_USES_STRONG_ENCRYPTION)) {
     mz_zip_set_error(pZip,MZ_ZIP_UNSUPPORTED_ENCRYPTION);
     __retres = 0;
     goto return_label;
   }
-  if (bit_flag & (unsigned int)MZ_ZIP_GENERAL_PURPOSE_BIT_FLAG_COMPRESSED_PATCH_FLAG) {
+  if (bit_flag & (mz_uint)MZ_ZIP_GENERAL_PURPOSE_BIT_FLAG_COMPRESSED_PATCH_FLAG) {
     mz_zip_set_error(pZip,MZ_ZIP_UNSUPPORTED_FEATURE);
     __retres = 0;
     goto return_label;
@@ -9557,7 +9557,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_reader_is_file_a_direc
   attribute_mapping_id = (mz_uint)((int)*((mz_uint16 const *)(p + MZ_ZIP_CDH_VERSION_MADE_BY_OFS)) >> 8);
   mz_uint tmp_2 = attribute_mapping_id;
   external_attr = *((mz_uint32 const *)(p + MZ_ZIP_CDH_EXTERNAL_ATTR_OFS));
-  if ((external_attr & (unsigned int)MZ_ZIP_DOS_DIR_ATTRIBUTE_BITFLAG) != (unsigned int)0) {
+  if ((external_attr & (mz_uint)MZ_ZIP_DOS_DIR_ATTRIBUTE_BITFLAG) != (mz_uint)0) {
     __retres = 1;
     goto return_label;
   }
@@ -9717,7 +9717,7 @@ __inline static mz_bool mz_zip_string_equal(char const *pA, char const *pB,
 {
   mz_bool __retres;
   mz_uint i;
-  if (flags & (unsigned int)MZ_ZIP_FLAG_CASE_SENSITIVE) {
+  if (flags & (mz_uint)MZ_ZIP_FLAG_CASE_SENSITIVE) {
     int tmp;
     tmp = memcmp((void const *)pA,(void const *)pB,(size_t)len);
     __retres = 0 == tmp;
@@ -9858,9 +9858,9 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_reader_locate_file_v2
         __retres = tmp;
         goto return_label;
       }
-  if (((pZip->m_pState)->m_init_flags & (unsigned int)MZ_ZIP_FLAG_DO_NOT_SORT_CENTRAL_DIRECTORY) == (unsigned int)0) 
+  if (((pZip->m_pState)->m_init_flags & (uint32_t)MZ_ZIP_FLAG_DO_NOT_SORT_CENTRAL_DIRECTORY) == (uint32_t)0) 
     if (pZip->m_zip_mode == (unsigned int)MZ_ZIP_MODE_READING) 
-      if ((flags & (unsigned int)(MZ_ZIP_FLAG_IGNORE_PATH | MZ_ZIP_FLAG_CASE_SENSITIVE)) == (unsigned int)0) 
+      if ((flags & (mz_uint)(MZ_ZIP_FLAG_IGNORE_PATH | MZ_ZIP_FLAG_CASE_SENSITIVE)) == (mz_uint)0) 
         if (! pComment) 
           if ((pZip->m_pState)->m_sorted_central_dir_offsets.m_size) {
             mz_bool __attribute__((__visibility__("default"))) tmp_0;
@@ -9908,7 +9908,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_reader_locate_file_v2
           if (! tmp_4) goto __Cont;
         }
       }
-      if (flags & (unsigned int)MZ_ZIP_FLAG_IGNORE_PATH) 
+      if (flags & (mz_uint)MZ_ZIP_FLAG_IGNORE_PATH) 
         if (filename_len) {
           int ofs = (int)(filename_len - (mz_uint)1);
           while (1) {
@@ -10002,7 +10002,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_reader_extract_to_mem_
     __retres = tmp_1;
     goto return_label;
   }
-  if (! (flags & (unsigned int)MZ_ZIP_FLAG_COMPRESSED_DATA)) 
+  if (! (flags & (mz_uint)MZ_ZIP_FLAG_COMPRESSED_DATA)) 
     if ((int)file_stat.m_method != 0) 
       if ((int)file_stat.m_method != 8) {
         mz_bool __attribute__((__visibility__("default"))) tmp_2;
@@ -10010,7 +10010,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_reader_extract_to_mem_
         __retres = tmp_2;
         goto return_label;
       }
-  if (flags & (unsigned int)MZ_ZIP_FLAG_COMPRESSED_DATA) needed_size = file_stat.m_comp_size;
+  if (flags & (mz_uint)MZ_ZIP_FLAG_COMPRESSED_DATA) needed_size = file_stat.m_comp_size;
   else needed_size = file_stat.m_uncomp_size;
   if (buf_size < needed_size) {
     mz_bool __attribute__((__visibility__("default"))) tmp_3;
@@ -10043,7 +10043,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_reader_extract_to_mem_
     __retres = tmp_7;
     goto return_label;
   }
-  if (flags & (unsigned int)MZ_ZIP_FLAG_COMPRESSED_DATA) goto _LOR_0;
+  if (flags & (mz_uint)MZ_ZIP_FLAG_COMPRESSED_DATA) goto _LOR_0;
   else 
     if (! file_stat.m_method) {
       _LOR_0:
@@ -10058,7 +10058,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_reader_extract_to_mem_
           __retres = tmp_8;
           goto return_label;
         }
-        if ((flags & (unsigned int)MZ_ZIP_FLAG_COMPRESSED_DATA) == (unsigned int)0) {
+        if ((flags & (mz_uint)MZ_ZIP_FLAG_COMPRESSED_DATA) == (mz_uint)0) {
           mz_ulong __attribute__((__visibility__("default"))) tmp_11;
           tmp_11 = mz_crc32((mz_ulong)0,(mz_uint8 const *)pBuf,
                             file_stat.m_uncomp_size);
@@ -10244,7 +10244,7 @@ void __attribute__((__visibility__("default"))) *mz_zip_reader_extract_to_heap
   }
   comp_size = (mz_uint64)*((mz_uint32 const *)(p + MZ_ZIP_CDH_COMPRESSED_SIZE_OFS));
   uncomp_size = (mz_uint64)*((mz_uint32 const *)(p + MZ_ZIP_CDH_DECOMPRESSED_SIZE_OFS));
-  if (flags & (unsigned int)MZ_ZIP_FLAG_COMPRESSED_DATA) alloc_size = comp_size;
+  if (flags & (mz_uint)MZ_ZIP_FLAG_COMPRESSED_DATA) alloc_size = comp_size;
   else alloc_size = uncomp_size;
   if (sizeof(size_t) == sizeof(mz_uint32)) 
     if (alloc_size > (mz_uint64)0x7FFFFFFF) {
@@ -10342,7 +10342,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_reader_extract_to_call
     __retres = tmp_1;
     goto return_label;
   }
-  if (! (flags & (unsigned int)MZ_ZIP_FLAG_COMPRESSED_DATA)) 
+  if (! (flags & (mz_uint)MZ_ZIP_FLAG_COMPRESSED_DATA)) 
     if ((int)file_stat.m_method != 0) 
       if ((int)file_stat.m_method != 8) {
         mz_bool __attribute__((__visibility__("default"))) tmp_2;
@@ -10395,7 +10395,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_reader_extract_to_call
     read_buf_avail = (mz_uint64)0;
     comp_remaining = file_stat.m_comp_size;
   }
-  if (flags & (unsigned int)MZ_ZIP_FLAG_COMPRESSED_DATA) goto _LOR_0;
+  if (flags & (mz_uint)MZ_ZIP_FLAG_COMPRESSED_DATA) goto _LOR_0;
   else 
     if (! file_stat.m_method) 
       _LOR_0:
@@ -10416,7 +10416,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_reader_extract_to_call
           status = TINFL_STATUS_FAILED;
         }
         else 
-          if (! (flags & (unsigned int)MZ_ZIP_FLAG_COMPRESSED_DATA)) {
+          if (! (flags & (mz_uint)MZ_ZIP_FLAG_COMPRESSED_DATA)) {
             mz_ulong __attribute__((__visibility__("default"))) tmp_9;
             tmp_9 = mz_crc32((mz_ulong)file_crc32,
                              (mz_uint8 const *)pRead_buf,
@@ -10441,7 +10441,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_reader_extract_to_call
             status = TINFL_STATUS_FAILED;
             break;
           }
-          if (! (flags & (unsigned int)MZ_ZIP_FLAG_COMPRESSED_DATA)) {
+          if (! (flags & (mz_uint)MZ_ZIP_FLAG_COMPRESSED_DATA)) {
             mz_ulong __attribute__((__visibility__("default"))) tmp_12;
             tmp_12 = mz_crc32((mz_ulong)file_crc32,
                               (mz_uint8 const *)pRead_buf,read_buf_avail);
@@ -10481,10 +10481,9 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_reader_extract_to_call
             tinfl_status __attribute__((__visibility__("default"))) tmp_16;
             int tmp_15;
             mz_uint8 *pWrite_buf_cur =
-              (mz_uint8 *)pWrite_buf + (out_buf_ofs & (unsigned long)(
-                                        32768 - 1));
+              (mz_uint8 *)pWrite_buf + (out_buf_ofs & (mz_uint64)(32768 - 1));
             size_t out_buf_size =
-              (unsigned long)32768 - (out_buf_ofs & (unsigned long)(32768 - 1));
+              (mz_uint64)32768 - (out_buf_ofs & (mz_uint64)(32768 - 1));
             if (! read_buf_avail) 
               if (! (pZip->m_pState)->m_pMem) {
                 size_t tmp_14;
@@ -10546,7 +10545,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_reader_extract_to_call
         }
     }
   if (status == TINFL_STATUS_DONE) 
-    if (! (flags & (unsigned int)MZ_ZIP_FLAG_COMPRESSED_DATA)) 
+    if (! (flags & (mz_uint)MZ_ZIP_FLAG_COMPRESSED_DATA)) 
       if (out_buf_ofs != file_stat.m_uncomp_size) {
         mz_zip_set_error(pZip,MZ_ZIP_UNEXPECTED_DECOMPRESSED_SIZE);
         status = TINFL_STATUS_FAILED;
@@ -10623,7 +10622,7 @@ mz_zip_reader_extract_iter_state __attribute__((__visibility__("default"))) *mz_
     __retres = (mz_zip_reader_extract_iter_state __attribute__((__visibility__("default"))) *)0;
     goto return_label;
   }
-  if (! (flags & (unsigned int)MZ_ZIP_FLAG_COMPRESSED_DATA)) 
+  if (! (flags & (mz_uint)MZ_ZIP_FLAG_COMPRESSED_DATA)) 
     if ((int)pState->file_stat.m_method != 0) 
       if ((int)pState->file_stat.m_method != 8) {
         mz_zip_set_error(pZip,MZ_ZIP_UNSUPPORTED_METHOD);
@@ -10674,7 +10673,7 @@ mz_zip_reader_extract_iter_state __attribute__((__visibility__("default"))) *mz_
     pState->comp_remaining = pState->file_stat.m_comp_size;
   }
   else {
-    if (flags & (unsigned int)MZ_ZIP_FLAG_COMPRESSED_DATA) goto _LOR;
+    if (flags & (mz_uint)MZ_ZIP_FLAG_COMPRESSED_DATA) goto _LOR;
     else 
       if (! pState->file_stat.m_method) _LOR:
                                         pState->read_buf_size = (mz_uint64)0;
@@ -10697,7 +10696,7 @@ mz_zip_reader_extract_iter_state __attribute__((__visibility__("default"))) *mz_
     pState->read_buf_avail = (mz_uint64)0;
     pState->comp_remaining = pState->file_stat.m_comp_size;
   }
-  if (! (flags & (unsigned int)MZ_ZIP_FLAG_COMPRESSED_DATA)) 
+  if (! (flags & (mz_uint)MZ_ZIP_FLAG_COMPRESSED_DATA)) 
     if (! (! pState->file_stat.m_method)) {
       void *tmp_4;
       pState->inflator.m_state = (mz_uint32)0;
@@ -10765,7 +10764,7 @@ size_t __attribute__((__visibility__("default"))) mz_zip_reader_extract_iter_rea
           __retres = (size_t __attribute__((__visibility__("default"))))0;
           goto return_label;
         }
-  if (pState->flags & (unsigned int)MZ_ZIP_FLAG_COMPRESSED_DATA) goto _LOR;
+  if (pState->flags & (mz_uint)MZ_ZIP_FLAG_COMPRESSED_DATA) goto _LOR;
   else 
     if (! pState->file_stat.m_method) {
       _LOR:
@@ -10790,7 +10789,7 @@ size_t __attribute__((__visibility__("default"))) mz_zip_reader_extract_iter_rea
             copied_to_caller = (size_t)0;
           }
         }
-        if (! (pState->flags & (unsigned int)MZ_ZIP_FLAG_COMPRESSED_DATA)) {
+        if (! (pState->flags & (mz_uint)MZ_ZIP_FLAG_COMPRESSED_DATA)) {
           mz_ulong __attribute__((__visibility__("default"))) tmp_1;
           tmp_1 = mz_crc32((mz_ulong)pState->file_crc32,
                            (mz_uint8 const *)pvBuf,copied_to_caller);
@@ -10806,11 +10805,10 @@ size_t __attribute__((__visibility__("default"))) mz_zip_reader_extract_iter_rea
         {
           size_t in_buf_size;
           mz_uint8 *pWrite_buf_cur =
-            (mz_uint8 *)pState->pWrite_buf + (pState->out_buf_ofs & (unsigned long)(
+            (mz_uint8 *)pState->pWrite_buf + (pState->out_buf_ofs & (mz_uint64)(
                                               32768 - 1));
           size_t out_buf_size =
-            (unsigned long)32768 - (pState->out_buf_ofs & (unsigned long)(
-                                    32768 - 1));
+            (mz_uint64)32768 - (pState->out_buf_ofs & (mz_uint64)(32768 - 1));
           if (! pState->out_blk_remain) {
             tinfl_status __attribute__((__visibility__("default"))) tmp_4;
             int tmp_3;
@@ -10904,7 +10902,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_reader_extract_iter_fr
         goto return_label;
       }
   if (pState->status == TINFL_STATUS_DONE) 
-    if (! (pState->flags & (unsigned int)MZ_ZIP_FLAG_COMPRESSED_DATA)) 
+    if (! (pState->flags & (mz_uint)MZ_ZIP_FLAG_COMPRESSED_DATA)) 
       if (pState->out_buf_ofs != pState->file_stat.m_uncomp_size) {
         mz_zip_set_error(pState->pZip,MZ_ZIP_UNEXPECTED_DECOMPRESSED_SIZE);
         pState->status = TINFL_STATUS_FAILED;
@@ -11160,7 +11158,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_validate_file
   local_header_uncomp_size = (mz_uint64)*((mz_uint32 const *)(pLocal_header + MZ_ZIP_LDH_DECOMPRESSED_SIZE_OFS));
   local_header_crc32 = *((mz_uint32 const *)(pLocal_header + MZ_ZIP_LDH_CRC32_OFS));
   local_header_bit_flags = (mz_uint32)*((mz_uint16 const *)(pLocal_header + MZ_ZIP_LDH_BIT_FLAG_OFS));
-  has_data_descriptor = (local_header_bit_flags & (unsigned int)8) != (unsigned int)0;
+  has_data_descriptor = (local_header_bit_flags & (mz_uint32)8) != (mz_uint32)0;
   tmp_9 = strlen((char const *)(file_stat.m_filename));
   ;
   if ((size_t)local_header_filename_len != tmp_9) {
@@ -11337,7 +11335,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_validate_file
           }
         }
   mz_zip_array_clear(pZip,& file_data_array);
-  if ((flags & (unsigned int)MZ_ZIP_FLAG_VALIDATE_HEADERS_ONLY) == (unsigned int)0) {
+  if ((flags & (mz_uint)MZ_ZIP_FLAG_VALIDATE_HEADERS_ONLY) == (mz_uint)0) {
     mz_bool __attribute__((__visibility__("default"))) tmp_18;
     tmp_18 = mz_zip_reader_extract_to_callback(pZip,file_index,
                                                & mz_zip_compute_crc32_callback,
@@ -11413,7 +11411,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_validate_archive
   while (i < pZip->m_total_files) {
     {
       mz_bool __attribute__((__visibility__("default"))) tmp_7;
-      if ((unsigned int)MZ_ZIP_FLAG_VALIDATE_LOCATE_FILE_FLAG & flags) {
+      if ((mz_uint)MZ_ZIP_FLAG_VALIDATE_LOCATE_FILE_FLAG & flags) {
         mz_uint32 found_index;
         mz_zip_archive_file_stat stat_0;
         mz_bool __attribute__((__visibility__("default"))) tmp_4;
@@ -11652,8 +11650,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_writer_init_v2
 {
   mz_bool __attribute__((__visibility__("default"))) __retres;
   mz_zip_internal_state *tmp_3;
-  mz_bool zip64 =
-    (flags & (unsigned int)MZ_ZIP_FLAG_WRITE_ZIP64) != (unsigned int)0;
+  mz_bool zip64 = (flags & (mz_uint)MZ_ZIP_FLAG_WRITE_ZIP64) != (mz_uint)0;
   if (! pZip) goto _LOR;
   else 
     if (pZip->m_pState) goto _LOR;
@@ -11666,7 +11663,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_writer_init_v2
           __retres = tmp;
           goto return_label;
         }
-  if (flags & (unsigned int)MZ_ZIP_FLAG_WRITE_ALLOW_READING) 
+  if (flags & (mz_uint)MZ_ZIP_FLAG_WRITE_ALLOW_READING) 
     if (! pZip->m_pRead) {
       mz_bool __attribute__((__visibility__("default"))) tmp_0;
       tmp_0 = mz_zip_set_error(pZip,MZ_ZIP_INVALID_PARAMETER);
@@ -11728,7 +11725,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_writer_init_heap_v2
   mz_bool __attribute__((__visibility__("default"))) tmp;
   pZip->m_pWrite = & mz_zip_heap_write_func;
   pZip->m_pNeeds_keepalive = (mz_bool (*)(void *pOpaque))0;
-  if (flags & (unsigned int)MZ_ZIP_FLAG_WRITE_ALLOW_READING) pZip->m_pRead = & mz_zip_mem_read_func;
+  if (flags & (mz_uint)MZ_ZIP_FLAG_WRITE_ALLOW_READING) pZip->m_pRead = & mz_zip_mem_read_func;
   pZip->m_pIO_opaque = (void *)pZip;
   tmp = mz_zip_writer_init_v2(pZip,size_to_reserve_at_beginning,flags);
   if (! tmp) {
@@ -11813,14 +11810,14 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_writer_init_file_v2
   char const *tmp_1;
   pZip->m_pWrite = & mz_zip_file_write_func;
   pZip->m_pNeeds_keepalive = (mz_bool (*)(void *pOpaque))0;
-  if (flags & (unsigned int)MZ_ZIP_FLAG_WRITE_ALLOW_READING) pZip->m_pRead = & mz_zip_file_read_func;
+  if (flags & (mz_uint)MZ_ZIP_FLAG_WRITE_ALLOW_READING) pZip->m_pRead = & mz_zip_file_read_func;
   pZip->m_pIO_opaque = (void *)pZip;
   tmp = mz_zip_writer_init_v2(pZip,size_to_reserve_at_beginning,flags);
   if (! tmp) {
     __retres = 0;
     goto return_label;
   }
-  if (flags & (unsigned int)MZ_ZIP_FLAG_WRITE_ALLOW_READING) tmp_1 = "w+b";
+  if (flags & (mz_uint)MZ_ZIP_FLAG_WRITE_ALLOW_READING) tmp_1 = "w+b";
   else tmp_1 = "wb";
   ;
   pFile = fopen(pFilename,tmp_1);
@@ -11872,7 +11869,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_writer_init_cfile
   off_t tmp_0;
   pZip->m_pWrite = & mz_zip_file_write_func;
   pZip->m_pNeeds_keepalive = (mz_bool (*)(void *pOpaque))0;
-  if (flags & (unsigned int)MZ_ZIP_FLAG_WRITE_ALLOW_READING) pZip->m_pRead = & mz_zip_file_read_func;
+  if (flags & (mz_uint)MZ_ZIP_FLAG_WRITE_ALLOW_READING) pZip->m_pRead = & mz_zip_file_read_func;
   pZip->m_pIO_opaque = (void *)pZip;
   tmp = mz_zip_writer_init_v2(pZip,(mz_uint64)0,flags);
   if (! tmp) {
@@ -11902,7 +11899,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_writer_init_from_reade
         __retres = tmp;
         goto return_label;
       }
-  if (flags & (unsigned int)MZ_ZIP_FLAG_WRITE_ZIP64) 
+  if (flags & (mz_uint)MZ_ZIP_FLAG_WRITE_ZIP64) 
     if (! (pZip->m_pState)->m_zip64) {
       mz_bool __attribute__((__visibility__("default"))) tmp_0;
       tmp_0 = mz_zip_set_error(pZip,MZ_ZIP_INVALID_PARAMETER);
@@ -12183,7 +12180,7 @@ static mz_bool mz_zip_writer_add_to_central_dir(mz_zip_archive *pZip,
       __retres = tmp;
       goto return_label;
     }
-  if (((((pState->m_central_dir.m_size + (mz_uint64)MZ_ZIP_CENTRAL_DIR_HEADER_SIZE) + (mz_uint64)filename_size) + (mz_uint64)extra_size) + (mz_uint64)user_extra_data_len) + (mz_uint64)comment_size >= (mz_uint64)0xFFFFFFFFU) {
+  if (((((pState->m_central_dir.m_size + (size_t)MZ_ZIP_CENTRAL_DIR_HEADER_SIZE) + (size_t)filename_size) + (size_t)extra_size) + (size_t)user_extra_data_len) + (size_t)comment_size >= (size_t)0xFFFFFFFFU) {
     mz_bool tmp_0;
     tmp_0 = mz_zip_set_error(pZip,MZ_ZIP_UNSUPPORTED_CDIR_SIZE);
     __retres = tmp_0;
@@ -12363,15 +12360,14 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_writer_add_mem_ex_v2
   if (uncomp_size) bit_flags = (mz_uint16)((int)bit_flags | MZ_ZIP_LDH_BIT_FLAG_HAS_LOCATOR);
   else 
     if (buf_size) 
-      if (! (level_and_flags & (unsigned int)MZ_ZIP_FLAG_COMPRESSED_DATA)) 
+      if (! (level_and_flags & (mz_uint)MZ_ZIP_FLAG_COMPRESSED_DATA)) 
         bit_flags = (mz_uint16)((int)bit_flags | MZ_ZIP_LDH_BIT_FLAG_HAS_LOCATOR);
-  if (! (level_and_flags & (unsigned int)MZ_ZIP_FLAG_ASCII_FILENAME)) 
-    bit_flags = (mz_uint16)((int)bit_flags | MZ_ZIP_GENERAL_PURPOSE_BIT_FLAG_UTF8);
-  level = level_and_flags & (unsigned int)0xF;
+  if (! (level_and_flags & (mz_uint)MZ_ZIP_FLAG_ASCII_FILENAME)) bit_flags = (mz_uint16)(
+                                                                 (int)bit_flags | MZ_ZIP_GENERAL_PURPOSE_BIT_FLAG_UTF8);
+  level = level_and_flags & (mz_uint)0xF;
   if (! level) tmp = 1;
   else 
-    if (level_and_flags & (unsigned int)MZ_ZIP_FLAG_COMPRESSED_DATA) 
-      tmp = 1;
+    if (level_and_flags & (mz_uint)MZ_ZIP_FLAG_COMPRESSED_DATA) tmp = 1;
     else tmp = 0;
   store_data_uncompressed = tmp;
   if (! pZip) goto _LOR;
@@ -12415,7 +12411,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_writer_add_mem_ex_v2
     else 
       if (uncomp_size > (mz_uint64)0xFFFFFFFF) _LOR_0: pState->m_zip64 = 1;
   }
-  if (! (level_and_flags & (unsigned int)MZ_ZIP_FLAG_COMPRESSED_DATA)) 
+  if (! (level_and_flags & (mz_uint)MZ_ZIP_FLAG_COMPRESSED_DATA)) 
     if (uncomp_size) {
       mz_bool __attribute__((__visibility__("default"))) tmp_2;
       tmp_2 = mz_zip_set_error(pZip,MZ_ZIP_INVALID_PARAMETER);
@@ -12437,7 +12433,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_writer_add_mem_ex_v2
     time(& cur_time);
     mz_zip_time_t_to_dos_time(cur_time,& dos_time,& dos_date);
   }
-  if (! (level_and_flags & (unsigned int)MZ_ZIP_FLAG_COMPRESSED_DATA)) {
+  if (! (level_and_flags & (mz_uint)MZ_ZIP_FLAG_COMPRESSED_DATA)) {
     mz_ulong __attribute__((__visibility__("default"))) tmp_5;
     tmp_5 = mz_crc32((mz_ulong)0,(mz_uint8 const *)pBuf,buf_size);
     uncomp_crc32 = (mz_uint32)tmp_5;
@@ -12456,8 +12452,8 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_writer_add_mem_ex_v2
   }
   num_alignment_padding_bytes = mz_zip_writer_compute_padding_needed_for_file_alignment
   (pZip);
-  if ((((pState->m_central_dir.m_size + (mz_uint64)MZ_ZIP_CENTRAL_DIR_HEADER_SIZE) + archive_name_size) + (
-       sizeof(mz_uint16) * (unsigned long)2 + sizeof(mz_uint64) * (unsigned long)3)) + (mz_uint64)comment_size >= (mz_uint64)0xFFFFFFFFU) {
+  if ((((pState->m_central_dir.m_size + (size_t)MZ_ZIP_CENTRAL_DIR_HEADER_SIZE) + archive_name_size) + (
+       sizeof(mz_uint16) * (unsigned long)2 + sizeof(mz_uint64) * (unsigned long)3)) + (size_t)comment_size >= (size_t)0xFFFFFFFFU) {
     mz_bool __attribute__((__visibility__("default"))) tmp_7;
     tmp_7 = mz_zip_set_error(pZip,MZ_ZIP_UNSUPPORTED_CDIR_SIZE);
     __retres = tmp_7;
@@ -12468,7 +12464,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_writer_add_mem_ex_v2
       pState->m_zip64 = 1;
   if (archive_name_size) 
     if ((int)*(pArchive_name + (archive_name_size - (size_t)1)) == '/') {
-      ext_attributes |= (unsigned int)MZ_ZIP_DOS_DIR_ATTRIBUTE_BITFLAG;
+      ext_attributes |= (mz_uint)MZ_ZIP_DOS_DIR_ATTRIBUTE_BITFLAG;
       if (buf_size) goto _LOR_1;
       else 
         if (uncomp_size) {
@@ -12519,16 +12515,15 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_writer_add_mem_ex_v2
   }
   local_dir_header_ofs += (mz_uint64)num_alignment_padding_bytes;
   if (pZip->m_file_offset_alignment) __FC_assert(((local_dir_header_ofs & (
-                                                   pZip->m_file_offset_alignment - (mz_uint64)1)) == (unsigned long)0) != 0,
+                                                   pZip->m_file_offset_alignment - (mz_uint64)1)) == (mz_uint64)0) != 0,
                                                  "miniz_zip.c",3286,
                                                  "(local_dir_header_ofs & (pZip->m_file_offset_alignment - 1)) == 0");
   cur_archive_file_ofs += (mz_uint64)num_alignment_padding_bytes;
   memset((void *)(& local_dir_header),0,sizeof(local_dir_header));
   if (! store_data_uncompressed) goto _LOR_3;
   else 
-    if (level_and_flags & (unsigned int)MZ_ZIP_FLAG_COMPRESSED_DATA) 
-      _LOR_3:
-      method = (mz_uint16)8;
+    if (level_and_flags & (mz_uint)MZ_ZIP_FLAG_COMPRESSED_DATA) _LOR_3:
+                                                                method = (mz_uint16)8;
   if (pState->m_zip64) {
     mz_bool tmp_20;
     size_t tmp_22;
@@ -12814,10 +12809,10 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_writer_add_read_buf_ca
   mz_uint8 *pExtra_data = (mz_uint8 *)0;
   mz_uint32 extra_size = (mz_uint32)0;
   mz_uint64 file_ofs = (mz_uint64)0;
-  if (! (level_and_flags & (unsigned int)MZ_ZIP_FLAG_ASCII_FILENAME)) 
-    gen_flags = (mz_uint16)((int)gen_flags | MZ_ZIP_GENERAL_PURPOSE_BIT_FLAG_UTF8);
+  if (! (level_and_flags & (mz_uint)MZ_ZIP_FLAG_ASCII_FILENAME)) gen_flags = (mz_uint16)(
+                                                                 (int)gen_flags | MZ_ZIP_GENERAL_PURPOSE_BIT_FLAG_UTF8);
   if ((int)level_and_flags < 0) level_and_flags = (mz_uint)MZ_DEFAULT_LEVEL;
-  level = level_and_flags & (unsigned int)0xF;
+  level = level_and_flags & (mz_uint)0xF;
   if (! pZip) goto _LOR;
   else 
     if (! pZip->m_pState) goto _LOR;
@@ -12841,7 +12836,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_writer_add_read_buf_ca
   pState = pZip->m_pState;
   if (! pState->m_zip64) 
     if (max_size > (mz_uint64)0xFFFFFFFFU) pState->m_zip64 = 1;
-  if (level_and_flags & (unsigned int)MZ_ZIP_FLAG_COMPRESSED_DATA) {
+  if (level_and_flags & (mz_uint)MZ_ZIP_FLAG_COMPRESSED_DATA) {
     mz_bool __attribute__((__visibility__("default"))) tmp_0;
     tmp_0 = mz_zip_set_error(pZip,MZ_ZIP_INVALID_PARAMETER);
     __retres = tmp_0;
@@ -12873,8 +12868,8 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_writer_add_read_buf_ca
   }
   num_alignment_padding_bytes = mz_zip_writer_compute_padding_needed_for_file_alignment
   (pZip);
-  if ((((pState->m_central_dir.m_size + (mz_uint64)MZ_ZIP_CENTRAL_DIR_HEADER_SIZE) + archive_name_size) + (
-       sizeof(mz_uint16) * (unsigned long)2 + sizeof(mz_uint64) * (unsigned long)3)) + (mz_uint64)comment_size >= (mz_uint64)0xFFFFFFFFU) {
+  if ((((pState->m_central_dir.m_size + (size_t)MZ_ZIP_CENTRAL_DIR_HEADER_SIZE) + archive_name_size) + (
+       sizeof(mz_uint16) * (unsigned long)2 + sizeof(mz_uint64) * (unsigned long)3)) + (size_t)comment_size >= (size_t)0xFFFFFFFFU) {
     mz_bool __attribute__((__visibility__("default"))) tmp_5;
     tmp_5 = mz_zip_set_error(pZip,MZ_ZIP_UNSUPPORTED_CDIR_SIZE);
     __retres = tmp_5;
@@ -12897,7 +12892,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_writer_add_read_buf_ca
   cur_archive_file_ofs += (mz_uint64)num_alignment_padding_bytes;
   local_dir_header_ofs = cur_archive_file_ofs;
   if (pZip->m_file_offset_alignment) __FC_assert(((cur_archive_file_ofs & (
-                                                   pZip->m_file_offset_alignment - (mz_uint64)1)) == (unsigned long)0) != 0,
+                                                   pZip->m_file_offset_alignment - (mz_uint64)1)) == (mz_uint64)0) != 0,
                                                  "miniz_zip.c",3535,
                                                  "(cur_archive_file_ofs & (pZip->m_file_offset_alignment - 1)) == 0");
   if (max_size) 
@@ -13670,7 +13665,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_writer_add_from_zip_re
   cur_dst_file_ofs += (mz_uint64)num_alignment_padding_bytes;
   local_dir_header_ofs = cur_dst_file_ofs;
   if (pZip->m_file_offset_alignment) __FC_assert(((local_dir_header_ofs & (
-                                                   pZip->m_file_offset_alignment - (mz_uint64)1)) == (unsigned long)0) != 0,
+                                                   pZip->m_file_offset_alignment - (mz_uint64)1)) == (mz_uint64)0) != 0,
                                                  "miniz_zip.c",4047,
                                                  "(local_dir_header_ofs & (pZip->m_file_offset_alignment - 1)) == 0");
   tmp_20 = (*(pZip->m_pWrite))(pZip->m_pIO_opaque,cur_dst_file_ofs,
@@ -13735,7 +13730,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_writer_add_from_zip_re
     src_archive_bytes_remaining -= (mz_uint64)n;
   }
   bit_flags = (mz_uint)*((mz_uint16 const *)(pLocal_header + MZ_ZIP_LDH_BIT_FLAG_OFS));
-  if (bit_flags & (unsigned int)8) {
+  if (bit_flags & (mz_uint)8) {
     size_t tmp_38;
     if ((pSource_zip->m_pState)->m_zip64) goto _LOR_1;
     else 
@@ -14204,7 +14199,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_add_mem_to_archive_fil
         }
         else {
           _LAND: ;
-          if ((level_and_flags & (unsigned int)0xF) > (unsigned int)MZ_UBER_COMPRESSION) {
+          if ((level_and_flags & (mz_uint)0xF) > (mz_uint)MZ_UBER_COMPRESSION) {
             _LOR:
             {
               if (pErr) *pErr = MZ_ZIP_INVALID_PARAMETER;
@@ -14236,7 +14231,7 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_add_mem_to_archive_fil
     mz_bool __attribute__((__visibility__("default"))) tmp_1;
     mz_bool __attribute__((__visibility__("default"))) tmp_2;
     tmp_1 = mz_zip_reader_init_file_v2(& zip_archive,pZip_filename,
-                                       level_and_flags | (unsigned int)MZ_ZIP_FLAG_DO_NOT_SORT_CENTRAL_DIRECTORY,
+                                       level_and_flags | (mz_uint)MZ_ZIP_FLAG_DO_NOT_SORT_CENTRAL_DIRECTORY,
                                        (mz_uint64)0,(mz_uint64)0);
     if (! tmp_1) {
       if (pErr) *pErr = zip_archive.m_last_error;
@@ -14300,7 +14295,7 @@ void __attribute__((__visibility__("default"))) *mz_zip_extract_archive_file_to_
     }
   mz_zip_zero_struct(& zip_archive);
   tmp = mz_zip_reader_init_file_v2(& zip_archive,pZip_filename,
-                                   flags | (unsigned int)MZ_ZIP_FLAG_DO_NOT_SORT_CENTRAL_DIRECTORY,
+                                   flags | (mz_uint)MZ_ZIP_FLAG_DO_NOT_SORT_CENTRAL_DIRECTORY,
                                    (mz_uint64)0,(mz_uint64)0);
   if (! tmp) {
     if (pErr) *pErr = zip_archive.m_last_error;

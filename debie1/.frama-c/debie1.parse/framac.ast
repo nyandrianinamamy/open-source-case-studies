@@ -1288,8 +1288,8 @@ void MeasureTemperature(sensor_index_t SU_index)
   uint_least8_t j;
   j = (uint_least8_t)0;
   while (j < (uint_least8_t)2) {
-    AD_temperature_parameters.ADC_channel = (((unsigned int)5 + (SU_index & (unsigned int)1) * (unsigned int)8) + 
-                                             (SU_index & (unsigned int)2) * (unsigned int)12) + j;
+    AD_temperature_parameters.ADC_channel = (((sensor_index_t)5 + (SU_index & (sensor_index_t)1) * (sensor_index_t)8) + 
+                                             (SU_index & (sensor_index_t)2) * (sensor_index_t)12) + j;
     AD_temperature_parameters.ADC_max_tries = (uint_least8_t)255;
     AD_temperature_parameters.conversion_max_tries = (uint_least8_t)255;
     Read_AD_Channel(& AD_temperature_parameters);
@@ -1574,7 +1574,7 @@ void Read_AD_Channel(ADC_parameters_t *ADC_parameters)
   /*@ loop \eva::unroll 1; */
   while ((int)tries_left > 0) {
     confirm_hit_result = (unsigned char)0;
-    ADC_channel_register = (unsigned char)((unsigned int)((int)ADC_channel_register & 0x80) | ADC_parameters->ADC_channel);
+    ADC_channel_register = (unsigned char)((channel_t)((int)ADC_channel_register & 0x80) | ADC_parameters->ADC_channel);
     Update_ADC_Channel_Reg(ADC_channel_register);
     Start_Conversion();
     DelayAwhile(delay_limit);
@@ -2314,7 +2314,7 @@ void HandleHitTrigger(void)
     if (self_test_SU_number != (sensor_number_t)0) {
       trigger = self_test_SU_number;
       if (SU_state[self_test_SU_number - (sensor_number_t)1] == (unsigned int)self_test_e) 
-        trigger |= (unsigned int)0x40;
+        trigger |= (sensor_number_t)0x40;
       else 
         if (SU_state[self_test_SU_number - (sensor_number_t)1] == (unsigned int)self_test_trigger_e) 
           SU_state[self_test_SU_number - (sensor_number_t)1] = self_test_e;
@@ -2329,14 +2329,14 @@ void HandleHitTrigger(void)
     CH_base = (channel_t)(((int)(trigger - (sensor_number_t)1) & 2) * 12 + 
                           ((int)(trigger - (sensor_number_t)1) & 1) * 8);
     ShortDelay((uint_least8_t)initial_delay);
-    ADC_channel_register = (unsigned char)((unsigned int)((int)ADC_channel_register & 0xC0) | CH_base);
+    ADC_channel_register = (unsigned char)((channel_t)((int)ADC_channel_register & 0xC0) | CH_base);
     Update_ADC_Channel_Reg(ADC_channel_register);
     ShortDelay((uint_least8_t)delay_limit);
     i = (uint_least8_t)0;
     while (i < (uint_least8_t)5) {
       ShortDelay((uint_least8_t)delay_limit);
       Start_Conversion();
-      ADC_channel_register = (unsigned char)((unsigned int)((int)ADC_channel_register & 0xC0) | (
+      ADC_channel_register = (unsigned char)((channel_t)((int)ADC_channel_register & 0xC0) | (
                                              (CH_base + i) + (channel_t)1));
       Update_ADC_Channel_Reg(ADC_channel_register);
       conversion_try_count = (uint_least8_t)0;
@@ -2355,7 +2355,7 @@ void HandleHitTrigger(void)
         ADC_result[i] = (unsigned short)(((unsigned int)msb << 8) | (unsigned int)lsb);
       }
       else {
-        trigger |= (unsigned int)0x80;
+        trigger |= (sensor_number_t)0x80;
         ADC_result[i] = (unsigned short)0;
       }
       i ++;
@@ -4932,8 +4932,8 @@ int printf_va_48(char const * restrict format, unsigned int param0);
 static void Set_Trigger_SU(sensor_index_t SU)
 {
   printf("Set Trigger SU index %u\n",SU); /* printf_va_48 */
-  trigger_source_0 = (unsigned char)(SU & (unsigned int)1);
-  trigger_source_1 = (unsigned char)((SU >> 1) & (unsigned int)1);
+  trigger_source_0 = (unsigned char)(SU & (sensor_index_t)1);
+  trigger_source_1 = (unsigned char)((SU >> 1) & (sensor_index_t)1);
   return;
 }
 
@@ -5412,8 +5412,8 @@ static void Send_TC(unsigned char address, unsigned char code)
 
 static void Send_TC_Word(uint_least16_t word)
 {
-  tc_msb = (unsigned char)((word >> 8) & (unsigned int)0xff);
-  tc_lsb = (unsigned char)(word & (unsigned int)0xff);
+  tc_msb = (unsigned char)((word >> 8) & (uint_least16_t)0xff);
+  tc_lsb = (unsigned char)(word & (uint_least16_t)0xff);
   tc_word = (uint16_t)(((int)tc_msb << 8) | (int)tc_lsb);
   tc_timer_overflow = (unsigned char)1;
   TC_Interrupt();
@@ -7939,7 +7939,7 @@ static void Hit_ISR_Tests(void)
     SU_state[su] = self_test_e;
     Trigger_SU_Hit(su,31);
     Check_Nonzero(mail_count[1] == 1);
-    Check_Nonzero((unsigned int)mail_message[1] == (self_test_SU_number | (unsigned int)0x40));
+    Check_Nonzero((sensor_number_t)mail_message[1] == (self_test_SU_number | (sensor_number_t)0x40));
     Check_Nonzero(SU_state[su] == (unsigned int)self_test_e);
     FlushMail((unsigned char)1);
     su ++;
@@ -7973,7 +7973,7 @@ static void Hit_ISR_Tests(void)
     ad_conv_num = su;
     Trigger_SU_Hit(su,32);
     Check_Nonzero(mail_count[1] == 1);
-    Check_Nonzero((unsigned int)mail_message[1] == ((su + (sensor_index_t)1) | (unsigned int)0x80));
+    Check_Nonzero((sensor_index_t)mail_message[1] == ((su + (sensor_index_t)1) | (sensor_index_t)0x80));
     FlushMail((unsigned char)1);
     su ++;
   }
@@ -8710,7 +8710,7 @@ void SU_Self_Test_Tests(void)
     Trigger_SU_Hit(sen,31);
     Check_Nonzero(SU_state[sen] == (unsigned int)self_test_e);
     Check_Nonzero(mail_count[1] == 1);
-    Check_Nonzero((unsigned int)mail_message[1] == ((sen + (sensor_index_t)1) | (unsigned int)0x40));
+    Check_Nonzero((sensor_index_t)mail_message[1] == ((sen + (sensor_index_t)1) | (sensor_index_t)0x40));
     FlushMail((unsigned char)1);
     sen ++;
   }
