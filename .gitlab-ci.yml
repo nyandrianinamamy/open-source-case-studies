@@ -29,6 +29,7 @@ __update-summary:
     # Remove .sav files to avoid them in artifacts
     - rm -f $TARGET/.frama-c/*/*.sav
   artifacts:
+    expire_in: 5 days
     untracked: true
       # untracked:true ensures that paths such as
       # "$TARGET/.frama-c/*.eva/**/*.{log,csv}" are included, and these are
