@@ -942,7 +942,7 @@ int main(int argc, char **argv)
   char *s;
   int i;
   struct timeval tv;
-  long tmp_1;
+  time_t tmp_1;
   int seed = 0;
   test_name = *(argv + 0);
   s = strrchr((char const *)test_name,'.');
@@ -977,8 +977,8 @@ int main(int argc, char **argv)
     i ++;
   }
   gettimeofday(& tv,(void *)0);
-  if (seed) tmp_1 = (long)seed;
-  else tmp_1 = tv.tv_sec ^ (long)(tv.tv_usec << 10);
+  if (seed) tmp_1 = (time_t)seed;
+  else tmp_1 = tv.tv_sec ^ (time_t)(tv.tv_usec << 10);
   srandom((unsigned int)tmp_1);
   printf("Testing %-30s ",test_name); /* printf_va_2 */
   fflush(__fc_stdout);
@@ -1156,9 +1156,9 @@ static void split_ip6(IPAddr *ip, uint32_t *dst)
   i = 0;
   /*@ loop \eva::unroll 4; */
   while (i < 4) {
-    *(dst + i) = ((((uint32_t)ip->addr.in6[i * 4 + 0] << 24) | (unsigned int)(
-                   (int)ip->addr.in6[i * 4 + 1] << 16)) | (unsigned int)(
-                  (int)ip->addr.in6[i * 4 + 2] << 8)) | (unsigned int)ip->addr.in6[
+    *(dst + i) = ((((uint32_t)ip->addr.in6[i * 4 + 0] << 24) | (uint32_t)(
+                   (int)ip->addr.in6[i * 4 + 1] << 16)) | (uint32_t)(
+                  (int)ip->addr.in6[i * 4 + 2] << 8)) | (uint32_t)ip->addr.in6[
                  i * 4 + 3];
     i ++;
   }
@@ -1276,7 +1276,7 @@ static ADF_Status set_subnet(TableNode *start_node, uint32_t *ip, int ip_len,
         }
         N = 1 << (4 - bits_to_go);
         tmp = get_subnet(ip,(unsigned int)bits_consumed);
-        subnet = tmp & (unsigned int)(~ (N - 1));
+        subnet = tmp & (uint32_t)(~ (N - 1));
         __FC_assert(((unsigned long)(subnet + (uint32_t)N) <= 1UL << 4) != 0,
                     "addrfilt.c",210,"subnet + N <= TABLE_SIZE");
         if (! node->extended) open_node(node);
@@ -5169,16 +5169,16 @@ static void parse_refclock(char *line)
           int tmp_0;
           tmp_0 = sscanf((char const *)line,"%4s%n",(char *)(ref),& n); /* sscanf_va_38 */
           if (tmp_0 != 1) break;
-          lock_ref_id = ((((uint32_t)ref[0] << 24) | (unsigned int)((int)ref[1] << 16)) | (unsigned int)(
-                         (int)ref[2] << 8)) | (unsigned int)ref[3];
+          lock_ref_id = ((((uint32_t)ref[0] << 24) | (uint32_t)((int)ref[1] << 16)) | (uint32_t)(
+                         (int)ref[2] << 8)) | (uint32_t)ref[3];
         }
       }
       else {
         int tmp;
         tmp = sscanf((char const *)line,"%4s%n",(char *)(ref),& n); /* sscanf_va_39 */
         if (tmp != 1) break;
-        ref_id = ((((uint32_t)ref[0] << 24) | (unsigned int)((int)ref[1] << 16)) | (unsigned int)(
-                  (int)ref[2] << 8)) | (unsigned int)ref[3];
+        ref_id = ((((uint32_t)ref[0] << 24) | (uint32_t)((int)ref[1] << 16)) | (uint32_t)(
+                  (int)ref[2] << 8)) | (uint32_t)ref[3];
       }
     }
     line += n;
@@ -6795,7 +6795,7 @@ void MD5Update(MD5_CTX *mdContext, unsigned char const *inBuf,
   int mdi;
   unsigned int i;
   unsigned int ii;
-  mdi = (int)((mdContext->i[0] >> 3) & (unsigned int)0x3F);
+  mdi = (int)((mdContext->i[0] >> 3) & (UINT4)0x3F);
   if (mdContext->i[0] + (inLen << 3) < mdContext->i[0]) (mdContext->i[1]) ++;
   mdContext->i[0] += inLen << 3;
   mdContext->i[1] += inLen >> 29;
@@ -6842,7 +6842,7 @@ void MD5Final(MD5_CTX *mdContext)
   unsigned int padLen;
   in[14] = mdContext->i[0];
   in[15] = mdContext->i[1];
-  mdi = (int)((mdContext->i[0] >> 3) & (unsigned int)0x3F);
+  mdi = (int)((mdContext->i[0] >> 3) & (UINT4)0x3F);
   if (mdi < 56) padLen = (unsigned int)(56 - mdi);
   else padLen = (unsigned int)(120 - mdi);
   MD5Update(mdContext,PADDING,padLen);
@@ -6861,10 +6861,10 @@ void MD5Final(MD5_CTX *mdContext)
   ii = (unsigned int)0;
   /*@ loop \eva::unroll 4; */
   while (i < (unsigned int)4) {
-    mdContext->digest[ii] = (unsigned char)(mdContext->buf[i] & (unsigned int)0xFF);
-    mdContext->digest[ii + (unsigned int)1] = (unsigned char)((mdContext->buf[i] >> 8) & (unsigned int)0xFF);
-    mdContext->digest[ii + (unsigned int)2] = (unsigned char)((mdContext->buf[i] >> 16) & (unsigned int)0xFF);
-    mdContext->digest[ii + (unsigned int)3] = (unsigned char)((mdContext->buf[i] >> 24) & (unsigned int)0xFF);
+    mdContext->digest[ii] = (unsigned char)(mdContext->buf[i] & (UINT4)0xFF);
+    mdContext->digest[ii + (unsigned int)1] = (unsigned char)((mdContext->buf[i] >> 8) & (UINT4)0xFF);
+    mdContext->digest[ii + (unsigned int)2] = (unsigned char)((mdContext->buf[i] >> 16) & (UINT4)0xFF);
+    mdContext->digest[ii + (unsigned int)3] = (unsigned char)((mdContext->buf[i] >> 24) & (UINT4)0xFF);
     i ++;
     ii += (unsigned int)4;
   }
@@ -9355,8 +9355,7 @@ static void update_drift_file(double freq_ppm, double skew)
     if (tmp_1) goto _LOR_0;
     else {
       int tmp_2;
-      tmp_2 = chmod((char const *)temp_drift_file,
-                    buf.st_mode & (unsigned int)0777);
+      tmp_2 = chmod((char const *)temp_drift_file,buf.st_mode & (mode_t)0777);
       if (tmp_2) {
         _LOR_0:
         {
@@ -10345,13 +10344,13 @@ int REF_IsLeapSecondClose(void)
   }
   SCH_GetLastEventTime(& now,(double *)0,& now_raw);
   if (now.tv_sec > (long)0) t = now.tv_sec; else t = - now.tv_sec;
-  if ((t + (time_t)5) % (long)(24 * 3600) < (long)(2 * 5)) {
+  if ((t + (time_t)5) % (time_t)(24 * 3600) < (time_t)(2 * 5)) {
     __retres = 1;
     goto return_label;
   }
   if (now_raw.tv_sec > (long)0) t = now_raw.tv_sec;
   else t = - now_raw.tv_sec;
-  if ((t + (time_t)5) % (long)(24 * 3600) < (long)(2 * 5)) {
+  if ((t + (time_t)5) % (time_t)(24 * 3600) < (time_t)(2 * 5)) {
     __retres = 1;
     goto return_label;
   }
@@ -14587,7 +14586,7 @@ char *UTI_RefidToString(uint32_t ref_id)
     else break;
     {
       int tmp_0;
-      c = (ref_id >> ((unsigned int)24 - i * (unsigned int)8)) & (unsigned int)0xff;
+      c = (ref_id >> ((unsigned int)24 - i * (unsigned int)8)) & (uint32_t)0xff;
       tmp_0 = isprint((int)c);
       if (tmp_0) {
         unsigned int tmp;
@@ -14769,8 +14768,8 @@ uint32_t UTI_IPToRefid(IPAddr *ip)
         }
       }
     }
-    __retres = ((((uint32_t)buf[0] << 24) | (unsigned int)((int)buf[1] << 16)) | (unsigned int)(
-                (int)buf[2] << 8)) | (unsigned int)buf[3];
+    __retres = ((((uint32_t)buf[0] << 24) | (uint32_t)((int)buf[1] << 16)) | (uint32_t)(
+                (int)buf[2] << 8)) | (uint32_t)buf[3];
     goto return_label;
   }
   __retres = (uint32_t)0;
@@ -15270,7 +15269,7 @@ void UTI_TimespecNetworkToHost(Timespec *src, struct timespec *dest)
   sec_low = ntohl(src->tv_sec_low);
   sec_high = ntohl(src->tv_sec_high);
   if (sec_high == (uint32_t)0x7fffffff) sec_high = (uint32_t)0;
-  dest->tv_sec = (long)(((uint64_t)sec_high << 32) | (unsigned long)sec_low);
+  dest->tv_sec = (long)(((uint64_t)sec_high << 32) | (uint64_t)sec_low);
   nsec = ntohl(src->tv_nsec);
   if (nsec < 999999999U) dest->tv_nsec = (long)nsec;
   else dest->tv_nsec = (long)999999999U;
@@ -15361,7 +15360,7 @@ Float UTI_FloatHostToNetwork(double x)
           }
     }
   if (neg) coef = (int32_t)(((uint32_t)(- coef) << 7) >> 7);
-  tmp_2 = htonl(((uint32_t)exp_0 << ((int)sizeof(int32_t) * 8 - 7)) | (unsigned int)coef);
+  tmp_2 = htonl(((uint32_t)exp_0 << ((int)sizeof(int32_t) * 8 - 7)) | (uint32_t)coef);
   f.f = (int32_t)tmp_2;
   return f;
 }
@@ -15486,14 +15485,14 @@ char *UTI_PathToDir(char const *path)
     __retres = tmp;
     goto return_label;
   }
-  if ((void *)slash == (void *)path) {
+  if (slash == (char *)path) {
     char *tmp_0;
     tmp_0 = Strdup("/");
     __retres = tmp_0;
     goto return_label;
   }
-  dir = (char *)Malloc((size_t)((slash - path) + (long)1));
-  snprintf(dir,(size_t)((slash - path) + (long)1),"%s",(char *)path); /* snprintf_va_16 */
+  dir = (char *)Malloc((size_t)((slash - (char *)path) + (long)1));
+  snprintf(dir,(size_t)((slash - (char *)path) + (long)1),"%s",(char *)path); /* snprintf_va_16 */
   __retres = dir;
   return_label: return __retres;
 }
@@ -15523,7 +15522,7 @@ static int create_dir(char *p, mode_t mode_0, uid_t uid, gid_t gid)
     }
   }
   else {
-    if ((buf.st_mode & (unsigned int)0170000) == (unsigned int)0040000) {
+    if ((buf.st_mode & (mode_t)0170000) == (mode_t)0040000) {
       __retres = 1;
       goto return_label;
     }
@@ -15662,7 +15661,7 @@ int UTI_CheckDirPermissions(char const *path, mode_t perm, uid_t uid,
     __retres = 0;
     goto return_label;
   }
-  if (! ((buf.st_mode & (unsigned int)0170000) == (unsigned int)0040000)) {
+  if (! ((buf.st_mode & (mode_t)0170000) == (mode_t)0040000)) {
     {
       char const *__va_arg0_12 = path;
       void *__va_args_14[1] = {& __va_arg0_12};
@@ -15672,7 +15671,7 @@ int UTI_CheckDirPermissions(char const *path, mode_t perm, uid_t uid,
     __retres = 0;
     goto return_label;
   }
-  if ((buf.st_mode & (unsigned int)0777) & ~ perm) {
+  if ((buf.st_mode & (mode_t)0777) & ~ perm) {
     {
       char const *__va_arg0_16 = path;
       void *__va_args_18[1] = {& __va_arg0_16};
@@ -18620,7 +18619,7 @@ static void send_response(int interleaved, int authenticated,
         case (long)1:
         {
           tmp_15 = ntohl(res->auth_keyid);
-          res->auth_keyid = htonl(tmp_15 ^ (unsigned int)1);
+          res->auth_keyid = htonl(tmp_15 ^ (uint32_t)1);
         }
         ;
         ;

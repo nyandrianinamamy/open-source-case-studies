@@ -263,16 +263,16 @@ static u64 load64_le_0(u8 const s[8])
   u32 tmp_0;
   tmp = load32_le(s);
   tmp_0 = load32_le(s + 4);
-  __retres = (unsigned long)tmp | ((u64)tmp_0 << 32);
+  __retres = (u64)tmp | ((u64)tmp_0 << 32);
   return __retres;
 }
 
 static void store32_le(u8 out[4], u32 in)
 {
-  *(out + 0) = (u8)(in & (unsigned int)0xff);
-  *(out + 1) = (u8)((in >> 8) & (unsigned int)0xff);
-  *(out + 2) = (u8)((in >> 16) & (unsigned int)0xff);
-  *(out + 3) = (u8)((in >> 24) & (unsigned int)0xff);
+  *(out + 0) = (u8)(in & (u32)0xff);
+  *(out + 1) = (u8)((in >> 8) & (u32)0xff);
+  *(out + 2) = (u8)((in >> 16) & (u32)0xff);
+  *(out + 3) = (u8)((in >> 24) & (u32)0xff);
   return;
 }
 
@@ -300,8 +300,8 @@ static u32 rotl32(u32 x, u32 n)
 static int neq0(u64 diff)
 {
   int __retres;
-  u64 half = (diff >> 32) | (unsigned long)((u32)diff);
-  __retres = (int)(((unsigned long)1 & ((half - (u64)1) >> 32)) - (unsigned long)1);
+  u64 half = (diff >> 32) | (u64)((u32)diff);
+  __retres = (int)(((u64)1 & ((half - (u64)1) >> 32)) - (u64)1);
   return __retres;
 }
 
@@ -515,8 +515,7 @@ static void chacha20_init_key(crypto_chacha_ctx *ctx, u8 const key[32])
 static u8 chacha20_pool_byte(crypto_chacha_ctx *ctx)
 {
   u32 pool_word = ctx->pool[ctx->pool_idx >> 2];
-  u8 pool_byte =
-    (u8)(pool_word >> (unsigned long)8 * (ctx->pool_idx & (unsigned long)3));
+  u8 pool_byte = (u8)(pool_word >> (size_t)8 * (ctx->pool_idx & (size_t)3));
   (ctx->pool_idx) ++;
   return pool_byte;
 }
@@ -609,7 +608,7 @@ void crypto_chacha20_x_init(crypto_chacha_ctx *ctx, uint8_t const key[32],
 
 void crypto_chacha20_set_ctr(crypto_chacha_ctx *ctx, uint64_t ctr)
 {
-  ctx->input[12] = (uint32_t)(ctr & (unsigned long)0xffffffff);
+  ctx->input[12] = (uint32_t)(ctr & (uint64_t)0xffffffff);
   ctx->input[13] = (uint32_t)(ctr >> 32);
   ctx->pool_idx = (size_t)64;
   return;
@@ -618,9 +617,9 @@ void crypto_chacha20_set_ctr(crypto_chacha_ctx *ctx, uint64_t ctr)
 void crypto_chacha20_encrypt(crypto_chacha_ctx *ctx, uint8_t *cipher_text,
                              uint8_t const *plain_text, size_t text_size)
 {
-  unsigned long tmp;
-  if (((~ ctx->pool_idx + (size_t)1) & (unsigned long)(64 - 1)) <= text_size) 
-    tmp = (~ ctx->pool_idx + (size_t)1) & (unsigned long)(64 - 1);
+  size_t tmp;
+  if (((~ ctx->pool_idx + (size_t)1) & (size_t)(64 - 1)) <= text_size) 
+    tmp = (~ ctx->pool_idx + (size_t)1) & (size_t)(64 - 1);
   else tmp = text_size;
   size_t align = tmp;
   chacha20_encrypt(ctx,cipher_text,plain_text,align);
@@ -658,7 +657,7 @@ void crypto_chacha20_encrypt(crypto_chacha_ctx *ctx, uint8_t *cipher_text,
       i ++;
     }
   }
-  text_size &= (unsigned long)63;
+  text_size &= (size_t)63;
   chacha20_encrypt(ctx,cipher_text,plain_text,text_size);
   return;
 }
@@ -697,21 +696,17 @@ static void poly_block(crypto_poly1305_ctx *ctx)
   u64 const x3 =
     (((s0 * (u64)r3 + s1 * (u64)r2) + s2 * (u64)r1) + s3 * (u64)r0) + (u64)(
     s4 * rr3);
-  u32 const x4 = s4 * (r0 & (unsigned int)3);
+  u32 const x4 = s4 * (r0 & (u32)3);
   u32 const u5 = (u32)((u64)x4 + (x3 >> 32));
-  u64 const u0 =
-    (unsigned long)((u5 >> 2) * (u32)5) + (x0 & (unsigned long)0xffffffff);
-  u64 const u1 =
-    ((u0 >> 32) + (x1 & (unsigned long)0xffffffff)) + (x0 >> 32);
-  u64 const u2 =
-    ((u1 >> 32) + (x2 & (unsigned long)0xffffffff)) + (x1 >> 32);
-  u64 const u3 =
-    ((u2 >> 32) + (x3 & (unsigned long)0xffffffff)) + (x2 >> 32);
-  u64 const u4 = (u3 >> 32) + (u64)(u5 & (unsigned int)3);
-  ctx->h[0] = (uint32_t)(u0 & (unsigned long)0xffffffff);
-  ctx->h[1] = (uint32_t)(u1 & (unsigned long)0xffffffff);
-  ctx->h[2] = (uint32_t)(u2 & (unsigned long)0xffffffff);
-  ctx->h[3] = (uint32_t)(u3 & (unsigned long)0xffffffff);
+  u64 const u0 = (u64)((u5 >> 2) * (u32)5) + (x0 & (u64)0xffffffff);
+  u64 const u1 = ((u0 >> 32) + (x1 & (u64)0xffffffff)) + (x0 >> 32);
+  u64 const u2 = ((u1 >> 32) + (x2 & (u64)0xffffffff)) + (x1 >> 32);
+  u64 const u3 = ((u2 >> 32) + (x3 & (u64)0xffffffff)) + (x2 >> 32);
+  u64 const u4 = (u3 >> 32) + (u64)(u5 & (u32)3);
+  ctx->h[0] = (uint32_t)(u0 & (u64)0xffffffff);
+  ctx->h[1] = (uint32_t)(u1 & (u64)0xffffffff);
+  ctx->h[2] = (uint32_t)(u2 & (u64)0xffffffff);
+  ctx->h[3] = (uint32_t)(u3 & (u64)0xffffffff);
   ctx->h[4] = (u32)u4;
   return;
 }
@@ -729,7 +724,7 @@ static void poly_clear_c(crypto_poly1305_ctx *ctx)
 static void poly_take_input(crypto_poly1305_ctx *ctx, u8 input)
 {
   size_t word = ctx->c_idx >> 2;
-  size_t byte = ctx->c_idx & (unsigned long)3;
+  size_t byte = ctx->c_idx & (size_t)3;
   ctx->c[word] |= (u32)input << byte * (size_t)8;
   (ctx->c_idx) ++;
   return;
@@ -769,7 +764,7 @@ void crypto_poly1305_init(crypto_poly1305_ctx *ctx, uint8_t const key[32])
       {
         u32 tmp;
         tmp = load32_le(key);
-        ctx->r[0] = tmp & (unsigned int)0x0fffffff;
+        ctx->r[0] = tmp & (u32)0x0fffffff;
       }
       i_0 ++;
     }
@@ -781,7 +776,7 @@ void crypto_poly1305_init(crypto_poly1305_ctx *ctx, uint8_t const key[32])
       {
         u32 tmp_0;
         tmp_0 = load32_le(key + i_1 * (size_t)4);
-        ctx->r[i_1] = tmp_0 & (unsigned int)0x0ffffffc;
+        ctx->r[i_1] = tmp_0 & (u32)0x0ffffffc;
       }
       i_1 ++;
     }
@@ -800,9 +795,9 @@ void crypto_poly1305_init(crypto_poly1305_ctx *ctx, uint8_t const key[32])
 void crypto_poly1305_update(crypto_poly1305_ctx *ctx, uint8_t const *message,
                             size_t message_size)
 {
-  unsigned long tmp;
-  if (((~ ctx->c_idx + (size_t)1) & (unsigned long)(16 - 1)) <= message_size) 
-    tmp = (~ ctx->c_idx + (size_t)1) & (unsigned long)(16 - 1);
+  size_t tmp;
+  if (((~ ctx->c_idx + (size_t)1) & (size_t)(16 - 1)) <= message_size) 
+    tmp = (~ ctx->c_idx + (size_t)1) & (size_t)(16 - 1);
   else tmp = message_size;
   size_t align = tmp;
   poly_update(ctx,message,align);
@@ -822,7 +817,7 @@ void crypto_poly1305_update(crypto_poly1305_ctx *ctx, uint8_t const *message,
     }
   }
   if (nb_blocks > (size_t)0) poly_clear_c(ctx);
-  message_size &= (unsigned long)15;
+  message_size &= (size_t)15;
   poly_update(ctx,message,message_size);
   return;
 }
@@ -1057,7 +1052,7 @@ static void blake2b_compress(crypto_blake2b_ctx *ctx, int is_last_block)
   u64 v5 = ctx->hash[5];
   u64 v13 = iv[5] ^ ctx->input_offset[1];
   u64 v6 = ctx->hash[6];
-  u64 v14 = iv[6] ^ (unsigned long)is_last_block;
+  u64 v14 = iv[6] ^ (u64)is_last_block;
   u64 v7 = ctx->hash[7];
   u64 v15 = iv[7];
   uint64_t *input = ctx->input;
@@ -1851,7 +1846,7 @@ static void blake2b_set_input(crypto_blake2b_ctx *ctx, u8 input, size_t index)
     }
   }
   size_t word = index >> 3;
-  size_t byte = index & (unsigned long)7;
+  size_t byte = index & (size_t)7;
   ctx->input[word] |= (u64)input << (byte << 3);
   return;
 }
@@ -1890,7 +1885,7 @@ void crypto_blake2b_general_init(crypto_blake2b_ctx *ctx, size_t hash_size,
       i ++;
     }
   }
-  ctx->hash[0] ^= ((unsigned long)0x01010000 ^ (key_size << 8)) ^ hash_size;
+  ctx->hash[0] ^= ((size_t)0x01010000 ^ (key_size << 8)) ^ hash_size;
   ctx->input_offset[0] = (uint64_t)0;
   ctx->input_offset[1] = (uint64_t)0;
   ctx->hash_size = hash_size;
@@ -1911,9 +1906,9 @@ void crypto_blake2b_init(crypto_blake2b_ctx *ctx)
 void crypto_blake2b_update(crypto_blake2b_ctx *ctx, uint8_t const *message,
                            size_t message_size)
 {
-  unsigned long tmp;
-  if (((~ ctx->input_idx + (size_t)1) & (unsigned long)(128 - 1)) <= message_size) 
-    tmp = (~ ctx->input_idx + (size_t)1) & (unsigned long)(128 - 1);
+  size_t tmp;
+  if (((~ ctx->input_idx + (size_t)1) & (size_t)(128 - 1)) <= message_size) 
+    tmp = (~ ctx->input_idx + (size_t)1) & (size_t)(128 - 1);
   else tmp = message_size;
   size_t align = tmp;
   blake2b_update(ctx,message,align);
@@ -1936,7 +1931,7 @@ void crypto_blake2b_update(crypto_blake2b_ctx *ctx, uint8_t const *message,
       i ++;
     }
   }
-  message_size &= (unsigned long)127;
+  message_size &= (size_t)127;
   blake2b_update(ctx,message,message_size);
   return;
 }
@@ -1963,8 +1958,8 @@ void crypto_blake2b_final(crypto_blake2b_ctx *ctx, uint8_t *hash)
   {
     size_t i_1 = nb_words * (size_t)8;
     while (i_1 < ctx->hash_size) {
-      *(hash + i_1) = (uint8_t)((ctx->hash[i_1 >> 3] >> (unsigned long)8 * (
-                                                        i_1 & (unsigned long)7)) & (unsigned long)0xff);
+      *(hash + i_1) = (uint8_t)((ctx->hash[i_1 >> 3] >> (size_t)8 * (
+                                                        i_1 & (size_t)7)) & (uint64_t)0xff);
       i_1 ++;
     }
   }
@@ -2089,188 +2084,168 @@ static void g_rounds(block *work_block)
     int i = 0;
     /*@ loop \eva::unroll 8; */
     while (i < 128) {
-      work_block->a[i] += work_block->a[i + 4] + ((unsigned long)2 * (
-                                                  work_block->a[i] & (unsigned long)0xffffffff)) * (
-                                                 work_block->a[i + 4] & (unsigned long)0xffffffff);
+      work_block->a[i] += work_block->a[i + 4] + ((u64)2 * (work_block->a[i] & (u64)0xffffffff)) * (
+                                                 work_block->a[i + 4] & (u64)0xffffffff);
       work_block->a[i + 12] ^= work_block->a[i];
       work_block->a[i + 12] = rotr64(work_block->a[i + 12],(u64)32);
-      work_block->a[i + 8] += work_block->a[i + 12] + ((unsigned long)2 * (
-                                                       work_block->a[
-                                                       i + 8] & (unsigned long)0xffffffff)) * (
-                                                      work_block->a[i + 12] & (unsigned long)0xffffffff);
+      work_block->a[i + 8] += work_block->a[i + 12] + ((u64)2 * (work_block->a[
+                                                                 i + 8] & (u64)0xffffffff)) * (
+                                                      work_block->a[i + 12] & (u64)0xffffffff);
       work_block->a[i + 4] ^= work_block->a[i + 8];
       work_block->a[i + 4] = rotr64(work_block->a[i + 4],(u64)24);
-      work_block->a[i] += work_block->a[i + 4] + ((unsigned long)2 * (
-                                                  work_block->a[i] & (unsigned long)0xffffffff)) * (
-                                                 work_block->a[i + 4] & (unsigned long)0xffffffff);
+      work_block->a[i] += work_block->a[i + 4] + ((u64)2 * (work_block->a[i] & (u64)0xffffffff)) * (
+                                                 work_block->a[i + 4] & (u64)0xffffffff);
       work_block->a[i + 12] ^= work_block->a[i];
       work_block->a[i + 12] = rotr64(work_block->a[i + 12],(u64)16);
-      work_block->a[i + 8] += work_block->a[i + 12] + ((unsigned long)2 * (
-                                                       work_block->a[
-                                                       i + 8] & (unsigned long)0xffffffff)) * (
-                                                      work_block->a[i + 12] & (unsigned long)0xffffffff);
+      work_block->a[i + 8] += work_block->a[i + 12] + ((u64)2 * (work_block->a[
+                                                                 i + 8] & (u64)0xffffffff)) * (
+                                                      work_block->a[i + 12] & (u64)0xffffffff);
       work_block->a[i + 4] ^= work_block->a[i + 8];
       work_block->a[i + 4] = rotr64(work_block->a[i + 4],(u64)63);
-      work_block->a[i + 1] += work_block->a[i + 5] + ((unsigned long)2 * (
-                                                      work_block->a[i + 1] & (unsigned long)0xffffffff)) * (
-                                                     work_block->a[i + 5] & (unsigned long)0xffffffff);
+      work_block->a[i + 1] += work_block->a[i + 5] + ((u64)2 * (work_block->a[
+                                                                i + 1] & (u64)0xffffffff)) * (
+                                                     work_block->a[i + 5] & (u64)0xffffffff);
       work_block->a[i + 13] ^= work_block->a[i + 1];
       work_block->a[i + 13] = rotr64(work_block->a[i + 13],(u64)32);
-      work_block->a[i + 9] += work_block->a[i + 13] + ((unsigned long)2 * (
-                                                       work_block->a[
-                                                       i + 9] & (unsigned long)0xffffffff)) * (
-                                                      work_block->a[i + 13] & (unsigned long)0xffffffff);
+      work_block->a[i + 9] += work_block->a[i + 13] + ((u64)2 * (work_block->a[
+                                                                 i + 9] & (u64)0xffffffff)) * (
+                                                      work_block->a[i + 13] & (u64)0xffffffff);
       work_block->a[i + 5] ^= work_block->a[i + 9];
       work_block->a[i + 5] = rotr64(work_block->a[i + 5],(u64)24);
-      work_block->a[i + 1] += work_block->a[i + 5] + ((unsigned long)2 * (
-                                                      work_block->a[i + 1] & (unsigned long)0xffffffff)) * (
-                                                     work_block->a[i + 5] & (unsigned long)0xffffffff);
+      work_block->a[i + 1] += work_block->a[i + 5] + ((u64)2 * (work_block->a[
+                                                                i + 1] & (u64)0xffffffff)) * (
+                                                     work_block->a[i + 5] & (u64)0xffffffff);
       work_block->a[i + 13] ^= work_block->a[i + 1];
       work_block->a[i + 13] = rotr64(work_block->a[i + 13],(u64)16);
-      work_block->a[i + 9] += work_block->a[i + 13] + ((unsigned long)2 * (
-                                                       work_block->a[
-                                                       i + 9] & (unsigned long)0xffffffff)) * (
-                                                      work_block->a[i + 13] & (unsigned long)0xffffffff);
+      work_block->a[i + 9] += work_block->a[i + 13] + ((u64)2 * (work_block->a[
+                                                                 i + 9] & (u64)0xffffffff)) * (
+                                                      work_block->a[i + 13] & (u64)0xffffffff);
       work_block->a[i + 5] ^= work_block->a[i + 9];
       work_block->a[i + 5] = rotr64(work_block->a[i + 5],(u64)63);
-      work_block->a[i + 2] += work_block->a[i + 6] + ((unsigned long)2 * (
-                                                      work_block->a[i + 2] & (unsigned long)0xffffffff)) * (
-                                                     work_block->a[i + 6] & (unsigned long)0xffffffff);
+      work_block->a[i + 2] += work_block->a[i + 6] + ((u64)2 * (work_block->a[
+                                                                i + 2] & (u64)0xffffffff)) * (
+                                                     work_block->a[i + 6] & (u64)0xffffffff);
       work_block->a[i + 14] ^= work_block->a[i + 2];
       work_block->a[i + 14] = rotr64(work_block->a[i + 14],(u64)32);
-      work_block->a[i + 10] += work_block->a[i + 14] + ((unsigned long)2 * (
-                                                        work_block->a[
-                                                        i + 10] & (unsigned long)0xffffffff)) * (
+      work_block->a[i + 10] += work_block->a[i + 14] + ((u64)2 * (work_block->a[
+                                                                  i + 10] & (u64)0xffffffff)) * (
                                                        work_block->a[
-                                                       i + 14] & (unsigned long)0xffffffff);
+                                                       i + 14] & (u64)0xffffffff);
       work_block->a[i + 6] ^= work_block->a[i + 10];
       work_block->a[i + 6] = rotr64(work_block->a[i + 6],(u64)24);
-      work_block->a[i + 2] += work_block->a[i + 6] + ((unsigned long)2 * (
-                                                      work_block->a[i + 2] & (unsigned long)0xffffffff)) * (
-                                                     work_block->a[i + 6] & (unsigned long)0xffffffff);
+      work_block->a[i + 2] += work_block->a[i + 6] + ((u64)2 * (work_block->a[
+                                                                i + 2] & (u64)0xffffffff)) * (
+                                                     work_block->a[i + 6] & (u64)0xffffffff);
       work_block->a[i + 14] ^= work_block->a[i + 2];
       work_block->a[i + 14] = rotr64(work_block->a[i + 14],(u64)16);
-      work_block->a[i + 10] += work_block->a[i + 14] + ((unsigned long)2 * (
-                                                        work_block->a[
-                                                        i + 10] & (unsigned long)0xffffffff)) * (
+      work_block->a[i + 10] += work_block->a[i + 14] + ((u64)2 * (work_block->a[
+                                                                  i + 10] & (u64)0xffffffff)) * (
                                                        work_block->a[
-                                                       i + 14] & (unsigned long)0xffffffff);
+                                                       i + 14] & (u64)0xffffffff);
       work_block->a[i + 6] ^= work_block->a[i + 10];
       work_block->a[i + 6] = rotr64(work_block->a[i + 6],(u64)63);
-      work_block->a[i + 3] += work_block->a[i + 7] + ((unsigned long)2 * (
-                                                      work_block->a[i + 3] & (unsigned long)0xffffffff)) * (
-                                                     work_block->a[i + 7] & (unsigned long)0xffffffff);
+      work_block->a[i + 3] += work_block->a[i + 7] + ((u64)2 * (work_block->a[
+                                                                i + 3] & (u64)0xffffffff)) * (
+                                                     work_block->a[i + 7] & (u64)0xffffffff);
       work_block->a[i + 15] ^= work_block->a[i + 3];
       work_block->a[i + 15] = rotr64(work_block->a[i + 15],(u64)32);
-      work_block->a[i + 11] += work_block->a[i + 15] + ((unsigned long)2 * (
-                                                        work_block->a[
-                                                        i + 11] & (unsigned long)0xffffffff)) * (
+      work_block->a[i + 11] += work_block->a[i + 15] + ((u64)2 * (work_block->a[
+                                                                  i + 11] & (u64)0xffffffff)) * (
                                                        work_block->a[
-                                                       i + 15] & (unsigned long)0xffffffff);
+                                                       i + 15] & (u64)0xffffffff);
       work_block->a[i + 7] ^= work_block->a[i + 11];
       work_block->a[i + 7] = rotr64(work_block->a[i + 7],(u64)24);
-      work_block->a[i + 3] += work_block->a[i + 7] + ((unsigned long)2 * (
-                                                      work_block->a[i + 3] & (unsigned long)0xffffffff)) * (
-                                                     work_block->a[i + 7] & (unsigned long)0xffffffff);
+      work_block->a[i + 3] += work_block->a[i + 7] + ((u64)2 * (work_block->a[
+                                                                i + 3] & (u64)0xffffffff)) * (
+                                                     work_block->a[i + 7] & (u64)0xffffffff);
       work_block->a[i + 15] ^= work_block->a[i + 3];
       work_block->a[i + 15] = rotr64(work_block->a[i + 15],(u64)16);
-      work_block->a[i + 11] += work_block->a[i + 15] + ((unsigned long)2 * (
-                                                        work_block->a[
-                                                        i + 11] & (unsigned long)0xffffffff)) * (
+      work_block->a[i + 11] += work_block->a[i + 15] + ((u64)2 * (work_block->a[
+                                                                  i + 11] & (u64)0xffffffff)) * (
                                                        work_block->a[
-                                                       i + 15] & (unsigned long)0xffffffff);
+                                                       i + 15] & (u64)0xffffffff);
       work_block->a[i + 7] ^= work_block->a[i + 11];
       work_block->a[i + 7] = rotr64(work_block->a[i + 7],(u64)63);
-      work_block->a[i] += work_block->a[i + 5] + ((unsigned long)2 * (
-                                                  work_block->a[i] & (unsigned long)0xffffffff)) * (
-                                                 work_block->a[i + 5] & (unsigned long)0xffffffff);
+      work_block->a[i] += work_block->a[i + 5] + ((u64)2 * (work_block->a[i] & (u64)0xffffffff)) * (
+                                                 work_block->a[i + 5] & (u64)0xffffffff);
       work_block->a[i + 15] ^= work_block->a[i];
       work_block->a[i + 15] = rotr64(work_block->a[i + 15],(u64)32);
-      work_block->a[i + 10] += work_block->a[i + 15] + ((unsigned long)2 * (
-                                                        work_block->a[
-                                                        i + 10] & (unsigned long)0xffffffff)) * (
+      work_block->a[i + 10] += work_block->a[i + 15] + ((u64)2 * (work_block->a[
+                                                                  i + 10] & (u64)0xffffffff)) * (
                                                        work_block->a[
-                                                       i + 15] & (unsigned long)0xffffffff);
+                                                       i + 15] & (u64)0xffffffff);
       work_block->a[i + 5] ^= work_block->a[i + 10];
       work_block->a[i + 5] = rotr64(work_block->a[i + 5],(u64)24);
-      work_block->a[i] += work_block->a[i + 5] + ((unsigned long)2 * (
-                                                  work_block->a[i] & (unsigned long)0xffffffff)) * (
-                                                 work_block->a[i + 5] & (unsigned long)0xffffffff);
+      work_block->a[i] += work_block->a[i + 5] + ((u64)2 * (work_block->a[i] & (u64)0xffffffff)) * (
+                                                 work_block->a[i + 5] & (u64)0xffffffff);
       work_block->a[i + 15] ^= work_block->a[i];
       work_block->a[i + 15] = rotr64(work_block->a[i + 15],(u64)16);
-      work_block->a[i + 10] += work_block->a[i + 15] + ((unsigned long)2 * (
-                                                        work_block->a[
-                                                        i + 10] & (unsigned long)0xffffffff)) * (
+      work_block->a[i + 10] += work_block->a[i + 15] + ((u64)2 * (work_block->a[
+                                                                  i + 10] & (u64)0xffffffff)) * (
                                                        work_block->a[
-                                                       i + 15] & (unsigned long)0xffffffff);
+                                                       i + 15] & (u64)0xffffffff);
       work_block->a[i + 5] ^= work_block->a[i + 10];
       work_block->a[i + 5] = rotr64(work_block->a[i + 5],(u64)63);
-      work_block->a[i + 1] += work_block->a[i + 6] + ((unsigned long)2 * (
-                                                      work_block->a[i + 1] & (unsigned long)0xffffffff)) * (
-                                                     work_block->a[i + 6] & (unsigned long)0xffffffff);
+      work_block->a[i + 1] += work_block->a[i + 6] + ((u64)2 * (work_block->a[
+                                                                i + 1] & (u64)0xffffffff)) * (
+                                                     work_block->a[i + 6] & (u64)0xffffffff);
       work_block->a[i + 12] ^= work_block->a[i + 1];
       work_block->a[i + 12] = rotr64(work_block->a[i + 12],(u64)32);
-      work_block->a[i + 11] += work_block->a[i + 12] + ((unsigned long)2 * (
-                                                        work_block->a[
-                                                        i + 11] & (unsigned long)0xffffffff)) * (
+      work_block->a[i + 11] += work_block->a[i + 12] + ((u64)2 * (work_block->a[
+                                                                  i + 11] & (u64)0xffffffff)) * (
                                                        work_block->a[
-                                                       i + 12] & (unsigned long)0xffffffff);
+                                                       i + 12] & (u64)0xffffffff);
       work_block->a[i + 6] ^= work_block->a[i + 11];
       work_block->a[i + 6] = rotr64(work_block->a[i + 6],(u64)24);
-      work_block->a[i + 1] += work_block->a[i + 6] + ((unsigned long)2 * (
-                                                      work_block->a[i + 1] & (unsigned long)0xffffffff)) * (
-                                                     work_block->a[i + 6] & (unsigned long)0xffffffff);
+      work_block->a[i + 1] += work_block->a[i + 6] + ((u64)2 * (work_block->a[
+                                                                i + 1] & (u64)0xffffffff)) * (
+                                                     work_block->a[i + 6] & (u64)0xffffffff);
       work_block->a[i + 12] ^= work_block->a[i + 1];
       work_block->a[i + 12] = rotr64(work_block->a[i + 12],(u64)16);
-      work_block->a[i + 11] += work_block->a[i + 12] + ((unsigned long)2 * (
-                                                        work_block->a[
-                                                        i + 11] & (unsigned long)0xffffffff)) * (
+      work_block->a[i + 11] += work_block->a[i + 12] + ((u64)2 * (work_block->a[
+                                                                  i + 11] & (u64)0xffffffff)) * (
                                                        work_block->a[
-                                                       i + 12] & (unsigned long)0xffffffff);
+                                                       i + 12] & (u64)0xffffffff);
       work_block->a[i + 6] ^= work_block->a[i + 11];
       work_block->a[i + 6] = rotr64(work_block->a[i + 6],(u64)63);
-      work_block->a[i + 2] += work_block->a[i + 7] + ((unsigned long)2 * (
-                                                      work_block->a[i + 2] & (unsigned long)0xffffffff)) * (
-                                                     work_block->a[i + 7] & (unsigned long)0xffffffff);
+      work_block->a[i + 2] += work_block->a[i + 7] + ((u64)2 * (work_block->a[
+                                                                i + 2] & (u64)0xffffffff)) * (
+                                                     work_block->a[i + 7] & (u64)0xffffffff);
       work_block->a[i + 13] ^= work_block->a[i + 2];
       work_block->a[i + 13] = rotr64(work_block->a[i + 13],(u64)32);
-      work_block->a[i + 8] += work_block->a[i + 13] + ((unsigned long)2 * (
-                                                       work_block->a[
-                                                       i + 8] & (unsigned long)0xffffffff)) * (
-                                                      work_block->a[i + 13] & (unsigned long)0xffffffff);
+      work_block->a[i + 8] += work_block->a[i + 13] + ((u64)2 * (work_block->a[
+                                                                 i + 8] & (u64)0xffffffff)) * (
+                                                      work_block->a[i + 13] & (u64)0xffffffff);
       work_block->a[i + 7] ^= work_block->a[i + 8];
       work_block->a[i + 7] = rotr64(work_block->a[i + 7],(u64)24);
-      work_block->a[i + 2] += work_block->a[i + 7] + ((unsigned long)2 * (
-                                                      work_block->a[i + 2] & (unsigned long)0xffffffff)) * (
-                                                     work_block->a[i + 7] & (unsigned long)0xffffffff);
+      work_block->a[i + 2] += work_block->a[i + 7] + ((u64)2 * (work_block->a[
+                                                                i + 2] & (u64)0xffffffff)) * (
+                                                     work_block->a[i + 7] & (u64)0xffffffff);
       work_block->a[i + 13] ^= work_block->a[i + 2];
       work_block->a[i + 13] = rotr64(work_block->a[i + 13],(u64)16);
-      work_block->a[i + 8] += work_block->a[i + 13] + ((unsigned long)2 * (
-                                                       work_block->a[
-                                                       i + 8] & (unsigned long)0xffffffff)) * (
-                                                      work_block->a[i + 13] & (unsigned long)0xffffffff);
+      work_block->a[i + 8] += work_block->a[i + 13] + ((u64)2 * (work_block->a[
+                                                                 i + 8] & (u64)0xffffffff)) * (
+                                                      work_block->a[i + 13] & (u64)0xffffffff);
       work_block->a[i + 7] ^= work_block->a[i + 8];
       work_block->a[i + 7] = rotr64(work_block->a[i + 7],(u64)63);
-      work_block->a[i + 3] += work_block->a[i + 4] + ((unsigned long)2 * (
-                                                      work_block->a[i + 3] & (unsigned long)0xffffffff)) * (
-                                                     work_block->a[i + 4] & (unsigned long)0xffffffff);
+      work_block->a[i + 3] += work_block->a[i + 4] + ((u64)2 * (work_block->a[
+                                                                i + 3] & (u64)0xffffffff)) * (
+                                                     work_block->a[i + 4] & (u64)0xffffffff);
       work_block->a[i + 14] ^= work_block->a[i + 3];
       work_block->a[i + 14] = rotr64(work_block->a[i + 14],(u64)32);
-      work_block->a[i + 9] += work_block->a[i + 14] + ((unsigned long)2 * (
-                                                       work_block->a[
-                                                       i + 9] & (unsigned long)0xffffffff)) * (
-                                                      work_block->a[i + 14] & (unsigned long)0xffffffff);
+      work_block->a[i + 9] += work_block->a[i + 14] + ((u64)2 * (work_block->a[
+                                                                 i + 9] & (u64)0xffffffff)) * (
+                                                      work_block->a[i + 14] & (u64)0xffffffff);
       work_block->a[i + 4] ^= work_block->a[i + 9];
       work_block->a[i + 4] = rotr64(work_block->a[i + 4],(u64)24);
-      work_block->a[i + 3] += work_block->a[i + 4] + ((unsigned long)2 * (
-                                                      work_block->a[i + 3] & (unsigned long)0xffffffff)) * (
-                                                     work_block->a[i + 4] & (unsigned long)0xffffffff);
+      work_block->a[i + 3] += work_block->a[i + 4] + ((u64)2 * (work_block->a[
+                                                                i + 3] & (u64)0xffffffff)) * (
+                                                     work_block->a[i + 4] & (u64)0xffffffff);
       work_block->a[i + 14] ^= work_block->a[i + 3];
       work_block->a[i + 14] = rotr64(work_block->a[i + 14],(u64)16);
-      work_block->a[i + 9] += work_block->a[i + 14] + ((unsigned long)2 * (
-                                                       work_block->a[
-                                                       i + 9] & (unsigned long)0xffffffff)) * (
-                                                      work_block->a[i + 14] & (unsigned long)0xffffffff);
+      work_block->a[i + 9] += work_block->a[i + 14] + ((u64)2 * (work_block->a[
+                                                                 i + 9] & (u64)0xffffffff)) * (
+                                                      work_block->a[i + 14] & (u64)0xffffffff);
       work_block->a[i + 4] ^= work_block->a[i + 9];
       work_block->a[i + 4] = rotr64(work_block->a[i + 4],(u64)63);
       i += 16;
@@ -2280,220 +2255,216 @@ static void g_rounds(block *work_block)
     int i_0 = 0;
     /*@ loop \eva::unroll 8; */
     while (i_0 < 16) {
-      work_block->a[i_0] += work_block->a[i_0 + 32] + ((unsigned long)2 * (
-                                                       work_block->a[i_0] & (unsigned long)0xffffffff)) * (
-                                                      work_block->a[i_0 + 32] & (unsigned long)0xffffffff);
+      work_block->a[i_0] += work_block->a[i_0 + 32] + ((u64)2 * (work_block->a[i_0] & (u64)0xffffffff)) * (
+                                                      work_block->a[i_0 + 32] & (u64)0xffffffff);
       work_block->a[i_0 + 96] ^= work_block->a[i_0];
       work_block->a[i_0 + 96] = rotr64(work_block->a[i_0 + 96],(u64)32);
-      work_block->a[i_0 + 64] += work_block->a[i_0 + 96] + ((unsigned long)2 * (
+      work_block->a[i_0 + 64] += work_block->a[i_0 + 96] + ((u64)2 * (
                                                             work_block->a[
-                                                            i_0 + 64] & (unsigned long)0xffffffff)) * (
+                                                            i_0 + 64] & (u64)0xffffffff)) * (
                                                            work_block->a[
-                                                           i_0 + 96] & (unsigned long)0xffffffff);
+                                                           i_0 + 96] & (u64)0xffffffff);
       work_block->a[i_0 + 32] ^= work_block->a[i_0 + 64];
       work_block->a[i_0 + 32] = rotr64(work_block->a[i_0 + 32],(u64)24);
-      work_block->a[i_0] += work_block->a[i_0 + 32] + ((unsigned long)2 * (
-                                                       work_block->a[i_0] & (unsigned long)0xffffffff)) * (
-                                                      work_block->a[i_0 + 32] & (unsigned long)0xffffffff);
+      work_block->a[i_0] += work_block->a[i_0 + 32] + ((u64)2 * (work_block->a[i_0] & (u64)0xffffffff)) * (
+                                                      work_block->a[i_0 + 32] & (u64)0xffffffff);
       work_block->a[i_0 + 96] ^= work_block->a[i_0];
       work_block->a[i_0 + 96] = rotr64(work_block->a[i_0 + 96],(u64)16);
-      work_block->a[i_0 + 64] += work_block->a[i_0 + 96] + ((unsigned long)2 * (
+      work_block->a[i_0 + 64] += work_block->a[i_0 + 96] + ((u64)2 * (
                                                             work_block->a[
-                                                            i_0 + 64] & (unsigned long)0xffffffff)) * (
+                                                            i_0 + 64] & (u64)0xffffffff)) * (
                                                            work_block->a[
-                                                           i_0 + 96] & (unsigned long)0xffffffff);
+                                                           i_0 + 96] & (u64)0xffffffff);
       work_block->a[i_0 + 32] ^= work_block->a[i_0 + 64];
       work_block->a[i_0 + 32] = rotr64(work_block->a[i_0 + 32],(u64)63);
-      work_block->a[i_0 + 1] += work_block->a[i_0 + 33] + ((unsigned long)2 * (
+      work_block->a[i_0 + 1] += work_block->a[i_0 + 33] + ((u64)2 * (
                                                            work_block->a[
-                                                           i_0 + 1] & (unsigned long)0xffffffff)) * (
+                                                           i_0 + 1] & (u64)0xffffffff)) * (
                                                           work_block->a[
-                                                          i_0 + 33] & (unsigned long)0xffffffff);
+                                                          i_0 + 33] & (u64)0xffffffff);
       work_block->a[i_0 + 97] ^= work_block->a[i_0 + 1];
       work_block->a[i_0 + 97] = rotr64(work_block->a[i_0 + 97],(u64)32);
-      work_block->a[i_0 + 65] += work_block->a[i_0 + 97] + ((unsigned long)2 * (
+      work_block->a[i_0 + 65] += work_block->a[i_0 + 97] + ((u64)2 * (
                                                             work_block->a[
-                                                            i_0 + 65] & (unsigned long)0xffffffff)) * (
+                                                            i_0 + 65] & (u64)0xffffffff)) * (
                                                            work_block->a[
-                                                           i_0 + 97] & (unsigned long)0xffffffff);
+                                                           i_0 + 97] & (u64)0xffffffff);
       work_block->a[i_0 + 33] ^= work_block->a[i_0 + 65];
       work_block->a[i_0 + 33] = rotr64(work_block->a[i_0 + 33],(u64)24);
-      work_block->a[i_0 + 1] += work_block->a[i_0 + 33] + ((unsigned long)2 * (
+      work_block->a[i_0 + 1] += work_block->a[i_0 + 33] + ((u64)2 * (
                                                            work_block->a[
-                                                           i_0 + 1] & (unsigned long)0xffffffff)) * (
+                                                           i_0 + 1] & (u64)0xffffffff)) * (
                                                           work_block->a[
-                                                          i_0 + 33] & (unsigned long)0xffffffff);
+                                                          i_0 + 33] & (u64)0xffffffff);
       work_block->a[i_0 + 97] ^= work_block->a[i_0 + 1];
       work_block->a[i_0 + 97] = rotr64(work_block->a[i_0 + 97],(u64)16);
-      work_block->a[i_0 + 65] += work_block->a[i_0 + 97] + ((unsigned long)2 * (
+      work_block->a[i_0 + 65] += work_block->a[i_0 + 97] + ((u64)2 * (
                                                             work_block->a[
-                                                            i_0 + 65] & (unsigned long)0xffffffff)) * (
+                                                            i_0 + 65] & (u64)0xffffffff)) * (
                                                            work_block->a[
-                                                           i_0 + 97] & (unsigned long)0xffffffff);
+                                                           i_0 + 97] & (u64)0xffffffff);
       work_block->a[i_0 + 33] ^= work_block->a[i_0 + 65];
       work_block->a[i_0 + 33] = rotr64(work_block->a[i_0 + 33],(u64)63);
-      work_block->a[i_0 + 16] += work_block->a[i_0 + 48] + ((unsigned long)2 * (
+      work_block->a[i_0 + 16] += work_block->a[i_0 + 48] + ((u64)2 * (
                                                             work_block->a[
-                                                            i_0 + 16] & (unsigned long)0xffffffff)) * (
+                                                            i_0 + 16] & (u64)0xffffffff)) * (
                                                            work_block->a[
-                                                           i_0 + 48] & (unsigned long)0xffffffff);
+                                                           i_0 + 48] & (u64)0xffffffff);
       work_block->a[i_0 + 112] ^= work_block->a[i_0 + 16];
       work_block->a[i_0 + 112] = rotr64(work_block->a[i_0 + 112],(u64)32);
-      work_block->a[i_0 + 80] += work_block->a[i_0 + 112] + ((unsigned long)2 * (
+      work_block->a[i_0 + 80] += work_block->a[i_0 + 112] + ((u64)2 * (
                                                              work_block->a[
-                                                             i_0 + 80] & (unsigned long)0xffffffff)) * (
+                                                             i_0 + 80] & (u64)0xffffffff)) * (
                                                             work_block->a[
-                                                            i_0 + 112] & (unsigned long)0xffffffff);
+                                                            i_0 + 112] & (u64)0xffffffff);
       work_block->a[i_0 + 48] ^= work_block->a[i_0 + 80];
       work_block->a[i_0 + 48] = rotr64(work_block->a[i_0 + 48],(u64)24);
-      work_block->a[i_0 + 16] += work_block->a[i_0 + 48] + ((unsigned long)2 * (
+      work_block->a[i_0 + 16] += work_block->a[i_0 + 48] + ((u64)2 * (
                                                             work_block->a[
-                                                            i_0 + 16] & (unsigned long)0xffffffff)) * (
+                                                            i_0 + 16] & (u64)0xffffffff)) * (
                                                            work_block->a[
-                                                           i_0 + 48] & (unsigned long)0xffffffff);
+                                                           i_0 + 48] & (u64)0xffffffff);
       work_block->a[i_0 + 112] ^= work_block->a[i_0 + 16];
       work_block->a[i_0 + 112] = rotr64(work_block->a[i_0 + 112],(u64)16);
-      work_block->a[i_0 + 80] += work_block->a[i_0 + 112] + ((unsigned long)2 * (
+      work_block->a[i_0 + 80] += work_block->a[i_0 + 112] + ((u64)2 * (
                                                              work_block->a[
-                                                             i_0 + 80] & (unsigned long)0xffffffff)) * (
+                                                             i_0 + 80] & (u64)0xffffffff)) * (
                                                             work_block->a[
-                                                            i_0 + 112] & (unsigned long)0xffffffff);
+                                                            i_0 + 112] & (u64)0xffffffff);
       work_block->a[i_0 + 48] ^= work_block->a[i_0 + 80];
       work_block->a[i_0 + 48] = rotr64(work_block->a[i_0 + 48],(u64)63);
-      work_block->a[i_0 + 17] += work_block->a[i_0 + 49] + ((unsigned long)2 * (
+      work_block->a[i_0 + 17] += work_block->a[i_0 + 49] + ((u64)2 * (
                                                             work_block->a[
-                                                            i_0 + 17] & (unsigned long)0xffffffff)) * (
+                                                            i_0 + 17] & (u64)0xffffffff)) * (
                                                            work_block->a[
-                                                           i_0 + 49] & (unsigned long)0xffffffff);
+                                                           i_0 + 49] & (u64)0xffffffff);
       work_block->a[i_0 + 113] ^= work_block->a[i_0 + 17];
       work_block->a[i_0 + 113] = rotr64(work_block->a[i_0 + 113],(u64)32);
-      work_block->a[i_0 + 81] += work_block->a[i_0 + 113] + ((unsigned long)2 * (
+      work_block->a[i_0 + 81] += work_block->a[i_0 + 113] + ((u64)2 * (
                                                              work_block->a[
-                                                             i_0 + 81] & (unsigned long)0xffffffff)) * (
+                                                             i_0 + 81] & (u64)0xffffffff)) * (
                                                             work_block->a[
-                                                            i_0 + 113] & (unsigned long)0xffffffff);
+                                                            i_0 + 113] & (u64)0xffffffff);
       work_block->a[i_0 + 49] ^= work_block->a[i_0 + 81];
       work_block->a[i_0 + 49] = rotr64(work_block->a[i_0 + 49],(u64)24);
-      work_block->a[i_0 + 17] += work_block->a[i_0 + 49] + ((unsigned long)2 * (
+      work_block->a[i_0 + 17] += work_block->a[i_0 + 49] + ((u64)2 * (
                                                             work_block->a[
-                                                            i_0 + 17] & (unsigned long)0xffffffff)) * (
+                                                            i_0 + 17] & (u64)0xffffffff)) * (
                                                            work_block->a[
-                                                           i_0 + 49] & (unsigned long)0xffffffff);
+                                                           i_0 + 49] & (u64)0xffffffff);
       work_block->a[i_0 + 113] ^= work_block->a[i_0 + 17];
       work_block->a[i_0 + 113] = rotr64(work_block->a[i_0 + 113],(u64)16);
-      work_block->a[i_0 + 81] += work_block->a[i_0 + 113] + ((unsigned long)2 * (
+      work_block->a[i_0 + 81] += work_block->a[i_0 + 113] + ((u64)2 * (
                                                              work_block->a[
-                                                             i_0 + 81] & (unsigned long)0xffffffff)) * (
+                                                             i_0 + 81] & (u64)0xffffffff)) * (
                                                             work_block->a[
-                                                            i_0 + 113] & (unsigned long)0xffffffff);
+                                                            i_0 + 113] & (u64)0xffffffff);
       work_block->a[i_0 + 49] ^= work_block->a[i_0 + 81];
       work_block->a[i_0 + 49] = rotr64(work_block->a[i_0 + 49],(u64)63);
-      work_block->a[i_0] += work_block->a[i_0 + 33] + ((unsigned long)2 * (
-                                                       work_block->a[i_0] & (unsigned long)0xffffffff)) * (
-                                                      work_block->a[i_0 + 33] & (unsigned long)0xffffffff);
+      work_block->a[i_0] += work_block->a[i_0 + 33] + ((u64)2 * (work_block->a[i_0] & (u64)0xffffffff)) * (
+                                                      work_block->a[i_0 + 33] & (u64)0xffffffff);
       work_block->a[i_0 + 113] ^= work_block->a[i_0];
       work_block->a[i_0 + 113] = rotr64(work_block->a[i_0 + 113],(u64)32);
-      work_block->a[i_0 + 80] += work_block->a[i_0 + 113] + ((unsigned long)2 * (
+      work_block->a[i_0 + 80] += work_block->a[i_0 + 113] + ((u64)2 * (
                                                              work_block->a[
-                                                             i_0 + 80] & (unsigned long)0xffffffff)) * (
+                                                             i_0 + 80] & (u64)0xffffffff)) * (
                                                             work_block->a[
-                                                            i_0 + 113] & (unsigned long)0xffffffff);
+                                                            i_0 + 113] & (u64)0xffffffff);
       work_block->a[i_0 + 33] ^= work_block->a[i_0 + 80];
       work_block->a[i_0 + 33] = rotr64(work_block->a[i_0 + 33],(u64)24);
-      work_block->a[i_0] += work_block->a[i_0 + 33] + ((unsigned long)2 * (
-                                                       work_block->a[i_0] & (unsigned long)0xffffffff)) * (
-                                                      work_block->a[i_0 + 33] & (unsigned long)0xffffffff);
+      work_block->a[i_0] += work_block->a[i_0 + 33] + ((u64)2 * (work_block->a[i_0] & (u64)0xffffffff)) * (
+                                                      work_block->a[i_0 + 33] & (u64)0xffffffff);
       work_block->a[i_0 + 113] ^= work_block->a[i_0];
       work_block->a[i_0 + 113] = rotr64(work_block->a[i_0 + 113],(u64)16);
-      work_block->a[i_0 + 80] += work_block->a[i_0 + 113] + ((unsigned long)2 * (
+      work_block->a[i_0 + 80] += work_block->a[i_0 + 113] + ((u64)2 * (
                                                              work_block->a[
-                                                             i_0 + 80] & (unsigned long)0xffffffff)) * (
+                                                             i_0 + 80] & (u64)0xffffffff)) * (
                                                             work_block->a[
-                                                            i_0 + 113] & (unsigned long)0xffffffff);
+                                                            i_0 + 113] & (u64)0xffffffff);
       work_block->a[i_0 + 33] ^= work_block->a[i_0 + 80];
       work_block->a[i_0 + 33] = rotr64(work_block->a[i_0 + 33],(u64)63);
-      work_block->a[i_0 + 1] += work_block->a[i_0 + 48] + ((unsigned long)2 * (
+      work_block->a[i_0 + 1] += work_block->a[i_0 + 48] + ((u64)2 * (
                                                            work_block->a[
-                                                           i_0 + 1] & (unsigned long)0xffffffff)) * (
+                                                           i_0 + 1] & (u64)0xffffffff)) * (
                                                           work_block->a[
-                                                          i_0 + 48] & (unsigned long)0xffffffff);
+                                                          i_0 + 48] & (u64)0xffffffff);
       work_block->a[i_0 + 96] ^= work_block->a[i_0 + 1];
       work_block->a[i_0 + 96] = rotr64(work_block->a[i_0 + 96],(u64)32);
-      work_block->a[i_0 + 81] += work_block->a[i_0 + 96] + ((unsigned long)2 * (
+      work_block->a[i_0 + 81] += work_block->a[i_0 + 96] + ((u64)2 * (
                                                             work_block->a[
-                                                            i_0 + 81] & (unsigned long)0xffffffff)) * (
+                                                            i_0 + 81] & (u64)0xffffffff)) * (
                                                            work_block->a[
-                                                           i_0 + 96] & (unsigned long)0xffffffff);
+                                                           i_0 + 96] & (u64)0xffffffff);
       work_block->a[i_0 + 48] ^= work_block->a[i_0 + 81];
       work_block->a[i_0 + 48] = rotr64(work_block->a[i_0 + 48],(u64)24);
-      work_block->a[i_0 + 1] += work_block->a[i_0 + 48] + ((unsigned long)2 * (
+      work_block->a[i_0 + 1] += work_block->a[i_0 + 48] + ((u64)2 * (
                                                            work_block->a[
-                                                           i_0 + 1] & (unsigned long)0xffffffff)) * (
+                                                           i_0 + 1] & (u64)0xffffffff)) * (
                                                           work_block->a[
-                                                          i_0 + 48] & (unsigned long)0xffffffff);
+                                                          i_0 + 48] & (u64)0xffffffff);
       work_block->a[i_0 + 96] ^= work_block->a[i_0 + 1];
       work_block->a[i_0 + 96] = rotr64(work_block->a[i_0 + 96],(u64)16);
-      work_block->a[i_0 + 81] += work_block->a[i_0 + 96] + ((unsigned long)2 * (
+      work_block->a[i_0 + 81] += work_block->a[i_0 + 96] + ((u64)2 * (
                                                             work_block->a[
-                                                            i_0 + 81] & (unsigned long)0xffffffff)) * (
+                                                            i_0 + 81] & (u64)0xffffffff)) * (
                                                            work_block->a[
-                                                           i_0 + 96] & (unsigned long)0xffffffff);
+                                                           i_0 + 96] & (u64)0xffffffff);
       work_block->a[i_0 + 48] ^= work_block->a[i_0 + 81];
       work_block->a[i_0 + 48] = rotr64(work_block->a[i_0 + 48],(u64)63);
-      work_block->a[i_0 + 16] += work_block->a[i_0 + 49] + ((unsigned long)2 * (
+      work_block->a[i_0 + 16] += work_block->a[i_0 + 49] + ((u64)2 * (
                                                             work_block->a[
-                                                            i_0 + 16] & (unsigned long)0xffffffff)) * (
+                                                            i_0 + 16] & (u64)0xffffffff)) * (
                                                            work_block->a[
-                                                           i_0 + 49] & (unsigned long)0xffffffff);
+                                                           i_0 + 49] & (u64)0xffffffff);
       work_block->a[i_0 + 97] ^= work_block->a[i_0 + 16];
       work_block->a[i_0 + 97] = rotr64(work_block->a[i_0 + 97],(u64)32);
-      work_block->a[i_0 + 64] += work_block->a[i_0 + 97] + ((unsigned long)2 * (
+      work_block->a[i_0 + 64] += work_block->a[i_0 + 97] + ((u64)2 * (
                                                             work_block->a[
-                                                            i_0 + 64] & (unsigned long)0xffffffff)) * (
+                                                            i_0 + 64] & (u64)0xffffffff)) * (
                                                            work_block->a[
-                                                           i_0 + 97] & (unsigned long)0xffffffff);
+                                                           i_0 + 97] & (u64)0xffffffff);
       work_block->a[i_0 + 49] ^= work_block->a[i_0 + 64];
       work_block->a[i_0 + 49] = rotr64(work_block->a[i_0 + 49],(u64)24);
-      work_block->a[i_0 + 16] += work_block->a[i_0 + 49] + ((unsigned long)2 * (
+      work_block->a[i_0 + 16] += work_block->a[i_0 + 49] + ((u64)2 * (
                                                             work_block->a[
-                                                            i_0 + 16] & (unsigned long)0xffffffff)) * (
+                                                            i_0 + 16] & (u64)0xffffffff)) * (
                                                            work_block->a[
-                                                           i_0 + 49] & (unsigned long)0xffffffff);
+                                                           i_0 + 49] & (u64)0xffffffff);
       work_block->a[i_0 + 97] ^= work_block->a[i_0 + 16];
       work_block->a[i_0 + 97] = rotr64(work_block->a[i_0 + 97],(u64)16);
-      work_block->a[i_0 + 64] += work_block->a[i_0 + 97] + ((unsigned long)2 * (
+      work_block->a[i_0 + 64] += work_block->a[i_0 + 97] + ((u64)2 * (
                                                             work_block->a[
-                                                            i_0 + 64] & (unsigned long)0xffffffff)) * (
+                                                            i_0 + 64] & (u64)0xffffffff)) * (
                                                            work_block->a[
-                                                           i_0 + 97] & (unsigned long)0xffffffff);
+                                                           i_0 + 97] & (u64)0xffffffff);
       work_block->a[i_0 + 49] ^= work_block->a[i_0 + 64];
       work_block->a[i_0 + 49] = rotr64(work_block->a[i_0 + 49],(u64)63);
-      work_block->a[i_0 + 17] += work_block->a[i_0 + 32] + ((unsigned long)2 * (
+      work_block->a[i_0 + 17] += work_block->a[i_0 + 32] + ((u64)2 * (
                                                             work_block->a[
-                                                            i_0 + 17] & (unsigned long)0xffffffff)) * (
+                                                            i_0 + 17] & (u64)0xffffffff)) * (
                                                            work_block->a[
-                                                           i_0 + 32] & (unsigned long)0xffffffff);
+                                                           i_0 + 32] & (u64)0xffffffff);
       work_block->a[i_0 + 112] ^= work_block->a[i_0 + 17];
       work_block->a[i_0 + 112] = rotr64(work_block->a[i_0 + 112],(u64)32);
-      work_block->a[i_0 + 65] += work_block->a[i_0 + 112] + ((unsigned long)2 * (
+      work_block->a[i_0 + 65] += work_block->a[i_0 + 112] + ((u64)2 * (
                                                              work_block->a[
-                                                             i_0 + 65] & (unsigned long)0xffffffff)) * (
+                                                             i_0 + 65] & (u64)0xffffffff)) * (
                                                             work_block->a[
-                                                            i_0 + 112] & (unsigned long)0xffffffff);
+                                                            i_0 + 112] & (u64)0xffffffff);
       work_block->a[i_0 + 32] ^= work_block->a[i_0 + 65];
       work_block->a[i_0 + 32] = rotr64(work_block->a[i_0 + 32],(u64)24);
-      work_block->a[i_0 + 17] += work_block->a[i_0 + 32] + ((unsigned long)2 * (
+      work_block->a[i_0 + 17] += work_block->a[i_0 + 32] + ((u64)2 * (
                                                             work_block->a[
-                                                            i_0 + 17] & (unsigned long)0xffffffff)) * (
+                                                            i_0 + 17] & (u64)0xffffffff)) * (
                                                            work_block->a[
-                                                           i_0 + 32] & (unsigned long)0xffffffff);
+                                                           i_0 + 32] & (u64)0xffffffff);
       work_block->a[i_0 + 112] ^= work_block->a[i_0 + 17];
       work_block->a[i_0 + 112] = rotr64(work_block->a[i_0 + 112],(u64)16);
-      work_block->a[i_0 + 65] += work_block->a[i_0 + 112] + ((unsigned long)2 * (
+      work_block->a[i_0 + 65] += work_block->a[i_0 + 112] + ((u64)2 * (
                                                              work_block->a[
-                                                             i_0 + 65] & (unsigned long)0xffffffff)) * (
+                                                             i_0 + 65] & (u64)0xffffffff)) * (
                                                             work_block->a[
-                                                            i_0 + 112] & (unsigned long)0xffffffff);
+                                                            i_0 + 112] & (u64)0xffffffff);
       work_block->a[i_0 + 32] ^= work_block->a[i_0 + 65];
       work_block->a[i_0 + 32] = rotr64(work_block->a[i_0 + 32],(u64)63);
       i_0 += 2;
@@ -2577,11 +2548,11 @@ static u32 gidx_next(gidx_ctx *ctx)
   u32 __retres;
   u32 tmp;
   u32 tmp_0;
-  if ((ctx->offset & (unsigned int)127) == (unsigned int)0) {
+  if ((ctx->offset & (u32)127) == (u32)0) {
     (ctx->ctr) ++;
     gidx_refresh(ctx);
   }
-  u32 index = ctx->offset & (unsigned int)127;
+  u32 index = ctx->offset & (u32)127;
   u32 offset = ctx->offset;
   (ctx->offset) ++;
   int first_pass = ctx->pass_number == (u32)0;
@@ -2589,15 +2560,14 @@ static u32 gidx_next(gidx_ctx *ctx)
   if (first_pass) tmp = ctx->slice_number; else tmp = (u32)3;
   u32 nb_segments = tmp;
   u32 area_size = (nb_segments * slice_size + offset) - (u32)1;
-  u32 next_slice =
-    ((ctx->slice_number + (u32)1) & (unsigned int)3) * slice_size;
+  u32 next_slice = ((ctx->slice_number + (u32)1) & (u32)3) * slice_size;
   if (first_pass) tmp_0 = (u32)0; else tmp_0 = next_slice;
   u32 start_pos = tmp_0;
-  u64 j1 = ctx->b.a[index] & (unsigned long)0xffffffff;
+  u64 j1 = ctx->b.a[index] & (u64)0xffffffff;
   u64 x = j1 * j1 >> 32;
   u64 y = (u64)area_size * x >> 32;
   u64 z = (u64)(area_size - (u32)1) - y;
-  __retres = (u32)(((u64)start_pos + z) % (unsigned long)ctx->nb_blocks);
+  __retres = (u32)(((u64)start_pos + z) % (u64)ctx->nb_blocks);
   return __retres;
 }
 
@@ -2647,7 +2617,7 @@ void crypto_argon2i_general(uint8_t *hash, uint32_t hash_size,
     crypto_wipe((void *)(hash_area),sizeof(hash_area));
     wipe_block(& tmp_block);
   }
-  nb_blocks -= nb_blocks & (unsigned int)3;
+  nb_blocks -= nb_blocks & (uint32_t)3;
   u32 const segment_size = nb_blocks >> 2;
   {
     size_t pass_number = (size_t)0;
@@ -2861,7 +2831,7 @@ static void fe_frombytes(i32 h[10], u8 const s[32])
   tmp_7 = load24_le(s + 26);
   i64 t8 = (i64)(tmp_7 << 4);
   tmp_8 = load24_le(s + 29);
-  i64 t9 = (i64)((tmp_8 & (unsigned int)8388607) << 2);
+  i64 t9 = (i64)((tmp_8 & (u32)8388607) << 2);
   c9 = (t9 + (i64)(1 << 24)) >> 25;
   t0 += c9 * (i64)19;
   t9 -= c9 * (i64)(1 << 25);
@@ -3688,7 +3658,7 @@ static void modL(u8 *r, i64 x[64])
     while (i_0 < (size_t)32) {
       *(x + i_0) = (i64)((u64)*(x + i_0) + ((u64)carry_0 - (u64)(*(x + 31) >> 4) * L[i_0]));
       carry_0 = *(x + i_0) >> 8;
-      *(x + i_0) &= (long)255;
+      *(x + i_0) &= (i64)255;
       i_0 ++;
     }
   }
@@ -3705,7 +3675,7 @@ static void modL(u8 *r, i64 x[64])
     /*@ loop \eva::unroll 32; */
     while (i_2 < (size_t)32) {
       *(x + (i_2 + (size_t)1)) += *(x + i_2) >> 8;
-      *(r + i_2) = (u8)(*(x + i_2) & (long)255);
+      *(r + i_2) = (u8)(*(x + i_2) & (i64)255);
       i_2 ++;
     }
   }
@@ -4715,7 +4685,7 @@ static void ge_scalarmult_base(ge *p, u8 const scalar[32])
           while (j < (size_t)16) {
             {
               i32 select =
-                (i32)((unsigned long)1 & (((j ^ (unsigned long)index) - (unsigned long)1) >> 8));
+                (i32)((size_t)1 & (((j ^ (size_t)index) - (size_t)1) >> 8));
               fe_ccopy(yp,comb_Yp[j],select);
               fe_ccopy(ym,comb_Ym[j],select);
               fe_ccopy(t2,comb_T2[j],select);
@@ -4928,7 +4898,7 @@ static void lock_ad_padding(crypto_lock_ctx *ctx)
   if (ctx->ad_phase) {
     ctx->ad_phase = 0;
     crypto_poly1305_update(& ctx->poly,zero,
-                           (~ ctx->ad_size + (uint64_t)1) & (unsigned long)(
+                           (~ ctx->ad_size + (uint64_t)1) & (uint64_t)(
                            16 - 1));
   }
   return;
@@ -4980,7 +4950,7 @@ void crypto_lock_final(crypto_lock_ctx *ctx, uint8_t mac[16])
   store64_le(& sizes[0],ctx->ad_size);
   store64_le(& sizes[8],ctx->message_size);
   crypto_poly1305_update(& ctx->poly,zero,
-                         (~ ctx->message_size + (uint64_t)1) & (unsigned long)(
+                         (~ ctx->message_size + (uint64_t)1) & (uint64_t)(
                          16 - 1));
   crypto_poly1305_update(& ctx->poly,(uint8_t const *)(sizes),(size_t)16);
   crypto_poly1305_final(& ctx->poly,mac);
@@ -5083,14 +5053,14 @@ static u64 load64_be(u8 const s[8])
 
 static void store64_be(u8 out[8], u64 in)
 {
-  *(out + 0) = (u8)((in >> 56) & (unsigned long)0xff);
-  *(out + 1) = (u8)((in >> 48) & (unsigned long)0xff);
-  *(out + 2) = (u8)((in >> 40) & (unsigned long)0xff);
-  *(out + 3) = (u8)((in >> 32) & (unsigned long)0xff);
-  *(out + 4) = (u8)((in >> 24) & (unsigned long)0xff);
-  *(out + 5) = (u8)((in >> 16) & (unsigned long)0xff);
-  *(out + 6) = (u8)((in >> 8) & (unsigned long)0xff);
-  *(out + 7) = (u8)(in & (unsigned long)0xff);
+  *(out + 0) = (u8)((in >> 56) & (u64)0xff);
+  *(out + 1) = (u8)((in >> 48) & (u64)0xff);
+  *(out + 2) = (u8)((in >> 40) & (u64)0xff);
+  *(out + 3) = (u8)((in >> 32) & (u64)0xff);
+  *(out + 4) = (u8)((in >> 24) & (u64)0xff);
+  *(out + 5) = (u8)((in >> 16) & (u64)0xff);
+  *(out + 6) = (u8)((in >> 8) & (u64)0xff);
+  *(out + 7) = (u8)(in & (u64)0xff);
   return;
 }
 
@@ -5338,7 +5308,7 @@ static void sha512_set_input(crypto_sha512_ctx *ctx, u8 input)
     }
   }
   size_t word = ctx->input_idx / (size_t)8;
-  size_t byte = ctx->input_idx % (unsigned long)8;
+  size_t byte = ctx->input_idx % (size_t)8;
   ctx->input[word] |= (u64)input << (size_t)8 * ((size_t)7 - byte);
   return;
 }
@@ -5392,9 +5362,9 @@ void crypto_sha512_init(crypto_sha512_ctx *ctx)
 void crypto_sha512_update(crypto_sha512_ctx *ctx, uint8_t const *message,
                           size_t message_size)
 {
-  unsigned long tmp;
-  if (((~ ctx->input_idx + (size_t)1) & (unsigned long)(128 - 1)) <= message_size) 
-    tmp = (~ ctx->input_idx + (size_t)1) & (unsigned long)(128 - 1);
+  size_t tmp;
+  if (((~ ctx->input_idx + (size_t)1) & (size_t)(128 - 1)) <= message_size) 
+    tmp = (~ ctx->input_idx + (size_t)1) & (size_t)(128 - 1);
   else tmp = message_size;
   size_t align = tmp;
   sha512_update(ctx,message,align);
@@ -5416,7 +5386,7 @@ void crypto_sha512_update(crypto_sha512_ctx *ctx, uint8_t const *message,
       i ++;
     }
   }
-  message_size &= (unsigned long)127;
+  message_size &= (size_t)127;
   sha512_update(ctx,message,message_size);
   return;
 }
@@ -5460,14 +5430,14 @@ void crypto_sha512(uint8_t *hash, uint8_t const *message, size_t message_size)
 
 static void store64_le_0(u8 out[8], u64 in)
 {
-  *(out + 0) = (u8)(in & (unsigned long)0xff);
-  *(out + 1) = (u8)((in >> 8) & (unsigned long)0xff);
-  *(out + 2) = (u8)((in >> 16) & (unsigned long)0xff);
-  *(out + 3) = (u8)((in >> 24) & (unsigned long)0xff);
-  *(out + 4) = (u8)((in >> 32) & (unsigned long)0xff);
-  *(out + 5) = (u8)((in >> 40) & (unsigned long)0xff);
-  *(out + 6) = (u8)((in >> 48) & (unsigned long)0xff);
-  *(out + 7) = (u8)((in >> 56) & (unsigned long)0xff);
+  *(out + 0) = (u8)(in & (u64)0xff);
+  *(out + 1) = (u8)((in >> 8) & (u64)0xff);
+  *(out + 2) = (u8)((in >> 16) & (u64)0xff);
+  *(out + 3) = (u8)((in >> 24) & (u64)0xff);
+  *(out + 4) = (u8)((in >> 32) & (u64)0xff);
+  *(out + 5) = (u8)((in >> 40) & (u64)0xff);
+  *(out + 6) = (u8)((in >> 48) & (u64)0xff);
+  *(out + 7) = (u8)((in >> 56) & (u64)0xff);
   return;
 }
 
@@ -435508,7 +435478,7 @@ static int test(void (*f)(vector const *, vector *), char const *name,
     (*f)((vector const *)in,& out);
     expected.buf = *(vectors + (idx + nb_inputs));
     expected.size = *(sizes + (idx + nb_inputs));
-    status = (int)((unsigned long)status | (out.size - expected.size));
+    status = (int)((size_t)status | (out.size - expected.size));
     if (out.size != (size_t)0) {
       int tmp_1;
       tmp_1 = memcmp((void const *)out.buf,(void const *)expected.buf,
@@ -436456,13 +436426,13 @@ static int p_argon2i_overlap(void)
         int tmp_5;
         p_random(work_area,(size_t)(8 * 1024));
         tmp_1 = rand64();
-        u32 pass_offset = (u32)(tmp_1 % (unsigned long)64);
+        u32 pass_offset = (u32)(tmp_1 % (u64)64);
         tmp_2 = rand64();
-        u32 salt_offset = (u32)(tmp_2 % (unsigned long)64);
+        u32 salt_offset = (u32)(tmp_2 % (u64)64);
         tmp_3 = rand64();
-        u32 key_offset = (u32)(tmp_3 % (unsigned long)64);
+        u32 key_offset = (u32)(tmp_3 % (u64)64);
         tmp_4 = rand64();
-        u32 ad_offset = (u32)(tmp_4 % (unsigned long)64);
+        u32 ad_offset = (u32)(tmp_4 % (u64)64);
         {
           size_t i_0 = (size_t)0;
           while (i_0 < (size_t)16) {
@@ -436873,8 +436843,8 @@ static int p_lock_incremental(void)
         u8 plain[256];
         u64 tmp;
         u64 tmp_0;
-        unsigned long tmp_2;
-        unsigned long tmp_4;
+        u64 tmp_2;
+        u64 tmp_4;
         u8 mac1[16];
         u8 cipher1[256];
         u8 mac2[16];
@@ -436895,17 +436865,17 @@ static int p_lock_incremental(void)
         p_random(ad,(size_t)128);
         p_random(plain,(size_t)256);
         tmp = rand64();
-        size_t ad_size = tmp % (unsigned long)128;
+        size_t ad_size = tmp % (u64)128;
         tmp_0 = rand64();
-        size_t text_size = tmp_0 % (unsigned long)256;
-        if (ad_size == (size_t)0) tmp_2 = (unsigned long)0;
+        size_t text_size = tmp_0 % (u64)256;
+        if (ad_size == (size_t)0) tmp_2 = (u64)0;
         else {
           u64 tmp_1;
           tmp_1 = rand64();
           tmp_2 = tmp_1 % ad_size;
         }
         size_t ad_size1 = tmp_2;
-        if (text_size == (size_t)0) tmp_4 = (unsigned long)0;
+        if (text_size == (size_t)0) tmp_4 = (u64)0;
         else {
           u64 tmp_3;
           tmp_3 = rand64();

@@ -7,11 +7,11 @@ FRAMAC_SHARE/libc	string.h	109	memcpy	precondition	Unknown	valid_src: valid_read
 FRAMAC_SHARE/libc	time.h	339	nanosleep	precondition	Unknown	valid_nanosecs: 0 ≤ rqtp->tv_nsec < 1000000000
 FRAMAC_SHARE/libc	unistd.h	1127	read	precondition	Unknown	buf_has_room: \valid((char *)buf + (0 .. count - 1))
 FRAMAC_SHARE/libc	unistd.h	1309	write	precondition	Unknown	buf_has_room: \valid_read((char *)buf + (0 .. count - 1))
-FRAMAC_SHARE/libc/sys	socket.h	299	accept	precondition	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
-FRAMAC_SHARE/libc/sys	socket.h	440	recv	precondition	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
-FRAMAC_SHARE/libc/sys	socket.h	441	recv	precondition	Unknown	valid_buffer_length: \valid((char *)buf + (0 .. len - 1))
-FRAMAC_SHARE/libc/sys	socket.h	496	send	precondition	Unknown	available_sockfd: 0 ≤ sockfd < 1024
-FRAMAC_SHARE/libc/sys	socket.h	497	send	precondition	Unknown	buf_len_ok: \valid_read((char *)buf + (0 .. len - 1))
+FRAMAC_SHARE/libc/sys	socket.h	304	accept	precondition	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
+FRAMAC_SHARE/libc/sys	socket.h	446	recv	precondition	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
+FRAMAC_SHARE/libc/sys	socket.h	447	recv	precondition	Unknown	valid_buffer_length: \valid((char *)buf + (0 .. len - 1))
+FRAMAC_SHARE/libc/sys	socket.h	502	send	precondition	Unknown	available_sockfd: 0 ≤ sockfd < 1024
+FRAMAC_SHARE/libc/sys	socket.h	503	send	precondition	Unknown	buf_len_ok: \valid_read((char *)buf + (0 .. len - 1))
 src	modbus-data.c	89	modbus_set_bits_from_bytes	initialization	Unknown	\initialized(tab_byte + (unsigned int)((unsigned int)(i - (unsigned int)idx) / 8))
 src	modbus-data.c	89	modbus_set_bits_from_bytes	mem_access	Unknown	\valid(dest + i)
 src	modbus-data.c	89	modbus_set_bits_from_bytes	mem_access	Unknown	\valid_read(tab_byte + (unsigned int)((unsigned int)(i - (unsigned int)idx) / 8))

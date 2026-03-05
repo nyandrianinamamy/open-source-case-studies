@@ -506,7 +506,7 @@ bitarray_t ba_init(size_t bits)
   bitarray_t ba = calloc((size_t)1,sizeof(bitarray));
   ba->num_bits = bits;
   size_t num_chars =
-    bits / (size_t)8 + (size_t)(bits % (unsigned long)8 > (unsigned long)0);
+    bits / (size_t)8 + (size_t)(bits % (size_t)8 > (size_t)0);
   ba->num_chars = num_chars;
   ba->arr = (unsigned char *)calloc(num_chars + (size_t)1,
                                     sizeof(unsigned char));
@@ -552,7 +552,7 @@ int ba_set_bit(bitarray_t ba, size_t bit)
     goto return_label;
   }
   *(ba->arr + bit / (size_t)8) = (unsigned char)((int)*(ba->arr + bit / (size_t)8) | (
-                                                 1 << bit % (unsigned long)8));
+                                                 1 << bit % (size_t)8));
   __retres = 1;
   return_label: return __retres;
 }
@@ -565,7 +565,7 @@ int ba_check_bit(bitarray_t ba, size_t bit)
     __retres = -1;
     goto return_label;
   }
-  if (((int)*(ba->arr + bit / (size_t)8) & (1 << bit % (unsigned long)8)) != 0) 
+  if (((int)*(ba->arr + bit / (size_t)8) & (1 << bit % (size_t)8)) != 0) 
     tmp = 1;
   else tmp = 0;
   __retres = tmp;
@@ -580,12 +580,12 @@ int ba_check_and_set_bit(bitarray_t ba, size_t bit)
     __retres = -1;
     goto return_label;
   }
-  if (((int)*(ba->arr + bit / (size_t)8) & (1 << bit % (unsigned long)8)) != 0) 
+  if (((int)*(ba->arr + bit / (size_t)8) & (1 << bit % (size_t)8)) != 0) 
     tmp = 1;
   else tmp = 0;
   int was_previously_set = tmp;
   *(ba->arr + bit / (size_t)8) = (unsigned char)((int)*(ba->arr + bit / (size_t)8) | (
-                                                 1 << bit % (unsigned long)8));
+                                                 1 << bit % (size_t)8));
   __retres = was_previously_set;
   return_label: return __retres;
 }
@@ -599,7 +599,7 @@ int ba_toggle_bit(bitarray_t ba, size_t bit)
     goto return_label;
   }
   *(ba->arr + bit / (size_t)8) = (unsigned char)((int)*(ba->arr + bit / (size_t)8) ^ (
-                                                 1 << bit % (unsigned long)8));
+                                                 1 << bit % (size_t)8));
   tmp = ba_check_bit(ba,bit);
   __retres = tmp;
   return_label: return __retres;
@@ -613,7 +613,7 @@ int ba_clear_bit(bitarray_t ba, size_t bit)
     goto return_label;
   }
   *(ba->arr + bit / (size_t)8) = (unsigned char)((int)*(ba->arr + bit / (size_t)8) & ~ (
-                                                 1 << bit % (unsigned long)8));
+                                                 1 << bit % (size_t)8));
   __retres = 0;
   return_label: return __retres;
 }
@@ -632,7 +632,7 @@ char *ba_to_string(bitarray_t ba)
   char *res = calloc(ba->num_bits + (size_t)1,sizeof(char));
   i = (size_t)0;
   while (i < ba->num_bits) {
-    if (((int)*(ba->arr + i / (size_t)8) & (1 << i % (unsigned long)8)) != 0) 
+    if (((int)*(ba->arr + i / (size_t)8) & (1 << i % (size_t)8)) != 0) 
       *(res + i) = (char)'1';
     else *(res + i) = (char)'0';
     i ++;

@@ -1073,11 +1073,11 @@ static mp_bitcnt_t mpn_common_scan(mp_limb_t limb, mp_size_t i, mp_srcptr up,
       unsigned int __clz_c;
       mp_limb_t __clz_x = __ctz_x & - __ctz_x;
       __clz_c = (unsigned int)0;
-      while ((__clz_x & ((mp_limb_t)0xff << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)8))) == (unsigned long)0) {
+      while ((__clz_x & ((mp_limb_t)0xff << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)8))) == (mp_limb_t)0) {
         __clz_x <<= 8;
         __clz_c += (unsigned int)8;
       }
-      while ((__clz_x & ((mp_limb_t)1 << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)1))) == (unsigned long)0) {
+      while ((__clz_x & ((mp_limb_t)1 << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)1))) == (mp_limb_t)0) {
         __clz_x <<= 1;
         __clz_c ++;
       }
@@ -1094,7 +1094,7 @@ mp_bitcnt_t mpn_scan1(mp_srcptr ptr, mp_bitcnt_t bit)
   mp_size_t i;
   mp_bitcnt_t tmp;
   i = (mp_size_t)(bit / (mp_bitcnt_t)(sizeof(mp_limb_t) * (unsigned int)8));
-  tmp = mpn_common_scan(*(ptr + i) & (~ ((mp_limb_t)0) << bit % (unsigned long)(
+  tmp = mpn_common_scan(*(ptr + i) & (~ ((mp_limb_t)0) << bit % (mp_bitcnt_t)(
                                                           sizeof(mp_limb_t) * (unsigned int)8)),
                         i,ptr,i,(mp_limb_t)0);
   return tmp;
@@ -1105,7 +1105,7 @@ mp_bitcnt_t mpn_scan0(mp_srcptr ptr, mp_bitcnt_t bit)
   mp_size_t i;
   mp_bitcnt_t tmp;
   i = (mp_size_t)(bit / (mp_bitcnt_t)(sizeof(mp_limb_t) * (unsigned int)8));
-  tmp = mpn_common_scan(~ *(ptr + i) & (~ ((mp_limb_t)0) << bit % (unsigned long)(
+  tmp = mpn_common_scan(~ *(ptr + i) & (~ ((mp_limb_t)0) << bit % (mp_bitcnt_t)(
                                                             sizeof(mp_limb_t) * (unsigned int)8)),
                         i,ptr,i,~ ((mp_limb_t)0));
   return tmp;
@@ -1208,11 +1208,11 @@ static void mpn_div_qr_1_invert(struct gmp_div_inverse *inv, mp_limb_t d)
     unsigned int __clz_c;
     mp_limb_t __clz_x = d;
     __clz_c = (unsigned int)0;
-    while ((__clz_x & ((mp_limb_t)0xff << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)8))) == (unsigned long)0) {
+    while ((__clz_x & ((mp_limb_t)0xff << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)8))) == (mp_limb_t)0) {
       __clz_x <<= 8;
       __clz_c += (unsigned int)8;
     }
-    while ((__clz_x & ((mp_limb_t)1 << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)1))) == (unsigned long)0) {
+    while ((__clz_x & ((mp_limb_t)1 << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)1))) == (mp_limb_t)0) {
       __clz_x <<= 1;
       __clz_c ++;
     }
@@ -1233,11 +1233,11 @@ static void mpn_div_qr_2_invert(struct gmp_div_inverse *inv, mp_limb_t d1,
     unsigned int __clz_c;
     mp_limb_t __clz_x = d1;
     __clz_c = (unsigned int)0;
-    while ((__clz_x & ((mp_limb_t)0xff << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)8))) == (unsigned long)0) {
+    while ((__clz_x & ((mp_limb_t)0xff << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)8))) == (mp_limb_t)0) {
       __clz_x <<= 8;
       __clz_c += (unsigned int)8;
     }
-    while ((__clz_x & ((mp_limb_t)1 << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)1))) == (unsigned long)0) {
+    while ((__clz_x & ((mp_limb_t)1 << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)1))) == (mp_limb_t)0) {
       __clz_x <<= 1;
       __clz_c ++;
     }
@@ -1272,11 +1272,11 @@ static void mpn_div_qr_invert(struct gmp_div_inverse *inv, mp_srcptr dp,
         unsigned int __clz_c;
         mp_limb_t __clz_x = d1;
         __clz_c = (unsigned int)0;
-        while ((__clz_x & ((mp_limb_t)0xff << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)8))) == (unsigned long)0) {
+        while ((__clz_x & ((mp_limb_t)0xff << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)8))) == (mp_limb_t)0) {
           __clz_x <<= 8;
           __clz_c += (unsigned int)8;
         }
-        while ((__clz_x & ((mp_limb_t)1 << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)1))) == (unsigned long)0) {
+        while ((__clz_x & ((mp_limb_t)1 << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)1))) == (mp_limb_t)0) {
           __clz_x <<= 1;
           __clz_c ++;
         }
@@ -1376,7 +1376,7 @@ static mp_limb_t mpn_div_qr_1(mp_ptr qp, mp_srcptr np, mp_size_t nn,
 {
   mp_limb_t __retres;
   __FC_assert((d > (mp_limb_t)0) != 0,"mini-gmp.c",895,"d > 0");
-  if ((d & (d - (mp_limb_t)1)) == (unsigned long)0) {
+  if ((d & (d - (mp_limb_t)1)) == (mp_limb_t)0) {
     mp_limb_t r = *(np + 0) & (d - (mp_limb_t)1);
     if (qp) 
       if (d <= (mp_limb_t)1) mpn_copyi(qp,np,nn);
@@ -1389,11 +1389,11 @@ static mp_limb_t mpn_div_qr_1(mp_ptr qp, mp_srcptr np, mp_size_t nn,
             unsigned int __clz_c;
             mp_limb_t __clz_x = __ctz_x & - __ctz_x;
             __clz_c = (unsigned int)0;
-            while ((__clz_x & ((mp_limb_t)0xff << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)8))) == (unsigned long)0) {
+            while ((__clz_x & ((mp_limb_t)0xff << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)8))) == (mp_limb_t)0) {
               __clz_x <<= 8;
               __clz_c += (unsigned int)8;
             }
-            while ((__clz_x & ((mp_limb_t)1 << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)1))) == (unsigned long)0) {
+            while ((__clz_x & ((mp_limb_t)1 << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)1))) == (mp_limb_t)0) {
               __clz_x <<= 1;
               __clz_c ++;
             }
@@ -1579,7 +1579,7 @@ static void mpn_div_qr_pi1(mp_ptr qp, mp_ptr np, mp_size_t nn, mp_limb_t n1,
   __FC_assert((nn >= dn) != 0,"mini-gmp.c",999,"nn >= dn");
   d1 = *(dp + (dn - (mp_size_t)1));
   d0 = *(dp + (dn - (mp_size_t)2));
-  __FC_assert(((d1 & ((mp_limb_t)1 << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)1))) != (unsigned long)0) != 0,
+  __FC_assert(((d1 & ((mp_limb_t)1 << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)1))) != (mp_limb_t)0) != 0,
               "mini-gmp.c",1004,"(d1 & GMP_LIMB_HIGHBIT) != 0");
   i = nn - dn;
   while (1) {
@@ -1737,7 +1737,7 @@ static void mpn_div_qr_preinv(mp_ptr qp, mp_ptr np, mp_size_t nn,
                   1066,"inv->d1 == dp[dn-1]");
       __FC_assert((inv->d0 == *(dp + (dn - (mp_size_t)2))) != 0,"mini-gmp.c",
                   1067,"inv->d0 == dp[dn-2]");
-      __FC_assert(((inv->d1 & ((mp_limb_t)1 << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)1))) != (unsigned long)0) != 0,
+      __FC_assert(((inv->d1 & ((mp_limb_t)1 << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)1))) != (mp_limb_t)0) != 0,
                   "mini-gmp.c",1068,"(inv->d1 & GMP_LIMB_HIGHBIT) != 0");
       shift = inv->shift;
       if (shift > (unsigned int)0) nh = mpn_lshift(np,(mp_srcptr)np,nn,shift);
@@ -1827,11 +1827,11 @@ static mp_bitcnt_t mpn_limb_size_in_base_2(mp_limb_t u)
     unsigned int __clz_c;
     mp_limb_t __clz_x = u;
     __clz_c = (unsigned int)0;
-    while ((__clz_x & ((mp_limb_t)0xff << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)8))) == (unsigned long)0) {
+    while ((__clz_x & ((mp_limb_t)0xff << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)8))) == (mp_limb_t)0) {
       __clz_x <<= 8;
       __clz_c += (unsigned int)8;
     }
-    while ((__clz_x & ((mp_limb_t)1 << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)1))) == (unsigned long)0) {
+    while ((__clz_x & ((mp_limb_t)1 << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)1))) == (mp_limb_t)0) {
       __clz_x <<= 1;
       __clz_c ++;
     }
@@ -1871,8 +1871,7 @@ static size_t mpn_get_str_bits(unsigned char *sp, unsigned int bits,
         ;
         if (i < un) {
           shift = (int)((unsigned int)shift - sizeof(mp_limb_t) * (unsigned int)8);
-          digit = (unsigned char)((unsigned long)digit | (*(up + i) << (
-                                                          bits - (unsigned int)shift)));
+          digit = (unsigned char)((mp_limb_t)digit | (*(up + i) << (bits - (unsigned int)shift)));
         }
       }
       *(sp + j) = (unsigned char)((int)digit & (int)mask);
@@ -2078,7 +2077,7 @@ static mp_size_t mpn_set_str_other(mp_ptr rp, unsigned char const *sp,
   unsigned int k;
   size_t j;
   size_t tmp;
-  k = (unsigned int)1 + (sn - (size_t)1) % info->exp;
+  k = (size_t)1 + (sn - (size_t)1) % info->exp;
   j = (size_t)0;
   tmp = j;
   j ++;
@@ -2210,7 +2209,7 @@ void mpz_set_ui(__mpz_struct r[1], unsigned long x)
 
 void mpz_set(__mpz_struct r[1], __mpz_struct const x[1])
 {
-  if ((void *)r != (void *)x) {
+  if (r != (__mpz_struct *)x) {
     mp_size_t n;
     mp_ptr rp;
     if (x->_mp_size >= 0) n = (mp_size_t)x->_mp_size;
@@ -2961,7 +2960,7 @@ void mpz_mul(__mpz_struct r[1], __mpz_struct const u[1],
               goto return_label;
             }
     }
-  sign = (un ^ vn) < (long)0;
+  sign = (un ^ vn) < (mp_size_t)0;
   if (un >= (mp_size_t)0) un = un; else un = - un;
   if (vn >= (mp_size_t)0) vn = vn; else vn = - vn;
   mpz_init2(t,
@@ -2992,7 +2991,7 @@ void mpz_mul_2exp(__mpz_struct r[1], __mpz_struct const u[1],
     goto return_label;
   }
   limbs = (mp_size_t)(bits / (mp_bitcnt_t)(sizeof(mp_limb_t) * (unsigned int)8));
-  shift = (unsigned int)(bits % (unsigned long)(sizeof(mp_limb_t) * (unsigned int)8));
+  shift = (unsigned int)(bits % (mp_bitcnt_t)(sizeof(mp_limb_t) * (unsigned int)8));
   rn = (un + limbs) + (mp_size_t)(shift > (unsigned int)0);
   if (rn > (mp_size_t)r->_mp_alloc) rp = mpz_realloc(r,rn);
   else rp = r->_mp_d;
@@ -3250,7 +3249,7 @@ static void mpz_div_q_2exp(__mpz_struct q[1], __mpz_struct const u[1],
   limb_cnt = (mp_size_t)(bit_index / (mp_bitcnt_t)(sizeof(mp_limb_t) * (unsigned int)8));
   if (un >= (mp_size_t)0) tmp = un; else tmp = - un;
   qn = tmp - limb_cnt;
-  bit_index %= (unsigned long)(sizeof(mp_limb_t) * (unsigned int)8);
+  bit_index %= (mp_bitcnt_t)(sizeof(mp_limb_t) * (unsigned int)8);
   if (un > (mp_size_t)0) tmp_2 = GMP_DIV_CEIL; else tmp_2 = GMP_DIV_FLOOR;
   ;
   if (mode == (unsigned int)tmp_2) {
@@ -3336,13 +3335,13 @@ static void mpz_div_r_2exp(__mpz_struct r[1], __mpz_struct const u[1],
       us = - us;
     }
     else {
-      if ((void *)r != (void *)u) mpn_copyi(rp,(mp_srcptr)u->_mp_d,un);
+      if (r != (__mpz_struct *)u) mpn_copyi(rp,(mp_srcptr)u->_mp_d,un);
       rn = un;
     }
   }
   else {
     int tmp_1;
-    if ((void *)r != (void *)u) mpn_copyi(rp,(mp_srcptr)u->_mp_d,
+    if (r != (__mpz_struct *)u) mpn_copyi(rp,(mp_srcptr)u->_mp_d,
                                           rn - (mp_size_t)1);
     *(rp + (rn - (mp_size_t)1)) = *(u->_mp_d + (rn - (mp_size_t)1)) & mask;
     if (us > (mp_size_t)0) tmp_1 = GMP_DIV_CEIL; else tmp_1 = GMP_DIV_FLOOR;
@@ -3646,8 +3645,7 @@ static mp_limb_t mpn_gcd_11(mp_limb_t u, mp_limb_t v)
 {
   mp_limb_t __retres;
   unsigned int shift;
-  __FC_assert(((u | v) > (unsigned long)0) != 0,"mini-gmp.c",2654,
-              "(u | v) > 0");
+  __FC_assert(((u | v) > (mp_limb_t)0) != 0,"mini-gmp.c",2654,"(u | v) > 0");
   if (u == (mp_limb_t)0) {
     __retres = v;
     goto return_label;
@@ -3664,11 +3662,11 @@ static mp_limb_t mpn_gcd_11(mp_limb_t u, mp_limb_t v)
       unsigned int __clz_c;
       mp_limb_t __clz_x = __ctz_x & - __ctz_x;
       __clz_c = (unsigned int)0;
-      while ((__clz_x & ((mp_limb_t)0xff << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)8))) == (unsigned long)0) {
+      while ((__clz_x & ((mp_limb_t)0xff << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)8))) == (mp_limb_t)0) {
         __clz_x <<= 8;
         __clz_c += (unsigned int)8;
       }
-      while ((__clz_x & ((mp_limb_t)1 << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)1))) == (unsigned long)0) {
+      while ((__clz_x & ((mp_limb_t)1 << (sizeof(mp_limb_t) * (unsigned int)8 - (unsigned int)1))) == (mp_limb_t)0) {
         __clz_x <<= 1;
         __clz_c ++;
       }
@@ -3678,25 +3676,25 @@ static mp_limb_t mpn_gcd_11(mp_limb_t u, mp_limb_t v)
   }
   u >>= shift;
   v >>= shift;
-  if ((u & (unsigned long)1) == (unsigned long)0) {
+  if ((u & (mp_limb_t)1) == (mp_limb_t)0) {
     mp_limb_t __mp_limb_t_swap__tmp = u;
     u = v;
     v = __mp_limb_t_swap__tmp;
   }
-  while ((v & (unsigned long)1) == (unsigned long)0) v >>= 1;
+  while ((v & (mp_limb_t)1) == (mp_limb_t)0) v >>= 1;
   while (u != v) 
     if (u > v) {
       u -= v;
       while (1) {
         u >>= 1;
-        if (! ((u & (unsigned long)1) == (unsigned long)0)) break;
+        if (! ((u & (mp_limb_t)1) == (mp_limb_t)0)) break;
       }
     }
     else {
       v -= u;
       while (1) {
         v >>= 1;
-        if (! ((v & (unsigned long)1) == (unsigned long)0)) break;
+        if (! ((v & (mp_limb_t)1) == (mp_limb_t)0)) break;
       }
     }
   __retres = u << shift;
@@ -4442,9 +4440,9 @@ int mpz_tstbit(__mpz_struct const d[1], mp_bitcnt_t bit_index)
     __retres = ds < (mp_size_t)0;
     goto return_label;
   }
-  shift = (unsigned int)(bit_index % (unsigned long)(sizeof(mp_limb_t) * (unsigned int)8));
+  shift = (unsigned int)(bit_index % (mp_bitcnt_t)(sizeof(mp_limb_t) * (unsigned int)8));
   w = *(d->_mp_d + limb_index);
-  bit = (int)((w >> shift) & (unsigned long)1);
+  bit = (int)((w >> shift) & (mp_limb_t)1);
   if (ds < (mp_size_t)0) {
     if (shift > (unsigned int)0) 
       if (w << (sizeof(mp_limb_t) * (unsigned int)8 - shift) > (mp_limb_t)0) {
@@ -4473,7 +4471,7 @@ static void mpz_abs_add_bit(__mpz_struct d[1], mp_bitcnt_t bit_index)
   if (d->_mp_size >= 0) dn = (mp_size_t)d->_mp_size;
   else dn = (mp_size_t)(- d->_mp_size);
   limb_index = (mp_size_t)(bit_index / (mp_bitcnt_t)(sizeof(mp_limb_t) * (unsigned int)8));
-  bit = (mp_limb_t)1 << bit_index % (unsigned long)(sizeof(mp_limb_t) * (unsigned int)8);
+  bit = (mp_limb_t)1 << bit_index % (mp_bitcnt_t)(sizeof(mp_limb_t) * (unsigned int)8);
   if (limb_index >= dn) {
     mp_size_t i;
     if (limb_index + (mp_size_t)1 > (mp_size_t)d->_mp_alloc) dp = mpz_realloc
@@ -4517,7 +4515,7 @@ static void mpz_abs_sub_bit(__mpz_struct d[1], mp_bitcnt_t bit_index)
   else dn = (mp_size_t)(- d->_mp_size);
   dp = d->_mp_d;
   limb_index = (mp_size_t)(bit_index / (mp_bitcnt_t)(sizeof(mp_limb_t) * (unsigned int)8));
-  bit = (mp_limb_t)1 << bit_index % (unsigned long)(sizeof(mp_limb_t) * (unsigned int)8);
+  bit = (mp_limb_t)1 << bit_index % (mp_bitcnt_t)(sizeof(mp_limb_t) * (unsigned int)8);
   __FC_assert((limb_index < dn) != 0,"mini-gmp.c",3556,"limb_index < dn");
   {
     mp_limb_t __cy =
@@ -4827,7 +4825,7 @@ static unsigned int gmp_popcount_limb(mp_limb_t x)
   while (x > (mp_limb_t)0) {
     {
       unsigned int w =
-        (unsigned int)(((x >> 1) & (unsigned long)0x5555) + (x & (unsigned long)0x5555));
+        (unsigned int)(((x >> 1) & (mp_limb_t)0x5555) + (x & (mp_limb_t)0x5555));
       w = ((w >> 2) & (unsigned int)0x3333) + (w & (unsigned int)0x3333);
       w = ((w >> 4) & (unsigned int)0x0f0f) + (w & (unsigned int)0x0f0f);
       w = (w >> 8) + (w & (unsigned int)0x00ff);
@@ -4884,7 +4882,7 @@ mp_bitcnt_t mpz_hamdist(__mpz_struct const u[1], __mpz_struct const v[1])
   mp_bitcnt_t c;
   un = (mp_size_t)u->_mp_size;
   vn = (mp_size_t)v->_mp_size;
-  if ((un ^ vn) < (long)0) {
+  if ((un ^ vn) < (mp_size_t)0) {
     __retres = ~ ((mp_bitcnt_t)0);
     goto return_label;
   }
@@ -4970,7 +4968,7 @@ mp_bitcnt_t mpz_scan1(__mpz_struct const u[1], mp_bitcnt_t starting_bit)
       limb = ~ limb + ux;
       ux = - ((mp_limb_t)(limb >= ux));
     }
-    limb &= ~ ((mp_limb_t)0) << starting_bit % (unsigned long)(sizeof(mp_limb_t) * (unsigned int)8);
+    limb &= ~ ((mp_limb_t)0) << starting_bit % (mp_bitcnt_t)(sizeof(mp_limb_t) * (unsigned int)8);
   }
   tmp_1 = mpn_common_scan(limb,i,(mp_srcptr)up,un,ux);
   __retres = tmp_1;
@@ -5004,7 +5002,7 @@ mp_bitcnt_t mpz_scan0(__mpz_struct const u[1], mp_bitcnt_t starting_bit)
     tmp_0 = mpn_zero_p((mp_srcptr)up,i);
     limb -= (mp_limb_t)tmp_0;
   }
-  limb &= ~ ((mp_limb_t)0) << starting_bit % (unsigned long)(sizeof(mp_limb_t) * (unsigned int)8);
+  limb &= ~ ((mp_limb_t)0) << starting_bit % (mp_bitcnt_t)(sizeof(mp_limb_t) * (unsigned int)8);
   tmp_1 = mpn_common_scan(limb,i,(mp_srcptr)up,un,ux);
   __retres = tmp_1;
   return_label: return __retres;

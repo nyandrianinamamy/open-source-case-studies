@@ -72,8 +72,7 @@ static z m(z a, z b_0, z c)
 {
   z __retres;
   z tmp;
-  tmp = t((b_0 << 16) | (c >> 48),(c >> 24) % (unsigned long long)(1 << 24),
-          c % (unsigned long long)(1 << 24));
+  tmp = t((b_0 << 16) | (c >> 48),(c >> 24) % (z)(1 << 24),c % (z)(1 << 24));
   ;
   __retres = (z)(tmp >> 48 < a);
   return __retres;
@@ -198,8 +197,7 @@ static void n(z *a, z *b_0, z *c)
   tmp_0 = s(*(a + 4),*(a + 5),*(a + 6));
   tmp_1 = l(*b_0);
   tmp_2 = q(tmp_1);
-  z d_0 =
-    (((*(a + 7) + tmp) + tmp_0) + tmp_2) + *(c + *b_0 % (unsigned long long)16);
+  z d_0 = (((*(a + 7) + tmp) + tmp_0) + tmp_2) + *(c + *b_0 % (z)16);
   {
     z e = (z)0;
     while (e < (z)8) {
@@ -221,12 +219,12 @@ static void n(z *a, z *b_0, z *c)
   }
   {
     z e_0 = (z)0;
-    while (e_0 < (z)(16 * (*b_0 % (unsigned long long)16 > (unsigned long long)14))) {
+    while (e_0 < (z)(16 * (*b_0 % (z)16 > (z)14))) {
       z tmp_6;
       z tmp_7;
-      tmp_6 = r(*(c + (e_0 + (z)1) % (unsigned long long)16));
-      tmp_7 = _(*(c + (e_0 + (z)14) % (unsigned long long)16));
-      *(c + e_0) += (*(c + (e_0 + (z)9) % (unsigned long long)16) + tmp_6) + tmp_7;
+      tmp_6 = r(*(c + (e_0 + (z)1) % (z)16));
+      tmp_7 = _(*(c + (e_0 + (z)14) % (z)16));
+      *(c + e_0) += (*(c + (e_0 + (z)9) % (z)16) + tmp_6) + tmp_7;
       e_0 ++;
     }
   }

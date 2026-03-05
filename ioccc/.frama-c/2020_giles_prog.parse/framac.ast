@@ -119,9 +119,9 @@ int main(int m, char **f)
       memset((void *)(l),0,(size_t)('F' + ':'));
       if (c_0) {
         w = (uint32_t)(c_0 - k);
-        double *n_0 = & l[(w % (unsigned int)4) * (unsigned int)2];
+        double *n_0 = & l[(w % (uint32_t)4) * (uint32_t)2];
         *n_0 = *(n_0 + 16);
-        n_0 = & l[8] + ((w / (uint32_t)4) % (unsigned int)4) * (unsigned int)2;
+        n_0 = & l[8] + ((w / (uint32_t)4) % (uint32_t)4) * (uint32_t)2;
         *n_0 = *(n_0 + 16);
       }
       w = (uint32_t)3200;

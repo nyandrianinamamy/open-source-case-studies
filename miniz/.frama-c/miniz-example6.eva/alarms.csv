@@ -155,7 +155,7 @@ directory	file	line	function	property kind	status	property
 .	miniz_tdef.c	513	tdefl_compress_lz_codes	initialization	Unknown	\initialized(&d->m_huff_codes[0][lit])
 .	miniz_tdef.c	513	tdefl_compress_lz_codes	shift	Unknown	0 ≤ bits_in < 64
 .	miniz_tdef.c	521	tdefl_compress_lz_codes	pointer_alignment	Unknown	\aligned(pOutput_buf,alignof(mz_uint64))
-.	miniz_tdef.c	523	tdefl_compress_lz_codes	shift	Unknown	0 ≤ (unsigned int)(bits_in & (unsigned int)((int)(~7))) < 64
+.	miniz_tdef.c	523	tdefl_compress_lz_codes	shift	Unknown	0 ≤ (mz_uint)(bits_in & (mz_uint)((int)(~7))) < 64
 .	miniz_tdef.c	536	tdefl_compress_lz_codes	precondition of __FC_assert	Unknown	nonnull_c: c ≢ 0
 .	miniz_tdef.c	541	tdefl_compress_lz_codes	initialization	Unknown	\initialized(&d->m_huff_codes[0][256])
 .	miniz_tdef.c	541	tdefl_compress_lz_codes	initialization	Unknown	\initialized(&d->m_huff_code_sizes[0][256])

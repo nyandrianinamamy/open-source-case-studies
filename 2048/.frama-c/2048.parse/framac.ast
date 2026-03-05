@@ -731,7 +731,7 @@ void setBufferedInput(_Bool enable)
       if (setBufferedInput_enabled) {
         tcgetattr(0,& new);
         setBufferedInput_old = new;
-        new.c_lflag &= (unsigned int)(~ 0000002 & ~ 0000010);
+        new.c_lflag &= (tcflag_t)(~ 0000002 & ~ 0000010);
         tcsetattr(0,0,& new);
         setBufferedInput_enabled = (_Bool)0;
       }

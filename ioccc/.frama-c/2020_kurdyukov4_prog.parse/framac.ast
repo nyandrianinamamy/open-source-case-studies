@@ -144,16 +144,16 @@ int main(int c, char **V)
             int tmp_9;
             tmp_9 = i;
             i ++;
-            a = (a ^ (unsigned int)*(m + (k + tmp_9))) * (unsigned int)79764919;
+            a = (a ^ (uint32_t)*(m + (k + tmp_9))) * (uint32_t)79764919;
           }
           while (1) {
-            i = (int)*(h + (a & (unsigned int)q));
+            i = (int)*(h + (a & (uint32_t)q));
             if (! (i ^ -1)) break;
             a ++;
           }
           tmp_8 = k;
           k ++;
-          *(h + (a & (unsigned int)q)) = (uint32_t)tmp_8;
+          *(h + (a & (uint32_t)q)) = (uint32_t)tmp_8;
         }
         s *= S;
         a = (uint32_t)(s >> 31);
@@ -173,11 +173,11 @@ int main(int c, char **V)
             int tmp_10;
             tmp_10 = i;
             i ++;
-            a = (a ^ (unsigned int)*(m + (p + tmp_10))) * (unsigned int)79764919;
+            a = (a ^ (uint32_t)*(m + (p + tmp_10))) * (uint32_t)79764919;
           }
           while (1) {
             int tmp_12;
-            i = (int)*(h + (a & (unsigned int)q));
+            i = (int)*(h + (a & (uint32_t)q));
             if (! (i ^ -1)) break;
             tmp_12 = memcmp((void const *)(m + p),(void const *)(m + i),
                             (size_t)y);

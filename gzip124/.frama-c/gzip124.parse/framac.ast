@@ -632,7 +632,7 @@ int longest_match(IPos cur_match)
     }
     __Cont:
     { /* sequence */
-      cur_match = (IPos)prev[cur_match & (unsigned int)(0x8000 - 1)];
+      cur_match = (IPos)prev[cur_match & (IPos)(0x8000 - 1)];
       ;
     }
     if (cur_match > limit) {
@@ -2272,7 +2272,7 @@ static void treat_file(char *iname)
   }
   tmp_0 = get_istat(iname,& istat);
   if (tmp_0 != 0) goto return_label;
-  if ((istat.st_mode & (unsigned int)0170000) == (unsigned int)0040000) {
+  if ((istat.st_mode & (mode_t)0170000) == (mode_t)0040000) {
     if (recursive) {
       struct stat st;
       st = istat;
@@ -2284,7 +2284,7 @@ static void treat_file(char *iname)
     }
     goto return_label;
   }
-  if (! ((istat.st_mode & (unsigned int)0170000) == (unsigned int)0100000)) {
+  if (! ((istat.st_mode & (mode_t)0170000) == (mode_t)0100000)) {
     if (! quiet) fprintf(__fc_stderr,
                          "%s: %s is not a directory or a regular file - ignored\n",
                          progname,ifname); /* fprintf_va_27 */
@@ -3771,7 +3771,7 @@ static void copy_stat(struct stat *ifstat)
 {
   int tmp;
   int tmp_0;
-  tmp = chmod((char const *)(ofname),ifstat->st_mode & (unsigned int)07777);
+  tmp = chmod((char const *)(ofname),ifstat->st_mode & (mode_t)07777);
   if (tmp) {
     if (! quiet) fprintf(__fc_stderr,"%s: ",progname); /* fprintf_va_53 */
     if (exit_code == 0) exit_code = 2;
@@ -4498,7 +4498,7 @@ int inflate_stored(void)
     b |= (ulg)((uch)tmp_4) << k;
     k += (unsigned int)8;
   }
-  if (n != (unsigned int)(~ b & (unsigned long)0xffff)) {
+  if (n != (unsigned int)(~ b & (ulg)0xffff)) {
     __retres = 1;
     goto return_label;
   }
@@ -5709,7 +5709,7 @@ ulg flush_block(char *buf, ulg stored_len, int eof)
     if (stored_len + (ulg)4 <= opt_lenb) {
       if (buf != (char *)0) {
         send_bits((0 << 1) + eof,3);
-        compressed_len = ((compressed_len + (ulg)3) + (ulg)7) & (unsigned long)(~ 7L);
+        compressed_len = ((compressed_len + (ulg)3) + (ulg)7) & (ulg)(~ 7L);
         compressed_len += (stored_len + (ulg)4) << 3;
         copy_block(buf,(unsigned int)stored_len,1);
       }
@@ -6742,7 +6742,7 @@ int unpack(int in, int out)
       bitbuf_0 = (bitbuf_0 << 8) | (ulg)tmp_1;
       valid += 8;
     }
-    peek = (unsigned int)((bitbuf_0 >> (valid - peek_bits)) & (unsigned long)peek_mask);
+    peek = (unsigned int)((bitbuf_0 >> (valid - peek_bits)) & (ulg)peek_mask);
     len = (int)outbuf[peek];
     if (len > 0) peek >>= peek_bits - len;
     else {
@@ -6852,7 +6852,7 @@ int check_zipfile(int in)
   if (inptr > insize) goto _LOR;
   else 
     if (((ulg)((int)((ush)*(h + 0)) | ((int)((ush)*(h + 1)) << 8)) | (
-         (ulg)((int)((ush)*((h + 2) + 0)) | ((int)((ush)*((h + 2) + 1)) << 8)) << 16)) != (unsigned long)0x04034b50L) {
+         (ulg)((int)((ush)*((h + 2) + 0)) | ((int)((ush)*((h + 2) + 1)) << 8)) << 16)) != (ulg)0x04034b50L) {
       _LOR:
       {
         fprintf(__fc_stderr,"\n%s: %s: not a valid zip file\n",progname,
@@ -6976,7 +6976,7 @@ int unzip(int in, int out)
         if (n_0 != ((ulg)((int)((ush)*(& inbuf[18] + 0)) | ((int)((ush)*(
                                                             & inbuf[18] + 1)) << 8)) | (
                     (ulg)((int)((ush)*((& inbuf[18] + 2) + 0)) | ((int)((ush)*(
-                                                                  (& inbuf[18] + 2) + 1)) << 8)) << 16)) - (unsigned long)tmp_0) {
+                                                                  (& inbuf[18] + 2) + 1)) << 8)) << 16)) - (ulg)tmp_0) {
           fprintf(__fc_stderr,"len %ld, siz %ld\n",(long)n_0,
                   (long)((ulg)((int)((ush)*(& inbuf[18] + 0)) | ((int)((ush)*(
                                                                  & inbuf[18] + 1)) << 8)) | (
@@ -7069,7 +7069,7 @@ int unzip(int in, int out)
     if (inptr + (unsigned int)4 < insize) 
       if (((ulg)((int)((ush)*(& inbuf[inptr] + 0)) | ((int)((ush)*(& inbuf[inptr] + 1)) << 8)) | (
            (ulg)((int)((ush)*((& inbuf[inptr] + 2) + 0)) | ((int)((ush)*(
-                                                            (& inbuf[inptr] + 2) + 1)) << 8)) << 16)) == (unsigned long)0x04034b50L) 
+                                                            (& inbuf[inptr] + 2) + 1)) << 8)) << 16)) == (ulg)0x04034b50L) 
         if (to_stdout) {
           if (! quiet) fprintf(__fc_stderr,
                                "%s: %s has more than one entry--rest ignored\n",
@@ -7843,7 +7843,7 @@ int zip(int in, int out)
     unsigned int tmp_8;
     tmp_7 = outcnt;
     outcnt ++;
-    outbuf[tmp_7] = (uch)(((ulg)time_stamp >> 16) & (unsigned long)0xff);
+    outbuf[tmp_7] = (uch)(((ulg)time_stamp >> 16) & (ulg)0xff);
     tmp_8 = outcnt;
     outcnt ++;
     outbuf[tmp_8] = (uch)((int)((ush)((ulg)time_stamp >> 16)) >> 8);
@@ -7853,7 +7853,7 @@ int zip(int in, int out)
       unsigned int tmp_9;
       tmp_9 = outcnt;
       outcnt ++;
-      outbuf[tmp_9] = (uch)(((ulg)time_stamp >> 16) & (unsigned long)0xff);
+      outbuf[tmp_9] = (uch)(((ulg)time_stamp >> 16) & (ulg)0xff);
       if (outcnt == (unsigned int)16384) flush_outbuf();
     }
     {
@@ -7906,24 +7906,24 @@ int zip(int in, int out)
     unsigned int tmp_17;
     tmp_16 = outcnt;
     outcnt ++;
-    outbuf[tmp_16] = (uch)((crc & (unsigned long)0xffff) & (unsigned long)0xff);
+    outbuf[tmp_16] = (uch)((crc & (ulg)0xffff) & (ulg)0xff);
     tmp_17 = outcnt;
     outcnt ++;
-    outbuf[tmp_17] = (uch)((int)((ush)(crc & (unsigned long)0xffff)) >> 8);
+    outbuf[tmp_17] = (uch)((int)((ush)(crc & (ulg)0xffff)) >> 8);
   }
   else {
     {
       unsigned int tmp_18;
       tmp_18 = outcnt;
       outcnt ++;
-      outbuf[tmp_18] = (uch)((crc & (unsigned long)0xffff) & (unsigned long)0xff);
+      outbuf[tmp_18] = (uch)((crc & (ulg)0xffff) & (ulg)0xff);
       if (outcnt == (unsigned int)16384) flush_outbuf();
     }
     {
       unsigned int tmp_19;
       tmp_19 = outcnt;
       outcnt ++;
-      outbuf[tmp_19] = (uch)((int)((ush)(crc & (unsigned long)0xffff)) >> 8);
+      outbuf[tmp_19] = (uch)((int)((ush)(crc & (ulg)0xffff)) >> 8);
       if (outcnt == (unsigned int)16384) flush_outbuf();
     }
   }
@@ -7932,7 +7932,7 @@ int zip(int in, int out)
     unsigned int tmp_21;
     tmp_20 = outcnt;
     outcnt ++;
-    outbuf[tmp_20] = (uch)((crc >> 16) & (unsigned long)0xff);
+    outbuf[tmp_20] = (uch)((crc >> 16) & (ulg)0xff);
     tmp_21 = outcnt;
     outcnt ++;
     outbuf[tmp_21] = (uch)((int)((ush)(crc >> 16)) >> 8);
@@ -7942,7 +7942,7 @@ int zip(int in, int out)
       unsigned int tmp_22;
       tmp_22 = outcnt;
       outcnt ++;
-      outbuf[tmp_22] = (uch)((crc >> 16) & (unsigned long)0xff);
+      outbuf[tmp_22] = (uch)((crc >> 16) & (ulg)0xff);
       if (outcnt == (unsigned int)16384) flush_outbuf();
     }
     {
@@ -7984,7 +7984,7 @@ int zip(int in, int out)
     unsigned int tmp_29;
     tmp_28 = outcnt;
     outcnt ++;
-    outbuf[tmp_28] = (uch)(((ulg)bytes_in >> 16) & (unsigned long)0xff);
+    outbuf[tmp_28] = (uch)(((ulg)bytes_in >> 16) & (ulg)0xff);
     tmp_29 = outcnt;
     outcnt ++;
     outbuf[tmp_29] = (uch)((int)((ush)((ulg)bytes_in >> 16)) >> 8);
@@ -7994,7 +7994,7 @@ int zip(int in, int out)
       unsigned int tmp_30;
       tmp_30 = outcnt;
       outcnt ++;
-      outbuf[tmp_30] = (uch)(((ulg)bytes_in >> 16) & (unsigned long)0xff);
+      outbuf[tmp_30] = (uch)(((ulg)bytes_in >> 16) & (ulg)0xff);
       if (outcnt == (unsigned int)16384) flush_outbuf();
     }
     {

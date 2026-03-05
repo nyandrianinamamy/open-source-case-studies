@@ -1,17 +1,14 @@
 default:
   image: framac/frama-c:dev
 
-variables:
-  GIT_CLEAN_FLAGS: none #each use case cleans its own directory
-
 stages:
-  - prepare
   - parse-and-run
+  - update-summary
 
 __update-summary:
   tags:
     - docker
-  stage: prepare
+  stage: update-summary
   script:
     - git config --global --add safe.directory $PWD
     - ./compute-summary.sh
@@ -29,9 +26,15 @@ __update-summary:
     - git config --global --add safe.directory $PWD
     - git diff --exit-code $TARGET
     - make $TARGET.sarif
+    # Remove .sav files to avoid them in artifacts
+    - rm -f $TARGET/.frama-c/*/*.sav
   artifacts:
+    untracked: true
+      # untracked:true ensures that paths such as
+      # "$TARGET/.frama-c/*.eva/**/*.{log,csv}" are included, and these are
+      # used by the next stage, update-summary
     paths:
-    - "$TARGET/.frama-c/*.sarif"
+      - "$TARGET/.frama-c/*.sarif"
 
 _2048:
   variables:

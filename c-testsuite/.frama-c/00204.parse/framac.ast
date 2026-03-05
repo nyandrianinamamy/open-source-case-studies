@@ -2666,63 +2666,63 @@ static uint64_t rsbl123(uint64_t x)
 static uint32_t andi0(uint32_t x)
 {
   uint32_t __retres;
-  __retres = x & (unsigned int)0;
+  __retres = x & (uint32_t)0;
   return __retres;
 }
 
 static uint64_t andlm1(uint64_t x)
 {
   uint64_t __retres;
-  __retres = x & (unsigned long)(-1);
+  __retres = x & (uint64_t)(-1);
   return __retres;
 }
 
 static uint64_t orrl0(uint64_t x)
 {
   uint64_t __retres;
-  __retres = x | (unsigned long)0;
+  __retres = x | (uint64_t)0;
   return __retres;
 }
 
 static uint32_t orrim1(uint32_t x)
 {
   uint32_t __retres;
-  __retres = x | (unsigned int)(-1);
+  __retres = x | (uint32_t)(-1);
   return __retres;
 }
 
 static uint32_t eori0(uint32_t x)
 {
   uint32_t __retres;
-  __retres = x ^ (unsigned int)0;
+  __retres = x ^ (uint32_t)0;
   return __retres;
 }
 
 static uint64_t eorlm1(uint64_t x)
 {
   uint64_t __retres;
-  __retres = x ^ (unsigned long)(-1);
+  __retres = x ^ (uint64_t)(-1);
   return __retres;
 }
 
 static uint32_t and0xf0(uint32_t x)
 {
   uint32_t __retres;
-  __retres = x & (unsigned int)0xf0;
+  __retres = x & (uint32_t)0xf0;
   return __retres;
 }
 
 static uint64_t orr0xf0(uint64_t x)
 {
   uint64_t __retres;
-  __retres = x | (unsigned long)0xf0;
+  __retres = x | (uint64_t)0xf0;
   return __retres;
 }
 
 static uint64_t eor0xf0(uint64_t x)
 {
   uint64_t __retres;
-  __retres = x ^ (unsigned long)0xf0;
+  __retres = x ^ (uint64_t)0xf0;
   return __retres;
 }
 

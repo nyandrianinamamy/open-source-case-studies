@@ -59,27 +59,27 @@ int main(void)
         else tmp_0 = (int64_t)128;
         tmp_1 = tmp_0;
       }
-      x = (uint32_t)((tmp_1 << 24) | (long)(x >> 8));
+      x = (uint32_t)((tmp_1 << 24) | (int64_t)(x >> 8));
       h[(int64_t)4 + n / (int64_t)4] = x;
     }
     e = (int64_t)0;
     k = ~ e << 40;
     while (1) {
-      unsigned int tmp_5;
+      uint32_t tmp_5;
       uint32_t tmp_6;
       x = i / (uint32_t)16;
       if (! (x < (uint32_t)4)) break;
       n = (((e * m + k * p) >> 21) + e * l) + k * o;
       k = ((((k * m - e * p) >> 21) + k * l) - e * o) >> 20;
       e = n >> 20;
-      n = (int64_t)((((((i | (unsigned int)12) * (unsigned int)152) % (unsigned int)543) % (unsigned int)82) % (unsigned int)4 + 
-                     ((i % (unsigned int)4) * (unsigned int)43) / (unsigned int)8) + (unsigned int)4);
+      n = (int64_t)((((((i | (uint32_t)12) * (uint32_t)152) % (uint32_t)543) % (uint32_t)82) % (uint32_t)4 + 
+                     ((i % (uint32_t)4) * (uint32_t)43) / (uint32_t)8) + (uint32_t)4);
       if (x > (uint32_t)2) tmp_5 = ~ d | b;
       else {
-        unsigned int tmp_4;
+        uint32_t tmp_4;
         if (x > (uint32_t)1) tmp_4 = b ^ d;
         else {
-          unsigned int tmp_3;
+          uint32_t tmp_3;
           if (x) tmp_3 = (b ^ c) & d; else tmp_3 = (c ^ d) & ~ b;
           tmp_4 = tmp_3;
         }
@@ -87,9 +87,12 @@ int main(void)
       }
       tmp_6 = i;
       i ++;
-      x = (uint32_t)((long)((a + (tmp_5 ^ c)) + h[(unsigned int)19 - 
-                                                  (((x * (uint32_t)7) / (uint32_t)2 & (unsigned int)5) - 
-                                                   ~ (x * (uint32_t)5 & (unsigned int)6) * tmp_6) % (unsigned int)16]) + (
+      x = (uint32_t)((int64_t)((a + (tmp_5 ^ c)) + h[(uint32_t)19 - (
+                                                                    (
+                                                                    (
+                                                                    x * (uint32_t)7) / (uint32_t)2 & (uint32_t)5) - 
+                                                                    ~ (
+                                                                    x * (uint32_t)5 & (uint32_t)6) * tmp_6) % (uint32_t)16]) + (
                      (e >> 40) ^ (e >> 8)));
       a = d;
       d = c;
@@ -100,7 +103,7 @@ int main(void)
   while (i < (uint32_t)33) {
     uint32_t tmp_9;
     uint32_t tmp_7;
-    a = (h[i / (uint32_t)8] >> ((i % (unsigned int)8) * (unsigned int)4 ^ (unsigned int)4)) & (unsigned int)15;
+    a = (h[i / (uint32_t)8] >> ((i % (uint32_t)8) * (uint32_t)4 ^ (uint32_t)4)) & (uint32_t)15;
     tmp_7 = i;
     i ++;
     ;
