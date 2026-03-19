@@ -13,8 +13,6 @@ MACHDEP = x86_32
 
 ## Preprocessing flags (for -cpp-extra-args)
 CPPFLAGS    += \
-  -CC \
-  -I/usr/include \
 
 ## General flags
 FCFLAGS     += \
