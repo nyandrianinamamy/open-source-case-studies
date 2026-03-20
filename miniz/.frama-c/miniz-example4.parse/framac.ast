@@ -1083,11 +1083,8 @@ int __attribute__((__visibility__("default"))) mz_deflateInit2(mz_streamp pStrea
   pStream->reserved = (mz_ulong)0;
   pStream->total_in = (mz_ulong)0;
   pStream->total_out = (mz_ulong)0;
-  if (! pStream->zalloc) pStream->zalloc = (void *(*)(void *opaque,
-                                                      size_t items,
-                                                      size_t size))(& miniz_def_alloc_func);
-  if (! pStream->zfree) pStream->zfree = (void (*)(void *opaque,
-                                                   void *address))(& miniz_def_free_func);
+  if (! pStream->zalloc) pStream->zalloc = & miniz_def_alloc_func;
+  if (! pStream->zfree) pStream->zfree = & miniz_def_free_func;
   pComp = (tdefl_compressor *)(*(pStream->zalloc))(pStream->opaque,(size_t)1,
                                                    sizeof(tdefl_compressor));
   if (! pComp) {
@@ -1336,11 +1333,8 @@ int __attribute__((__visibility__("default"))) mz_inflateInit2(mz_streamp pStrea
   pStream->total_in = (mz_ulong)0;
   pStream->total_out = (mz_ulong)0;
   pStream->reserved = (mz_ulong)0;
-  if (! pStream->zalloc) pStream->zalloc = (void *(*)(void *opaque,
-                                                      size_t items,
-                                                      size_t size))(& miniz_def_alloc_func);
-  if (! pStream->zfree) pStream->zfree = (void (*)(void *opaque,
-                                                   void *address))(& miniz_def_free_func);
+  if (! pStream->zalloc) pStream->zalloc = & miniz_def_alloc_func;
+  if (! pStream->zfree) pStream->zfree = & miniz_def_free_func;
   pDecomp = (inflate_state *)(*(pStream->zalloc))(pStream->opaque,(size_t)1,
                                                   sizeof(inflate_state));
   if (! pDecomp) {

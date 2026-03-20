@@ -1735,11 +1735,8 @@ int __attribute__((__visibility__("default"))) mz_deflateInit2(mz_streamp pStrea
   pStream->reserved = (mz_ulong)0;
   pStream->total_in = (mz_ulong)0;
   pStream->total_out = (mz_ulong)0;
-  if (! pStream->zalloc) pStream->zalloc = (void *(*)(void *opaque,
-                                                      size_t items,
-                                                      size_t size))(& miniz_def_alloc_func);
-  if (! pStream->zfree) pStream->zfree = (void (*)(void *opaque,
-                                                   void *address))(& miniz_def_free_func);
+  if (! pStream->zalloc) pStream->zalloc = & miniz_def_alloc_func;
+  if (! pStream->zfree) pStream->zfree = & miniz_def_free_func;
   pComp = (tdefl_compressor *)(*(pStream->zalloc))(pStream->opaque,(size_t)1,
                                                    sizeof(tdefl_compressor));
   if (! pComp) {
@@ -1988,11 +1985,8 @@ int __attribute__((__visibility__("default"))) mz_inflateInit2(mz_streamp pStrea
   pStream->total_in = (mz_ulong)0;
   pStream->total_out = (mz_ulong)0;
   pStream->reserved = (mz_ulong)0;
-  if (! pStream->zalloc) pStream->zalloc = (void *(*)(void *opaque,
-                                                      size_t items,
-                                                      size_t size))(& miniz_def_alloc_func);
-  if (! pStream->zfree) pStream->zfree = (void (*)(void *opaque,
-                                                   void *address))(& miniz_def_free_func);
+  if (! pStream->zalloc) pStream->zalloc = & miniz_def_alloc_func;
+  if (! pStream->zfree) pStream->zfree = & miniz_def_free_func;
   pDecomp = (inflate_state *)(*(pStream->zalloc))(pStream->opaque,(size_t)1,
                                                   sizeof(inflate_state));
   if (! pDecomp) {
@@ -8535,13 +8529,9 @@ static mz_bool mz_zip_reader_init_internal(mz_zip_archive *pZip,
         __retres = tmp;
         goto return_label;
       }
-  if (! pZip->m_pAlloc) pZip->m_pAlloc = (void *(*)(void *opaque,
-                                                    size_t items, size_t size))(& miniz_def_alloc_func);
-  if (! pZip->m_pFree) pZip->m_pFree = (void (*)(void *opaque, void *address))(& miniz_def_free_func);
-  if (! pZip->m_pRealloc) pZip->m_pRealloc = (void *(*)(void *opaque,
-                                                        void *address,
-                                                        size_t items,
-                                                        size_t size))(& miniz_def_realloc_func);
+  if (! pZip->m_pAlloc) pZip->m_pAlloc = & miniz_def_alloc_func;
+  if (! pZip->m_pFree) pZip->m_pFree = & miniz_def_free_func;
+  if (! pZip->m_pRealloc) pZip->m_pRealloc = & miniz_def_realloc_func;
   pZip->m_archive_size = (mz_uint64)0;
   pZip->m_central_directory_file_ofs = (mz_uint64)0;
   pZip->m_total_files = (mz_uint32)0;
@@ -11677,13 +11667,9 @@ mz_bool __attribute__((__visibility__("default"))) mz_zip_writer_init_v2
       __retres = tmp_1;
       goto return_label;
     }
-  if (! pZip->m_pAlloc) pZip->m_pAlloc = (void *(*)(void *opaque,
-                                                    size_t items, size_t size))(& miniz_def_alloc_func);
-  if (! pZip->m_pFree) pZip->m_pFree = (void (*)(void *opaque, void *address))(& miniz_def_free_func);
-  if (! pZip->m_pRealloc) pZip->m_pRealloc = (void *(*)(void *opaque,
-                                                        void *address,
-                                                        size_t items,
-                                                        size_t size))(& miniz_def_realloc_func);
+  if (! pZip->m_pAlloc) pZip->m_pAlloc = & miniz_def_alloc_func;
+  if (! pZip->m_pFree) pZip->m_pFree = & miniz_def_free_func;
+  if (! pZip->m_pRealloc) pZip->m_pRealloc = & miniz_def_realloc_func;
   pZip->m_archive_size = existing_size;
   pZip->m_central_directory_file_ofs = (mz_uint64)0;
   pZip->m_total_files = (mz_uint32)0;
