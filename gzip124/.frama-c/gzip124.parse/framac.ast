@@ -34,9 +34,9 @@ struct option {
    int val ;
 };
 enum __anonenum_ordering_1 {
-    REQUIRE_ORDER = 0,
-    PERMUTE = 1,
-    RETURN_IN_ORDER = 2
+    REQUIRE_ORDER = 0U,
+    PERMUTE = 1U,
+    RETURN_IN_ORDER = 2U
 };
 union __anonunion_v_1 {
    ush n ;
@@ -1123,7 +1123,7 @@ int _getopt_internal(int argc, char * const *argv, char const *optstring,
       _LOR_0:
       {
         int tmp_2;
-        if (ordering == (unsigned int)PERMUTE) {
+        if (ordering == PERMUTE) {
           if (first_nonopt != last_nonopt) {
             if (last_nonopt != optind) exchange((char **)argv);
             else goto _LAND;
@@ -1170,7 +1170,7 @@ int _getopt_internal(int argc, char * const *argv, char const *optstring,
             _LOR:
             {
               int tmp_1;
-              if (ordering == (unsigned int)REQUIRE_ORDER) {
+              if (ordering == REQUIRE_ORDER) {
                 __retres = -1;
                 goto return_label;
               }
@@ -2075,7 +2075,7 @@ static void treat_stdin(void)
         tmp_4 = fileno(__fc_stdin);
         tmp_5 = fstat(tmp_4,& istat);
         if (tmp_5 != 0) error((char *)"fstat(stdin)");
-        time_stamp = istat.st_mtime;
+        time_stamp = istat.st_mtim.tv_sec;
       }
     }
   ifile_size = -1L;
@@ -2308,8 +2308,8 @@ static void treat_file(char *iname)
       }
   ifile_size = istat.st_size;
   if (no_time) 
-    if (! list) time_stamp = (long)0; else time_stamp = istat.st_mtime;
-  else time_stamp = istat.st_mtime;
+    if (! list) time_stamp = (long)0; else time_stamp = istat.st_mtim.tv_sec;
+  else time_stamp = istat.st_mtim.tv_sec;
   if (to_stdout) {
     if (! list) {
       if (! test) strcpy(ofname,"stdout"); else goto _LAND_0;

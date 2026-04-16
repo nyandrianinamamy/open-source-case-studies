@@ -97,9 +97,9 @@ struct redisReply {
 };
 typedef struct redisReply redisReply;
 enum redisConnectionType {
-    REDIS_CONN_TCP = 0,
-    REDIS_CONN_UNIX = 1,
-    REDIS_CONN_USERFD = 2
+    REDIS_CONN_TCP = 0U,
+    REDIS_CONN_UNIX = 1U,
+    REDIS_CONN_USERFD = 2U
 };
 typedef int redisFD;
 struct __anonstruct_tcp_3 {
@@ -233,10 +233,10 @@ struct dictIterator {
 };
 typedef struct dictIterator dictIterator;
 enum connection_type {
-    CONN_TCP = 0,
-    CONN_UNIX = 1,
-    CONN_FD = 2,
-    CONN_SSL = 3
+    CONN_TCP = 0U,
+    CONN_UNIX = 1U,
+    CONN_FD = 2U,
+    CONN_SSL = 3U
 };
 struct __anonstruct_tcp_6 {
    char const *host ;
@@ -1087,7 +1087,7 @@ redisAsyncContext *redisAsyncConnect(char const *ip, int port)
      .endpoint = {.tcp = {.source_addr = (char const *)0,
                           .ip = (char const *)0,
                           .port = 0}}};
-  options.type = REDIS_CONN_TCP;
+  options.type = (int)REDIS_CONN_TCP;
   options.endpoint.tcp.ip = ip;
   options.endpoint.tcp.port = port;
   tmp = redisAsyncConnectWithOptions((redisOptions const *)(& options));
@@ -1105,7 +1105,7 @@ redisAsyncContext *redisAsyncConnectBind(char const *ip, int port,
      .endpoint = {.tcp = {.source_addr = (char const *)0,
                           .ip = (char const *)0,
                           .port = 0}}};
-  options.type = REDIS_CONN_TCP;
+  options.type = (int)REDIS_CONN_TCP;
   options.endpoint.tcp.ip = ip;
   options.endpoint.tcp.port = port;
   options.endpoint.tcp.source_addr = source_addr;
@@ -1124,7 +1124,7 @@ redisAsyncContext *redisAsyncConnectBindWithReuse(char const *ip, int port,
      .endpoint = {.tcp = {.source_addr = (char const *)0,
                           .ip = (char const *)0,
                           .port = 0}}};
-  options.type = REDIS_CONN_TCP;
+  options.type = (int)REDIS_CONN_TCP;
   options.endpoint.tcp.ip = ip;
   options.endpoint.tcp.port = port;
   options.options |= 0x02;
@@ -1143,7 +1143,7 @@ redisAsyncContext *redisAsyncConnectUnix(char const *path)
      .endpoint = {.tcp = {.source_addr = (char const *)0,
                           .ip = (char const *)0,
                           .port = 0}}};
-  options.type = REDIS_CONN_UNIX;
+  options.type = (int)REDIS_CONN_UNIX;
   options.endpoint.unix_socket = path;
   tmp = redisAsyncConnectWithOptions((redisOptions const *)(& options));
   return tmp;
@@ -2602,7 +2602,7 @@ int redisReconnect(redisContext *c)
   redisReaderFree(c->reader);
   c->obuf = sdsempty();
   c->reader = redisReaderCreate();
-  if (c->connection_type == (unsigned int)REDIS_CONN_TCP) {
+  if (c->connection_type == REDIS_CONN_TCP) {
     int tmp_0;
     tmp_0 = redisContextConnectBindTcp(c,(char const *)c->tcp.host,
                                        c->tcp.port,
@@ -2612,7 +2612,7 @@ int redisReconnect(redisContext *c)
     goto return_label;
   }
   else 
-    if (c->connection_type == (unsigned int)REDIS_CONN_UNIX) {
+    if (c->connection_type == REDIS_CONN_UNIX) {
       int tmp_1;
       tmp_1 = redisContextConnectUnix(c,(char const *)c->unix_sock.path,
                                       (struct timeval const *)c->timeout);
@@ -2635,17 +2635,19 @@ redisContext *redisConnectWithOptions(redisOptions const *options)
   if (! (options->options & 0x01)) c->flags |= 0x1;
   if (options->options & 0x02) c->flags |= 0x80;
   if (options->options & 0x04) c->flags |= 0x200;
-  if (options->type == REDIS_CONN_TCP) redisContextConnectBindTcp(c,
-                                                                  options->endpoint.tcp.ip,
-                                                                  options->endpoint.tcp.port,
-                                                                  options->timeout,
-                                                                  options->endpoint.tcp.source_addr);
+  if ((unsigned int)options->type == REDIS_CONN_TCP) redisContextConnectBindTcp
+                                                     (c,
+                                                      options->endpoint.tcp.ip,
+                                                      options->endpoint.tcp.port,
+                                                      options->timeout,
+                                                      options->endpoint.tcp.source_addr);
   else 
-    if (options->type == REDIS_CONN_UNIX) redisContextConnectUnix(c,
-                                                                  options->endpoint.unix_socket,
-                                                                  options->timeout);
+    if ((unsigned int)options->type == REDIS_CONN_UNIX) redisContextConnectUnix
+                                                        (c,
+                                                         options->endpoint.unix_socket,
+                                                         options->timeout);
     else 
-      if (options->type == REDIS_CONN_USERFD) {
+      if ((unsigned int)options->type == REDIS_CONN_USERFD) {
         c->fd = options->endpoint.fd;
         c->flags |= 0x2;
       }
@@ -2670,7 +2672,7 @@ redisContext *redisConnect(char const *ip, int port)
      .endpoint = {.tcp = {.source_addr = (char const *)0,
                           .ip = (char const *)0,
                           .port = 0}}};
-  options.type = REDIS_CONN_TCP;
+  options.type = (int)REDIS_CONN_TCP;
   options.endpoint.tcp.ip = ip;
   options.endpoint.tcp.port = port;
   tmp = redisConnectWithOptions((redisOptions const *)(& options));
@@ -2688,7 +2690,7 @@ redisContext *redisConnectWithTimeout(char const *ip, int port,
      .endpoint = {.tcp = {.source_addr = (char const *)0,
                           .ip = (char const *)0,
                           .port = 0}}};
-  options.type = REDIS_CONN_TCP;
+  options.type = (int)REDIS_CONN_TCP;
   options.endpoint.tcp.ip = ip;
   options.endpoint.tcp.port = port;
   options.timeout = & tv;
@@ -2706,7 +2708,7 @@ redisContext *redisConnectNonBlock(char const *ip, int port)
      .endpoint = {.tcp = {.source_addr = (char const *)0,
                           .ip = (char const *)0,
                           .port = 0}}};
-  options.type = REDIS_CONN_TCP;
+  options.type = (int)REDIS_CONN_TCP;
   options.endpoint.tcp.ip = ip;
   options.endpoint.tcp.port = port;
   options.options |= 0x01;
@@ -2725,7 +2727,7 @@ redisContext *redisConnectBindNonBlock(char const *ip, int port,
      .endpoint = {.tcp = {.source_addr = (char const *)0,
                           .ip = (char const *)0,
                           .port = 0}}};
-  options.type = REDIS_CONN_TCP;
+  options.type = (int)REDIS_CONN_TCP;
   options.endpoint.tcp.ip = ip;
   options.endpoint.tcp.port = port;
   options.endpoint.tcp.source_addr = source_addr;
@@ -2745,7 +2747,7 @@ redisContext *redisConnectBindNonBlockWithReuse(char const *ip, int port,
      .endpoint = {.tcp = {.source_addr = (char const *)0,
                           .ip = (char const *)0,
                           .port = 0}}};
-  options.type = REDIS_CONN_TCP;
+  options.type = (int)REDIS_CONN_TCP;
   options.endpoint.tcp.ip = ip;
   options.endpoint.tcp.port = port;
   options.endpoint.tcp.source_addr = source_addr;
@@ -2764,7 +2766,7 @@ redisContext *redisConnectUnix(char const *path)
      .endpoint = {.tcp = {.source_addr = (char const *)0,
                           .ip = (char const *)0,
                           .port = 0}}};
-  options.type = REDIS_CONN_UNIX;
+  options.type = (int)REDIS_CONN_UNIX;
   options.endpoint.unix_socket = path;
   tmp = redisConnectWithOptions((redisOptions const *)(& options));
   return tmp;
@@ -2781,7 +2783,7 @@ redisContext *redisConnectUnixWithTimeout(char const *path,
      .endpoint = {.tcp = {.source_addr = (char const *)0,
                           .ip = (char const *)0,
                           .port = 0}}};
-  options.type = REDIS_CONN_UNIX;
+  options.type = (int)REDIS_CONN_UNIX;
   options.endpoint.unix_socket = path;
   options.timeout = & tv;
   tmp = redisConnectWithOptions((redisOptions const *)(& options));
@@ -2798,7 +2800,7 @@ redisContext *redisConnectUnixNonBlock(char const *path)
      .endpoint = {.tcp = {.source_addr = (char const *)0,
                           .ip = (char const *)0,
                           .port = 0}}};
-  options.type = REDIS_CONN_UNIX;
+  options.type = (int)REDIS_CONN_UNIX;
   options.endpoint.unix_socket = path;
   options.options |= 0x01;
   tmp = redisConnectWithOptions((redisOptions const *)(& options));
@@ -2815,7 +2817,7 @@ redisContext *redisConnectFd(redisFD fd)
      .endpoint = {.tcp = {.source_addr = (char const *)0,
                           .ip = (char const *)0,
                           .port = 0}}};
-  options.type = REDIS_CONN_USERFD;
+  options.type = (int)REDIS_CONN_USERFD;
   options.endpoint.fd = fd;
   tmp = redisConnectWithOptions((redisOptions const *)(& options));
   return tmp;
@@ -3350,7 +3352,8 @@ static int redisSetTcpNoDelay(redisContext *c)
   int __retres;
   int tmp;
   int yes = 1;
-  tmp = setsockopt(c->fd,IPPROTO_TCP,1,(void const *)(& yes),sizeof(yes));
+  tmp = setsockopt(c->fd,(int)IPPROTO_TCP,1,(void const *)(& yes),
+                   sizeof(yes));
   if (tmp == -1) {
     __redisSetErrorFromErrno(c,1,"setsockopt(TCP_NODELAY)");
     redisNetClose(c);

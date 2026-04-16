@@ -9,13 +9,7 @@
 #include "stdlib.c"
 #include "stdlib.h"
 #include "string.h"
-#include "stropts.h"
-struct winsize {
-   unsigned short ws_row ;
-   unsigned short ws_col ;
-   unsigned short ws_xpixel ;
-   unsigned short ws_ypixel ;
-};
+#include "sys/ioctl.h"
 struct gs_image {
    unsigned int w ;
    unsigned int h ;
@@ -67,8 +61,8 @@ struct gs_lbp_cascade {
    float const *stage_threshold ;
 };
 enum __anonenum_1 {
-    GS_ERODE = 0,
-    GS_DILATE = 1
+    GS_ERODE = 0U,
+    GS_DILATE = 1U
 };
 struct cmd {
    char const *name ;
@@ -885,7 +879,7 @@ __inline static void gs_morph(struct gs_image dst, struct gs_image src,
         while (x < src.w) {
           {
             int tmp_1;
-            if (op == GS_ERODE) tmp_1 = 255; else tmp_1 = 0;
+            if ((unsigned int)op == GS_ERODE) tmp_1 = 255; else tmp_1 = 0;
             uint8_t val = (uint8_t)tmp_1;
             {
               int dy = -1;
@@ -902,9 +896,9 @@ __inline static void gs_morph(struct gs_image dst, struct gs_image src,
                             if (sx < (int)src.w) {
                               uint8_t pixel =
                                 gs_get(src,(unsigned int)sx,(unsigned int)sy);
-                              if (op == GS_DILATE) 
+                              if ((unsigned int)op == GS_DILATE) 
                                 if ((int)pixel > (int)val) val = pixel;
-                              if (op == GS_ERODE) 
+                              if ((unsigned int)op == GS_ERODE) 
                                 if ((int)pixel < (int)val) val = pixel;
                             }
                     }
@@ -927,13 +921,13 @@ __inline static void gs_morph(struct gs_image dst, struct gs_image src,
 
 __inline static void gs_erode(struct gs_image dst, struct gs_image src)
 {
-  gs_morph(dst,src,GS_ERODE);
+  gs_morph(dst,src,(int)GS_ERODE);
   return;
 }
 
 __inline static void gs_dilate(struct gs_image dst, struct gs_image src)
 {
-  gs_morph(dst,src,GS_DILATE);
+  gs_morph(dst,src,(int)GS_DILATE);
   return;
 }
 

@@ -13,19 +13,12 @@
 #include "string.c"
 #include "string.h"
 #include "strings.h"
-#include "stropts.h"
-#include "sys/select.h"
+#include "sys/ioctl.h"
 #include "sys/time.h"
 #include "sys/types.h"
 #include "termios.h"
 #include "time.h"
 #include "unistd.h"
-struct winsize {
-   unsigned short ws_row ;
-   unsigned short ws_col ;
-   unsigned short ws_xpixel ;
-   unsigned short ws_ypixel ;
-};
 struct editorSyntax {
    char **filematch ;
    char **keywords ;
@@ -61,28 +54,28 @@ struct editorConfig {
    struct editorSyntax *syntax ;
 };
 enum KEY_ACTION {
-    KEY_NULL = 0,
-    CTRL_C = 3,
-    CTRL_D = 4,
-    CTRL_F = 6,
-    CTRL_H = 8,
-    TAB = 9,
-    CTRL_L = 12,
-    ENTER = 13,
-    CTRL_Q = 17,
-    CTRL_S = 19,
-    CTRL_U = 21,
-    ESC = 27,
-    BACKSPACE = 127,
-    ARROW_LEFT = 1000,
-    ARROW_RIGHT = 1001,
-    ARROW_UP = 1002,
-    ARROW_DOWN = 1003,
-    DEL_KEY = 1004,
-    HOME_KEY = 1005,
-    END_KEY = 1006,
-    PAGE_UP = 1007,
-    PAGE_DOWN = 1008
+    KEY_NULL = (unsigned int)0,
+    CTRL_C = (unsigned int)3,
+    CTRL_D = (unsigned int)4,
+    CTRL_F = (unsigned int)6,
+    CTRL_H = (unsigned int)8,
+    TAB = (unsigned int)9,
+    CTRL_L = (unsigned int)12,
+    ENTER = (unsigned int)13,
+    CTRL_Q = (unsigned int)17,
+    CTRL_S = (unsigned int)19,
+    CTRL_U = (unsigned int)21,
+    ESC = (unsigned int)27,
+    BACKSPACE = (unsigned int)127,
+    ARROW_LEFT = (unsigned int)1000,
+    ARROW_RIGHT = 1001U,
+    ARROW_UP = 1002U,
+    ARROW_DOWN = 1003U,
+    DEL_KEY = 1004U,
+    HOME_KEY = 1005U,
+    END_KEY = 1006U,
+    PAGE_UP = 1007U,
+    PAGE_DOWN = 1008U
 };
 struct abuf {
    char *b ;
@@ -187,14 +180,14 @@ int editorReadKey(int fd)
     switch ((int)c) {
       ssize_t tmp;
       ssize_t tmp_0;
-      case ESC: tmp = read(fd,(void *)(seq),(size_t)1);
+      case (int)ESC: tmp = read(fd,(void *)(seq),(size_t)1);
       if (tmp == 0) {
-        __retres = ESC;
+        __retres = (int)ESC;
         goto return_label;
       }
       tmp_0 = read(fd,(void *)(& seq[1]),(size_t)1);
       if (tmp_0 == 0) {
-        __retres = ESC;
+        __retres = (int)ESC;
         goto return_label;
       }
       if ((int)seq[0] == '[') 
@@ -203,16 +196,16 @@ int editorReadKey(int fd)
             ssize_t tmp_1;
             tmp_1 = read(fd,(void *)(& seq[2]),(size_t)1);
             if (tmp_1 == 0) {
-              __retres = ESC;
+              __retres = (int)ESC;
               goto return_label;
             }
             if ((int)seq[2] == '~') 
               switch ((int)seq[1]) {
-                case '3': __retres = DEL_KEY;
+                case '3': __retres = (int)DEL_KEY;
                 goto return_label;
-                case '5': __retres = PAGE_UP;
+                case '5': __retres = (int)PAGE_UP;
                 goto return_label;
-                case '6': __retres = PAGE_DOWN;
+                case '6': __retres = (int)PAGE_DOWN;
                 goto return_label;
               }
           }
@@ -221,25 +214,25 @@ int editorReadKey(int fd)
         else 
           _LAND:
           switch ((int)seq[1]) {
-            case 'A': __retres = ARROW_UP;
+            case 'A': __retres = (int)ARROW_UP;
             goto return_label;
-            case 'B': __retres = ARROW_DOWN;
+            case 'B': __retres = (int)ARROW_DOWN;
             goto return_label;
-            case 'C': __retres = ARROW_RIGHT;
+            case 'C': __retres = (int)ARROW_RIGHT;
             goto return_label;
-            case 'D': __retres = ARROW_LEFT;
+            case 'D': __retres = (int)ARROW_LEFT;
             goto return_label;
-            case 'H': __retres = HOME_KEY;
+            case 'H': __retres = (int)HOME_KEY;
             goto return_label;
-            case 'F': __retres = END_KEY;
+            case 'F': __retres = (int)END_KEY;
             goto return_label;
           }
       else 
         if ((int)seq[0] == 'O') 
           switch ((int)seq[1]) {
-            case 'H': __retres = HOME_KEY;
+            case 'H': __retres = (int)HOME_KEY;
             goto return_label;
-            case 'F': __retres = END_KEY;
+            case 'F': __retres = (int)END_KEY;
             goto return_label;
           }
       break;
@@ -287,7 +280,7 @@ int getCursorPosition(int ifd, int ofd, int *rows, int *cols)
     i ++;
   }
   buf[i] = (char)'\000';
-  if ((int)buf[0] != ESC) {
+  if ((unsigned int)buf[0] != ESC) {
     __retres = -1;
     goto return_label;
   }
@@ -640,14 +633,14 @@ void editorUpdateRow(erow *row)
   free((void *)row->render);
   j = 0;
   while (j < row->size) {
-    if ((int)*(row->chars + j) == TAB) tabs ++;
+    if ((unsigned int)*(row->chars + j) == TAB) tabs ++;
     j ++;
   }
   row->render = (char *)malloc((size_t)(((row->size + tabs * 8) + nonprint * 9) + 1));
   idx = 0;
   j = 0;
   while (j < row->size) {
-    if ((int)*(row->chars + j) == TAB) {
+    if ((unsigned int)*(row->chars + j) == TAB) {
       int tmp;
       tmp = idx;
       idx ++;
@@ -1192,7 +1185,7 @@ void editorRefreshScreen(void)
     j_0 = E.coloff;
     while (j_0 < E.cx + E.coloff) {
       if (j_0 < row->size) 
-        if ((int)*(row->chars + j_0) == TAB) cx += 7 - cx % 8;
+        if ((unsigned int)*(row->chars + j_0) == TAB) cx += 7 - cx % 8;
       cx ++;
       j_0 ++;
     }
@@ -1236,11 +1229,11 @@ void editorFind(int fd)
     }
     editorRefreshScreen();
     int c = editorReadKey(fd);
-    if (c == DEL_KEY) goto _LOR_2;
+    if ((unsigned int)c == DEL_KEY) goto _LOR_2;
     else 
-      if (c == CTRL_H) goto _LOR_2;
+      if ((unsigned int)c == CTRL_H) goto _LOR_2;
       else 
-        if (c == BACKSPACE) {
+        if ((unsigned int)c == BACKSPACE) {
           _LOR_2:
           {
             if (qlen != 0) {
@@ -1251,12 +1244,12 @@ void editorFind(int fd)
           }
         }
         else 
-          if (c == ESC) goto _LOR_1;
+          if ((unsigned int)c == ESC) goto _LOR_1;
           else 
-            if (c == ENTER) {
+            if ((unsigned int)c == ENTER) {
               _LOR_1:
               {
-                if (c == ESC) {
+                if ((unsigned int)c == ESC) {
                   E.cx = saved_cx;
                   E.cy = saved_cy;
                   E.coloff = saved_coloff;
@@ -1276,13 +1269,13 @@ void editorFind(int fd)
               }
             }
             else 
-              if (c == ARROW_RIGHT) goto _LOR_0;
+              if ((unsigned int)c == ARROW_RIGHT) goto _LOR_0;
               else 
-                if (c == ARROW_DOWN) _LOR_0: find_next = 1;
+                if ((unsigned int)c == ARROW_DOWN) _LOR_0: find_next = 1;
                 else 
-                  if (c == ARROW_LEFT) goto _LOR;
+                  if ((unsigned int)c == ARROW_LEFT) goto _LOR;
                   else 
-                    if (c == ARROW_UP) _LOR: find_next = -1;
+                    if ((unsigned int)c == ARROW_UP) _LOR: find_next = -1;
                     else {
                       int tmp_1;
                       tmp_1 = isprint(c);
@@ -1355,7 +1348,7 @@ void editorMoveCursor(int key)
   if (filerow >= E.numrows) tmp = (erow *)0; else tmp = E.row + filerow;
   erow *row = tmp;
   switch (key) {
-    case ARROW_LEFT: ;
+    case (int)ARROW_LEFT: ;
     if (E.cx == 0) {
       if (E.coloff) (E.coloff) --;
       else 
@@ -1370,7 +1363,7 @@ void editorMoveCursor(int key)
     }
     else (E.cx) --;
     break;
-    case ARROW_RIGHT: ;
+    case (int)ARROW_RIGHT: ;
     if (row) {
       if (filecol < row->size) 
         if (E.cx == E.screencols - 1) (E.coloff) ++; else (E.cx) ++;
@@ -1386,13 +1379,13 @@ void editorMoveCursor(int key)
         }
     }
     break;
-    case ARROW_UP: ;
+    case (int)ARROW_UP: ;
     if (E.cy == 0) {
       if (E.rowoff) (E.rowoff) --;
     }
     else (E.cy) --;
     break;
-    case ARROW_DOWN: ;
+    case (int)ARROW_DOWN: ;
     if (filerow < E.numrows) 
       if (E.cy == E.screenrows - 1) (E.rowoff) ++; else (E.cy) ++;
     break;
@@ -1418,10 +1411,10 @@ void editorProcessKeypress(int fd)
 {
   int c = editorReadKey(fd);
   switch (c) {
-    case ENTER: editorInsertNewline();
+    case (int)ENTER: editorInsertNewline();
     break;
-    case CTRL_C: break;
-    case CTRL_Q: ;
+    case (int)CTRL_C: break;
+    case (int)CTRL_Q: ;
     if (E.dirty) 
       if (editorProcessKeypress_quit_times) {
         {
@@ -1435,40 +1428,43 @@ void editorProcessKeypress(int fd)
       }
     exit(0);
     break;
-    case CTRL_S: editorSave();
+    case (int)CTRL_S: editorSave();
     break;
-    case CTRL_F: editorFind(fd);
+    case (int)CTRL_F: editorFind(fd);
     break;
-    case BACKSPACE: case CTRL_H: case DEL_KEY: editorDelChar();
+    case (int)BACKSPACE: case (int)CTRL_H: case (int)DEL_KEY:
+    editorDelChar();
     break;
-    case PAGE_UP: case PAGE_DOWN: ;
-    if (c == PAGE_UP) {
+    case (int)PAGE_UP: case (int)PAGE_DOWN: ;
+    if ((unsigned int)c == PAGE_UP) {
       if (E.cy != 0) E.cy = 0; else goto _LAND;
     }
     else {
       _LAND: ;
-      if (c == PAGE_DOWN) 
+      if ((unsigned int)c == PAGE_DOWN) 
         if (E.cy != E.screenrows - 1) E.cy = E.screenrows - 1;
     }
     {
       int times = E.screenrows;
       while (1) {
         int tmp_1;
-        int tmp_0;
+        unsigned int tmp_0;
         tmp_1 = times;
         times --;
         ;
         if (! tmp_1) break;
-        if (c == PAGE_UP) tmp_0 = ARROW_UP; else tmp_0 = ARROW_DOWN;
-        editorMoveCursor(tmp_0);
+        if ((unsigned int)c == PAGE_UP) tmp_0 = ARROW_UP;
+        else tmp_0 = ARROW_DOWN;
+        editorMoveCursor((int)tmp_0);
       }
     }
     break;
-    case ARROW_UP: case ARROW_DOWN: case ARROW_LEFT: case ARROW_RIGHT:
+    case (int)ARROW_UP: case (int)ARROW_DOWN: case (int)ARROW_LEFT:
+    case (int)ARROW_RIGHT:
     editorMoveCursor(c);
     break;
-    case CTRL_L: break;
-    case ESC: break;
+    case (int)CTRL_L: break;
+    case (int)ESC: break;
     default: editorInsertChar(c);
     break;
   }

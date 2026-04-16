@@ -15,7 +15,7 @@
 #include "string.c"
 #include "string.h"
 #include "strings.h"
-#include "stropts.h"
+#include "sys/ioctl.h"
 #include "sys/select.h"
 #include "sys/socket.h"
 #include "sys/time.h"
@@ -24,18 +24,18 @@
 #include "time.h"
 #include "unistd.h"
 enum __anonenum_1 {
-    MODBUS_EXCEPTION_ILLEGAL_FUNCTION = 0x01,
-    MODBUS_EXCEPTION_ILLEGAL_DATA_ADDRESS = 2,
-    MODBUS_EXCEPTION_ILLEGAL_DATA_VALUE = 3,
-    MODBUS_EXCEPTION_SLAVE_OR_SERVER_FAILURE = 4,
-    MODBUS_EXCEPTION_ACKNOWLEDGE = 5,
-    MODBUS_EXCEPTION_SLAVE_OR_SERVER_BUSY = 6,
-    MODBUS_EXCEPTION_NEGATIVE_ACKNOWLEDGE = 7,
-    MODBUS_EXCEPTION_MEMORY_PARITY = 8,
-    MODBUS_EXCEPTION_NOT_DEFINED = 9,
-    MODBUS_EXCEPTION_GATEWAY_PATH = 10,
-    MODBUS_EXCEPTION_GATEWAY_TARGET = 11,
-    MODBUS_EXCEPTION_MAX = 12
+    MODBUS_EXCEPTION_ILLEGAL_FUNCTION = (unsigned int)0x01,
+    MODBUS_EXCEPTION_ILLEGAL_DATA_ADDRESS = 2U,
+    MODBUS_EXCEPTION_ILLEGAL_DATA_VALUE = 3U,
+    MODBUS_EXCEPTION_SLAVE_OR_SERVER_FAILURE = 4U,
+    MODBUS_EXCEPTION_ACKNOWLEDGE = 5U,
+    MODBUS_EXCEPTION_SLAVE_OR_SERVER_BUSY = 6U,
+    MODBUS_EXCEPTION_NEGATIVE_ACKNOWLEDGE = 7U,
+    MODBUS_EXCEPTION_MEMORY_PARITY = 8U,
+    MODBUS_EXCEPTION_NOT_DEFINED = 9U,
+    MODBUS_EXCEPTION_GATEWAY_PATH = 10U,
+    MODBUS_EXCEPTION_GATEWAY_TARGET = 11U,
+    MODBUS_EXCEPTION_MAX = 12U
 };
 typedef struct _modbus modbus_t;
 struct __anonstruct_modbus_mapping_t_2 {
@@ -54,18 +54,18 @@ struct __anonstruct_modbus_mapping_t_2 {
 };
 typedef struct __anonstruct_modbus_mapping_t_2 modbus_mapping_t;
 enum __anonenum_modbus_error_recovery_mode_3 {
-    MODBUS_ERROR_RECOVERY_NONE = 0,
-    MODBUS_ERROR_RECOVERY_LINK = 1 << 1,
-    MODBUS_ERROR_RECOVERY_PROTOCOL = 1 << 2
+    MODBUS_ERROR_RECOVERY_NONE = (unsigned int)0,
+    MODBUS_ERROR_RECOVERY_LINK = (unsigned int)(1 << 1),
+    MODBUS_ERROR_RECOVERY_PROTOCOL = (unsigned int)(1 << 2)
 };
 typedef enum __anonenum_modbus_error_recovery_mode_3 modbus_error_recovery_mode;
 enum __anonenum_modbus_backend_type_t_4 {
-    _MODBUS_BACKEND_TYPE_RTU = 0,
-    _MODBUS_BACKEND_TYPE_TCP = 1
+    _MODBUS_BACKEND_TYPE_RTU = (unsigned int)0,
+    _MODBUS_BACKEND_TYPE_TCP = 1U
 };
 enum __anonenum_msg_type_t_5 {
-    MSG_INDICATION = 0,
-    MSG_CONFIRMATION = 1
+    MSG_INDICATION = 0U,
+    MSG_CONFIRMATION = 1U
 };
 typedef enum __anonenum_msg_type_t_5 msg_type_t;
 struct _sft {
@@ -137,15 +137,15 @@ struct _modbus_tcp_pi {
 };
 typedef struct _modbus_tcp_pi modbus_tcp_pi_t;
 enum __anonenum__step_t_6 {
-    _STEP_FUNCTION = 0,
-    _STEP_META = 1,
-    _STEP_DATA = 2
+    _STEP_FUNCTION = 0U,
+    _STEP_META = 1U,
+    _STEP_DATA = 2U
 };
 typedef enum __anonenum__step_t_6 _step_t;
 enum __anonenum_4 {
-    TCP = 0,
-    TCP_PI = 1,
-    RTU = 2
+    TCP = 0U,
+    TCP_PI = 1U,
+    RTU = 2U
 };
 /* compiler builtin: 
    unsigned int __builtin_bswap32(unsigned int);   */
@@ -1189,7 +1189,7 @@ static int _modbus_rtu_pre_check_confirmation(modbus_t *ctx,
       if (ctx->debug) fprintf(__fc_stderr,
                               "The responding slave %d isn\'t the requested slave %d\n",
                               (int)*(rsp + 0),(int)*(req + 0)); /* fprintf_va_2 */
-      __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 6;
+      __fc_errno = (int)(((unsigned int)112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + (unsigned int)6);
       __retres = -1;
       goto return_label;
     }
@@ -1258,9 +1258,9 @@ static int _modbus_rtu_check_integrity(modbus_t *ctx, uint8_t *msg,
                             "ERROR CRC received 0x%0X != CRC calculated 0x%0X\n",
                             (unsigned int)((int)crc_received),
                             (unsigned int)((int)crc_calculated)); /* fprintf_va_3 */
-    if (ctx->error_recovery & MODBUS_ERROR_RECOVERY_PROTOCOL) _modbus_rtu_flush
-                                                              (ctx);
-    __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 1;
+    if ((unsigned int)ctx->error_recovery & MODBUS_ERROR_RECOVERY_PROTOCOL) 
+      _modbus_rtu_flush(ctx);
+    __fc_errno = (int)(((unsigned int)112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + (unsigned int)1);
     __retres = -1;
     goto return_label;
   }
@@ -1473,7 +1473,7 @@ int modbus_rtu_set_serial_mode(modbus_t *ctx, int mode)
     __retres = -1;
     goto return_label;
   }
-  if ((ctx->backend)->backend_type == (unsigned int)_MODBUS_BACKEND_TYPE_RTU) {
+  if ((ctx->backend)->backend_type == _MODBUS_BACKEND_TYPE_RTU) {
     if (ctx->debug) fprintf(__fc_stderr,
                             "This function isn\'t supported on your platform\n"); /* fprintf_va_6 */
     __fc_errno = 95;
@@ -1505,7 +1505,7 @@ int modbus_rtu_get_serial_mode(modbus_t *ctx)
     __retres = -1;
     goto return_label;
   }
-  if ((ctx->backend)->backend_type == (unsigned int)_MODBUS_BACKEND_TYPE_RTU) {
+  if ((ctx->backend)->backend_type == _MODBUS_BACKEND_TYPE_RTU) {
     if (ctx->debug) fprintf(__fc_stderr,
                             "This function isn\'t supported on your platform\n"); /* fprintf_va_7 */
     __fc_errno = 95;
@@ -1528,7 +1528,7 @@ int modbus_rtu_get_rts(modbus_t *ctx)
     __retres = -1;
     goto return_label;
   }
-  if ((ctx->backend)->backend_type == (unsigned int)_MODBUS_BACKEND_TYPE_RTU) {
+  if ((ctx->backend)->backend_type == _MODBUS_BACKEND_TYPE_RTU) {
     modbus_rtu_t *ctx_rtu = (modbus_rtu_t *)ctx->backend_data;
     __retres = ctx_rtu->rts;
     goto return_label;
@@ -1549,7 +1549,7 @@ int modbus_rtu_set_rts(modbus_t *ctx, int mode)
     __retres = -1;
     goto return_label;
   }
-  if ((ctx->backend)->backend_type == (unsigned int)_MODBUS_BACKEND_TYPE_RTU) {
+  if ((ctx->backend)->backend_type == _MODBUS_BACKEND_TYPE_RTU) {
     modbus_rtu_t *ctx_rtu = (modbus_rtu_t *)ctx->backend_data;
     if (mode == 0) goto _LOR;
     else 
@@ -1584,7 +1584,7 @@ int modbus_rtu_set_custom_rts(modbus_t *ctx,
     __retres = -1;
     goto return_label;
   }
-  if ((ctx->backend)->backend_type == (unsigned int)_MODBUS_BACKEND_TYPE_RTU) {
+  if ((ctx->backend)->backend_type == _MODBUS_BACKEND_TYPE_RTU) {
     modbus_rtu_t *ctx_rtu = (modbus_rtu_t *)ctx->backend_data;
     ctx_rtu->set_rts = set_rts;
     __retres = 0;
@@ -1606,7 +1606,7 @@ int modbus_rtu_get_rts_delay(modbus_t *ctx)
     __retres = -1;
     goto return_label;
   }
-  if ((ctx->backend)->backend_type == (unsigned int)_MODBUS_BACKEND_TYPE_RTU) {
+  if ((ctx->backend)->backend_type == _MODBUS_BACKEND_TYPE_RTU) {
     modbus_rtu_t *ctx_rtu;
     ctx_rtu = (modbus_rtu_t *)ctx->backend_data;
     __retres = ctx_rtu->rts_delay;
@@ -1632,7 +1632,7 @@ int modbus_rtu_set_rts_delay(modbus_t *ctx, int us)
               goto return_label;
             }
     }
-  if ((ctx->backend)->backend_type == (unsigned int)_MODBUS_BACKEND_TYPE_RTU) {
+  if ((ctx->backend)->backend_type == _MODBUS_BACKEND_TYPE_RTU) {
     modbus_rtu_t *ctx_rtu;
     ctx_rtu = (modbus_rtu_t *)ctx->backend_data;
     ctx_rtu->rts_delay = us;
@@ -1714,7 +1714,7 @@ static void _modbus_rtu_free(modbus_t *ctx)
 }
 
 modbus_backend_t const _modbus_rtu_backend =
-  {.backend_type = (unsigned int)_MODBUS_BACKEND_TYPE_RTU,
+  {.backend_type = _MODBUS_BACKEND_TYPE_RTU,
    .header_length = (unsigned int)1,
    .checksum_length = (unsigned int)2,
    .max_adu_length = (unsigned int)256,
@@ -1958,7 +1958,7 @@ static int _modbus_tcp_pre_check_confirmation(modbus_t *ctx,
                                                rsp + 1)),
                                 (unsigned int)(((int)*(req + 0) << 8) + (int)*(
                                                req + 1))); /* fprintf_va_11 */
-        __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 2;
+        __fc_errno = (int)(((unsigned int)112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + (unsigned int)2);
         __retres = -1;
         goto return_label;
       }
@@ -1969,7 +1969,7 @@ static int _modbus_tcp_pre_check_confirmation(modbus_t *ctx,
                               "Invalid protocol ID received 0x%X (not 0x0)\n",
                               (unsigned int)(((int)*(rsp + 2) << 8) + (int)*(
                                              rsp + 3))); /* fprintf_va_12 */
-      __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 2;
+      __fc_errno = (int)(((unsigned int)112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + (unsigned int)2);
       __retres = -1;
       goto return_label;
     }
@@ -1983,14 +1983,14 @@ static int _modbus_tcp_set_ipv4_options(int s)
   int rc;
   int option;
   option = 1;
-  rc = setsockopt(s,IPPROTO_TCP,1,(void const *)(& option),
+  rc = setsockopt(s,(int)IPPROTO_TCP,1,(void const *)(& option),
                   (socklen_t)sizeof(int));
   if (rc == -1) {
     __retres = -1;
     goto return_label;
   }
   option = 0x10;
-  rc = setsockopt(s,IPPROTO_IP,1,(void const *)(& option),
+  rc = setsockopt(s,(int)IPPROTO_IP,1,(void const *)(& option),
                   (socklen_t)sizeof(int));
   if (rc == -1) {
     __retres = -1;
@@ -2187,7 +2187,7 @@ static int _modbus_tcp_pi_connect(modbus_t *ctx)
 static void _modbus_tcp_close(modbus_t *ctx)
 {
   if (ctx->s != -1) {
-    shutdown(ctx->s,SHUT_RDWR);
+    shutdown(ctx->s,(int)SHUT_RDWR);
     close(ctx->s);
     ctx->s = -1;
   }
@@ -2227,7 +2227,7 @@ int modbus_tcp_listen(modbus_t *ctx, int nb_connection)
     goto return_label;
   }
   ctx_tcp = (modbus_tcp_t *)ctx->backend_data;
-  new_s = socket(2,1,IPPROTO_TCP);
+  new_s = socket(2,1,(int)IPPROTO_TCP);
   if (new_s == -1) {
     __retres = -1;
     goto return_label;
@@ -2486,7 +2486,7 @@ static void _modbus_tcp_free(modbus_t *ctx)
 }
 
 modbus_backend_t const _modbus_tcp_backend =
-  {.backend_type = (unsigned int)_MODBUS_BACKEND_TYPE_TCP,
+  {.backend_type = _MODBUS_BACKEND_TYPE_TCP,
    .header_length = (unsigned int)7,
    .checksum_length = (unsigned int)0,
    .max_adu_length = (unsigned int)260,
@@ -2506,7 +2506,7 @@ modbus_backend_t const _modbus_tcp_backend =
    .select = & _modbus_tcp_select,
    .free = & _modbus_tcp_free};
 modbus_backend_t const _modbus_tcp_pi_backend =
-  {.backend_type = (unsigned int)_MODBUS_BACKEND_TYPE_TCP,
+  {.backend_type = _MODBUS_BACKEND_TYPE_TCP,
    .header_length = (unsigned int)7,
    .checksum_length = (unsigned int)0,
    .max_adu_length = (unsigned int)260,
@@ -2704,48 +2704,49 @@ char const *modbus_strerror(int errnum)
   char const *__retres;
   switch (errnum) {
     char const *tmp;
-    case 112345678 + MODBUS_EXCEPTION_ILLEGAL_FUNCTION:
+    case (int)((unsigned int)112345678 + MODBUS_EXCEPTION_ILLEGAL_FUNCTION):
     __retres = "Illegal function";
     goto return_label;
-    case 112345678 + MODBUS_EXCEPTION_ILLEGAL_DATA_ADDRESS:
+    case (int)((unsigned int)112345678 + MODBUS_EXCEPTION_ILLEGAL_DATA_ADDRESS):
     __retres = "Illegal data address";
     goto return_label;
-    case 112345678 + MODBUS_EXCEPTION_ILLEGAL_DATA_VALUE:
+    case (int)((unsigned int)112345678 + MODBUS_EXCEPTION_ILLEGAL_DATA_VALUE):
     __retres = "Illegal data value";
     goto return_label;
-    case 112345678 + MODBUS_EXCEPTION_SLAVE_OR_SERVER_FAILURE:
+    case (int)((unsigned int)112345678 + MODBUS_EXCEPTION_SLAVE_OR_SERVER_FAILURE):
     __retres = "Slave device or server failure";
     goto return_label;
-    case 112345678 + MODBUS_EXCEPTION_ACKNOWLEDGE: __retres = "Acknowledge";
+    case (int)((unsigned int)112345678 + MODBUS_EXCEPTION_ACKNOWLEDGE):
+    __retres = "Acknowledge";
     goto return_label;
-    case 112345678 + MODBUS_EXCEPTION_SLAVE_OR_SERVER_BUSY:
+    case (int)((unsigned int)112345678 + MODBUS_EXCEPTION_SLAVE_OR_SERVER_BUSY):
     __retres = "Slave device or server is busy";
     goto return_label;
-    case 112345678 + MODBUS_EXCEPTION_NEGATIVE_ACKNOWLEDGE:
+    case (int)((unsigned int)112345678 + MODBUS_EXCEPTION_NEGATIVE_ACKNOWLEDGE):
     __retres = "Negative acknowledge";
     goto return_label;
-    case 112345678 + MODBUS_EXCEPTION_MEMORY_PARITY:
+    case (int)((unsigned int)112345678 + MODBUS_EXCEPTION_MEMORY_PARITY):
     __retres = "Memory parity error";
     goto return_label;
-    case 112345678 + MODBUS_EXCEPTION_GATEWAY_PATH:
+    case (int)((unsigned int)112345678 + MODBUS_EXCEPTION_GATEWAY_PATH):
     __retres = "Gateway path unavailable";
     goto return_label;
-    case 112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET:
+    case (int)((unsigned int)112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET):
     __retres = "Target device failed to respond";
     goto return_label;
-    case (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 1:
+    case (int)(((unsigned int)112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + (unsigned int)1):
     __retres = "Invalid CRC";
     goto return_label;
-    case (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 2:
+    case (int)(((unsigned int)112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + (unsigned int)2):
     __retres = "Invalid data";
     goto return_label;
-    case (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 3:
+    case (int)(((unsigned int)112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + (unsigned int)3):
     __retres = "Invalid exception code";
     goto return_label;
-    case (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 5:
+    case (int)(((unsigned int)112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + (unsigned int)5):
     __retres = "Too many data";
     goto return_label;
-    case (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 6:
+    case (int)(((unsigned int)112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + (unsigned int)6):
     __retres = "Response not from requested slave";
     goto return_label;
     default: tmp = (char const *)strerror(errnum);
@@ -2935,7 +2936,7 @@ static int send_msg(modbus_t *ctx, uint8_t *msg, int msg_length)
       rc = (int)tmp;
       if (rc == -1) {
         _error_print(ctx,(char const *)0);
-        if (ctx->error_recovery & MODBUS_ERROR_RECOVERY_LINK) {
+        if ((unsigned int)ctx->error_recovery & MODBUS_ERROR_RECOVERY_LINK) {
           int saved_errno = __fc_errno;
           if (__fc_errno == 9) goto _LOR;
           else 
@@ -2957,14 +2958,14 @@ static int send_msg(modbus_t *ctx, uint8_t *msg, int msg_length)
         }
       }
     }
-    if (ctx->error_recovery & MODBUS_ERROR_RECOVERY_LINK) {
+    if ((unsigned int)ctx->error_recovery & MODBUS_ERROR_RECOVERY_LINK) {
       if (! (rc == -1)) break;
     }
     else break;
   }
   if (rc > 0) 
     if (rc != msg_length) {
-      __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 2;
+      __fc_errno = (int)(((unsigned int)112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + (unsigned int)2);
       __retres = -1;
       goto return_label;
     }
@@ -3013,7 +3014,7 @@ static uint8_t compute_meta_length_after_function(int function,
 {
   uint8_t __retres;
   int length;
-  if (msg_type == (unsigned int)MSG_INDICATION) {
+  if (msg_type == MSG_INDICATION) {
     if (function <= 0x06) length = 4;
     else 
       if (function == 0x0F) goto _LOR;
@@ -3041,7 +3042,7 @@ static int compute_data_length_after_meta(modbus_t *ctx, uint8_t *msg,
 {
   int length;
   int function = (int)*(msg + (ctx->backend)->header_length);
-  if (msg_type == (unsigned int)MSG_INDICATION) 
+  if (msg_type == MSG_INDICATION) 
     switch (function) {
       case 0x0F: case 0x10:
       length = (int)*(msg + ((ctx->backend)->header_length + (unsigned int)5));
@@ -3124,13 +3125,13 @@ int _modbus_receive_msg(modbus_t *ctx, uint8_t *msg, msg_type_t msg_type)
   int tmp_1;
   int msg_length = 0;
   if (ctx->debug) 
-    if (msg_type == (unsigned int)MSG_INDICATION) printf("Waiting for a indication...\n"); /* printf_va_11 */
+    if (msg_type == MSG_INDICATION) printf("Waiting for a indication...\n"); /* printf_va_11 */
     else printf("Waiting for a confirmation...\n"); /* printf_va_12 */
   FD_ZERO(& rset);
   FD_SET(ctx->s,& rset);
   step = _STEP_FUNCTION;
   length_to_read = (int)((ctx->backend)->header_length + (unsigned int)1);
-  if (msg_type == (unsigned int)MSG_INDICATION) p_tv = (struct timeval *)0;
+  if (msg_type == MSG_INDICATION) p_tv = (struct timeval *)0;
   else {
     tv.tv_sec = ctx->response_timeout.tv_sec;
     tv.tv_usec = ctx->response_timeout.tv_usec;
@@ -3141,7 +3142,7 @@ int _modbus_receive_msg(modbus_t *ctx, uint8_t *msg, msg_type_t msg_type)
     rc = (*((ctx->backend)->select))(ctx,& rset,p_tv,length_to_read);
     if (rc == -1) {
       _error_print(ctx,"select");
-      if (ctx->error_recovery & MODBUS_ERROR_RECOVERY_LINK) {
+      if ((unsigned int)ctx->error_recovery & MODBUS_ERROR_RECOVERY_LINK) {
         int saved_errno = __fc_errno;
         if (__fc_errno == 110) {
           _sleep_response_timeout(ctx);
@@ -3165,7 +3166,7 @@ int _modbus_receive_msg(modbus_t *ctx, uint8_t *msg, msg_type_t msg_type)
     }
     if (rc == -1) {
       _error_print(ctx,"read");
-      if (ctx->error_recovery & MODBUS_ERROR_RECOVERY_LINK) 
+      if ((unsigned int)ctx->error_recovery & MODBUS_ERROR_RECOVERY_LINK) 
         if (__fc_errno == 104) goto _LOR;
         else 
           if (__fc_errno == 111) goto _LOR;
@@ -3208,7 +3209,7 @@ int _modbus_receive_msg(modbus_t *ctx, uint8_t *msg, msg_type_t msg_type)
         case _STEP_META:
         length_to_read = compute_data_length_after_meta(ctx,msg,msg_type);
         if (msg_length + length_to_read > (int)(ctx->backend)->max_adu_length) {
-          __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 2;
+          __fc_errno = (int)(((unsigned int)112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + (unsigned int)2);
           _error_print(ctx,"too many data");
           __retres = -1;
           goto return_label;
@@ -3320,7 +3321,7 @@ static int check_confirmation(modbus_t *ctx, uint8_t *req, uint8_t *rsp,
                                                      (uint8_t const *)rsp,
                                                      rsp_length);
     if (rc == -1) {
-      if (ctx->error_recovery & MODBUS_ERROR_RECOVERY_PROTOCOL) {
+      if ((unsigned int)ctx->error_recovery & MODBUS_ERROR_RECOVERY_PROTOCOL) {
         _sleep_response_timeout(ctx);
         modbus_flush(ctx);
       }
@@ -3334,8 +3335,9 @@ static int check_confirmation(modbus_t *ctx, uint8_t *req, uint8_t *rsp,
     if (rsp_length == (offset + 2) + (int)(ctx->backend)->checksum_length) {
       if ((int)*(req + offset) == (int)*(rsp + offset) - 0x80) {
         int exception_code = (int)*(rsp + (offset + 1));
-        if (exception_code < MODBUS_EXCEPTION_MAX) __fc_errno = 112345678 + exception_code;
-        else __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 3;
+        if ((unsigned int)exception_code < MODBUS_EXCEPTION_MAX) __fc_errno = 
+                                                                 112345678 + exception_code;
+        else __fc_errno = (int)(((unsigned int)112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + (unsigned int)3);
         _error_print(ctx,(char const *)0);
         __retres = -1;
         goto return_label;
@@ -3345,7 +3347,7 @@ static int check_confirmation(modbus_t *ctx, uint8_t *req, uint8_t *rsp,
     else {
       _LAND:
       {
-        __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 3;
+        __fc_errno = (int)(((unsigned int)112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + (unsigned int)3);
         _error_print(ctx,(char const *)0);
         __retres = -1;
         goto return_label;
@@ -3363,11 +3365,11 @@ static int check_confirmation(modbus_t *ctx, uint8_t *req, uint8_t *rsp,
                                   "Received function not corresponding to the request (0x%X != 0x%X)\n",
                                   (unsigned int)function,
                                   (unsigned int)((int)*(req + offset))); /* fprintf_va_25 */
-          if (ctx->error_recovery & MODBUS_ERROR_RECOVERY_PROTOCOL) {
+          if ((unsigned int)ctx->error_recovery & MODBUS_ERROR_RECOVERY_PROTOCOL) {
             _sleep_response_timeout(ctx);
             modbus_flush(ctx);
           }
-          __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 2;
+          __fc_errno = (int)(((unsigned int)112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + (unsigned int)2);
           __retres = -1;
           goto return_label;
         }
@@ -3408,11 +3410,11 @@ static int check_confirmation(modbus_t *ctx, uint8_t *req, uint8_t *rsp,
           if (ctx->debug) fprintf(__fc_stderr,
                                   "Quantity not corresponding to the request (%d != %d)\n",
                                   rsp_nb_value,req_nb_value); /* fprintf_va_26 */
-          if (ctx->error_recovery & MODBUS_ERROR_RECOVERY_PROTOCOL) {
+          if ((unsigned int)ctx->error_recovery & MODBUS_ERROR_RECOVERY_PROTOCOL) {
             _sleep_response_timeout(ctx);
             modbus_flush(ctx);
           }
-          __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 2;
+          __fc_errno = (int)(((unsigned int)112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + (unsigned int)2);
           rc = -1;
         }
       }
@@ -3424,11 +3426,11 @@ static int check_confirmation(modbus_t *ctx, uint8_t *req, uint8_t *rsp,
         if (ctx->debug) fprintf(__fc_stderr,
                                 "Message length not corresponding to the computed length (%d != %d)\n",
                                 rsp_length,rsp_length_computed); /* fprintf_va_27 */
-        if (ctx->error_recovery & MODBUS_ERROR_RECOVERY_PROTOCOL) {
+        if ((unsigned int)ctx->error_recovery & MODBUS_ERROR_RECOVERY_PROTOCOL) {
           _sleep_response_timeout(ctx);
           modbus_flush(ctx);
         }
-        __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 2;
+        __fc_errno = (int)(((unsigned int)112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + (unsigned int)2);
         rc = -1;
       }
     }
@@ -3557,7 +3559,7 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
             int __va_arg2 = 2000;
             void *__va_args[3] = {& __va_arg0, & __va_arg1, & __va_arg2};
             rsp_length = response_exception(ctx,& sft,
-                                            MODBUS_EXCEPTION_ILLEGAL_DATA_VALUE,
+                                            (int)MODBUS_EXCEPTION_ILLEGAL_DATA_VALUE,
                                             rsp,(unsigned int)1,
                                             "Illegal nb of values %d in %s (max %d)\n",
                                             (void * const *)(__va_args));
@@ -3579,7 +3581,7 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
                   char const *__va_arg1_86 = name;
                   void *__va_args_88[2] = {& __va_arg0_84, & __va_arg1_86};
                   rsp_length = response_exception(ctx,& sft,
-                                                  MODBUS_EXCEPTION_ILLEGAL_DATA_ADDRESS,
+                                                  (int)MODBUS_EXCEPTION_ILLEGAL_DATA_ADDRESS,
                                                   rsp,(unsigned int)0,
                                                   "Illegal data address 0x%0X in %s\n",
                                                   (void * const *)(__va_args_88));
@@ -3633,7 +3635,7 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
             void *__va_args_96[3] =
               {& __va_arg0_90, & __va_arg1_92, & __va_arg2_94};
             rsp_length = response_exception(ctx,& sft,
-                                            MODBUS_EXCEPTION_ILLEGAL_DATA_VALUE,
+                                            (int)MODBUS_EXCEPTION_ILLEGAL_DATA_VALUE,
                                             rsp,(unsigned int)1,
                                             "Illegal nb of values %d in %s (max %d)\n",
                                             (void * const *)(__va_args_96));
@@ -3655,7 +3657,7 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
                   char const *__va_arg1_100 = name_0;
                   void *__va_args_102[2] = {& __va_arg0_98, & __va_arg1_100};
                   rsp_length = response_exception(ctx,& sft,
-                                                  MODBUS_EXCEPTION_ILLEGAL_DATA_ADDRESS,
+                                                  (int)MODBUS_EXCEPTION_ILLEGAL_DATA_ADDRESS,
                                                   rsp,(unsigned int)0,
                                                   "Illegal data address 0x%0X in %s\n",
                                                   (void * const *)(__va_args_102));
@@ -3698,7 +3700,7 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
             int __va_arg0_104 = (int)address;
             void *__va_args_106[1] = {& __va_arg0_104};
             rsp_length = response_exception(ctx,& sft,
-                                            MODBUS_EXCEPTION_ILLEGAL_DATA_ADDRESS,
+                                            (int)MODBUS_EXCEPTION_ILLEGAL_DATA_ADDRESS,
                                             rsp,(unsigned int)0,
                                             "Illegal data address 0x%0X in write_bit\n",
                                             (void * const *)(__va_args_106));
@@ -3724,7 +3726,7 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
                 int __va_arg1_110 = (int)address;
                 void *__va_args_112[2] = {& __va_arg0_108, & __va_arg1_110};
                 rsp_length = response_exception(ctx,& sft,
-                                                MODBUS_EXCEPTION_ILLEGAL_DATA_VALUE,
+                                                (int)MODBUS_EXCEPTION_ILLEGAL_DATA_VALUE,
                                                 rsp,(unsigned int)0,
                                                 "Illegal data value 0x%0X in write_bit request at address %0X\n",
                                                 (void * const *)(__va_args_112));
@@ -3744,7 +3746,7 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
             int __va_arg0_114 = (int)address;
             void *__va_args_116[1] = {& __va_arg0_114};
             rsp_length = response_exception(ctx,& sft,
-                                            MODBUS_EXCEPTION_ILLEGAL_DATA_ADDRESS,
+                                            (int)MODBUS_EXCEPTION_ILLEGAL_DATA_ADDRESS,
                                             rsp,(unsigned int)0,
                                             "Illegal data address 0x%0X in write_register\n",
                                             (void * const *)(__va_args_116));
@@ -3773,7 +3775,7 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
             int __va_arg1_120 = 1968;
             void *__va_args_122[2] = {& __va_arg0_118, & __va_arg1_120};
             rsp_length = response_exception(ctx,& sft,
-                                            MODBUS_EXCEPTION_ILLEGAL_DATA_VALUE,
+                                            (int)MODBUS_EXCEPTION_ILLEGAL_DATA_VALUE,
                                             rsp,(unsigned int)1,
                                             "Illegal number of values %d in write_bits (max %d)\n",
                                             (void * const *)(__va_args_122));
@@ -3793,7 +3795,7 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
                   int __va_arg0_124 = tmp_14;
                   void *__va_args_126[1] = {& __va_arg0_124};
                   rsp_length = response_exception(ctx,& sft,
-                                                  MODBUS_EXCEPTION_ILLEGAL_DATA_ADDRESS,
+                                                  (int)MODBUS_EXCEPTION_ILLEGAL_DATA_ADDRESS,
                                                   rsp,(unsigned int)0,
                                                   "Illegal data address 0x%0X in write_bits\n",
                                                   (void * const *)(__va_args_126));
@@ -3827,7 +3829,7 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
             int __va_arg1_130 = 123;
             void *__va_args_132[2] = {& __va_arg0_128, & __va_arg1_130};
             rsp_length = response_exception(ctx,& sft,
-                                            MODBUS_EXCEPTION_ILLEGAL_DATA_VALUE,
+                                            (int)MODBUS_EXCEPTION_ILLEGAL_DATA_VALUE,
                                             rsp,(unsigned int)1,
                                             "Illegal number of values %d in write_registers (max %d)\n",
                                             (void * const *)(__va_args_132));
@@ -3847,7 +3849,7 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
                   int __va_arg0_134 = tmp_15;
                   void *__va_args_136[1] = {& __va_arg0_134};
                   rsp_length = response_exception(ctx,& sft,
-                                                  MODBUS_EXCEPTION_ILLEGAL_DATA_ADDRESS,
+                                                  (int)MODBUS_EXCEPTION_ILLEGAL_DATA_ADDRESS,
                                                   rsp,(unsigned int)0,
                                                   "Illegal data address 0x%0X in write_registers\n",
                                                   (void * const *)(__va_args_136));
@@ -3919,7 +3921,7 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
             int __va_arg0_138 = (int)address;
             void *__va_args_140[1] = {& __va_arg0_138};
             rsp_length = response_exception(ctx,& sft,
-                                            MODBUS_EXCEPTION_ILLEGAL_DATA_ADDRESS,
+                                            (int)MODBUS_EXCEPTION_ILLEGAL_DATA_ADDRESS,
                                             rsp,(unsigned int)0,
                                             "Illegal data address 0x%0X in write_register\n",
                                             (void * const *)(__va_args_140));
@@ -3974,7 +3976,7 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
                      & __va_arg2_146,
                      & __va_arg3};
                   rsp_length = response_exception(ctx,& sft,
-                                                  MODBUS_EXCEPTION_ILLEGAL_DATA_VALUE,
+                                                  (int)MODBUS_EXCEPTION_ILLEGAL_DATA_VALUE,
                                                   rsp,(unsigned int)1,
                                                   "Illegal nb of values (W%d, R%d) in write_and_read_registers (max W%d, R%d)\n",
                                                   (void * const *)(__va_args_149));
@@ -4004,7 +4006,7 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
                             void *__va_args_155[2] =
                               {& __va_arg0_151, & __va_arg1_153};
                             rsp_length = response_exception(ctx,& sft,
-                                                            MODBUS_EXCEPTION_ILLEGAL_DATA_ADDRESS,
+                                                            (int)MODBUS_EXCEPTION_ILLEGAL_DATA_ADDRESS,
                                                             rsp,
                                                             (unsigned int)0,
                                                             "Illegal data read address 0x%0X or write address 0x%0X write_and_read_registers\n",
@@ -4052,8 +4054,8 @@ int modbus_reply(modbus_t *ctx, uint8_t const *req, int req_length,
       int __va_arg0_157 = function;
       void *__va_args_159[1] = {& __va_arg0_157};
       rsp_length = response_exception(ctx,& sft,
-                                      MODBUS_EXCEPTION_ILLEGAL_FUNCTION,rsp,
-                                      (unsigned int)1,
+                                      (int)MODBUS_EXCEPTION_ILLEGAL_FUNCTION,
+                                      rsp,(unsigned int)1,
                                       "Unknown Modbus function code: 0x%0X\n",
                                       (void * const *)(__va_args_159));
     }
@@ -4087,7 +4089,7 @@ int modbus_reply_exception(modbus_t *ctx, uint8_t const *req,
   sft.function = function + 0x80;
   sft.t_id = (*((ctx->backend)->prepare_response_tid))(req,& dummy_length);
   rsp_length = (*((ctx->backend)->build_response_basis))(& sft,rsp);
-  if (exception_code < (unsigned int)MODBUS_EXCEPTION_MAX) {
+  if (exception_code < MODBUS_EXCEPTION_MAX) {
     int tmp;
     int tmp_0;
     tmp = rsp_length;
@@ -4189,7 +4191,7 @@ int modbus_read_bits(modbus_t *ctx, int addr, int nb, uint8_t *dest)
     if (ctx->debug) fprintf(__fc_stderr,
                             "ERROR Too many bits requested (%d > %d)\n",nb,
                             2000); /* fprintf_va_29 */
-    __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 5;
+    __fc_errno = (int)(((unsigned int)112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + (unsigned int)5);
     __retres = -1;
     goto return_label;
   }
@@ -4232,7 +4234,7 @@ int modbus_read_input_bits(modbus_t *ctx, int addr, int nb, uint8_t *dest)
     if (ctx->debug) fprintf(__fc_stderr,
                             "ERROR Too many discrete inputs requested (%d > %d)\n",
                             nb,2000); /* fprintf_va_30 */
-    __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 5;
+    __fc_errno = (int)(((unsigned int)112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + (unsigned int)5);
     __retres = -1;
     goto return_label;
   }
@@ -4274,7 +4276,7 @@ static int read_registers(modbus_t *ctx, int function, int addr, int nb,
     if (ctx->debug) fprintf(__fc_stderr,
                             "ERROR Too many registers requested (%d > %d)\n",
                             nb,125); /* fprintf_va_31 */
-    __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 5;
+    __fc_errno = (int)(((unsigned int)112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + (unsigned int)5);
     __retres = -1;
     goto return_label;
   }
@@ -4334,7 +4336,7 @@ int modbus_read_registers(modbus_t *ctx, int addr, int nb, uint16_t *dest)
     if (ctx->debug) fprintf(__fc_stderr,
                             "ERROR Too many registers requested (%d > %d)\n",
                             nb,125); /* fprintf_va_32 */
-    __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 5;
+    __fc_errno = (int)(((unsigned int)112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + (unsigned int)5);
     __retres = -1;
     goto return_label;
   }
@@ -4370,7 +4372,7 @@ int modbus_read_input_registers(modbus_t *ctx, int addr, int nb,
   if (nb > 125) {
     fprintf(__fc_stderr,
             "ERROR Too many input registers requested (%d > %d)\n",nb,125); /* fprintf_va_33 */
-    __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 5;
+    __fc_errno = (int)(((unsigned int)112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + (unsigned int)5);
     __retres = -1;
     goto return_label;
   }
@@ -4473,7 +4475,7 @@ int modbus_write_bits(modbus_t *ctx, int addr, int nb, uint8_t const *src)
     if (ctx->debug) fprintf(__fc_stderr,
                             "ERROR Writing too many bits (%d > %d)\n",nb,
                             1968); /* fprintf_va_34 */
-    __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 5;
+    __fc_errno = (int)(((unsigned int)112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + (unsigned int)5);
     __retres = -1;
     goto return_label;
   }
@@ -4560,7 +4562,7 @@ int modbus_write_registers(modbus_t *ctx, int addr, int nb,
     if (ctx->debug) fprintf(__fc_stderr,
                             "ERROR Trying to write to too many registers (%d > %d)\n",
                             nb,123); /* fprintf_va_35 */
-    __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 5;
+    __fc_errno = (int)(((unsigned int)112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + (unsigned int)5);
     __retres = -1;
     goto return_label;
   }
@@ -4691,7 +4693,7 @@ int modbus_write_and_read_registers(modbus_t *ctx, int write_addr,
     if (ctx->debug) fprintf(__fc_stderr,
                             "ERROR Too many registers to write (%d > %d)\n",
                             write_nb,121); /* fprintf_va_36 */
-    __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 5;
+    __fc_errno = (int)(((unsigned int)112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + (unsigned int)5);
     __retres = -1;
     goto return_label;
   }
@@ -4699,7 +4701,7 @@ int modbus_write_and_read_registers(modbus_t *ctx, int write_addr,
     if (ctx->debug) fprintf(__fc_stderr,
                             "ERROR Too many registers requested (%d > %d)\n",
                             read_nb,125); /* fprintf_va_37 */
-    __fc_errno = (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 5;
+    __fc_errno = (int)(((unsigned int)112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + (unsigned int)5);
     __retres = -1;
     goto return_label;
   }
@@ -4814,7 +4816,7 @@ void _modbus_init_common(modbus_t *ctx)
   ctx->slave = -1;
   ctx->s = -1;
   ctx->debug = 0;
-  ctx->error_recovery = MODBUS_ERROR_RECOVERY_NONE;
+  ctx->error_recovery = (int)MODBUS_ERROR_RECOVERY_NONE;
   ctx->response_timeout.tv_sec = (time_t)0;
   ctx->response_timeout.tv_usec = 500000;
   ctx->byte_timeout.tv_sec = (time_t)0;
@@ -5287,15 +5289,15 @@ int main(int argc, char **argv)
   if (argc > 1) {
     int tmp_1;
     tmp_1 = strcmp((char const *)*(argv + 1),"tcp");
-    if (tmp_1 == 0) use_backend = TCP;
+    if (tmp_1 == 0) use_backend = (int)TCP;
     else {
       int tmp_0;
       tmp_0 = strcmp((char const *)*(argv + 1),"tcppi");
-      if (tmp_0 == 0) use_backend = TCP_PI;
+      if (tmp_0 == 0) use_backend = (int)TCP_PI;
       else {
         int tmp;
         tmp = strcmp((char const *)*(argv + 1),"rtu");
-        if (tmp == 0) use_backend = RTU;
+        if (tmp == 0) use_backend = (int)RTU;
         else {
           printf("Usage:\n  %s [tcp|tcppi|rtu] - Modbus server for unit testing\n\n",
                  *(argv + 0)); /* printf_va_15 */
@@ -5305,13 +5307,13 @@ int main(int argc, char **argv)
       }
     }
   }
-  else use_backend = TCP;
-  if (use_backend == TCP) {
+  else use_backend = (int)TCP;
+  if ((unsigned int)use_backend == TCP) {
     ctx = modbus_new_tcp("127.0.0.1",1502);
     query = (uint8_t *)malloc((size_t)260);
   }
   else 
-    if (use_backend == TCP_PI) {
+    if ((unsigned int)use_backend == TCP_PI) {
       ctx = modbus_new_tcp_pi("::0","1502");
       query = (uint8_t *)malloc((size_t)260);
     }
@@ -5347,12 +5349,12 @@ int main(int argc, char **argv)
     *(mb_mapping->tab_input_registers + i) = UT_INPUT_REGISTERS_TAB[i];
     i ++;
   }
-  if (use_backend == TCP) {
+  if ((unsigned int)use_backend == TCP) {
     s = modbus_tcp_listen(ctx,1);
     modbus_tcp_accept(ctx,& s);
   }
   else 
-    if (use_backend == TCP_PI) {
+    if ((unsigned int)use_backend == TCP_PI) {
       s = modbus_tcp_pi_listen(ctx,1);
       modbus_tcp_pi_accept(ctx,& s);
     }
@@ -5374,7 +5376,7 @@ int main(int argc, char **argv)
       if (! (rc == 0)) break;
     }
     if (rc == -1) 
-      if (__fc_errno != (112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + 1) 
+      if ((unsigned int)__fc_errno != ((unsigned int)112345678 + MODBUS_EXCEPTION_GATEWAY_TARGET) + (unsigned int)1) 
         break;
     if ((int)*(query + header_length) == 0x03) 
       if (((int)*(query + (header_length + 3)) << 8) + (int)*(query + (
@@ -5388,7 +5390,7 @@ int main(int argc, char **argv)
                                                                 (header_length + 1) + 1)) == (int)UT_REGISTERS_ADDRESS_SPECIAL) {
           printf("Reply to this special register address by an exception\n"); /* printf_va_17 */
           modbus_reply_exception(ctx,(uint8_t const *)query,
-                                 (unsigned int)MODBUS_EXCEPTION_SLAVE_OR_SERVER_BUSY);
+                                 MODBUS_EXCEPTION_SLAVE_OR_SERVER_BUSY);
           goto __Cont;
         }
         else 
@@ -5396,7 +5398,8 @@ int main(int argc, char **argv)
                                                                   (header_length + 1) + 1)) == (int)UT_REGISTERS_ADDRESS_INVALID_TID_OR_SLAVE) {
             int tmp_4;
             int const RAW_REQ_LENGTH = 5;
-            if (use_backend == RTU) tmp_4 = 18; else tmp_4 = 0xFF;
+            if ((unsigned int)use_backend == RTU) tmp_4 = 18;
+            else tmp_4 = 0xFF;
             uint8_t raw_req[5] =
               {(uint8_t)tmp_4,
                (uint8_t)0x03,
@@ -5449,7 +5452,7 @@ int main(int argc, char **argv)
   }
   tmp_7 = modbus_strerror(__fc_errno);
   printf("Quit the loop: %s\n",(char *)tmp_7); /* printf_va_21 */
-  if (use_backend == TCP) 
+  if ((unsigned int)use_backend == TCP) 
     if (s != -1) close(s);
   modbus_mapping_free(mb_mapping);
   free((void *)query);

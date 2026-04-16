@@ -2,19 +2,19 @@
 #include "stddef.h"
 #include "stdio.h"
 enum fred {
-    a = 0,
-    b = 1,
-    c = 2
+    a = 0U,
+    b = 1U,
+    c = 2U
 };
 enum __anonenum_h_1 {
-    e = 0,
-    f = 1,
-    g = 2
+    e = 0U,
+    f = 1U,
+    g = 2U
 };
 enum __anonenum_m_2 {
-    i = 0,
-    j = 1,
-    k = 2
+    i = 0U,
+    j = 1U,
+    k = 2U
 };
 /*@ requires valid_read_string(format);
     assigns \result, __fc_stdout->__fc_FILE_data;
@@ -137,15 +137,15 @@ int main(void)
 {
   int __retres;
   enum fred d;
-  printf("a=%d\n",a); /* printf_va_1 */
-  printf("b=%d\n",b); /* printf_va_2 */
-  printf("c=%d\n",c); /* printf_va_3 */
-  printf("e=%d\n",e); /* printf_va_4 */
-  printf("f=%d\n",f); /* printf_va_5 */
-  printf("g=%d\n",g); /* printf_va_6 */
-  printf("i=%d\n",i); /* printf_va_7 */
-  printf("j=%d\n",j); /* printf_va_8 */
-  printf("k=%d\n",k); /* printf_va_9 */
+  printf("a=%d\n",(int)a); /* printf_va_1 */
+  printf("b=%d\n",(int)b); /* printf_va_2 */
+  printf("c=%d\n",(int)c); /* printf_va_3 */
+  printf("e=%d\n",(int)e); /* printf_va_4 */
+  printf("f=%d\n",(int)f); /* printf_va_5 */
+  printf("g=%d\n",(int)g); /* printf_va_6 */
+  printf("i=%d\n",(int)i); /* printf_va_7 */
+  printf("j=%d\n",(int)j); /* printf_va_8 */
+  printf("k=%d\n",(int)k); /* printf_va_9 */
   __retres = 0;
   return __retres;
 }

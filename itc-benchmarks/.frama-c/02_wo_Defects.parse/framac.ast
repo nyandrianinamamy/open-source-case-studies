@@ -4,7 +4,6 @@
 #include "ctype.h"
 #include "errno.h"
 #include "math.h"
-#include "sched.h"
 #include "stdarg.h"
 #include "stddef.h"
 #include "stdint.h"
@@ -189,7 +188,7 @@ struct __anonstruct_memory_allocation_failure_010_s_001_1 {
 };
 typedef struct __anonstruct_memory_allocation_failure_010_s_001_1 memory_allocation_failure_010_s_001;
 enum __anonenum_2 {
-    max_buffer = 10 * 2
+    max_buffer = (unsigned int)(10 * 2)
 };
 struct __anonstruct_memory_allocation_failure_011_s_001_3 {
    int *a ;
@@ -335,7 +334,7 @@ struct __anonstruct_uninit_memory_access_010_s_001_3 {
 };
 typedef struct __anonstruct_uninit_memory_access_010_s_001_3 uninit_memory_access_010_s_001;
 enum __anonenum_4 {
-    max_buffer_0 = 24
+    max_buffer_0 = (unsigned int)24
 };
 struct __anonstruct_uninit_memory_access_012_s_001_5 {
    int int_a ;
@@ -344,8 +343,8 @@ struct __anonstruct_uninit_memory_access_012_s_001_5 {
 };
 typedef struct __anonstruct_uninit_memory_access_012_s_001_5 uninit_memory_access_012_s_001;
 enum __anonenum_bool_6 {
-    true = 1,
-    false = 0
+    true = (unsigned int)1,
+    false = (unsigned int)0
 };
 typedef enum __anonenum_bool_6 bool;
 struct __anonstruct_uninit_memory_access_013_s_001_7 {
@@ -373,9 +372,9 @@ struct __anonstruct_uninit_pointer_014_s_001_2 {
 };
 typedef struct __anonstruct_uninit_pointer_014_s_001_2 uninit_pointer_014_s_001;
 enum __anonenum_values_3 {
-    ZERO = 0,
-    ONE = 1,
-    TWO = 2
+    ZERO = 0U,
+    ONE = 1U,
+    TWO = 2U
 };
 typedef enum __anonenum_values_3 values;
 struct __anonstruct_uninit_var_007_s_001_1 {
@@ -4828,13 +4827,12 @@ char *memory_allocation_failure_008_func_001(char const *msg)
   char const *error_log = msg;
   char *buffer = (char *)0;
   i = 0;
-  while (i < max_buffer) {
-    buffer = (char *)malloc((unsigned int)max_buffer * sizeof(char));
+  while ((unsigned int)i < max_buffer) {
+    buffer = (char *)malloc(max_buffer * sizeof(char));
     break;
     i ++;
   }
-  if (buffer != (char *)0) snprintf(buffer,
-                                    (unsigned int)max_buffer * sizeof(char),
+  if (buffer != (char *)0) snprintf(buffer,max_buffer * sizeof(char),
                                     "Error: %s",(char *)error_log); /* snprintf_va_1 */
   return buffer;
 }

@@ -2,27 +2,27 @@
 #include "stddef.h"
 #include "stdio.h"
 enum fred {
-    a = 0,
-    b = 1,
-    c = 2,
-    d = 3,
-    e = 54,
-    f = 73,
-    g = 74,
-    h = 75
+    a = 0U,
+    b = 1U,
+    c = 2U,
+    d = 3U,
+    e = (unsigned int)54,
+    f = (unsigned int)73,
+    g = 74U,
+    h = 75U
 };
 enum efoo;
 enum efoo;
 enum efoo {
-    ONE = 0,
-    TWO = 1
+    ONE = 0U,
+    TWO = 1U
 };
 struct S2 {
    enum efoo (*f2)(void) ;
 };
 enum Epositive {
-    epos_one = 0,
-    epos_two = 1
+    epos_one = 0U,
+    epos_two = 1U
 };
 enum efoo it_real_fn(void);
 
@@ -109,7 +109,8 @@ int main(void)
   enum fred frod;
   unsigned int tmp;
   enum Epositive epos = epos_two;
-  printf("%d %d %d %d %d %d %d %d\n",a,b,c,d,e,f,g,h); /* printf_va_1 */
+  printf("%d %d %d %d %d %d %d %d\n",(int)a,(int)b,(int)c,(int)d,(int)e,
+         (int)f,(int)g,(int)h); /* printf_va_1 */
   frod = (enum fred)12;
   printf("%d\n",(int)frod); /* printf_va_2 */
   frod = e;

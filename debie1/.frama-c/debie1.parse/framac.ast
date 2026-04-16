@@ -14,17 +14,17 @@ typedef uint16_t code_address_t;
 typedef code_address_t fptr_t;
 typedef unsigned char DEBIE_mode_t;
 enum __anonenum_reset_class_t_1 {
-    power_up_reset_e = 0,
-    watchdog_reset_e = 1,
-    soft_reset_e = 2,
-    warm_reset_e = 3,
-    error_e = 4,
-    checksum_reset_e = 5
+    power_up_reset_e = (unsigned int)0,
+    watchdog_reset_e = (unsigned int)1,
+    soft_reset_e = 2U,
+    warm_reset_e = 3U,
+    error_e = 4U,
+    checksum_reset_e = 5U
 };
 typedef enum __anonenum_reset_class_t_1 reset_class_t;
 enum __anonenum_memory_configuration_t_2 {
-    PROM_e = 0,
-    SRAM_e = 1
+    PROM_e = 0U,
+    SRAM_e = 1U
 };
 typedef enum __anonenum_memory_configuration_t_2 memory_configuration_t;
 typedef uint32_t dpu_time_t;
@@ -139,14 +139,14 @@ struct __anonstruct_science_data_file_t_10 {
 };
 typedef struct __anonstruct_science_data_file_t_10 science_data_file_t;
 enum __anonenum_SU_state_t_11 {
-    off_e = 0,
-    start_switching_e = 1,
-    switching_e = 2,
-    on_e = 3,
-    self_test_mon_e = 4,
-    self_test_e = 5,
-    self_test_trigger_e = 6,
-    acquisition_e = 7
+    off_e = 0U,
+    start_switching_e = 1U,
+    switching_e = 2U,
+    on_e = 3U,
+    self_test_mon_e = 4U,
+    self_test_e = 5U,
+    self_test_trigger_e = 6U,
+    acquisition_e = 7U
 };
 typedef enum __anonenum_SU_state_t_11 SU_state_t;
 struct __anonstruct_sensor_unit_t_12 {
@@ -157,21 +157,21 @@ struct __anonstruct_sensor_unit_t_12 {
 };
 typedef struct __anonstruct_sensor_unit_t_12 sensor_unit_t;
 enum __anonenum_SU_test_level_t_13 {
-    high_e = 0,
-    low_e = 1
+    high_e = 0U,
+    low_e = 1U
 };
 typedef enum __anonenum_SU_test_level_t_13 SU_test_level_t;
 enum __anonenum_round_t_7 {
-    round_0_e = 0,
-    round_1_e = 1,
-    round_2_e = 2,
-    round_3_e = 3,
-    round_4_e = 4,
-    round_5_e = 5,
-    round_6_e = 6,
-    round_7_e = 7,
-    round_8_e = 8,
-    round_9_e = 9
+    round_0_e = 0U,
+    round_1_e = 1U,
+    round_2_e = 2U,
+    round_3_e = 3U,
+    round_4_e = 4U,
+    round_5_e = 5U,
+    round_6_e = 6U,
+    round_7_e = 7U,
+    round_8_e = 8U,
+    round_9_e = 9U
 };
 struct __anonstruct_task_info_t_8 {
    unsigned char rtx_task_number ;
@@ -179,13 +179,13 @@ struct __anonstruct_task_info_t_8 {
 };
 typedef struct __anonstruct_task_info_t_8 task_info_t;
 enum __anonenum_TC_state_t_12 {
-    TC_handling_e = 0,
-    read_memory_e = 1,
-    memory_dump_e = 2,
-    write_memory_e = 3,
-    memory_patch_e = 4,
-    register_TM_e = 5,
-    SC_TM_e = 6
+    TC_handling_e = 0U,
+    read_memory_e = 1U,
+    memory_dump_e = 2U,
+    write_memory_e = 3U,
+    memory_patch_e = 4U,
+    register_TM_e = 5U,
+    SC_TM_e = 6U
 };
 typedef enum __anonenum_TC_state_t_12 TC_state_t;
 struct __anonstruct_ADC_parameters_t_17 {
@@ -199,19 +199,19 @@ struct __anonstruct_ADC_parameters_t_17 {
 };
 typedef struct __anonstruct_ADC_parameters_t_17 ADC_parameters_t;
 enum __anonenum_SU_index_t_18 {
-    su1_e = 0,
-    su2_e = 1,
-    su3_e = 2,
-    su4_e = 3
+    su1_e = 0U,
+    su2_e = 1U,
+    su3_e = 2U,
+    su4_e = 3U
 };
 enum __anonenum_AD_channel_t_19 {
-    channel_0_e = 0,
-    channel_1_e = 1,
-    channel_2_e = 2,
-    channel_3_e = 3,
-    channel_4_e = 4,
-    channel_5_e = 5,
-    channel_6_e = 6
+    channel_0_e = 0U,
+    channel_1_e = 1U,
+    channel_2_e = 2U,
+    channel_3_e = 3U,
+    channel_4_e = 4U,
+    channel_5_e = 5U,
+    channel_6_e = 6U
 };
 struct __anonstruct_incoming_mail_t_11 {
    unsigned char mailbox_number ;
@@ -229,8 +229,8 @@ struct __anonstruct_telecommand_t_18 {
 };
 typedef struct __anonstruct_telecommand_t_18 telecommand_t;
 enum __anonenum_memory_type_t_19 {
-    code_e = 0,
-    data_e = 1
+    code_e = 0U,
+    data_e = 1U
 };
 typedef enum __anonenum_memory_type_t_19 memory_type_t;
 struct __anonstruct_ad_limit_t_18 {
@@ -502,8 +502,7 @@ void ClassifyEvent(event_record_t *new_event)
   if ((int)new_event->delay_1 <= (int)limits->plasma_1_plus_to_minus_max_time) 
     class_index = (unsigned char)((int)class_index | 0x04);
   new_event->classification = event_class[class_index];
-  if (SU_state[(int)new_event->SU_number - 1] == (unsigned int)self_test_e) 
-    new_event->quality_number = (unsigned char)255;
+  if (SU_state[(int)new_event->SU_number - 1] == self_test_e) new_event->quality_number = (unsigned char)255;
   else CalculateQualityNumber(new_event);
   return;
 }
@@ -1132,15 +1131,15 @@ void Boot(void)
   Set_Data_Byte((data_address_t)0xFFD0,SU_ctrl_register);
   max_events = (uint_least16_t)1261;
   ResetDelayCounters();
-  SetSensorUnitOff((sensor_index_t)su1_e,& execution_result);
-  SetSensorUnitOff((sensor_index_t)su2_e,& execution_result);
-  SetSensorUnitOff((sensor_index_t)su3_e,& execution_result);
-  SetSensorUnitOff((sensor_index_t)su4_e,& execution_result);
+  SetSensorUnitOff(su1_e,& execution_result);
+  SetSensorUnitOff(su2_e,& execution_result);
+  SetSensorUnitOff(su3_e,& execution_result);
+  SetSensorUnitOff(su4_e,& execution_result);
   ADC_channel_register = (unsigned char)((int)ADC_channel_register | 0x80);
   Update_ADC_Channel_Reg(ADC_channel_register);
   reset_class = GetResetClass();
-  if (reset_class != (unsigned int)warm_reset_e) reference_checksum = (unsigned char)0;
-  if (reset_class == (unsigned int)power_up_reset_e) {
+  if (reset_class != warm_reset_e) reference_checksum = (unsigned char)0;
+  if (reset_class == power_up_reset_e) {
     internal_time = (dpu_time_t)0;
     fill_pointer = (unsigned char *)(& telemetry_data);
     i = (unsigned int)0;
@@ -1155,13 +1154,13 @@ void Boot(void)
     Clear_RTX_Errors();
   }
   else 
-    if (reset_class == (unsigned int)watchdog_reset_e) {
+    if (reset_class == watchdog_reset_e) {
       telemetry_data.error_status = (unsigned char)((int)telemetry_data.error_status | 0x04);
       if ((int)telemetry_data.watchdog_failures < 255) telemetry_data.watchdog_failures = (unsigned char)(
                                                        (int)telemetry_data.watchdog_failures + 1);
     }
     else 
-      if (reset_class == (unsigned int)checksum_reset_e) {
+      if (reset_class == checksum_reset_e) {
         telemetry_data.error_status = (unsigned char)((int)telemetry_data.error_status | 0x08);
         if ((int)telemetry_data.checksum_failures < 255) telemetry_data.checksum_failures = (unsigned char)(
                                                          (int)telemetry_data.checksum_failures + 1);
@@ -1226,7 +1225,7 @@ void Monitor(uint_least8_t health_mon_round_0)
   UpdatePeriodCounter(& checksum_count,(uint_least8_t)59);
   switch (health_mon_round_0) {
     unsigned char tmp;
-    case (uint_least8_t)round_0_e: HighVoltageCurrent(health_mon_round_0);
+    case round_0_e: HighVoltageCurrent(health_mon_round_0);
     UpdatePeriodCounter(& temp_meas_count,(uint_least8_t)5);
     UpdatePeriodCounter(& voltage_meas_count,(uint_least8_t)17);
     hit_budget_left = hit_budget;
@@ -1241,34 +1240,34 @@ void Monitor(uint_least8_t health_mon_round_0)
       ResetDelayCounters();
     }
     break;
-    case (uint_least8_t)round_1_e: HighVoltageCurrent(health_mon_round_0);
+    case round_1_e: HighVoltageCurrent(health_mon_round_0);
     break;
-    case (uint_least8_t)round_2_e: HighVoltageCurrent(health_mon_round_0);
+    case round_2_e: HighVoltageCurrent(health_mon_round_0);
     break;
-    case (uint_least8_t)round_3_e: HighVoltageCurrent(health_mon_round_0);
+    case round_3_e: HighVoltageCurrent(health_mon_round_0);
     break;
-    case (uint_least8_t)round_4_e: LowVoltageCurrent();
+    case round_4_e: LowVoltageCurrent();
     break;
-    case (uint_least8_t)round_5_e: ;
+    case round_5_e: ;
     if (voltage_meas_count < (uint_least8_t)7) MeasureVoltage(voltage_meas_count);
     break;
-    case (uint_least8_t)round_6_e: ;
+    case round_6_e: ;
     if (self_test_SU_number != (sensor_number_t)0) 
-      if (SU_state[self_test_SU_number - (sensor_number_t)1] == (unsigned int)self_test_e) {
+      if (SU_state[self_test_SU_number - (sensor_number_t)1] == self_test_e) {
         SelfTestChannel(self_test_SU_number - (sensor_number_t)1);
         self_test_SU_number = (sensor_number_t)0;
       }
     break;
-    case (uint_least8_t)round_7_e: ;
+    case round_7_e: ;
     if (self_test_SU_number != (sensor_number_t)0) {
       self_test_flag = (unsigned char)1;
       SelfTest_SU(self_test_SU_number - (sensor_number_t)1);
       if (self_test_SU_number != (sensor_number_t)0) SU_state[self_test_SU_number - (sensor_number_t)1] = self_test_e;
     }
     break;
-    case (uint_least8_t)round_8_e: ;
+    case round_8_e: ;
     break;
-    case (uint_least8_t)round_9_e: ;
+    case round_9_e: ;
     if (temp_meas_count < (uint_least8_t)4) MeasureTemperature(temp_meas_count);
     break;
   }
@@ -1365,33 +1364,33 @@ void MeasureVoltage(uint_least8_t channel_selector)
                                                            ((unsigned char)0x01);
   else 
     switch (channel_selector) {
-      case (uint_least8_t)channel_0_e:
+      case channel_0_e:
       telemetry_data.sensor_unit_1.plus_5_voltage = (unsigned char)(AD_voltage_parameters.unsigned_ADC >> 8);
       telemetry_data.sensor_unit_2.plus_5_voltage = (unsigned char)(AD_voltage_parameters.unsigned_ADC >> 8);
       break;
-      case (uint_least8_t)channel_1_e:
+      case channel_1_e:
       telemetry_data.sensor_unit_3.plus_5_voltage = (unsigned char)(AD_voltage_parameters.unsigned_ADC >> 8);
       telemetry_data.sensor_unit_4.plus_5_voltage = (unsigned char)(AD_voltage_parameters.unsigned_ADC >> 8);
       break;
-      case (uint_least8_t)channel_2_e:
+      case channel_2_e:
       telemetry_data.SU_plus_50 = (unsigned char)(AD_voltage_parameters.unsigned_ADC >> 8);
       break;
-      case (uint_least8_t)channel_3_e:
+      case channel_3_e:
       telemetry_data.DPU_plus_5_digital = (unsigned char)(AD_voltage_parameters.unsigned_ADC >> 8);
       break;
-      case (uint_least8_t)channel_4_e:
+      case channel_4_e:
       telemetry_data.sensor_unit_1.minus_5_voltage = (unsigned char)(
       AD_voltage_parameters.unsigned_ADC >> 8);
       telemetry_data.sensor_unit_2.minus_5_voltage = (unsigned char)(
       AD_voltage_parameters.unsigned_ADC >> 8);
       break;
-      case (uint_least8_t)channel_5_e:
+      case channel_5_e:
       telemetry_data.sensor_unit_3.minus_5_voltage = (unsigned char)(
       AD_voltage_parameters.unsigned_ADC >> 8);
       telemetry_data.sensor_unit_4.minus_5_voltage = (unsigned char)(
       AD_voltage_parameters.unsigned_ADC >> 8);
       break;
-      case (uint_least8_t)channel_6_e:
+      case channel_6_e:
       telemetry_data.SU_minus_50 = (unsigned char)(AD_voltage_parameters.unsigned_ADC >> 8);
       break;
     }
@@ -1635,7 +1634,7 @@ void Monitor_SU_Voltage(sensor_index_t self_test_SU_index)
     unsigned char tmp_0;
     unsigned char tmp_1;
     unsigned char tmp_2;
-    case (sensor_index_t)su1_e: case (sensor_index_t)su2_e:
+    case su1_e: case su2_e:
     tmp = ExceedsLimit(telemetry_data.sensor_unit_1.plus_5_voltage,
                        (unsigned char)0xBA,(unsigned char)0xE4);
     if (tmp) Set_SU_Error(self_test_SU_index,(unsigned char)0x04);
@@ -1643,7 +1642,7 @@ void Monitor_SU_Voltage(sensor_index_t self_test_SU_index)
                          (unsigned char)0x0D,(unsigned char)0x22);
     if (tmp_0) Set_SU_Error(self_test_SU_index,(unsigned char)0x04);
     break;
-    case (sensor_index_t)su3_e: case (sensor_index_t)su4_e:
+    case su3_e: case su4_e:
     tmp_1 = ExceedsLimit(telemetry_data.sensor_unit_3.plus_5_voltage,
                          (unsigned char)0xBA,(unsigned char)0xE4);
     if (tmp_1) Set_SU_Error(self_test_SU_index,(unsigned char)0x04);
@@ -1666,8 +1665,8 @@ void SelfTest_SU(sensor_index_t self_test_SU_index)
   uint_least8_t i;
   LowVoltageCurrent();
   HighVoltageCurrent(self_test_SU_index);
-  i = (uint_least8_t)channel_0_e;
-  while (i <= (uint_least8_t)channel_6_e) {
+  i = channel_0_e;
+  while (i <= channel_6_e) {
     MeasureVoltage(i);
     i ++;
   }
@@ -1770,7 +1769,7 @@ void ExecuteChannelTest(sensor_index_t self_test_SU_index,
           delay_limit = (unsigned short)(((double)1000 / 1.085 - (double)4) / (double)2);
           DelayAwhile(delay_limit);
           if ((int)test_channel_0 == 1) 
-            if (SU_state[self_test_SU_index] == (unsigned int)self_test_trigger_e) {
+            if (SU_state[self_test_SU_index] == self_test_trigger_e) {
               Set_SU_Error(self_test_SU_index,(unsigned char)0x10);
               SU_state[self_test_SU_index] = self_test_e;
             }
@@ -1814,7 +1813,7 @@ void ExecuteChannelTest(sensor_index_t self_test_SU_index,
         test_threshold.channel = (channel_t)5;
         SetTriggerLevel(& test_threshold);
       }
-  if (SU_state[self_test_SU_index] == (unsigned int)self_test_trigger_e) {
+  if (SU_state[self_test_SU_index] == self_test_trigger_e) {
     Set_SU_Error(self_test_SU_index,(unsigned char)0x10);
     SU_state[self_test_SU_index] = self_test_e;
   }
@@ -1927,7 +1926,7 @@ void Init_DPU(reset_class_t reset_class)
 unsigned short InitCode_RAM(reset_class_t reset_class)
 {
   code_address_t code_address;
-  if (reset_class == (unsigned int)warm_reset_e) code_address = failed_code_address;
+  if (reset_class == warm_reset_e) code_address = failed_code_address;
   else {
     code_address = Check_RAM((data_address_t)0x1000,(data_address_t)0x7FFF);
     if ((int)code_address == 0xFFFF) CopyProgramCode();
@@ -1938,7 +1937,7 @@ unsigned short InitCode_RAM(reset_class_t reset_class)
 
 void InitData_RAM(reset_class_t reset_class, code_address_t code_address)
 {
-  if (reset_class == (unsigned int)power_up_reset_e) 
+  if (reset_class == power_up_reset_e) 
     if ((int)code_address == 0xFFFF) failed_data_address = Check_RAM((data_address_t)0x0000,
                                                                     (data_address_t)0xFEFF);
     else failed_data_address = Check_RAM((data_address_t)0x8000,
@@ -2313,10 +2312,10 @@ void HandleHitTrigger(void)
     }
     if (self_test_SU_number != (sensor_number_t)0) {
       trigger = self_test_SU_number;
-      if (SU_state[self_test_SU_number - (sensor_number_t)1] == (unsigned int)self_test_e) 
+      if (SU_state[self_test_SU_number - (sensor_number_t)1] == self_test_e) 
         trigger |= (sensor_number_t)0x40;
       else 
-        if (SU_state[self_test_SU_number - (sensor_number_t)1] == (unsigned int)self_test_trigger_e) 
+        if (SU_state[self_test_SU_number - (sensor_number_t)1] == self_test_trigger_e) 
           SU_state[self_test_SU_number - (sensor_number_t)1] = self_test_e;
     }
     else {
@@ -2403,9 +2402,9 @@ void HandleAcquisition(void)
           _LOR_0:
           {
             state = SU_state[(int)trigger_unit - 1];
-            if (state == (unsigned int)self_test_e) goto _LOR;
+            if (state == self_test_e) goto _LOR;
             else 
-              if (state == (unsigned int)acquisition_e) {
+              if (state == acquisition_e) {
                 unsigned char tmp;
                 _LOR: tmp = Event_Flag();
                 if ((int)tmp == 1) {
@@ -2486,14 +2485,14 @@ void Switch_SU_State(sensor_unit_t *SU_setting)
   if (SU_state[SU_setting->SU_number - (sensor_number_t)1] != SU_setting->expected_source_state) 
     SU_setting->execution_result = (unsigned char)0;
   else 
-    if (SU_setting->SU_state == (unsigned int)self_test_mon_e) {
+    if (SU_setting->SU_state == self_test_mon_e) {
       if (self_test_SU_number != (sensor_number_t)0) SU_setting->execution_result = (unsigned char)0;
       else goto _LAND;
     }
     else {
       _LAND:
       {
-        if (SU_setting->SU_state == (unsigned int)self_test_mon_e) self_test_SU_number = SU_setting->SU_number;
+        if (SU_setting->SU_state == self_test_mon_e) self_test_SU_number = SU_setting->SU_number;
         else 
           if (SU_setting->SU_number == self_test_SU_number) self_test_SU_number = (sensor_number_t)0;
         SU_state[SU_setting->SU_number - (sensor_number_t)1] = SU_setting->SU_state;
@@ -2506,7 +2505,7 @@ void Switch_SU_State(sensor_unit_t *SU_setting)
 void Start_SU_SwitchingOn(sensor_index_t SU, unsigned char *exec_result)
 {
   *exec_result = (unsigned char)1;
-  if (SU_state[SU] != (unsigned int)off_e) *exec_result = (unsigned char)0;
+  if (SU_state[SU] != off_e) *exec_result = (unsigned char)0;
   else {
     Switch_SU_On(SU + (sensor_index_t)1,exec_result);
     if ((sensor_index_t)*exec_result == SU + (sensor_index_t)1) SU_state[SU] = start_switching_e;
@@ -2539,9 +2538,9 @@ SU_state_t ReadSensorUnit(unsigned char SU_number)
 
 void Update_SU_State(sensor_index_t SU_index)
 {
-  if (SU_state[SU_index] == (unsigned int)start_switching_e) SU_state[SU_index] = switching_e;
+  if (SU_state[SU_index] == start_switching_e) SU_state[SU_index] = switching_e;
   else 
-    if (SU_state[SU_index] == (unsigned int)switching_e) {
+    if (SU_state[SU_index] == switching_e) {
       ResetPeakDetector(SU_index + (sensor_index_t)1);
       WaitTimeout((unsigned char)1);
       ResetPeakDetector(SU_index + (sensor_index_t)1);
@@ -2671,20 +2670,20 @@ void TC_InterruptService(void)
     telemetry_data.error_status = (unsigned char)((int)telemetry_data.error_status | 1);
     goto return_label;
   }
-  if (TC_state == (unsigned int)SC_TM_e) goto _LOR;
+  if (TC_state == SC_TM_e) goto _LOR;
   else 
-    if (TC_state == (unsigned int)memory_dump_e) _LOR: goto return_label;
+    if (TC_state == memory_dump_e) _LOR: goto return_label;
   Clear_TC_Timer_Overflow_Flag();
   TC_address = Read_TC_MSB();
   TC_code = Read_TC_LSB();
   TC_word = (uint16_t)((int)TC_address * 256 + (int)TC_code);
-  if (TC_state == (unsigned int)memory_patch_e) {
+  if (TC_state == memory_patch_e) {
     unsigned char tmp_0;
     tmp_0 = isr_send_message((unsigned char)0,TC_word);
     if ((int)tmp_0 == 9) telemetry_data.isr_send_message_error = (unsigned char)0;
     goto return_label;
   }
-  if (TC_state == (unsigned int)register_TM_e) {
+  if (TC_state == register_TM_e) {
     TC_state = TC_handling_e;
     ResetInterruptMask((unsigned char)0x04);
   }
@@ -2793,7 +2792,7 @@ void TC_InterruptService(void)
       }
     else 
       if ((int)TC_address == 0x60) {
-        if (TC_state != (unsigned int)read_memory_e) goto _LOR_2;
+        if (TC_state != read_memory_e) goto _LOR_2;
         else 
           if (((unsigned int)address_MSB << 8) + (unsigned int)TC_code > (unsigned int)(
               (0xFEFF - 32) + 1)) {
@@ -2895,12 +2894,12 @@ void WriteMemory(telecommand_t *command)
 {
   write_checksum = (unsigned char)((int)write_checksum ^ (((int)command->TC_word >> 8) ^ (int)command->TC_code));
   if ((int)command->TC_address == 0x6F) {
-    if (memory_type == (unsigned int)code_e) goto _LOR; else goto _LAND_0;
+    if (memory_type == code_e) goto _LOR; else goto _LAND_0;
   }
   else {
     _LAND_0: ;
     if ((int)command->TC_address == 0x6A) {
-      if (memory_type == (unsigned int)data_e) {
+      if (memory_type == data_e) {
         _LOR:
         {
           TC_state = memory_patch_e;
@@ -3145,7 +3144,7 @@ void ExecuteCommand(telecommand_t *command)
     break;
     case 0x60: break;
     case 0x6F: case 0x6A: ;
-    if (TC_state != (unsigned int)write_memory_e) Set_TC_Error();
+    if (TC_state != write_memory_e) Set_TC_Error();
     break;
     case 0x09: Reboot(soft_reset_e);
     break;
@@ -3155,12 +3154,11 @@ void ExecuteCommand(telecommand_t *command)
       {
         SU_state_t tmp_1;
         tmp_1 = ReadSensorUnit((unsigned char)i);
-        if (tmp_1 == (unsigned int)start_switching_e) goto _LOR;
+        if (tmp_1 == start_switching_e) goto _LOR;
         else {
           SU_state_t tmp_2;
           tmp_2 = ReadSensorUnit((unsigned char)i);
-          if (tmp_2 == (unsigned int)switching_e) _LOR:
-                                                  error_flag = (unsigned char)1;
+          if (tmp_2 == switching_e) _LOR: error_flag = (unsigned char)1;
         }
       }
       i ++;
@@ -3231,20 +3229,20 @@ void HandleTelecommand(void)
     previous_TC.TC_word = (uint16_t)0;
     previous_TC.TC_address = (unsigned char)0x00;
     previous_TC.TC_code = (unsigned char)0;
-    if (TC_state != (unsigned int)TC_handling_e) Set_TC_Error();
+    if (TC_state != TC_handling_e) Set_TC_Error();
     TC_state = TC_handling_e;
   }
   else 
     if ((int)TC_mail.execution_result == 1) {
       received_command.TC_address = (unsigned char)((int)received_command.TC_word >> 9);
       received_command.TC_code = (unsigned char)((int)received_command.TC_word & 255);
-      if (TC_state == (unsigned int)SC_TM_e) goto _LOR;
+      if (TC_state == SC_TM_e) goto _LOR;
       else 
-        if (TC_state == (unsigned int)memory_dump_e) {
+        if (TC_state == memory_dump_e) {
           _LOR: ;
           if ((int)received_command.TC_word == 0xFFFF) {
             DisableInterrupt((unsigned char)2);
-            if (TC_state == (unsigned int)SC_TM_e) ClearEvents();
+            if (TC_state == SC_TM_e) ClearEvents();
             TC_state = TC_handling_e;
           }
           else goto _LAND;
@@ -3324,7 +3322,7 @@ void TM_InterruptService(void)
     telemetry_pointer ++;
   }
   else 
-    if (TC_state == (unsigned int)register_TM_e) {
+    if (TC_state == register_TM_e) {
       telemetry_pointer = (unsigned char *)(& telemetry_data);
       Write_TM_MSB(*telemetry_pointer);
       telemetry_pointer ++;
@@ -3332,7 +3330,7 @@ void TM_InterruptService(void)
       telemetry_pointer ++;
     }
     else 
-      if (TC_state == (unsigned int)memory_dump_e) {
+      if (TC_state == memory_dump_e) {
         unsigned char tmp;
         Write_TM_MSB((unsigned char)0);
         Write_TM_LSB(read_memory_checksum);
@@ -3408,9 +3406,8 @@ void RecordEvent(void)
   uint_least16_t record_index;
   record_index = free_slot_index;
   if (record_index >= max_events) 
-    if (TC_state != (unsigned int)SC_TM_e) record_index = FindMinQualityRecord
-                                           ();
-  if (TC_state == (unsigned int)SC_TM_e) {
+    if (TC_state != SC_TM_e) record_index = FindMinQualityRecord();
+  if (TC_state == SC_TM_e) {
     if (event_queue_length < (uint_least8_t)10) event_queue_length ++;
   }
   else {
@@ -3922,7 +3919,7 @@ int printf_va_23(char const * restrict format);
 void Reboot(reset_class_t boot_type)
 {
   printf("Reboot %u\n",boot_type); /* printf_va_22 */
-  if (boot_type == (unsigned int)checksum_reset_e) reference_checksum = code_checksum;
+  if (boot_type == checksum_reset_e) reference_checksum = code_checksum;
   printf("Target Reboot.\n"); /* printf_va_23 */
   return;
 }
@@ -4893,7 +4890,7 @@ void Sim_Self_Test_Trigger(void)
     if ((int)hit_enabled == 1) 
       if ((int)self_test_pulse > 0) 
         if (self_test_SU_number != (sensor_number_t)0) 
-          if (SU_state[self_test_SU_number - (sensor_number_t)1] == (unsigned int)self_test_trigger_e) {
+          if (SU_state[self_test_SU_number - (sensor_number_t)1] == self_test_trigger_e) {
             printf("SU Self Test trigger!\n"); /* printf_va_47 */
             SU_state[self_test_SU_number - (sensor_number_t)1] = self_test_e;
           }
@@ -5637,7 +5634,7 @@ static void TC_ISR_Tests(void)
   printf("\nCASE: %s:\n\n",(char *)"TC = SEND_STATUS_REGISTER, ok"); /* printf_va_78 */
   Send_TC((unsigned char)0x05,(unsigned char)8);
   Check_No_Errors();
-  Check_Nonzero(TC_state == (unsigned int)register_TM_e);
+  Check_Nonzero(TC_state == register_TM_e);
   Check_Nonzero(mail_count[0] == 1);
   FlushMail((unsigned char)0);
   printf("\nCASE: %s:\n\n",(char *)"TC type ALL_INVALID"); /* printf_va_79 */
@@ -5657,13 +5654,13 @@ static void TC_ISR_Tests(void)
   telemetry_data.error_status = (unsigned char)0;
   printf("\nCASE: %s:\n\n",(char *)"TC type ONLY_EVEN, fail (odd)"); /* printf_va_82 */
   Send_TC((unsigned char)0x05,(unsigned char)5);
-  Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
+  Check_Nonzero(TC_state == TC_handling_e);
   Check_Nonzero((int)telemetry_data.error_status == 1);
   Check_Nonzero(mail_count[0] == 0);
   telemetry_data.error_status = (unsigned char)0;
   printf("\nCASE: %s:\n\n",(char *)"TC type ONLY_EVEN, fail (too large)"); /* printf_va_83 */
   Send_TC((unsigned char)0x05,(unsigned char)(0x74 + 2));
-  Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
+  Check_Nonzero(TC_state == TC_handling_e);
   Check_Nonzero((int)telemetry_data.error_status == 1);
   Check_Nonzero(mail_count[0] == 0);
   telemetry_data.error_status = (unsigned char)0;
@@ -5748,11 +5745,11 @@ static void Send_Patch_Code(uint16_t address, unsigned char *checksum)
   Exec_TC((unsigned char)0x10,(unsigned char)(((int)address >> 8) & 0xff),42);
   sum = (unsigned char)(((int)tc_word >> 8) ^ ((int)tc_word & 0xff));
   Check_No_Errors();
-  Check_Nonzero(TC_state == (unsigned int)write_memory_e);
+  Check_Nonzero(TC_state == write_memory_e);
   Exec_TC((unsigned char)0x6F,(unsigned char)((int)address & 0xff),43);
   sum = (unsigned char)((int)sum ^ (((int)tc_word >> 8) ^ ((int)tc_word & 0xff)));
   Check_No_Errors();
-  Check_Nonzero(TC_state == (unsigned int)memory_patch_e);
+  Check_Nonzero(TC_state == memory_patch_e);
   i = (uint_least8_t)0;
   while (i < (uint_least8_t)16) {
     Send_TC_Word(i << 6);
@@ -5771,11 +5768,11 @@ static void Send_Patch_Data(uint16_t address, unsigned char *checksum)
   Exec_TC((unsigned char)0x15,(unsigned char)(((int)address >> 8) & 0xff),42);
   sum = (unsigned char)(((int)tc_word >> 8) ^ ((int)tc_word & 0xff));
   Check_No_Errors();
-  Check_Nonzero(TC_state == (unsigned int)write_memory_e);
+  Check_Nonzero(TC_state == write_memory_e);
   Exec_TC((unsigned char)0x6A,(unsigned char)((int)address & 0xff),43);
   sum = (unsigned char)((int)sum ^ (((int)tc_word >> 8) ^ ((int)tc_word & 0xff)));
   Check_No_Errors();
-  Check_Nonzero(TC_state == (unsigned int)memory_patch_e);
+  Check_Nonzero(TC_state == memory_patch_e);
   i = (uint_least8_t)0;
   while (i < (uint_least8_t)16) {
     Send_TC_Word(i << 6);
@@ -5896,10 +5893,10 @@ static void Read_Data_Memory(uint16_t address)
   uint_least8_t i;
   Exec_TC((unsigned char)0x1F,(unsigned char)(((int)address >> 8) & 0xff),41);
   Check_No_Errors();
-  Check_Nonzero(TC_state == (unsigned int)read_memory_e);
+  Check_Nonzero(TC_state == read_memory_e);
   Exec_TC((unsigned char)0x60,(unsigned char)((int)address & 0xff),41);
   Check_No_Errors();
-  Check_Nonzero(TC_state == (unsigned int)memory_dump_e);
+  Check_Nonzero(TC_state == memory_dump_e);
   i = (uint_least8_t)0;
   while (i < (uint_least8_t)16) {
     Check_Nonzero(telemetry_pointer < telemetry_end_pointer);
@@ -5908,7 +5905,7 @@ static void Read_Data_Memory(uint16_t address)
     TM_InterruptService();
     printf("RPT_Ipoint %d\n",3); /* printf_va_90 */
     printf("RPT_Ipoint %d\n",0); /* printf_va_91 */
-    Check_Nonzero(TC_state == (unsigned int)memory_dump_e);
+    Check_Nonzero(TC_state == memory_dump_e);
     i ++;
   }
   Check_Nonzero(telemetry_pointer == telemetry_end_pointer);
@@ -5919,7 +5916,7 @@ static void Read_Data_Memory(uint16_t address)
   printf("RPT_Ipoint %d\n",0); /* printf_va_95 */
   Handle_TC(10);
   Check_No_Errors();
-  Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
+  Check_Nonzero(TC_state == TC_handling_e);
   return;
 }
 
@@ -5927,7 +5924,7 @@ void Clear_Errors(void)
 {
   Exec_TC((unsigned char)0x03,(unsigned char)0x03,41);
   Check_No_Errors();
-  Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
+  Check_Nonzero(TC_state == TC_handling_e);
   return;
 }
 
@@ -6574,7 +6571,7 @@ static void TC_Task_Tests(void)
   Handle_TC(41);
   Check_Zero((int)telemetry_data.mode_status & 0x10);
   Check_No_Errors();
-  Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
+  Check_Nonzero(TC_state == TC_handling_e);
   printf("\nCASE: %s:\n\n",(char *)"TC to patch code memory, no action"); /* printf_va_101 */
   Send_Patch_Code((uint16_t)0x1300,& chsum);
   chsum = (unsigned char)((int)chsum ^ 0x00);
@@ -6583,7 +6580,7 @@ static void TC_Task_Tests(void)
   Handle_TC(41);
   Check_Zero((int)telemetry_data.mode_status & 0x10);
   Check_No_Errors();
-  Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
+  Check_Nonzero(TC_state == TC_handling_e);
   printf("\nCASE: %s:\n\n",(char *)"TC to patch code memory, soft reset"); /* printf_va_102 */
   Send_Patch_Code((uint16_t)0x1400,& chsum);
   chsum = (unsigned char)((int)chsum ^ 0x09);
@@ -6592,7 +6589,7 @@ static void TC_Task_Tests(void)
   Handle_TC(41);
   Check_Zero((int)telemetry_data.mode_status & 0x10);
   Check_No_Errors();
-  Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
+  Check_Nonzero(TC_state == TC_handling_e);
   printf("\nCASE: %s:\n\n",(char *)"TC to patch code memory, warm reset"); /* printf_va_103 */
   Send_Patch_Code((uint16_t)0x2100,& chsum);
   chsum = (unsigned char)((int)chsum ^ 0x37);
@@ -6601,7 +6598,7 @@ static void TC_Task_Tests(void)
   Handle_TC(41);
   Check_Zero((int)telemetry_data.mode_status & 0x10);
   Check_No_Errors();
-  Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
+  Check_Nonzero(TC_state == TC_handling_e);
   printf("\nCASE: %s:\n\n",(char *)"TC to patch code memory, invalid action"); /* printf_va_104 */
   Send_Patch_Code((uint16_t)0x2400,& chsum);
   chsum = (unsigned char)((int)chsum ^ 0x62);
@@ -6629,7 +6626,7 @@ static void TC_Task_Tests(void)
   Send_TC_Word((uint_least16_t)(0x5A00 | (int)chsum));
   Handle_TC(41);
   Check_Nonzero((int)telemetry_data.mode_status & 0x10);
-  Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
+  Check_Nonzero(TC_state == TC_handling_e);
   Clear_Errors();
   printf("\nCASE: %s:\n\n",
          (char *)"TC to patch code, TC sequence error at first word"); /* printf_va_107 */
@@ -6641,7 +6638,7 @@ static void TC_Task_Tests(void)
          (char *)"TC to patch code, TC sequence error at second word"); /* printf_va_108 */
   Exec_TC((unsigned char)0x10,(unsigned char)0x32,41);
   Check_No_Errors();
-  Check_Nonzero(TC_state == (unsigned int)write_memory_e);
+  Check_Nonzero(TC_state == write_memory_e);
   Exec_TC((unsigned char)0x0A,(unsigned char)0x0A,41);
   Check_Nonzero((int)telemetry_data.error_status == 1);
   Check_Zero((int)telemetry_data.mode_status & 0x10);
@@ -6654,7 +6651,7 @@ static void TC_Task_Tests(void)
   Handle_TC(41);
   Check_Zero((int)telemetry_data.mode_status & 0x10);
   Check_No_Errors();
-  Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
+  Check_Nonzero(TC_state == TC_handling_e);
   printf("\nCASE: %s:\n\n",(char *)"TC to patch data memory, address error"); /* printf_va_110 */
   Send_Patch_Data((uint16_t)0xfef0,& chsum);
   chsum = (unsigned char)((int)chsum ^ 0x11);
@@ -6674,7 +6671,7 @@ static void TC_Task_Tests(void)
          (char *)"TC to patch data memory, TC sequence error at second word"); /* printf_va_112 */
   Exec_TC((unsigned char)0x15,(unsigned char)0x32,41);
   Check_No_Errors();
-  Check_Nonzero(TC_state == (unsigned int)write_memory_e);
+  Check_Nonzero(TC_state == write_memory_e);
   Exec_TC((unsigned char)0x0A,(unsigned char)0x0A,41);
   Check_Nonzero((int)telemetry_data.error_status == 1);
   Check_Zero((int)telemetry_data.mode_status & 0x10);
@@ -6687,13 +6684,13 @@ static void TC_Task_Tests(void)
   Send_TC_Word((uint_least16_t)(0x1100 | (int)chsum));
   Handle_TC(41);
   Check_Nonzero((int)telemetry_data.mode_status & 0x10);
-  Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
+  Check_Nonzero(TC_state == TC_handling_e);
   Clear_Errors();
   printf("\nCASE: %s:\n\n",
          (char *)"TC to patch data memory, time-out on TC word reception"); /* printf_va_114 */
   Send_Patch_Data((uint16_t)0x2200,& chsum);
   chsum = (unsigned char)((int)chsum ^ 0x11);
-  Check_Nonzero(TC_state == (unsigned int)memory_patch_e);
+  Check_Nonzero(TC_state == memory_patch_e);
   Check_Zero((int)telemetry_data.mode_status & 0x10);
   Check_Nonzero(mail_count[0] == 0);
   printf("RPT_Ipoint %d\n",3); /* printf_va_115 */
@@ -6701,7 +6698,7 @@ static void TC_Task_Tests(void)
   HandleTelecommand();
   printf("RPT_Ipoint %d\n",3); /* printf_va_117 */
   printf("RPT_Ipoint %d\n",0); /* printf_va_118 */
-  Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
+  Check_Nonzero(TC_state == TC_handling_e);
   Check_Nonzero((int)telemetry_data.error_status == 1);
   Clear_Errors();
   printf("\nCASE: %s:\n\n",(char *)"TC timeout during TC handling, normal"); /* printf_va_119 */
@@ -6711,14 +6708,14 @@ static void TC_Task_Tests(void)
   HandleTelecommand();
   printf("RPT_Ipoint %d\n",3); /* printf_va_122 */
   printf("RPT_Ipoint %d\n",0); /* printf_va_123 */
-  Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
+  Check_Nonzero(TC_state == TC_handling_e);
   Check_No_Errors();
   printf("\nCASE: %s:\n\n",(char *)"TC to read data memory"); /* printf_va_124 */
   Read_Data_Memory((uint16_t)0x2041);
   printf("\nCASE: %s:\n\n",(char *)"TC to read data memory, address error"); /* printf_va_125 */
   Exec_TC((unsigned char)0x1F,(unsigned char)0xfe,41);
   Check_No_Errors();
-  Check_Nonzero(TC_state == (unsigned int)read_memory_e);
+  Check_Nonzero(TC_state == read_memory_e);
   Exec_TC((unsigned char)0x60,(unsigned char)0xf0,41);
   Check_Nonzero((int)telemetry_data.error_status == 1);
   Clear_Errors();
@@ -6731,7 +6728,7 @@ static void TC_Task_Tests(void)
          (char *)"TC to read data memory, TC sequence error at second word"); /* printf_va_127 */
   Exec_TC((unsigned char)0x1F,(unsigned char)0xab,41);
   Check_No_Errors();
-  Check_Nonzero(TC_state == (unsigned int)read_memory_e);
+  Check_Nonzero(TC_state == read_memory_e);
   Exec_TC((unsigned char)0x0A,(unsigned char)0x0A,41);
   Check_Nonzero((int)telemetry_data.error_status == 1);
   Clear_Errors();
@@ -7500,9 +7497,9 @@ void TM_Tests(void)
   printf("\nCASE: %s:\n\n",(char *)"One whole round of register TM"); /* printf_va_150 */
   Send_TC((unsigned char)0x05,(unsigned char)0);
   Check_No_Errors();
-  Check_Nonzero(TC_state == (unsigned int)register_TM_e);
+  Check_Nonzero(TC_state == register_TM_e);
   Handle_TC(41);
-  Check_Nonzero(TC_state == (unsigned int)register_TM_e);
+  Check_Nonzero(TC_state == register_TM_e);
   octets = 0;
   while ((unsigned int)octets < sizeof(telemetry_data_t)) {
     if (telemetry_pointer != (unsigned char *)(& telemetry_data.time)) {
@@ -7519,15 +7516,15 @@ void TM_Tests(void)
       printf("RPT_Ipoint %d\n",3); /* printf_va_157 */
       printf("RPT_Ipoint %d\n",0); /* printf_va_158 */
     }
-    Check_Nonzero(TC_state == (unsigned int)register_TM_e);
+    Check_Nonzero(TC_state == register_TM_e);
     octets += 2;
   }
   printf("\nCASE: %s:\n\n",(char *)"Partial register TM, stop by TC"); /* printf_va_159 */
   Send_TC((unsigned char)0x05,(unsigned char)22);
   Check_No_Errors();
-  Check_Nonzero(TC_state == (unsigned int)register_TM_e);
+  Check_Nonzero(TC_state == register_TM_e);
   Handle_TC(41);
-  Check_Nonzero(TC_state == (unsigned int)register_TM_e);
+  Check_Nonzero(TC_state == register_TM_e);
   octets = 0;
   while (octets < 40) {
     if (telemetry_pointer != (unsigned char *)(& telemetry_data.time)) {
@@ -7544,19 +7541,19 @@ void TM_Tests(void)
       printf("RPT_Ipoint %d\n",3); /* printf_va_166 */
       printf("RPT_Ipoint %d\n",0); /* printf_va_167 */
     }
-    Check_Nonzero(TC_state == (unsigned int)register_TM_e);
+    Check_Nonzero(TC_state == register_TM_e);
     octets += 2;
   }
   Send_TC((unsigned char)0x03,(unsigned char)0x03);
-  Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
+  Check_Nonzero(TC_state == TC_handling_e);
   Handle_TC(41);
   Check_No_Errors();
   printf("\nCASE: %s:\n\n",(char *)"Science Data TM"); /* printf_va_168 */
   Send_TC((unsigned char)0x06,(unsigned char)0x06);
   Check_No_Errors();
-  Check_Nonzero(TC_state == (unsigned int)SC_TM_e);
+  Check_Nonzero(TC_state == SC_TM_e);
   Handle_TC(41);
-  Check_Nonzero(TC_state == (unsigned int)SC_TM_e);
+  Check_Nonzero(TC_state == SC_TM_e);
   octets = 0;
   /*@ loop \eva::unroll 22; */
   while (mail_count[0] == 0) {
@@ -7575,11 +7572,11 @@ void TM_Tests(void)
       printf("RPT_Ipoint %d\n",0); /* printf_va_176 */
     }
     octets += 2;
-    Check_Nonzero(TC_state == (unsigned int)SC_TM_e);
+    Check_Nonzero(TC_state == SC_TM_e);
   }
   printf("Science TM octets sent %d\n",octets); /* printf_va_177 */
   Handle_TC(41);
-  Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
+  Check_Nonzero(TC_state == TC_handling_e);
   return;
 }
 
@@ -7927,7 +7924,7 @@ static void Hit_ISR_Tests(void)
     Trigger_SU_Hit(su,31);
     Check_Nonzero(mail_count[1] == 1);
     Check_Nonzero((sensor_number_t)mail_message[1] == self_test_SU_number);
-    Check_Nonzero(SU_state[su] == (unsigned int)self_test_e);
+    Check_Nonzero(SU_state[su] == self_test_e);
     FlushMail((unsigned char)1);
     su ++;
   }
@@ -7940,7 +7937,7 @@ static void Hit_ISR_Tests(void)
     Trigger_SU_Hit(su,31);
     Check_Nonzero(mail_count[1] == 1);
     Check_Nonzero((sensor_number_t)mail_message[1] == (self_test_SU_number | (sensor_number_t)0x40));
-    Check_Nonzero(SU_state[su] == (unsigned int)self_test_e);
+    Check_Nonzero(SU_state[su] == self_test_e);
     FlushMail((unsigned char)1);
     su ++;
   }
@@ -8326,10 +8323,10 @@ static void Acquisition_Tests(void)
   printf("\nCASE: %s:\n\n",(char *)"Turn Sensor Units ON"); /* printf_va_199 */
   sen = (sensor_index_t)0;
   while (sen < (sensor_index_t)4) {
-    Check_Nonzero(SU_state[sen] == (unsigned int)off_e);
+    Check_Nonzero(SU_state[sen] == off_e);
     Exec_TC(switch_su_cmd[sen],(unsigned char)0x55,41);
     Check_No_Errors();
-    Check_Nonzero(SU_state[sen] == (unsigned int)start_switching_e);
+    Check_Nonzero(SU_state[sen] == start_switching_e);
     sen ++;
   }
   Set_AD_Nominal();
@@ -8340,19 +8337,19 @@ static void Acquisition_Tests(void)
   Monitor_Health(61);
   sen = (sensor_index_t)0;
   while (sen < (sensor_index_t)4) {
-    Check_Nonzero(SU_state[sen] == (unsigned int)switching_e);
+    Check_Nonzero(SU_state[sen] == switching_e);
     sen ++;
   }
   Monitor_Health(61);
   sen = (sensor_index_t)0;
   while (sen < (sensor_index_t)4) {
-    Check_Nonzero(SU_state[sen] == (unsigned int)on_e);
+    Check_Nonzero(SU_state[sen] == on_e);
     sen ++;
   }
   printf("\nCASE: %s:\n\n",(char *)"SWITCH_SU_ON when already ON, fail"); /* printf_va_200 */
   Exec_TC((unsigned char)0x30,(unsigned char)0x55,41);
   Check_Nonzero((int)telemetry_data.error_status == 1);
-  Check_Nonzero(SU_state[1] == (unsigned int)on_e);
+  Check_Nonzero(SU_state[1] == on_e);
   Clear_Errors();
   printf("\nCASE: %s:\n\n",(char *)"Start Acquisition"); /* printf_va_201 */
   Check_Nonzero(((int)telemetry_data.mode_status & 3) == 1);
@@ -8361,7 +8358,7 @@ static void Acquisition_Tests(void)
   Check_Nonzero(((int)telemetry_data.mode_status & 3) == 2);
   sen = (sensor_index_t)0;
   while (sen < (sensor_index_t)4) {
-    Check_Nonzero(SU_state[sen] == (unsigned int)acquisition_e);
+    Check_Nonzero(SU_state[sen] == acquisition_e);
     sen ++;
   }
   printf("\nCASE: %s:\n\n",(char *)"TC = SWITCH_SU in ACQUISITION, fail"); /* printf_va_202 */
@@ -8401,9 +8398,9 @@ static void Acquisition_Tests(void)
          (char *)"Science Data TM, full Science Data, some hits during TM"); /* printf_va_207 */
   Send_TC((unsigned char)0x06,(unsigned char)0x06);
   Check_No_Errors();
-  Check_Nonzero(TC_state == (unsigned int)SC_TM_e);
+  Check_Nonzero(TC_state == SC_TM_e);
   Handle_TC(41);
-  Check_Nonzero(TC_state == (unsigned int)SC_TM_e);
+  Check_Nonzero(TC_state == SC_TM_e);
   hits = (unsigned int)0;
   hit_budget_left = (uint_least8_t)(10 + 2);
   Check_Zero((int)event_queue_length);
@@ -8425,7 +8422,7 @@ static void Acquisition_Tests(void)
       printf("RPT_Ipoint %d\n",0); /* printf_va_215 */
     }
     octets += 2;
-    Check_Nonzero(TC_state == (unsigned int)SC_TM_e);
+    Check_Nonzero(TC_state == SC_TM_e);
     if (hits < (unsigned int)(10 + 4)) {
       internal_time ++;
       Random_Event();
@@ -8440,7 +8437,7 @@ static void Acquisition_Tests(void)
   Check_Zero((int)hit_budget_left);
   Check_Nonzero(hits == (unsigned int)(10 + 4));
   Handle_TC(41);
-  Check_Nonzero(TC_state == (unsigned int)TC_handling_e);
+  Check_Nonzero(TC_state == TC_handling_e);
   Check_Zero((int)event_queue_length);
   Check_Nonzero(free_slot_index == (unsigned int)10);
   printf("\nCASE: %s:\n\n",
@@ -8458,7 +8455,7 @@ static void Acquisition_Tests(void)
   Check_Nonzero(((int)telemetry_data.mode_status & 3) == 1);
   sen = (sensor_index_t)0;
   while (sen < (sensor_index_t)4) {
-    Check_Nonzero(SU_state[sen] == (unsigned int)on_e);
+    Check_Nonzero(SU_state[sen] == on_e);
     sen ++;
   }
   printf("\nCASE: %s:\n\n",(char *)"Turn Sensor Units OFF"); /* printf_va_219 */
@@ -8466,7 +8463,7 @@ static void Acquisition_Tests(void)
   while (sen < (sensor_index_t)4) {
     Exec_TC(switch_su_cmd[sen],(unsigned char)0x73,41);
     Check_No_Errors();
-    Check_Nonzero(SU_state[sen] == (unsigned int)off_e);
+    Check_Nonzero(SU_state[sen] == off_e);
     sen ++;
   }
   return;
@@ -8607,10 +8604,10 @@ void SU_Self_Test_Tests(void)
   printf("\nCASE: %s:\n\n",(char *)"Turn Sensor Units ON for Self Test"); /* printf_va_220 */
   sen = (sensor_index_t)0;
   while (sen < (sensor_index_t)4) {
-    Check_Nonzero(SU_state[sen] == (unsigned int)off_e);
+    Check_Nonzero(SU_state[sen] == off_e);
     Exec_TC(switch_su_cmd[sen],(unsigned char)0x55,41);
     Check_No_Errors();
-    Check_Nonzero(SU_state[sen] == (unsigned int)start_switching_e);
+    Check_Nonzero(SU_state[sen] == start_switching_e);
     sen ++;
   }
   Set_AD_Nominal();
@@ -8621,13 +8618,13 @@ void SU_Self_Test_Tests(void)
   Monitor_Health(61);
   sen = (sensor_index_t)0;
   while (sen < (sensor_index_t)4) {
-    Check_Nonzero(SU_state[sen] == (unsigned int)switching_e);
+    Check_Nonzero(SU_state[sen] == switching_e);
     sen ++;
   }
   Monitor_Health(61);
   sen = (sensor_index_t)0;
   while (sen < (sensor_index_t)4) {
-    Check_Nonzero(SU_state[sen] == (unsigned int)on_e);
+    Check_Nonzero(SU_state[sen] == on_e);
     sen ++;
   }
   printf("\nCASE: %s:\n\n",(char *)"Switch SU2 to Self Test in Standby mode"); /* printf_va_221 */
@@ -8637,7 +8634,7 @@ void SU_Self_Test_Tests(void)
   Exec_TC((unsigned char)0x30,(unsigned char)0x99,41);
   Check_No_Errors();
   Check_Nonzero(self_test_SU_number == (sensor_number_t)2);
-  Check_Nonzero(SU_state[1] == (unsigned int)self_test_mon_e);
+  Check_Nonzero(SU_state[1] == self_test_mon_e);
   printf("\nCASE: %s:\n\n",(char *)"Switch SU3 (also) to Self Test, fail"); /* printf_va_222 */
   Exec_TC((unsigned char)0x40,(unsigned char)0x99,41);
   Check_Nonzero((int)telemetry_data.error_status & 1);
@@ -8647,16 +8644,16 @@ void SU_Self_Test_Tests(void)
   Check_No_Errors();
   printf("\nCASE: %s:\n\n",(char *)"Run Self Test for SU2"); /* printf_va_223 */
   /*@ loop \eva::unroll 10; */
-  while (health_mon_round != (uint_least8_t)round_7_e) Monitor_Health(61);
+  while (health_mon_round != round_7_e) Monitor_Health(61);
   Check_Nonzero(self_test_SU_number == (sensor_number_t)2);
-  Check_Nonzero(SU_state[1] == (unsigned int)self_test_mon_e);
+  Check_Nonzero(SU_state[1] == self_test_mon_e);
   Monitor_Health(61);
   Check_Nonzero(self_test_SU_number == (sensor_number_t)2);
-  Check_Nonzero(SU_state[1] == (unsigned int)self_test_e);
-  Check_Nonzero(health_mon_round == (uint_least8_t)round_6_e);
+  Check_Nonzero(SU_state[1] == self_test_e);
+  Check_Nonzero(health_mon_round == round_6_e);
   Monitor_Health(61);
   Check_Nonzero(self_test_SU_number == (sensor_number_t)0);
-  Check_Nonzero(SU_state[1] == (unsigned int)on_e);
+  Check_Nonzero(SU_state[1] == on_e);
   Check_No_Errors();
   printf("\nCASE: %s:\n\n",(char *)"Run Self Test for SU2, fail"); /* printf_va_224 */
   tmp_0 = GetMode();
@@ -8665,19 +8662,19 @@ void SU_Self_Test_Tests(void)
   Exec_TC((unsigned char)0x30,(unsigned char)0x99,41);
   Check_No_Errors();
   Check_Nonzero(self_test_SU_number == (sensor_number_t)2);
-  Check_Nonzero(SU_state[1] == (unsigned int)self_test_mon_e);
+  Check_Nonzero(SU_state[1] == self_test_mon_e);
   sim_self_test = (unsigned char)0;
   /*@ loop \eva::unroll 10; */
-  while (health_mon_round != (uint_least8_t)round_7_e) Monitor_Health(61);
+  while (health_mon_round != round_7_e) Monitor_Health(61);
   Check_Nonzero(self_test_SU_number == (sensor_number_t)2);
-  Check_Nonzero(SU_state[1] == (unsigned int)self_test_mon_e);
+  Check_Nonzero(SU_state[1] == self_test_mon_e);
   Monitor_Health(61);
   Check_Nonzero(self_test_SU_number == (sensor_number_t)2);
-  Check_Nonzero(SU_state[1] == (unsigned int)self_test_e);
-  Check_Nonzero(health_mon_round == (uint_least8_t)round_6_e);
+  Check_Nonzero(SU_state[1] == self_test_e);
+  Check_Nonzero(health_mon_round == round_6_e);
   Monitor_Health(61);
   Check_Nonzero(self_test_SU_number == (sensor_number_t)0);
-  Check_Nonzero(SU_state[1] == (unsigned int)on_e);
+  Check_Nonzero(SU_state[1] == on_e);
   Check_Nonzero((int)telemetry_data.SU_status[1] & 0x10);
   Check_Nonzero((int)telemetry_data.error_status == 0x20);
   Clear_Errors();
@@ -8691,7 +8688,7 @@ void SU_Self_Test_Tests(void)
     self_test_SU_number = sen + (sensor_index_t)1;
     SU_state[sen] = self_test_trigger_e;
     Trigger_SU_Hit(sen,31);
-    Check_Nonzero(SU_state[sen] == (unsigned int)self_test_e);
+    Check_Nonzero(SU_state[sen] == self_test_e);
     Check_Nonzero(mail_count[1] == 1);
     Check_Nonzero((sensor_index_t)mail_message[1] == sen + (sensor_index_t)1);
     FlushMail((unsigned char)1);
@@ -8708,7 +8705,7 @@ void SU_Self_Test_Tests(void)
     self_test_SU_number = sen + (sensor_index_t)1;
     SU_state[sen] = self_test_e;
     Trigger_SU_Hit(sen,31);
-    Check_Nonzero(SU_state[sen] == (unsigned int)self_test_e);
+    Check_Nonzero(SU_state[sen] == self_test_e);
     Check_Nonzero(mail_count[1] == 1);
     Check_Nonzero((sensor_index_t)mail_message[1] == ((sen + (sensor_index_t)1) | (sensor_index_t)0x40));
     FlushMail((unsigned char)1);
@@ -8724,7 +8721,7 @@ void SU_Self_Test_Tests(void)
     self_test_SU_number = sen + (sensor_index_t)1;
     SU_state[sen] = on_e;
     Trigger_SU_Hit(sen,31);
-    Check_Nonzero(SU_state[sen] == (unsigned int)on_e);
+    Check_Nonzero(SU_state[sen] == on_e);
     Check_Nonzero(mail_count[1] == 1);
     Check_Nonzero((sensor_index_t)mail_message[1] == sen + (sensor_index_t)1);
     FlushMail((unsigned char)1);
@@ -8737,7 +8734,7 @@ void SU_Self_Test_Tests(void)
   while (sen < (sensor_index_t)4) {
     Exec_TC(switch_su_cmd[sen],(unsigned char)0x73,41);
     Check_No_Errors();
-    Check_Nonzero(SU_state[sen] == (unsigned int)off_e);
+    Check_Nonzero(SU_state[sen] == off_e);
     sen ++;
   }
   return;

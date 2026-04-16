@@ -3,7 +3,7 @@
 #include "stdio.h"
 typedef unsigned int P;
 enum __anonenum_1 {
-    L = 1 << 26
+    L = (unsigned int)(1 << 26)
 };
 char *v;
 char *y =
@@ -17,7 +17,7 @@ P K = (P)24;
 P M;
 P E;
 P j[L] = {(P)0};
-P *D = & j[L / 2];
+P *D = & j[L / (unsigned int)2];
 P *i = & j[L] - 3;
 P w(P __0)
 {

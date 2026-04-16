@@ -71,8 +71,8 @@ directory	file	line	function	property kind	status	property
 .	findopen.c	88	findopen	mem_access	Unknown	\valid(i + *ct)
 .	findopen.c	104	findopen	mem_access	Unknown	\valid(i + *ct)
 .	findpatn.c	53	findpatn	user assertion	Unknown	findpatn_cnd > 0
-.	findwinr.c	62	findwinner	initialization	Unknown	\initialized((int *)ti)
-.	findwinr.c	63	findwinner	initialization	Unknown	\initialized((int *)tj)
+.	findwinr.c	62	findwinner	initialization	Unknown	\initialized(&(ti[0]))
+.	findwinr.c	63	findwinner	initialization	Unknown	\initialized(&(tj[0]))
 .	findwinr.c	72	findwinner	initialization	Unknown	\initialized(&ti[u])
 .	findwinr.c	72	findwinner	initialization	Unknown	\initialized(&tj[u])
 .	findwinr.c	72	findwinner	precondition of countlib	Unknown	in_grid_i: in_grid(m)

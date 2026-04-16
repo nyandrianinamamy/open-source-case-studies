@@ -29,30 +29,30 @@ typedef __mpz_struct mpz_t[1];
 typedef __mpz_struct *mpz_ptr;
 typedef __mpz_struct const *mpz_srcptr;
 enum hex_random_op {
-    OP_ADD = 0,
-    OP_SUB = 1,
-    OP_MUL = 2,
-    OP_SQR = 3,
-    OP_CDIV = 4,
-    OP_FDIV = 5,
-    OP_TDIV = 6,
-    OP_CDIV_Q_2 = 7,
-    OP_CDIV_R_2 = 8,
-    OP_FDIV_Q_2 = 9,
-    OP_FDIV_R_2 = 10,
-    OP_TDIV_Q_2 = 11,
-    OP_TDIV_R_2 = 12,
-    OP_GCD = 13,
-    OP_LCM = 14,
-    OP_POWM = 15,
-    OP_AND = 16,
-    OP_IOR = 17,
-    OP_XOR = 18,
-    OP_SETBIT = 19,
-    OP_CLRBIT = 20,
-    OP_COMBIT = 21,
-    OP_SCAN0 = 22,
-    OP_SCAN1 = 23
+    OP_ADD = 0U,
+    OP_SUB = 1U,
+    OP_MUL = 2U,
+    OP_SQR = 3U,
+    OP_CDIV = 4U,
+    OP_FDIV = 5U,
+    OP_TDIV = 6U,
+    OP_CDIV_Q_2 = 7U,
+    OP_CDIV_R_2 = 8U,
+    OP_FDIV_Q_2 = 9U,
+    OP_FDIV_R_2 = 10U,
+    OP_TDIV_Q_2 = 11U,
+    OP_TDIV_R_2 = 12U,
+    OP_GCD = 13U,
+    OP_LCM = 14U,
+    OP_POWM = 15U,
+    OP_AND = 16U,
+    OP_IOR = 17U,
+    OP_XOR = 18U,
+    OP_SETBIT = 19U,
+    OP_CLRBIT = 20U,
+    OP_COMBIT = 21U,
+    OP_SCAN0 = 22U,
+    OP_SCAN1 = 23U
 };
 struct gmp_div_inverse {
    unsigned int shift ;
@@ -65,12 +65,12 @@ struct mpn_base_info {
    mp_limb_t bb ;
 };
 enum mpz_div_round_mode {
-    GMP_DIV_FLOOR = 0,
-    GMP_DIV_CEIL = 1,
-    GMP_DIV_TRUNC = 2
+    GMP_DIV_FLOOR = 0U,
+    GMP_DIV_CEIL = 1U,
+    GMP_DIV_TRUNC = 2U
 };
 enum __anonenum_gmp_randalg_t_4 {
-    GMP_RAND_ALG_DEFAULT = 0,
+    GMP_RAND_ALG_DEFAULT = (unsigned int)0,
     GMP_RAND_ALG_LC = GMP_RAND_ALG_DEFAULT
 };
 typedef enum __anonenum_gmp_randalg_t_4 gmp_randalg_t;
@@ -3073,7 +3073,7 @@ static int mpz_div_qr(__mpz_struct q[1], __mpz_struct r[1],
   if (ds >= (mp_size_t)0) dn = ds; else dn = - ds;
   qs = ds ^ ns;
   if (nn < dn) {
-    if (mode == (unsigned int)GMP_DIV_CEIL) {
+    if (mode == GMP_DIV_CEIL) {
       if (qs >= (mp_size_t)0) {
         if (r) mpz_sub(r,n,d);
         if (q) mpz_set_ui(q,(unsigned long)1);
@@ -3082,7 +3082,7 @@ static int mpz_div_qr(__mpz_struct q[1], __mpz_struct r[1],
     }
     else {
       _LAND_0: ;
-      if (mode == (unsigned int)GMP_DIV_FLOOR) {
+      if (mode == GMP_DIV_FLOOR) {
         if (qs < (mp_size_t)0) {
           if (r) mpz_add(r,n,d);
           if (q) mpz_set_si(q,(long)(-1));
@@ -3124,7 +3124,7 @@ static int mpz_div_qr(__mpz_struct q[1], __mpz_struct r[1],
     rn = mpn_normalized_size((mp_srcptr)np,dn);
     if (ns < (mp_size_t)0) tr[0]._mp_size = (int)(- rn);
     else tr[0]._mp_size = (int)rn;
-    if (mode == (unsigned int)GMP_DIV_FLOOR) {
+    if (mode == GMP_DIV_FLOOR) {
       if (qs < (mp_size_t)0) {
         if (rn != (mp_size_t)0) {
           if (q) mpz_sub_ui(tq,(__mpz_struct const *)(tq),(unsigned long)1);
@@ -3136,7 +3136,7 @@ static int mpz_div_qr(__mpz_struct q[1], __mpz_struct r[1],
     }
     else {
       _LAND_2: ;
-      if (mode == (unsigned int)GMP_DIV_CEIL) 
+      if (mode == GMP_DIV_CEIL) 
         if (qs >= (mp_size_t)0) 
           if (rn != (mp_size_t)0) {
             if (q) mpz_add_ui(tq,(__mpz_struct const *)(tq),(unsigned long)1);
@@ -3221,12 +3221,12 @@ void mpz_tdiv_r(__mpz_struct r[1], __mpz_struct const n[1],
 void mpz_mod(__mpz_struct r[1], __mpz_struct const n[1],
              __mpz_struct const d[1])
 {
-  int tmp;
+  unsigned int tmp;
   if (d->_mp_size >= 0) tmp = GMP_DIV_FLOOR; else tmp = GMP_DIV_CEIL;
   ;
   ;
   ;
-  mpz_div_qr((__mpz_struct *)0,r,n,d,(enum mpz_div_round_mode)tmp);
+  mpz_div_qr((__mpz_struct *)0,r,n,d,tmp);
   return;
 }
 
@@ -3240,7 +3240,7 @@ static void mpz_div_q_2exp(__mpz_struct q[1], __mpz_struct const u[1],
   mp_ptr qp;
   int adjust;
   mp_size_t tmp;
-  int tmp_2;
+  unsigned int tmp_2;
   un = (mp_size_t)u->_mp_size;
   if (un == (mp_size_t)0) {
     q->_mp_size = 0;
@@ -3252,7 +3252,7 @@ static void mpz_div_q_2exp(__mpz_struct q[1], __mpz_struct const u[1],
   bit_index %= (mp_bitcnt_t)(sizeof(mp_limb_t) * (unsigned int)8);
   if (un > (mp_size_t)0) tmp_2 = GMP_DIV_CEIL; else tmp_2 = GMP_DIV_FLOOR;
   ;
-  if (mode == (unsigned int)tmp_2) {
+  if (mode == tmp_2) {
     int tmp_1;
     if (qn <= (mp_size_t)0) tmp_1 = 1;
     else {
@@ -3310,10 +3310,10 @@ static void mpz_div_r_2exp(__mpz_struct r[1], __mpz_struct const u[1],
   if (us >= (mp_size_t)0) un = us; else un = - us;
   mask = ~ ((mp_limb_t)0) >> ((unsigned long)rn * (unsigned long)(sizeof(mp_limb_t) * (unsigned int)8) - bit_index);
   if (rn > un) {
-    int tmp_0;
+    unsigned int tmp_0;
     if (us > (mp_size_t)0) tmp_0 = GMP_DIV_CEIL; else tmp_0 = GMP_DIV_FLOOR;
     ;
-    if (mode == (unsigned int)tmp_0) {
+    if (mode == tmp_0) {
       mp_size_t i;
       mp_limb_t cy;
       cy = (mp_limb_t)1;
@@ -3340,13 +3340,13 @@ static void mpz_div_r_2exp(__mpz_struct r[1], __mpz_struct const u[1],
     }
   }
   else {
-    int tmp_1;
+    unsigned int tmp_1;
     if (r != (__mpz_struct *)u) mpn_copyi(rp,(mp_srcptr)u->_mp_d,
                                           rn - (mp_size_t)1);
     *(rp + (rn - (mp_size_t)1)) = *(u->_mp_d + (rn - (mp_size_t)1)) & mask;
     if (us > (mp_size_t)0) tmp_1 = GMP_DIV_CEIL; else tmp_1 = GMP_DIV_FLOOR;
     ;
-    if (mode == (unsigned int)tmp_1) {
+    if (mode == tmp_1) {
       mp_size_t i_0;
       i_0 = (mp_size_t)0;
       while (1) {
@@ -3485,12 +3485,12 @@ static unsigned long mpz_div_qr_ui(__mpz_struct q[1], __mpz_struct r[1],
   rs = (mp_size_t)(rl > (mp_limb_t)0);
   if (ns < (mp_size_t)0) rs = - rs; else rs = rs;
   if (rl > (mp_limb_t)0) 
-    if (mode == (unsigned int)GMP_DIV_FLOOR) {
+    if (mode == GMP_DIV_FLOOR) {
       if (ns < (mp_size_t)0) goto _LOR; else goto _LAND;
     }
     else {
       _LAND: ;
-      if (mode == (unsigned int)GMP_DIV_CEIL) 
+      if (mode == GMP_DIV_CEIL) 
         if (ns >= (mp_size_t)0) {
           _LOR:
           {
@@ -6079,7 +6079,7 @@ void hex_random_op4(enum hex_random_op op, unsigned long maxbits, char **ap,
   __gmpz_init(b);
   __gmpz_init(c);
   __gmpz_init(d);
-  if (op == (unsigned int)OP_POWM) {
+  if (op == OP_POWM) {
     unsigned long cbits;
     unsigned long tmp;
     unsigned long tmp_0;

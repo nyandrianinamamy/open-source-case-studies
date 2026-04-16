@@ -4,11 +4,11 @@
 #include "stdlib.h"
 #include "string.h"
 enum __anonenum_jsmntype_t_1 {
-    JSMN_UNDEFINED = 0,
-    JSMN_OBJECT = 1,
-    JSMN_ARRAY = 2,
-    JSMN_STRING = 3,
-    JSMN_PRIMITIVE = 4
+    JSMN_UNDEFINED = (unsigned int)0,
+    JSMN_OBJECT = (unsigned int)1,
+    JSMN_ARRAY = (unsigned int)2,
+    JSMN_STRING = (unsigned int)3,
+    JSMN_PRIMITIVE = (unsigned int)4
 };
 typedef enum __anonenum_jsmntype_t_1 jsmntype_t;
 enum jsmnerr {
@@ -279,14 +279,13 @@ int jsmn_parse(jsmn_parser *parser, char const *js, size_t len,
         case ',': ;
         if (tokens != (jsmntok_t *)0) 
           if (parser->toksuper != -1) 
-            if ((tokens + parser->toksuper)->type != (unsigned int)JSMN_ARRAY) 
-              if ((tokens + parser->toksuper)->type != (unsigned int)JSMN_OBJECT) {
+            if ((tokens + parser->toksuper)->type != JSMN_ARRAY) 
+              if ((tokens + parser->toksuper)->type != JSMN_OBJECT) {
                 i = (int)(parser->toknext - (unsigned int)1);
                 while (i >= 0) {
-                  if ((tokens + i)->type == (unsigned int)JSMN_ARRAY) 
-                    goto _LOR;
+                  if ((tokens + i)->type == JSMN_ARRAY) goto _LOR;
                   else 
-                    if ((tokens + i)->type == (unsigned int)JSMN_OBJECT) 
+                    if ((tokens + i)->type == JSMN_OBJECT) 
                       _LOR:
                       if ((tokens + i)->start != -1) 
                         if ((tokens + i)->end == -1) {
@@ -338,7 +337,7 @@ static char const *JSON_STRING =
 static int jsoneq(char const *json, jsmntok_t *tok, char const *s)
 {
   int __retres;
-  if (tok->type == (unsigned int)JSMN_STRING) {
+  if (tok->type == JSMN_STRING) {
     size_t tmp;
     tmp = strlen(s);
     ;
@@ -486,7 +485,7 @@ int main(void)
   }
   if (r < 1) goto _LOR;
   else 
-    if (t[0].type != (unsigned int)JSMN_OBJECT) {
+    if (t[0].type != JSMN_OBJECT) {
       _LOR:
       {
         printf("Object expected\n"); /* printf_va_2 */
@@ -526,7 +525,7 @@ int main(void)
             if (tmp_0 == 0) {
               int j;
               printf("- Groups:\n"); /* printf_va_6 */
-              if (t[i + 1].type != (unsigned int)JSMN_ARRAY) goto __Cont;
+              if (t[i + 1].type != JSMN_ARRAY) goto __Cont;
               j = 0;
               while (j < t[i + 1].size) {
                 {

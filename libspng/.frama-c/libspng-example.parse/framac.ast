@@ -90,30 +90,30 @@ enum spng_errno {
     SPNG_ENCODE_ONLY = 74
 };
 enum spng_text_type {
-    SPNG_TEXT = 1,
-    SPNG_ZTXT = 2,
-    SPNG_ITXT = 3
+    SPNG_TEXT = (unsigned int)1,
+    SPNG_ZTXT = (unsigned int)2,
+    SPNG_ITXT = (unsigned int)3
 };
 enum spng_color_type {
-    SPNG_COLOR_TYPE_GRAYSCALE = 0,
-    SPNG_COLOR_TYPE_TRUECOLOR = 2,
-    SPNG_COLOR_TYPE_INDEXED = 3,
-    SPNG_COLOR_TYPE_GRAYSCALE_ALPHA = 4,
-    SPNG_COLOR_TYPE_TRUECOLOR_ALPHA = 6
+    SPNG_COLOR_TYPE_GRAYSCALE = (unsigned int)0,
+    SPNG_COLOR_TYPE_TRUECOLOR = (unsigned int)2,
+    SPNG_COLOR_TYPE_INDEXED = (unsigned int)3,
+    SPNG_COLOR_TYPE_GRAYSCALE_ALPHA = (unsigned int)4,
+    SPNG_COLOR_TYPE_TRUECOLOR_ALPHA = (unsigned int)6
 };
 enum spng_format {
-    SPNG_FMT_RGBA8 = 1,
-    SPNG_FMT_RGBA16 = 2
+    SPNG_FMT_RGBA8 = (unsigned int)1,
+    SPNG_FMT_RGBA16 = (unsigned int)2
 };
 enum spng_decode_flags {
-    SPNG_DECODE_USE_TRNS = 1,
-    SPNG_DECODE_USE_GAMA = 2,
-    SPNG_DECODE_USE_SBIT = 8
+    SPNG_DECODE_USE_TRNS = (unsigned int)1,
+    SPNG_DECODE_USE_GAMA = (unsigned int)2,
+    SPNG_DECODE_USE_SBIT = (unsigned int)8
 };
 enum spng_crc_action {
-    SPNG_CRC_ERROR = 0,
-    SPNG_CRC_DISCARD = 1,
-    SPNG_CRC_USE = 2
+    SPNG_CRC_ERROR = (unsigned int)0,
+    SPNG_CRC_DISCARD = (unsigned int)1,
+    SPNG_CRC_USE = (unsigned int)2
 };
 struct spng_ihdr {
    uint32_t width ;
@@ -657,7 +657,7 @@ int main(int argc, char **argv)
     printf("spng_ctx_new() failed\n"); /* printf_va_5 */
     goto err;
   }
-  r = spng_set_crc_action(ctx,SPNG_CRC_USE,SPNG_CRC_USE);
+  r = spng_set_crc_action(ctx,(int)SPNG_CRC_USE,(int)SPNG_CRC_USE);
   if (r) {
     char const *tmp_1;
     tmp_1 = spng_strerror(r);
@@ -678,13 +678,13 @@ int main(int argc, char **argv)
     printf("spng_get_ihdr() error: %s\n",(char *)tmp_3); /* printf_va_8 */
     goto err;
   }
-  if ((int)ihdr.color_type == SPNG_COLOR_TYPE_GRAYSCALE) clr_type_str = (char *)"grayscale";
+  if ((unsigned int)ihdr.color_type == SPNG_COLOR_TYPE_GRAYSCALE) clr_type_str = (char *)"grayscale";
   else 
-    if ((int)ihdr.color_type == SPNG_COLOR_TYPE_TRUECOLOR) clr_type_str = (char *)"truecolor";
+    if ((unsigned int)ihdr.color_type == SPNG_COLOR_TYPE_TRUECOLOR) clr_type_str = (char *)"truecolor";
     else 
-      if ((int)ihdr.color_type == SPNG_COLOR_TYPE_INDEXED) clr_type_str = (char *)"indexed color";
+      if ((unsigned int)ihdr.color_type == SPNG_COLOR_TYPE_INDEXED) clr_type_str = (char *)"indexed color";
       else 
-        if ((int)ihdr.color_type == SPNG_COLOR_TYPE_GRAYSCALE_ALPHA) 
+        if ((unsigned int)ihdr.color_type == SPNG_COLOR_TYPE_GRAYSCALE_ALPHA) 
           clr_type_str = (char *)"grayscale with alpha";
         else clr_type_str = (char *)"truecolor with alpha";
   printf("width: %u\nheight: %u\nbit depth: %hhu\ncolor type: %hhu - %s\n",
@@ -693,11 +693,11 @@ int main(int argc, char **argv)
   printf("compression method: %hhu\nfilter method: %hhu\ninterlace method: %hhu\n",
          (int)ihdr.compression_method,(int)ihdr.filter_method,
          (int)ihdr.interlace_method); /* printf_va_10 */
-  r = spng_decoded_image_size(ctx,SPNG_FMT_RGBA8,& out_size);
+  r = spng_decoded_image_size(ctx,(int)SPNG_FMT_RGBA8,& out_size);
   if (r) goto err;
   out = (unsigned char *)malloc(out_size);
   if (out == (unsigned char *)0) goto err;
-  r = spng_decode_image(ctx,out,out_size,SPNG_FMT_RGBA8,0);
+  r = spng_decode_image(ctx,out,out_size,(int)SPNG_FMT_RGBA8,0);
   if (r) {
     char const *tmp_4;
     tmp_4 = spng_strerror(r);
@@ -960,18 +960,18 @@ __inline static int read_and_check_crc(spng_ctx *ctx)
     int tmp;
     tmp = is_critical_chunk(& ctx->current_chunk);
     if (tmp) {
-      if (ctx->crc_action_critical == SPNG_CRC_USE) {
+      if ((unsigned int)ctx->crc_action_critical == SPNG_CRC_USE) {
         __retres = 0;
         goto return_label;
       }
     }
     else {
-      if (ctx->crc_action_ancillary == SPNG_CRC_USE) {
+      if ((unsigned int)ctx->crc_action_ancillary == SPNG_CRC_USE) {
         __retres = 0;
         goto return_label;
       }
-      if (ctx->crc_action_ancillary == SPNG_CRC_DISCARD) {
-        __retres = - SPNG_CRC_DISCARD;
+      if ((unsigned int)ctx->crc_action_ancillary == SPNG_CRC_DISCARD) {
+        __retres = (int)(- SPNG_CRC_DISCARD);
         goto return_label;
       }
     }
@@ -1000,7 +1000,7 @@ __inline static int read_header(spng_ctx *ctx, int *discard)
      .crc = 0U};
   ret = read_and_check_crc(ctx);
   if (ret) 
-    if (ret == - SPNG_CRC_DISCARD) {
+    if ((unsigned int)ret == - SPNG_CRC_DISCARD) {
       if (discard != (int *)0) *discard = 1;
     }
     else {
@@ -1054,12 +1054,12 @@ static int read_chunk_bytes(spng_ctx *ctx, uint32_t bytes)
   }
   tmp = is_critical_chunk(& ctx->current_chunk);
   if (tmp) {
-    if (ctx->crc_action_critical == SPNG_CRC_USE) goto skip_crc;
+    if ((unsigned int)ctx->crc_action_critical == SPNG_CRC_USE) goto skip_crc;
     else goto _LAND;
   }
   else {
     _LAND: ;
-    if (ctx->crc_action_ancillary == SPNG_CRC_USE) goto skip_crc;
+    if ((unsigned int)ctx->crc_action_ancillary == SPNG_CRC_USE) goto skip_crc;
   }
   ctx->cur_actual_crc = (uint32_t)crc32((unsigned long)ctx->cur_actual_crc,
                                         (unsigned char *)ctx->data,bytes);
@@ -1354,7 +1354,7 @@ __inline static void gamma_correct_row(unsigned char *row, uint32_t pixels,
                                        int fmt, uint16_t const *gamma_lut)
 {
   uint32_t i;
-  if (fmt == SPNG_FMT_RGBA8) {
+  if ((unsigned int)fmt == SPNG_FMT_RGBA8) {
     i = (uint32_t)0;
     while (i < pixels) {
       {
@@ -1369,7 +1369,7 @@ __inline static void gamma_correct_row(unsigned char *row, uint32_t pixels,
     }
   }
   else 
-    if (fmt == SPNG_FMT_RGBA16) {
+    if ((unsigned int)fmt == SPNG_FMT_RGBA16) {
       i = (uint32_t)0;
       while (i < pixels) {
         {
@@ -1394,10 +1394,10 @@ __inline static void trns_row(unsigned char *row,
                               int fmt, unsigned int ctype, unsigned int depth)
 {
   uint32_t i;
-  if (ctype != (unsigned int)SPNG_COLOR_TYPE_TRUECOLOR) goto return_label;
+  if (ctype != SPNG_COLOR_TYPE_TRUECOLOR) goto return_label;
   unsigned int scanline_stride = (unsigned int)3;
   if (depth == (unsigned int)16) scanline_stride = (unsigned int)6;
-  if (fmt == SPNG_FMT_RGBA8) {
+  if ((unsigned int)fmt == SPNG_FMT_RGBA8) {
     i = (uint32_t)0;
     while (i < pixels) {
       {
@@ -1412,7 +1412,7 @@ __inline static void trns_row(unsigned char *row,
     }
   }
   else 
-    if (fmt == SPNG_FMT_RGBA16) {
+    if ((unsigned int)fmt == SPNG_FMT_RGBA16) {
       i = (uint32_t)0;
       while (i < pixels) {
         {
@@ -1433,7 +1433,7 @@ __inline static void scale_row(unsigned char *row, uint32_t pixels, int fmt,
                                unsigned int depth, struct spng_sbit *sbit)
 {
   uint32_t i;
-  if (fmt == SPNG_FMT_RGBA8) {
+  if ((unsigned int)fmt == SPNG_FMT_RGBA8) {
     unsigned char px[4];
     i = (uint32_t)0;
     while (i < pixels) {
@@ -1464,7 +1464,7 @@ __inline static void scale_row(unsigned char *row, uint32_t pixels, int fmt,
     }
   }
   else 
-    if (fmt == SPNG_FMT_RGBA16) {
+    if ((unsigned int)fmt == SPNG_FMT_RGBA16) {
       uint16_t px_0[4];
       i = (uint32_t)0;
       while (i < pixels) {
@@ -1523,7 +1523,7 @@ static int check_ihdr(struct spng_ihdr const *ihdr, uint32_t max_width,
         goto return_label;
       }
   switch ((int)ihdr->color_type) {
-    case SPNG_COLOR_TYPE_GRAYSCALE:
+    case (int)SPNG_COLOR_TYPE_GRAYSCALE:
     {
       if (! ((int)ihdr->bit_depth == 1)) 
         if (! ((int)ihdr->bit_depth == 2)) 
@@ -1535,8 +1535,9 @@ static int check_ihdr(struct spng_ihdr const *ihdr, uint32_t max_width,
               }
       break;
     }
-    case SPNG_COLOR_TYPE_TRUECOLOR: case SPNG_COLOR_TYPE_GRAYSCALE_ALPHA:
-    case SPNG_COLOR_TYPE_TRUECOLOR_ALPHA:
+    case (int)SPNG_COLOR_TYPE_TRUECOLOR:
+    case (int)SPNG_COLOR_TYPE_GRAYSCALE_ALPHA:
+    case (int)SPNG_COLOR_TYPE_TRUECOLOR_ALPHA:
     {
       if (! ((int)ihdr->bit_depth == 8)) 
         if (! ((int)ihdr->bit_depth == 16)) {
@@ -1545,7 +1546,7 @@ static int check_ihdr(struct spng_ihdr const *ihdr, uint32_t max_width,
         }
       break;
     }
-    case SPNG_COLOR_TYPE_INDEXED:
+    case (int)SPNG_COLOR_TYPE_INDEXED:
     {
       if (! ((int)ihdr->bit_depth == 1)) 
         if (! ((int)ihdr->bit_depth == 2)) 
@@ -1597,7 +1598,7 @@ static int check_plte(struct spng_plte const *plte,
     __retres = 1;
     goto return_label;
   }
-  if ((int)ihdr->color_type == SPNG_COLOR_TYPE_INDEXED) 
+  if ((unsigned int)ihdr->color_type == SPNG_COLOR_TYPE_INDEXED) 
     if (plte->n_entries > 1U << (int)ihdr->bit_depth) {
       __retres = 1;
       goto return_label;
@@ -2971,7 +2972,7 @@ static int read_chunks_after_idat(spng_ctx *ctx)
             goto return_label;
           }
           ret = read_and_check_crc(ctx);
-          if (ret == - SPNG_CRC_DISCARD) ret = 0;
+          if ((unsigned int)ret == - SPNG_CRC_DISCARD) ret = 0;
           __retres = ret;
           goto return_label;
         }
@@ -3343,12 +3344,13 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
   }
   out_width = out_size_required / ctx->ihdr.height;
   uint8_t channels = (uint8_t)1;
-  if ((int)ctx->ihdr.color_type == SPNG_COLOR_TYPE_TRUECOLOR) channels = (uint8_t)3;
+  if ((unsigned int)ctx->ihdr.color_type == SPNG_COLOR_TYPE_TRUECOLOR) 
+    channels = (uint8_t)3;
   else 
-    if ((int)ctx->ihdr.color_type == SPNG_COLOR_TYPE_GRAYSCALE_ALPHA) 
+    if ((unsigned int)ctx->ihdr.color_type == SPNG_COLOR_TYPE_GRAYSCALE_ALPHA) 
       channels = (uint8_t)2;
     else 
-      if ((int)ctx->ihdr.color_type == SPNG_COLOR_TYPE_TRUECOLOR_ALPHA) 
+      if ((unsigned int)ctx->ihdr.color_type == SPNG_COLOR_TYPE_TRUECOLOR_ALPHA) 
         channels = (uint8_t)4;
   if ((int)ctx->ihdr.bit_depth < 8) bytes_per_pixel = (uint8_t)1;
   else bytes_per_pixel = (uint8_t)((int)channels * ((int)ctx->ihdr.bit_depth / 8));
@@ -3361,16 +3363,17 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
     goto return_label;
   }
   int apply_trns = 0;
-  if (flags & SPNG_DECODE_USE_TRNS) 
+  if ((unsigned int)flags & SPNG_DECODE_USE_TRNS) 
     if (ctx->stored.trns) apply_trns = 1;
   int apply_gamma = 0;
-  if (flags & SPNG_DECODE_USE_GAMA) 
+  if ((unsigned int)flags & SPNG_DECODE_USE_GAMA) 
     if (ctx->stored.gama) apply_gamma = 1;
   int use_sbit = 0;
-  if (flags & SPNG_DECODE_USE_SBIT) 
+  if ((unsigned int)flags & SPNG_DECODE_USE_SBIT) 
     if (ctx->stored.sbit) use_sbit = 1;
   int indexed = 0;
-  if ((int)ctx->ihdr.color_type == SPNG_COLOR_TYPE_INDEXED) indexed = 1;
+  if ((unsigned int)ctx->ihdr.color_type == SPNG_COLOR_TYPE_INDEXED) 
+    indexed = 1;
   int do_scaling = 1;
   if (indexed) do_scaling = 0;
   int interlaced = 0;
@@ -3396,7 +3399,7 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
   unsigned int depth_target = (unsigned int)8;
   unsigned int processing_depth = (unsigned int)ctx->ihdr.bit_depth;
   if (indexed) processing_depth = (unsigned int)8;
-  if (fmt == SPNG_FMT_RGBA16) {
+  if ((unsigned int)fmt == SPNG_FMT_RGBA16) {
     depth_target = (unsigned int)16;
     pixel_size = (size_t)8;
   }
@@ -3428,7 +3431,7 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
     uint32_t lut_entries;
     int tmp_2;
     float file_gamma = (float)ctx->gama / 100000.0f;
-    if (fmt == SPNG_FMT_RGBA8) {
+    if ((unsigned int)fmt == SPNG_FMT_RGBA8) {
       lut_entries = (uint32_t)256;
       max = 255.0f;
       gamma_lut = ctx->gamma_lut8;
@@ -3500,7 +3503,7 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
             sb.alpha_bits = ctx->sbit.alpha_bits;
           }
   if ((int)ctx->ihdr.bit_depth == 16) 
-    if (fmt == SPNG_FMT_RGBA8) {
+    if ((unsigned int)fmt == SPNG_FMT_RGBA8) {
       sb.red_bits = (uint8_t)((int)sb.red_bits - 8);
       sb.green_bits = (uint8_t)((int)sb.green_bits - 8);
       sb.blue_bits = (uint8_t)((int)sb.blue_bits - 8);
@@ -3581,7 +3584,7 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
     apply_gamma = 0;
   }
   if (apply_trns) 
-    if ((int)ctx->ihdr.color_type == SPNG_COLOR_TYPE_TRUECOLOR) 
+    if ((unsigned int)ctx->ihdr.color_type == SPNG_COLOR_TYPE_TRUECOLOR) 
       if ((int)ctx->ihdr.bit_depth == 16) {
         memcpy((void *)(trns_px),(void const *)(& ctx->trns.red),(size_t)2);
         memcpy((void *)(& trns_px[2]),(void const *)(& ctx->trns.green),
@@ -3629,7 +3632,7 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
         while (k < width) {
           pixel = row + pixel_offset;
           pixel_offset += pixel_size;
-          if ((int)ctx->ihdr.color_type == SPNG_COLOR_TYPE_TRUECOLOR) 
+          if ((unsigned int)ctx->ihdr.color_type == SPNG_COLOR_TYPE_TRUECOLOR) 
             if ((int)ctx->ihdr.bit_depth == 16) {
               r_16 = read_u16((void const *)(scanline + k * (uint32_t)6));
               g_16 = read_u16((void const *)((scanline + k * (uint32_t)6) + 2));
@@ -3637,7 +3640,7 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
               a_16 = (uint16_t)65535;
             }
             else {
-              if (fmt == SPNG_FMT_RGBA8) {
+              if ((unsigned int)fmt == SPNG_FMT_RGBA8) {
                 memcpy((void *)pixel,
                        (void const *)(scanline + k * (uint32_t)3),(size_t)3);
                 *(pixel + 3) = (unsigned char)255;
@@ -3654,7 +3657,7 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
               a_8 = (uint8_t)255;
             }
           else 
-            if ((int)ctx->ihdr.color_type == SPNG_COLOR_TYPE_INDEXED) {
+            if ((unsigned int)ctx->ihdr.color_type == SPNG_COLOR_TYPE_INDEXED) {
               uint8_t entry = (uint8_t)0;
               if ((int)ctx->ihdr.bit_depth == 8) memcpy((void *)(& entry),
                                                         (void const *)(
@@ -3668,7 +3671,7 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
                 entry = (uint8_t)(((int)entry >> (int)shift_amount) & (int)mask);
                 shift_amount = (uint8_t)((int)shift_amount - (int)ctx->ihdr.bit_depth);
               }
-              if (fmt == SPNG_FMT_RGBA8) {
+              if ((unsigned int)fmt == SPNG_FMT_RGBA8) {
                 *(pixel + 0) = (unsigned char)plte[entry].red;
                 *(pixel + 1) = (unsigned char)plte[entry].green;
                 *(pixel + 2) = (unsigned char)plte[entry].blue;
@@ -3688,7 +3691,7 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
               }
             }
             else 
-              if ((int)ctx->ihdr.color_type == SPNG_COLOR_TYPE_TRUECOLOR_ALPHA) 
+              if ((unsigned int)ctx->ihdr.color_type == SPNG_COLOR_TYPE_TRUECOLOR_ALPHA) 
                 if ((int)ctx->ihdr.bit_depth == 16) {
                   r_16 = read_u16((void const *)(scanline + k * (uint32_t)8));
                   g_16 = read_u16((void const *)((scanline + k * (uint32_t)8) + 2));
@@ -3696,7 +3699,7 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
                   a_16 = read_u16((void const *)((scanline + k * (uint32_t)8) + 6));
                 }
                 else {
-                  if (fmt == SPNG_FMT_RGBA8) {
+                  if ((unsigned int)fmt == SPNG_FMT_RGBA8) {
                     memcpy((void *)row,(void const *)scanline,
                            scanline_width - (size_t)1);
                     break;
@@ -3715,7 +3718,7 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
                          (size_t)1);
                 }
               else 
-                if ((int)ctx->ihdr.color_type == SPNG_COLOR_TYPE_GRAYSCALE) 
+                if ((unsigned int)ctx->ihdr.color_type == SPNG_COLOR_TYPE_GRAYSCALE) 
                   if ((int)ctx->ihdr.bit_depth == 16) {
                     gray_16 = read_u16((void const *)(scanline + k * (uint32_t)2));
                     if (apply_trns) 
@@ -3742,7 +3745,7 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
                     b_8 = gray_8;
                   }
                 else 
-                  if ((int)ctx->ihdr.color_type == SPNG_COLOR_TYPE_GRAYSCALE_ALPHA) 
+                  if ((unsigned int)ctx->ihdr.color_type == SPNG_COLOR_TYPE_GRAYSCALE_ALPHA) 
                     if ((int)ctx->ihdr.bit_depth == 16) {
                       gray_16 = read_u16((void const *)(scanline + k * (uint32_t)4));
                       a_16 = read_u16((void const *)((scanline + k * (uint32_t)4) + 2));
@@ -3761,7 +3764,7 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
                       g_8 = gray_8;
                       b_8 = gray_8;
                     }
-          if (fmt == SPNG_FMT_RGBA8) {
+          if ((unsigned int)fmt == SPNG_FMT_RGBA8) {
             if ((int)ctx->ihdr.bit_depth == 16) {
               r_8 = (uint8_t)((int)r_16 >> 8);
               g_8 = (uint8_t)((int)g_16 >> 8);
@@ -3774,7 +3777,7 @@ int spng_decode_image(spng_ctx *ctx, unsigned char *out, size_t out_size,
             memcpy((void *)(pixel + 3),(void const *)(& a_8),(size_t)1);
           }
           else 
-            if (fmt == SPNG_FMT_RGBA16) {
+            if ((unsigned int)fmt == SPNG_FMT_RGBA16) {
               if ((int)ctx->ihdr.bit_depth != 16) {
                 r_16 = (uint16_t)r_8;
                 g_16 = (uint16_t)g_8;
@@ -4178,7 +4181,7 @@ int spng_set_crc_action(spng_ctx *ctx, int critical, int ancillary)
       __retres = 1;
       goto return_label;
     }
-  if (critical == SPNG_CRC_DISCARD) {
+  if ((unsigned int)critical == SPNG_CRC_DISCARD) {
     __retres = 1;
     goto return_label;
   }
@@ -4206,7 +4209,7 @@ int spng_decoded_image_size(spng_ctx *ctx, int fmt, size_t *out)
     __retres = ret;
     goto return_label;
   }
-  if (fmt == SPNG_FMT_RGBA8) {
+  if ((unsigned int)fmt == SPNG_FMT_RGBA8) {
     if ((unsigned int)4 > 4294967295U / ctx->ihdr.width) {
       __retres = SPNG_EOVERFLOW;
       goto return_label;
@@ -4219,7 +4222,7 @@ int spng_decoded_image_size(spng_ctx *ctx, int fmt, size_t *out)
     res *= ctx->ihdr.height;
   }
   else 
-    if (fmt == SPNG_FMT_RGBA16) {
+    if ((unsigned int)fmt == SPNG_FMT_RGBA16) {
       if ((unsigned int)8 > 4294967295U / ctx->ihdr.width) {
         __retres = SPNG_EOVERFLOW;
         goto return_label;
@@ -5066,7 +5069,7 @@ int spng_set_text(spng_ctx *ctx, struct spng_text *text, uint32_t n_text)
         __retres = 1;
         goto return_label;
       }
-      if ((text + i)->type == SPNG_TEXT) {
+      if ((unsigned int)(text + i)->type == SPNG_TEXT) {
         int tmp_1;
         tmp_1 = check_png_text((char const *)(text + i)->text,
                                (text + i)->length);
@@ -5076,7 +5079,7 @@ int spng_set_text(spng_ctx *ctx, struct spng_text *text, uint32_t n_text)
         }
       }
       else 
-        if ((text + i)->type == SPNG_ZTXT) {
+        if ((unsigned int)(text + i)->type == SPNG_ZTXT) {
           int tmp_2;
           tmp_2 = check_png_text((char const *)(text + i)->text,
                                  (text + i)->length);
@@ -5090,7 +5093,7 @@ int spng_set_text(spng_ctx *ctx, struct spng_text *text, uint32_t n_text)
           }
         }
         else 
-          if ((text + i)->type == SPNG_ITXT) {
+          if ((unsigned int)(text + i)->type == SPNG_ITXT) {
             if ((int)(text + i)->compression_flag > 1) {
               __retres = 1;
               goto return_label;

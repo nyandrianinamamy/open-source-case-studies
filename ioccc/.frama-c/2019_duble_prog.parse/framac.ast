@@ -26,7 +26,7 @@ struct __anonstruct_w_1 {
    int K ;
 };
 enum __anonenum_2 {
-    u = 24 * (11 * 80 + 5) + 16
+    u = (unsigned int)(24 * (11 * 80 + 5) + 16)
 };
 int a;
 int b;
@@ -529,8 +529,9 @@ int main(int F_0, char **D_0)
               tmp_23 = x.L;
               (x.L) ++;
               v[tmp_23] = (char)w.K;
-              if (x.L < u) tmp_26 = G(5);
-              else tmp_26 = printf("%s%.*s\r \033[97mmode:",I,u - 6,v); /* printf_va_1 */
+              if ((unsigned int)x.L < u) tmp_26 = G(5);
+              else tmp_26 = printf("%s%.*s\r \033[97mmode:",I,
+                                   (int)(u - (unsigned int)6),v); /* printf_va_1 */
               if (tmp_26) tmp_27 = 1; else tmp_27 = 0;
             }
             if (a == 7) {

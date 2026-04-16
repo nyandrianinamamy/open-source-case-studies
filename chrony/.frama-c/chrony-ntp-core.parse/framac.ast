@@ -36,11 +36,11 @@
 #include "time.h"
 #include "unistd.h"
 enum __anonenum_LOG_Severity_1 {
-    LOGS_INFO = 0,
-    LOGS_WARN = 1,
-    LOGS_ERR = 2,
-    LOGS_FATAL = 3,
-    LOGS_DEBUG = 4
+    LOGS_INFO = 0U,
+    LOGS_WARN = 1U,
+    LOGS_ERR = 2U,
+    LOGS_FATAL = 3U,
+    LOGS_DEBUG = 4U
 };
 typedef enum __anonenum_LOG_Severity_1 LOG_Severity;
 typedef int LOG_FileID;
@@ -72,19 +72,19 @@ struct __anonstruct_NTP_int64_6 {
 typedef struct __anonstruct_NTP_int64_6 NTP_int64;
 typedef uint32_t NTP_int32;
 enum __anonenum_NTP_Leap_7 {
-    LEAP_Normal = 0,
-    LEAP_InsertSecond = 1,
-    LEAP_DeleteSecond = 2,
-    LEAP_Unsynchronised = 3
+    LEAP_Normal = (unsigned int)0,
+    LEAP_InsertSecond = (unsigned int)1,
+    LEAP_DeleteSecond = (unsigned int)2,
+    LEAP_Unsynchronised = (unsigned int)3
 };
 typedef enum __anonenum_NTP_Leap_7 NTP_Leap;
 enum __anonenum_NTP_Mode_8 {
-    MODE_UNDEFINED = 0,
-    MODE_ACTIVE = 1,
-    MODE_PASSIVE = 2,
-    MODE_CLIENT = 3,
-    MODE_SERVER = 4,
-    MODE_BROADCAST = 5
+    MODE_UNDEFINED = (unsigned int)0,
+    MODE_ACTIVE = (unsigned int)1,
+    MODE_PASSIVE = (unsigned int)2,
+    MODE_CLIENT = (unsigned int)3,
+    MODE_SERVER = (unsigned int)4,
+    MODE_BROADCAST = (unsigned int)5
 };
 typedef enum __anonenum_NTP_Mode_8 NTP_Mode;
 struct __anonstruct_NTP_Packet_9 {
@@ -132,14 +132,14 @@ typedef struct __anonstruct_Float_13 Float;
 struct ADF_AuthTableInst;
 typedef struct ADF_AuthTableInst *ADF_AuthTable;
 enum __anonenum_ADF_Status_5 {
-    ADF_SUCCESS = 0,
-    ADF_BADSUBNET = 1
+    ADF_SUCCESS = 0U,
+    ADF_BADSUBNET = 1U
 };
 typedef enum __anonenum_ADF_Status_5 ADF_Status;
 enum __anonenum_State_6 {
-    DENY = 0,
-    ALLOW = 1,
-    AS_PARENT = 2
+    DENY = 0U,
+    ALLOW = 1U,
+    AS_PARENT = 2U
 };
 typedef enum __anonenum_State_6 State;
 struct _TableNode {
@@ -160,17 +160,17 @@ struct ARR_Instance_Record {
    unsigned int allocated ;
 };
 enum __anonenum_mode_12 {
-    RPT_NTP_CLIENT = 0,
-    RPT_NTP_PEER = 1,
-    RPT_LOCAL_REFERENCE = 2
+    RPT_NTP_CLIENT = 0U,
+    RPT_NTP_PEER = 1U,
+    RPT_LOCAL_REFERENCE = 2U
 };
 enum __anonenum_state_13 {
-    RPT_SYNC = 0,
-    RPT_UNREACH = 1,
-    RPT_FALSETICKER = 2,
-    RPT_JITTERY = 3,
-    RPT_CANDIDATE = 4,
-    RPT_OUTLIER = 5
+    RPT_SYNC = 0U,
+    RPT_UNREACH = 1U,
+    RPT_FALSETICKER = 2U,
+    RPT_JITTERY = 3U,
+    RPT_CANDIDATE = 4U,
+    RPT_OUTLIER = 5U
 };
 struct __anonstruct_RPT_SourceReport_11 {
    IPAddr ip_addr ;
@@ -277,25 +277,25 @@ struct __anonstruct_RPT_NTPReport_22 {
 };
 typedef struct __anonstruct_RPT_NTPReport_22 RPT_NTPReport;
 enum __anonenum_REF_LeapMode_23 {
-    REF_LeapModeSystem = 0,
-    REF_LeapModeSlew = 1,
-    REF_LeapModeStep = 2,
-    REF_LeapModeIgnore = 3
+    REF_LeapModeSystem = 0U,
+    REF_LeapModeSlew = 1U,
+    REF_LeapModeStep = 2U,
+    REF_LeapModeIgnore = 3U
 };
 typedef enum __anonenum_REF_LeapMode_23 REF_LeapMode;
 enum __anonenum_REF_Mode_24 {
-    REF_ModeNormal = 0,
-    REF_ModeInitStepSlew = 1,
-    REF_ModeUpdateOnce = 2,
-    REF_ModePrintOnce = 3,
-    REF_ModeIgnore = 4
+    REF_ModeNormal = 0U,
+    REF_ModeInitStepSlew = 1U,
+    REF_ModeUpdateOnce = 2U,
+    REF_ModePrintOnce = 3U,
+    REF_ModeIgnore = 4U
 };
 typedef enum __anonenum_REF_Mode_24 REF_Mode;
 enum __anonenum_CNF_HwTs_RxFilter_25 {
-    CNF_HWTS_RXFILTER_ANY = 0,
-    CNF_HWTS_RXFILTER_NONE = 1,
-    CNF_HWTS_RXFILTER_NTP = 2,
-    CNF_HWTS_RXFILTER_ALL = 3
+    CNF_HWTS_RXFILTER_ANY = 0U,
+    CNF_HWTS_RXFILTER_NONE = 1U,
+    CNF_HWTS_RXFILTER_NTP = 2U,
+    CNF_HWTS_RXFILTER_ALL = 3U
 };
 typedef enum __anonenum_CNF_HwTs_RxFilter_25 CNF_HwTs_RxFilter;
 struct __anonstruct_CNF_HwTsInterface_26 {
@@ -331,14 +331,14 @@ typedef struct __anonstruct_Record_80 Record;
 typedef struct SST_Stats_Record *SST_Stats;
 typedef struct SRC_Instance_Record *SRC_Instance;
 enum __anonenum_SRC_Type_23 {
-    SRC_NTP = 0,
-    SRC_REFCLOCK = 1
+    SRC_NTP = 0U,
+    SRC_REFCLOCK = 1U
 };
 typedef enum __anonenum_SRC_Type_23 SRC_Type;
 enum __anonenum_SRC_Connectivity_24 {
-    SRC_OFFLINE = 0,
-    SRC_ONLINE = 1,
-    SRC_MAYBE_ONLINE = 2
+    SRC_OFFLINE = 0U,
+    SRC_ONLINE = 1U,
+    SRC_MAYBE_ONLINE = 2U
 };
 typedef enum __anonenum_SRC_Connectivity_24 SRC_Connectivity;
 struct __anonstruct_SourceParameters_25 {
@@ -374,20 +374,20 @@ struct __anonstruct_CPS_NTP_Source_26 {
 };
 typedef struct __anonstruct_CPS_NTP_Source_26 CPS_NTP_Source;
 enum __anonenum_DNS_Status_27 {
-    DNS_Success = 0,
-    DNS_TryAgain = 1,
-    DNS_Failure = 2
+    DNS_Success = 0U,
+    DNS_TryAgain = 1U,
+    DNS_Failure = 2U
 };
 typedef enum __anonenum_DNS_Status_27 DNS_Status;
 enum __anonenum_NTP_Source_Type_30 {
-    NTP_SERVER = 0,
-    NTP_PEER = 1
+    NTP_SERVER = 0U,
+    NTP_PEER = 1U
 };
 typedef enum __anonenum_NTP_Source_Type_30 NTP_Source_Type;
 enum __anonenum_NTP_Timestamp_Source_31 {
-    NTP_TS_DAEMON = 0,
-    NTP_TS_KERNEL = 1,
-    NTP_TS_HARDWARE = 2
+    NTP_TS_DAEMON = (unsigned int)0,
+    NTP_TS_KERNEL = 1U,
+    NTP_TS_HARDWARE = 2U
 };
 typedef enum __anonenum_NTP_Timestamp_Source_31 NTP_Timestamp_Source;
 struct __anonstruct_NTP_Local_Timestamp_32 {
@@ -398,11 +398,11 @@ struct __anonstruct_NTP_Local_Timestamp_32 {
 typedef struct __anonstruct_NTP_Local_Timestamp_32 NTP_Local_Timestamp;
 typedef struct NCR_Instance_Record *NCR_Instance;
 enum __anonenum_NSR_Status_33 {
-    NSR_Success = 0,
-    NSR_NoSuchSource = 1,
-    NSR_AlreadyInUse = 2,
-    NSR_TooManySources = 3,
-    NSR_InvalidAF = 4
+    NSR_Success = 0U,
+    NSR_NoSuchSource = 1U,
+    NSR_AlreadyInUse = 2U,
+    NSR_TooManySources = 3U,
+    NSR_InvalidAF = 4U
 };
 typedef enum __anonenum_NSR_Status_33 NSR_Status;
 struct __anonstruct_RefclockParameters_34 {
@@ -456,9 +456,9 @@ struct __anonstruct_MD5_CTX_63 {
 };
 typedef struct __anonstruct_MD5_CTX_63 MD5_CTX;
 enum __anonenum_LCL_ChangeType_83 {
-    LCL_ChangeAdjust = 0,
-    LCL_ChangeStep = 1,
-    LCL_ChangeUnknownStep = 2
+    LCL_ChangeAdjust = 0U,
+    LCL_ChangeStep = 1U,
+    LCL_ChangeUnknownStep = 2U
 };
 typedef enum __anonenum_LCL_ChangeType_83 LCL_ChangeType;
 struct __anonstruct_Key_85 {
@@ -487,11 +487,11 @@ struct _DispersionNotifyListEntry {
 typedef struct _DispersionNotifyListEntry DispersionNotifyListEntry;
 typedef unsigned int SCH_TimeoutID;
 enum __anonenum_SCH_TimeoutClass_30 {
-    SCH_ReservedTimeoutValue = 0,
-    SCH_NtpClientClass = 1,
-    SCH_NtpPeerClass = 2,
-    SCH_NtpBroadcastClass = 3,
-    SCH_NumberOfClasses = 4
+    SCH_ReservedTimeoutValue = (unsigned int)0,
+    SCH_NtpClientClass = 1U,
+    SCH_NtpPeerClass = 2U,
+    SCH_NtpBroadcastClass = 3U,
+    SCH_NumberOfClasses = 4U
 };
 typedef enum __anonenum_SCH_TimeoutClass_30 SCH_TimeoutClass;
 typedef void *SCH_ArbitraryArgument;
@@ -544,23 +544,23 @@ struct SelectInfo {
    double last_sample_ago ;
 };
 enum __anonenum_SRC_Status_90 {
-    SRC_OK = 0,
-    SRC_UNSELECTABLE = 1,
-    SRC_BAD_STATS = 2,
-    SRC_BAD_DISTANCE = 3,
-    SRC_JITTERY = 4,
-    SRC_WAITS_STATS = 5,
-    SRC_STALE = 6,
-    SRC_ORPHAN = 7,
-    SRC_UNTRUSTED = 8,
-    SRC_FALSETICKER = 9,
-    SRC_WAITS_SOURCES = 10,
-    SRC_NONPREFERRED = 11,
-    SRC_WAITS_UPDATE = 12,
-    SRC_DISTANT = 13,
-    SRC_OUTLIER = 14,
-    SRC_UNSELECTED = 15,
-    SRC_SELECTED = 16
+    SRC_OK = 0U,
+    SRC_UNSELECTABLE = 1U,
+    SRC_BAD_STATS = 2U,
+    SRC_BAD_DISTANCE = 3U,
+    SRC_JITTERY = 4U,
+    SRC_WAITS_STATS = 5U,
+    SRC_STALE = 6U,
+    SRC_ORPHAN = 7U,
+    SRC_UNTRUSTED = 8U,
+    SRC_FALSETICKER = 9U,
+    SRC_WAITS_SOURCES = 10U,
+    SRC_NONPREFERRED = 11U,
+    SRC_WAITS_UPDATE = 12U,
+    SRC_DISTANT = 13U,
+    SRC_OUTLIER = 14U,
+    SRC_UNSELECTED = 15U,
+    SRC_SELECTED = 16U
 };
 typedef enum __anonenum_SRC_Status_90 SRC_Status;
 struct SRC_Instance_Record {
@@ -631,17 +631,17 @@ struct DNS_Async_Instance {
 struct SPF_Instance_Record;
 typedef struct SPF_Instance_Record *SPF_Instance;
 enum __anonenum_OperatingMode_90 {
-    MD_OFFLINE = 0,
-    MD_ONLINE = 1,
-    MD_BURST_WAS_OFFLINE = 2,
-    MD_BURST_WAS_ONLINE = 3
+    MD_OFFLINE = 0U,
+    MD_ONLINE = 1U,
+    MD_BURST_WAS_OFFLINE = 2U,
+    MD_BURST_WAS_ONLINE = 3U
 };
 typedef enum __anonenum_OperatingMode_90 OperatingMode;
 enum __anonenum_AuthenticationMode_91 {
-    AUTH_NONE = 0,
-    AUTH_SYMMETRIC = 1,
-    AUTH_MSSNTP = 2,
-    AUTH_MSSNTP_EXT = 3
+    AUTH_NONE = (unsigned int)0,
+    AUTH_SYMMETRIC = 1U,
+    AUTH_MSSNTP = 2U,
+    AUTH_MSSNTP_EXT = 3U
 };
 typedef enum __anonenum_AuthenticationMode_91 AuthenticationMode;
 struct NCR_Instance_Record {
@@ -1324,10 +1324,10 @@ static ADF_Status set_subnet_(ADF_AuthTable table, IPAddr *ip_addr,
     }
     memset((void *)(ip6),0,sizeof(ip6));
     tmp_1 = set_subnet(& table->base4,ip6,1,0,new_state,delete_children);
-    if (tmp_1 == (unsigned int)ADF_SUCCESS) {
+    if (tmp_1 == ADF_SUCCESS) {
       ADF_Status tmp_2;
       tmp_2 = set_subnet(& table->base6,ip6,4,0,new_state,delete_children);
-      if (tmp_2 == (unsigned int)ADF_SUCCESS) {
+      if (tmp_2 == ADF_SUCCESS) {
         __retres = ADF_SUCCESS;
         goto return_label;
       }
@@ -1384,7 +1384,7 @@ static int check_ip_in_node(TableNode *start_node, uint32_t *ip)
   State state = DENY;
   node = start_node;
   while (1) {
-    if (node->state != (unsigned int)AS_PARENT) state = node->state;
+    if (node->state != AS_PARENT) state = node->state;
     if (node->extended) {
       subnet = get_subnet(ip,(unsigned int)bits_consumed);
       node = node->extended + subnet;
@@ -1431,9 +1431,8 @@ static int is_any_allowed(TableNode *node, State parent)
   int __retres;
   State state;
   int i;
-  if (node->state != (unsigned int)AS_PARENT) state = node->state;
-  else state = parent;
-  __FC_assert((state != (unsigned int)AS_PARENT) != 0,"addrfilt.c",384,
+  if (node->state != AS_PARENT) state = node->state; else state = parent;
+  __FC_assert((state != AS_PARENT) != 0,"addrfilt.c",384,
               "state != AS_PARENT");
   if (node->extended) {
     i = 0;
@@ -1451,7 +1450,7 @@ static int is_any_allowed(TableNode *node, State parent)
     }
   }
   else 
-    if (state == (unsigned int)ALLOW) {
+    if (state == ALLOW) {
       __retres = 1;
       goto return_label;
     }
@@ -5307,8 +5306,8 @@ static void parse_initstepslew(char *line)
     if (*hostname) {
       DNS_Status tmp_0;
       tmp_0 = DNS_Name2IPAddress((char const *)hostname,& ip_addr,1);
-      if (tmp_0 == (unsigned int)DNS_Success) ARR_AppendElement(init_sources,
-                                                                (void *)(& ip_addr));
+      if (tmp_0 == DNS_Success) ARR_AppendElement(init_sources,
+                                                  (void *)(& ip_addr));
       else {
         {
           char *__va_arg0 = hostname;
@@ -5621,7 +5620,7 @@ static void parse_allow_deny(char *line, ARR_Instance restrictions, int allow)
         if (! slashpos) {
           DNS_Status tmp_3;
           tmp_3 = DNS_Name2IPAddress((char const *)p,& ip_addr,1);
-          if (tmp_3 == (unsigned int)DNS_Success) {
+          if (tmp_3 == DNS_Success) {
             new_node = (AllowDeny *)ARR_GetNewElement(restrictions);
             new_node->allow = allow;
             new_node->all = all;
@@ -8569,7 +8568,7 @@ static int prepare_socket(int family, int port_number, int client_only)
   }
   if (my_addr_len > (socklen_t)0) {
     int tmp_9;
-    tmp_9 = setsockopt(sock_fd,IPPROTO_IP,15,(void const *)(& on_off),
+    tmp_9 = setsockopt(sock_fd,(int)IPPROTO_IP,15,(void const *)(& on_off),
                        (socklen_t)sizeof(on_off));
     if (tmp_9 < 0) {
       {
@@ -9068,13 +9067,12 @@ static void handle_slew(struct timespec *raw, struct timespec *cooked,
   tmp = UTI_IsZeroTimespec(& our_ref_time);
   if (! tmp) UTI_AdjustTimespec(& our_ref_time,cooked,& our_ref_time,& delta,
                                 dfreq,doffset);
-  if (change_type == (unsigned int)LCL_ChangeUnknownStep) UTI_ZeroTimespec
-                                                          (& last_ref_update);
+  if (change_type == LCL_ChangeUnknownStep) UTI_ZeroTimespec(& last_ref_update);
   else 
     if (last_ref_update.tv_sec) UTI_AdjustTimespec(& last_ref_update,cooked,
                                                    & last_ref_update,& delta,
                                                    dfreq,doffset);
-  if (change_type != (unsigned int)LCL_ChangeAdjust) 
+  if (change_type != LCL_ChangeAdjust) 
     if (our_leap_sec) 
       if (! leap_in_progress) {
         LCL_ReadRawTime(& now);
@@ -9185,7 +9183,7 @@ void REF_Initialise(void)
   leap_timeout_id = (SCH_TimeoutID)0;
   leap_in_progress = 0;
   leap_mode = CNF_GetLeapSecMode();
-  if (leap_mode == (unsigned int)REF_LeapModeSystem) {
+  if (leap_mode == REF_LeapModeSystem) {
     int tmp_4;
     tmp_4 = LCL_CanSystemLeap();
     if (! tmp_4) leap_mode = REF_LeapModeStep;
@@ -9194,11 +9192,11 @@ void REF_Initialise(void)
   if (leap_tzname) {
     NTP_Leap tmp_5;
     tmp_5 = get_tz_leap((time_t)1341014400,& tai_offset);
-    if (tmp_5 == (unsigned int)LEAP_InsertSecond) {
+    if (tmp_5 == LEAP_InsertSecond) {
       if (tai_offset == 34) {
         NTP_Leap tmp_6;
         tmp_6 = get_tz_leap((time_t)1356912000,& tai_offset);
-        if (tmp_6 == (unsigned int)LEAP_Normal) {
+        if (tmp_6 == LEAP_Normal) {
           if (tai_offset == 35) {
             {
               char *__va_arg0_28 = leap_tzname;
@@ -9723,12 +9721,11 @@ static void leap_end_timeout(void *arg)
   leap_in_progress = 0;
   if (our_tai_offset) our_tai_offset += our_leap_sec;
   our_leap_sec = 0;
-  if (leap_mode == (unsigned int)REF_LeapModeSystem) LCL_SetSystemLeap
-                                                     (our_leap_sec,
-                                                      our_tai_offset);
-  if (our_leap_status == (unsigned int)LEAP_InsertSecond) our_leap_status = LEAP_Normal;
+  if (leap_mode == REF_LeapModeSystem) LCL_SetSystemLeap(our_leap_sec,
+                                                         our_tai_offset);
+  if (our_leap_status == LEAP_InsertSecond) our_leap_status = LEAP_Normal;
   else 
-    if (our_leap_status == (unsigned int)LEAP_DeleteSecond) our_leap_status = LEAP_Normal;
+    if (our_leap_status == LEAP_DeleteSecond) our_leap_status = LEAP_Normal;
   return;
 }
 
@@ -9777,7 +9774,7 @@ static void set_leap_timeout(time_t now)
   when.tv_sec = (now / (time_t)(24 * 3600) + (time_t)1) * (time_t)(24 * 3600);
   when.tv_nsec = (long)0;
   if (our_leap_sec < 0) (when.tv_sec) --;
-  if (leap_mode == (unsigned int)REF_LeapModeSystem) {
+  if (leap_mode == REF_LeapModeSystem) {
     (when.tv_sec) --;
     when.tv_nsec = (long)500000000;
   }
@@ -9795,18 +9792,17 @@ static void update_leap_status(NTP_Leap leap, time_t now, int reset)
   if (leap_tzname) 
     if (now) {
       tz_leap = get_tz_leap(now,& tai_offset);
-      if (leap == (unsigned int)LEAP_Normal) leap = tz_leap;
+      if (leap == LEAP_Normal) leap = tz_leap;
     }
-  if (leap == (unsigned int)LEAP_InsertSecond) goto _LOR;
+  if (leap == LEAP_InsertSecond) goto _LOR;
   else 
-    if (leap == (unsigned int)LEAP_DeleteSecond) {
+    if (leap == LEAP_DeleteSecond) {
       _LOR:
       {
         int tmp;
         tmp = is_leap_second_day(now);
         if (tmp) 
-          if (leap == (unsigned int)LEAP_InsertSecond) leap_sec = 1;
-          else leap_sec = -1;
+          if (leap == LEAP_InsertSecond) leap_sec = 1; else leap_sec = -1;
         else leap = LEAP_Normal;
       }
     }
@@ -9980,7 +9976,7 @@ static void special_mode_sync(int valid, double offset)
       end_ref_mode(0);
       break;
     }
-    step = mode == (unsigned int)REF_ModeUpdateOnce;
+    step = mode == REF_ModeUpdateOnce;
     if (step) tmp_4 = "step"; else tmp_4 = "ignored";
     ;
     {
@@ -10061,11 +10057,11 @@ void REF_SetReference(int stratum, NTP_Leap leap, int combined_sources,
   double tmp_3;
   int tmp_4;
   __FC_assert(initialised_0 != 0,"reference.c",976,"initialised");
-  if (mode != (unsigned int)REF_ModeNormal) {
+  if (mode != REF_ModeNormal) {
     special_mode_sync(1,offset);
     goto return_label;
   }
-  manual = leap == (unsigned int)LEAP_Unsynchronised;
+  manual = leap == LEAP_Unsynchronised;
   LCL_ReadRawTime(& raw_now);
   LCL_GetOffsetCorrection(& raw_now,& uncorrected_offset,(double *)0);
   UTI_AddDoubleToTimespec(& raw_now,uncorrected_offset,& now);
@@ -10084,7 +10080,7 @@ void REF_SetReference(int stratum, NTP_Leap leap, int combined_sources,
   if (! tmp) goto return_label;
   tmp_0 = get_root_dispersion(& now);
   orig_root_distance = our_root_delay / 2.0 + tmp_0;
-  are_we_synchronised = leap != (unsigned int)LEAP_Unsynchronised;
+  are_we_synchronised = leap != LEAP_Unsynchronised;
   our_stratum = stratum + 1;
   our_ref_id = ref_id;
   if (ref_ip) our_ref_ip = *ref_ip; else our_ref_ip.family = (uint16_t)0;
@@ -10178,7 +10174,7 @@ void REF_SetUnsynchronised(void)
   double tmp;
   double tmp_0;
   __FC_assert(initialised_0 != 0,"reference.c",1131,"initialised");
-  if (mode != (unsigned int)REF_ModeNormal) {
+  if (mode != REF_ModeNormal) {
     special_mode_sync(0,0.0);
     goto return_label;
   }
@@ -10284,7 +10280,7 @@ int REF_GetOrphanStratum(void)
       goto return_label;
     }
     else 
-      if (mode != (unsigned int)REF_ModeNormal) {
+      if (mode != REF_ModeNormal) {
         __retres = 16;
         goto return_label;
       }
@@ -11431,7 +11427,7 @@ SCH_TimeoutID SCH_AddTimeoutInClass(double min_delay, double separation,
   double new_min_delay;
   __FC_assert(initialised_1 != 0,"sched.c",380,"initialised");
   __FC_assert((min_delay >= 0.0) != 0,"sched.c",381,"min_delay >= 0.0");
-  __FC_assert((class < (unsigned int)SCH_NumberOfClasses) != 0,"sched.c",382,
+  __FC_assert((class < SCH_NumberOfClasses) != 0,"sched.c",382,
               "class < SCH_NumberOfClasses");
   if (randomness > 0.0) {
     uint32_t rnd;
@@ -11595,7 +11591,7 @@ static void handle_slew_0(struct timespec *raw, struct timespec *cooked,
   TimerQueueEntry *ptr;
   double delta;
   int i;
-  if (change_type != (unsigned int)LCL_ChangeAdjust) {
+  if (change_type != LCL_ChangeAdjust) {
     int tmp;
     tmp = LCL_IsFirstParameterChangeHandler(& handle_slew_0);
     __FC_assert(tmp != 0,"sched.c",587,
@@ -11606,7 +11602,7 @@ static void handle_slew_0(struct timespec *raw, struct timespec *cooked,
       ptr = ptr->next;
     }
     i = 0;
-    while (i < SCH_NumberOfClasses) {
+    while ((unsigned int)i < SCH_NumberOfClasses) {
       UTI_AddDoubleToTimespec(& last_class_dispatch[i],- doffset,
                               & last_class_dispatch[i]);
       i ++;
@@ -11977,7 +11973,7 @@ static void handle_slew_1(struct timespec *raw, struct timespec *cooked,
 {
   double delta;
   int tmp;
-  if (change_type == (unsigned int)LCL_ChangeAdjust) 
+  if (change_type == LCL_ChangeAdjust) 
     if (leap_only_mode) update_smoothing(cooked,0.0,0.0);
     else update_smoothing(cooked,doffset,dfreq);
   tmp = UTI_IsZeroTimespec(& last_update);
@@ -12321,24 +12317,23 @@ void SRC_UpdateReachability(SRC_Instance inst, int reachable)
   if (! reachable) 
     if (inst->index == selected_source_index) SRC_SelectSource((SRC_Instance)0);
   tmp = REF_GetMode();
-  if (tmp != (unsigned int)REF_ModeNormal) {
+  if (tmp != REF_ModeNormal) {
     int tmp_0;
     tmp_0 = special_mode_end();
     if (tmp_0) REF_SetUnsynchronised();
   }
-  if (inst->type == (unsigned int)SRC_NTP) 
+  if (inst->type == SRC_NTP) 
     if (! inst->reachability) {
       if (inst->reachability_size == 8) goto _LOR; else goto _LAND;
     }
     else {
       _LAND: ;
-      if (inst->status == (unsigned int)SRC_BAD_DISTANCE) goto _LOR;
+      if (inst->status == SRC_BAD_DISTANCE) goto _LOR;
       else 
-        if (inst->status == (unsigned int)SRC_JITTERY) goto _LOR;
+        if (inst->status == SRC_JITTERY) goto _LOR;
         else 
-          if (inst->status == (unsigned int)SRC_FALSETICKER) _LOR:
-                                                             NSR_HandleBadSource
-                                                             (inst->ip_addr);
+          if (inst->status == SRC_FALSETICKER) _LOR:
+                                               NSR_HandleBadSource(inst->ip_addr);
     }
   return;
 }
@@ -12355,7 +12350,7 @@ static void log_selection_message(char *format, char *arg)
 {
   REF_Mode tmp;
   tmp = REF_GetMode();
-  if (tmp != (unsigned int)REF_ModeNormal) goto return_label;
+  if (tmp != REF_ModeNormal) goto return_label;
   {
     char *__va_arg0 = arg;
     void *__va_args[1] = {& __va_arg0};
@@ -12419,7 +12414,7 @@ static void mark_ok_sources(SRC_Status status)
   i = 0;
   /*@ loop \eva::unroll 2; */
   while (i < n_sources) {
-    if ((*(sources + i))->status != (unsigned int)SRC_OK) goto __Cont;
+    if ((*(sources + i))->status != SRC_OK) goto __Cont;
     (*(sources + i))->status = status;
     __Cont: i ++;
   }
@@ -12468,8 +12463,7 @@ static int combine_sources(int n_sel_sources, struct timespec *ref_time,
   sum_frequency = inv_sum2_frequency_sd;
   sum_frequency_weight = sum_frequency;
   sel_src_distance = (*(sources + selected_source_index))->sel_info.root_distance;
-  if ((*(sources + selected_source_index))->type == (unsigned int)SRC_NTP) 
-    sel_src_distance += reselect_distance_0;
+  if ((*(sources + selected_source_index))->type == SRC_NTP) sel_src_distance += reselect_distance_0;
   combined = 0;
   i = combined;
   /*@ loop \eva::unroll 2; */
@@ -12503,7 +12497,7 @@ static int combine_sources(int n_sel_sources, struct timespec *ref_time,
       (*(sources + index))->status = SRC_DISTANT;
       goto __Cont;
     }
-    if ((*(sources + index))->status == (unsigned int)SRC_OK) (*(sources + index))->status = SRC_UNSELECTED;
+    if ((*(sources + index))->status == SRC_OK) (*(sources + index))->status = SRC_UNSELECTED;
     elapsed = UTI_DiffTimespecsToDouble(ref_time,& src_ref_time);
     src_offset += elapsed * src_frequency;
     src_offset_sd += elapsed * src_frequency_sd;
@@ -12599,8 +12593,8 @@ void SRC_SelectSource(SRC_Instance updated_inst)
   i = 0;
   /*@ loop \eva::unroll 2; */
   while (i < n_sources) {
-    __FC_assert(((*(sources + i))->status != (unsigned int)SRC_OK) != 0,
-                "sources.c",634,"sources[i]->status != SRC_OK");
+    __FC_assert(((*(sources + i))->status != SRC_OK) != 0,"sources.c",634,
+                "sources[i]->status != SRC_OK");
     if ((*(sources + i))->sel_options & 0x8) sel_req_source = 1;
     if ((*(sources + i))->sel_options & 0x1) {
       (*(sources + i))->status = SRC_UNSELECTABLE;
@@ -12650,7 +12644,7 @@ void SRC_SelectSource(SRC_Instance updated_inst)
   i = 0;
   /*@ loop \eva::unroll 2; */
   while (i < n_sources) {
-    if ((*(sources + i))->status != (unsigned int)SRC_OK) goto __Cont_0;
+    if ((*(sources + i))->status != SRC_OK) goto __Cont_0;
     si = & (*(sources + i))->sel_info;
     if (! (*(sources + i))->reachability) 
       if (max_reach_sample_ago < si->last_sample_ago) {
@@ -12658,7 +12652,7 @@ void SRC_SelectSource(SRC_Instance updated_inst)
         goto __Cont_0;
       }
     if (si->stratum >= orphan_stratum) 
-      if ((*(sources + i))->type == (unsigned int)SRC_NTP) {
+      if ((*(sources + i))->type == SRC_NTP) {
         (*(sources + i))->status = SRC_ORPHAN;
         if (si->stratum == orphan_stratum) 
           if ((*(sources + i))->reachability) 
@@ -12691,7 +12685,7 @@ void SRC_SelectSource(SRC_Instance updated_inst)
   i = 0;
   /*@ loop \eva::unroll 2; */
   while (i < n_sources) {
-    if ((*(sources + i))->status != (unsigned int)SRC_OK) goto __Cont_1;
+    if ((*(sources + i))->status != SRC_OK) goto __Cont_1;
     si = & (*(sources + i))->sel_info;
     j1 = n_endpoints;
     j2 = j1 + 1;
@@ -12771,7 +12765,7 @@ void SRC_SelectSource(SRC_Instance updated_inst)
   i = 0;
   /*@ loop \eva::unroll 2; */
   while (i < n_sources) {
-    if ((*(sources + i))->status != (unsigned int)SRC_OK) goto __Cont_2;
+    if ((*(sources + i))->status != SRC_OK) goto __Cont_2;
     if (! best_trust_depth) goto _LOR_1;
     else 
       if ((*(sources + i))->sel_options & 0x4) {
@@ -12846,11 +12840,9 @@ void SRC_SelectSource(SRC_Instance updated_inst)
     if (best_trust_depth) 
       if (! ((*(sources + index))->sel_options & 0x4)) goto __Cont_3;
     leap_votes ++;
-    if ((*(sources + index))->sel_info.leap == (unsigned int)LEAP_InsertSecond) 
-      leap_ins ++;
+    if ((*(sources + index))->sel_info.leap == LEAP_InsertSecond) leap_ins ++;
     else 
-      if ((*(sources + index))->sel_info.leap == (unsigned int)LEAP_DeleteSecond) 
-        leap_del ++;
+      if ((*(sources + index))->sel_info.leap == LEAP_DeleteSecond) leap_del ++;
     __Cont_3: i ++;
   }
   if (leap_ins > leap_votes / 2) leap_status = LEAP_InsertSecond;
@@ -12902,7 +12894,7 @@ void SRC_SelectSource(SRC_Instance updated_inst)
   i = 0;
   /*@ loop \eva::unroll 2; */
   while (i < n_sources) {
-    if ((*(sources + i))->status != (unsigned int)SRC_OK) goto _LOR_3;
+    if ((*(sources + i))->status != SRC_OK) goto _LOR_3;
     else 
       if (sel_prefer) 
         if (! ((*(sources + i))->sel_options & 0x2)) {
@@ -12915,7 +12907,7 @@ void SRC_SelectSource(SRC_Instance updated_inst)
         }
     distance = (*(sources + i))->sel_info.root_distance + (double)((*(
                                                                    sources + i))->sel_info.stratum - min_stratum) * stratum_weight_0;
-    if ((*(sources + i))->type == (unsigned int)SRC_NTP) distance += reselect_distance_0;
+    if ((*(sources + i))->type == SRC_NTP) distance += reselect_distance_0;
     if (selected_source_index != -1) {
       if (*(sources + i) == updated_inst) goto _LOR_4;
       else 
@@ -12938,8 +12930,7 @@ void SRC_SelectSource(SRC_Instance updated_inst)
               "max_score_index != INVALID_SOURCE");
   if (selected_source_index == -1) goto _LOR_5;
   else 
-    if ((*(sources + selected_source_index))->status != (unsigned int)SRC_OK) 
-      goto _LOR_5;
+    if ((*(sources + selected_source_index))->status != SRC_OK) goto _LOR_5;
     else 
       if (max_score_index != selected_source_index) 
         if (max_score > 10.0) {
@@ -12969,7 +12960,7 @@ void SRC_SelectSource(SRC_Instance updated_inst)
     /*@ loop \eva::unroll 2; */
     while (i < n_sel_sources) {
       index = *(sel_sources + i);
-      if ((*(sources + index))->status == (unsigned int)SRC_OK) 
+      if ((*(sources + index))->status == SRC_OK) 
         if ((*(sources + index))->distant) (*(sources + index))->status = SRC_DISTANT;
         else (*(sources + index))->status = SRC_UNSELECTED;
       i ++;
@@ -13027,13 +13018,11 @@ static void slew_sources(struct timespec *raw, struct timespec *cooked,
   i = 0;
   /*@ loop \eva::unroll 2; */
   while (i < n_sources) {
-    if (change_type == (unsigned int)LCL_ChangeUnknownStep) SST_ResetInstance
-                                                            ((*(sources + i))->stats);
+    if (change_type == LCL_ChangeUnknownStep) SST_ResetInstance((*(sources + i))->stats);
     else SST_SlewSamples((*(sources + i))->stats,cooked,dfreq,doffset);
     i ++;
   }
-  if (change_type == (unsigned int)LCL_ChangeUnknownStep) SRC_SelectSource
-                                                          ((SRC_Instance)0);
+  if (change_type == LCL_ChangeUnknownStep) SRC_SelectSource((SRC_Instance)0);
   return;
 }
 
@@ -13096,7 +13085,7 @@ static FILE *open_dumpfile(SRC_Instance inst, char const *mode_0)
     __retres = (FILE *)0;
     goto return_label;
   }
-  if (inst->type == (unsigned int)SRC_NTP) {
+  if (inst->type == SRC_NTP) {
     int tmp_0;
     char *tmp;
     tmp = source_to_string(inst);
@@ -13106,7 +13095,7 @@ static FILE *open_dumpfile(SRC_Instance inst, char const *mode_0)
   }
   else {
     _LAND: ;
-    if (inst->type != (unsigned int)SRC_NTP) {
+    if (inst->type != SRC_NTP) {
       int tmp_1;
       tmp_1 = snprintf(filename,sizeof(filename),"%s/refid:%08x.dat",
                        dumpdir_0,inst->ref_id); /* snprintf_va_4 */
@@ -15824,7 +15813,7 @@ static void resolve_name(int fd, int event, void *anything)
   status = DNS_Name2IPAddress(inst->name,addrs,16);
   i = 0;
   while (1) {
-    if (status == (unsigned int)DNS_Success) 
+    if (status == DNS_Success) 
       if (i < 16) {
         if (! ((int)addrs[i].family != 0)) break;
       }
@@ -16090,7 +16079,7 @@ static void restart_timeout(NCR_Instance inst, double delay)
 {
   int tmp;
   int tmp_0;
-  int tmp_1;
+  unsigned int tmp_1;
   double tmp_2;
   if (inst->tx_suspended) {
     __FC_assert(! inst->tx_timeout_id != 0,"ntp_core.c",432,
@@ -16109,12 +16098,11 @@ static void restart_timeout(NCR_Instance inst, double delay)
   __FC_assert(tmp_0 != 0,"ntp_core.c",439,
               "!inst->tx_timeout_id || inst->tx_timeout_id == 102");
   ;
-  if (inst->mode == (unsigned int)MODE_CLIENT) tmp_1 = SCH_NtpClientClass;
+  if (inst->mode == MODE_CLIENT) tmp_1 = SCH_NtpClientClass;
   else tmp_1 = SCH_NtpPeerClass;
   tmp_2 = get_separation(inst->local_poll);
   ;
-  inst->tx_timeout_id = add_timeout_in_class(delay,tmp_2,0.02,
-                                             (SCH_TimeoutClass)tmp_1,
+  inst->tx_timeout_id = add_timeout_in_class(delay,tmp_2,0.02,tmp_1,
                                              & transmit_timeout,(void *)inst);
   return_label: return;
 }
@@ -16139,7 +16127,7 @@ static void start_initial_timeout(NCR_Instance inst)
 static void close_client_socket(NCR_Instance inst)
 {
   int tmp;
-  if (inst->mode == (unsigned int)MODE_CLIENT) 
+  if (inst->mode == MODE_CLIENT) 
     if (inst->local_addr.sock_fd != -2) {
       __FC_assert((inst->local_addr.sock_fd == 101) != 0,"ntp_core.c",484,
                   "inst->local_addr.sock_fd == 101");
@@ -16207,8 +16195,7 @@ NCR_Instance NCR_GetInstance(NTP_Remote_Address *remote_addr,
   if (result->min_stratum >= 16) result->min_stratum = 16 - 1;
   result->presend_minpoll = params->presend_minpoll;
   if (result->presend_minpoll <= 24) 
-    if (result->mode != (unsigned int)MODE_CLIENT) result->presend_minpoll = 
-                                                   24 + 1;
+    if (result->mode != MODE_CLIENT) result->presend_minpoll = 24 + 1;
   if (params->max_delay < 1.0e3) tmp_0 = params->max_delay;
   else tmp_0 = 1.0e3;
   if (0.0 > tmp_0) result->max_delay = 0.0;
@@ -16314,9 +16301,9 @@ NCR_Instance NCR_GetInstance(NTP_Remote_Address *remote_addr,
   result->rx_timeout_id = (SCH_TimeoutID)0;
   result->tx_timeout_id = (SCH_TimeoutID)0;
   result->tx_suspended = 1;
-  if (params->connectivity == (unsigned int)SRC_ONLINE) result->opmode = MD_ONLINE;
+  if (params->connectivity == SRC_ONLINE) result->opmode = MD_ONLINE;
   else 
-    if (params->connectivity == (unsigned int)SRC_MAYBE_ONLINE) {
+    if (params->connectivity == SRC_MAYBE_ONLINE) {
       int tmp_14;
       tmp_14 = NIO_IsServerConnectable(remote_addr);
       if (tmp_14) result->opmode = MD_ONLINE;
@@ -16336,11 +16323,10 @@ NCR_Instance NCR_GetInstance(NTP_Remote_Address *remote_addr,
 
 void NCR_DestroyInstance(NCR_Instance instance)
 {
-  if (instance->opmode != (unsigned int)MD_OFFLINE) take_offline(instance);
-  if (instance->mode == (unsigned int)MODE_ACTIVE) __FC_assert((instance->local_addr.sock_fd == 100) != 0,
-                                                               "ntp_core.c",
-                                                               645,
-                                                               "instance->local_addr.sock_fd == 100");
+  if (instance->opmode != MD_OFFLINE) take_offline(instance);
+  if (instance->mode == MODE_ACTIVE) __FC_assert((instance->local_addr.sock_fd == 100) != 0,
+                                                 "ntp_core.c",645,
+                                                 "instance->local_addr.sock_fd == 100");
   if (instance->filter) SPF_DestroyInstance(instance->filter);
   SRC_DestroyInstance(instance->source);
   free((void *)instance);
@@ -16350,8 +16336,7 @@ void NCR_DestroyInstance(NCR_Instance instance)
 void NCR_StartInstance(NCR_Instance instance)
 {
   instance->tx_suspended = 0;
-  if (instance->opmode != (unsigned int)MD_OFFLINE) start_initial_timeout
-                                                    (instance);
+  if (instance->opmode != MD_OFFLINE) start_initial_timeout(instance);
   return;
 }
 
@@ -16399,7 +16384,7 @@ void NCR_ChangeRemoteAddress(NCR_Instance inst,
   memset((void *)(& inst->report),0,sizeof(inst->report));
   NCR_ResetInstance(inst);
   inst->remote_addr = *remote_addr;
-  if (inst->mode == (unsigned int)MODE_CLIENT) close_client_socket(inst);
+  if (inst->mode == MODE_CLIENT) close_client_socket(inst);
   else {
     __FC_assert((inst->local_addr.sock_fd == 100) != 0,"ntp_core.c",726,
                 "inst->local_addr.sock_fd == 100");
@@ -16477,7 +16462,7 @@ static int get_transmit_poll(NCR_Instance inst)
 {
   int poll;
   poll = inst->local_poll;
-  if (inst->mode == (unsigned int)MODE_ACTIVE) 
+  if (inst->mode == MODE_ACTIVE) 
     if (poll > inst->remote_poll) {
       int tmp;
       tmp = SRC_IsReachable(inst->source);
@@ -16598,7 +16583,7 @@ static int transmit_packet(NTP_Mode my_mode, int interleaved, int my_poll,
       }
   smooth_time = 0;
   smooth_offset_0 = 0.0;
-  if (my_mode == (unsigned int)MODE_CLIENT) {
+  if (my_mode == MODE_CLIENT) {
     precision = 32;
     our_ref_id_0 = (uint32_t)0;
     our_stratum_0 = (int)our_ref_id_0;
@@ -16617,9 +16602,9 @@ static int transmit_packet(NTP_Mode my_mode, int interleaved, int my_poll,
                            & our_root_dispersion_0);
     tmp_3 = SMT_IsEnabled();
     if (tmp_3) 
-      if (my_mode == (unsigned int)MODE_SERVER) goto _LOR;
+      if (my_mode == MODE_SERVER) goto _LOR;
       else 
-        if (my_mode == (unsigned int)MODE_BROADCAST) {
+        if (my_mode == MODE_BROADCAST) {
           _LOR:
           {
             double tmp_0;
@@ -16630,10 +16615,10 @@ static int transmit_packet(NTP_Mode my_mode, int interleaved, int my_poll,
             tmp_1 = LCL_GetSysPrecisionAsQuantum();
             smooth_time = tmp_0 > tmp_1;
             tmp_2 = REF_GetLeapMode();
-            if (tmp_2 == (unsigned int)REF_LeapModeSlew) 
-              if (leap_status == (unsigned int)LEAP_InsertSecond) leap_status = LEAP_Normal;
+            if (tmp_2 == REF_LeapModeSlew) 
+              if (leap_status == LEAP_InsertSecond) leap_status = LEAP_Normal;
               else 
-                if (leap_status == (unsigned int)LEAP_DeleteSecond) leap_status = LEAP_Normal;
+                if (leap_status == LEAP_DeleteSecond) leap_status = LEAP_Normal;
           }
         }
     tmp_4 = random();
@@ -16661,7 +16646,7 @@ static int transmit_packet(NTP_Mode my_mode, int interleaved, int my_poll,
   message.root_dispersion = UTI_DoubleToNtp32(our_root_dispersion_0);
   message.reference_id = htonl(our_ref_id_0);
   UTI_TimespecToNtp64(& our_ref_time_0,& message.reference_ts,(NTP_int64 *)0);
-  if (my_mode != (unsigned int)MODE_CLIENT) goto _LOR_0;
+  if (my_mode != MODE_CLIENT) goto _LOR_0;
   else 
     if (interleaved) {
       _LOR_0:
@@ -16700,21 +16685,22 @@ static int transmit_packet(NTP_Mode my_mode, int interleaved, int my_poll,
                                              smooth_offset_0,
                                              & local_transmit);
     length = 48;
-    if (auth_mode == AUTH_SYMMETRIC) goto _LOR_1;
+    if ((unsigned int)auth_mode == AUTH_SYMMETRIC) goto _LOR_1;
     else 
-      if (auth_mode == AUTH_MSSNTP) {
+      if ((unsigned int)auth_mode == AUTH_MSSNTP) {
         _LOR_1:
         {
           int tmp_10;
           struct timespec *tmp_11;
-          if (auth_mode == AUTH_SYMMETRIC) tmp_10 = KEY_GetAuthDelay(key_id);
+          if ((unsigned int)auth_mode == AUTH_SYMMETRIC) tmp_10 = KEY_GetAuthDelay
+                                                         (key_id);
           else tmp_10 = NSD_GetAuthDelay(key_id);
           local_transmit.tv_nsec += (long)tmp_10;
           UTI_NormaliseTimespec(& local_transmit);
           if (interleaved) tmp_11 = & local_tx->ts;
           else tmp_11 = & local_transmit;
           UTI_TimespecToNtp64(tmp_11,& message.transmit_ts,& ts_fuzz);
-          if (auth_mode == AUTH_SYMMETRIC) {
+          if ((unsigned int)auth_mode == AUTH_SYMMETRIC) {
             if (version == 4) max_auth_len = (4 + 20) - 4;
             else max_auth_len = (int)sizeof(message.auth_data);
             auth_len = KEY_GenerateAuth(key_id,
@@ -16730,7 +16716,7 @@ static int transmit_packet(NTP_Mode my_mode, int interleaved, int my_poll,
             length = (int)((unsigned long)length + (sizeof(message.auth_keyid) + (unsigned long)auth_len));
           }
           else 
-            if (auth_mode == AUTH_MSSNTP) {
+            if ((unsigned int)auth_mode == AUTH_MSSNTP) {
               int tmp_12;
               tmp_12 = NSD_SignAndSendPacket(key_id,& message,where_to,from,
                                              length);
@@ -16803,8 +16789,8 @@ static void transmit_timeout(void *arg)
     break;
     default: break;
   }
-  if (inst->opmode == (unsigned int)MD_OFFLINE) goto return_label;
-  if (inst->mode == (unsigned int)MODE_CLIENT) {
+  if (inst->opmode == MD_OFFLINE) goto return_label;
+  if (inst->mode == MODE_CLIENT) {
     close_client_socket(inst);
     __FC_assert((inst->local_addr.sock_fd == -2) != 0,"ntp_core.c",1181,
                 "inst->local_addr.sock_fd == INVALID_SOCK_FD");
@@ -16815,12 +16801,12 @@ static void transmit_timeout(void *arg)
   local_addr.if_index = -1;
   local_addr.sock_fd = inst->local_addr.sock_fd;
   if (inst->interleaved) 
-    if (inst->mode == (unsigned int)MODE_CLIENT) {
+    if (inst->mode == MODE_CLIENT) {
       if (inst->tx_count < (unsigned int)4) tmp_1 = 1; else goto _LAND;
     }
     else {
       _LAND: ;
-      if (inst->mode == (unsigned int)MODE_ACTIVE) 
+      if (inst->mode == MODE_ACTIVE) 
         if (inst->prev_tx_count == (unsigned int)1) 
           if (inst->tx_count == (unsigned int)0) tmp_1 = 1; else tmp_1 = 0;
         else tmp_1 = 0;
@@ -16828,7 +16814,7 @@ static void transmit_timeout(void *arg)
     }
   else tmp_1 = 0;
   interleaved = tmp_1;
-  if (inst->mode == (unsigned int)MODE_ACTIVE) 
+  if (inst->mode == MODE_ACTIVE) 
     if (! inst->valid_rx) {
       int tmp_2;
       tmp_2 = UTI_IsZeroNtp64(& inst->init_remote_ntp_tx);
@@ -16901,7 +16887,7 @@ static void transmit_timeout(void *arg)
   tmp_10 = get_transmit_delay(inst,1,0.0);
   ;
   restart_timeout(inst,tmp_10);
-  if (inst->mode == (unsigned int)MODE_CLIENT) inst->rx_timeout_id = (SCH_TimeoutID)102;
+  if (inst->mode == MODE_CLIENT) inst->rx_timeout_id = (SCH_TimeoutID)102;
   return_label: return;
 }
 
@@ -17241,7 +17227,7 @@ static int receive_packet(NCR_Instance inst, NTP_Local_Address *local_addr,
     }
   }
   test3 = tmp_11;
-  if (inst->auth_mode == (unsigned int)AUTH_NONE) tmp_13 = 1;
+  if (inst->auth_mode == AUTH_NONE) tmp_13 = 1;
   else {
     int tmp_12;
     tmp_12 = check_packet_auth(message,length,& pkt_auth_mode,& pkt_key_id);
@@ -17252,7 +17238,7 @@ static int receive_packet(NCR_Instance inst, NTP_Local_Address *local_addr,
     else tmp_13 = 0;
   }
   test5 = tmp_13;
-  if (pkt_leap != LEAP_Unsynchronised) 
+  if ((unsigned int)pkt_leap != LEAP_Unsynchronised) 
     if ((int)message->stratum < 16) 
       if ((int)message->stratum != 0) tmp_14 = 1; else tmp_14 = 0;
     else tmp_14 = 0;
@@ -17277,7 +17263,7 @@ static int receive_packet(NCR_Instance inst, NTP_Local_Address *local_addr,
   if (test1) 
     if (test2) 
       if (test5) 
-        if (pkt_leap == LEAP_Unsynchronised) 
+        if ((unsigned int)pkt_leap == LEAP_Unsynchronised) 
           if ((int)message->stratum == 0) 
             if ((unsigned long)pkt_refid == 0x52415445UL) kod_rate = 1;
   if (synced_packet) {
@@ -17375,12 +17361,12 @@ static int receive_packet(NCR_Instance inst, NTP_Local_Address *local_addr,
           prev_remote_poll_interval = UTI_Log2ToDouble(tmp_27);
           if (sample.peer_delay - sample.peer_dispersion <= inst->max_delay) 
             if (precision <= inst->max_delay) 
-              if (inst->mode == (unsigned int)MODE_CLIENT) {
+              if (inst->mode == MODE_CLIENT) {
                 if (response_time > 4.0) tmp_30 = 0; else goto _LAND_0;
               }
               else {
                 _LAND_0: ;
-                if (inst->mode == (unsigned int)MODE_ACTIVE) 
+                if (inst->mode == MODE_ACTIVE) 
                   if (interleaved_packet) 
                     if (sample.peer_delay > 0.5 * prev_remote_poll_interval) 
                       tmp_30 = 0;
@@ -17415,7 +17401,7 @@ static int receive_packet(NCR_Instance inst, NTP_Local_Address *local_addr,
           else {
             REF_Mode tmp_31;
             tmp_31 = REF_GetMode();
-            if (tmp_31 != (unsigned int)REF_ModeNormal) tmp_33 = 1;
+            if (tmp_31 != REF_ModeNormal) tmp_33 = 1;
             else {
               uint32_t tmp_32;
               tmp_32 = UTI_IPToRefid(& local_addr->ip_addr);
@@ -17459,7 +17445,7 @@ static int receive_packet(NCR_Instance inst, NTP_Local_Address *local_addr,
   if ((int)message->stratum > inst->min_stratum) sample.stratum = (int)message->stratum;
   else sample.stratum = inst->min_stratum;
   sample.leap = (NTP_Leap)pkt_leap;
-  if (inst->mode == (unsigned int)MODE_CLIENT) {
+  if (inst->mode == MODE_CLIENT) {
     if (valid_packet) {
       if (! inst->valid_rx) goto _LOR_2; else goto _LAND_9;
     }
@@ -17467,7 +17453,7 @@ static int receive_packet(NCR_Instance inst, NTP_Local_Address *local_addr,
   }
   else {
     _LAND_9: ;
-    if (inst->mode == (unsigned int)MODE_ACTIVE) {
+    if (inst->mode == MODE_ACTIVE) {
       if (valid_packet) {
         if (! inst->valid_rx) goto _LOR_2;
         else {
@@ -17496,7 +17482,7 @@ static int receive_packet(NCR_Instance inst, NTP_Local_Address *local_addr,
     }
     else {
       _LAND_7: ;
-      if (inst->mode == (unsigned int)MODE_ACTIVE) {
+      if (inst->mode == MODE_ACTIVE) {
         if (test1) {
           int tmp_35;
           tmp_35 = UTI_IsZeroNtp64(& message->transmit_ts);
@@ -17560,7 +17546,7 @@ static int receive_packet(NCR_Instance inst, NTP_Local_Address *local_addr,
         case MD_BURST_WAS_ONLINE: case MD_BURST_WAS_OFFLINE:
         (inst->burst_good_samples_to_go) --;
         if (inst->burst_good_samples_to_go <= 0) 
-          if (inst->opmode == (unsigned int)MD_BURST_WAS_ONLINE) inst->opmode = MD_ONLINE;
+          if (inst->opmode == MD_BURST_WAS_ONLINE) inst->opmode = MD_ONLINE;
           else take_offline(inst);
         break;
         default: break;
@@ -17570,7 +17556,7 @@ static int receive_packet(NCR_Instance inst, NTP_Local_Address *local_addr,
     close_client_socket(inst);
     inst->local_addr.ip_addr = local_addr->ip_addr;
     inst->local_addr.if_index = local_addr->if_index;
-    if (inst->opmode != (unsigned int)MD_OFFLINE) {
+    if (inst->opmode != MD_OFFLINE) {
       double tmp_44;
       tmp_44 = UTI_DiffTimespecsToDouble(& inst->local_rx.ts,
                                          & inst->local_tx.ts);
@@ -17588,10 +17574,10 @@ static int receive_packet(NCR_Instance inst, NTP_Local_Address *local_addr,
         }
         tmp_46 = UTI_Log2ToDouble(inst->local_poll);
         delay_time += (double)4 * tmp_46;
-        if (inst->opmode == (unsigned int)MD_BURST_WAS_OFFLINE) goto _LOR_3;
+        if (inst->opmode == MD_BURST_WAS_OFFLINE) goto _LOR_3;
         else 
-          if (inst->opmode == (unsigned int)MD_BURST_WAS_ONLINE) _LOR_3:
-                                                                 inst->burst_good_samples_to_go = 0;
+          if (inst->opmode == MD_BURST_WAS_ONLINE) _LOR_3:
+                                                   inst->burst_good_samples_to_go = 0;
       }
       __FC_assert(inst->tx_timeout_id != (SCH_TimeoutID)0,"ntp_core.c",1883,
                   "inst->tx_timeout_id");
@@ -17617,7 +17603,7 @@ static int receive_packet(NCR_Instance inst, NTP_Local_Address *local_addr,
     inst->report.jitter_asymmetry = SST_GetJitterAsymmetry(stats);
     inst->report.tests = (uint16_t)((((((((((((((((((test1 << 1) | test2) << 1) | test3) << 1) | test5) << 1) | test6) << 1) | test7) << 1) | testA) << 1) | testB) << 1) | testC) << 1) | testD);
     inst->report.interleaved = interleaved_packet;
-    inst->report.authenticated = inst->auth_mode != (unsigned int)AUTH_NONE;
+    inst->report.authenticated = inst->auth_mode != AUTH_NONE;
     inst->report.tx_tss_char = tss_chars[local_transmit.source];
     inst->report.rx_tss_char = tss_chars[local_receive.source];
     (inst->report.total_valid_count) ++;
@@ -17742,7 +17728,7 @@ int NCR_ProcessRxKnown(NCR_Instance inst, NTP_Local_Address *local_addr,
   proc_packet = 0;
   proc_as_unknown = 0;
   switch (pkt_mode) {
-    case MODE_ACTIVE: ;
+    case (int)MODE_ACTIVE: ;
     switch (inst->mode) {
       case MODE_ACTIVE: proc_packet = 1;
       break;
@@ -17752,7 +17738,7 @@ int NCR_ProcessRxKnown(NCR_Instance inst, NTP_Local_Address *local_addr,
       default: break;
     }
     break;
-    case MODE_PASSIVE: ;
+    case (int)MODE_PASSIVE: ;
     switch (inst->mode) {
       case MODE_ACTIVE: proc_packet = 1;
       break;
@@ -17760,16 +17746,16 @@ int NCR_ProcessRxKnown(NCR_Instance inst, NTP_Local_Address *local_addr,
       default: break;
     }
     break;
-    case MODE_CLIENT: proc_as_unknown = 1;
+    case (int)MODE_CLIENT: proc_as_unknown = 1;
     break;
-    case MODE_SERVER: ;
+    case (int)MODE_SERVER: ;
     switch (inst->mode) {
       case MODE_CLIENT: proc_packet = 1;
       break;
       default: break;
     }
     break;
-    case MODE_BROADCAST: break;
+    case (int)MODE_BROADCAST: break;
     default: break;
   }
   if (proc_packet) {
@@ -17778,7 +17764,7 @@ int NCR_ProcessRxKnown(NCR_Instance inst, NTP_Local_Address *local_addr,
       __retres = 0;
       goto return_label;
     }
-    if (inst->opmode == (unsigned int)MD_OFFLINE) goto _LOR;
+    if (inst->opmode == MD_OFFLINE) goto _LOR;
     else 
       if (inst->tx_suspended) {
         _LOR: {
@@ -17938,8 +17924,8 @@ void NCR_ProcessTxKnown(NCR_Instance inst, NTP_Local_Address *local_addr,
   tmp = check_packet_format(message,length);
   if (! tmp) goto return_label;
   pkt_mode = (NTP_Mode)((int)message->lvm & 0x7);
-  if (pkt_mode != (unsigned int)MODE_CLIENT) 
-    if (pkt_mode != (unsigned int)MODE_ACTIVE) {
+  if (pkt_mode != MODE_CLIENT) 
+    if (pkt_mode != MODE_ACTIVE) {
       NCR_ProcessTxUnknown(& inst->remote_addr,local_addr,tx_ts,message,
                            length);
       goto return_label;
@@ -17962,12 +17948,12 @@ void NCR_ProcessTxUnknown(NTP_Remote_Address *remote_addr,
   int tmp_1;
   tmp = check_packet_format(message,length);
   if (! tmp) goto return_label;
-  if (((int)message->lvm & 0x7) == MODE_BROADCAST) goto return_label;
+  if ((unsigned int)((int)message->lvm & 0x7) == MODE_BROADCAST) goto return_label;
   log_index = CLG_GetClientIndex(& remote_addr->ip_addr);
   if (log_index < 0) goto return_label;
   tmp_1 = SMT_IsEnabled();
   if (tmp_1) 
-    if (((int)message->lvm & 0x7) == MODE_SERVER) {
+    if ((unsigned int)((int)message->lvm & 0x7) == MODE_SERVER) {
       double tmp_0;
       ;
       tmp_0 = SMT_GetOffset(& tx_ts->ts);
@@ -18011,7 +17997,7 @@ void NCR_SetConnectivity(NCR_Instance inst, SRC_Connectivity connectivity)
 {
   char *s;
   s = UTI_IPToString(& inst->remote_addr.ip_addr);
-  if (connectivity == (unsigned int)SRC_MAYBE_ONLINE) {
+  if (connectivity == SRC_MAYBE_ONLINE) {
     int tmp;
     tmp = NIO_IsServerConnectable(& inst->remote_addr);
     if (tmp) connectivity = SRC_ONLINE; else connectivity = SRC_OFFLINE;
@@ -18220,11 +18206,11 @@ void NCR_ModifyPolltarget(NCR_Instance inst, int new_poll_target)
 void NCR_InitiateSampleBurst(NCR_Instance inst, int n_good_samples,
                              int n_total_samples)
 {
-  if (inst->mode == (unsigned int)MODE_CLIENT) 
+  if (inst->mode == MODE_CLIENT) 
     switch (inst->opmode) {
       case MD_BURST_WAS_OFFLINE: case MD_BURST_WAS_ONLINE: break;
       case MD_ONLINE: case MD_OFFLINE:
-      if (inst->opmode == (unsigned int)MD_ONLINE) inst->opmode = MD_BURST_WAS_ONLINE;
+      if (inst->opmode == MD_ONLINE) inst->opmode = MD_BURST_WAS_ONLINE;
       else inst->opmode = MD_BURST_WAS_OFFLINE;
       inst->burst_good_samples_to_go = n_good_samples;
       inst->burst_total_samples_to_go = n_total_samples;
@@ -18267,7 +18253,7 @@ int NCR_AddAccessRestriction(IPAddr *ip_addr, int subnet_bits, int allow,
   else 
     if (all) status = ADF_DenyAll(access_auth_table,ip_addr,subnet_bits);
     else status = ADF_Deny(access_auth_table,ip_addr,subnet_bits);
-  if (status != (unsigned int)ADF_SUCCESS) {
+  if (status != ADF_SUCCESS) {
     __retres = 0;
     goto return_label;
   }
@@ -18503,7 +18489,7 @@ static void send_response(int interleaved, int authenticated,
 {
   NTP_Packet *req;
   NTP_Packet *res;
-  int tmp;
+  unsigned int tmp;
   double tmp_0;
   double tmp_1;
   double tmp_2;
@@ -18514,10 +18500,11 @@ static void send_response(int interleaved, int authenticated,
     TST_Fail(142);
     exit(1);
   }
-  if (((int)req->lvm & 0x7) == MODE_CLIENT) tmp = MODE_SERVER;
+  if ((unsigned int)((int)req->lvm & 0x7) == MODE_CLIENT) tmp = MODE_SERVER;
   else tmp = MODE_ACTIVE;
-  res->lvm = (uint8_t)((((LEAP_Normal << 6) & 0xc0) | (((((int)req->lvm >> 3) & 0x7) << 3) & 0x38)) | (
-                       tmp & 0x07));
+  res->lvm = (uint8_t)((((LEAP_Normal << 6) & (unsigned int)0xc0) | (unsigned int)(
+                        ((((int)req->lvm >> 3) & 0x7) << 3) & 0x38)) | (
+                       tmp & (unsigned int)0x07));
   res->stratum = (uint8_t)1;
   res->poll = req->poll;
   res->precision = (int8_t)(-20);
@@ -18667,7 +18654,7 @@ static void process_response(NCR_Instance inst, int good, int valid,
   res = & res_buffer.ntp_pkt;
   local_addr.ip_addr.family = (uint16_t)0;
   local_addr.if_index = -1;
-  if (((int)res->lvm & 0x7) != MODE_SERVER) local_addr.sock_fd = 100;
+  if ((unsigned int)((int)res->lvm & 0x7) != MODE_SERVER) local_addr.sock_fd = 100;
   else local_addr.sock_fd = 101;
   local_ts.ts = current_time;
   local_ts.err = 0.0;
@@ -18862,9 +18849,9 @@ void test_unit(void)
       long tmp_0;
       long tmp_1;
       double tmp_2;
-      int tmp_4;
+      unsigned int tmp_4;
       long tmp_3;
-      int tmp_14;
+      unsigned int tmp_14;
       long tmp_13;
       tmp = random();
       if (tmp % (long)2) source.params.interleaved = 1;
@@ -18879,8 +18866,7 @@ void test_unit(void)
       remote_addr.port = (unsigned short)123;
       tmp_3 = random();
       if (tmp_3 % (long)2) tmp_4 = NTP_SERVER; else tmp_4 = NTP_PEER;
-      inst1 = NCR_GetInstance(& remote_addr,(NTP_Source_Type)tmp_4,
-                              & source.params);
+      inst1 = NCR_GetInstance(& remote_addr,tmp_4,& source.params);
       NCR_StartInstance(inst1);
       has_updated = 0;
       j = 0;
@@ -18897,7 +18883,7 @@ void test_unit(void)
           int tmp_12;
           tmp_5 = random();
           if (tmp_5 % (long)2) 
-            if (inst1->mode != (unsigned int)MODE_CLIENT) tmp_6 = 1;
+            if (inst1->mode != MODE_CLIENT) tmp_6 = 1;
             else 
               if (inst1->tx_count < (unsigned int)4) tmp_6 = 1;
               else tmp_6 = 0;
@@ -18918,7 +18904,7 @@ void test_unit(void)
           valid = tmp_8;
           if (valid) goto _LOR_0;
           else 
-            if (inst1->mode == (unsigned int)MODE_ACTIVE) 
+            if (inst1->mode == MODE_ACTIVE) 
               _LOR_0:
               if (! source.params.authkey) tmp_9 = 1;
               else 
@@ -18929,7 +18915,7 @@ void test_unit(void)
           else 
             if (updated) tmp_10 = 1; else tmp_10 = 0;
           has_updated = tmp_10;
-          if (inst1->mode == (unsigned int)MODE_CLIENT) updated = 0;
+          if (inst1->mode == MODE_CLIENT) updated = 0;
           send_request(inst1);
           send_response(interleaved,authenticated,1,0,1);
           process_response(inst1,0,0,0,updated);
@@ -18961,8 +18947,7 @@ void test_unit(void)
       NCR_DestroyInstance(inst1);
       tmp_13 = random();
       if (tmp_13 % (long)2) tmp_14 = NTP_SERVER; else tmp_14 = NTP_PEER;
-      inst1 = NCR_GetInstance(& remote_addr,(NTP_Source_Type)tmp_14,
-                              & source.params);
+      inst1 = NCR_GetInstance(& remote_addr,tmp_14,& source.params);
       NCR_StartInstance(inst1);
       j = 0;
       /*@ loop \eva::unroll 2; */

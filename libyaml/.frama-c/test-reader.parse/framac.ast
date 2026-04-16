@@ -17,28 +17,28 @@ struct yaml_tag_directive_s {
 };
 typedef struct yaml_tag_directive_s yaml_tag_directive_t;
 enum yaml_encoding_e {
-    YAML_ANY_ENCODING = 0,
-    YAML_UTF8_ENCODING = 1,
-    YAML_UTF16LE_ENCODING = 2,
-    YAML_UTF16BE_ENCODING = 3
+    YAML_ANY_ENCODING = 0U,
+    YAML_UTF8_ENCODING = 1U,
+    YAML_UTF16LE_ENCODING = 2U,
+    YAML_UTF16BE_ENCODING = 3U
 };
 typedef enum yaml_encoding_e yaml_encoding_t;
 enum yaml_break_e {
-    YAML_ANY_BREAK = 0,
-    YAML_CR_BREAK = 1,
-    YAML_LN_BREAK = 2,
-    YAML_CRLN_BREAK = 3
+    YAML_ANY_BREAK = 0U,
+    YAML_CR_BREAK = 1U,
+    YAML_LN_BREAK = 2U,
+    YAML_CRLN_BREAK = 3U
 };
 typedef enum yaml_break_e yaml_break_t;
 enum yaml_error_type_e {
-    YAML_NO_ERROR = 0,
-    YAML_MEMORY_ERROR = 1,
-    YAML_READER_ERROR = 2,
-    YAML_SCANNER_ERROR = 3,
-    YAML_PARSER_ERROR = 4,
-    YAML_COMPOSER_ERROR = 5,
-    YAML_WRITER_ERROR = 6,
-    YAML_EMITTER_ERROR = 7
+    YAML_NO_ERROR = 0U,
+    YAML_MEMORY_ERROR = 1U,
+    YAML_READER_ERROR = 2U,
+    YAML_SCANNER_ERROR = 3U,
+    YAML_PARSER_ERROR = 4U,
+    YAML_COMPOSER_ERROR = 5U,
+    YAML_WRITER_ERROR = 6U,
+    YAML_EMITTER_ERROR = 7U
 };
 typedef enum yaml_error_type_e yaml_error_type_t;
 struct yaml_mark_s {
@@ -48,49 +48,49 @@ struct yaml_mark_s {
 };
 typedef struct yaml_mark_s yaml_mark_t;
 enum yaml_scalar_style_e {
-    YAML_ANY_SCALAR_STYLE = 0,
-    YAML_PLAIN_SCALAR_STYLE = 1,
-    YAML_SINGLE_QUOTED_SCALAR_STYLE = 2,
-    YAML_DOUBLE_QUOTED_SCALAR_STYLE = 3,
-    YAML_LITERAL_SCALAR_STYLE = 4,
-    YAML_FOLDED_SCALAR_STYLE = 5
+    YAML_ANY_SCALAR_STYLE = 0U,
+    YAML_PLAIN_SCALAR_STYLE = 1U,
+    YAML_SINGLE_QUOTED_SCALAR_STYLE = 2U,
+    YAML_DOUBLE_QUOTED_SCALAR_STYLE = 3U,
+    YAML_LITERAL_SCALAR_STYLE = 4U,
+    YAML_FOLDED_SCALAR_STYLE = 5U
 };
 typedef enum yaml_scalar_style_e yaml_scalar_style_t;
 enum yaml_sequence_style_e {
-    YAML_ANY_SEQUENCE_STYLE = 0,
-    YAML_BLOCK_SEQUENCE_STYLE = 1,
-    YAML_FLOW_SEQUENCE_STYLE = 2
+    YAML_ANY_SEQUENCE_STYLE = 0U,
+    YAML_BLOCK_SEQUENCE_STYLE = 1U,
+    YAML_FLOW_SEQUENCE_STYLE = 2U
 };
 typedef enum yaml_sequence_style_e yaml_sequence_style_t;
 enum yaml_mapping_style_e {
-    YAML_ANY_MAPPING_STYLE = 0,
-    YAML_BLOCK_MAPPING_STYLE = 1,
-    YAML_FLOW_MAPPING_STYLE = 2
+    YAML_ANY_MAPPING_STYLE = 0U,
+    YAML_BLOCK_MAPPING_STYLE = 1U,
+    YAML_FLOW_MAPPING_STYLE = 2U
 };
 typedef enum yaml_mapping_style_e yaml_mapping_style_t;
 enum yaml_token_type_e {
-    YAML_NO_TOKEN = 0,
-    YAML_STREAM_START_TOKEN = 1,
-    YAML_STREAM_END_TOKEN = 2,
-    YAML_VERSION_DIRECTIVE_TOKEN = 3,
-    YAML_TAG_DIRECTIVE_TOKEN = 4,
-    YAML_DOCUMENT_START_TOKEN = 5,
-    YAML_DOCUMENT_END_TOKEN = 6,
-    YAML_BLOCK_SEQUENCE_START_TOKEN = 7,
-    YAML_BLOCK_MAPPING_START_TOKEN = 8,
-    YAML_BLOCK_END_TOKEN = 9,
-    YAML_FLOW_SEQUENCE_START_TOKEN = 10,
-    YAML_FLOW_SEQUENCE_END_TOKEN = 11,
-    YAML_FLOW_MAPPING_START_TOKEN = 12,
-    YAML_FLOW_MAPPING_END_TOKEN = 13,
-    YAML_BLOCK_ENTRY_TOKEN = 14,
-    YAML_FLOW_ENTRY_TOKEN = 15,
-    YAML_KEY_TOKEN = 16,
-    YAML_VALUE_TOKEN = 17,
-    YAML_ALIAS_TOKEN = 18,
-    YAML_ANCHOR_TOKEN = 19,
-    YAML_TAG_TOKEN = 20,
-    YAML_SCALAR_TOKEN = 21
+    YAML_NO_TOKEN = 0U,
+    YAML_STREAM_START_TOKEN = 1U,
+    YAML_STREAM_END_TOKEN = 2U,
+    YAML_VERSION_DIRECTIVE_TOKEN = 3U,
+    YAML_TAG_DIRECTIVE_TOKEN = 4U,
+    YAML_DOCUMENT_START_TOKEN = 5U,
+    YAML_DOCUMENT_END_TOKEN = 6U,
+    YAML_BLOCK_SEQUENCE_START_TOKEN = 7U,
+    YAML_BLOCK_MAPPING_START_TOKEN = 8U,
+    YAML_BLOCK_END_TOKEN = 9U,
+    YAML_FLOW_SEQUENCE_START_TOKEN = 10U,
+    YAML_FLOW_SEQUENCE_END_TOKEN = 11U,
+    YAML_FLOW_MAPPING_START_TOKEN = 12U,
+    YAML_FLOW_MAPPING_END_TOKEN = 13U,
+    YAML_BLOCK_ENTRY_TOKEN = 14U,
+    YAML_FLOW_ENTRY_TOKEN = 15U,
+    YAML_KEY_TOKEN = 16U,
+    YAML_VALUE_TOKEN = 17U,
+    YAML_ALIAS_TOKEN = 18U,
+    YAML_ANCHOR_TOKEN = 19U,
+    YAML_TAG_TOKEN = 20U,
+    YAML_SCALAR_TOKEN = 21U
 };
 typedef enum yaml_token_type_e yaml_token_type_t;
 struct __anonstruct_stream_start_2 {
@@ -136,17 +136,17 @@ struct yaml_token_s {
 };
 typedef struct yaml_token_s yaml_token_t;
 enum yaml_event_type_e {
-    YAML_NO_EVENT = 0,
-    YAML_STREAM_START_EVENT = 1,
-    YAML_STREAM_END_EVENT = 2,
-    YAML_DOCUMENT_START_EVENT = 3,
-    YAML_DOCUMENT_END_EVENT = 4,
-    YAML_ALIAS_EVENT = 5,
-    YAML_SCALAR_EVENT = 6,
-    YAML_SEQUENCE_START_EVENT = 7,
-    YAML_SEQUENCE_END_EVENT = 8,
-    YAML_MAPPING_START_EVENT = 9,
-    YAML_MAPPING_END_EVENT = 10
+    YAML_NO_EVENT = 0U,
+    YAML_STREAM_START_EVENT = 1U,
+    YAML_STREAM_END_EVENT = 2U,
+    YAML_DOCUMENT_START_EVENT = 3U,
+    YAML_DOCUMENT_END_EVENT = 4U,
+    YAML_ALIAS_EVENT = 5U,
+    YAML_SCALAR_EVENT = 6U,
+    YAML_SEQUENCE_START_EVENT = 7U,
+    YAML_SEQUENCE_END_EVENT = 8U,
+    YAML_MAPPING_START_EVENT = 9U,
+    YAML_MAPPING_END_EVENT = 10U
 };
 typedef enum yaml_event_type_e yaml_event_type_t;
 struct __anonstruct_stream_start_10 {
@@ -205,10 +205,10 @@ struct yaml_event_s {
 };
 typedef struct yaml_event_s yaml_event_t;
 enum yaml_node_type_e {
-    YAML_NO_NODE = 0,
-    YAML_SCALAR_NODE = 1,
-    YAML_SEQUENCE_NODE = 2,
-    YAML_MAPPING_NODE = 3
+    YAML_NO_NODE = 0U,
+    YAML_SCALAR_NODE = 1U,
+    YAML_SEQUENCE_NODE = 2U,
+    YAML_MAPPING_NODE = 3U
 };
 typedef enum yaml_node_type_e yaml_node_type_t;
 struct yaml_node_s;
@@ -283,30 +283,30 @@ struct yaml_simple_key_s {
 };
 typedef struct yaml_simple_key_s yaml_simple_key_t;
 enum yaml_parser_state_e {
-    YAML_PARSE_STREAM_START_STATE = 0,
-    YAML_PARSE_IMPLICIT_DOCUMENT_START_STATE = 1,
-    YAML_PARSE_DOCUMENT_START_STATE = 2,
-    YAML_PARSE_DOCUMENT_CONTENT_STATE = 3,
-    YAML_PARSE_DOCUMENT_END_STATE = 4,
-    YAML_PARSE_BLOCK_NODE_STATE = 5,
-    YAML_PARSE_BLOCK_NODE_OR_INDENTLESS_SEQUENCE_STATE = 6,
-    YAML_PARSE_FLOW_NODE_STATE = 7,
-    YAML_PARSE_BLOCK_SEQUENCE_FIRST_ENTRY_STATE = 8,
-    YAML_PARSE_BLOCK_SEQUENCE_ENTRY_STATE = 9,
-    YAML_PARSE_INDENTLESS_SEQUENCE_ENTRY_STATE = 10,
-    YAML_PARSE_BLOCK_MAPPING_FIRST_KEY_STATE = 11,
-    YAML_PARSE_BLOCK_MAPPING_KEY_STATE = 12,
-    YAML_PARSE_BLOCK_MAPPING_VALUE_STATE = 13,
-    YAML_PARSE_FLOW_SEQUENCE_FIRST_ENTRY_STATE = 14,
-    YAML_PARSE_FLOW_SEQUENCE_ENTRY_STATE = 15,
-    YAML_PARSE_FLOW_SEQUENCE_ENTRY_MAPPING_KEY_STATE = 16,
-    YAML_PARSE_FLOW_SEQUENCE_ENTRY_MAPPING_VALUE_STATE = 17,
-    YAML_PARSE_FLOW_SEQUENCE_ENTRY_MAPPING_END_STATE = 18,
-    YAML_PARSE_FLOW_MAPPING_FIRST_KEY_STATE = 19,
-    YAML_PARSE_FLOW_MAPPING_KEY_STATE = 20,
-    YAML_PARSE_FLOW_MAPPING_VALUE_STATE = 21,
-    YAML_PARSE_FLOW_MAPPING_EMPTY_VALUE_STATE = 22,
-    YAML_PARSE_END_STATE = 23
+    YAML_PARSE_STREAM_START_STATE = 0U,
+    YAML_PARSE_IMPLICIT_DOCUMENT_START_STATE = 1U,
+    YAML_PARSE_DOCUMENT_START_STATE = 2U,
+    YAML_PARSE_DOCUMENT_CONTENT_STATE = 3U,
+    YAML_PARSE_DOCUMENT_END_STATE = 4U,
+    YAML_PARSE_BLOCK_NODE_STATE = 5U,
+    YAML_PARSE_BLOCK_NODE_OR_INDENTLESS_SEQUENCE_STATE = 6U,
+    YAML_PARSE_FLOW_NODE_STATE = 7U,
+    YAML_PARSE_BLOCK_SEQUENCE_FIRST_ENTRY_STATE = 8U,
+    YAML_PARSE_BLOCK_SEQUENCE_ENTRY_STATE = 9U,
+    YAML_PARSE_INDENTLESS_SEQUENCE_ENTRY_STATE = 10U,
+    YAML_PARSE_BLOCK_MAPPING_FIRST_KEY_STATE = 11U,
+    YAML_PARSE_BLOCK_MAPPING_KEY_STATE = 12U,
+    YAML_PARSE_BLOCK_MAPPING_VALUE_STATE = 13U,
+    YAML_PARSE_FLOW_SEQUENCE_FIRST_ENTRY_STATE = 14U,
+    YAML_PARSE_FLOW_SEQUENCE_ENTRY_STATE = 15U,
+    YAML_PARSE_FLOW_SEQUENCE_ENTRY_MAPPING_KEY_STATE = 16U,
+    YAML_PARSE_FLOW_SEQUENCE_ENTRY_MAPPING_VALUE_STATE = 17U,
+    YAML_PARSE_FLOW_SEQUENCE_ENTRY_MAPPING_END_STATE = 18U,
+    YAML_PARSE_FLOW_MAPPING_FIRST_KEY_STATE = 19U,
+    YAML_PARSE_FLOW_MAPPING_KEY_STATE = 20U,
+    YAML_PARSE_FLOW_MAPPING_VALUE_STATE = 21U,
+    YAML_PARSE_FLOW_MAPPING_EMPTY_VALUE_STATE = 22U,
+    YAML_PARSE_END_STATE = 23U
 };
 typedef enum yaml_parser_state_e yaml_parser_state_t;
 struct yaml_alias_data_s {
@@ -411,24 +411,24 @@ typedef struct yaml_parser_s yaml_parser_t;
 typedef int yaml_write_handler_t(void *data, unsigned char *buffer,
                                  size_t size);
 enum yaml_emitter_state_e {
-    YAML_EMIT_STREAM_START_STATE = 0,
-    YAML_EMIT_FIRST_DOCUMENT_START_STATE = 1,
-    YAML_EMIT_DOCUMENT_START_STATE = 2,
-    YAML_EMIT_DOCUMENT_CONTENT_STATE = 3,
-    YAML_EMIT_DOCUMENT_END_STATE = 4,
-    YAML_EMIT_FLOW_SEQUENCE_FIRST_ITEM_STATE = 5,
-    YAML_EMIT_FLOW_SEQUENCE_ITEM_STATE = 6,
-    YAML_EMIT_FLOW_MAPPING_FIRST_KEY_STATE = 7,
-    YAML_EMIT_FLOW_MAPPING_KEY_STATE = 8,
-    YAML_EMIT_FLOW_MAPPING_SIMPLE_VALUE_STATE = 9,
-    YAML_EMIT_FLOW_MAPPING_VALUE_STATE = 10,
-    YAML_EMIT_BLOCK_SEQUENCE_FIRST_ITEM_STATE = 11,
-    YAML_EMIT_BLOCK_SEQUENCE_ITEM_STATE = 12,
-    YAML_EMIT_BLOCK_MAPPING_FIRST_KEY_STATE = 13,
-    YAML_EMIT_BLOCK_MAPPING_KEY_STATE = 14,
-    YAML_EMIT_BLOCK_MAPPING_SIMPLE_VALUE_STATE = 15,
-    YAML_EMIT_BLOCK_MAPPING_VALUE_STATE = 16,
-    YAML_EMIT_END_STATE = 17
+    YAML_EMIT_STREAM_START_STATE = 0U,
+    YAML_EMIT_FIRST_DOCUMENT_START_STATE = 1U,
+    YAML_EMIT_DOCUMENT_START_STATE = 2U,
+    YAML_EMIT_DOCUMENT_CONTENT_STATE = 3U,
+    YAML_EMIT_DOCUMENT_END_STATE = 4U,
+    YAML_EMIT_FLOW_SEQUENCE_FIRST_ITEM_STATE = 5U,
+    YAML_EMIT_FLOW_SEQUENCE_ITEM_STATE = 6U,
+    YAML_EMIT_FLOW_MAPPING_FIRST_KEY_STATE = 7U,
+    YAML_EMIT_FLOW_MAPPING_KEY_STATE = 8U,
+    YAML_EMIT_FLOW_MAPPING_SIMPLE_VALUE_STATE = 9U,
+    YAML_EMIT_FLOW_MAPPING_VALUE_STATE = 10U,
+    YAML_EMIT_BLOCK_SEQUENCE_FIRST_ITEM_STATE = 11U,
+    YAML_EMIT_BLOCK_SEQUENCE_ITEM_STATE = 12U,
+    YAML_EMIT_BLOCK_MAPPING_FIRST_KEY_STATE = 13U,
+    YAML_EMIT_BLOCK_MAPPING_KEY_STATE = 14U,
+    YAML_EMIT_BLOCK_MAPPING_SIMPLE_VALUE_STATE = 15U,
+    YAML_EMIT_BLOCK_MAPPING_VALUE_STATE = 16U,
+    YAML_EMIT_END_STATE = 17U
 };
 typedef enum yaml_emitter_state_e yaml_emitter_state_t;
 struct yaml_anchors_s {
@@ -2647,7 +2647,7 @@ int yaml_document_append_sequence_item(yaml_document_t *document,
   else tmp = 0;
   __FC_assert(tmp != 0,"src/api.c",1343,
               "sequence > 0 && document->nodes.start + sequence <= document->nodes.top");
-  __FC_assert(((document->nodes.start + (sequence - 1))->type == (unsigned int)YAML_SEQUENCE_NODE) != 0,
+  __FC_assert(((document->nodes.start + (sequence - 1))->type == YAML_SEQUENCE_NODE) != 0,
               "src/api.c",1346,
               "document->nodes.start[sequence-1].type == YAML_SEQUENCE_NODE");
   if (item > 0) 
@@ -2702,7 +2702,7 @@ int yaml_document_append_mapping_pair(yaml_document_t *document, int mapping,
   else tmp = 0;
   __FC_assert(tmp != 0,"src/api.c",1373,
               "mapping > 0 && document->nodes.start + mapping <= document->nodes.top");
-  __FC_assert(((document->nodes.start + (mapping - 1))->type == (unsigned int)YAML_MAPPING_NODE) != 0,
+  __FC_assert(((document->nodes.start + (mapping - 1))->type == YAML_MAPPING_NODE) != 0,
               "src/api.c",1376,
               "document->nodes.start[mapping-1].type == YAML_MAPPING_NODE");
   if (key > 0) 
@@ -2895,15 +2895,15 @@ static void yaml_emitter_delete_document_and_anchors(yaml_emitter_t *emitter)
       yaml_node_t node = *((emitter->document)->nodes.start + index);
       if (! (emitter->anchors + index)->serialized) {
         yaml_free((void *)node.tag);
-        if (node.type == (unsigned int)YAML_SCALAR_NODE) yaml_free((void *)node.data.scalar.value);
+        if (node.type == YAML_SCALAR_NODE) yaml_free((void *)node.data.scalar.value);
       }
-      if (node.type == (unsigned int)YAML_SEQUENCE_NODE) {
+      if (node.type == YAML_SEQUENCE_NODE) {
         yaml_free((void *)node.data.sequence.items.start);
         node.data.sequence.items.end = (yaml_node_item_t *)0;
         node.data.sequence.items.top = node.data.sequence.items.end;
         node.data.sequence.items.start = node.data.sequence.items.top;
       }
-      if (node.type == (unsigned int)YAML_MAPPING_NODE) {
+      if (node.type == YAML_MAPPING_NODE) {
         yaml_free((void *)node.data.mapping.pairs.start);
         node.data.mapping.pairs.end = (yaml_node_pair_t *)0;
         node.data.mapping.pairs.top = node.data.mapping.pairs.end;
@@ -3637,7 +3637,7 @@ static int yaml_emitter_emit_stream_start(yaml_emitter_t *emitter,
   int __retres;
   int tmp_0;
   emitter->open_ended = 0;
-  if (event->type == (unsigned int)YAML_STREAM_START_EVENT) {
+  if (event->type == YAML_STREAM_START_EVENT) {
     if (! emitter->encoding) emitter->encoding = event->data.stream_start.encoding;
     if (! emitter->encoding) emitter->encoding = YAML_UTF8_ENCODING;
     if (emitter->best_indent < 2) goto _LOR;
@@ -3652,7 +3652,7 @@ static int yaml_emitter_emit_stream_start(yaml_emitter_t *emitter,
     emitter->column = 0;
     emitter->whitespace = 1;
     emitter->indention = 1;
-    if (emitter->encoding != (unsigned int)YAML_UTF8_ENCODING) {
+    if (emitter->encoding != YAML_UTF8_ENCODING) {
       int tmp;
       tmp = yaml_emitter_write_bom(emitter);
       if (! tmp) {
@@ -3674,7 +3674,7 @@ static int yaml_emitter_emit_document_start(yaml_emitter_t *emitter,
 {
   int __retres;
   int tmp_22;
-  if (event->type == (unsigned int)YAML_DOCUMENT_START_EVENT) {
+  if (event->type == YAML_DOCUMENT_START_EVENT) {
     yaml_tag_directive_t *tag_directive;
     int implicit;
     int tmp_15;
@@ -3852,7 +3852,7 @@ static int yaml_emitter_emit_document_start(yaml_emitter_t *emitter,
     goto return_label;
   }
   else 
-    if (event->type == (unsigned int)YAML_STREAM_END_EVENT) {
+    if (event->type == YAML_STREAM_END_EVENT) {
       int tmp_21;
       if (emitter->open_ended == 2) {
         int tmp_19;
@@ -3922,7 +3922,7 @@ static int yaml_emitter_emit_document_end(yaml_emitter_t *emitter,
 {
   int __retres;
   int tmp_3;
-  if (event->type == (unsigned int)YAML_DOCUMENT_END_EVENT) {
+  if (event->type == YAML_DOCUMENT_END_EVENT) {
     int tmp;
     int tmp_2;
     tmp = yaml_emitter_write_indent(emitter);
@@ -3989,7 +3989,7 @@ static int yaml_emitter_emit_flow_sequence_item(yaml_emitter_t *emitter,
     }
     (emitter->flow_level) ++;
   }
-  if (event->type == (unsigned int)YAML_SEQUENCE_END_EVENT) {
+  if (event->type == YAML_SEQUENCE_END_EVENT) {
     int tmp_3;
     (emitter->flow_level) --;
     (emitter->indents.top) --;
@@ -4086,7 +4086,7 @@ static int yaml_emitter_emit_flow_mapping_key(yaml_emitter_t *emitter,
     }
     (emitter->flow_level) ++;
   }
-  if (event->type == (unsigned int)YAML_MAPPING_END_EVENT) {
+  if (event->type == YAML_MAPPING_END_EVENT) {
     int tmp_3;
     (emitter->flow_level) --;
     (emitter->indents.top) --;
@@ -4297,7 +4297,7 @@ static int yaml_emitter_emit_block_sequence_item(yaml_emitter_t *emitter,
       goto return_label;
     }
   }
-  if (event->type == (unsigned int)YAML_SEQUENCE_END_EVENT) {
+  if (event->type == YAML_SEQUENCE_END_EVENT) {
     (emitter->indents.top) --;
     emitter->indent = *(emitter->indents.top);
     (emitter->states.top) --;
@@ -4356,7 +4356,7 @@ static int yaml_emitter_emit_block_mapping_key(yaml_emitter_t *emitter,
       goto return_label;
     }
   }
-  if (event->type == (unsigned int)YAML_MAPPING_END_EVENT) {
+  if (event->type == YAML_MAPPING_END_EVENT) {
     (emitter->indents.top) --;
     emitter->indent = *(emitter->indents.top);
     (emitter->states.top) --;
@@ -4630,7 +4630,7 @@ static int yaml_emitter_emit_sequence_start(yaml_emitter_t *emitter,
   else 
     if (emitter->canonical) goto _LOR;
     else 
-      if (event->data.sequence_start.style == (unsigned int)YAML_FLOW_SEQUENCE_STYLE) 
+      if (event->data.sequence_start.style == YAML_FLOW_SEQUENCE_STYLE) 
         goto _LOR;
       else {
         int tmp_1;
@@ -4663,7 +4663,7 @@ static int yaml_emitter_emit_mapping_start(yaml_emitter_t *emitter,
   else 
     if (emitter->canonical) goto _LOR;
     else 
-      if (event->data.mapping_start.style == (unsigned int)YAML_FLOW_MAPPING_STYLE) 
+      if (event->data.mapping_start.style == YAML_FLOW_MAPPING_STYLE) 
         goto _LOR;
       else {
         int tmp_1;
@@ -4691,8 +4691,8 @@ static int yaml_emitter_check_empty_sequence(yaml_emitter_t *emitter)
     __retres = 0;
     goto return_label;
   }
-  if ((emitter->events.head + 0)->type == (unsigned int)YAML_SEQUENCE_START_EVENT) 
-    if ((emitter->events.head + 1)->type == (unsigned int)YAML_SEQUENCE_END_EVENT) 
+  if ((emitter->events.head + 0)->type == YAML_SEQUENCE_START_EVENT) 
+    if ((emitter->events.head + 1)->type == YAML_SEQUENCE_END_EVENT) 
       tmp = 1;
     else tmp = 0;
   else tmp = 0;
@@ -4708,9 +4708,8 @@ static int yaml_emitter_check_empty_mapping(yaml_emitter_t *emitter)
     __retres = 0;
     goto return_label;
   }
-  if ((emitter->events.head + 0)->type == (unsigned int)YAML_MAPPING_START_EVENT) 
-    if ((emitter->events.head + 1)->type == (unsigned int)YAML_MAPPING_END_EVENT) 
-      tmp = 1;
+  if ((emitter->events.head + 0)->type == YAML_MAPPING_START_EVENT) 
+    if ((emitter->events.head + 1)->type == YAML_MAPPING_END_EVENT) tmp = 1;
     else tmp = 0;
   else tmp = 0;
   __retres = tmp;
@@ -4780,11 +4779,11 @@ static int yaml_emitter_select_scalar_style(yaml_emitter_t *emitter,
         __retres = tmp_0;
         goto return_label;
       }
-  if (style == (unsigned int)YAML_ANY_SCALAR_STYLE) style = YAML_PLAIN_SCALAR_STYLE;
+  if (style == YAML_ANY_SCALAR_STYLE) style = YAML_PLAIN_SCALAR_STYLE;
   if (emitter->canonical) style = YAML_DOUBLE_QUOTED_SCALAR_STYLE;
   if (emitter->simple_key_context) 
     if (emitter->scalar_data.multiline) style = YAML_DOUBLE_QUOTED_SCALAR_STYLE;
-  if (style == (unsigned int)YAML_PLAIN_SCALAR_STYLE) {
+  if (style == YAML_PLAIN_SCALAR_STYLE) {
     if (emitter->flow_level) {
       if (! emitter->scalar_data.flow_plain_allowed) style = YAML_SINGLE_QUOTED_SCALAR_STYLE;
       else goto _LAND;
@@ -4800,11 +4799,11 @@ static int yaml_emitter_select_scalar_style(yaml_emitter_t *emitter,
     if (no_tag) 
       if (! event->data.scalar.plain_implicit) style = YAML_SINGLE_QUOTED_SCALAR_STYLE;
   }
-  if (style == (unsigned int)YAML_SINGLE_QUOTED_SCALAR_STYLE) 
+  if (style == YAML_SINGLE_QUOTED_SCALAR_STYLE) 
     if (! emitter->scalar_data.single_quoted_allowed) style = YAML_DOUBLE_QUOTED_SCALAR_STYLE;
-  if (style == (unsigned int)YAML_LITERAL_SCALAR_STYLE) goto _LOR;
+  if (style == YAML_LITERAL_SCALAR_STYLE) goto _LOR;
   else 
-    if (style == (unsigned int)YAML_FOLDED_SCALAR_STYLE) 
+    if (style == YAML_FOLDED_SCALAR_STYLE) 
       _LOR:
       if (! emitter->scalar_data.block_allowed) style = YAML_DOUBLE_QUOTED_SCALAR_STYLE;
       else 
@@ -4813,7 +4812,7 @@ static int yaml_emitter_select_scalar_style(yaml_emitter_t *emitter,
           if (emitter->simple_key_context) style = YAML_DOUBLE_QUOTED_SCALAR_STYLE;
   if (no_tag) 
     if (! event->data.scalar.quoted_implicit) 
-      if (style != (unsigned int)YAML_PLAIN_SCALAR_STYLE) {
+      if (style != YAML_PLAIN_SCALAR_STYLE) {
         emitter->tag_data.handle = (yaml_char_t *)"!";
         emitter->tag_data.handle_length = (size_t)1;
       }
@@ -6434,7 +6433,7 @@ static int yaml_emitter_write_indent(yaml_emitter_t *emitter)
             tmp_0 = yaml_emitter_flush(emitter);
             if (tmp_0) {
               _LOR: ;
-              if (emitter->line_break == (unsigned int)YAML_CR_BREAK) {
+              if (emitter->line_break == YAML_CR_BREAK) {
                 yaml_char_t *tmp_1;
                 tmp_1 = emitter->buffer.pointer;
                 (emitter->buffer.pointer) ++;
@@ -6442,7 +6441,7 @@ static int yaml_emitter_write_indent(yaml_emitter_t *emitter)
                 yaml_char_t tmp_9 = *tmp_1;
               }
               else 
-                if (emitter->line_break == (unsigned int)YAML_LN_BREAK) {
+                if (emitter->line_break == YAML_LN_BREAK) {
                   yaml_char_t *tmp_2;
                   tmp_2 = emitter->buffer.pointer;
                   (emitter->buffer.pointer) ++;
@@ -6450,7 +6449,7 @@ static int yaml_emitter_write_indent(yaml_emitter_t *emitter)
                   yaml_char_t tmp_7 = *tmp_2;
                 }
                 else 
-                  if (emitter->line_break == (unsigned int)YAML_CRLN_BREAK) {
+                  if (emitter->line_break == YAML_CRLN_BREAK) {
                     yaml_char_t *tmp_3;
                     yaml_char_t *tmp_4;
                     tmp_3 = emitter->buffer.pointer;
@@ -7434,7 +7433,7 @@ static int yaml_emitter_write_plain_scalar(yaml_emitter_t *emitter,
                             tmp_27_0 = yaml_emitter_flush(emitter);
                             if (tmp_27_0) {
                               _LOR_2: ;
-                              if (emitter->line_break == (unsigned int)YAML_CR_BREAK) {
+                              if (emitter->line_break == YAML_CR_BREAK) {
                                 yaml_char_t *tmp_28;
                                 tmp_28 = emitter->buffer.pointer;
                                 (emitter->buffer.pointer) ++;
@@ -7442,7 +7441,7 @@ static int yaml_emitter_write_plain_scalar(yaml_emitter_t *emitter,
                                 yaml_char_t tmp_39 = *tmp_28;
                               }
                               else 
-                                if (emitter->line_break == (unsigned int)YAML_LN_BREAK) {
+                                if (emitter->line_break == YAML_LN_BREAK) {
                                   yaml_char_t *tmp_29_0;
                                   tmp_29_0 = emitter->buffer.pointer;
                                   (emitter->buffer.pointer) ++;
@@ -7450,7 +7449,7 @@ static int yaml_emitter_write_plain_scalar(yaml_emitter_t *emitter,
                                   yaml_char_t tmp_37 = *tmp_29_0;
                                 }
                                 else 
-                                  if (emitter->line_break == (unsigned int)YAML_CRLN_BREAK) {
+                                  if (emitter->line_break == YAML_CRLN_BREAK) {
                                     yaml_char_t *tmp_30;
                                     yaml_char_t *tmp_31_0;
                                     tmp_30 = emitter->buffer.pointer;
@@ -7486,7 +7485,7 @@ static int yaml_emitter_write_plain_scalar(yaml_emitter_t *emitter,
                               tmp_33_0 = yaml_emitter_flush(emitter);
                               if (tmp_33_0) {
                                 _LOR_3: ;
-                                if (emitter->line_break == (unsigned int)YAML_CR_BREAK) {
+                                if (emitter->line_break == YAML_CR_BREAK) {
                                   yaml_char_t *tmp_34;
                                   tmp_34 = emitter->buffer.pointer;
                                   (emitter->buffer.pointer) ++;
@@ -7494,7 +7493,7 @@ static int yaml_emitter_write_plain_scalar(yaml_emitter_t *emitter,
                                   yaml_char_t tmp_45 = *tmp_34;
                                 }
                                 else 
-                                  if (emitter->line_break == (unsigned int)YAML_LN_BREAK) {
+                                  if (emitter->line_break == YAML_LN_BREAK) {
                                     yaml_char_t *tmp_35_0;
                                     tmp_35_0 = emitter->buffer.pointer;
                                     (emitter->buffer.pointer) ++;
@@ -7502,7 +7501,7 @@ static int yaml_emitter_write_plain_scalar(yaml_emitter_t *emitter,
                                     yaml_char_t tmp_43 = *tmp_35_0;
                                   }
                                   else 
-                                    if (emitter->line_break == (unsigned int)YAML_CRLN_BREAK) {
+                                    if (emitter->line_break == YAML_CRLN_BREAK) {
                                       yaml_char_t *tmp_36;
                                       yaml_char_t *tmp_37_0;
                                       tmp_36 = emitter->buffer.pointer;
@@ -7957,7 +7956,7 @@ static int yaml_emitter_write_single_quoted_scalar(yaml_emitter_t *emitter,
                             tmp_26_1 = yaml_emitter_flush(emitter);
                             if (tmp_26_1) {
                               _LOR_0: ;
-                              if (emitter->line_break == (unsigned int)YAML_CR_BREAK) {
+                              if (emitter->line_break == YAML_CR_BREAK) {
                                 yaml_char_t *tmp_27;
                                 tmp_27 = emitter->buffer.pointer;
                                 (emitter->buffer.pointer) ++;
@@ -7965,7 +7964,7 @@ static int yaml_emitter_write_single_quoted_scalar(yaml_emitter_t *emitter,
                                 yaml_char_t tmp_38 = *tmp_27;
                               }
                               else 
-                                if (emitter->line_break == (unsigned int)YAML_LN_BREAK) {
+                                if (emitter->line_break == YAML_LN_BREAK) {
                                   yaml_char_t *tmp_28_1;
                                   tmp_28_1 = emitter->buffer.pointer;
                                   (emitter->buffer.pointer) ++;
@@ -7973,7 +7972,7 @@ static int yaml_emitter_write_single_quoted_scalar(yaml_emitter_t *emitter,
                                   yaml_char_t tmp_36 = *tmp_28_1;
                                 }
                                 else 
-                                  if (emitter->line_break == (unsigned int)YAML_CRLN_BREAK) {
+                                  if (emitter->line_break == YAML_CRLN_BREAK) {
                                     yaml_char_t *tmp_29;
                                     yaml_char_t *tmp_30_0;
                                     tmp_29 = emitter->buffer.pointer;
@@ -8009,7 +8008,7 @@ static int yaml_emitter_write_single_quoted_scalar(yaml_emitter_t *emitter,
                               tmp_32_0 = yaml_emitter_flush(emitter);
                               if (tmp_32_0) {
                                 _LOR_1: ;
-                                if (emitter->line_break == (unsigned int)YAML_CR_BREAK) {
+                                if (emitter->line_break == YAML_CR_BREAK) {
                                   yaml_char_t *tmp_33;
                                   tmp_33 = emitter->buffer.pointer;
                                   (emitter->buffer.pointer) ++;
@@ -8017,7 +8016,7 @@ static int yaml_emitter_write_single_quoted_scalar(yaml_emitter_t *emitter,
                                   yaml_char_t tmp_44 = *tmp_33;
                                 }
                                 else 
-                                  if (emitter->line_break == (unsigned int)YAML_LN_BREAK) {
+                                  if (emitter->line_break == YAML_LN_BREAK) {
                                     yaml_char_t *tmp_34_0;
                                     tmp_34_0 = emitter->buffer.pointer;
                                     (emitter->buffer.pointer) ++;
@@ -8025,7 +8024,7 @@ static int yaml_emitter_write_single_quoted_scalar(yaml_emitter_t *emitter,
                                     yaml_char_t tmp_42 = *tmp_34_0;
                                   }
                                   else 
-                                    if (emitter->line_break == (unsigned int)YAML_CRLN_BREAK) {
+                                    if (emitter->line_break == YAML_CRLN_BREAK) {
                                       yaml_char_t *tmp_35;
                                       yaml_char_t *tmp_36_0;
                                       tmp_35 = emitter->buffer.pointer;
@@ -9446,7 +9445,7 @@ static int yaml_emitter_write_literal_scalar(yaml_emitter_t *emitter,
     tmp_1 = yaml_emitter_flush(emitter);
     if (tmp_1) {
       _LOR: ;
-      if (emitter->line_break == (unsigned int)YAML_CR_BREAK) {
+      if (emitter->line_break == YAML_CR_BREAK) {
         yaml_char_t *tmp_2;
         tmp_2 = emitter->buffer.pointer;
         (emitter->buffer.pointer) ++;
@@ -9454,7 +9453,7 @@ static int yaml_emitter_write_literal_scalar(yaml_emitter_t *emitter,
         yaml_char_t tmp_10 = *tmp_2;
       }
       else 
-        if (emitter->line_break == (unsigned int)YAML_LN_BREAK) {
+        if (emitter->line_break == YAML_LN_BREAK) {
           yaml_char_t *tmp_3;
           tmp_3 = emitter->buffer.pointer;
           (emitter->buffer.pointer) ++;
@@ -9462,7 +9461,7 @@ static int yaml_emitter_write_literal_scalar(yaml_emitter_t *emitter,
           yaml_char_t tmp_8 = *tmp_3;
         }
         else 
-          if (emitter->line_break == (unsigned int)YAML_CRLN_BREAK) {
+          if (emitter->line_break == YAML_CRLN_BREAK) {
             yaml_char_t *tmp_4;
             yaml_char_t *tmp_5;
             tmp_4 = emitter->buffer.pointer;
@@ -9527,7 +9526,7 @@ static int yaml_emitter_write_literal_scalar(yaml_emitter_t *emitter,
                             tmp_7 = yaml_emitter_flush(emitter);
                             if (tmp_7) {
                               _LOR_0: ;
-                              if (emitter->line_break == (unsigned int)YAML_CR_BREAK) {
+                              if (emitter->line_break == YAML_CR_BREAK) {
                                 yaml_char_t *tmp_8_0;
                                 tmp_8_0 = emitter->buffer.pointer;
                                 (emitter->buffer.pointer) ++;
@@ -9535,7 +9534,7 @@ static int yaml_emitter_write_literal_scalar(yaml_emitter_t *emitter,
                                 yaml_char_t tmp_16 = *tmp_8_0;
                               }
                               else 
-                                if (emitter->line_break == (unsigned int)YAML_LN_BREAK) {
+                                if (emitter->line_break == YAML_LN_BREAK) {
                                   yaml_char_t *tmp_9;
                                   tmp_9 = emitter->buffer.pointer;
                                   (emitter->buffer.pointer) ++;
@@ -9543,7 +9542,7 @@ static int yaml_emitter_write_literal_scalar(yaml_emitter_t *emitter,
                                   yaml_char_t tmp_14 = *tmp_9;
                                 }
                                 else 
-                                  if (emitter->line_break == (unsigned int)YAML_CRLN_BREAK) {
+                                  if (emitter->line_break == YAML_CRLN_BREAK) {
                                     yaml_char_t *tmp_10_0;
                                     yaml_char_t *tmp_11;
                                     tmp_10_0 = emitter->buffer.pointer;
@@ -9819,7 +9818,7 @@ static int yaml_emitter_write_folded_scalar(yaml_emitter_t *emitter,
     tmp_1 = yaml_emitter_flush(emitter);
     if (tmp_1) {
       _LOR: ;
-      if (emitter->line_break == (unsigned int)YAML_CR_BREAK) {
+      if (emitter->line_break == YAML_CR_BREAK) {
         yaml_char_t *tmp_2;
         tmp_2 = emitter->buffer.pointer;
         (emitter->buffer.pointer) ++;
@@ -9827,7 +9826,7 @@ static int yaml_emitter_write_folded_scalar(yaml_emitter_t *emitter,
         yaml_char_t tmp_10 = *tmp_2;
       }
       else 
-        if (emitter->line_break == (unsigned int)YAML_LN_BREAK) {
+        if (emitter->line_break == YAML_LN_BREAK) {
           yaml_char_t *tmp_3;
           tmp_3 = emitter->buffer.pointer;
           (emitter->buffer.pointer) ++;
@@ -9835,7 +9834,7 @@ static int yaml_emitter_write_folded_scalar(yaml_emitter_t *emitter,
           yaml_char_t tmp_8 = *tmp_3;
         }
         else 
-          if (emitter->line_break == (unsigned int)YAML_CRLN_BREAK) {
+          if (emitter->line_break == YAML_CRLN_BREAK) {
             yaml_char_t *tmp_4;
             yaml_char_t *tmp_5;
             tmp_4 = emitter->buffer.pointer;
@@ -9980,7 +9979,7 @@ static int yaml_emitter_write_folded_scalar(yaml_emitter_t *emitter,
                                             (emitter);
                                             if (tmp_10_1) {
                                               _LOR_0: ;
-                                              if (emitter->line_break == (unsigned int)YAML_CR_BREAK) {
+                                              if (emitter->line_break == YAML_CR_BREAK) {
                                                 yaml_char_t *tmp_11;
                                                 tmp_11 = emitter->buffer.pointer;
                                                 (emitter->buffer.pointer) ++;
@@ -9988,7 +9987,7 @@ static int yaml_emitter_write_folded_scalar(yaml_emitter_t *emitter,
                                                 yaml_char_t tmp_19 = *tmp_11;
                                               }
                                               else 
-                                                if (emitter->line_break == (unsigned int)YAML_LN_BREAK) {
+                                                if (emitter->line_break == YAML_LN_BREAK) {
                                                   yaml_char_t *tmp_12;
                                                   tmp_12 = emitter->buffer.pointer;
                                                   (emitter->buffer.pointer) ++;
@@ -9997,7 +9996,7 @@ static int yaml_emitter_write_folded_scalar(yaml_emitter_t *emitter,
                                                     *tmp_12;
                                                 }
                                                 else 
-                                                  if (emitter->line_break == (unsigned int)YAML_CRLN_BREAK) {
+                                                  if (emitter->line_break == YAML_CRLN_BREAK) {
                                                     yaml_char_t *tmp_13;
                                                     yaml_char_t *tmp_14;
                                                     tmp_13 = emitter->buffer.pointer;
@@ -10038,7 +10037,7 @@ static int yaml_emitter_write_folded_scalar(yaml_emitter_t *emitter,
                             tmp_16 = yaml_emitter_flush(emitter);
                             if (tmp_16) {
                               _LOR_1: ;
-                              if (emitter->line_break == (unsigned int)YAML_CR_BREAK) {
+                              if (emitter->line_break == YAML_CR_BREAK) {
                                 yaml_char_t *tmp_17_0;
                                 tmp_17_0 = emitter->buffer.pointer;
                                 (emitter->buffer.pointer) ++;
@@ -10046,7 +10045,7 @@ static int yaml_emitter_write_folded_scalar(yaml_emitter_t *emitter,
                                 yaml_char_t tmp_25 = *tmp_17_0;
                               }
                               else 
-                                if (emitter->line_break == (unsigned int)YAML_LN_BREAK) {
+                                if (emitter->line_break == YAML_LN_BREAK) {
                                   yaml_char_t *tmp_18;
                                   tmp_18 = emitter->buffer.pointer;
                                   (emitter->buffer.pointer) ++;
@@ -10054,7 +10053,7 @@ static int yaml_emitter_write_folded_scalar(yaml_emitter_t *emitter,
                                   yaml_char_t tmp_23 = *tmp_18;
                                 }
                                 else 
-                                  if (emitter->line_break == (unsigned int)YAML_CRLN_BREAK) {
+                                  if (emitter->line_break == YAML_CRLN_BREAK) {
                                     yaml_char_t *tmp_19_0;
                                     yaml_char_t *tmp_20;
                                     tmp_19_0 = emitter->buffer.pointer;
@@ -10425,8 +10424,8 @@ int yaml_parser_load(yaml_parser_t *parser, yaml_document_t *document)
     int tmp_2;
     tmp_2 = yaml_parser_parse(parser,& event);
     if (! tmp_2) goto error;
-    __FC_assert((event.type == (unsigned int)YAML_STREAM_START_EVENT) != 0,
-                "src/loader.c",100,"event.type == YAML_STREAM_START_EVENT");
+    __FC_assert((event.type == YAML_STREAM_START_EVENT) != 0,"src/loader.c",
+                100,"event.type == YAML_STREAM_START_EVENT");
   }
   if (parser->stream_end_produced) {
     __retres = 1;
@@ -10434,7 +10433,7 @@ int yaml_parser_load(yaml_parser_t *parser, yaml_document_t *document)
   }
   tmp_3 = yaml_parser_parse(parser,& event);
   if (! tmp_3) goto error;
-  if (event.type == (unsigned int)YAML_STREAM_END_EVENT) {
+  if (event.type == YAML_STREAM_END_EVENT) {
     __retres = 1;
     goto return_label;
   }
@@ -10518,8 +10517,8 @@ static int yaml_parser_load_document(yaml_parser_t *parser,
   int tmp_1;
   struct loader_ctx ctx =
     {.start = (int *)0, .end = (int *)0, .top = (int *)0};
-  __FC_assert((event->type == (unsigned int)YAML_DOCUMENT_START_EVENT) != 0,
-              "src/loader.c",189,"event->type == YAML_DOCUMENT_START_EVENT");
+  __FC_assert((event->type == YAML_DOCUMENT_START_EVENT) != 0,"src/loader.c",
+              189,"event->type == YAML_DOCUMENT_START_EVENT");
   (parser->document)->version_directive = event->data.document_start.version_directive;
   (parser->document)->tag_directives.start = event->data.document_start.tag_directives.start;
   (parser->document)->tag_directives.end = event->data.document_start.tag_directives.end;
@@ -10624,7 +10623,7 @@ static int yaml_parser_load_nodes(yaml_parser_t *parser,
         case YAML_DOCUMENT_END_EVENT: break;
       }
     }
-    if (! (event.type != (unsigned int)YAML_DOCUMENT_END_EVENT)) break;
+    if (! (event.type != YAML_DOCUMENT_END_EVENT)) break;
   }
   (parser->document)->end_implicit = event.data.document_end.implicit;
   (parser->document)->end_mark = event.end_mark;
@@ -11043,7 +11042,7 @@ static int yaml_parser_load_sequence_end(yaml_parser_t *parser,
   __FC_assert((ctx->top - ctx->start > (long)0) != 0,"src/loader.c",467,
               "((*ctx).top - (*ctx).start) > 0");
   index = *(ctx->top - 1);
-  __FC_assert((((parser->document)->nodes.start + (index - 1))->type == (unsigned int)YAML_SEQUENCE_NODE) != 0,
+  __FC_assert((((parser->document)->nodes.start + (index - 1))->type == YAML_SEQUENCE_NODE) != 0,
               "src/loader.c",470,
               "parser->document->nodes.start[index-1].type == YAML_SEQUENCE_NODE");
   ((parser->document)->nodes.start + (index - 1))->end_mark = event->end_mark;
@@ -11191,7 +11190,7 @@ static int yaml_parser_load_mapping_end(yaml_parser_t *parser,
   __FC_assert((ctx->top - ctx->start > (long)0) != 0,"src/loader.c",535,
               "((*ctx).top - (*ctx).start) > 0");
   index = *(ctx->top - 1);
-  __FC_assert((((parser->document)->nodes.start + (index - 1))->type == (unsigned int)YAML_MAPPING_NODE) != 0,
+  __FC_assert((((parser->document)->nodes.start + (index - 1))->type == YAML_MAPPING_NODE) != 0,
               "src/loader.c",538,
               "parser->document->nodes.start[index-1].type == YAML_MAPPING_NODE");
   ((parser->document)->nodes.start + (index - 1))->end_mark = event->end_mark;
@@ -11287,7 +11286,7 @@ int yaml_parser_parse(yaml_parser_t *parser, yaml_event_t *event)
   else 
     if (parser->error) goto _LOR;
     else 
-      if (parser->state == (unsigned int)YAML_PARSE_END_STATE) {
+      if (parser->state == YAML_PARSE_END_STATE) {
         _LOR: {
                 __retres = 1;
                 goto return_label;
@@ -11468,7 +11467,7 @@ static int yaml_parser_parse_stream_start(yaml_parser_t *parser,
     __retres = 0;
     goto return_label;
   }
-  if (token->type != (unsigned int)YAML_STREAM_START_TOKEN) {
+  if (token->type != YAML_STREAM_START_TOKEN) {
     int tmp_0;
     tmp_0 = yaml_parser_set_parser_error(parser,
                                          "did not find expected <stream-start>",
@@ -11484,7 +11483,7 @@ static int yaml_parser_parse_stream_start(yaml_parser_t *parser,
   event->data.stream_start.encoding = token->data.stream_start.encoding;
   parser->token_available = 0;
   (parser->tokens_parsed) ++;
-  parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+  parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
   (parser->tokens.head) ++;
   __retres = 1;
   return_label: return __retres;
@@ -11510,10 +11509,10 @@ static int yaml_parser_parse_document_start(yaml_parser_t *parser,
     goto return_label;
   }
   if (! implicit) 
-    while (token->type == (unsigned int)YAML_DOCUMENT_END_TOKEN) {
+    while (token->type == YAML_DOCUMENT_END_TOKEN) {
       parser->token_available = 0;
       (parser->tokens_parsed) ++;
-      parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+      parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
       (parser->tokens.head) ++;
       if (parser->token_available) token = parser->tokens.head;
       else {
@@ -11528,10 +11527,10 @@ static int yaml_parser_parse_document_start(yaml_parser_t *parser,
       }
     }
   if (implicit) {
-    if (token->type != (unsigned int)YAML_VERSION_DIRECTIVE_TOKEN) {
-      if (token->type != (unsigned int)YAML_TAG_DIRECTIVE_TOKEN) {
-        if (token->type != (unsigned int)YAML_DOCUMENT_START_TOKEN) {
-          if (token->type != (unsigned int)YAML_STREAM_END_TOKEN) {
+    if (token->type != YAML_VERSION_DIRECTIVE_TOKEN) {
+      if (token->type != YAML_TAG_DIRECTIVE_TOKEN) {
+        if (token->type != YAML_DOCUMENT_START_TOKEN) {
+          if (token->type != YAML_STREAM_END_TOKEN) {
             int tmp_1;
             int tmp_4;
             tmp_1 = yaml_parser_process_directives(parser,
@@ -11586,7 +11585,7 @@ static int yaml_parser_parse_document_start(yaml_parser_t *parser,
   }
   else {
     _LAND_2: ;
-    if (token->type != (unsigned int)YAML_STREAM_END_TOKEN) {
+    if (token->type != YAML_STREAM_END_TOKEN) {
       yaml_mark_t start_mark;
       yaml_mark_t end_mark;
       int tmp_5;
@@ -11607,7 +11606,7 @@ static int yaml_parser_parse_document_start(yaml_parser_t *parser,
         else token = (yaml_token_t *)0;
       }
       if (! token) goto error;
-      if (token->type != (unsigned int)YAML_DOCUMENT_START_TOKEN) {
+      if (token->type != YAML_DOCUMENT_START_TOKEN) {
         yaml_parser_set_parser_error(parser,
                                      "did not find expected <document start>",
                                      token->start_mark);
@@ -11644,7 +11643,7 @@ static int yaml_parser_parse_document_start(yaml_parser_t *parser,
       event->data.document_start.implicit = 0;
       parser->token_available = 0;
       (parser->tokens_parsed) ++;
-      parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+      parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
       (parser->tokens.head) ++;
       version_directive = (yaml_version_directive_t *)0;
       tag_directives.end = (yaml_tag_directive_t *)0;
@@ -11660,7 +11659,7 @@ static int yaml_parser_parse_document_start(yaml_parser_t *parser,
       event->end_mark = token->end_mark;
       parser->token_available = 0;
       (parser->tokens_parsed) ++;
-      parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+      parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
       (parser->tokens.head) ++;
       __retres = 1;
       goto return_label;
@@ -11692,15 +11691,15 @@ static int yaml_parser_parse_document_content(yaml_parser_t *parser,
     __retres = 0;
     goto return_label;
   }
-  if (token->type == (unsigned int)YAML_VERSION_DIRECTIVE_TOKEN) goto _LOR;
+  if (token->type == YAML_VERSION_DIRECTIVE_TOKEN) goto _LOR;
   else 
-    if (token->type == (unsigned int)YAML_TAG_DIRECTIVE_TOKEN) goto _LOR;
+    if (token->type == YAML_TAG_DIRECTIVE_TOKEN) goto _LOR;
     else 
-      if (token->type == (unsigned int)YAML_DOCUMENT_START_TOKEN) goto _LOR;
+      if (token->type == YAML_DOCUMENT_START_TOKEN) goto _LOR;
       else 
-        if (token->type == (unsigned int)YAML_DOCUMENT_END_TOKEN) goto _LOR;
+        if (token->type == YAML_DOCUMENT_END_TOKEN) goto _LOR;
         else 
-          if (token->type == (unsigned int)YAML_STREAM_END_TOKEN) {
+          if (token->type == YAML_STREAM_END_TOKEN) {
             _LOR:
             {
               int tmp_0;
@@ -11741,11 +11740,11 @@ static int yaml_parser_parse_document_end(yaml_parser_t *parser,
   }
   end_mark = token->start_mark;
   start_mark = end_mark;
-  if (token->type == (unsigned int)YAML_DOCUMENT_END_TOKEN) {
+  if (token->type == YAML_DOCUMENT_END_TOKEN) {
     end_mark = token->end_mark;
     parser->token_available = 0;
     (parser->tokens_parsed) ++;
-    parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+    parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
     (parser->tokens.head) ++;
     implicit = 0;
   }
@@ -11788,7 +11787,7 @@ static int yaml_parser_parse_node(yaml_parser_t *parser, yaml_event_t *event,
     __retres = 0;
     goto return_label;
   }
-  if (token->type == (unsigned int)YAML_ALIAS_TOKEN) {
+  if (token->type == YAML_ALIAS_TOKEN) {
     (parser->states.top) --;
     parser->state = *(parser->states.top);
     memset((void *)event,0,sizeof(yaml_event_t));
@@ -11798,7 +11797,7 @@ static int yaml_parser_parse_node(yaml_parser_t *parser, yaml_event_t *event,
     event->data.alias.anchor = token->data.alias.value;
     parser->token_available = 0;
     (parser->tokens_parsed) ++;
-    parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+    parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
     (parser->tokens.head) ++;
     __retres = 1;
     goto return_label;
@@ -11807,13 +11806,13 @@ static int yaml_parser_parse_node(yaml_parser_t *parser, yaml_event_t *event,
     int tmp_8;
     end_mark = token->start_mark;
     start_mark = end_mark;
-    if (token->type == (unsigned int)YAML_ANCHOR_TOKEN) {
+    if (token->type == YAML_ANCHOR_TOKEN) {
       anchor = token->data.anchor.value;
       start_mark = token->start_mark;
       end_mark = token->end_mark;
       parser->token_available = 0;
       (parser->tokens_parsed) ++;
-      parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+      parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
       (parser->tokens.head) ++;
       if (parser->token_available) token = parser->tokens.head;
       else {
@@ -11823,14 +11822,14 @@ static int yaml_parser_parse_node(yaml_parser_t *parser, yaml_event_t *event,
         else token = (yaml_token_t *)0;
       }
       if (! token) goto error;
-      if (token->type == (unsigned int)YAML_TAG_TOKEN) {
+      if (token->type == YAML_TAG_TOKEN) {
         tag_handle = token->data.tag.handle;
         tag_suffix = token->data.tag.suffix;
         tag_mark = token->start_mark;
         end_mark = token->end_mark;
         parser->token_available = 0;
         (parser->tokens_parsed) ++;
-        parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+        parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
         (parser->tokens.head) ++;
         if (parser->token_available) token = parser->tokens.head;
         else {
@@ -11843,7 +11842,7 @@ static int yaml_parser_parse_node(yaml_parser_t *parser, yaml_event_t *event,
       }
     }
     else 
-      if (token->type == (unsigned int)YAML_TAG_TOKEN) {
+      if (token->type == YAML_TAG_TOKEN) {
         tag_handle = token->data.tag.handle;
         tag_suffix = token->data.tag.suffix;
         tag_mark = token->start_mark;
@@ -11851,7 +11850,7 @@ static int yaml_parser_parse_node(yaml_parser_t *parser, yaml_event_t *event,
         end_mark = token->end_mark;
         parser->token_available = 0;
         (parser->tokens_parsed) ++;
-        parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+        parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
         (parser->tokens.head) ++;
         if (parser->token_available) token = parser->tokens.head;
         else {
@@ -11861,12 +11860,12 @@ static int yaml_parser_parse_node(yaml_parser_t *parser, yaml_event_t *event,
           else token = (yaml_token_t *)0;
         }
         if (! token) goto error;
-        if (token->type == (unsigned int)YAML_ANCHOR_TOKEN) {
+        if (token->type == YAML_ANCHOR_TOKEN) {
           anchor = token->data.anchor.value;
           end_mark = token->end_mark;
           parser->token_available = 0;
           (parser->tokens_parsed) ++;
-          parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+          parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
           (parser->tokens.head) ++;
           if (parser->token_available) token = parser->tokens.head;
           else {
@@ -11929,7 +11928,7 @@ static int yaml_parser_parse_node(yaml_parser_t *parser, yaml_event_t *event,
       if (! *tag) tmp_8 = 1; else tmp_8 = 0;
     implicit = tmp_8;
     if (indentless_sequence) {
-      if (token->type == (unsigned int)YAML_BLOCK_ENTRY_TOKEN) {
+      if (token->type == YAML_BLOCK_ENTRY_TOKEN) {
         end_mark = token->end_mark;
         parser->state = YAML_PARSE_INDENTLESS_SEQUENCE_ENTRY_STATE;
         memset((void *)event,0,sizeof(yaml_event_t));
@@ -11947,11 +11946,11 @@ static int yaml_parser_parse_node(yaml_parser_t *parser, yaml_event_t *event,
     }
     else 
       _LAND_3:
-      if (token->type == (unsigned int)YAML_SCALAR_TOKEN) {
+      if (token->type == YAML_SCALAR_TOKEN) {
         int plain_implicit = 0;
         int quoted_implicit = 0;
         end_mark = token->end_mark;
-        if (token->data.scalar.style == (unsigned int)YAML_PLAIN_SCALAR_STYLE) {
+        if (token->data.scalar.style == YAML_PLAIN_SCALAR_STYLE) {
           if (! tag) goto _LOR; else goto _LAND_0;
         }
         else {
@@ -11979,13 +11978,13 @@ static int yaml_parser_parse_node(yaml_parser_t *parser, yaml_event_t *event,
         event->data.scalar.style = token->data.scalar.style;
         parser->token_available = 0;
         (parser->tokens_parsed) ++;
-        parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+        parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
         (parser->tokens.head) ++;
         __retres = 1;
         goto return_label;
       }
       else 
-        if (token->type == (unsigned int)YAML_FLOW_SEQUENCE_START_TOKEN) {
+        if (token->type == YAML_FLOW_SEQUENCE_START_TOKEN) {
           end_mark = token->end_mark;
           parser->state = YAML_PARSE_FLOW_SEQUENCE_FIRST_ENTRY_STATE;
           memset((void *)event,0,sizeof(yaml_event_t));
@@ -12000,7 +11999,7 @@ static int yaml_parser_parse_node(yaml_parser_t *parser, yaml_event_t *event,
           goto return_label;
         }
         else 
-          if (token->type == (unsigned int)YAML_FLOW_MAPPING_START_TOKEN) {
+          if (token->type == YAML_FLOW_MAPPING_START_TOKEN) {
             end_mark = token->end_mark;
             parser->state = YAML_PARSE_FLOW_MAPPING_FIRST_KEY_STATE;
             memset((void *)event,0,sizeof(yaml_event_t));
@@ -12016,7 +12015,7 @@ static int yaml_parser_parse_node(yaml_parser_t *parser, yaml_event_t *event,
           }
           else 
             if (block) {
-              if (token->type == (unsigned int)YAML_BLOCK_SEQUENCE_START_TOKEN) {
+              if (token->type == YAML_BLOCK_SEQUENCE_START_TOKEN) {
                 end_mark = token->end_mark;
                 parser->state = YAML_PARSE_BLOCK_SEQUENCE_FIRST_ENTRY_STATE;
                 memset((void *)event,0,sizeof(yaml_event_t));
@@ -12035,7 +12034,7 @@ static int yaml_parser_parse_node(yaml_parser_t *parser, yaml_event_t *event,
             else {
               _LAND_2: ;
               if (block) {
-                if (token->type == (unsigned int)YAML_BLOCK_MAPPING_START_TOKEN) {
+                if (token->type == YAML_BLOCK_MAPPING_START_TOKEN) {
                   end_mark = token->end_mark;
                   parser->state = YAML_PARSE_BLOCK_MAPPING_FIRST_KEY_STATE;
                   memset((void *)event,0,sizeof(yaml_event_t));
@@ -12143,7 +12142,7 @@ static int yaml_parser_parse_block_sequence_entry(yaml_parser_t *parser,
     }
     parser->token_available = 0;
     (parser->tokens_parsed) ++;
-    parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+    parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
     (parser->tokens.head) ++;
   }
   if (parser->token_available) token = parser->tokens.head;
@@ -12156,11 +12155,11 @@ static int yaml_parser_parse_block_sequence_entry(yaml_parser_t *parser,
     __retres = 0;
     goto return_label;
   }
-  if (token->type == (unsigned int)YAML_BLOCK_ENTRY_TOKEN) {
+  if (token->type == YAML_BLOCK_ENTRY_TOKEN) {
     yaml_mark_t mark = token->end_mark;
     parser->token_available = 0;
     (parser->tokens_parsed) ++;
-    parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+    parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
     (parser->tokens.head) ++;
     if (parser->token_available) token = parser->tokens.head;
     else {
@@ -12172,8 +12171,8 @@ static int yaml_parser_parse_block_sequence_entry(yaml_parser_t *parser,
       __retres = 0;
       goto return_label;
     }
-    if (token->type != (unsigned int)YAML_BLOCK_ENTRY_TOKEN) {
-      if (token->type != (unsigned int)YAML_BLOCK_END_TOKEN) {
+    if (token->type != YAML_BLOCK_ENTRY_TOKEN) {
+      if (token->type != YAML_BLOCK_END_TOKEN) {
         int tmp_7;
         int tmp_8;
         if (parser->states.top != parser->states.end) goto _LOR_0;
@@ -12216,7 +12215,7 @@ static int yaml_parser_parse_block_sequence_entry(yaml_parser_t *parser,
     }
   }
   else 
-    if (token->type == (unsigned int)YAML_BLOCK_END_TOKEN) {
+    if (token->type == YAML_BLOCK_END_TOKEN) {
       (parser->states.top) --;
       parser->state = *(parser->states.top);
       (parser->marks.top) --;
@@ -12227,7 +12226,7 @@ static int yaml_parser_parse_block_sequence_entry(yaml_parser_t *parser,
       event->end_mark = token->end_mark;
       parser->token_available = 0;
       (parser->tokens_parsed) ++;
-      parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+      parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
       (parser->tokens.head) ++;
       __retres = 1;
       goto return_label;
@@ -12264,11 +12263,11 @@ static int yaml_parser_parse_indentless_sequence_entry(yaml_parser_t *parser,
     __retres = 0;
     goto return_label;
   }
-  if (token->type == (unsigned int)YAML_BLOCK_ENTRY_TOKEN) {
+  if (token->type == YAML_BLOCK_ENTRY_TOKEN) {
     yaml_mark_t mark = token->end_mark;
     parser->token_available = 0;
     (parser->tokens_parsed) ++;
-    parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+    parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
     (parser->tokens.head) ++;
     if (parser->token_available) token = parser->tokens.head;
     else {
@@ -12280,10 +12279,10 @@ static int yaml_parser_parse_indentless_sequence_entry(yaml_parser_t *parser,
       __retres = 0;
       goto return_label;
     }
-    if (token->type != (unsigned int)YAML_BLOCK_ENTRY_TOKEN) {
-      if (token->type != (unsigned int)YAML_KEY_TOKEN) {
-        if (token->type != (unsigned int)YAML_VALUE_TOKEN) {
-          if (token->type != (unsigned int)YAML_BLOCK_END_TOKEN) {
+    if (token->type != YAML_BLOCK_ENTRY_TOKEN) {
+      if (token->type != YAML_KEY_TOKEN) {
+        if (token->type != YAML_VALUE_TOKEN) {
+          if (token->type != YAML_BLOCK_END_TOKEN) {
             int tmp_3;
             int tmp_4;
             if (parser->states.top != parser->states.end) goto _LOR;
@@ -12379,7 +12378,7 @@ static int yaml_parser_parse_block_mapping_key(yaml_parser_t *parser,
     }
     parser->token_available = 0;
     (parser->tokens_parsed) ++;
-    parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+    parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
     (parser->tokens.head) ++;
   }
   if (parser->token_available) token = parser->tokens.head;
@@ -12392,11 +12391,11 @@ static int yaml_parser_parse_block_mapping_key(yaml_parser_t *parser,
     __retres = 0;
     goto return_label;
   }
-  if (token->type == (unsigned int)YAML_KEY_TOKEN) {
+  if (token->type == YAML_KEY_TOKEN) {
     yaml_mark_t mark = token->end_mark;
     parser->token_available = 0;
     (parser->tokens_parsed) ++;
-    parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+    parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
     (parser->tokens.head) ++;
     if (parser->token_available) token = parser->tokens.head;
     else {
@@ -12408,9 +12407,9 @@ static int yaml_parser_parse_block_mapping_key(yaml_parser_t *parser,
       __retres = 0;
       goto return_label;
     }
-    if (token->type != (unsigned int)YAML_KEY_TOKEN) {
-      if (token->type != (unsigned int)YAML_VALUE_TOKEN) {
-        if (token->type != (unsigned int)YAML_BLOCK_END_TOKEN) {
+    if (token->type != YAML_KEY_TOKEN) {
+      if (token->type != YAML_VALUE_TOKEN) {
+        if (token->type != YAML_BLOCK_END_TOKEN) {
           int tmp_7;
           int tmp_8;
           if (parser->states.top != parser->states.end) goto _LOR_0;
@@ -12455,7 +12454,7 @@ static int yaml_parser_parse_block_mapping_key(yaml_parser_t *parser,
     }
   }
   else 
-    if (token->type == (unsigned int)YAML_BLOCK_END_TOKEN) {
+    if (token->type == YAML_BLOCK_END_TOKEN) {
       (parser->states.top) --;
       parser->state = *(parser->states.top);
       (parser->marks.top) --;
@@ -12466,7 +12465,7 @@ static int yaml_parser_parse_block_mapping_key(yaml_parser_t *parser,
       event->end_mark = token->end_mark;
       parser->token_available = 0;
       (parser->tokens_parsed) ++;
-      parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+      parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
       (parser->tokens.head) ++;
       __retres = 1;
       goto return_label;
@@ -12503,11 +12502,11 @@ static int yaml_parser_parse_block_mapping_value(yaml_parser_t *parser,
     __retres = 0;
     goto return_label;
   }
-  if (token->type == (unsigned int)YAML_VALUE_TOKEN) {
+  if (token->type == YAML_VALUE_TOKEN) {
     yaml_mark_t mark = token->end_mark;
     parser->token_available = 0;
     (parser->tokens_parsed) ++;
-    parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+    parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
     (parser->tokens.head) ++;
     if (parser->token_available) token = parser->tokens.head;
     else {
@@ -12519,9 +12518,9 @@ static int yaml_parser_parse_block_mapping_value(yaml_parser_t *parser,
       __retres = 0;
       goto return_label;
     }
-    if (token->type != (unsigned int)YAML_KEY_TOKEN) {
-      if (token->type != (unsigned int)YAML_VALUE_TOKEN) {
-        if (token->type != (unsigned int)YAML_BLOCK_END_TOKEN) {
+    if (token->type != YAML_KEY_TOKEN) {
+      if (token->type != YAML_VALUE_TOKEN) {
+        if (token->type != YAML_BLOCK_END_TOKEN) {
           int tmp_3;
           int tmp_4;
           if (parser->states.top != parser->states.end) goto _LOR;
@@ -12613,7 +12612,7 @@ static int yaml_parser_parse_flow_sequence_entry(yaml_parser_t *parser,
     }
     parser->token_available = 0;
     (parser->tokens_parsed) ++;
-    parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+    parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
     (parser->tokens.head) ++;
   }
   if (parser->token_available) token = parser->tokens.head;
@@ -12626,12 +12625,12 @@ static int yaml_parser_parse_flow_sequence_entry(yaml_parser_t *parser,
     __retres = 0;
     goto return_label;
   }
-  if (token->type != (unsigned int)YAML_FLOW_SEQUENCE_END_TOKEN) {
+  if (token->type != YAML_FLOW_SEQUENCE_END_TOKEN) {
     if (! first) 
-      if (token->type == (unsigned int)YAML_FLOW_ENTRY_TOKEN) {
+      if (token->type == YAML_FLOW_ENTRY_TOKEN) {
         parser->token_available = 0;
         (parser->tokens_parsed) ++;
-        parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+        parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
         (parser->tokens.head) ++;
         if (parser->token_available) token = parser->tokens.head;
         else {
@@ -12659,7 +12658,7 @@ static int yaml_parser_parse_flow_sequence_entry(yaml_parser_t *parser,
         __retres = tmp_5;
         goto return_label;
       }
-    if (token->type == (unsigned int)YAML_KEY_TOKEN) {
+    if (token->type == YAML_KEY_TOKEN) {
       parser->state = YAML_PARSE_FLOW_SEQUENCE_ENTRY_MAPPING_KEY_STATE;
       memset((void *)event,0,sizeof(yaml_event_t));
       event->type = YAML_MAPPING_START_EVENT;
@@ -12671,13 +12670,13 @@ static int yaml_parser_parse_flow_sequence_entry(yaml_parser_t *parser,
       event->data.mapping_start.style = YAML_FLOW_MAPPING_STYLE;
       parser->token_available = 0;
       (parser->tokens_parsed) ++;
-      parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+      parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
       (parser->tokens.head) ++;
       __retres = 1;
       goto return_label;
     }
     else 
-      if (token->type != (unsigned int)YAML_FLOW_SEQUENCE_END_TOKEN) {
+      if (token->type != YAML_FLOW_SEQUENCE_END_TOKEN) {
         int tmp_8;
         int tmp_9;
         if (parser->states.top != parser->states.end) goto _LOR_0;
@@ -12717,7 +12716,7 @@ static int yaml_parser_parse_flow_sequence_entry(yaml_parser_t *parser,
   event->end_mark = token->end_mark;
   parser->token_available = 0;
   (parser->tokens_parsed) ++;
-  parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+  parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
   (parser->tokens.head) ++;
   __retres = 1;
   return_label: return __retres;
@@ -12738,9 +12737,9 @@ static int yaml_parser_parse_flow_sequence_entry_mapping_key(yaml_parser_t *pars
     __retres = 0;
     goto return_label;
   }
-  if (token->type != (unsigned int)YAML_VALUE_TOKEN) {
-    if (token->type != (unsigned int)YAML_FLOW_ENTRY_TOKEN) {
-      if (token->type != (unsigned int)YAML_FLOW_SEQUENCE_END_TOKEN) {
+  if (token->type != YAML_VALUE_TOKEN) {
+    if (token->type != YAML_FLOW_ENTRY_TOKEN) {
+      if (token->type != YAML_FLOW_SEQUENCE_END_TOKEN) {
         int tmp_2;
         int tmp_3;
         if (parser->states.top != parser->states.end) goto _LOR;
@@ -12780,7 +12779,7 @@ static int yaml_parser_parse_flow_sequence_entry_mapping_key(yaml_parser_t *pars
       yaml_mark_t mark = token->end_mark;
       parser->token_available = 0;
       (parser->tokens_parsed) ++;
-      parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+      parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
       (parser->tokens.head) ++;
       parser->state = YAML_PARSE_FLOW_SEQUENCE_ENTRY_MAPPING_VALUE_STATE;
       tmp_4 = yaml_parser_process_empty_scalar(parser,event,mark);
@@ -12807,10 +12806,10 @@ static int yaml_parser_parse_flow_sequence_entry_mapping_value(yaml_parser_t *pa
     __retres = 0;
     goto return_label;
   }
-  if (token->type == (unsigned int)YAML_VALUE_TOKEN) {
+  if (token->type == YAML_VALUE_TOKEN) {
     parser->token_available = 0;
     (parser->tokens_parsed) ++;
-    parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+    parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
     (parser->tokens.head) ++;
     if (parser->token_available) token = parser->tokens.head;
     else {
@@ -12822,8 +12821,8 @@ static int yaml_parser_parse_flow_sequence_entry_mapping_value(yaml_parser_t *pa
       __retres = 0;
       goto return_label;
     }
-    if (token->type != (unsigned int)YAML_FLOW_ENTRY_TOKEN) 
-      if (token->type != (unsigned int)YAML_FLOW_SEQUENCE_END_TOKEN) {
+    if (token->type != YAML_FLOW_ENTRY_TOKEN) 
+      if (token->type != YAML_FLOW_SEQUENCE_END_TOKEN) {
         int tmp_3;
         int tmp_4;
         if (parser->states.top != parser->states.end) goto _LOR;
@@ -12920,7 +12919,7 @@ static int yaml_parser_parse_flow_mapping_key(yaml_parser_t *parser,
     }
     parser->token_available = 0;
     (parser->tokens_parsed) ++;
-    parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+    parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
     (parser->tokens.head) ++;
   }
   if (parser->token_available) token = parser->tokens.head;
@@ -12933,12 +12932,12 @@ static int yaml_parser_parse_flow_mapping_key(yaml_parser_t *parser,
     __retres = 0;
     goto return_label;
   }
-  if (token->type != (unsigned int)YAML_FLOW_MAPPING_END_TOKEN) {
+  if (token->type != YAML_FLOW_MAPPING_END_TOKEN) {
     if (! first) 
-      if (token->type == (unsigned int)YAML_FLOW_ENTRY_TOKEN) {
+      if (token->type == YAML_FLOW_ENTRY_TOKEN) {
         parser->token_available = 0;
         (parser->tokens_parsed) ++;
-        parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+        parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
         (parser->tokens.head) ++;
         if (parser->token_available) token = parser->tokens.head;
         else {
@@ -12966,10 +12965,10 @@ static int yaml_parser_parse_flow_mapping_key(yaml_parser_t *parser,
         __retres = tmp_5;
         goto return_label;
       }
-    if (token->type == (unsigned int)YAML_KEY_TOKEN) {
+    if (token->type == YAML_KEY_TOKEN) {
       parser->token_available = 0;
       (parser->tokens_parsed) ++;
-      parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+      parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
       (parser->tokens.head) ++;
       if (parser->token_available) token = parser->tokens.head;
       else {
@@ -12982,9 +12981,9 @@ static int yaml_parser_parse_flow_mapping_key(yaml_parser_t *parser,
         __retres = 0;
         goto return_label;
       }
-      if (token->type != (unsigned int)YAML_VALUE_TOKEN) {
-        if (token->type != (unsigned int)YAML_FLOW_ENTRY_TOKEN) {
-          if (token->type != (unsigned int)YAML_FLOW_MAPPING_END_TOKEN) {
+      if (token->type != YAML_VALUE_TOKEN) {
+        if (token->type != YAML_FLOW_ENTRY_TOKEN) {
+          if (token->type != YAML_FLOW_MAPPING_END_TOKEN) {
             int tmp_9;
             int tmp_10;
             if (parser->states.top != parser->states.end) goto _LOR_0;
@@ -13030,7 +13029,7 @@ static int yaml_parser_parse_flow_mapping_key(yaml_parser_t *parser,
       }
     }
     else 
-      if (token->type != (unsigned int)YAML_FLOW_MAPPING_END_TOKEN) {
+      if (token->type != YAML_FLOW_MAPPING_END_TOKEN) {
         int tmp_14;
         int tmp_15;
         if (parser->states.top != parser->states.end) goto _LOR_1;
@@ -13070,7 +13069,7 @@ static int yaml_parser_parse_flow_mapping_key(yaml_parser_t *parser,
   event->end_mark = token->end_mark;
   parser->token_available = 0;
   (parser->tokens_parsed) ++;
-  parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+  parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
   (parser->tokens.head) ++;
   __retres = 1;
   return_label: return __retres;
@@ -13100,10 +13099,10 @@ static int yaml_parser_parse_flow_mapping_value(yaml_parser_t *parser,
     __retres = tmp_0;
     goto return_label;
   }
-  if (token->type == (unsigned int)YAML_VALUE_TOKEN) {
+  if (token->type == YAML_VALUE_TOKEN) {
     parser->token_available = 0;
     (parser->tokens_parsed) ++;
-    parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+    parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
     (parser->tokens.head) ++;
     if (parser->token_available) token = parser->tokens.head;
     else {
@@ -13115,8 +13114,8 @@ static int yaml_parser_parse_flow_mapping_value(yaml_parser_t *parser,
       __retres = 0;
       goto return_label;
     }
-    if (token->type != (unsigned int)YAML_FLOW_ENTRY_TOKEN) 
-      if (token->type != (unsigned int)YAML_FLOW_MAPPING_END_TOKEN) {
+    if (token->type != YAML_FLOW_ENTRY_TOKEN) 
+      if (token->type != YAML_FLOW_MAPPING_END_TOKEN) {
         int tmp_4;
         int tmp_5;
         if (parser->states.top != parser->states.end) goto _LOR;
@@ -13219,10 +13218,9 @@ static int yaml_parser_process_directives(yaml_parser_t *parser,
   }
   if (! token) goto error;
   while (1) {
-    if (! (token->type == (unsigned int)YAML_VERSION_DIRECTIVE_TOKEN)) 
-      if (! (token->type == (unsigned int)YAML_TAG_DIRECTIVE_TOKEN)) 
-        break;
-    if (token->type == (unsigned int)YAML_VERSION_DIRECTIVE_TOKEN) {
+    if (! (token->type == YAML_VERSION_DIRECTIVE_TOKEN)) 
+      if (! (token->type == YAML_TAG_DIRECTIVE_TOKEN)) break;
+    if (token->type == YAML_VERSION_DIRECTIVE_TOKEN) {
       if (version_directive) {
         yaml_parser_set_parser_error(parser,
                                      "found duplicate %YAML directive",
@@ -13250,7 +13248,7 @@ static int yaml_parser_process_directives(yaml_parser_t *parser,
       version_directive->minor = token->data.version_directive.minor;
     }
     else 
-      if (token->type == (unsigned int)YAML_TAG_DIRECTIVE_TOKEN) {
+      if (token->type == YAML_TAG_DIRECTIVE_TOKEN) {
         yaml_tag_directive_t value;
         int tmp_3;
         int tmp_6;
@@ -13281,7 +13279,7 @@ static int yaml_parser_process_directives(yaml_parser_t *parser,
       }
     parser->token_available = 0;
     (parser->tokens_parsed) ++;
-    parser->stream_end_produced = (parser->tokens.head)->type == (unsigned int)YAML_STREAM_END_TOKEN;
+    parser->stream_end_produced = (parser->tokens.head)->type == YAML_STREAM_END_TOKEN;
     (parser->tokens.head) ++;
     if (parser->token_available) token = parser->tokens.head;
     else {
@@ -13709,11 +13707,9 @@ int yaml_parser_update_buffer(yaml_parser_t *parser, size_t length)
         }
         break;
         case YAML_UTF16LE_ENCODING: case YAML_UTF16BE_ENCODING:
-        if (parser->encoding == (unsigned int)YAML_UTF16LE_ENCODING) 
-          low = 0;
-        else low = 1;
-        if (parser->encoding == (unsigned int)YAML_UTF16LE_ENCODING) 
-          high = 1;
+        if (parser->encoding == YAML_UTF16LE_ENCODING) low = 0; else 
+                                                                  low = 1;
+        if (parser->encoding == YAML_UTF16LE_ENCODING) high = 1;
         else high = 0;
         if (raw_unread < (size_t)2) {
           if (parser->eof) {
@@ -14021,7 +14017,7 @@ int yaml_parser_scan(yaml_parser_t *parser, yaml_token_t *token)
   *token = *tmp_0;
   parser->token_available = 0;
   (parser->tokens_parsed) ++;
-  if (token->type == (unsigned int)YAML_STREAM_END_TOKEN) parser->stream_end_produced = 1;
+  if (token->type == YAML_STREAM_END_TOKEN) parser->stream_end_produced = 1;
   __retres = 1;
   return_label: return __retres;
 }
@@ -17415,7 +17411,7 @@ static int yaml_parser_scan_anchor(yaml_parser_t *parser,
                                     {
                                       char const *tmp_32;
                                       ;
-                                      if (type == (unsigned int)YAML_ANCHOR_TOKEN) 
+                                      if (type == YAML_ANCHOR_TOKEN) 
                                         tmp_32 = "while scanning an anchor";
                                       else tmp_32 = "while scanning an alias";
                                       ;
@@ -17429,7 +17425,7 @@ static int yaml_parser_scan_anchor(yaml_parser_t *parser,
                 }
               }
             }
-  if (type == (unsigned int)YAML_ANCHOR_TOKEN) {
+  if (type == YAML_ANCHOR_TOKEN) {
     memset((void *)token,0,sizeof(yaml_token_t));
     token->type = YAML_ANCHOR_TOKEN;
     token->start_mark = start_mark;
@@ -22367,7 +22363,7 @@ int yaml_emitter_flush(yaml_emitter_t *emitter)
     __retres = 1;
     goto return_label;
   }
-  if (emitter->encoding == (unsigned int)YAML_UTF8_ENCODING) {
+  if (emitter->encoding == YAML_UTF8_ENCODING) {
     int tmp_0;
     tmp_0 = (*(emitter->write_handler))(emitter->write_handler_data,
                                         emitter->buffer.start,
@@ -22385,10 +22381,8 @@ int yaml_emitter_flush(yaml_emitter_t *emitter)
       goto return_label;
     }
   }
-  if (emitter->encoding == (unsigned int)YAML_UTF16LE_ENCODING) low = 0;
-  else low = 1;
-  if (emitter->encoding == (unsigned int)YAML_UTF16LE_ENCODING) high = 1;
-  else high = 0;
+  if (emitter->encoding == YAML_UTF16LE_ENCODING) low = 0; else low = 1;
+  if (emitter->encoding == YAML_UTF16LE_ENCODING) high = 1; else high = 0;
   while (emitter->buffer.pointer != emitter->buffer.last) {
     unsigned char octet;
     unsigned int width;
@@ -22759,7 +22753,7 @@ int check_utf8_sequences(void)
         else printf("\t\t+ "); /* printf_va_4 */
         if (! parser.error) printf("(no error)\n"); /* printf_va_5 */
         else 
-          if (parser.error == (unsigned int)YAML_READER_ERROR) 
+          if (parser.error == YAML_READER_ERROR) 
             if (parser.problem_value != -1) printf("(reader error: %s: #%X at %ld)\n",
                                                    (char *)parser.problem,
                                                    (unsigned int)parser.problem_value,

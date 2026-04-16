@@ -6,11 +6,11 @@
 #include "stdlib.h"
 #include "string.h"
 enum __anonenum_jsmntype_t_1 {
-    JSMN_UNDEFINED = 0,
-    JSMN_OBJECT = 1,
-    JSMN_ARRAY = 2,
-    JSMN_STRING = 3,
-    JSMN_PRIMITIVE = 4
+    JSMN_UNDEFINED = (unsigned int)0,
+    JSMN_OBJECT = (unsigned int)1,
+    JSMN_ARRAY = (unsigned int)2,
+    JSMN_STRING = (unsigned int)3,
+    JSMN_PRIMITIVE = (unsigned int)4
 };
 typedef enum __anonenum_jsmntype_t_1 jsmntype_t;
 enum jsmnerr {
@@ -311,14 +311,13 @@ int jsmn_parse(jsmn_parser *parser, char const *js, size_t len,
         case ',': ;
         if (tokens != (jsmntok_t *)0) 
           if (parser->toksuper != -1) 
-            if ((tokens + parser->toksuper)->type != (unsigned int)JSMN_ARRAY) 
-              if ((tokens + parser->toksuper)->type != (unsigned int)JSMN_OBJECT) {
+            if ((tokens + parser->toksuper)->type != JSMN_ARRAY) 
+              if ((tokens + parser->toksuper)->type != JSMN_OBJECT) {
                 i = (int)(parser->toknext - (unsigned int)1);
                 while (i >= 0) {
-                  if ((tokens + i)->type == (unsigned int)JSMN_ARRAY) 
-                    goto _LOR;
+                  if ((tokens + i)->type == JSMN_ARRAY) goto _LOR;
                   else 
-                    if ((tokens + i)->type == (unsigned int)JSMN_OBJECT) 
+                    if ((tokens + i)->type == JSMN_OBJECT) 
                       _LOR:
                       if ((tokens + i)->start != -1) 
                         if ((tokens + i)->end == -1) {
@@ -459,7 +458,7 @@ static int vtokeq(char const *s, jsmntok_t *t, int numtok, va_list ap)
     while (i < numtok) {
       type = *((int *)*ap);
       ap ++;
-      if (type == JSMN_STRING) {
+      if ((unsigned int)type == JSMN_STRING) {
         value = *((char **)*ap);
         ap ++;
         size = *((int *)*ap);
@@ -468,7 +467,7 @@ static int vtokeq(char const *s, jsmntok_t *t, int numtok, va_list ap)
         start = end;
       }
       else 
-        if (type == JSMN_PRIMITIVE) {
+        if ((unsigned int)type == JSMN_PRIMITIVE) {
           value = *((char **)*ap);
           ap ++;
           size = -1;
@@ -598,7 +597,7 @@ int test_empty(void)
   {
     int tmp;
     {
-      int __va_arg0 = JSMN_OBJECT;
+      unsigned int __va_arg0 = JSMN_OBJECT;
       int __va_arg1 = 0;
       int __va_arg2 = 2;
       int __va_arg3 = 0;
@@ -614,7 +613,7 @@ int test_empty(void)
   {
     int tmp_0;
     {
-      int __va_arg0_10 = JSMN_ARRAY;
+      unsigned int __va_arg0_10 = JSMN_ARRAY;
       int __va_arg1_12 = 0;
       int __va_arg2_14 = 2;
       int __va_arg3_16 = 0;
@@ -630,15 +629,15 @@ int test_empty(void)
   {
     int tmp_1;
     {
-      int __va_arg0_20 = JSMN_ARRAY;
+      unsigned int __va_arg0_20 = JSMN_ARRAY;
       int __va_arg1_22 = 0;
       int __va_arg2_24 = 7;
       int __va_arg3_26 = 2;
-      int __va_arg4 = JSMN_OBJECT;
+      unsigned int __va_arg4 = JSMN_OBJECT;
       int __va_arg5 = 1;
       int __va_arg6 = 3;
       int __va_arg7 = 0;
-      int __va_arg8 = JSMN_OBJECT;
+      unsigned int __va_arg8 = JSMN_OBJECT;
       int __va_arg9 = 4;
       int __va_arg10 = 6;
       int __va_arg11 = 0;
@@ -672,14 +671,14 @@ int test_object(void)
   {
     int tmp;
     {
-      int __va_arg0 = JSMN_OBJECT;
+      unsigned int __va_arg0 = JSMN_OBJECT;
       int __va_arg1 = 0;
       int __va_arg2 = 7;
       int __va_arg3 = 1;
-      int __va_arg4 = JSMN_STRING;
+      unsigned int __va_arg4 = JSMN_STRING;
       char const *__va_arg5 = "a";
       int __va_arg6 = 1;
-      int __va_arg7 = JSMN_PRIMITIVE;
+      unsigned int __va_arg7 = JSMN_PRIMITIVE;
       char const *__va_arg8 = "0";
       void *__va_args[9] =
         {& __va_arg0,
@@ -701,14 +700,14 @@ int test_object(void)
   {
     int tmp_0;
     {
-      int __va_arg0_17 = JSMN_OBJECT;
+      unsigned int __va_arg0_17 = JSMN_OBJECT;
       int __va_arg1_19 = 0;
       int __va_arg2_21 = 8;
       int __va_arg3_23 = 1;
-      int __va_arg4_25 = JSMN_STRING;
+      unsigned int __va_arg4_25 = JSMN_STRING;
       char const *__va_arg5_27 = "a";
       int __va_arg6_29 = 1;
-      int __va_arg7_31 = JSMN_ARRAY;
+      unsigned int __va_arg7_31 = JSMN_ARRAY;
       int __va_arg8_33 = 5;
       int __va_arg9 = 7;
       int __va_arg10 = 0;
@@ -734,21 +733,21 @@ int test_object(void)
   {
     int tmp_1;
     {
-      int __va_arg0_39 = JSMN_OBJECT;
+      unsigned int __va_arg0_39 = JSMN_OBJECT;
       int __va_arg1_41 = -1;
       int __va_arg2_43 = -1;
       int __va_arg3_45 = 2;
-      int __va_arg4_47 = JSMN_STRING;
+      unsigned int __va_arg4_47 = JSMN_STRING;
       char const *__va_arg5_49 = "a";
       int __va_arg6_51 = 1;
-      int __va_arg7_53 = JSMN_OBJECT;
+      unsigned int __va_arg7_53 = JSMN_OBJECT;
       int __va_arg8_55 = -1;
       int __va_arg9_57 = -1;
       int __va_arg10_59 = 0;
-      int __va_arg11 = JSMN_STRING;
+      unsigned int __va_arg11 = JSMN_STRING;
       char const *__va_arg12 = "b";
       int __va_arg13 = 1;
-      int __va_arg14 = JSMN_OBJECT;
+      unsigned int __va_arg14 = JSMN_OBJECT;
       int __va_arg15 = -1;
       int __va_arg16 = -1;
       int __va_arg17 = 0;
@@ -782,24 +781,24 @@ int test_object(void)
   {
     int tmp_2;
     {
-      int __va_arg0_70 = JSMN_OBJECT;
+      unsigned int __va_arg0_70 = JSMN_OBJECT;
       int __va_arg1_72 = -1;
       int __va_arg2_74 = -1;
       int __va_arg3_76 = 3;
-      int __va_arg4_78 = JSMN_STRING;
+      unsigned int __va_arg4_78 = JSMN_STRING;
       char const *__va_arg5_80 = "Day";
       int __va_arg6_82 = 1;
-      int __va_arg7_84 = JSMN_PRIMITIVE;
+      unsigned int __va_arg7_84 = JSMN_PRIMITIVE;
       char const *__va_arg8_86 = "26";
-      int __va_arg9_88 = JSMN_STRING;
+      unsigned int __va_arg9_88 = JSMN_STRING;
       char const *__va_arg10_90 = "Month";
       int __va_arg11_92 = 1;
-      int __va_arg12_94 = JSMN_PRIMITIVE;
+      unsigned int __va_arg12_94 = JSMN_PRIMITIVE;
       char const *__va_arg13_96 = "9";
-      int __va_arg14_98 = JSMN_STRING;
+      unsigned int __va_arg14_98 = JSMN_STRING;
       char const *__va_arg15_100 = "Year";
       int __va_arg16_102 = 1;
-      int __va_arg17_104 = JSMN_PRIMITIVE;
+      unsigned int __va_arg17_104 = JSMN_PRIMITIVE;
       char const *__va_arg18 = "12";
       void *__va_args_107[19] =
         {& __va_arg0_70,
@@ -832,19 +831,19 @@ int test_object(void)
   {
     int tmp_3;
     {
-      int __va_arg0_109 = JSMN_OBJECT;
+      unsigned int __va_arg0_109 = JSMN_OBJECT;
       int __va_arg1_111 = -1;
       int __va_arg2_113 = -1;
       int __va_arg3_115 = 2;
-      int __va_arg4_117 = JSMN_STRING;
+      unsigned int __va_arg4_117 = JSMN_STRING;
       char const *__va_arg5_119 = "a";
       int __va_arg6_121 = 1;
-      int __va_arg7_123 = JSMN_PRIMITIVE;
+      unsigned int __va_arg7_123 = JSMN_PRIMITIVE;
       char const *__va_arg8_125 = "0";
-      int __va_arg9_127 = JSMN_STRING;
+      unsigned int __va_arg9_127 = JSMN_STRING;
       char const *__va_arg10_129 = "b";
       int __va_arg11_131 = 1;
-      int __va_arg12_133 = JSMN_STRING;
+      unsigned int __va_arg12_133 = JSMN_STRING;
       char const *__va_arg13_135 = "c";
       int __va_arg14_137 = 0;
       void *__va_args_139[15] =
@@ -881,11 +880,11 @@ int test_array(void)
   {
     int tmp;
     {
-      int __va_arg0 = JSMN_ARRAY;
+      unsigned int __va_arg0 = JSMN_ARRAY;
       int __va_arg1 = -1;
       int __va_arg2 = -1;
       int __va_arg3 = 1;
-      int __va_arg4 = JSMN_PRIMITIVE;
+      unsigned int __va_arg4 = JSMN_PRIMITIVE;
       char const *__va_arg5 = "10";
       void *__va_args[6] =
         {& __va_arg0,
@@ -923,14 +922,14 @@ int test_primitive(void)
   {
     int tmp;
     {
-      int __va_arg0 = JSMN_OBJECT;
+      unsigned int __va_arg0 = JSMN_OBJECT;
       int __va_arg1 = -1;
       int __va_arg2 = -1;
       int __va_arg3 = 1;
-      int __va_arg4 = JSMN_STRING;
+      unsigned int __va_arg4 = JSMN_STRING;
       char const *__va_arg5 = "boolVar";
       int __va_arg6 = 1;
-      int __va_arg7 = JSMN_PRIMITIVE;
+      unsigned int __va_arg7 = JSMN_PRIMITIVE;
       char const *__va_arg8 = "true";
       void *__va_args[9] =
         {& __va_arg0,
@@ -952,14 +951,14 @@ int test_primitive(void)
   {
     int tmp_0;
     {
-      int __va_arg0_17 = JSMN_OBJECT;
+      unsigned int __va_arg0_17 = JSMN_OBJECT;
       int __va_arg1_19 = -1;
       int __va_arg2_21 = -1;
       int __va_arg3_23 = 1;
-      int __va_arg4_25 = JSMN_STRING;
+      unsigned int __va_arg4_25 = JSMN_STRING;
       char const *__va_arg5_27 = "boolVar";
       int __va_arg6_29 = 1;
-      int __va_arg7_31 = JSMN_PRIMITIVE;
+      unsigned int __va_arg7_31 = JSMN_PRIMITIVE;
       char const *__va_arg8_33 = "false";
       void *__va_args_35[9] =
         {& __va_arg0_17,
@@ -982,14 +981,14 @@ int test_primitive(void)
   {
     int tmp_1;
     {
-      int __va_arg0_37 = JSMN_OBJECT;
+      unsigned int __va_arg0_37 = JSMN_OBJECT;
       int __va_arg1_39 = -1;
       int __va_arg2_41 = -1;
       int __va_arg3_43 = 1;
-      int __va_arg4_45 = JSMN_STRING;
+      unsigned int __va_arg4_45 = JSMN_STRING;
       char const *__va_arg5_47 = "nullVar";
       int __va_arg6_49 = 1;
-      int __va_arg7_51 = JSMN_PRIMITIVE;
+      unsigned int __va_arg7_51 = JSMN_PRIMITIVE;
       char const *__va_arg8_53 = "null";
       void *__va_args_55[9] =
         {& __va_arg0_37,
@@ -1012,14 +1011,14 @@ int test_primitive(void)
   {
     int tmp_2;
     {
-      int __va_arg0_57 = JSMN_OBJECT;
+      unsigned int __va_arg0_57 = JSMN_OBJECT;
       int __va_arg1_59 = -1;
       int __va_arg2_61 = -1;
       int __va_arg3_63 = 1;
-      int __va_arg4_65 = JSMN_STRING;
+      unsigned int __va_arg4_65 = JSMN_STRING;
       char const *__va_arg5_67 = "intVar";
       int __va_arg6_69 = 1;
-      int __va_arg7_71 = JSMN_PRIMITIVE;
+      unsigned int __va_arg7_71 = JSMN_PRIMITIVE;
       char const *__va_arg8_73 = "12";
       void *__va_args_75[9] =
         {& __va_arg0_57,
@@ -1041,14 +1040,14 @@ int test_primitive(void)
   {
     int tmp_3;
     {
-      int __va_arg0_77 = JSMN_OBJECT;
+      unsigned int __va_arg0_77 = JSMN_OBJECT;
       int __va_arg1_79 = -1;
       int __va_arg2_81 = -1;
       int __va_arg3_83 = 1;
-      int __va_arg4_85 = JSMN_STRING;
+      unsigned int __va_arg4_85 = JSMN_STRING;
       char const *__va_arg5_87 = "floatVar";
       int __va_arg6_89 = 1;
-      int __va_arg7_91 = JSMN_PRIMITIVE;
+      unsigned int __va_arg7_91 = JSMN_PRIMITIVE;
       char const *__va_arg8_93 = "12.345";
       void *__va_args_95[9] =
         {& __va_arg0_77,
@@ -1078,14 +1077,14 @@ int test_string(void)
   {
     int tmp;
     {
-      int __va_arg0 = JSMN_OBJECT;
+      unsigned int __va_arg0 = JSMN_OBJECT;
       int __va_arg1 = -1;
       int __va_arg2 = -1;
       int __va_arg3 = 1;
-      int __va_arg4 = JSMN_STRING;
+      unsigned int __va_arg4 = JSMN_STRING;
       char const *__va_arg5 = "strVar";
       int __va_arg6 = 1;
-      int __va_arg7 = JSMN_STRING;
+      unsigned int __va_arg7 = JSMN_STRING;
       char const *__va_arg8 = "hello world";
       int __va_arg9 = 0;
       void *__va_args[10] =
@@ -1110,14 +1109,14 @@ int test_string(void)
   {
     int tmp_0;
     {
-      int __va_arg0_23 = JSMN_OBJECT;
+      unsigned int __va_arg0_23 = JSMN_OBJECT;
       int __va_arg1_25 = -1;
       int __va_arg2_27 = -1;
       int __va_arg3_29 = 1;
-      int __va_arg4_31 = JSMN_STRING;
+      unsigned int __va_arg4_31 = JSMN_STRING;
       char const *__va_arg5_33 = "strVar";
       int __va_arg6_35 = 1;
-      int __va_arg7_37 = JSMN_STRING;
+      unsigned int __va_arg7_37 = JSMN_STRING;
       char const *__va_arg8_39 = "escapes: \\/\\r\\n\\t\\b\\f\\\"\\\\";
       int __va_arg9_41 = 0;
       void *__va_args_43[10] =
@@ -1142,14 +1141,14 @@ int test_string(void)
   {
     int tmp_1;
     {
-      int __va_arg0_45 = JSMN_OBJECT;
+      unsigned int __va_arg0_45 = JSMN_OBJECT;
       int __va_arg1_47 = -1;
       int __va_arg2_49 = -1;
       int __va_arg3_51 = 1;
-      int __va_arg4_53 = JSMN_STRING;
+      unsigned int __va_arg4_53 = JSMN_STRING;
       char const *__va_arg5_55 = "strVar";
       int __va_arg6_57 = 1;
-      int __va_arg7_59 = JSMN_STRING;
+      unsigned int __va_arg7_59 = JSMN_STRING;
       char const *__va_arg8_61 = "";
       int __va_arg9_63 = 0;
       void *__va_args_65[10] =
@@ -1173,14 +1172,14 @@ int test_string(void)
   {
     int tmp_2;
     {
-      int __va_arg0_67 = JSMN_OBJECT;
+      unsigned int __va_arg0_67 = JSMN_OBJECT;
       int __va_arg1_69 = -1;
       int __va_arg2_71 = -1;
       int __va_arg3_73 = 1;
-      int __va_arg4_75 = JSMN_STRING;
+      unsigned int __va_arg4_75 = JSMN_STRING;
       char const *__va_arg5_77 = "a";
       int __va_arg6_79 = 1;
-      int __va_arg7_81 = JSMN_STRING;
+      unsigned int __va_arg7_81 = JSMN_STRING;
       char const *__va_arg8_83 = "\\uAbcD";
       int __va_arg9_85 = 0;
       void *__va_args_87[10] =
@@ -1204,14 +1203,14 @@ int test_string(void)
   {
     int tmp_3;
     {
-      int __va_arg0_89 = JSMN_OBJECT;
+      unsigned int __va_arg0_89 = JSMN_OBJECT;
       int __va_arg1_91 = -1;
       int __va_arg2_93 = -1;
       int __va_arg3_95 = 1;
-      int __va_arg4_97 = JSMN_STRING;
+      unsigned int __va_arg4_97 = JSMN_STRING;
       char const *__va_arg5_99 = "a";
       int __va_arg6_101 = 1;
-      int __va_arg7_103 = JSMN_STRING;
+      unsigned int __va_arg7_103 = JSMN_STRING;
       char const *__va_arg8_105 = "str\\u0000";
       int __va_arg9_107 = 0;
       void *__va_args_109[10] =
@@ -1236,14 +1235,14 @@ int test_string(void)
   {
     int tmp_4;
     {
-      int __va_arg0_111 = JSMN_OBJECT;
+      unsigned int __va_arg0_111 = JSMN_OBJECT;
       int __va_arg1_113 = -1;
       int __va_arg2_115 = -1;
       int __va_arg3_117 = 1;
-      int __va_arg4_119 = JSMN_STRING;
+      unsigned int __va_arg4_119 = JSMN_STRING;
       char const *__va_arg5_121 = "a";
       int __va_arg6_123 = 1;
-      int __va_arg7_125 = JSMN_STRING;
+      unsigned int __va_arg7_125 = JSMN_STRING;
       char const *__va_arg8_127 = "\\uFFFFstr";
       int __va_arg9_129 = 0;
       void *__va_args_131[10] =
@@ -1268,18 +1267,18 @@ int test_string(void)
   {
     int tmp_5;
     {
-      int __va_arg0_133 = JSMN_OBJECT;
+      unsigned int __va_arg0_133 = JSMN_OBJECT;
       int __va_arg1_135 = -1;
       int __va_arg2_137 = -1;
       int __va_arg3_139 = 1;
-      int __va_arg4_141 = JSMN_STRING;
+      unsigned int __va_arg4_141 = JSMN_STRING;
       char const *__va_arg5_143 = "a";
       int __va_arg6_145 = 1;
-      int __va_arg7_147 = JSMN_ARRAY;
+      unsigned int __va_arg7_147 = JSMN_ARRAY;
       int __va_arg8_149 = -1;
       int __va_arg9_151 = -1;
       int __va_arg10 = 1;
-      int __va_arg11 = JSMN_STRING;
+      unsigned int __va_arg11 = JSMN_STRING;
       char const *__va_arg12 = "\\u0280";
       int __va_arg13 = 0;
       void *__va_args_157[14] =
@@ -1373,20 +1372,20 @@ int test_partial_string(void)
         {
           int tmp;
           {
-            int __va_arg0 = JSMN_OBJECT;
+            unsigned int __va_arg0 = JSMN_OBJECT;
             int __va_arg1 = -1;
             int __va_arg2 = -1;
             int __va_arg3 = 2;
-            int __va_arg4 = JSMN_STRING;
+            unsigned int __va_arg4 = JSMN_STRING;
             char const *__va_arg5 = "x";
             int __va_arg6 = 1;
-            int __va_arg7 = JSMN_STRING;
+            unsigned int __va_arg7 = JSMN_STRING;
             char const *__va_arg8 = "va\\\\ue";
             int __va_arg9 = 0;
-            int __va_arg10 = JSMN_STRING;
+            unsigned int __va_arg10 = JSMN_STRING;
             char const *__va_arg11 = "y";
             int __va_arg12 = 1;
-            int __va_arg13 = JSMN_STRING;
+            unsigned int __va_arg13 = JSMN_STRING;
             char const *__va_arg14 = "value y";
             int __va_arg15 = 0;
             void *__va_args[16] =
@@ -1470,21 +1469,21 @@ int test_array_nomem(void)
       {
         int tmp_1;
         {
-          int __va_arg0 = JSMN_ARRAY;
+          unsigned int __va_arg0 = JSMN_ARRAY;
           int __va_arg1 = -1;
           int __va_arg2 = -1;
           int __va_arg3 = 3;
-          int __va_arg4 = JSMN_PRIMITIVE;
+          unsigned int __va_arg4 = JSMN_PRIMITIVE;
           char const *__va_arg5 = "1";
-          int __va_arg6 = JSMN_PRIMITIVE;
+          unsigned int __va_arg6 = JSMN_PRIMITIVE;
           char const *__va_arg7 = "true";
-          int __va_arg8 = JSMN_ARRAY;
+          unsigned int __va_arg8 = JSMN_ARRAY;
           int __va_arg9 = -1;
           int __va_arg10 = -1;
           int __va_arg11 = 2;
-          int __va_arg12 = JSMN_PRIMITIVE;
+          unsigned int __va_arg12 = JSMN_PRIMITIVE;
           char const *__va_arg13 = "123";
-          int __va_arg14 = JSMN_STRING;
+          unsigned int __va_arg14 = JSMN_STRING;
           char const *__va_arg15 = "hello";
           int __va_arg16 = 0;
           void *__va_args[17] =
@@ -1539,14 +1538,14 @@ int test_unquoted_keys(void)
   {
     int tmp_0;
     {
-      int __va_arg0 = JSMN_PRIMITIVE;
+      unsigned int __va_arg0 = JSMN_PRIMITIVE;
       char const *__va_arg1 = "key1";
-      int __va_arg2 = JSMN_STRING;
+      unsigned int __va_arg2 = JSMN_STRING;
       char const *__va_arg3 = "value";
       int __va_arg4 = 0;
-      int __va_arg5 = JSMN_PRIMITIVE;
+      unsigned int __va_arg5 = JSMN_PRIMITIVE;
       char const *__va_arg6 = "key2";
-      int __va_arg7 = JSMN_PRIMITIVE;
+      unsigned int __va_arg7 = JSMN_PRIMITIVE;
       char const *__va_arg8 = "123";
       void *__va_args[9] =
         {& __va_arg0,
@@ -1627,14 +1626,14 @@ int test_input_length(void)
   {
     int tmp;
     {
-      int __va_arg0 = JSMN_OBJECT;
+      unsigned int __va_arg0 = JSMN_OBJECT;
       int __va_arg1 = -1;
       int __va_arg2 = -1;
       int __va_arg3 = 1;
-      int __va_arg4 = JSMN_STRING;
+      unsigned int __va_arg4 = JSMN_STRING;
       char const *__va_arg5 = "a";
       int __va_arg6 = 1;
-      int __va_arg7 = JSMN_PRIMITIVE;
+      unsigned int __va_arg7 = JSMN_PRIMITIVE;
       char const *__va_arg8 = "0";
       void *__va_args[9] =
         {& __va_arg0,
@@ -1804,9 +1803,9 @@ int test_nonstrict(void)
   {
     int tmp;
     {
-      int __va_arg0 = JSMN_PRIMITIVE;
+      unsigned int __va_arg0 = JSMN_PRIMITIVE;
       char const *__va_arg1 = "a";
-      int __va_arg2 = JSMN_PRIMITIVE;
+      unsigned int __va_arg2 = JSMN_PRIMITIVE;
       char const *__va_arg3 = "0garbage";
       void *__va_args[4] =
         {& __va_arg0, & __va_arg1, & __va_arg2, & __va_arg3};
@@ -1821,17 +1820,17 @@ int test_nonstrict(void)
   {
     int tmp_0;
     {
-      int __va_arg0_11 = JSMN_PRIMITIVE;
+      unsigned int __va_arg0_11 = JSMN_PRIMITIVE;
       char const *__va_arg1_13 = "Day";
-      int __va_arg2_15 = JSMN_PRIMITIVE;
+      unsigned int __va_arg2_15 = JSMN_PRIMITIVE;
       char const *__va_arg3_17 = "26";
-      int __va_arg4 = JSMN_PRIMITIVE;
+      unsigned int __va_arg4 = JSMN_PRIMITIVE;
       char const *__va_arg5 = "Month";
-      int __va_arg6 = JSMN_PRIMITIVE;
+      unsigned int __va_arg6 = JSMN_PRIMITIVE;
       char const *__va_arg7 = "Sep";
-      int __va_arg8 = JSMN_PRIMITIVE;
+      unsigned int __va_arg8 = JSMN_PRIMITIVE;
       char const *__va_arg9 = "Year";
-      int __va_arg10 = JSMN_PRIMITIVE;
+      unsigned int __va_arg10 = JSMN_PRIMITIVE;
       char const *__va_arg11 = "12";
       void *__va_args_27[12] =
         {& __va_arg0_11,
@@ -1857,10 +1856,10 @@ int test_nonstrict(void)
   {
     int tmp_1;
     {
-      int __va_arg0_29 = JSMN_STRING;
+      unsigned int __va_arg0_29 = JSMN_STRING;
       char const *__va_arg1_31 = "key {1";
       int __va_arg2_33 = 1;
-      int __va_arg3_35 = JSMN_PRIMITIVE;
+      unsigned int __va_arg3_35 = JSMN_PRIMITIVE;
       char const *__va_arg4_37 = "1234";
       void *__va_args_39[5] =
         {& __va_arg0_29,
@@ -1935,14 +1934,14 @@ int test_unmatched_brackets(void)
   {
     int tmp_3;
     {
-      int __va_arg0 = JSMN_OBJECT;
+      unsigned int __va_arg0 = JSMN_OBJECT;
       int __va_arg1 = 0;
       int __va_arg2 = 16;
       int __va_arg3 = 1;
-      int __va_arg4 = JSMN_STRING;
+      unsigned int __va_arg4 = JSMN_STRING;
       char const *__va_arg5 = "key {1";
       int __va_arg6 = 1;
-      int __va_arg7 = JSMN_PRIMITIVE;
+      unsigned int __va_arg7 = JSMN_PRIMITIVE;
       char const *__va_arg8 = "1234";
       void *__va_args_25[9] =
         {& __va_arg0,

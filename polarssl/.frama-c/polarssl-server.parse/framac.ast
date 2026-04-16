@@ -168,22 +168,22 @@ struct _x509_crl {
 };
 typedef struct _x509_crl x509_crl;
 enum __anonenum_ssl_states_7 {
-    SSL_HELLO_REQUEST = 0,
-    SSL_CLIENT_HELLO = 1,
-    SSL_SERVER_HELLO = 2,
-    SSL_SERVER_CERTIFICATE = 3,
-    SSL_SERVER_KEY_EXCHANGE = 4,
-    SSL_CERTIFICATE_REQUEST = 5,
-    SSL_SERVER_HELLO_DONE = 6,
-    SSL_CLIENT_CERTIFICATE = 7,
-    SSL_CLIENT_KEY_EXCHANGE = 8,
-    SSL_CERTIFICATE_VERIFY = 9,
-    SSL_CLIENT_CHANGE_CIPHER_SPEC = 10,
-    SSL_CLIENT_FINISHED = 11,
-    SSL_SERVER_CHANGE_CIPHER_SPEC = 12,
-    SSL_SERVER_FINISHED = 13,
-    SSL_FLUSH_BUFFERS = 14,
-    SSL_HANDSHAKE_OVER = 15
+    SSL_HELLO_REQUEST = 0U,
+    SSL_CLIENT_HELLO = 1U,
+    SSL_SERVER_HELLO = 2U,
+    SSL_SERVER_CERTIFICATE = 3U,
+    SSL_SERVER_KEY_EXCHANGE = 4U,
+    SSL_CERTIFICATE_REQUEST = 5U,
+    SSL_SERVER_HELLO_DONE = 6U,
+    SSL_CLIENT_CERTIFICATE = 7U,
+    SSL_CLIENT_KEY_EXCHANGE = 8U,
+    SSL_CERTIFICATE_VERIFY = 9U,
+    SSL_CLIENT_CHANGE_CIPHER_SPEC = 10U,
+    SSL_CLIENT_FINISHED = 11U,
+    SSL_SERVER_CHANGE_CIPHER_SPEC = 12U,
+    SSL_SERVER_FINISHED = 13U,
+    SSL_FLUSH_BUFFERS = 14U,
+    SSL_HANDSHAKE_OVER = 15U
 };
 struct _ssl_session;
 typedef struct _ssl_session ssl_session;
@@ -309,44 +309,44 @@ struct __anonstruct_sha4_context_13 {
 };
 typedef struct __anonstruct_sha4_context_13 sha4_context;
 enum __anonenum_cipher_id_t_1 {
-    POLARSSL_CIPHER_ID_NONE = 0,
-    POLARSSL_CIPHER_ID_AES = 1,
-    POLARSSL_CIPHER_ID_DES = 2,
-    POLARSSL_CIPHER_ID_3DES = 3,
-    POLARSSL_CIPHER_ID_CAMELLIA = 4
+    POLARSSL_CIPHER_ID_NONE = (unsigned int)0,
+    POLARSSL_CIPHER_ID_AES = 1U,
+    POLARSSL_CIPHER_ID_DES = 2U,
+    POLARSSL_CIPHER_ID_3DES = 3U,
+    POLARSSL_CIPHER_ID_CAMELLIA = 4U
 };
 typedef enum __anonenum_cipher_id_t_1 cipher_id_t;
 enum __anonenum_cipher_type_t_2 {
-    POLARSSL_CIPHER_NONE = 0,
-    POLARSSL_CIPHER_AES_128_CBC = 1,
-    POLARSSL_CIPHER_AES_192_CBC = 2,
-    POLARSSL_CIPHER_AES_256_CBC = 3,
-    POLARSSL_CIPHER_AES_128_CFB128 = 4,
-    POLARSSL_CIPHER_AES_192_CFB128 = 5,
-    POLARSSL_CIPHER_AES_256_CFB128 = 6,
-    POLARSSL_CIPHER_AES_128_CTR = 7,
-    POLARSSL_CIPHER_AES_192_CTR = 8,
-    POLARSSL_CIPHER_AES_256_CTR = 9,
-    POLARSSL_CIPHER_CAMELLIA_128_CBC = 10,
-    POLARSSL_CIPHER_CAMELLIA_192_CBC = 11,
-    POLARSSL_CIPHER_CAMELLIA_256_CBC = 12,
-    POLARSSL_CIPHER_CAMELLIA_128_CFB128 = 13,
-    POLARSSL_CIPHER_CAMELLIA_192_CFB128 = 14,
-    POLARSSL_CIPHER_CAMELLIA_256_CFB128 = 15,
-    POLARSSL_CIPHER_CAMELLIA_128_CTR = 16,
-    POLARSSL_CIPHER_CAMELLIA_192_CTR = 17,
-    POLARSSL_CIPHER_CAMELLIA_256_CTR = 18,
-    POLARSSL_CIPHER_DES_CBC = 19,
-    POLARSSL_CIPHER_DES_EDE_CBC = 20,
-    POLARSSL_CIPHER_DES_EDE3_CBC = 21
+    POLARSSL_CIPHER_NONE = (unsigned int)0,
+    POLARSSL_CIPHER_AES_128_CBC = 1U,
+    POLARSSL_CIPHER_AES_192_CBC = 2U,
+    POLARSSL_CIPHER_AES_256_CBC = 3U,
+    POLARSSL_CIPHER_AES_128_CFB128 = 4U,
+    POLARSSL_CIPHER_AES_192_CFB128 = 5U,
+    POLARSSL_CIPHER_AES_256_CFB128 = 6U,
+    POLARSSL_CIPHER_AES_128_CTR = 7U,
+    POLARSSL_CIPHER_AES_192_CTR = 8U,
+    POLARSSL_CIPHER_AES_256_CTR = 9U,
+    POLARSSL_CIPHER_CAMELLIA_128_CBC = 10U,
+    POLARSSL_CIPHER_CAMELLIA_192_CBC = 11U,
+    POLARSSL_CIPHER_CAMELLIA_256_CBC = 12U,
+    POLARSSL_CIPHER_CAMELLIA_128_CFB128 = 13U,
+    POLARSSL_CIPHER_CAMELLIA_192_CFB128 = 14U,
+    POLARSSL_CIPHER_CAMELLIA_256_CFB128 = 15U,
+    POLARSSL_CIPHER_CAMELLIA_128_CTR = 16U,
+    POLARSSL_CIPHER_CAMELLIA_192_CTR = 17U,
+    POLARSSL_CIPHER_CAMELLIA_256_CTR = 18U,
+    POLARSSL_CIPHER_DES_CBC = 19U,
+    POLARSSL_CIPHER_DES_EDE_CBC = 20U,
+    POLARSSL_CIPHER_DES_EDE3_CBC = 21U
 };
 typedef enum __anonenum_cipher_type_t_2 cipher_type_t;
 enum __anonenum_cipher_mode_t_3 {
-    POLARSSL_MODE_NONE = 0,
-    POLARSSL_MODE_CBC = 1,
-    POLARSSL_MODE_CFB128 = 2,
-    POLARSSL_MODE_OFB = 3,
-    POLARSSL_MODE_CTR = 4
+    POLARSSL_MODE_NONE = (unsigned int)0,
+    POLARSSL_MODE_CBC = 1U,
+    POLARSSL_MODE_CFB128 = 2U,
+    POLARSSL_MODE_OFB = 3U,
+    POLARSSL_MODE_CTR = 4U
 };
 typedef enum __anonenum_cipher_mode_t_3 cipher_mode_t;
 enum __anonenum_operation_t_4 {
@@ -356,11 +356,11 @@ enum __anonenum_operation_t_4 {
 };
 typedef enum __anonenum_operation_t_4 operation_t;
 enum __anonenum_5 {
-    POLARSSL_KEY_LENGTH_NONE = 0,
-    POLARSSL_KEY_LENGTH_DES = 64,
-    POLARSSL_KEY_LENGTH_DES_EDE = 128,
-    POLARSSL_KEY_LENGTH_DES_EDE3 = 192,
-    POLARSSL_MAX_IV_LENGTH = 16
+    POLARSSL_KEY_LENGTH_NONE = (unsigned int)0,
+    POLARSSL_KEY_LENGTH_DES = (unsigned int)64,
+    POLARSSL_KEY_LENGTH_DES_EDE = (unsigned int)128,
+    POLARSSL_KEY_LENGTH_DES_EDE3 = (unsigned int)192,
+    POLARSSL_MAX_IV_LENGTH = (unsigned int)16
 };
 struct __anonstruct_cipher_base_t_6 {
    cipher_id_t cipher ;
@@ -415,15 +415,15 @@ struct __anonstruct_entropy_context_3 {
 };
 typedef struct __anonstruct_entropy_context_3 entropy_context;
 enum __anonenum_md_type_t_19 {
-    POLARSSL_MD_NONE = 0,
-    POLARSSL_MD_MD2 = 1,
-    POLARSSL_MD_MD4 = 2,
-    POLARSSL_MD_MD5 = 3,
-    POLARSSL_MD_SHA1 = 4,
-    POLARSSL_MD_SHA224 = 5,
-    POLARSSL_MD_SHA256 = 6,
-    POLARSSL_MD_SHA384 = 7,
-    POLARSSL_MD_SHA512 = 8
+    POLARSSL_MD_NONE = (unsigned int)0,
+    POLARSSL_MD_MD2 = 1U,
+    POLARSSL_MD_MD4 = 2U,
+    POLARSSL_MD_MD5 = 3U,
+    POLARSSL_MD_SHA1 = 4U,
+    POLARSSL_MD_SHA224 = 5U,
+    POLARSSL_MD_SHA256 = 6U,
+    POLARSSL_MD_SHA384 = 7U,
+    POLARSSL_MD_SHA512 = 8U
 };
 typedef enum __anonenum_md_type_t_19 md_type_t;
 struct __anonstruct_md_info_t_20 {
@@ -10619,27 +10619,27 @@ cipher_info_t const des_ede_cbc_info;
 cipher_info_t const des_ede3_cbc_info;
 
 static int const supported_ciphers[22] =
-  {POLARSSL_CIPHER_AES_128_CBC,
-   POLARSSL_CIPHER_AES_192_CBC,
-   POLARSSL_CIPHER_AES_256_CBC,
-   POLARSSL_CIPHER_AES_128_CFB128,
-   POLARSSL_CIPHER_AES_192_CFB128,
-   POLARSSL_CIPHER_AES_256_CFB128,
-   POLARSSL_CIPHER_AES_128_CTR,
-   POLARSSL_CIPHER_AES_192_CTR,
-   POLARSSL_CIPHER_AES_256_CTR,
-   POLARSSL_CIPHER_CAMELLIA_128_CBC,
-   POLARSSL_CIPHER_CAMELLIA_192_CBC,
-   POLARSSL_CIPHER_CAMELLIA_256_CBC,
-   POLARSSL_CIPHER_CAMELLIA_128_CFB128,
-   POLARSSL_CIPHER_CAMELLIA_192_CFB128,
-   POLARSSL_CIPHER_CAMELLIA_256_CFB128,
-   POLARSSL_CIPHER_CAMELLIA_128_CTR,
-   POLARSSL_CIPHER_CAMELLIA_192_CTR,
-   POLARSSL_CIPHER_CAMELLIA_256_CTR,
-   POLARSSL_CIPHER_DES_CBC,
-   POLARSSL_CIPHER_DES_EDE_CBC,
-   POLARSSL_CIPHER_DES_EDE3_CBC,
+  {(int)POLARSSL_CIPHER_AES_128_CBC,
+   (int)POLARSSL_CIPHER_AES_192_CBC,
+   (int)POLARSSL_CIPHER_AES_256_CBC,
+   (int)POLARSSL_CIPHER_AES_128_CFB128,
+   (int)POLARSSL_CIPHER_AES_192_CFB128,
+   (int)POLARSSL_CIPHER_AES_256_CFB128,
+   (int)POLARSSL_CIPHER_AES_128_CTR,
+   (int)POLARSSL_CIPHER_AES_192_CTR,
+   (int)POLARSSL_CIPHER_AES_256_CTR,
+   (int)POLARSSL_CIPHER_CAMELLIA_128_CBC,
+   (int)POLARSSL_CIPHER_CAMELLIA_192_CBC,
+   (int)POLARSSL_CIPHER_CAMELLIA_256_CBC,
+   (int)POLARSSL_CIPHER_CAMELLIA_128_CFB128,
+   (int)POLARSSL_CIPHER_CAMELLIA_192_CFB128,
+   (int)POLARSSL_CIPHER_CAMELLIA_256_CFB128,
+   (int)POLARSSL_CIPHER_CAMELLIA_128_CTR,
+   (int)POLARSSL_CIPHER_CAMELLIA_192_CTR,
+   (int)POLARSSL_CIPHER_CAMELLIA_256_CTR,
+   (int)POLARSSL_CIPHER_DES_CBC,
+   (int)POLARSSL_CIPHER_DES_EDE_CBC,
+   (int)POLARSSL_CIPHER_DES_EDE3_CBC,
    0};
 int const *cipher_list(void)
 {
@@ -10947,10 +10947,9 @@ int cipher_setkey(cipher_context_t *ctx, unsigned char const *key,
   ctx->operation = operation;
   if (POLARSSL_ENCRYPT == operation) goto _LOR;
   else 
-    if ((unsigned int)POLARSSL_MODE_CFB128 == (ctx->cipher_info)->mode) 
-      goto _LOR;
+    if (POLARSSL_MODE_CFB128 == (ctx->cipher_info)->mode) goto _LOR;
     else 
-      if ((unsigned int)POLARSSL_MODE_CTR == (ctx->cipher_info)->mode) {
+      if (POLARSSL_MODE_CTR == (ctx->cipher_info)->mode) {
         _LOR:
         {
           int tmp;
@@ -11019,7 +11018,7 @@ int cipher_update(cipher_context_t *ctx, unsigned char const *input,
                 }
         }
   *olen = (size_t)0;
-  if ((ctx->cipher_info)->mode == (unsigned int)POLARSSL_MODE_CBC) {
+  if ((ctx->cipher_info)->mode == POLARSSL_MODE_CBC) {
     if (ctx->operation == POLARSSL_DECRYPT) {
       unsigned int tmp;
       tmp = cipher_get_block_size((cipher_context_t const *)ctx);
@@ -11101,7 +11100,7 @@ int cipher_update(cipher_context_t *ctx, unsigned char const *input,
     __retres = 0;
     goto return_label;
   }
-  if ((ctx->cipher_info)->mode == (unsigned int)POLARSSL_MODE_CFB128) {
+  if ((ctx->cipher_info)->mode == POLARSSL_MODE_CFB128) {
     ret = (*(((ctx->cipher_info)->base)->cfb128_func))(ctx->cipher_ctx,
                                                        ctx->operation,ilen,
                                                        & ctx->unprocessed_len,
@@ -11114,7 +11113,7 @@ int cipher_update(cipher_context_t *ctx, unsigned char const *input,
     __retres = 0;
     goto return_label;
   }
-  if ((ctx->cipher_info)->mode == (unsigned int)POLARSSL_MODE_CTR) {
+  if ((ctx->cipher_info)->mode == POLARSSL_MODE_CTR) {
     ret = (*(((ctx->cipher_info)->base)->ctr_func))(ctx->cipher_ctx,ilen,
                                                     & ctx->unprocessed_len,
                                                     ctx->iv,
@@ -11197,16 +11196,15 @@ int cipher_finish(cipher_context_t *ctx, unsigned char *output, size_t *olen)
         goto return_label;
       }
   *olen = (size_t)0;
-  if ((unsigned int)POLARSSL_MODE_CFB128 == (ctx->cipher_info)->mode) 
-    goto _LOR;
+  if (POLARSSL_MODE_CFB128 == (ctx->cipher_info)->mode) goto _LOR;
   else 
-    if ((unsigned int)POLARSSL_MODE_CTR == (ctx->cipher_info)->mode) {
+    if (POLARSSL_MODE_CTR == (ctx->cipher_info)->mode) {
       _LOR: {
               __retres = 0;
               goto return_label;
             }
     }
-  if ((unsigned int)POLARSSL_MODE_CBC == (ctx->cipher_info)->mode) {
+  if (POLARSSL_MODE_CBC == (ctx->cipher_info)->mode) {
     unsigned int tmp_1;
     if (POLARSSL_ENCRYPT == ctx->operation) {
       int tmp;
@@ -11664,7 +11662,7 @@ cipher_base_t const des_info =
 cipher_info_t const des_cbc_info =
   {.type = POLARSSL_CIPHER_DES_CBC,
    .mode = POLARSSL_MODE_CBC,
-   .key_length = (unsigned int)POLARSSL_KEY_LENGTH_DES,
+   .key_length = POLARSSL_KEY_LENGTH_DES,
    .name = "DES-CBC",
    .iv_size = (unsigned int)8,
    .block_size = (unsigned int)8,
@@ -11681,7 +11679,7 @@ cipher_base_t const des_ede_info =
 cipher_info_t const des_ede_cbc_info =
   {.type = POLARSSL_CIPHER_DES_EDE_CBC,
    .mode = POLARSSL_MODE_CBC,
-   .key_length = (unsigned int)POLARSSL_KEY_LENGTH_DES_EDE,
+   .key_length = POLARSSL_KEY_LENGTH_DES_EDE,
    .name = "DES-EDE-CBC",
    .iv_size = (unsigned int)8,
    .block_size = (unsigned int)8,
@@ -11698,7 +11696,7 @@ cipher_base_t const des_ede3_info =
 cipher_info_t const des_ede3_cbc_info =
   {.type = POLARSSL_CIPHER_DES_EDE3_CBC,
    .mode = POLARSSL_MODE_CBC,
-   .key_length = (unsigned int)POLARSSL_KEY_LENGTH_DES_EDE3,
+   .key_length = POLARSSL_KEY_LENGTH_DES_EDE3,
    .name = "DES-EDE3-CBC",
    .iv_size = (unsigned int)8,
    .block_size = (unsigned int)8,
@@ -17068,12 +17066,12 @@ md_info_t const sha384_info;
 md_info_t const sha512_info;
 
 static int const supported_digests[7] =
-  {POLARSSL_MD_MD5,
-   POLARSSL_MD_SHA1,
-   POLARSSL_MD_SHA224,
-   POLARSSL_MD_SHA256,
-   POLARSSL_MD_SHA384,
-   POLARSSL_MD_SHA512,
+  {(int)POLARSSL_MD_MD5,
+   (int)POLARSSL_MD_SHA1,
+   (int)POLARSSL_MD_SHA224,
+   (int)POLARSSL_MD_SHA256,
+   (int)POLARSSL_MD_SHA384,
+   (int)POLARSSL_MD_SHA512,
    0};
 int const *md_list(void)
 {
@@ -19337,7 +19335,7 @@ int net_connect(int *fd, char const *host, int port)
     __retres = -0x0040;
     goto return_label;
   }
-  tmp = socket(2,1,IPPROTO_IP);
+  tmp = socket(2,1,(int)IPPROTO_IP);
   *fd = tmp;
   if (tmp < 0) {
     __retres = -0x0042;
@@ -19395,7 +19393,7 @@ int net_bind(int *fd, char const *bind_ip, int port)
   int tmp_0;
   int tmp_1;
   signal(13,SIG_IGN);
-  tmp = socket(2,1,IPPROTO_IP);
+  tmp = socket(2,1,(int)IPPROTO_IP);
   *fd = tmp;
   if (tmp < 0) {
     __retres = -0x0042;
@@ -19828,7 +19826,7 @@ int pem_read_buffer(pem_context *ctx, char *header, char *footer,
       }
       s1 += 32;
     }
-    if (enc_alg == (unsigned int)POLARSSL_CIPHER_NONE) {
+    if (enc_alg == POLARSSL_CIPHER_NONE) {
       __retres = -0x1280;
       goto return_label;
     }
@@ -19862,32 +19860,27 @@ int pem_read_buffer(pem_context *ctx, char *header, char *footer,
       __retres = -0x1300;
       goto return_label;
     }
-    if (enc_alg == (unsigned int)POLARSSL_CIPHER_DES_EDE3_CBC) pem_des3_decrypt
-                                                               (pem_iv,buf,
-                                                                len,pwd,
+    if (enc_alg == POLARSSL_CIPHER_DES_EDE3_CBC) pem_des3_decrypt(pem_iv,buf,
+                                                                  len,pwd,
+                                                                  pwdlen);
+    else 
+      if (enc_alg == POLARSSL_CIPHER_DES_CBC) pem_des_decrypt(pem_iv,buf,len,
+                                                              pwd,pwdlen);
+    if (enc_alg == POLARSSL_CIPHER_AES_128_CBC) pem_aes_decrypt(pem_iv,
+                                                                (unsigned int)16,
+                                                                buf,len,pwd,
                                                                 pwdlen);
     else 
-      if (enc_alg == (unsigned int)POLARSSL_CIPHER_DES_CBC) pem_des_decrypt
-                                                            (pem_iv,buf,len,
-                                                             pwd,pwdlen);
-    if (enc_alg == (unsigned int)POLARSSL_CIPHER_AES_128_CBC) pem_aes_decrypt
-                                                              (pem_iv,
-                                                               (unsigned int)16,
-                                                               buf,len,pwd,
-                                                               pwdlen);
-    else 
-      if (enc_alg == (unsigned int)POLARSSL_CIPHER_AES_192_CBC) pem_aes_decrypt
-                                                                (pem_iv,
-                                                                 (unsigned int)24,
-                                                                 buf,len,pwd,
-                                                                 pwdlen);
+      if (enc_alg == POLARSSL_CIPHER_AES_192_CBC) pem_aes_decrypt(pem_iv,
+                                                                  (unsigned int)24,
+                                                                  buf,len,
+                                                                  pwd,pwdlen);
       else 
-        if (enc_alg == (unsigned int)POLARSSL_CIPHER_AES_256_CBC) pem_aes_decrypt
-                                                                  (pem_iv,
-                                                                   (unsigned int)32,
-                                                                   buf,len,
-                                                                   pwd,
-                                                                   pwdlen);
+        if (enc_alg == POLARSSL_CIPHER_AES_256_CBC) pem_aes_decrypt(pem_iv,
+                                                                    (unsigned int)32,
+                                                                    buf,len,
+                                                                    pwd,
+                                                                    pwdlen);
     if ((int)*(buf + 0) != 0x30) goto _LOR;
     else 
       if ((int)*(buf + 1) != 0x82) goto _LOR;
@@ -28559,7 +28552,7 @@ static int ssl_parse_server_hello(ssl_context *ssl)
             }
           }
           else {
-            ssl->state = SSL_SERVER_CHANGE_CIPHER_SPEC;
+            ssl->state = (int)SSL_SERVER_CHANGE_CIPHER_SPEC;
             ret = ssl_derive_keys(ssl);
             if (ret != 0) {
               __retres = ret;
@@ -28835,42 +28828,47 @@ int ssl_handshake_client(ssl_context *ssl)
 {
   int __retres;
   int ret = 0;
-  while (ssl->state != SSL_HANDSHAKE_OVER) {
+  while ((unsigned int)ssl->state != SSL_HANDSHAKE_OVER) {
     ret = ssl_flush_output(ssl);
     if (ret != 0) break;
     switch (ssl->state) {
-      case SSL_HELLO_REQUEST: ssl->state = SSL_CLIENT_HELLO;
+      case (int)SSL_HELLO_REQUEST: ssl->state = (int)SSL_CLIENT_HELLO;
       break;
-      case SSL_CLIENT_HELLO: ret = ssl_write_client_hello(ssl);
+      case (int)SSL_CLIENT_HELLO: ret = ssl_write_client_hello(ssl);
       break;
-      case SSL_SERVER_HELLO: ret = ssl_parse_server_hello(ssl);
+      case (int)SSL_SERVER_HELLO: ret = ssl_parse_server_hello(ssl);
       break;
-      case SSL_SERVER_CERTIFICATE: ret = ssl_parse_certificate(ssl);
+      case (int)SSL_SERVER_CERTIFICATE: ret = ssl_parse_certificate(ssl);
       break;
-      case SSL_SERVER_KEY_EXCHANGE: ret = ssl_parse_server_key_exchange(ssl);
+      case (int)SSL_SERVER_KEY_EXCHANGE:
+      ret = ssl_parse_server_key_exchange(ssl);
       break;
-      case SSL_CERTIFICATE_REQUEST: ret = ssl_parse_certificate_request(ssl);
+      case (int)SSL_CERTIFICATE_REQUEST:
+      ret = ssl_parse_certificate_request(ssl);
       break;
-      case SSL_SERVER_HELLO_DONE: ret = ssl_parse_server_hello_done(ssl);
+      case (int)SSL_SERVER_HELLO_DONE:
+      ret = ssl_parse_server_hello_done(ssl);
       break;
-      case SSL_CLIENT_CERTIFICATE: ret = ssl_write_certificate(ssl);
+      case (int)SSL_CLIENT_CERTIFICATE: ret = ssl_write_certificate(ssl);
       break;
-      case SSL_CLIENT_KEY_EXCHANGE: ret = ssl_write_client_key_exchange(ssl);
+      case (int)SSL_CLIENT_KEY_EXCHANGE:
+      ret = ssl_write_client_key_exchange(ssl);
       break;
-      case SSL_CERTIFICATE_VERIFY: ret = ssl_write_certificate_verify(ssl);
+      case (int)SSL_CERTIFICATE_VERIFY:
+      ret = ssl_write_certificate_verify(ssl);
       break;
-      case SSL_CLIENT_CHANGE_CIPHER_SPEC:
+      case (int)SSL_CLIENT_CHANGE_CIPHER_SPEC:
       ret = ssl_write_change_cipher_spec(ssl);
       break;
-      case SSL_CLIENT_FINISHED: ret = ssl_write_finished(ssl);
+      case (int)SSL_CLIENT_FINISHED: ret = ssl_write_finished(ssl);
       break;
-      case SSL_SERVER_CHANGE_CIPHER_SPEC:
+      case (int)SSL_SERVER_CHANGE_CIPHER_SPEC:
       ret = ssl_parse_change_cipher_spec(ssl);
       break;
-      case SSL_SERVER_FINISHED: ret = ssl_parse_finished(ssl);
+      case (int)SSL_SERVER_FINISHED: ret = ssl_parse_finished(ssl);
       break;
-      case SSL_FLUSH_BUFFERS: ;
-      ssl->state = SSL_HANDSHAKE_OVER;
+      case (int)SSL_FLUSH_BUFFERS: ;
+      ssl->state = (int)SSL_HANDSHAKE_OVER;
       break;
       default: ;
       __retres = -0x7100;
@@ -29161,7 +29159,7 @@ static int ssl_write_server_hello(ssl_context *ssl)
     }
     else {
       ssl->resume = 1;
-      ssl->state = SSL_SERVER_CHANGE_CIPHER_SPEC;
+      ssl->state = (int)SSL_SERVER_CHANGE_CIPHER_SPEC;
       ret = ssl_derive_keys(ssl);
       if (ret != 0) {
         __retres = ret;
@@ -29490,42 +29488,47 @@ int ssl_handshake_server(ssl_context *ssl)
 {
   int __retres;
   int ret = 0;
-  while (ssl->state != SSL_HANDSHAKE_OVER) {
+  while ((unsigned int)ssl->state != SSL_HANDSHAKE_OVER) {
     ret = ssl_flush_output(ssl);
     if (ret != 0) break;
     switch (ssl->state) {
-      case SSL_HELLO_REQUEST: ssl->state = SSL_CLIENT_HELLO;
+      case (int)SSL_HELLO_REQUEST: ssl->state = (int)SSL_CLIENT_HELLO;
       break;
-      case SSL_CLIENT_HELLO: ret = ssl_parse_client_hello(ssl);
+      case (int)SSL_CLIENT_HELLO: ret = ssl_parse_client_hello(ssl);
       break;
-      case SSL_SERVER_HELLO: ret = ssl_write_server_hello(ssl);
+      case (int)SSL_SERVER_HELLO: ret = ssl_write_server_hello(ssl);
       break;
-      case SSL_SERVER_CERTIFICATE: ret = ssl_write_certificate(ssl);
+      case (int)SSL_SERVER_CERTIFICATE: ret = ssl_write_certificate(ssl);
       break;
-      case SSL_SERVER_KEY_EXCHANGE: ret = ssl_write_server_key_exchange(ssl);
+      case (int)SSL_SERVER_KEY_EXCHANGE:
+      ret = ssl_write_server_key_exchange(ssl);
       break;
-      case SSL_CERTIFICATE_REQUEST: ret = ssl_write_certificate_request(ssl);
+      case (int)SSL_CERTIFICATE_REQUEST:
+      ret = ssl_write_certificate_request(ssl);
       break;
-      case SSL_SERVER_HELLO_DONE: ret = ssl_write_server_hello_done(ssl);
+      case (int)SSL_SERVER_HELLO_DONE:
+      ret = ssl_write_server_hello_done(ssl);
       break;
-      case SSL_CLIENT_CERTIFICATE: ret = ssl_parse_certificate(ssl);
+      case (int)SSL_CLIENT_CERTIFICATE: ret = ssl_parse_certificate(ssl);
       break;
-      case SSL_CLIENT_KEY_EXCHANGE: ret = ssl_parse_client_key_exchange(ssl);
+      case (int)SSL_CLIENT_KEY_EXCHANGE:
+      ret = ssl_parse_client_key_exchange(ssl);
       break;
-      case SSL_CERTIFICATE_VERIFY: ret = ssl_parse_certificate_verify(ssl);
+      case (int)SSL_CERTIFICATE_VERIFY:
+      ret = ssl_parse_certificate_verify(ssl);
       break;
-      case SSL_CLIENT_CHANGE_CIPHER_SPEC:
+      case (int)SSL_CLIENT_CHANGE_CIPHER_SPEC:
       ret = ssl_parse_change_cipher_spec(ssl);
       break;
-      case SSL_CLIENT_FINISHED: ret = ssl_parse_finished(ssl);
+      case (int)SSL_CLIENT_FINISHED: ret = ssl_parse_finished(ssl);
       break;
-      case SSL_SERVER_CHANGE_CIPHER_SPEC:
+      case (int)SSL_SERVER_CHANGE_CIPHER_SPEC:
       ret = ssl_write_change_cipher_spec(ssl);
       break;
-      case SSL_SERVER_FINISHED: ret = ssl_write_finished(ssl);
+      case (int)SSL_SERVER_FINISHED: ret = ssl_write_finished(ssl);
       break;
-      case SSL_FLUSH_BUFFERS: ;
-      ssl->state = SSL_HANDSHAKE_OVER;
+      case (int)SSL_FLUSH_BUFFERS: ;
+      ssl->state = (int)SSL_HANDSHAKE_OVER;
       break;
       default: ;
       __retres = -0x7100;
@@ -30688,8 +30691,8 @@ int ssl_write_finished(ssl_context *ssl)
   ssl->out_msgtype = 22;
   *(ssl->out_msg + 0) = (unsigned char)20;
   if (ssl->resume != 0) 
-    if (ssl->endpoint == 0) ssl->state = SSL_HANDSHAKE_OVER;
-    else ssl->state = SSL_CLIENT_CHANGE_CIPHER_SPEC;
+    if (ssl->endpoint == 0) ssl->state = (int)SSL_HANDSHAKE_OVER;
+    else ssl->state = (int)SSL_CLIENT_CHANGE_CIPHER_SPEC;
   else (ssl->state) ++;
   ssl->do_crypt = 1;
   ret = ssl_write_record(ssl);
@@ -30741,8 +30744,8 @@ int ssl_parse_finished(ssl_context *ssl)
     goto return_label;
   }
   if (ssl->resume != 0) {
-    if (ssl->endpoint == 0) ssl->state = SSL_CLIENT_CHANGE_CIPHER_SPEC;
-    if (ssl->endpoint == 1) ssl->state = SSL_HANDSHAKE_OVER;
+    if (ssl->endpoint == 0) ssl->state = (int)SSL_CLIENT_CHANGE_CIPHER_SPEC;
+    if (ssl->endpoint == 1) ssl->state = (int)SSL_HANDSHAKE_OVER;
   }
   else (ssl->state) ++;
   __retres = 0;
@@ -30781,7 +30784,7 @@ int ssl_init(ssl_context *ssl)
 
 void ssl_session_reset(ssl_context *ssl)
 {
-  ssl->state = SSL_HELLO_REQUEST;
+  ssl->state = (int)SSL_HELLO_REQUEST;
   ssl->in_offt = (unsigned char *)0;
   ssl->in_msgtype = 0;
   ssl->in_msglen = (size_t)0;
@@ -31130,7 +31133,7 @@ int ssl_read(ssl_context *ssl, unsigned char *buf, size_t len)
   int __retres;
   int ret;
   size_t n;
-  if (ssl->state != SSL_HANDSHAKE_OVER) {
+  if ((unsigned int)ssl->state != SSL_HANDSHAKE_OVER) {
     ret = ssl_handshake(ssl);
     if (ret != 0) {
       __retres = ret;
@@ -31179,7 +31182,7 @@ int ssl_write(ssl_context *ssl, unsigned char const *buf, size_t len)
   int __retres;
   int ret;
   size_t n;
-  if (ssl->state != SSL_HANDSHAKE_OVER) {
+  if ((unsigned int)ssl->state != SSL_HANDSHAKE_OVER) {
     ret = ssl_handshake(ssl);
     if (ret != 0) {
       __retres = ret;
@@ -31217,7 +31220,7 @@ int ssl_close_notify(ssl_context *ssl)
     __retres = ret;
     goto return_label;
   }
-  if (ssl->state == SSL_HANDSHAKE_OVER) {
+  if ((unsigned int)ssl->state == SSL_HANDSHAKE_OVER) {
     ssl->out_msgtype = 21;
     ssl->out_msglen = (size_t)2;
     *(ssl->out_msg + 0) = (unsigned char)1;

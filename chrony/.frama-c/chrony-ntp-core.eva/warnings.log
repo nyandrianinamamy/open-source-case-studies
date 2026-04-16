@@ -738,8 +738,7 @@
          main :: fc_stubs.c:37 <-
          eva_main
 [eva:alarm] conf.c:761: Warning: 
-  accessing uninitialized left-value.
-  assert \initialized((unsigned char *)ref);
+  accessing uninitialized left-value. assert \initialized(&(ref[0]));
   stack: parse_refclock :: conf.c:571 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -775,8 +774,7 @@
          main :: fc_stubs.c:37 <-
          eva_main
 [eva:alarm] conf.c:757: Warning: 
-  accessing uninitialized left-value.
-  assert \initialized((unsigned char *)ref);
+  accessing uninitialized left-value. assert \initialized(&(ref[0]));
   stack: parse_refclock :: conf.c:571 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -4179,7 +4177,7 @@
          main :: fc_stubs.c:37 <-
          eva_main
 [eva:alarm] keys.c:214: Warning: 
-  accessing uninitialized left-value. assert \initialized((char *)line);
+  accessing uninitialized left-value. assert \initialized(&(line[0]));
   stack: KEY_Reload :: keys.c:80 <-
          KEY_Initialise :: test/unit/ntp_core.c:328 <-
          test_unit :: test/unit/test.c:70 <-

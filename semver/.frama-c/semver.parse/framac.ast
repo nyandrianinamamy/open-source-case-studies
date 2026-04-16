@@ -14,11 +14,11 @@ struct semver_version_s {
 };
 typedef struct semver_version_s semver_t;
 enum operators {
-    SYMBOL_GT = 0x3e,
-    SYMBOL_LT = 0x3c,
-    SYMBOL_EQ = 0x3d,
-    SYMBOL_TF = 0x7e,
-    SYMBOL_CF = 0x5e
+    SYMBOL_GT = (unsigned int)0x3e,
+    SYMBOL_LT = (unsigned int)0x3c,
+    SYMBOL_EQ = (unsigned int)0x3d,
+    SYMBOL_TF = (unsigned int)0x7e,
+    SYMBOL_CF = (unsigned int)0x5e
 };
 struct test_case {
    char *x ;
@@ -505,27 +505,27 @@ int semver_satisfies(semver_t x, semver_t y, char const *op)
   int second;
   first = (int)*(op + 0);
   second = (int)*(op + 1);
-  if (first == SYMBOL_CF) {
+  if ((unsigned int)first == SYMBOL_CF) {
     int tmp;
     tmp = semver_satisfies_caret(x,y);
     __retres = tmp;
     goto return_label;
   }
-  if (first == SYMBOL_TF) {
+  if ((unsigned int)first == SYMBOL_TF) {
     int tmp_0;
     tmp_0 = semver_satisfies_patch(x,y);
     __retres = tmp_0;
     goto return_label;
   }
-  if (first == SYMBOL_EQ) {
+  if ((unsigned int)first == SYMBOL_EQ) {
     int tmp_1;
     tmp_1 = semver_eq(x,y);
     __retres = tmp_1;
     goto return_label;
   }
-  if (first == SYMBOL_GT) {
+  if ((unsigned int)first == SYMBOL_GT) {
     int tmp_3;
-    if (second == SYMBOL_EQ) {
+    if ((unsigned int)second == SYMBOL_EQ) {
       int tmp_2;
       tmp_2 = semver_gte(x,y);
       __retres = tmp_2;
@@ -535,9 +535,9 @@ int semver_satisfies(semver_t x, semver_t y, char const *op)
     __retres = tmp_3;
     goto return_label;
   }
-  if (first == SYMBOL_LT) {
+  if ((unsigned int)first == SYMBOL_LT) {
     int tmp_5;
-    if (second == SYMBOL_EQ) {
+    if ((unsigned int)second == SYMBOL_EQ) {
       int tmp_4;
       tmp_4 = semver_lte(x,y);
       __retres = tmp_4;

@@ -23,14 +23,14 @@ struct kgflags_double_array {
 };
 typedef struct kgflags_double_array kgflags_double_array_t;
 enum _kgflags_flag_kind {
-    KGFLAGS_FLAG_KIND_NONE = 0,
-    KGFLAGS_FLAG_KIND_STRING = 1,
-    KGFLAGS_FLAG_KIND_BOOL = 2,
-    KGFLAGS_FLAG_KIND_INT = 3,
-    KGFLAGS_FLAG_KIND_DOUBLE = 4,
-    KGFLAGS_FLAG_KIND_STRING_ARRAY = 5,
-    KGFLAGS_FLAG_KIND_INT_ARRAY = 6,
-    KGFLAGS_FLAG_KIND_DOUBLE_ARRAY = 7
+    KGFLAGS_FLAG_KIND_NONE = 0U,
+    KGFLAGS_FLAG_KIND_STRING = 1U,
+    KGFLAGS_FLAG_KIND_BOOL = 2U,
+    KGFLAGS_FLAG_KIND_INT = 3U,
+    KGFLAGS_FLAG_KIND_DOUBLE = 4U,
+    KGFLAGS_FLAG_KIND_STRING_ARRAY = 5U,
+    KGFLAGS_FLAG_KIND_INT_ARRAY = 6U,
+    KGFLAGS_FLAG_KIND_DOUBLE_ARRAY = 7U
 };
 typedef enum _kgflags_flag_kind _kgflags_flag_kind_t;
 union __anonunion_default_value_1 {
@@ -60,17 +60,17 @@ struct _kgflags_flag {
 };
 typedef struct _kgflags_flag _kgflags_flag_t;
 enum _kgflags_error_kind {
-    KGFLAGS_ERROR_KIND_NONE = 0,
-    KGFLAGS_ERROR_KIND_MISSING_VALUE = 1,
-    KGFLAGS_ERROR_KIND_UNKNOWN_FLAG = 2,
-    KGFLAGS_ERROR_KIND_UNASSIGNED_FLAG = 3,
-    KGFLAGS_ERROR_KIND_INVALID_INT = 4,
-    KGFLAGS_ERROR_KIND_INVALID_DOUBLE = 5,
-    KGFLAGS_ERROR_KIND_TOO_MANY_FLAGS = 6,
-    KGFLAGS_ERROR_KIND_TOO_MANY_NON_FLAG_ARGS = 7,
-    KGFLAGS_ERROR_KIND_MULTIPLE_ASSIGNMENT = 8,
-    KGFLAGS_ERROR_KIND_DUPLICATE_FLAG = 9,
-    KGFLAGS_ERROR_KIND_PREFIX_NO = 10
+    KGFLAGS_ERROR_KIND_NONE = 0U,
+    KGFLAGS_ERROR_KIND_MISSING_VALUE = 1U,
+    KGFLAGS_ERROR_KIND_UNKNOWN_FLAG = 2U,
+    KGFLAGS_ERROR_KIND_UNASSIGNED_FLAG = 3U,
+    KGFLAGS_ERROR_KIND_INVALID_INT = 4U,
+    KGFLAGS_ERROR_KIND_INVALID_DOUBLE = 5U,
+    KGFLAGS_ERROR_KIND_TOO_MANY_FLAGS = 6U,
+    KGFLAGS_ERROR_KIND_TOO_MANY_NON_FLAG_ARGS = 7U,
+    KGFLAGS_ERROR_KIND_MULTIPLE_ASSIGNMENT = 8U,
+    KGFLAGS_ERROR_KIND_DUPLICATE_FLAG = 9U,
+    KGFLAGS_ERROR_KIND_PREFIX_NO = 10U
 };
 typedef enum _kgflags_error_kind _kgflags_error_kind_t;
 struct _kgflags_error {
@@ -1179,7 +1179,7 @@ static _kgflags_flag_t *_kgflags_get_flag(char const *name,
           __retres = flag;
           goto return_label;
         }
-        if (flag->kind == (unsigned int)KGFLAGS_FLAG_KIND_BOOL) {
+        if (flag->kind == KGFLAGS_FLAG_KIND_BOOL) {
           char *tmp_1;
           tmp_1 = strstr(name,"no-");
           ;
