@@ -20,20 +20,20 @@
 |kgflags|Header-only command-line parsing library|https://github.com/kgabis/kgflags|2|130|5|1222|NO_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|library|
 |khash|Standalone, generic C library|https://github.com/attractivechaos/klib|1|0|2|308|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|library|
 |kilo|Text editor in less than 1000 lines of code|https://github.com/antirez/kilo/blob/master/kilo.c|1|584|2|1012|HAS_DYN_ALLOC, REM_RECURSION, NO_FLOAT|executable|
-|libmodbus|Library to send/receive data according to the Modbus protocol|https://github.com/stephane/libmodbus|2|144|22|5172|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|library|
+|libmodbus|Library to send/receive data according to the Modbus protocol|https://github.com/stephane/libmodbus|2|146|22|5172|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|library|
 |libspng|Library for writing and reading PNG files|https://github.com/randy408/libspng|1|186|5|3337|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|library|
 |libyaml|Library for parsing and emitting YAML|https://github.com/yaml/libyaml|2|151|25|10548|HAS_DYN_ALLOC, UNUSED_RECURSION, NO_FLOAT|library|
-|line-following-robot|Very simple AVR-based robot (student project)|https://github.com/Fabio-Morais/Line-Follower-Robot|1|4|21|3560|NO_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|executable|
+|line-following-robot|Very simple AVR-based robot (student project)|https://github.com/Fabio-Morais/Line-Follower-Robot|1|0|21|3560|NO_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|executable|
 |mbedtls|Implementation of the TLS and SSL protocols (formerly PolarSSL)|https://github.com/Mbed-TLS/mbedtls|179|-1|423|138478|HAS_DYN_ALLOC, HAS_RECURSION, NO_FLOAT|library|
 |microstrain|Driver for a LORD/Microstrain Inertial Measurement Unit (IMU) sensor|https://github.com/ros-drivers/microstrain_mips|1|789|69|19075|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|library|
 |mini-gmp|Implementation of a subset of GNU's Multiple Precision Arithmetic library|https://gmplib.org/|1|69|35|8686|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|library|
 |miniz|Compression library in a single source file, implementing zlib and Deflate|https://github.com/richgel999/miniz|6|5665|26|8299|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|library|
 |monocypher|Small, self-contained cryptographic library|https://monocypher.org|1|113|42|23680|HAS_DYN_ALLOC(tests), NO_RECURSION, NO_FLOAT|library|
-|papabench|Real time benchmark based on the Paparazzi unmanned aerial vehicle (UAV) code|https://github.com/t-crest/patmos-benchmarks/tree/master/PapaBench-0.4|1|47|80|7251|NO_DYN_ALLOC, UNUSED_RECURSION, HAS_FLOAT|executable|
+|papabench|Real time benchmark based on the Paparazzi unmanned aerial vehicle (UAV) code|https://github.com/t-crest/patmos-benchmarks/tree/master/PapaBench-0.4|1|48|80|7251|NO_DYN_ALLOC, UNUSED_RECURSION, HAS_FLOAT|executable|
 |polarssl|Implementation of the TLS and SSL protocols (formerly PolarSSL)|https://github.com/ARMmbed/mbedtls|1|139|118|28873|HAS_DYN_ALLOC, REM_RECURSION, NO_FLOAT|library|
 |powerwindow|Distributed power window control, by CoSys-Lab, part of TACLeBench|https://github.com/tacle/tacle-bench/tree/master/bench/app/powerwindow|1|0|39|2918|NO_DYN_ALLOC, NO_RECURSION, NO_FLOAT|executable|
 |qlz|Fast compression library|http://www.quicklz.com|4|118|7|963|HAS_DYN_ALLOC(tests), NO_RECURSION, NO_FLOAT|library|
-|safestringlib|Library for handling strings securely|https://github.com/intel/safestringlib|1|592|148|14922|NO_DYN_ALLOC, NO_RECURSION, NO_FLOAT|library|
+|safestringlib|Library for handling strings securely|https://github.com/intel/safestringlib|1|593|148|14922|NO_DYN_ALLOC, NO_RECURSION, NO_FLOAT|library|
 |semver|Parser and renderer for semantic versioning 2.0.0|https://github.com/h2non/semver.c|1|97|4|1034|HAS_DYN_ALLOC, NO_RECURSION, NO_FLOAT|executable|
 |snprintf|Lightweight implementation of snprintf|https://github.com/mirtoto/snprintf|66|3|4|1068|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|library|
 |solitaire|Implementation of Bruce Schneier's card cipher, Solitaire (aka Pontifex)|http://www.ciphergoth.org/crypto/solitaire/|1|286|1|263|NO_DYN_ALLOC, NO_RECURSION, NO_FLOAT|executable|
@@ -41,7 +41,7 @@
 |tsvc|Test suite for vectorizing compilers|http://polaris.cs.uiuc.edu/~maleki1/TSVC.tar.gz|1|49|2|4041|HAS_DYN_ALLOC, NO_RECURSION, HAS_FLOAT|test suite|
 |tweetnacl-usable|Cryptographic library in 100 tweets, in a more usable form|https://twitter.com/TweetNaCl|1|2|5|1072|HAS_DYN_ALLOC, NO_RECURSION, NO_FLOAT|library|
 |verisec|Buffer overflow benchmark|https://security.csl.toronto.edu/wp-content/uploads/2018/06/Verisec-ASE2007.pdf|275|698|320|14561|HAS_DYN_ALLOC, NO_RECURSION, NO_FLOAT|test suite|
-|x509-parser|RTE-free X.509 parser|https://github.com/ANSSI-FR/x509-parser|1|665|3|5057|NO_DYN_ALLOC, NO_RECURSION, NO_FLOAT|executable|
+|x509-parser|RTE-free X.509 parser|https://github.com/ANSSI-FR/x509-parser|1|662|3|5057|NO_DYN_ALLOC, NO_RECURSION, NO_FLOAT|executable|
 
 Note: the 'Tags' column refers to code features that may be found in the code.
       A few examples are presented below.
