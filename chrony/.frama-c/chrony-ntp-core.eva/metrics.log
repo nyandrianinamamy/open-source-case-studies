@@ -31,11 +31,11 @@
 [metrics:eva:unreached] 
   References to non-analyzed functions
   ------------------------------------
-  Function check_packet_auth calls KEY_CheckAuth (at ntp_core.c:1353)
+  Function check_packet_auth calls KEY_CheckAuth (at ntp_core.c:1353-1354)
   Function check_packet_auth calls is_zero_data (at ntp_core.c:1393)
   Function check_packet_auth calls is_zero_data (at ntp_core.c:1395)
   Function CLG_GetClientIndex calls get_index (at clientlog.c:455)
-  Function CLG_LogNTPAccess calls update_record (at clientlog.c:473)
+  Function CLG_LogNTPAccess calls update_record (at clientlog.c:473-476)
   Function CLG_LogNTPAccess calls get_index (at clientlog.c:482)
   Function get_record calls UTI_IPToHash (at clientlog.c:176)
   Function get_record calls UTI_CompareIPs (at clientlog.c:181)

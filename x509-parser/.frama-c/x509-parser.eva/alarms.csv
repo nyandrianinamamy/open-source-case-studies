@@ -91,7 +91,6 @@ src	x509-parser.c	1685	parse_algoid_params_ecdsa_with	precondition	Unknown	len >
 src	x509-parser.c	1689	parse_algoid_params_ecdsa_with	postcondition	Unknown	\old(buf) ≢ \null ∧ \old(len) ≡ 0 ⇒ \result ≡ 0
 src	x509-parser.c	1690	parse_algoid_params_ecdsa_with	postcondition	Unknown	\old(len) ≢ 0 ⇒ \result < 0
 src	x509-parser.c	1821	find_curve_by_oid	precondition	Unknown	len > 0 ∧ buf ≢ (u8 const *)0 ⇒ \valid_read(buf + (0 .. len - 1))
-src	x509-parser.c	1822	find_curve_by_oid	postcondition	Unknown	\result ≢ (_curve const *)0 ⇒ (∃ ℤ i; 0 ≤ i < sizeof(known_curves) / sizeof(known_curves[0]) ∧ \result ≡ known_curves[i])
 src	x509-parser.c	1853	find_curve_by_oid	user assertion	Unknown	\valid_read(buf + (0 .. len - 1))
 src	x509-parser.c	1870	parse_algoid_params_ecPublicKey	precondition	Unknown	len > 0 ∧ buf ≢ \null ⇒ \valid_read(buf + (0 .. len - 1))
 src	x509-parser.c	1873	parse_algoid_params_ecPublicKey	postcondition	Unknown	\old(len) ≡ 0 ⇒ \result < 0
@@ -217,7 +216,6 @@ src	x509-parser.c	3392	parse_rdn_val_pseudo	precondition	Unknown	len > 0 ∧ buf
 src	x509-parser.c	3394	parse_rdn_val_pseudo	postcondition	Unknown	\old(len) ≡ 0 ⇒ \result < 0
 src	x509-parser.c	3400	parse_rdn_val_pseudo	precondition of parse_directory_string	Unknown	len > 0 ∧ buf ≢ \null ⇒ \valid_read(buf + (0 .. len - 1))
 src	x509-parser.c	3481	find_dn_by_oid	precondition	Unknown	len > 0 ∧ buf ≢ (u8 const *)0 ⇒ \valid_read(buf + (0 .. len - 1))
-src	x509-parser.c	3482	find_dn_by_oid	postcondition	Unknown	\result ≢ (_name_oid const *)0 ⇒ (∃ ℤ i; 0 ≤ i < sizeof(known_dn_oids) / sizeof(known_dn_oids[0]) ∧ \result ≡ &known_dn_oids[i])
 src	x509-parser.c	3483	find_dn_by_oid	postcondition	Unknown	\old(len) ≡ 0 ⇒ \result ≡ (_name_oid const *)0
 src	x509-parser.c	3513	find_dn_by_oid	user assertion	Unknown	\valid_read(buf + (0 .. len - 1))
 src	x509-parser.c	3536	parse_AttributeTypeAndValue	precondition	Unknown	len > 0 ∧ buf ≢ \null ⇒ \valid_read(buf + (0 .. len - 1))
@@ -520,7 +518,6 @@ src	x509-parser.c	7100	parse_ext_policyConstraints	unsigned_downcast	Unknown	0 �
 src	x509-parser.c	7104	parse_ext_policyConstraints	precondition of parse_integer	Unknown	len > 0 ∧ buf ≢ \null ⇒ \valid_read(buf + (0 .. len - 1))
 src	x509-parser.c	7119	parse_ext_policyConstraints	unsigned_downcast	Unknown	0 ≤ (int)((int)remain - (int)parsed)
 src	x509-parser.c	7190	find_kp_by_oid	precondition	Unknown	len > 0 ∧ buf ≢ (u8 const *)0 ⇒ \valid_read(buf + (0 .. len - 1))
-src	x509-parser.c	7191	find_kp_by_oid	postcondition	Unknown	\result ≢ (_kp_oid const *)0 ⇒ (∃ ℤ i; 0 ≤ i < sizeof(known_kp_oids) / sizeof(known_kp_oids[0]) ∧ \result ≡ &known_kp_oids[i])
 src	x509-parser.c	7192	find_kp_by_oid	postcondition	Unknown	\old(len) ≡ 0 ⇒ \result ≡ (_kp_oid const *)0
 src	x509-parser.c	7222	find_kp_by_oid	user assertion	Unknown	\valid_read(buf + (0 .. len - 1))
 src	x509-parser.c	7246	parse_ext_EKU	precondition	Unknown	len > 0 ∧ buf ≢ \null ⇒ \valid_read(buf + (0 .. len - 1))

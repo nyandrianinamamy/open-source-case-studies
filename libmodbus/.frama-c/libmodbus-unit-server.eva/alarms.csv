@@ -1,5 +1,6 @@
 directory	file	line	function	property kind	status	property
 FRAMAC_SHARE/libc	stdio.h	239	printf_va_15	precondition	Unknown	valid_read_string(param0)
+FRAMAC_SHARE/libc	stdio.h	239	printf_va_6	precondition	Unknown	valid_read_string(param0)
 FRAMAC_SHARE/libc	string.c	132	strcmp	mem_access	Unknown	\valid_read(s1 + i)
 FRAMAC_SHARE/libc	string.c	135	strcmp	mem_access	Unknown	\valid_read((unsigned char *)s1 + i)
 FRAMAC_SHARE/libc	string.h	128	memcpy	precondition	Unknown	valid_dest: valid_or_empty(dest, n)
@@ -40,6 +41,7 @@ src	modbus-tcp.c	180	_modbus_tcp_recv	precondition of recv	Unknown	valid_sockfd:
 src	modbus-tcp.c	451	_modbus_tcp_flush	precondition of recv	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
 src	modbus-tcp.c	472	_modbus_tcp_flush	signed_overflow	Unknown	rc_sum + rc ≤ 2147483647
 src	modbus-tcp.c	663	modbus_tcp_accept	precondition of accept	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
+src	modbus-tcp.c	671	modbus_tcp_accept	precondition of printf_va_6	Unknown	valid_read_string(param0)
 src	modbus-tcp.c	693	modbus_tcp_pi_accept	precondition of accept	Unknown	valid_sockfd: 0 ≤ sockfd < 1024
 src	modbus.c	105	_sleep_response_timeout	precondition of nanosleep	Unknown	valid_nanosecs: 0 ≤ rqtp->tv_nsec < 1000000000
 src	modbus.c	176	send_msg	initialization	Unknown	\initialized(msg + i)

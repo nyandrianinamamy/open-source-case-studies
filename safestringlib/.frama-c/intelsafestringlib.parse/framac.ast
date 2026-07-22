@@ -36532,8 +36532,8 @@ int test_wmemmove_s(void)
     mem2_3[i] = (wchar_t)55;
     i ++;
   }
-  rc = wmemmove_s((wchar_t *)((char *)(mem1_4) + 1),(rsize_t)(256 * 4),
-                  (wchar_t const *)(mem2_3),(rsize_t)10);
+  rc = wmemmove_s((wchar_t *)((wchar_t)((char *)(mem1_4) + 1)),
+                  (rsize_t)(256 * 4),(wchar_t const *)(mem2_3),(rsize_t)10);
   if (rc != 0) printf("%s %u  Error rc=%u \n",(char *)"test_wmemmove_s",
                       (unsigned int)410,(unsigned int)rc); /* printf_va_1309 */
   else {
@@ -36560,8 +36560,8 @@ int test_wmemmove_s(void)
     mem2_3[i] = (wchar_t)55;
     i ++;
   }
-  rc = wmemmove_s((wchar_t *)((char *)(mem1_4) + 2),(rsize_t)(256 * 4),
-                  (wchar_t const *)(mem2_3),(rsize_t)10);
+  rc = wmemmove_s((wchar_t *)((wchar_t)((char *)(mem1_4) + 2)),
+                  (rsize_t)(256 * 4),(wchar_t const *)(mem2_3),(rsize_t)10);
   if (rc != 0) printf("%s %u  Error rc=%u \n",(char *)"test_wmemmove_s",
                       (unsigned int)436,(unsigned int)rc); /* printf_va_1313 */
   else {
