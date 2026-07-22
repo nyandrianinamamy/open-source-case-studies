@@ -25,6 +25,7 @@ sw/airborne/autopilot	main.c	316	send_climb	index_bound	Unknown	tx_tail < 255
 sw/airborne/autopilot	main.c	319	send_mode	index_bound	Unknown	tx_tail < 255
 sw/airborne/autopilot	main.c	322	send_debug	index_bound	Unknown	tx_tail < 255
 sw/airborne/autopilot	main.c	325	send_nav_ref	index_bound	Unknown	tx_tail < 255
+sw/airborne/autopilot	main.c	344	radio_control_task	pointer_downcast	Unknown	(unsigned int)(&from_fbw.status) ≤ 65535
 sw/airborne/autopilot	main.c	362	radio_control_task	index_bound	Unknown	tx_tail < 255
 sw/airborne/autopilot	main.c	407	send_nav_values	index_bound	Unknown	tx_tail < 255
 sw/airborne/autopilot	main.c	492	periodic_task	float_to_int	Unknown	(double)stage_time_ds + .5 < 32768

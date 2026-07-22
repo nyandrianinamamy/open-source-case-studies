@@ -198,7 +198,7 @@
          eva_main
 [eva:alarm] conf.c:1284: Warning: 
   function sscanf_va_52: precondition valid_read_string(s) got status unknown.
-  stack: sscanf_va_52 :: conf.c:1284 <-
+  stack: sscanf_va_52 :: conf.c:1284-1285 <-
          parse_tempcomp :: conf.c:593 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -811,14 +811,14 @@
 [eva:alarm] conf.c:684: Warning: 
   function sscanf_va_24: precondition valid_read_string(s) got status unknown.
   stack: sscanf_va_24 :: conf.c:684 <-
-         parse_ratelimit :: conf.c:568 <-
+         parse_ratelimit :: conf.c:568-569 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
          eva_main
 [eva:alarm] conf.c:681: Warning: 
   out of bounds read. assert \valid_read(line);
-  stack: parse_ratelimit :: conf.c:568 <-
+  stack: parse_ratelimit :: conf.c:568-569 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -1679,7 +1679,7 @@
   out of bounds write.
   assert
   \valid(pglob->gl_pathv + (size_t)((size_t)(reserve_offs + prev_len) + i_1));
-  stack: glob :: conf.c:1379 <-
+  stack: glob :: conf.c:1379-1383 <-
          parse_include :: conf.c:505 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -1690,7 +1690,7 @@
   assert
   \valid(pglob->gl_pathv +
          (size_t)((size_t)(prev_len + reserve_offs) + pglob->gl_pathc));
-  stack: glob :: conf.c:1379 <-
+  stack: glob :: conf.c:1379-1383 <-
          parse_include :: conf.c:505 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -2092,7 +2092,7 @@
 [eva:alarm] conf.c:684: Warning: 
   function sscanf_va_24: precondition valid_read_string(s) got status unknown.
   stack: sscanf_va_24 :: conf.c:684 <-
-         parse_ratelimit :: conf.c:481 <-
+         parse_ratelimit :: conf.c:481-482 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -3260,8 +3260,8 @@
          eva_main
 [eva:malloc:weak] FRAMAC_SHARE/libc/glob.c:52: Warning: 
   marking variable `__realloc_glob_l52_0' as weak
-  stack: realloc :: FRAMAC_SHARE/libc/glob.c:52 <-
-         glob :: conf.c:1379 <-
+  stack: realloc :: FRAMAC_SHARE/libc/glob.c:52-53 <-
+         glob :: conf.c:1379-1383 <-
          parse_include :: conf.c:505 <-
          CNF_ParseLine :: test/unit/ntp_core.c:317 <-
          test_unit :: test/unit/test.c:70 <-
@@ -4593,7 +4593,7 @@
   bsearch((void const *)(& specimen), (void const *)keys_ptr, (size_t)ARR_GetSize(keys), sizeof(Key), & compare_keys_by_id))
   stack: lookup_key :: keys.c:290 <-
          get_key_by_id :: keys.c:390 <-
-         KEY_GenerateAuth :: keys.c:115 <-
+         KEY_GenerateAuth :: keys.c:115-116 <-
          determine_hash_delay :: keys.c:257 <-
          KEY_Reload :: keys.c:80 <-
          KEY_Initialise :: test/unit/ntp_core.c:328 <-
@@ -4604,7 +4604,7 @@
   pointer comparison. assert \pointer_comparable((void *)0, (void *)where);
   stack: lookup_key :: keys.c:290 <-
          get_key_by_id :: keys.c:390 <-
-         KEY_GenerateAuth :: keys.c:115 <-
+         KEY_GenerateAuth :: keys.c:115-116 <-
          determine_hash_delay :: keys.c:257 <-
          KEY_Reload :: keys.c:80 <-
          KEY_Initialise :: test/unit/ntp_core.c:328 <-
@@ -4615,7 +4615,7 @@
   pointer subtraction. assert \base_addr(where) ≡ \base_addr(keys_ptr);
   stack: lookup_key :: keys.c:290 <-
          get_key_by_id :: keys.c:390 <-
-         KEY_GenerateAuth :: keys.c:115 <-
+         KEY_GenerateAuth :: keys.c:115-116 <-
          determine_hash_delay :: keys.c:257 <-
          KEY_Reload :: keys.c:80 <-
          KEY_Initialise :: test/unit/ntp_core.c:328 <-
@@ -4624,7 +4624,7 @@
          eva_main
 [eva:alarm] keys.c:392: Warning: 
   pointer comparison. assert \pointer_comparable((void *)0, (void *)key);
-  stack: KEY_GenerateAuth :: keys.c:115 <-
+  stack: KEY_GenerateAuth :: keys.c:115-116 <-
          determine_hash_delay :: keys.c:257 <-
          KEY_Reload :: keys.c:80 <-
          KEY_Initialise :: test/unit/ntp_core.c:328 <-
@@ -4633,7 +4633,7 @@
          eva_main
 [eva:alarm] keys.c:395: Warning: 
   accessing uninitialized left-value. assert \initialized(&key->len);
-  stack: KEY_GenerateAuth :: keys.c:115 <-
+  stack: KEY_GenerateAuth :: keys.c:115-116 <-
          determine_hash_delay :: keys.c:257 <-
          KEY_Reload :: keys.c:80 <-
          KEY_Initialise :: test/unit/ntp_core.c:328 <-
@@ -4642,7 +4642,7 @@
          eva_main
 [eva:alarm] keys.c:395: Warning: 
   accessing uninitialized left-value. assert \initialized(&key->val);
-  stack: KEY_GenerateAuth :: keys.c:115 <-
+  stack: KEY_GenerateAuth :: keys.c:115-116 <-
          determine_hash_delay :: keys.c:257 <-
          KEY_Reload :: keys.c:80 <-
          KEY_Initialise :: test/unit/ntp_core.c:328 <-
@@ -4651,7 +4651,7 @@
          eva_main
 [eva:alarm] keys.c:395: Warning: 
   accessing uninitialized left-value. assert \initialized(&key->hash_id);
-  stack: KEY_GenerateAuth :: keys.c:115 <-
+  stack: KEY_GenerateAuth :: keys.c:115-116 <-
          determine_hash_delay :: keys.c:257 <-
          KEY_Reload :: keys.c:80 <-
          KEY_Initialise :: test/unit/ntp_core.c:328 <-
@@ -4660,7 +4660,7 @@
          eva_main
 [eva:alarm] keys.c:395: Warning: 
   out of bounds read. assert \valid_read(&key->len);
-  stack: KEY_GenerateAuth :: keys.c:115 <-
+  stack: KEY_GenerateAuth :: keys.c:115-116 <-
          determine_hash_delay :: keys.c:257 <-
          KEY_Reload :: keys.c:80 <-
          KEY_Initialise :: test/unit/ntp_core.c:328 <-
@@ -4669,7 +4669,7 @@
          eva_main
 [eva:alarm] keys.c:395: Warning: 
   out of bounds read. assert \valid_read(&key->val);
-  stack: KEY_GenerateAuth :: keys.c:115 <-
+  stack: KEY_GenerateAuth :: keys.c:115-116 <-
          determine_hash_delay :: keys.c:257 <-
          KEY_Reload :: keys.c:80 <-
          KEY_Initialise :: test/unit/ntp_core.c:328 <-
@@ -4678,7 +4678,7 @@
          eva_main
 [eva:alarm] keys.c:395: Warning: 
   out of bounds read. assert \valid_read(&key->hash_id);
-  stack: KEY_GenerateAuth :: keys.c:115 <-
+  stack: KEY_GenerateAuth :: keys.c:115-116 <-
          determine_hash_delay :: keys.c:257 <-
          KEY_Reload :: keys.c:80 <-
          KEY_Initialise :: test/unit/ntp_core.c:328 <-
@@ -4691,8 +4691,8 @@
   (tmp_0 from inBuf++)
   stack: MD5Update :: hash_intmd5.c:54 <-
          HSH_Hash :: keys.c:364 <-
-         generate_ntp_auth :: keys.c:395 <-
-         KEY_GenerateAuth :: keys.c:115 <-
+         generate_ntp_auth :: keys.c:395-396 <-
+         KEY_GenerateAuth :: keys.c:115-116 <-
          determine_hash_delay :: keys.c:257 <-
          KEY_Reload :: keys.c:80 <-
          KEY_Initialise :: test/unit/ntp_core.c:328 <-
@@ -4704,8 +4704,8 @@
                       (tmp_0 from inBuf++)
   stack: MD5Update :: hash_intmd5.c:54 <-
          HSH_Hash :: keys.c:364 <-
-         generate_ntp_auth :: keys.c:395 <-
-         KEY_GenerateAuth :: keys.c:115 <-
+         generate_ntp_auth :: keys.c:395-396 <-
+         KEY_GenerateAuth :: keys.c:115-116 <-
          determine_hash_delay :: keys.c:257 <-
          KEY_Reload :: keys.c:80 <-
          KEY_Initialise :: test/unit/ntp_core.c:328 <-
@@ -4716,8 +4716,8 @@
   signed overflow. assert -2147483648 ≤ mdi + 1;
   stack: MD5Update :: hash_intmd5.c:56 <-
          HSH_Hash :: keys.c:364 <-
-         generate_ntp_auth :: keys.c:395 <-
-         KEY_GenerateAuth :: keys.c:115 <-
+         generate_ntp_auth :: keys.c:395-396 <-
+         KEY_GenerateAuth :: keys.c:115-116 <-
          determine_hash_delay :: keys.c:257 <-
          KEY_Reload :: keys.c:80 <-
          KEY_Initialise :: test/unit/ntp_core.c:328 <-
@@ -4728,8 +4728,8 @@
   signed overflow. assert mdi + 1 ≤ 2147483647;
   stack: MD5Update :: hash_intmd5.c:56 <-
          HSH_Hash :: keys.c:364 <-
-         generate_ntp_auth :: keys.c:395 <-
-         KEY_GenerateAuth :: keys.c:115 <-
+         generate_ntp_auth :: keys.c:395-396 <-
+         KEY_GenerateAuth :: keys.c:115-116 <-
          determine_hash_delay :: keys.c:257 <-
          KEY_Reload :: keys.c:80 <-
          KEY_Initialise :: test/unit/ntp_core.c:328 <-
@@ -4741,8 +4741,8 @@
                                  (tmp from mdi++)
   stack: MD5Update :: hash_intmd5.c:56 <-
          HSH_Hash :: keys.c:364 <-
-         generate_ntp_auth :: keys.c:395 <-
-         KEY_GenerateAuth :: keys.c:115 <-
+         generate_ntp_auth :: keys.c:395-396 <-
+         KEY_GenerateAuth :: keys.c:115-116 <-
          determine_hash_delay :: keys.c:257 <-
          KEY_Reload :: keys.c:80 <-
          KEY_Initialise :: test/unit/ntp_core.c:328 <-
@@ -4754,8 +4754,8 @@
                                  (tmp from mdi++)
   stack: MD5Update :: hash_intmd5.c:56 <-
          HSH_Hash :: keys.c:364 <-
-         generate_ntp_auth :: keys.c:395 <-
-         KEY_GenerateAuth :: keys.c:115 <-
+         generate_ntp_auth :: keys.c:395-396 <-
+         KEY_GenerateAuth :: keys.c:115-116 <-
          determine_hash_delay :: keys.c:257 <-
          KEY_Reload :: keys.c:80 <-
          KEY_Initialise :: test/unit/ntp_core.c:328 <-
@@ -4767,8 +4767,8 @@
                        (tmp from mdi++)
   stack: MD5Update :: hash_intmd5.c:56 <-
          HSH_Hash :: keys.c:364 <-
-         generate_ntp_auth :: keys.c:395 <-
-         KEY_GenerateAuth :: keys.c:115 <-
+         generate_ntp_auth :: keys.c:395-396 <-
+         KEY_GenerateAuth :: keys.c:115-116 <-
          determine_hash_delay :: keys.c:257 <-
          KEY_Reload :: keys.c:80 <-
          KEY_Initialise :: test/unit/ntp_core.c:328 <-
@@ -4779,8 +4779,8 @@
   all target addresses were invalid. This path is assumed to be dead.
   stack: MD5Update :: hash_intmd5.c:56 <-
          HSH_Hash :: keys.c:364 <-
-         generate_ntp_auth :: keys.c:395 <-
-         KEY_GenerateAuth :: keys.c:115 <-
+         generate_ntp_auth :: keys.c:395-396 <-
+         KEY_GenerateAuth :: keys.c:115-116 <-
          determine_hash_delay :: keys.c:257 <-
          KEY_Reload :: keys.c:80 <-
          KEY_Initialise :: test/unit/ntp_core.c:328 <-
@@ -6313,7 +6313,7 @@
   default assigns. See -generated-spec-* options for more info.
 [eva:alarm] reference.c:1212: Warning: 
   signed overflow. assert -9223372036854775808 ≤ ref_time->tv_sec - 1;
-  stack: REF_GetReferenceParams :: reference.c:1250 <-
+  stack: REF_GetReferenceParams :: reference.c:1250-1251 <-
          REF_GetOurStratum :: ntp_core.c:859 <-
          get_transmit_delay :: ntp_core.c:471 <-
          start_initial_timeout :: ntp_core.c:666 <-
@@ -6370,7 +6370,7 @@
   overflow in conversion from floating-point to integer.
   assert 4.294967296 * (double)nsec < 4294967296;
   stack: UTI_TimespecToNtp64 :: ntp_core.c:1031 <-
-         transmit_packet :: ntp_core.c:1228 <-
+         transmit_packet :: ntp_core.c:1228-1234 <-
          transmit_timeout :: test/unit/ntp_core.c:87 <-
          send_request :: test/unit/ntp_core.c:377 <-
          test_unit :: test/unit/test.c:70 <-
@@ -6382,7 +6382,7 @@
          UTI_GetRandomBytesUrandom :: util.c:1258 <-
          UTI_GetRandomBytes :: util.c:650 <-
          UTI_GetNtp64Fuzz :: ntp_core.c:1041 <-
-         transmit_packet :: ntp_core.c:1228 <-
+         transmit_packet :: ntp_core.c:1228-1234 <-
          transmit_timeout :: test/unit/ntp_core.c:87 <-
          send_request :: test/unit/ntp_core.c:377 <-
          test_unit :: test/unit/test.c:70 <-
@@ -6394,7 +6394,7 @@
          UTI_GetRandomBytesUrandom :: util.c:1258 <-
          UTI_GetRandomBytes :: util.c:650 <-
          UTI_GetNtp64Fuzz :: ntp_core.c:1061 <-
-         transmit_packet :: ntp_core.c:1228 <-
+         transmit_packet :: ntp_core.c:1228-1234 <-
          transmit_timeout :: test/unit/ntp_core.c:87 <-
          send_request :: test/unit/ntp_core.c:377 <-
          test_unit :: test/unit/test.c:70 <-
@@ -6403,7 +6403,7 @@
 [eva:alarm] keys.c:320: Warning: 
   pointer comparison. assert \pointer_comparable((void *)0, (void *)key);
   stack: KEY_GetAuthDelay :: ntp_core.c:1079 <-
-         transmit_packet :: ntp_core.c:1228 <-
+         transmit_packet :: ntp_core.c:1228-1234 <-
          transmit_timeout :: test/unit/ntp_core.c:87 <-
          send_request :: test/unit/ntp_core.c:377 <-
          test_unit :: test/unit/test.c:70 <-
@@ -6412,7 +6412,7 @@
 [eva:alarm] keys.c:323: Warning: 
   accessing uninitialized left-value. assert \initialized(&key->auth_delay);
   stack: KEY_GetAuthDelay :: ntp_core.c:1079 <-
-         transmit_packet :: ntp_core.c:1228 <-
+         transmit_packet :: ntp_core.c:1228-1234 <-
          transmit_timeout :: test/unit/ntp_core.c:87 <-
          send_request :: test/unit/ntp_core.c:377 <-
          test_unit :: test/unit/test.c:70 <-
@@ -6421,7 +6421,7 @@
 [eva:alarm] keys.c:323: Warning: 
   out of bounds read. assert \valid_read(&key->auth_delay);
   stack: KEY_GetAuthDelay :: ntp_core.c:1079 <-
-         transmit_packet :: ntp_core.c:1228 <-
+         transmit_packet :: ntp_core.c:1228-1234 <-
          transmit_timeout :: test/unit/ntp_core.c:87 <-
          send_request :: test/unit/ntp_core.c:377 <-
          test_unit :: test/unit/test.c:70 <-
@@ -6433,7 +6433,7 @@
   (tmp_10 from
   auth_mode ==
   AUTH_SYMMETRIC?KEY_GetAuthDelay(key_id):NSD_GetAuthDelay(key_id))
-  stack: transmit_packet :: ntp_core.c:1228 <-
+  stack: transmit_packet :: ntp_core.c:1228-1234 <-
          transmit_timeout :: test/unit/ntp_core.c:87 <-
          send_request :: test/unit/ntp_core.c:377 <-
          test_unit :: test/unit/test.c:70 <-
@@ -6445,7 +6445,7 @@
   (tmp_10 from
   auth_mode ==
   AUTH_SYMMETRIC?KEY_GetAuthDelay(key_id):NSD_GetAuthDelay(key_id))
-  stack: transmit_packet :: ntp_core.c:1228 <-
+  stack: transmit_packet :: ntp_core.c:1228-1234 <-
          transmit_timeout :: test/unit/ntp_core.c:87 <-
          send_request :: test/unit/ntp_core.c:377 <-
          test_unit :: test/unit/test.c:70 <-
@@ -6454,7 +6454,7 @@
 [eva:alarm] util.c:103: Warning: 
   signed overflow. assert ts->tv_sec - 1 ≤ 9223372036854775807;
   stack: UTI_NormaliseTimespec :: ntp_core.c:1080 <-
-         transmit_packet :: ntp_core.c:1228 <-
+         transmit_packet :: ntp_core.c:1228-1234 <-
          transmit_timeout :: test/unit/ntp_core.c:87 <-
          send_request :: test/unit/ntp_core.c:377 <-
          test_unit :: test/unit/test.c:70 <-
@@ -6463,7 +6463,7 @@
 [eva:alarm] util.c:104: Warning: 
   signed overflow. assert -9223372036854775808 ≤ ts->tv_nsec + 1000000000;
   stack: UTI_NormaliseTimespec :: ntp_core.c:1080 <-
-         transmit_packet :: ntp_core.c:1228 <-
+         transmit_packet :: ntp_core.c:1228-1234 <-
          transmit_timeout :: test/unit/ntp_core.c:87 <-
          send_request :: test/unit/ntp_core.c:377 <-
          test_unit :: test/unit/test.c:70 <-
@@ -6472,7 +6472,7 @@
 [eva:alarm] util.c:104: Warning: 
   signed overflow. assert ts->tv_nsec + 1000000000 ≤ 9223372036854775807;
   stack: UTI_NormaliseTimespec :: ntp_core.c:1080 <-
-         transmit_packet :: ntp_core.c:1228 <-
+         transmit_packet :: ntp_core.c:1228-1234 <-
          transmit_timeout :: test/unit/ntp_core.c:87 <-
          send_request :: test/unit/ntp_core.c:377 <-
          test_unit :: test/unit/test.c:70 <-
@@ -6481,8 +6481,8 @@
 [eva:alarm] util.c:764: Warning: 
   non-finite double value.
   assert \is_finite(\mul_double((double)4.294967296, (double)nsec));
-  stack: UTI_TimespecToNtp64 :: ntp_core.c:1081 <-
-         transmit_packet :: ntp_core.c:1228 <-
+  stack: UTI_TimespecToNtp64 :: ntp_core.c:1081-1082 <-
+         transmit_packet :: ntp_core.c:1228-1234 <-
          transmit_timeout :: test/unit/ntp_core.c:87 <-
          send_request :: test/unit/ntp_core.c:377 <-
          test_unit :: test/unit/test.c:70 <-
@@ -6491,8 +6491,8 @@
 [eva:alarm] util.c:764: Warning: 
   overflow in conversion from floating-point to integer.
   assert -1 < 4.294967296 * (double)nsec;
-  stack: UTI_TimespecToNtp64 :: ntp_core.c:1081 <-
-         transmit_packet :: ntp_core.c:1228 <-
+  stack: UTI_TimespecToNtp64 :: ntp_core.c:1081-1082 <-
+         transmit_packet :: ntp_core.c:1228-1234 <-
          transmit_timeout :: test/unit/ntp_core.c:87 <-
          send_request :: test/unit/ntp_core.c:377 <-
          test_unit :: test/unit/test.c:70 <-
@@ -6502,9 +6502,9 @@
   all target addresses were invalid. This path is assumed to be dead.
   stack: MD5Update :: hash_intmd5.c:56 <-
          HSH_Hash :: keys.c:364 <-
-         generate_ntp_auth :: keys.c:395 <-
-         KEY_GenerateAuth :: ntp_core.c:1090 <-
-         transmit_packet :: ntp_core.c:1228 <-
+         generate_ntp_auth :: keys.c:395-396 <-
+         KEY_GenerateAuth :: ntp_core.c:1090-1092 <-
+         transmit_packet :: ntp_core.c:1228-1234 <-
          transmit_timeout :: test/unit/ntp_core.c:87 <-
          send_request :: test/unit/ntp_core.c:377 <-
          test_unit :: test/unit/test.c:70 <-
@@ -6539,8 +6539,8 @@
   all target addresses were invalid. This path is assumed to be dead.
   stack: MD5Update :: hash_intmd5.c:56 <-
          HSH_Hash :: keys.c:364 <-
-         generate_ntp_auth :: keys.c:395 <-
-         KEY_GenerateAuth :: test/unit/ntp_core.c:190 <-
+         generate_ntp_auth :: keys.c:395-396 <-
+         KEY_GenerateAuth :: test/unit/ntp_core.c:190-191 <-
          send_response :: test/unit/ntp_core.c:379 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -6835,7 +6835,7 @@
          eva_main
 [eva:alarm] ntp_core.c:746: Warning: 
   non-finite double value. assert \is_finite(inst->poll_score);
-  stack: adjust_poll :: ntp_core.c:1509 <-
+  stack: adjust_poll :: ntp_core.c:1509-1510 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
@@ -6846,7 +6846,7 @@
 [eva:alarm] ntp_core.c:746: Warning: 
   overflow in conversion from floating-point to integer.
   assert inst->poll_score < 2147483648;
-  stack: adjust_poll :: ntp_core.c:1509 <-
+  stack: adjust_poll :: ntp_core.c:1509-1510 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
@@ -6857,7 +6857,7 @@
 [eva:alarm] ntp_core.c:746: Warning: 
   signed overflow.
   assert inst->local_poll + (int)inst->poll_score ≤ 2147483647;
-  stack: adjust_poll :: ntp_core.c:1509 <-
+  stack: adjust_poll :: ntp_core.c:1509-1510 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
@@ -6868,7 +6868,7 @@
 [eva:alarm] ntp_core.c:751: Warning: 
   non-finite double value.
   assert \is_finite(\sub_double(inst->poll_score, (double)1.0));
-  stack: adjust_poll :: ntp_core.c:1509 <-
+  stack: adjust_poll :: ntp_core.c:1509-1510 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
@@ -6879,7 +6879,7 @@
 [eva:alarm] ntp_core.c:751: Warning: 
   overflow in conversion from floating-point to integer.
   assert -2147483649 < inst->poll_score - 1.0;
-  stack: adjust_poll :: ntp_core.c:1509 <-
+  stack: adjust_poll :: ntp_core.c:1509-1510 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
@@ -6892,7 +6892,7 @@
   assert
   -2147483648 ≤
   inst->local_poll + (int)\sub_double(inst->poll_score, (double)1.0);
-  stack: adjust_poll :: ntp_core.c:1509 <-
+  stack: adjust_poll :: ntp_core.c:1509-1510 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
@@ -6903,7 +6903,7 @@
 [eva:alarm] ntp_core.c:752: Warning: 
   overflow in conversion from floating-point to integer.
   assert -2147483649 < inst->poll_score - 1.0;
-  stack: adjust_poll :: ntp_core.c:1509 <-
+  stack: adjust_poll :: ntp_core.c:1509-1510 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
@@ -7202,7 +7202,7 @@
          UTI_GetRandomBytesUrandom :: util.c:1258 <-
          UTI_GetRandomBytes :: util.c:650 <-
          UTI_GetNtp64Fuzz :: ntp_core.c:1041 <-
-         transmit_packet :: ntp_core.c:2196 <-
+         transmit_packet :: ntp_core.c:2196-2198 <-
          NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
          process_response :: test/unit/ntp_core.c:381 <-
@@ -7215,7 +7215,7 @@
          UTI_GetRandomBytesUrandom :: util.c:1258 <-
          UTI_GetRandomBytes :: util.c:650 <-
          UTI_GetNtp64Fuzz :: ntp_core.c:1061 <-
-         transmit_packet :: ntp_core.c:2196 <-
+         transmit_packet :: ntp_core.c:2196-2198 <-
          NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
          process_response :: test/unit/ntp_core.c:381 <-
@@ -7462,7 +7462,7 @@
          eva_main
 [eva:alarm] sourcestats.c:669: Warning: 
   accessing uninitialized left-value. assert \initialized(&inst->offsets[i]);
-  stack: SST_GetSelectionData :: sources.c:648 <-
+  stack: SST_GetSelectionData :: sources.c:648-651 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -7474,7 +7474,7 @@
 [eva:alarm] sourcestats.c:670: Warning: 
   accessing uninitialized left-value.
   assert \initialized(&inst->root_delays[j]);
-  stack: SST_GetSelectionData :: sources.c:648 <-
+  stack: SST_GetSelectionData :: sources.c:648-651 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -7486,7 +7486,7 @@
 [eva:alarm] sourcestats.c:670: Warning: 
   accessing uninitialized left-value.
   assert \initialized(&inst->root_dispersions[j]);
-  stack: SST_GetSelectionData :: sources.c:648 <-
+  stack: SST_GetSelectionData :: sources.c:648-651 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -7782,7 +7782,7 @@
 [eva:alarm] regress.c:678: Warning: 
   accessing uninitialized left-value. assert \initialized(x1 + i);
   stack: RGR_MultipleRegress :: sourcestats.c:443 <-
-         estimate_asymmetry :: sourcestats.c:485 <-
+         estimate_asymmetry :: sourcestats.c:485-486 <-
          correct_asymmetry :: sourcestats.c:560 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
@@ -7796,7 +7796,7 @@
 [eva:alarm] regress.c:679: Warning: 
   accessing uninitialized left-value. assert \initialized(x2 + i);
   stack: RGR_MultipleRegress :: sourcestats.c:443 <-
-         estimate_asymmetry :: sourcestats.c:485 <-
+         estimate_asymmetry :: sourcestats.c:485-486 <-
          correct_asymmetry :: sourcestats.c:560 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
@@ -7810,7 +7810,7 @@
 [eva:alarm] regress.c:683: Warning: 
   accessing uninitialized left-value. assert \initialized(y + i);
   stack: RGR_MultipleRegress :: sourcestats.c:443 <-
-         estimate_asymmetry :: sourcestats.c:485 <-
+         estimate_asymmetry :: sourcestats.c:485-486 <-
          correct_asymmetry :: sourcestats.c:560 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
@@ -7824,7 +7824,7 @@
 [eva:alarm] regress.c:680: Warning: 
   accessing uninitialized left-value. assert \initialized(x1 + i);
   stack: RGR_MultipleRegress :: sourcestats.c:443 <-
-         estimate_asymmetry :: sourcestats.c:485 <-
+         estimate_asymmetry :: sourcestats.c:485-486 <-
          correct_asymmetry :: sourcestats.c:560 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
@@ -7838,7 +7838,7 @@
 [eva:alarm] regress.c:681: Warning: 
   accessing uninitialized left-value. assert \initialized(x1 + i);
   stack: RGR_MultipleRegress :: sourcestats.c:443 <-
-         estimate_asymmetry :: sourcestats.c:485 <-
+         estimate_asymmetry :: sourcestats.c:485-486 <-
          correct_asymmetry :: sourcestats.c:560 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
@@ -7852,7 +7852,7 @@
 [eva:alarm] regress.c:681: Warning: 
   accessing uninitialized left-value. assert \initialized(x2 + i);
   stack: RGR_MultipleRegress :: sourcestats.c:443 <-
-         estimate_asymmetry :: sourcestats.c:485 <-
+         estimate_asymmetry :: sourcestats.c:485-486 <-
          correct_asymmetry :: sourcestats.c:560 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
@@ -7866,7 +7866,7 @@
 [eva:alarm] regress.c:682: Warning: 
   accessing uninitialized left-value. assert \initialized(x2 + i);
   stack: RGR_MultipleRegress :: sourcestats.c:443 <-
-         estimate_asymmetry :: sourcestats.c:485 <-
+         estimate_asymmetry :: sourcestats.c:485-486 <-
          correct_asymmetry :: sourcestats.c:560 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
@@ -7880,7 +7880,7 @@
 [eva:alarm] regress.c:683: Warning: 
   accessing uninitialized left-value. assert \initialized(x1 + i);
   stack: RGR_MultipleRegress :: sourcestats.c:443 <-
-         estimate_asymmetry :: sourcestats.c:485 <-
+         estimate_asymmetry :: sourcestats.c:485-486 <-
          correct_asymmetry :: sourcestats.c:560 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
@@ -7894,7 +7894,7 @@
 [eva:alarm] regress.c:684: Warning: 
   accessing uninitialized left-value. assert \initialized(x2 + i);
   stack: RGR_MultipleRegress :: sourcestats.c:443 <-
-         estimate_asymmetry :: sourcestats.c:485 <-
+         estimate_asymmetry :: sourcestats.c:485-486 <-
          correct_asymmetry :: sourcestats.c:560 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
@@ -7908,7 +7908,7 @@
 [eva:alarm] regress.c:684: Warning: 
   accessing uninitialized left-value. assert \initialized(y + i);
   stack: RGR_MultipleRegress :: sourcestats.c:443 <-
-         estimate_asymmetry :: sourcestats.c:485 <-
+         estimate_asymmetry :: sourcestats.c:485-486 <-
          correct_asymmetry :: sourcestats.c:560 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
@@ -7922,7 +7922,7 @@
 [eva:alarm] regress.c:685: Warning: 
   accessing uninitialized left-value. assert \initialized(y + i);
   stack: RGR_MultipleRegress :: sourcestats.c:443 <-
-         estimate_asymmetry :: sourcestats.c:485 <-
+         estimate_asymmetry :: sourcestats.c:485-486 <-
          correct_asymmetry :: sourcestats.c:560 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
@@ -7935,7 +7935,7 @@
          eva_main
 [eva:alarm] sourcestats.c:444: Warning: 
   accessing uninitialized left-value. assert \initialized(&a);
-  stack: estimate_asymmetry :: sourcestats.c:485 <-
+  stack: estimate_asymmetry :: sourcestats.c:485-486 <-
          correct_asymmetry :: sourcestats.c:560 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
@@ -7948,7 +7948,7 @@
          eva_main
 [eva:alarm] regress.c:254: Warning: 
   accessing uninitialized left-value. assert \initialized(x + i);
-  stack: RGR_FindBestRegression :: sourcestats.c:562 <-
+  stack: RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -7960,7 +7960,7 @@
          eva_main
 [eva:alarm] regress.c:254: Warning: 
   accessing uninitialized left-value. assert \initialized(w + i);
-  stack: RGR_FindBestRegression :: sourcestats.c:562 <-
+  stack: RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -7972,7 +7972,7 @@
          eva_main
 [eva:alarm] regress.c:255: Warning: 
   accessing uninitialized left-value. assert \initialized(w + i);
-  stack: RGR_FindBestRegression :: sourcestats.c:562 <-
+  stack: RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -7984,7 +7984,7 @@
          eva_main
 [eva:alarm] regress.c:262: Warning: 
   accessing uninitialized left-value. assert \initialized(x + i);
-  stack: RGR_FindBestRegression :: sourcestats.c:562 <-
+  stack: RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -7996,7 +7996,7 @@
          eva_main
 [eva:alarm] regress.c:263: Warning: 
   accessing uninitialized left-value. assert \initialized(y + i);
-  stack: RGR_FindBestRegression :: sourcestats.c:562 <-
+  stack: RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -8008,7 +8008,7 @@
          eva_main
 [eva:alarm] regress.c:263: Warning: 
   accessing uninitialized left-value. assert \initialized(w + i);
-  stack: RGR_FindBestRegression :: sourcestats.c:562 <-
+  stack: RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -8020,7 +8020,7 @@
          eva_main
 [eva:alarm] regress.c:264: Warning: 
   accessing uninitialized left-value. assert \initialized(y + i);
-  stack: RGR_FindBestRegression :: sourcestats.c:562 <-
+  stack: RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -8032,7 +8032,7 @@
          eva_main
 [eva:alarm] regress.c:264: Warning: 
   accessing uninitialized left-value. assert \initialized(w + i);
-  stack: RGR_FindBestRegression :: sourcestats.c:562 <-
+  stack: RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -8044,7 +8044,7 @@
          eva_main
 [eva:alarm] regress.c:265: Warning: 
   accessing uninitialized left-value. assert \initialized(w + i);
-  stack: RGR_FindBestRegression :: sourcestats.c:562 <-
+  stack: RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -8056,7 +8056,7 @@
          eva_main
 [eva:alarm] regress.c:277: Warning: 
   accessing out of bounds index. assert 0 ≤ (int)(i - resid_start);
-  stack: RGR_FindBestRegression :: sourcestats.c:562 <-
+  stack: RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -8068,7 +8068,7 @@
          eva_main
 [eva:alarm] regress.c:277: Warning: 
   accessing uninitialized left-value. assert \initialized(y + i);
-  stack: RGR_FindBestRegression :: sourcestats.c:562 <-
+  stack: RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -8080,7 +8080,7 @@
          eva_main
 [eva:alarm] regress.c:277: Warning: 
   accessing uninitialized left-value. assert \initialized(x + i);
-  stack: RGR_FindBestRegression :: sourcestats.c:562 <-
+  stack: RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -8092,7 +8092,7 @@
          eva_main
 [eva:alarm] regress.c:277: Warning: 
   out of bounds read. assert \valid_read(y + i);
-  stack: RGR_FindBestRegression :: sourcestats.c:562 <-
+  stack: RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -8104,7 +8104,7 @@
          eva_main
 [eva:alarm] regress.c:277: Warning: 
   out of bounds read. assert \valid_read(x + i);
-  stack: RGR_FindBestRegression :: sourcestats.c:562 <-
+  stack: RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -8118,7 +8118,7 @@
   accessing uninitialized left-value.
   assert \initialized(resid + (int)(i - 1));
   stack: n_runs_from_residuals :: regress.c:281 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -8131,7 +8131,7 @@
 [eva:alarm] regress.c:183: Warning: 
   accessing uninitialized left-value. assert \initialized(resid + i);
   stack: n_runs_from_residuals :: regress.c:281 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -8144,7 +8144,7 @@
 [eva:alarm] regress.c:184: Warning: 
   accessing uninitialized left-value. assert \initialized(resid + i);
   stack: n_runs_from_residuals :: regress.c:281 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -8158,7 +8158,7 @@
   accessing uninitialized left-value.
   assert \initialized(resid + (int)(i - 1));
   stack: n_runs_from_residuals :: regress.c:281 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -8170,7 +8170,7 @@
          eva_main
 [eva:alarm] regress.c:304: Warning: 
   accessing uninitialized left-value. assert \initialized(w + i);
-  stack: RGR_FindBestRegression :: sourcestats.c:562 <-
+  stack: RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -8183,7 +8183,7 @@
 [eva:alarm] regress.c:304: Warning: 
   accessing uninitialized left-value.
   assert \initialized(&resid[(int)(i - resid_start)]);
-  stack: RGR_FindBestRegression :: sourcestats.c:562 <-
+  stack: RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -8572,7 +8572,7 @@
 [eva:alarm] sourcestats.c:724: Warning: 
   accessing uninitialized left-value.
   assert \initialized(&inst->root_delays[j]);
-  stack: SST_GetTrackingData :: sources.c:1086 <-
+  stack: SST_GetTrackingData :: sources.c:1086-1089 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -8584,7 +8584,7 @@
 [eva:alarm] sourcestats.c:727: Warning: 
   accessing uninitialized left-value.
   assert \initialized(&inst->root_dispersions[j]);
-  stack: SST_GetTrackingData :: sources.c:1086 <-
+  stack: SST_GetTrackingData :: sources.c:1086-1089 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -8595,7 +8595,7 @@
          eva_main
 [eva:alarm] reference.c:1011: Warning: 
   signed overflow. assert stratum + 1 ≤ 2147483647;
-  stack: REF_SetReference :: sources.c:1094 <-
+  stack: REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -8611,7 +8611,7 @@
          handle_slew_0 :: local.c:295 <-
          invoke_parameter_change_handlers :: local.c:626 <-
          LCL_AccumulateFrequencyAndOffset :: reference.c:1052 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -8628,7 +8628,7 @@
          handle_slew_0 :: local.c:295 <-
          invoke_parameter_change_handlers :: local.c:626 <-
          LCL_AccumulateFrequencyAndOffset :: reference.c:1052 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -8645,7 +8645,7 @@
          slew_sources :: local.c:295 <-
          invoke_parameter_change_handlers :: local.c:626 <-
          LCL_AccumulateFrequencyAndOffset :: reference.c:1052 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -8662,7 +8662,7 @@
          slew_sources :: local.c:295 <-
          invoke_parameter_change_handlers :: local.c:626 <-
          LCL_AccumulateFrequencyAndOffset :: reference.c:1052 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -8680,7 +8680,7 @@
          slew_sources :: local.c:295 <-
          invoke_parameter_change_handlers :: local.c:626 <-
          LCL_AccumulateFrequencyAndOffset :: reference.c:1052 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -8698,7 +8698,7 @@
          slew_sources :: local.c:295 <-
          invoke_parameter_change_handlers :: local.c:626 <-
          LCL_AccumulateFrequencyAndOffset :: reference.c:1052 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -8713,7 +8713,7 @@
          slew_sources :: local.c:295 <-
          invoke_parameter_change_handlers :: local.c:626 <-
          LCL_AccumulateFrequencyAndOffset :: reference.c:1052 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -8726,7 +8726,7 @@
   signed overflow. assert t - when ≤ 9223372036854775807;
   stack: get_tz_leap :: reference.c:781 <-
          update_leap_status :: reference.c:1054 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -8739,7 +8739,7 @@
   signed overflow. assert (time_t)(t - when) + 10 ≤ 9223372036854775807;
   stack: get_tz_leap :: reference.c:781 <-
          update_leap_status :: reference.c:1054 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -8755,7 +8755,7 @@
   (time_t)((int)(24 * 3600)) ≤ 9223372036854775807;
   stack: set_leap_timeout :: reference.c:812 <-
          update_leap_status :: reference.c:1054 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -8768,7 +8768,7 @@
   function popen: precondition 'valid_command' got status unknown.
   stack: popen :: reference.c:526 <-
          maybe_log_offset :: reference.c:1055 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -8781,7 +8781,7 @@
   function fprintf_va_3: precondition valid_read_string(param0) got status unknown.
   stack: fprintf_va_3 :: reference.c:533 <-
          maybe_log_offset :: reference.c:1055 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -8794,7 +8794,7 @@
   function fprintf_va_4: precondition valid_read_string(param0) got status unknown.
   stack: fprintf_va_4 :: reference.c:534 <-
          maybe_log_offset :: reference.c:1055 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -8807,7 +8807,7 @@
   function fputs: precondition 'valid_string_s' got status unknown.
   stack: fputs :: reference.c:541 <-
          maybe_log_offset :: reference.c:1055 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -8820,7 +8820,7 @@
   function pclose: precondition 'open_pipe' got status unknown.
   stack: pclose :: reference.c:551 <-
          maybe_log_offset :: reference.c:1055 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -8833,10 +8833,10 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: reference.c:860 <-
-         write_log :: reference.c:1076 <-
-         REF_SetReference :: sources.c:1094 <-
+         write_log :: reference.c:1076-1077 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -8850,7 +8850,7 @@
   stack: __FC_assert :: sched.c:476 <-
          SCH_RemoveTimeout :: reference.c:409 <-
          update_fb_drifts :: reference.c:1090 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -8862,7 +8862,7 @@
 [eva:alarm] reference.c:478: Warning: 
   signed overflow. assert c - fb_drift_min_0 ≤ 2147483647;
   stack: schedule_fb_drift :: reference.c:1091 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -8875,7 +8875,7 @@
   accessing uninitialized left-value.
   assert \initialized(&(fb_drifts + (int)(c - fb_drift_min_0))->freq);
   stack: schedule_fb_drift :: reference.c:1091 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -8888,7 +8888,7 @@
   out of bounds read.
   assert \valid_read(&(fb_drifts + (int)(c - fb_drift_min_0))->freq);
   stack: schedule_fb_drift :: reference.c:1091 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -8931,7 +8931,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: ntp_core.c:1921 <-
          receive_packet :: ntp_core.c:2070 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
@@ -8998,7 +8998,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: sourcestats.c:307 <-
          SST_AccumulateSample :: sources.c:349 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
@@ -9146,7 +9146,7 @@
          eva_main
 [eva:alarm] sourcestats.c:664: Warning: 
   accessing uninitialized left-value. assert \initialized(&inst->stratum);
-  stack: SST_GetSelectionData :: sources.c:648 <-
+  stack: SST_GetSelectionData :: sources.c:648-651 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9317,7 +9317,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: sources.c:472 <-
          source_to_string :: sources.c:1052 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
@@ -9331,7 +9331,7 @@
 [eva:alarm] sourcestats.c:713: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: sourcestats.c:713 <-
-         SST_GetTrackingData :: sources.c:1086 <-
+         SST_GetTrackingData :: sources.c:1086-1089 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9344,10 +9344,10 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: reference.c:860 <-
-         write_log :: reference.c:1076 <-
-         REF_SetReference :: sources.c:1094 <-
+         write_log :: reference.c:1076-1077 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9360,7 +9360,7 @@
   function strlen: precondition 'valid_string_s' got status unknown.
   stack: strlen :: reference.c:341 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9373,7 +9373,7 @@
   accessing uninitialized left-value. assert \initialized(src + i);
   stack: strcpy :: reference.c:347 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9386,7 +9386,7 @@
   accessing uninitialized left-value. assert \initialized(src + i);
   stack: strcpy :: reference.c:347 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9399,7 +9399,7 @@
   out of bounds write. assert \valid(dest + i);
   stack: strcpy :: reference.c:347 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9412,7 +9412,7 @@
   out of bounds write. assert \valid(dest + i);
   stack: strcpy :: reference.c:347 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9426,7 +9426,7 @@
   stack: strlen :: FRAMAC_SHARE/libc/string.c:187 <-
          strcat :: reference.c:348 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9439,7 +9439,7 @@
   out of bounds write. assert \valid(dest + (size_t)(n + i));
   stack: strcat :: reference.c:348 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9452,7 +9452,7 @@
   out of bounds read. assert \valid_read(src + i);
   stack: strcat :: reference.c:348 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9465,7 +9465,7 @@
   out of bounds write. assert \valid(dest + (size_t)(n + i));
   stack: strcat :: reference.c:348 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9478,7 +9478,7 @@
   function fopen: precondition 'valid_filename' got status unknown.
   stack: fopen :: reference.c:350 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9491,7 +9491,7 @@
   function stat: precondition 'valid_pathname' got status unknown.
   stack: stat :: reference.c:370 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9503,7 +9503,7 @@
 [eva:alarm] reference.c:371: Warning: 
   accessing uninitialized left-value. assert \initialized(&buf.st_uid);
   stack: update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9515,7 +9515,7 @@
 [eva:alarm] reference.c:371: Warning: 
   accessing uninitialized left-value. assert \initialized(&buf.st_gid);
   stack: update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9528,7 +9528,7 @@
   function chown: precondition 'valid_string_path' got status unknown.
   stack: chown :: reference.c:371 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9540,7 +9540,7 @@
 [eva:alarm] reference.c:372: Warning: 
   accessing uninitialized left-value. assert \initialized(&buf.st_mode);
   stack: update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9553,7 +9553,7 @@
   function chmod: precondition 'valid_path' got status unknown.
   stack: chmod :: reference.c:372 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9566,7 +9566,7 @@
   function rename: precondition 'valid_old_name' got status unknown.
   stack: rename :: reference.c:380 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9579,7 +9579,7 @@
   function rename: precondition 'valid_new_name' got status unknown.
   stack: rename :: reference.c:380 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9592,7 +9592,7 @@
   function unlink: precondition 'valid_string_path' got status unknown.
   stack: unlink :: reference.c:381 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9604,7 +9604,7 @@
 [eva:alarm] reference.c:415: Warning: 
   signed overflow. assert -2147483648 ≤ fb_drift_max_0 - fb_drift_min_0;
   stack: update_fb_drifts :: reference.c:1090 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9616,7 +9616,7 @@
 [eva:alarm] reference.c:415: Warning: 
   signed overflow. assert fb_drift_max_0 - fb_drift_min_0 ≤ 2147483647;
   stack: update_fb_drifts :: reference.c:1090 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9629,7 +9629,7 @@
   signed overflow.
   assert (int)(fb_drift_max_0 - fb_drift_min_0) + 1 ≤ 2147483647;
   stack: update_fb_drifts :: reference.c:1090 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9641,7 +9641,7 @@
 [eva:alarm] reference.c:416: Warning: 
   invalid RHS operand for shift. assert 0 ≤ (int)(i + fb_drift_min_0) < 32;
   stack: update_fb_drifts :: reference.c:1090 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9653,7 +9653,7 @@
 [eva:alarm] reference.c:416: Warning: 
   signed overflow. assert 1 << (int)(i + fb_drift_min_0) ≤ 2147483647;
   stack: update_fb_drifts :: reference.c:1090 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9666,7 +9666,7 @@
   accessing uninitialized left-value.
   assert \initialized(&(fb_drifts + i)->secs);
   stack: update_fb_drifts :: reference.c:1090 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9678,7 +9678,7 @@
 [eva:alarm] reference.c:417: Warning: 
   out of bounds read. assert \valid_read(&(fb_drifts + i)->secs);
   stack: update_fb_drifts :: reference.c:1090 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9690,7 +9690,7 @@
 [eva:alarm] reference.c:420: Warning: 
   out of bounds write. assert \valid(&(fb_drifts + i)->freq);
   stack: update_fb_drifts :: reference.c:1090 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9703,7 +9703,7 @@
   accessing uninitialized left-value.
   assert \initialized(&(fb_drifts + i)->freq);
   stack: update_fb_drifts :: reference.c:1090 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9715,7 +9715,7 @@
 [eva:alarm] reference.c:420: Warning: 
   out of bounds read. assert \valid_read(&(fb_drifts + i)->secs);
   stack: update_fb_drifts :: reference.c:1090 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9727,7 +9727,7 @@
 [eva:alarm] reference.c:422: Warning: 
   out of bounds write. assert \valid(&(fb_drifts + i)->secs);
   stack: update_fb_drifts :: reference.c:1090 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9739,7 +9739,7 @@
 [eva:alarm] reference.c:416: Warning: 
   signed overflow. assert i + fb_drift_min_0 ≤ 2147483647;
   stack: update_fb_drifts :: reference.c:1090 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9752,7 +9752,7 @@
   accessing uninitialized left-value.
   assert \initialized(&(fb_drifts + i)->secs);
   stack: update_fb_drifts :: reference.c:1090 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9765,7 +9765,7 @@
   accessing uninitialized left-value.
   assert \initialized(&(fb_drifts + i)->secs);
   stack: update_fb_drifts :: reference.c:1090 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9777,7 +9777,7 @@
 [eva:alarm] reference.c:427: Warning: 
   out of bounds write. assert \valid(&(fb_drifts + i)->freq);
   stack: update_fb_drifts :: reference.c:1090 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9790,7 +9790,7 @@
   accessing uninitialized left-value.
   assert \initialized(&(fb_drifts + i)->freq);
   stack: update_fb_drifts :: reference.c:1090 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -9833,7 +9833,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: ntp_core.c:1921 <-
          receive_packet :: ntp_core.c:2070 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
@@ -9855,7 +9855,7 @@
 [eva:alarm] util.c:680: Warning: 
   non-finite double value. assert \is_finite(x);
   stack: UTI_DoubleToNtp32 :: ntp_core.c:1024 <-
-         transmit_packet :: ntp_core.c:2196 <-
+         transmit_packet :: ntp_core.c:2196-2198 <-
          NCR_ProcessRxUnknown :: ntp_core.c:2072 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
          process_response :: test/unit/ntp_core.c:393 <-
@@ -9866,7 +9866,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: sourcestats.c:307 <-
          SST_AccumulateSample :: sources.c:349 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
@@ -9894,7 +9894,7 @@
 [eva:alarm] regress.c:183: Warning: 
   out of bounds read. assert \valid_read(resid + (int)(i - 1));
   stack: n_runs_from_residuals :: regress.c:288 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -9907,7 +9907,7 @@
 [eva:alarm] regress.c:184: Warning: 
   out of bounds read. assert \valid_read(resid + (int)(i - 1));
   stack: n_runs_from_residuals :: regress.c:288 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -9920,7 +9920,7 @@
 [eva:alarm] regress.c:183: Warning: 
   out of bounds read. assert \valid_read(resid + i);
   stack: n_runs_from_residuals :: regress.c:288 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -9933,7 +9933,7 @@
 [eva:alarm] regress.c:184: Warning: 
   out of bounds read. assert \valid_read(resid + i);
   stack: n_runs_from_residuals :: regress.c:288 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -9945,7 +9945,7 @@
          eva_main
 [eva:alarm] regress.c:304: Warning: 
   accessing out of bounds index. assert 0 ≤ (int)(i - resid_start);
-  stack: RGR_FindBestRegression :: sourcestats.c:562 <-
+  stack: RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -10043,7 +10043,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: sources.c:472 <-
          source_to_string :: sources.c:1052 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
@@ -10057,7 +10057,7 @@
 [eva:alarm] sourcestats.c:713: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: sourcestats.c:713 <-
-         SST_GetTrackingData :: sources.c:1086 <-
+         SST_GetTrackingData :: sources.c:1086-1089 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -10070,7 +10070,7 @@
   function strlen: precondition 'valid_string_s' got status unknown.
   stack: strlen :: reference.c:341 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -10084,7 +10084,7 @@
   stack: strlen :: FRAMAC_SHARE/libc/string.c:187 <-
          strcat :: reference.c:348 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -10097,7 +10097,7 @@
   function fopen: precondition 'valid_filename' got status unknown.
   stack: fopen :: reference.c:350 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -10110,7 +10110,7 @@
   function stat: precondition 'valid_pathname' got status unknown.
   stack: stat :: reference.c:370 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -10123,7 +10123,7 @@
   function chown: precondition 'valid_string_path' got status unknown.
   stack: chown :: reference.c:371 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -10136,7 +10136,7 @@
   function chmod: precondition 'valid_path' got status unknown.
   stack: chmod :: reference.c:372 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -10149,7 +10149,7 @@
   function rename: precondition 'valid_old_name' got status unknown.
   stack: rename :: reference.c:380 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -10162,7 +10162,7 @@
   function rename: precondition 'valid_new_name' got status unknown.
   stack: rename :: reference.c:380 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -10175,7 +10175,7 @@
   function unlink: precondition 'valid_string_path' got status unknown.
   stack: unlink :: reference.c:381 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -10218,7 +10218,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: ntp_core.c:1921 <-
          receive_packet :: ntp_core.c:2070 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
@@ -10241,7 +10241,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: sourcestats.c:307 <-
          SST_AccumulateSample :: sources.c:349 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
@@ -10283,7 +10283,7 @@
 [eva:alarm] regress.c:242: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: regress.c:242 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -10295,7 +10295,7 @@
          eva_main
 [eva:alarm] regress.c:254: Warning: 
   out of bounds read. assert \valid_read(x + i);
-  stack: RGR_FindBestRegression :: sourcestats.c:562 <-
+  stack: RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -10307,7 +10307,7 @@
          eva_main
 [eva:alarm] regress.c:262: Warning: 
   out of bounds read. assert \valid_read(x + i);
-  stack: RGR_FindBestRegression :: sourcestats.c:562 <-
+  stack: RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -10319,7 +10319,7 @@
          eva_main
 [eva:alarm] regress.c:263: Warning: 
   out of bounds read. assert \valid_read(y + i);
-  stack: RGR_FindBestRegression :: sourcestats.c:562 <-
+  stack: RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -10331,7 +10331,7 @@
          eva_main
 [eva:alarm] regress.c:264: Warning: 
   out of bounds read. assert \valid_read(y + i);
-  stack: RGR_FindBestRegression :: sourcestats.c:562 <-
+  stack: RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -10343,7 +10343,7 @@
          eva_main
 [eva:alarm] regress.c:283: Warning: 
   accessing out of bounds index. assert 0 ≤ (int)(n - resid_start);
-  stack: RGR_FindBestRegression :: sourcestats.c:562 <-
+  stack: RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -10355,7 +10355,7 @@
          eva_main
 [eva:alarm] regress.c:272: Warning: 
   signed overflow. assert -2147483648 ≤ (int)(n - start) * 2;
-  stack: RGR_FindBestRegression :: sourcestats.c:562 <-
+  stack: RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -10367,7 +10367,7 @@
          eva_main
 [eva:alarm] regress.c:272: Warning: 
   signed overflow. assert n - (int)((int)(n - start) * 2) ≤ 2147483647;
-  stack: RGR_FindBestRegression :: sourcestats.c:562 <-
+  stack: RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -10379,7 +10379,7 @@
          eva_main
 [eva:alarm] regress.c:277: Warning: 
   signed overflow. assert -2147483648 ≤ i - resid_start;
-  stack: RGR_FindBestRegression :: sourcestats.c:562 <-
+  stack: RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -10477,7 +10477,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: sources.c:472 <-
          source_to_string :: sources.c:1052 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
@@ -10491,7 +10491,7 @@
 [eva:alarm] sourcestats.c:713: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: sourcestats.c:713 <-
-         SST_GetTrackingData :: sources.c:1086 <-
+         SST_GetTrackingData :: sources.c:1086-1089 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -10504,7 +10504,7 @@
   function strlen: precondition 'valid_string_s' got status unknown.
   stack: strlen :: reference.c:341 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -10518,7 +10518,7 @@
   stack: strlen :: FRAMAC_SHARE/libc/string.c:187 <-
          strcat :: reference.c:348 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -10531,7 +10531,7 @@
   function fopen: precondition 'valid_filename' got status unknown.
   stack: fopen :: reference.c:350 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -10544,7 +10544,7 @@
   function stat: precondition 'valid_pathname' got status unknown.
   stack: stat :: reference.c:370 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -10557,7 +10557,7 @@
   function chown: precondition 'valid_string_path' got status unknown.
   stack: chown :: reference.c:371 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -10570,7 +10570,7 @@
   function chmod: precondition 'valid_path' got status unknown.
   stack: chmod :: reference.c:372 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -10583,7 +10583,7 @@
   function rename: precondition 'valid_old_name' got status unknown.
   stack: rename :: reference.c:380 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -10596,7 +10596,7 @@
   function rename: precondition 'valid_new_name' got status unknown.
   stack: rename :: reference.c:380 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -10609,7 +10609,7 @@
   function unlink: precondition 'valid_string_path' got status unknown.
   stack: unlink :: reference.c:381 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -10652,7 +10652,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: ntp_core.c:1921 <-
          receive_packet :: ntp_core.c:2070 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
@@ -10692,7 +10692,7 @@
          eva_main
 [eva:alarm] ntp_core.c:1037: Warning: 
   out of bounds read. assert \valid_read(remote_ntp_rx);
-  stack: transmit_packet :: ntp_core.c:1228 <-
+  stack: transmit_packet :: ntp_core.c:1228-1234 <-
          transmit_timeout :: test/unit/ntp_core.c:87 <-
          send_request :: test/unit/ntp_core.c:377 <-
          test_unit :: test/unit/test.c:70 <-
@@ -10702,7 +10702,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: ntp_core.c:2319 <-
          NCR_SetConnectivity :: ntp_core.c:1256 <-
          transmit_timeout :: test/unit/ntp_core.c:87 <-
@@ -10786,7 +10786,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: sourcestats.c:307 <-
          SST_AccumulateSample :: sources.c:349 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
@@ -10800,7 +10800,7 @@
 [eva:alarm] regress.c:242: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: regress.c:242 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -10813,7 +10813,7 @@
 [eva:alarm] regress.c:243: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: regress.c:243 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -10873,7 +10873,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: sources.c:472 <-
          source_to_string :: sources.c:1052 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
@@ -10887,7 +10887,7 @@
 [eva:alarm] sourcestats.c:713: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: sourcestats.c:713 <-
-         SST_GetTrackingData :: sources.c:1086 <-
+         SST_GetTrackingData :: sources.c:1086-1089 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -10900,7 +10900,7 @@
   function strlen: precondition 'valid_string_s' got status unknown.
   stack: strlen :: reference.c:341 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -10914,7 +10914,7 @@
   stack: strlen :: FRAMAC_SHARE/libc/string.c:187 <-
          strcat :: reference.c:348 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -10927,7 +10927,7 @@
   function fopen: precondition 'valid_filename' got status unknown.
   stack: fopen :: reference.c:350 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -10940,7 +10940,7 @@
   function stat: precondition 'valid_pathname' got status unknown.
   stack: stat :: reference.c:370 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -10953,7 +10953,7 @@
   function chown: precondition 'valid_string_path' got status unknown.
   stack: chown :: reference.c:371 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -10966,7 +10966,7 @@
   function chmod: precondition 'valid_path' got status unknown.
   stack: chmod :: reference.c:372 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -10979,7 +10979,7 @@
   function rename: precondition 'valid_old_name' got status unknown.
   stack: rename :: reference.c:380 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -10992,7 +10992,7 @@
   function rename: precondition 'valid_new_name' got status unknown.
   stack: rename :: reference.c:380 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -11005,7 +11005,7 @@
   function unlink: precondition 'valid_string_path' got status unknown.
   stack: unlink :: reference.c:381 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -11018,7 +11018,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: ntp_core.c:1921 <-
          receive_packet :: ntp_core.c:2070 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
@@ -11030,7 +11030,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: sourcestats.c:307 <-
          SST_AccumulateSample :: sources.c:349 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
@@ -11044,7 +11044,7 @@
 [eva:alarm] regress.c:242: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: regress.c:242 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -11057,7 +11057,7 @@
 [eva:alarm] regress.c:243: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: regress.c:243 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -11117,7 +11117,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: sources.c:472 <-
          source_to_string :: sources.c:1052 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
@@ -11131,7 +11131,7 @@
 [eva:alarm] sourcestats.c:713: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: sourcestats.c:713 <-
-         SST_GetTrackingData :: sources.c:1086 <-
+         SST_GetTrackingData :: sources.c:1086-1089 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -11144,7 +11144,7 @@
   function strlen: precondition 'valid_string_s' got status unknown.
   stack: strlen :: reference.c:341 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -11158,7 +11158,7 @@
   stack: strlen :: FRAMAC_SHARE/libc/string.c:187 <-
          strcat :: reference.c:348 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -11171,7 +11171,7 @@
   function fopen: precondition 'valid_filename' got status unknown.
   stack: fopen :: reference.c:350 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -11184,7 +11184,7 @@
   function stat: precondition 'valid_pathname' got status unknown.
   stack: stat :: reference.c:370 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -11197,7 +11197,7 @@
   function chown: precondition 'valid_string_path' got status unknown.
   stack: chown :: reference.c:371 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -11210,7 +11210,7 @@
   function chmod: precondition 'valid_path' got status unknown.
   stack: chmod :: reference.c:372 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -11223,7 +11223,7 @@
   function rename: precondition 'valid_old_name' got status unknown.
   stack: rename :: reference.c:380 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -11236,7 +11236,7 @@
   function rename: precondition 'valid_new_name' got status unknown.
   stack: rename :: reference.c:380 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -11249,7 +11249,7 @@
   function unlink: precondition 'valid_string_path' got status unknown.
   stack: unlink :: reference.c:381 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -11262,7 +11262,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: ntp_core.c:1921 <-
          receive_packet :: ntp_core.c:2070 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
@@ -11274,7 +11274,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: sourcestats.c:307 <-
          SST_AccumulateSample :: sources.c:349 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
@@ -11288,7 +11288,7 @@
 [eva:alarm] regress.c:242: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: regress.c:242 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -11301,7 +11301,7 @@
 [eva:alarm] regress.c:243: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: regress.c:243 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -11339,7 +11339,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: sources.c:472 <-
          source_to_string :: sources.c:1052 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
@@ -11353,7 +11353,7 @@
 [eva:alarm] sourcestats.c:713: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: sourcestats.c:713 <-
-         SST_GetTrackingData :: sources.c:1086 <-
+         SST_GetTrackingData :: sources.c:1086-1089 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -11366,7 +11366,7 @@
   function strlen: precondition 'valid_string_s' got status unknown.
   stack: strlen :: reference.c:341 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -11380,7 +11380,7 @@
   stack: strlen :: FRAMAC_SHARE/libc/string.c:187 <-
          strcat :: reference.c:348 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -11393,7 +11393,7 @@
   function fopen: precondition 'valid_filename' got status unknown.
   stack: fopen :: reference.c:350 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -11406,7 +11406,7 @@
   function stat: precondition 'valid_pathname' got status unknown.
   stack: stat :: reference.c:370 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -11419,7 +11419,7 @@
   function chown: precondition 'valid_string_path' got status unknown.
   stack: chown :: reference.c:371 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -11432,7 +11432,7 @@
   function chmod: precondition 'valid_path' got status unknown.
   stack: chmod :: reference.c:372 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -11445,7 +11445,7 @@
   function rename: precondition 'valid_old_name' got status unknown.
   stack: rename :: reference.c:380 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -11458,7 +11458,7 @@
   function rename: precondition 'valid_new_name' got status unknown.
   stack: rename :: reference.c:380 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -11471,7 +11471,7 @@
   function unlink: precondition 'valid_string_path' got status unknown.
   stack: unlink :: reference.c:381 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -11483,7 +11483,7 @@
 [eva:alarm] regress.c:242: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: regress.c:242 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -11496,7 +11496,7 @@
 [eva:alarm] regress.c:243: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: regress.c:243 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -11522,7 +11522,7 @@
 [eva:alarm] regress.c:242: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: regress.c:242 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -11535,7 +11535,7 @@
 [eva:alarm] regress.c:243: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: regress.c:243 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -11548,7 +11548,7 @@
 [eva:alarm] regress.c:243: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: regress.c:243 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -11581,7 +11581,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: ntp_core.c:586 <-
          NCR_GetInstance :: test/unit/ntp_core.c:410 <-
          test_unit :: test/unit/test.c:70 <-
@@ -11610,7 +11610,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: ntp_core.c:2319 <-
          NCR_SetConnectivity :: ntp_core.c:1256 <-
          transmit_timeout :: test/unit/ntp_core.c:87 <-
@@ -11634,7 +11634,7 @@
   stack: __FC_assert :: addrfilt.c:347 <-
          check_ip_in_node :: addrfilt.c:365 <-
          ADF_IsAllowed :: ntp_core.c:2105 <-
-         NCR_ProcessRxUnknown :: test/unit/ntp_core.c:119 <-
+         NCR_ProcessRxUnknown :: test/unit/ntp_core.c:119-120 <-
          process_request :: test/unit/ntp_core.c:422 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -11690,7 +11690,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: ntp_core.c:1871 <-
          receive_packet :: ntp_core.c:2070 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
@@ -11711,7 +11711,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: ntp_core.c:1921 <-
          receive_packet :: ntp_core.c:2070 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
@@ -11756,9 +11756,9 @@
   all target addresses were invalid. This path is assumed to be dead.
   stack: MD5Update :: hash_intmd5.c:56 <-
          HSH_Hash :: keys.c:364 <-
-         generate_ntp_auth :: keys.c:395 <-
-         KEY_GenerateAuth :: ntp_core.c:1090 <-
-         transmit_packet :: ntp_core.c:1228 <-
+         generate_ntp_auth :: keys.c:395-396 <-
+         KEY_GenerateAuth :: ntp_core.c:1090-1092 <-
+         transmit_packet :: ntp_core.c:1228-1234 <-
          transmit_timeout :: test/unit/ntp_core.c:87 <-
          send_request :: test/unit/ntp_core.c:421 <-
          test_unit :: test/unit/test.c:70 <-
@@ -11768,7 +11768,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: sourcestats.c:307 <-
          SST_AccumulateSample :: sources.c:349 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
@@ -11799,7 +11799,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: ntp_core.c:586 <-
          NCR_GetInstance :: test/unit/ntp_core.c:429 <-
          test_unit :: test/unit/test.c:70 <-
@@ -11809,7 +11809,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: ntp_core.c:586 <-
          NCR_GetInstance :: test/unit/ntp_core.c:431 <-
          test_unit :: test/unit/test.c:70 <-
@@ -11819,9 +11819,9 @@
   all target addresses were invalid. This path is assumed to be dead.
   stack: MD5Update :: hash_intmd5.c:56 <-
          HSH_Hash :: keys.c:364 <-
-         generate_ntp_auth :: keys.c:395 <-
-         KEY_GenerateAuth :: ntp_core.c:1090 <-
-         transmit_packet :: ntp_core.c:1228 <-
+         generate_ntp_auth :: keys.c:395-396 <-
+         KEY_GenerateAuth :: ntp_core.c:1090-1092 <-
+         transmit_packet :: ntp_core.c:1228-1234 <-
          transmit_timeout :: test/unit/ntp_core.c:87 <-
          send_request :: test/unit/ntp_core.c:444 <-
          test_unit :: test/unit/test.c:70 <-
@@ -11831,7 +11831,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: ntp_core.c:2319 <-
          NCR_SetConnectivity :: ntp_core.c:1256 <-
          transmit_timeout :: test/unit/ntp_core.c:87 <-
@@ -11869,7 +11869,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: ntp_core.c:1871 <-
          receive_packet :: ntp_core.c:2070 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
@@ -11890,7 +11890,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: ntp_core.c:1921 <-
          receive_packet :: ntp_core.c:2070 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
@@ -11941,7 +11941,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: ntp_core.c:1871 <-
          receive_packet :: ntp_core.c:2070 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
@@ -11964,7 +11964,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: ntp_core.c:1921 <-
          receive_packet :: ntp_core.c:2070 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
@@ -11989,7 +11989,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: sourcestats.c:307 <-
          SST_AccumulateSample :: sources.c:349 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
@@ -12033,7 +12033,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: ntp_core.c:1871 <-
          receive_packet :: ntp_core.c:2070 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
@@ -12056,7 +12056,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: ntp_core.c:1921 <-
          receive_packet :: ntp_core.c:2070 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
@@ -12091,9 +12091,9 @@
   all target addresses were invalid. This path is assumed to be dead.
   stack: MD5Update :: hash_intmd5.c:56 <-
          HSH_Hash :: keys.c:364 <-
-         generate_ntp_auth :: keys.c:395 <-
-         KEY_GenerateAuth :: ntp_core.c:1090 <-
-         transmit_packet :: ntp_core.c:1228 <-
+         generate_ntp_auth :: keys.c:395-396 <-
+         KEY_GenerateAuth :: ntp_core.c:1090-1092 <-
+         transmit_packet :: ntp_core.c:1228-1234 <-
          transmit_timeout :: test/unit/ntp_core.c:87 <-
          send_request :: test/unit/ntp_core.c:466 <-
          test_unit :: test/unit/test.c:70 <-
@@ -12103,7 +12103,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: ntp_core.c:2319 <-
          NCR_SetConnectivity :: ntp_core.c:1256 <-
          transmit_timeout :: test/unit/ntp_core.c:87 <-
@@ -12121,7 +12121,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: sourcestats.c:307 <-
          SST_AccumulateSample :: sources.c:349 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
@@ -12162,7 +12162,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: ntp_core.c:1871 <-
          receive_packet :: ntp_core.c:2070 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
@@ -12183,7 +12183,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: ntp_core.c:1921 <-
          receive_packet :: ntp_core.c:2070 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
@@ -12206,7 +12206,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: sourcestats.c:307 <-
          SST_AccumulateSample :: sources.c:349 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
@@ -12274,7 +12274,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: sources.c:472 <-
          source_to_string :: sources.c:1052 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
@@ -12289,7 +12289,7 @@
 [eva:alarm] sourcestats.c:713: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: sourcestats.c:713 <-
-         SST_GetTrackingData :: sources.c:1086 <-
+         SST_GetTrackingData :: sources.c:1086-1089 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -12303,7 +12303,7 @@
   function strlen: precondition 'valid_string_s' got status unknown.
   stack: strlen :: reference.c:341 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -12318,7 +12318,7 @@
   stack: strlen :: FRAMAC_SHARE/libc/string.c:187 <-
          strcat :: reference.c:348 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -12332,7 +12332,7 @@
   function fopen: precondition 'valid_filename' got status unknown.
   stack: fopen :: reference.c:350 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -12346,7 +12346,7 @@
   function stat: precondition 'valid_pathname' got status unknown.
   stack: stat :: reference.c:370 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -12360,7 +12360,7 @@
   function chown: precondition 'valid_string_path' got status unknown.
   stack: chown :: reference.c:371 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -12374,7 +12374,7 @@
   function chmod: precondition 'valid_path' got status unknown.
   stack: chmod :: reference.c:372 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -12388,7 +12388,7 @@
   function rename: precondition 'valid_old_name' got status unknown.
   stack: rename :: reference.c:380 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -12402,7 +12402,7 @@
   function rename: precondition 'valid_new_name' got status unknown.
   stack: rename :: reference.c:380 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -12416,7 +12416,7 @@
   function unlink: precondition 'valid_string_path' got status unknown.
   stack: unlink :: reference.c:381 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -12440,7 +12440,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: ntp_core.c:1921 <-
          receive_packet :: ntp_core.c:2070 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
@@ -12465,7 +12465,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: sourcestats.c:307 <-
          SST_AccumulateSample :: sources.c:349 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
@@ -12639,7 +12639,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: sources.c:472 <-
          source_to_string :: sources.c:1052 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
@@ -12665,7 +12665,7 @@
 [eva:alarm] sourcestats.c:713: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: sourcestats.c:713 <-
-         SST_GetTrackingData :: sources.c:1086 <-
+         SST_GetTrackingData :: sources.c:1086-1089 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -12679,7 +12679,7 @@
   accessing uninitialized left-value.
   assert
   \initialized(&(*(sources + selected_source_index))->sel_info.root_distance);
-  stack: combine_sources :: sources.c:1091 <-
+  stack: combine_sources :: sources.c:1091-1092 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -12692,8 +12692,8 @@
 [eva:alarm] sourcestats.c:713: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: sourcestats.c:713 <-
-         SST_GetTrackingData :: sources.c:523 <-
-         combine_sources :: sources.c:1091 <-
+         SST_GetTrackingData :: sources.c:523-526 <-
+         combine_sources :: sources.c:1091-1092 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -12706,7 +12706,7 @@
 [eva:alarm] sources.c:533: Warning: 
   accessing uninitialized left-value.
   assert \initialized(&(*(sources + index))->sel_info.root_distance);
-  stack: combine_sources :: sources.c:1091 <-
+  stack: combine_sources :: sources.c:1091-1092 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -12719,7 +12719,7 @@
 [eva:alarm] sources.c:554: Warning: 
   accessing uninitialized left-value.
   assert \initialized(&(*(sources + index))->sel_info.root_distance);
-  stack: combine_sources :: sources.c:1091 <-
+  stack: combine_sources :: sources.c:1091-1092 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -12731,7 +12731,7 @@
          eva_main
 [eva:alarm] sources.c:522: Warning: 
   accessing uninitialized left-value. assert \initialized(sel_sources + i);
-  stack: combine_sources :: sources.c:1091 <-
+  stack: combine_sources :: sources.c:1091-1092 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -12744,7 +12744,7 @@
 [eva:alarm] sources.c:574: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: sources.c:574 <-
-         combine_sources :: sources.c:1091 <-
+         combine_sources :: sources.c:1091-1092 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -12770,7 +12770,7 @@
   function strlen: precondition 'valid_string_s' got status unknown.
   stack: strlen :: reference.c:341 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -12785,7 +12785,7 @@
   stack: strlen :: FRAMAC_SHARE/libc/string.c:187 <-
          strcat :: reference.c:348 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -12799,7 +12799,7 @@
   function fopen: precondition 'valid_filename' got status unknown.
   stack: fopen :: reference.c:350 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -12813,7 +12813,7 @@
   function stat: precondition 'valid_pathname' got status unknown.
   stack: stat :: reference.c:370 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -12827,7 +12827,7 @@
   function chown: precondition 'valid_string_path' got status unknown.
   stack: chown :: reference.c:371 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -12841,7 +12841,7 @@
   function chmod: precondition 'valid_path' got status unknown.
   stack: chmod :: reference.c:372 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -12855,7 +12855,7 @@
   function rename: precondition 'valid_old_name' got status unknown.
   stack: rename :: reference.c:380 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -12869,7 +12869,7 @@
   function rename: precondition 'valid_new_name' got status unknown.
   stack: rename :: reference.c:380 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -12883,7 +12883,7 @@
   function unlink: precondition 'valid_string_path' got status unknown.
   stack: unlink :: reference.c:381 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -12897,7 +12897,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: ntp_core.c:1871 <-
          receive_packet :: ntp_core.c:2070 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
@@ -12920,7 +12920,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: ntp_core.c:1921 <-
          receive_packet :: ntp_core.c:2070 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
@@ -12954,7 +12954,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: sourcestats.c:307 <-
          SST_AccumulateSample :: sources.c:349 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
@@ -13014,7 +13014,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: sources.c:472 <-
          source_to_string :: sources.c:1052 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
@@ -13028,7 +13028,7 @@
 [eva:alarm] sourcestats.c:713: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: sourcestats.c:713 <-
-         SST_GetTrackingData :: sources.c:1086 <-
+         SST_GetTrackingData :: sources.c:1086-1089 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13040,8 +13040,8 @@
 [eva:alarm] sourcestats.c:713: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: sourcestats.c:713 <-
-         SST_GetTrackingData :: sources.c:523 <-
-         combine_sources :: sources.c:1091 <-
+         SST_GetTrackingData :: sources.c:523-526 <-
+         combine_sources :: sources.c:1091-1092 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13053,7 +13053,7 @@
 [eva:alarm] sources.c:574: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: sources.c:574 <-
-         combine_sources :: sources.c:1091 <-
+         combine_sources :: sources.c:1091-1092 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13066,7 +13066,7 @@
   function strlen: precondition 'valid_string_s' got status unknown.
   stack: strlen :: reference.c:341 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13080,7 +13080,7 @@
   stack: strlen :: FRAMAC_SHARE/libc/string.c:187 <-
          strcat :: reference.c:348 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13093,7 +13093,7 @@
   function fopen: precondition 'valid_filename' got status unknown.
   stack: fopen :: reference.c:350 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13106,7 +13106,7 @@
   function stat: precondition 'valid_pathname' got status unknown.
   stack: stat :: reference.c:370 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13119,7 +13119,7 @@
   function chown: precondition 'valid_string_path' got status unknown.
   stack: chown :: reference.c:371 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13132,7 +13132,7 @@
   function chmod: precondition 'valid_path' got status unknown.
   stack: chmod :: reference.c:372 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13145,7 +13145,7 @@
   function rename: precondition 'valid_old_name' got status unknown.
   stack: rename :: reference.c:380 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13158,7 +13158,7 @@
   function rename: precondition 'valid_new_name' got status unknown.
   stack: rename :: reference.c:380 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13171,7 +13171,7 @@
   function unlink: precondition 'valid_string_path' got status unknown.
   stack: unlink :: reference.c:381 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13184,7 +13184,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: sourcestats.c:307 <-
          SST_AccumulateSample :: sources.c:349 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
@@ -13236,7 +13236,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: sources.c:472 <-
          source_to_string :: sources.c:1052 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
@@ -13251,7 +13251,7 @@
 [eva:alarm] sourcestats.c:713: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: sourcestats.c:713 <-
-         SST_GetTrackingData :: sources.c:1086 <-
+         SST_GetTrackingData :: sources.c:1086-1089 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13264,8 +13264,8 @@
 [eva:alarm] sourcestats.c:713: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: sourcestats.c:713 <-
-         SST_GetTrackingData :: sources.c:523 <-
-         combine_sources :: sources.c:1091 <-
+         SST_GetTrackingData :: sources.c:523-526 <-
+         combine_sources :: sources.c:1091-1092 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13278,7 +13278,7 @@
 [eva:alarm] sources.c:574: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: sources.c:574 <-
-         combine_sources :: sources.c:1091 <-
+         combine_sources :: sources.c:1091-1092 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13292,7 +13292,7 @@
   function strlen: precondition 'valid_string_s' got status unknown.
   stack: strlen :: reference.c:341 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13307,7 +13307,7 @@
   stack: strlen :: FRAMAC_SHARE/libc/string.c:187 <-
          strcat :: reference.c:348 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13321,7 +13321,7 @@
   function fopen: precondition 'valid_filename' got status unknown.
   stack: fopen :: reference.c:350 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13335,7 +13335,7 @@
   function stat: precondition 'valid_pathname' got status unknown.
   stack: stat :: reference.c:370 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13349,7 +13349,7 @@
   function chown: precondition 'valid_string_path' got status unknown.
   stack: chown :: reference.c:371 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13363,7 +13363,7 @@
   function chmod: precondition 'valid_path' got status unknown.
   stack: chmod :: reference.c:372 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13377,7 +13377,7 @@
   function rename: precondition 'valid_old_name' got status unknown.
   stack: rename :: reference.c:380 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13391,7 +13391,7 @@
   function rename: precondition 'valid_new_name' got status unknown.
   stack: rename :: reference.c:380 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13405,7 +13405,7 @@
   function unlink: precondition 'valid_string_path' got status unknown.
   stack: unlink :: reference.c:381 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13469,7 +13469,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: sources.c:472 <-
          source_to_string :: sources.c:1052 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
@@ -13484,7 +13484,7 @@
 [eva:alarm] sourcestats.c:713: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: sourcestats.c:713 <-
-         SST_GetTrackingData :: sources.c:1086 <-
+         SST_GetTrackingData :: sources.c:1086-1089 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13497,8 +13497,8 @@
 [eva:alarm] sourcestats.c:713: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: sourcestats.c:713 <-
-         SST_GetTrackingData :: sources.c:523 <-
-         combine_sources :: sources.c:1091 <-
+         SST_GetTrackingData :: sources.c:523-526 <-
+         combine_sources :: sources.c:1091-1092 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13511,7 +13511,7 @@
 [eva:alarm] sources.c:574: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: sources.c:574 <-
-         combine_sources :: sources.c:1091 <-
+         combine_sources :: sources.c:1091-1092 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13525,7 +13525,7 @@
   function strlen: precondition 'valid_string_s' got status unknown.
   stack: strlen :: reference.c:341 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13540,7 +13540,7 @@
   stack: strlen :: FRAMAC_SHARE/libc/string.c:187 <-
          strcat :: reference.c:348 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13554,7 +13554,7 @@
   function fopen: precondition 'valid_filename' got status unknown.
   stack: fopen :: reference.c:350 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13568,7 +13568,7 @@
   function stat: precondition 'valid_pathname' got status unknown.
   stack: stat :: reference.c:370 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13582,7 +13582,7 @@
   function chown: precondition 'valid_string_path' got status unknown.
   stack: chown :: reference.c:371 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13596,7 +13596,7 @@
   function chmod: precondition 'valid_path' got status unknown.
   stack: chmod :: reference.c:372 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13610,7 +13610,7 @@
   function rename: precondition 'valid_old_name' got status unknown.
   stack: rename :: reference.c:380 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13624,7 +13624,7 @@
   function rename: precondition 'valid_new_name' got status unknown.
   stack: rename :: reference.c:380 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13638,7 +13638,7 @@
   function unlink: precondition 'valid_string_path' got status unknown.
   stack: unlink :: reference.c:381 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13665,7 +13665,7 @@
 [eva:alarm] regress.c:242: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: regress.c:242 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -13679,7 +13679,7 @@
 [eva:alarm] regress.c:242: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: regress.c:242 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -13739,7 +13739,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: sources.c:472 <-
          source_to_string :: sources.c:1052 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
@@ -13753,7 +13753,7 @@
 [eva:alarm] sourcestats.c:713: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: sourcestats.c:713 <-
-         SST_GetTrackingData :: sources.c:1086 <-
+         SST_GetTrackingData :: sources.c:1086-1089 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13765,8 +13765,8 @@
 [eva:alarm] sourcestats.c:713: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: sourcestats.c:713 <-
-         SST_GetTrackingData :: sources.c:523 <-
-         combine_sources :: sources.c:1091 <-
+         SST_GetTrackingData :: sources.c:523-526 <-
+         combine_sources :: sources.c:1091-1092 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13778,7 +13778,7 @@
 [eva:alarm] sources.c:574: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: sources.c:574 <-
-         combine_sources :: sources.c:1091 <-
+         combine_sources :: sources.c:1091-1092 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13791,7 +13791,7 @@
   function strlen: precondition 'valid_string_s' got status unknown.
   stack: strlen :: reference.c:341 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13805,7 +13805,7 @@
   stack: strlen :: FRAMAC_SHARE/libc/string.c:187 <-
          strcat :: reference.c:348 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13818,7 +13818,7 @@
   function fopen: precondition 'valid_filename' got status unknown.
   stack: fopen :: reference.c:350 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13831,7 +13831,7 @@
   function stat: precondition 'valid_pathname' got status unknown.
   stack: stat :: reference.c:370 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13844,7 +13844,7 @@
   function chown: precondition 'valid_string_path' got status unknown.
   stack: chown :: reference.c:371 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13857,7 +13857,7 @@
   function chmod: precondition 'valid_path' got status unknown.
   stack: chmod :: reference.c:372 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13870,7 +13870,7 @@
   function rename: precondition 'valid_old_name' got status unknown.
   stack: rename :: reference.c:380 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13883,7 +13883,7 @@
   function rename: precondition 'valid_new_name' got status unknown.
   stack: rename :: reference.c:380 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13896,7 +13896,7 @@
   function unlink: precondition 'valid_string_path' got status unknown.
   stack: unlink :: reference.c:381 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13908,7 +13908,7 @@
 [eva:alarm] regress.c:242: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: regress.c:242 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -13922,7 +13922,7 @@
 [eva:alarm] regress.c:243: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: regress.c:243 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -13962,8 +13962,8 @@
 [eva:alarm] sourcestats.c:713: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: sourcestats.c:713 <-
-         SST_GetTrackingData :: sources.c:523 <-
-         combine_sources :: sources.c:1091 <-
+         SST_GetTrackingData :: sources.c:523-526 <-
+         combine_sources :: sources.c:1091-1092 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13976,7 +13976,7 @@
 [eva:alarm] sources.c:574: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: sources.c:574 <-
-         combine_sources :: sources.c:1091 <-
+         combine_sources :: sources.c:1091-1092 <-
          SRC_SelectSource :: ntp_core.c:1507 <-
          process_sample :: ntp_core.c:1834 <-
          receive_packet :: ntp_core.c:2070 <-
@@ -13990,7 +13990,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: ntp_core.c:1871 <-
          receive_packet :: ntp_core.c:2070 <-
          NCR_ProcessRxKnown :: test/unit/ntp_core.c:251 <-
@@ -14002,7 +14002,7 @@
 [eva:alarm] regress.c:242: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: regress.c:242 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -14016,7 +14016,7 @@
 [eva:alarm] regress.c:243: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: regress.c:243 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -14044,7 +14044,7 @@
 [eva:alarm] regress.c:242: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: regress.c:242 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -14057,7 +14057,7 @@
 [eva:alarm] regress.c:243: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: regress.c:243 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -14083,7 +14083,7 @@
 [eva:alarm] regress.c:242: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: regress.c:242 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -14097,7 +14097,7 @@
 [eva:alarm] regress.c:243: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: regress.c:243 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -14111,7 +14111,7 @@
 [eva:alarm] regress.c:243: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: regress.c:243 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -14125,7 +14125,7 @@
 [eva:alarm] regress.c:243: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: regress.c:243 <-
-         RGR_FindBestRegression :: sourcestats.c:562 <-
+         RGR_FindBestRegression :: sourcestats.c:562-568 <-
          SST_DoNewRegression :: sources.c:350 <-
          SRC_AccumulateSample :: ntp_core.c:1506 <-
          process_sample :: ntp_core.c:1834 <-
@@ -14190,7 +14190,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: sources.c:472 <-
          source_to_string :: sources.c:1052 <-
          SRC_SelectSource :: sources.c:1110 <-
@@ -14203,7 +14203,7 @@
 [eva:alarm] sourcestats.c:713: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: sourcestats.c:713 <-
-         SST_GetTrackingData :: sources.c:1086 <-
+         SST_GetTrackingData :: sources.c:1086-1089 <-
          SRC_SelectSource :: sources.c:1110 <-
          SRC_ReselectSource :: sources.c:284 <-
          SRC_DestroyInstance :: ntp_core.c:653 <-
@@ -14215,7 +14215,7 @@
   function strlen: precondition 'valid_string_s' got status unknown.
   stack: strlen :: reference.c:341 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: sources.c:1110 <-
          SRC_ReselectSource :: sources.c:284 <-
          SRC_DestroyInstance :: ntp_core.c:653 <-
@@ -14228,7 +14228,7 @@
   stack: strlen :: FRAMAC_SHARE/libc/string.c:187 <-
          strcat :: reference.c:348 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: sources.c:1110 <-
          SRC_ReselectSource :: sources.c:284 <-
          SRC_DestroyInstance :: ntp_core.c:653 <-
@@ -14240,7 +14240,7 @@
   function fopen: precondition 'valid_filename' got status unknown.
   stack: fopen :: reference.c:350 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: sources.c:1110 <-
          SRC_ReselectSource :: sources.c:284 <-
          SRC_DestroyInstance :: ntp_core.c:653 <-
@@ -14252,7 +14252,7 @@
   function stat: precondition 'valid_pathname' got status unknown.
   stack: stat :: reference.c:370 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: sources.c:1110 <-
          SRC_ReselectSource :: sources.c:284 <-
          SRC_DestroyInstance :: ntp_core.c:653 <-
@@ -14264,7 +14264,7 @@
   function chown: precondition 'valid_string_path' got status unknown.
   stack: chown :: reference.c:371 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: sources.c:1110 <-
          SRC_ReselectSource :: sources.c:284 <-
          SRC_DestroyInstance :: ntp_core.c:653 <-
@@ -14276,7 +14276,7 @@
   function chmod: precondition 'valid_path' got status unknown.
   stack: chmod :: reference.c:372 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: sources.c:1110 <-
          SRC_ReselectSource :: sources.c:284 <-
          SRC_DestroyInstance :: ntp_core.c:653 <-
@@ -14288,7 +14288,7 @@
   function rename: precondition 'valid_old_name' got status unknown.
   stack: rename :: reference.c:380 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: sources.c:1110 <-
          SRC_ReselectSource :: sources.c:284 <-
          SRC_DestroyInstance :: ntp_core.c:653 <-
@@ -14300,7 +14300,7 @@
   function rename: precondition 'valid_new_name' got status unknown.
   stack: rename :: reference.c:380 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: sources.c:1110 <-
          SRC_ReselectSource :: sources.c:284 <-
          SRC_DestroyInstance :: ntp_core.c:653 <-
@@ -14312,7 +14312,7 @@
   function unlink: precondition 'valid_string_path' got status unknown.
   stack: unlink :: reference.c:381 <-
          update_drift_file :: reference.c:1083 <-
-         REF_SetReference :: sources.c:1094 <-
+         REF_SetReference :: sources.c:1094-1100 <-
          SRC_SelectSource :: sources.c:1110 <-
          SRC_ReselectSource :: sources.c:284 <-
          SRC_DestroyInstance :: ntp_core.c:653 <-
@@ -14324,7 +14324,7 @@
   function snprintf_va_10: precondition \valid(s + (0 .. n - 1)) ∨
                                         \valid(s +
                                                (0 .. format_length(format) - 1)) got status unknown.
-  stack: snprintf_va_10 :: util.c:310 <-
+  stack: snprintf_va_10 :: util.c:310-311 <-
          UTI_IPToString :: ntp_core.c:586 <-
          NCR_GetInstance :: test/unit/ntp_core.c:354 <-
          test_unit :: test/unit/test.c:70 <-
@@ -14606,7 +14606,7 @@
 [eva:alarm] local.c:268: Warning: 
   function __FC_assert: precondition 'nonnull_c' got status unknown.
   stack: __FC_assert :: local.c:268 <-
-         LCL_RemoveParameterChangeHandler :: local.c:189 <-
+         LCL_RemoveParameterChangeHandler :: local.c:189-190 <-
          LCL_Finalise :: test/unit/ntp_core.c:498 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -14614,7 +14614,7 @@
 [eva:alarm] local.c:274: Warning: 
   function free: precondition 'freeable' got status unknown.
   stack: free :: local.c:274 <-
-         LCL_RemoveParameterChangeHandler :: local.c:189 <-
+         LCL_RemoveParameterChangeHandler :: local.c:189-190 <-
          LCL_Finalise :: test/unit/ntp_core.c:498 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -14629,7 +14629,7 @@
 [eva:alarm] local.c:261: Warning: 
   accessing left-value that contains escaping addresses.
   assert ¬\dangling(&ptr->next);
-  stack: LCL_RemoveParameterChangeHandler :: local.c:189 <-
+  stack: LCL_RemoveParameterChangeHandler :: local.c:189-190 <-
          LCL_Finalise :: test/unit/ntp_core.c:498 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -14637,7 +14637,7 @@
 [eva:alarm] local.c:271: Warning: 
   accessing left-value that contains escaping addresses.
   assert ¬\dangling(&ptr->next);
-  stack: LCL_RemoveParameterChangeHandler :: local.c:189 <-
+  stack: LCL_RemoveParameterChangeHandler :: local.c:189-190 <-
          LCL_Finalise :: test/unit/ntp_core.c:498 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -14645,7 +14645,7 @@
 [eva:alarm] local.c:271: Warning: 
   accessing left-value that contains escaping addresses.
   assert ¬\dangling(&ptr->prev);
-  stack: LCL_RemoveParameterChangeHandler :: local.c:189 <-
+  stack: LCL_RemoveParameterChangeHandler :: local.c:189-190 <-
          LCL_Finalise :: test/unit/ntp_core.c:498 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -14653,7 +14653,7 @@
 [eva:alarm] local.c:272: Warning: 
   accessing left-value that contains escaping addresses.
   assert ¬\dangling(&ptr->prev);
-  stack: LCL_RemoveParameterChangeHandler :: local.c:189 <-
+  stack: LCL_RemoveParameterChangeHandler :: local.c:189-190 <-
          LCL_Finalise :: test/unit/ntp_core.c:498 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-
@@ -14661,7 +14661,7 @@
 [eva:alarm] local.c:272: Warning: 
   accessing left-value that contains escaping addresses.
   assert ¬\dangling(&ptr->next);
-  stack: LCL_RemoveParameterChangeHandler :: local.c:189 <-
+  stack: LCL_RemoveParameterChangeHandler :: local.c:189-190 <-
          LCL_Finalise :: test/unit/ntp_core.c:498 <-
          test_unit :: test/unit/test.c:70 <-
          main :: fc_stubs.c:37 <-

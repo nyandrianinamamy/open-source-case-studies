@@ -1,6 +1,7 @@
 [eva:garbled-mix:write] pointer_copy_user_dataflow_direct_bytewise.c:5: Warning: 
   Assigning imprecise value to *dest because of misaligned read of addresses.
-  stack: user_memcpy :: pointer_copy_user_dataflow_direct_bytewise.c:14 <- main
+  stack: user_memcpy :: pointer_copy_user_dataflow_direct_bytewise.c:14-15 <-
+         main
 [eva:garbled-mix:summary] Warning: 
   Origins of garbled mix generated during analysis:
     pointer_copy_user_dataflow_direct_bytewise.c:5: misaligned read of addresses

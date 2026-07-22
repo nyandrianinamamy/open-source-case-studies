@@ -1,22 +1,22 @@
 [nonterm:stmt] src/monocypher.c:611: Warning: 
   non-terminating loop
   stack 1: crypto_blake2b_update :: src/monocypher.c:933 <-
-           crypto_argon2i_general :: tests/test.c:169 <-
+           crypto_argon2i_general :: tests/test.c:169-174 <-
            argon2i :: tests/test.c:70 <-
            test :: tests/test.c:842 <-
            main
   stack 2: crypto_blake2b_update :: src/monocypher.c:935 <-
-           crypto_argon2i_general :: tests/test.c:169 <-
+           crypto_argon2i_general :: tests/test.c:169-174 <-
            argon2i :: tests/test.c:70 <-
            test :: tests/test.c:842 <-
            main
   stack 3: crypto_blake2b_update :: src/monocypher.c:937 <-
-           crypto_argon2i_general :: tests/test.c:169 <-
+           crypto_argon2i_general :: tests/test.c:169-174 <-
            argon2i :: tests/test.c:70 <-
            test :: tests/test.c:842 <-
            main
   stack 4: crypto_blake2b_update :: src/monocypher.c:939 <-
-           crypto_argon2i_general :: tests/test.c:169 <-
+           crypto_argon2i_general :: tests/test.c:169-174 <-
            argon2i :: tests/test.c:70 <-
            test :: tests/test.c:842 <-
            main
@@ -33,19 +33,19 @@
            test :: tests/test.c:850 <-
            main
   stack 7: crypto_blake2b_update :: src/monocypher.c:935 <-
-           crypto_argon2i_general :: tests/test.c:567 <-
+           crypto_argon2i_general :: tests/test.c:567-568 <-
            p_argon2i_easy :: tests/test.c:869 <-
            main
   stack 8: crypto_blake2b_update :: src/monocypher.c:935 <-
-           crypto_argon2i_general :: tests/test.c:594 <-
+           crypto_argon2i_general :: tests/test.c:594-595 <-
            p_argon2i_overlap :: tests/test.c:870 <-
            main
   stack 9: crypto_blake2b_update :: src/monocypher.c:937 <-
-           crypto_argon2i_general :: tests/test.c:594 <-
+           crypto_argon2i_general :: tests/test.c:594-595 <-
            p_argon2i_overlap :: tests/test.c:870 <-
            main
   stack 10: crypto_blake2b_update :: src/monocypher.c:939 <-
-            crypto_argon2i_general :: tests/test.c:594 <-
+            crypto_argon2i_general :: tests/test.c:594-595 <-
             p_argon2i_overlap :: tests/test.c:870 <-
             main
   stack 11: crypto_blake2b_update :: src/monocypher.c:1937 <-

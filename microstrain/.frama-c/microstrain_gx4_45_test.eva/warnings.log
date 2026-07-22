@@ -1,20 +1,176 @@
+[eva:volatile] MIPSDK/C/Library/Source/ring_buffer.c:390: Warning: 
+  Lvalue *(buffer->entries + (entry_pos * buffer->entry_size + j)) with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/ring_buffer.c:438: Warning: 
+  Lvalue *(buffer->entries + (buffer->position * buffer->entry_size + i)) with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/ring_buffer.c:511: Warning: 
+  Lvalue *(buffer->entries + (local_position * buffer->entry_size + i)) with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/ring_buffer.c:511: Warning: 
+  Lvalue *(entry + i) with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip.c:635: Warning: 
+  Lvalue *(mip_buffer + checksum_offset) with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip.c:635: Warning: 
+  Lvalue *(mip_buffer + ((int)checksum_offset + 1)) with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip.c:691: Warning: 
+  Lvalue *(mip_buffer + i) with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
 [kernel] Warning: Unknown alignment of base __mip_interface_command_response_handler: Undefined alignof on a function.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_inteface.c:735: Warning: 
+  Lvalue device_interface_0->command_response_received with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_inteface.c:749: Warning: 
+  Lvalue device_interface_0->command_id with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_inteface.c:750: Warning: 
+  Lvalue device_interface_0->command_acknack_response with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip.c:473: Warning: 
+  Lvalue (*field_header)->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip.c:477: Warning: 
+  Lvalue (*field_header)->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_inteface.c:756: Warning: 
+  Lvalue device_interface_0->command_response_data with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_inteface.c:757: Warning: 
+  Lvalue device_interface_0->command_response_data_size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_inteface.c:767: Warning: 
+  Lvalue device_interface_0->command_id with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_inteface.c:768: Warning: 
+  Lvalue device_interface_0->command_acknack_response with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_inteface.c:769: Warning: 
+  Lvalue device_interface_0->command_response_data with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_inteface.c:770: Warning: 
+  Lvalue device_interface_0->command_response_data_size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_inteface.c:563: Warning: 
+  Lvalue *callback_function with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_inteface.c:543: Warning: 
+  Lvalue *callback_function with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
 [eva:garbled-mix:write] MIPSDK/C/Library/Source/ring_buffer.c:438: Warning: 
   Assigning imprecise value to *(entry + i)
   because of misaligned read of addresses.
   stack: ring_buffer_read :: MIPSDK/C/Library/Source/mip_sdk_inteface.c:461 <-
          __mip_interface_parse_input_buffer :: MIPSDK/C/Library/Source/mip_sdk_inteface.c:209 <-
          mip_interface_update :: MIPSDK/C/Library/Source/mip_sdk_inteface.c:1076 <-
-         __mip_interface_wait_for_response :: MIPSDK/C/Library/Source/mip_sdk_inteface.c:1013 <-
-         mip_interface_send_preformatted_command_with_response :: MIPSDK/C/Library/Source/mip_sdk_inteface.c:938 <-
-         mip_interface_send_command_with_response :: MIPSDK/C/Library/Source/mip_sdk_system.c:99 <-
+         __mip_interface_wait_for_response :: MIPSDK/C/Library/Source/mip_sdk_inteface.c:1013-1014 <-
+         mip_interface_send_preformatted_command_with_response :: MIPSDK/C/Library/Source/mip_sdk_inteface.c:938-939 <-
+         mip_interface_send_command_with_response :: MIPSDK/C/Library/Source/mip_sdk_system.c:99-100 <-
          mip_system_com_mode :: MIPSDK/C/Examples/Linux/GX4-45/GX4_45_Test/GX4-45_Test.c:196 <-
          main :: fc_stubs.c:21 <-
          eva_main
+[eva:volatile] src/mip_sdk_user_functions.c:474: Warning: 
+  Lvalue *((int *)port_handle) with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] src/mip_sdk_user_functions.c:437: Warning: 
+  Lvalue *((int *)port_handle) with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/ring_buffer.c:390: Warning: 
+  Lvalue *(entry_buff + (i * buffer->entry_size + j)) with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/ring_buffer.c:438: Warning: 
+  Lvalue *(entry + i) with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_inteface.c:586: Warning: 
+  Lvalue *callback_function with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_system.c:107: Warning: 
+  Lvalue field_header_ptr->descriptor with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_system.c:108: Warning: 
+  Lvalue field_header_ptr->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] src/mip_sdk_user_functions.c:392: Warning: 
+  Lvalue *((int *)port_handle) with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_base.c:143: Warning: 
+  Lvalue field_header_ptr->descriptor with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_base.c:144: Warning: 
+  Lvalue field_header_ptr->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_base.c:211: Warning: 
+  Lvalue field_header_ptr->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_base.c:213: Warning: 
+  Lvalue field_header_ptr->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_base.c:214: Warning: 
+  Lvalue field_header_ptr->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_base.c:276: Warning: 
+  Lvalue field_header_ptr->descriptor with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_base.c:277: Warning: 
+  Lvalue field_header_ptr->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:273: Warning: 
+  Lvalue field_header_ptr->descriptor with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:274: Warning: 
+  Lvalue field_header_ptr->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:1558: Warning: 
+  Lvalue field_header_ptr->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:1560: Warning: 
+  Lvalue field_header_ptr->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:1561: Warning: 
+  Lvalue field_header_ptr->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:1873: Warning: 
+  Lvalue field_header_ptr->descriptor with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:1874: Warning: 
+  Lvalue field_header_ptr->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:1709: Warning: 
+  Lvalue field_header_ptr->descriptor with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:1710: Warning: 
+  Lvalue field_header_ptr->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:1789: Warning: 
+  Lvalue field_header_ptr->descriptor with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:1790: Warning: 
+  Lvalue field_header_ptr->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:1932: Warning: 
+  Lvalue field_header_ptr->descriptor with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:1933: Warning: 
+  Lvalue field_header_ptr->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:2013: Warning: 
+  Lvalue field_header_ptr->descriptor with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:2014: Warning: 
+  Lvalue field_header_ptr->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:2093: Warning: 
+  Lvalue field_header_ptr->descriptor with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:2094: Warning: 
+  Lvalue field_header_ptr->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:498: Warning: 
+  Lvalue field_header_ptr->descriptor with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:499: Warning: 
+  Lvalue field_header_ptr->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:505: Warning: 
+  Lvalue *(response_data + 0) with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:518: Warning: 
+  Lvalue *(response_data + (1 + (int)i * 3)) with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:520: Warning: 
+  Lvalue *short_ptr with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip.c:300: Warning: 
+  Lvalue *(mip_buffer + checksum_offset) with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:331: Warning: 
+  Lvalue field_header_ptr->descriptor with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:332: Warning: 
+  Lvalue field_header_ptr->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:388: Warning: 
+  Lvalue field_header_ptr->descriptor with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:389: Warning: 
+  Lvalue field_header_ptr->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:2252: Warning: 
+  Lvalue field_header_ptr->descriptor with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:2253: Warning: 
+  Lvalue field_header_ptr->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_filter.c:1221: Warning: 
+  Lvalue field_header_ptr->descriptor with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_filter.c:1222: Warning: 
+  Lvalue field_header_ptr->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_filter.c:1311: Warning: 
+  Lvalue field_header_ptr->descriptor with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_filter.c:1312: Warning: 
+  Lvalue field_header_ptr->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_filter.c:1406: Warning: 
+  Lvalue field_header_ptr->descriptor with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_filter.c:1407: Warning: 
+  Lvalue field_header_ptr->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_filter.c:1499: Warning: 
+  Lvalue field_header_ptr->descriptor with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_filter.c:1500: Warning: 
+  Lvalue field_header_ptr->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_filter.c:2890: Warning: 
+  Lvalue field_header_ptr->descriptor with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_filter.c:2891: Warning: 
+  Lvalue field_header_ptr->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_filter.c:1582: Warning: 
+  Lvalue field_header_ptr->descriptor with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_filter.c:1583: Warning: 
+  Lvalue field_header_ptr->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:869: Warning: 
+  Lvalue field_header_ptr->descriptor with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
+[eva:volatile] MIPSDK/C/Library/Source/mip_sdk_3dm.c:870: Warning: 
+  Lvalue field_header_ptr->size with non-volatile-qualified type may refer to an object defined with a volatile-qualified type.
 [eva:garbled-mix:summary] Warning: 
   Origins of garbled mix generated during analysis:
     MIPSDK/C/Library/Source/ring_buffer.c:390: imprecise merge of addresses
-      (read in 458 statements, propagated through 553 statements)
+      (read in 457 statements, propagated through 553 statements)
       garbled mix of &{__mip_interface_command_response_handler;
                        device_interface; mip_sdk_port_open_local_port_handle}
     MIPSDK/C/Library/Source/ring_buffer.c:438: misaligned read of addresses
@@ -22,6 +178,6 @@
       garbled mix of &{__mip_interface_command_response_handler;
                        device_interface; mip_sdk_port_open_local_port_handle}
     MIPSDK/C/Library/Source/mip_sdk_inteface.c:735: imprecise merge of addresses
-      (read in 3 statements, propagated through 1 statement)
+      (read in 2 statements, propagated through 1 statement)
       garbled mix of &{__mip_interface_command_response_handler;
                        device_interface; mip_sdk_port_open_local_port_handle}

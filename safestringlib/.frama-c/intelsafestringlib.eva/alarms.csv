@@ -590,4 +590,5 @@ unittests	test_wcsncpy_s.c	454	test_wcsncpy_s	precondition of printf_va_1140	Unk
 unittests	test_wcsncpy_s.c	454	test_wcsncpy_s	precondition of printf_va_1140	Unknown	valid_read_wstring(param3)
 unittests	test_wcsncpy_s.c	476	test_wcsncpy_s	precondition of printf_va_1143	Unknown	valid_read_wstring(param2)
 unittests	test_wcsncpy_s.c	498	test_wcsncpy_s	precondition of printf_va_1146	Unknown	valid_read_wstring(param2)
-unittests	test_wmemmove_s.c	407	test_wmemmove_s	pointer_alignment	Invalid or unreachable	\aligned((char *)(&(mem1_4[0])) + 1,alignof(wchar_t))
+unittests	test_wmemmove_s.c	407	test_wmemmove_s	pointer_alignment	Invalid or unreachable	\aligned((void *)((wchar_t)((char *)(&(mem1_4[0])) + 1)),alignof(wchar_t))
+unittests	test_wmemmove_s.c	407	test_wmemmove_s	pointer_downcast	Unknown	(unsigned int)((char *)(&(mem1_4[0])) + 1) ≤ 2147483647

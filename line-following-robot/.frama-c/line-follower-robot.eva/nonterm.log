@@ -1,3 +1,30 @@
+[nonterm:stmt] sources/Bluetooth.h:35: Warning: 
+  non-terminating loop
+  stack 1: Send_Data :: sources/main.c:884 <-
+           Modo_Stop :: sources/main.c:377 <-
+           main
+  stack 2: Send_Data :: sources/main.c:900 <-
+           Modo_Perdido :: sources/main.c:356 <-
+           main
+  stack 3: Send_Data :: sources/main.c:1052 <-
+           Send_To_Bluetooth :: sources/main.c:345 <-
+           main
+  stack 4: Send_Data :: sources/main.c:1056 <-
+           Send_To_Bluetooth :: sources/main.c:345 <-
+           main
+[nonterm:stmt] sources/Battery.h:30: Warning: 
+  non-terminating loop
+  stack 1: read_adc :: sources/main.c:984 <-
+           Read_Battery :: sources/main.c:383 <-
+           main
+  stack 2: read_adc :: sources/main.c:984 <-
+           Read_Battery :: sources/main.c:498 <-
+           main
 [nonterm:stmt] sources/main.c:326: Warning: 
   non-terminating loop
   stack: main
+[nonterm:stmt] sources/main.c:493: Warning: 
+  non-terminating loop
+  stack: main
+[nonterm:unreachable] sources/main.c:903: Warning: unreachable return
+[nonterm:unreachable] sources/main.c:990: Warning: unreachable return

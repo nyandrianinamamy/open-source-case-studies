@@ -67,16 +67,16 @@ void ad7714_start_transmitting(struct AdMsg const *amsg)
     *((uint8_t volatile *)(0x0D + 0x20)) = (uint8_t)((((((1 << 6) | (1 << 4)) | (
                                                         1 << 1)) | (1 << 3)) | (
                                                       1 << 2)) | (1 << 0));
-    if ((int)*((uint8_t volatile *)(0x0E + 0x20)) & (1 << 7)) foo = *((uint8_t volatile *)(
-                                                              0x0F + 0x20));
+    if ((int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x0E + 0x20)))) & (
+        1 << 7)) foo = *((uint8_t volatile *)(0x0F + 0x20));
     *((uint8_t volatile *)(0x0D + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
                                                      0x0D + 0x20)) | (
                                                      1 << 7));
   }
   spi_cur_slave = (uint8_t)2;
-  *((uint8_t volatile *)(0x03 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                   0x03 + 0x20)) & ~ (
-                                                   1 << 7));
+  *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x03 + 0x20)))) = (uint8_t)(
+  (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x03 + 0x20)))) & ~ (
+  1 << 7));
   msg = (struct AdMsg *)amsg;
   *((uint8_t volatile *)(0x0F + 0x20)) = *(msg->data + 0);
   idx = (uint8_t)0;
@@ -98,15 +98,15 @@ void ad7714_on_spi_it(void)
                                 msg->data + idx);
   else {
     spi_cur_slave = (uint8_t)0;
-    *((uint8_t volatile *)(0x03 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                     0x03 + 0x20)) | (
-                                                     1 << 7));
-    *((uint8_t volatile *)(0x0D + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                     0x0D + 0x20)) & ~ (
-                                                     1 << 7));
-    *((uint8_t volatile *)(0x0D + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                     0x0D + 0x20)) & ~ (
-                                                     1 << 6));
+    *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x03 + 0x20)))) = (uint8_t)(
+    (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x03 + 0x20)))) | (
+    1 << 7));
+    *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x0D + 0x20)))) = (uint8_t)(
+    (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x0D + 0x20)))) & ~ (
+    1 << 7));
+    *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x0D + 0x20)))) = (uint8_t)(
+    (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x0D + 0x20)))) & ~ (
+    1 << 6));
   }
   return;
 }
@@ -124,13 +124,15 @@ void ad7714_on_it(void)
 
 void ad7714_init(void)
 {
-  *((uint8_t volatile *)(0x3A + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                   0x3A + 0x20)) & ~ (
-                                                   1 << 4));
-  *((uint8_t volatile *)(0x3A + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                   0x3A + 0x20)) | (1 << 5));
-  *((uint8_t volatile *)(0x39 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                   0x39 + 0x20)) | (1 << 6));
+  *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x3A + 0x20)))) = (uint8_t)(
+  (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x3A + 0x20)))) & ~ (
+  1 << 4));
+  *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x3A + 0x20)))) = (uint8_t)(
+  (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x3A + 0x20)))) | (
+  1 << 5));
+  *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x39 + 0x20)))) = (uint8_t)(
+  (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x39 + 0x20)))) | (
+  1 << 6));
   return;
 }
 
@@ -161,8 +163,9 @@ void adc_init(void)
   *((uint8_t volatile *)0x62) = (uint8_t)0x00;
   *((uint8_t volatile *)0x61) = (uint8_t)0x00;
   *((uint8_t volatile *)(0x07 + 0x20)) = (uint8_t)(1 << 6);
-  *((uint8_t volatile *)(0x08 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                   0x08 + 0x20)) | (1 << 7));
+  *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x08 + 0x20)))) = (uint8_t)(
+  (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x08 + 0x20)))) | (
+  1 << 7));
   *((uint8_t volatile *)(0x06 + 0x20)) = (uint8_t)((((0 | 0x07) | (1 << 7)) | (
                                                     1 << 3)) | (1 << 6));
   i = (uint8_t)0;
@@ -194,8 +197,9 @@ void __vector_21(void)
   adc_input = (uint8_t)((int)adc_input + 1);
   if ((int)adc_input >= 8) adc_input = (uint8_t)0;
   *((uint8_t volatile *)(0x07 + 0x20)) = (uint8_t)((int)adc_input | (1 << 6));
-  *((uint8_t volatile *)(0x06 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                   0x06 + 0x20)) | (1 << 6));
+  *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x06 + 0x20)))) = (uint8_t)(
+  (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x06 + 0x20)))) | (
+  1 << 6));
   return;
 }
 
@@ -790,16 +794,16 @@ void link_fbw_send(void)
     uint8_t foo;
     *((uint8_t volatile *)(0x0D + 0x20)) = (uint8_t)(((1 << 6) | (1 << 4)) | (
                                                      1 << 0));
-    if ((int)*((uint8_t volatile *)(0x0E + 0x20)) & (1 << 7)) foo = *((uint8_t volatile *)(
-                                                              0x0F + 0x20));
+    if ((int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x0E + 0x20)))) & (
+        1 << 7)) foo = *((uint8_t volatile *)(0x0F + 0x20));
     *((uint8_t volatile *)(0x0D + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
                                                      0x0D + 0x20)) | (
                                                      1 << 7));
   }
   spi_cur_slave = (uint8_t)1;
-  *((uint8_t volatile *)(0x18 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                   0x18 + 0x20)) & ~ (
-                                                   1 << 0));
+  *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x18 + 0x20)))) = (uint8_t)(
+  (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x18 + 0x20)))) & ~ (
+  1 << 0));
   idx_buf = (uint8_t)0;
   xor_in = (uint8_t)0;
   xor_out = *((uint8_t *)(& to_fbw) + idx_buf);
@@ -812,10 +816,12 @@ void link_fbw_on_spi_it(void)
 {
   *((uint16_t volatile *)(0x2A + 0x20)) = (uint16_t)((int)*((uint16_t volatile *)(
                                                      0x2C + 0x20)) + 200);
-  *((uint8_t volatile *)(0x36 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                   0x36 + 0x20)) | (1 << 4));
-  *((uint8_t volatile *)(0x37 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                   0x37 + 0x20)) | (1 << 4));
+  *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x36 + 0x20)))) = (uint8_t)(
+  (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x36 + 0x20)))) | (
+  1 << 4));
+  *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x37 + 0x20)))) = (uint8_t)(
+  (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x37 + 0x20)))) | (
+  1 << 4));
   return;
 }
 
@@ -825,9 +831,9 @@ void __vector_12(void) __attribute__((__signal__));
 void __vector_12(void)
 {
   uint8_t tmp;
-  *((uint8_t volatile *)(0x37 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                   0x37 + 0x20)) & ~ (
-                                                   1 << 4));
+  *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x37 + 0x20)))) = (uint8_t)(
+  (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x37 + 0x20)))) & ~ (
+  1 << 4));
   idx_buf = (uint8_t)((int)idx_buf + 1);
   if ((unsigned int)idx_buf == sizeof(struct inter_mcu_msg) + (unsigned int)1) {
     tmp = *((uint8_t volatile *)(0x0F + 0x20));
@@ -838,15 +844,15 @@ void __vector_12(void)
     else link_fbw_nb_err = (uint8_t)((int)link_fbw_nb_err + 1);
     link_fbw_receive_complete = (uint8_t)(! 0);
     spi_cur_slave = (uint8_t)0;
-    *((uint8_t volatile *)(0x18 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                     0x18 + 0x20)) | (
-                                                     1 << 0));
-    *((uint8_t volatile *)(0x0D + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                     0x0D + 0x20)) & ~ (
-                                                     1 << 7));
-    *((uint8_t volatile *)(0x0D + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                     0x0D + 0x20)) & ~ (
-                                                     1 << 6));
+    *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x18 + 0x20)))) = (uint8_t)(
+    (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x18 + 0x20)))) | (
+    1 << 0));
+    *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x0D + 0x20)))) = (uint8_t)(
+    (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x0D + 0x20)))) & ~ (
+    1 << 7));
+    *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x0D + 0x20)))) = (uint8_t)(
+    (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x0D + 0x20)))) & ~ (
+    1 << 6));
     goto return_label;
   }
   if ((unsigned int)idx_buf < (sizeof(struct inter_mcu_msg) + (unsigned int)1) - (unsigned int)1) {
@@ -931,12 +937,12 @@ __inline static void ground_calibrate__fc_inline(void)
               tx_byte_idx = (uint8_t)0;
               tx_tail = (uint8_t)((int)tx_tail + 1);
               if ((int)tx_tail >= 255) tx_tail = (uint8_t)0;
-              *((uint8_t volatile *)(0x38 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                               0x38 + 0x20)) | (
-                                                               1 << 0));
-              *((uint8_t volatile *)(0x39 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                               0x39 + 0x20)) | (
-                                                               1 << 4));
+              *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+              0x38 + 0x20)))) = (uint8_t)((int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+                                          0x38 + 0x20)))) | (1 << 0));
+              *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+              0x39 + 0x20)))) = (uint8_t)((int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+                                          0x39 + 0x20)))) | (1 << 4));
             }
           }
           else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
@@ -1056,12 +1062,12 @@ __inline static void ground_calibrate__fc_inline(void)
                   tx_byte_idx = (uint8_t)0;
                   tx_tail = (uint8_t)((int)tx_tail + 1);
                   if ((int)tx_tail >= 255) tx_tail = (uint8_t)0;
-                  *((uint8_t volatile *)(0x38 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                                   0x38 + 0x20)) | (
-                                                                   1 << 0));
-                  *((uint8_t volatile *)(0x39 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                                   0x39 + 0x20)) | (
-                                                                   1 << 4));
+                  *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+                  0x38 + 0x20)))) = (uint8_t)((int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+                                              0x38 + 0x20)))) | (1 << 0));
+                  *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+                  0x39 + 0x20)))) = (uint8_t)((int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+                                              0x39 + 0x20)))) | (1 << 4));
                 }
               }
               else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
@@ -1101,12 +1107,12 @@ __inline static void ground_calibrate__fc_inline(void)
                   tx_byte_idx = (uint8_t)0;
                   tx_tail = (uint8_t)((int)tx_tail + 1);
                   if ((int)tx_tail >= 255) tx_tail = (uint8_t)0;
-                  *((uint8_t volatile *)(0x38 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                                   0x38 + 0x20)) | (
-                                                                   1 << 0));
-                  *((uint8_t volatile *)(0x39 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                                   0x39 + 0x20)) | (
-                                                                   1 << 4));
+                  *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+                  0x38 + 0x20)))) = (uint8_t)((int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+                                              0x38 + 0x20)))) | (1 << 0));
+                  *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+                  0x39 + 0x20)))) = (uint8_t)((int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+                                              0x39 + 0x20)))) | (1 << 4));
                 }
               }
               else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
@@ -1274,12 +1280,12 @@ void send_boot(void)
           tx_byte_idx = (uint8_t)0;
           tx_tail = (uint8_t)((int)tx_tail + 1);
           if ((int)tx_tail >= 255) tx_tail = (uint8_t)0;
-          *((uint8_t volatile *)(0x38 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                           0x38 + 0x20)) | (
-                                                           1 << 0));
-          *((uint8_t volatile *)(0x39 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                           0x39 + 0x20)) | (
-                                                           1 << 4));
+          *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x38 + 0x20)))) = (uint8_t)(
+          (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+          0x38 + 0x20)))) | (1 << 0));
+          *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x39 + 0x20)))) = (uint8_t)(
+          (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+          0x39 + 0x20)))) | (1 << 4));
         }
       }
       else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
@@ -1388,12 +1394,12 @@ void send_boot(void)
           tx_byte_idx = (uint8_t)0;
           tx_tail = (uint8_t)((int)tx_tail + 1);
           if ((int)tx_tail >= 255) tx_tail = (uint8_t)0;
-          *((uint8_t volatile *)(0x38 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                           0x38 + 0x20)) | (
-                                                           1 << 0));
-          *((uint8_t volatile *)(0x39 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                           0x39 + 0x20)) | (
-                                                           1 << 4));
+          *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x38 + 0x20)))) = (uint8_t)(
+          (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+          0x38 + 0x20)))) | (1 << 0));
+          *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x39 + 0x20)))) = (uint8_t)(
+          (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+          0x39 + 0x20)))) | (1 << 4));
         }
       }
       else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
@@ -1492,12 +1498,12 @@ void send_attitude(void)
           tx_byte_idx = (uint8_t)0;
           tx_tail = (uint8_t)((int)tx_tail + 1);
           if ((int)tx_tail >= 255) tx_tail = (uint8_t)0;
-          *((uint8_t volatile *)(0x38 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                           0x38 + 0x20)) | (
-                                                           1 << 0));
-          *((uint8_t volatile *)(0x39 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                           0x39 + 0x20)) | (
-                                                           1 << 4));
+          *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x38 + 0x20)))) = (uint8_t)(
+          (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+          0x38 + 0x20)))) | (1 << 0));
+          *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x39 + 0x20)))) = (uint8_t)(
+          (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+          0x39 + 0x20)))) | (1 << 4));
         }
       }
       else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
@@ -1553,12 +1559,12 @@ void send_adc(void)
           tx_byte_idx = (uint8_t)0;
           tx_tail = (uint8_t)((int)tx_tail + 1);
           if ((int)tx_tail >= 255) tx_tail = (uint8_t)0;
-          *((uint8_t volatile *)(0x38 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                           0x38 + 0x20)) | (
-                                                           1 << 0));
-          *((uint8_t volatile *)(0x39 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                           0x39 + 0x20)) | (
-                                                           1 << 4));
+          *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x38 + 0x20)))) = (uint8_t)(
+          (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+          0x38 + 0x20)))) | (1 << 0));
+          *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x39 + 0x20)))) = (uint8_t)(
+          (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+          0x39 + 0x20)))) | (1 << 4));
         }
       }
       else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
@@ -1639,12 +1645,12 @@ void send_settings(void)
             tx_byte_idx = (uint8_t)0;
             tx_tail = (uint8_t)((int)tx_tail + 1);
             if ((int)tx_tail >= 255) tx_tail = (uint8_t)0;
-            *((uint8_t volatile *)(0x38 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                             0x38 + 0x20)) | (
-                                                             1 << 0));
-            *((uint8_t volatile *)(0x39 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                             0x39 + 0x20)) | (
-                                                             1 << 4));
+            *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x38 + 0x20)))) = (uint8_t)(
+            (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+            0x38 + 0x20)))) | (1 << 0));
+            *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x39 + 0x20)))) = (uint8_t)(
+            (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+            0x39 + 0x20)))) | (1 << 4));
           }
         }
         else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
@@ -1779,12 +1785,12 @@ void send_desired(void)
           tx_byte_idx = (uint8_t)0;
           tx_tail = (uint8_t)((int)tx_tail + 1);
           if ((int)tx_tail >= 255) tx_tail = (uint8_t)0;
-          *((uint8_t volatile *)(0x38 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                           0x38 + 0x20)) | (
-                                                           1 << 0));
-          *((uint8_t volatile *)(0x39 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                           0x39 + 0x20)) | (
-                                                           1 << 4));
+          *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x38 + 0x20)))) = (uint8_t)(
+          (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+          0x38 + 0x20)))) | (1 << 0));
+          *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x39 + 0x20)))) = (uint8_t)(
+          (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+          0x39 + 0x20)))) | (1 << 4));
         }
       }
       else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
@@ -1859,12 +1865,12 @@ void send_bat(void)
           tx_byte_idx = (uint8_t)0;
           tx_tail = (uint8_t)((int)tx_tail + 1);
           if ((int)tx_tail >= 255) tx_tail = (uint8_t)0;
-          *((uint8_t volatile *)(0x38 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                           0x38 + 0x20)) | (
-                                                           1 << 0));
-          *((uint8_t volatile *)(0x39 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                           0x39 + 0x20)) | (
-                                                           1 << 4));
+          *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x38 + 0x20)))) = (uint8_t)(
+          (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+          0x38 + 0x20)))) | (1 << 0));
+          *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x39 + 0x20)))) = (uint8_t)(
+          (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+          0x39 + 0x20)))) | (1 << 4));
         }
       }
       else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
@@ -1969,12 +1975,12 @@ void send_climb(void)
           tx_byte_idx = (uint8_t)0;
           tx_tail = (uint8_t)((int)tx_tail + 1);
           if ((int)tx_tail >= 255) tx_tail = (uint8_t)0;
-          *((uint8_t volatile *)(0x38 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                           0x38 + 0x20)) | (
-                                                           1 << 0));
-          *((uint8_t volatile *)(0x39 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                           0x39 + 0x20)) | (
-                                                           1 << 4));
+          *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x38 + 0x20)))) = (uint8_t)(
+          (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+          0x38 + 0x20)))) | (1 << 0));
+          *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x39 + 0x20)))) = (uint8_t)(
+          (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+          0x39 + 0x20)))) | (1 << 4));
         }
       }
       else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
@@ -2034,12 +2040,12 @@ void send_mode(void)
           tx_byte_idx = (uint8_t)0;
           tx_tail = (uint8_t)((int)tx_tail + 1);
           if ((int)tx_tail >= 255) tx_tail = (uint8_t)0;
-          *((uint8_t volatile *)(0x38 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                           0x38 + 0x20)) | (
-                                                           1 << 0));
-          *((uint8_t volatile *)(0x39 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                           0x39 + 0x20)) | (
-                                                           1 << 4));
+          *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x38 + 0x20)))) = (uint8_t)(
+          (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+          0x38 + 0x20)))) | (1 << 0));
+          *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x39 + 0x20)))) = (uint8_t)(
+          (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+          0x39 + 0x20)))) | (1 << 4));
         }
       }
       else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
@@ -2099,12 +2105,12 @@ void send_debug(void)
           tx_byte_idx = (uint8_t)0;
           tx_tail = (uint8_t)((int)tx_tail + 1);
           if ((int)tx_tail >= 255) tx_tail = (uint8_t)0;
-          *((uint8_t volatile *)(0x38 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                           0x38 + 0x20)) | (
-                                                           1 << 0));
-          *((uint8_t volatile *)(0x39 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                           0x39 + 0x20)) | (
-                                                           1 << 4));
+          *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x38 + 0x20)))) = (uint8_t)(
+          (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+          0x38 + 0x20)))) | (1 << 0));
+          *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x39 + 0x20)))) = (uint8_t)(
+          (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+          0x39 + 0x20)))) | (1 << 4));
         }
       }
       else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
@@ -2179,12 +2185,12 @@ void send_nav_ref(void)
           tx_byte_idx = (uint8_t)0;
           tx_tail = (uint8_t)((int)tx_tail + 1);
           if ((int)tx_tail >= 255) tx_tail = (uint8_t)0;
-          *((uint8_t volatile *)(0x38 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                           0x38 + 0x20)) | (
-                                                           1 << 0));
-          *((uint8_t volatile *)(0x39 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                           0x39 + 0x20)) | (
-                                                           1 << 4));
+          *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x38 + 0x20)))) = (uint8_t)(
+          (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+          0x38 + 0x20)))) | (1 << 0));
+          *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x39 + 0x20)))) = (uint8_t)(
+          (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+          0x39 + 0x20)))) | (1 << 4));
         }
       }
       else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
@@ -2222,7 +2228,8 @@ void radio_control_task(void)
     uint8_t tmp_2;
     uint8_t mode_changed = (uint8_t)0;
     copy_from_to_fbw__fc_inline();
-    if ((int)from_fbw.status & (1 << 1)) {
+    if ((int)*((uint8_t volatile *)((uint16_t)(& from_fbw.status))) & (
+        1 << 1)) {
       if ((int)pprz_mode == 1) goto _LOR;
       else 
         if ((int)pprz_mode == 0) goto _LOR; else goto _LAND;
@@ -2236,7 +2243,8 @@ void radio_control_task(void)
               }
       }
     }
-    if ((int)from_fbw.status & (1 << 2)) {
+    if ((int)*((uint8_t volatile *)((uint16_t)(& from_fbw.status))) & (
+        1 << 2)) {
       uint8_t tmp_0;
       int tmp_1;
       bool_t pprz_mode_changed = pprz_mode_update__fc_inline();
@@ -2301,12 +2309,12 @@ void radio_control_task(void)
           tx_byte_idx = (uint8_t)0;
           tx_tail = (uint8_t)((int)tx_tail + 1);
           if ((int)tx_tail >= 255) tx_tail = (uint8_t)0;
-          *((uint8_t volatile *)(0x38 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                           0x38 + 0x20)) | (
-                                                           1 << 0));
-          *((uint8_t volatile *)(0x39 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                           0x39 + 0x20)) | (
-                                                           1 << 4));
+          *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x38 + 0x20)))) = (uint8_t)(
+          (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+          0x38 + 0x20)))) | (1 << 0));
+          *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x39 + 0x20)))) = (uint8_t)(
+          (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+          0x39 + 0x20)))) | (1 << 4));
         }
       }
       else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
@@ -2496,12 +2504,12 @@ void send_nav_values(void)
         tx_byte_idx = (uint8_t)0;
         tx_tail = (uint8_t)((int)tx_tail + 1);
         if ((int)tx_tail >= 255) tx_tail = (uint8_t)0;
-        *((uint8_t volatile *)(0x38 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                         0x38 + 0x20)) | (
-                                                         1 << 0));
-        *((uint8_t volatile *)(0x39 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                         0x39 + 0x20)) | (
-                                                         1 << 4));
+        *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x38 + 0x20)))) = (uint8_t)(
+        (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x38 + 0x20)))) | (
+        1 << 0));
+        *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x39 + 0x20)))) = (uint8_t)(
+        (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x39 + 0x20)))) | (
+        1 << 4));
       }
     }
     else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
@@ -2804,12 +2812,12 @@ void send_gps_pos(void)
           tx_byte_idx = (uint8_t)0;
           tx_tail = (uint8_t)((int)tx_tail + 1);
           if ((int)tx_tail >= 255) tx_tail = (uint8_t)0;
-          *((uint8_t volatile *)(0x38 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                           0x38 + 0x20)) | (
-                                                           1 << 0));
-          *((uint8_t volatile *)(0x39 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                           0x39 + 0x20)) | (
-                                                           1 << 4));
+          *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x38 + 0x20)))) = (uint8_t)(
+          (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+          0x38 + 0x20)))) | (1 << 0));
+          *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x39 + 0x20)))) = (uint8_t)(
+          (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+          0x39 + 0x20)))) | (1 << 4));
         }
       }
       else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
@@ -2925,12 +2933,12 @@ void send_radIR(void)
         tx_byte_idx = (uint8_t)0;
         tx_tail = (uint8_t)((int)tx_tail + 1);
         if ((int)tx_tail >= 255) tx_tail = (uint8_t)0;
-        *((uint8_t volatile *)(0x38 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                         0x38 + 0x20)) | (
-                                                         1 << 0));
-        *((uint8_t volatile *)(0x39 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                         0x39 + 0x20)) | (
-                                                         1 << 4));
+        *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x38 + 0x20)))) = (uint8_t)(
+        (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x38 + 0x20)))) | (
+        1 << 0));
+        *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x39 + 0x20)))) = (uint8_t)(
+        (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x39 + 0x20)))) | (
+        1 << 4));
       }
     }
     else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
@@ -2979,12 +2987,12 @@ void send_takeOff(void)
               tx_byte_idx = (uint8_t)0;
               tx_tail = (uint8_t)((int)tx_tail + 1);
               if ((int)tx_tail >= 255) tx_tail = (uint8_t)0;
-              *((uint8_t volatile *)(0x38 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                               0x38 + 0x20)) | (
-                                                               1 << 0));
-              *((uint8_t volatile *)(0x39 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                               0x39 + 0x20)) | (
-                                                               1 << 4));
+              *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+              0x38 + 0x20)))) = (uint8_t)((int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+                                          0x38 + 0x20)))) | (1 << 0));
+              *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+              0x39 + 0x20)))) = (uint8_t)((int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+                                          0x39 + 0x20)))) | (1 << 4));
             }
           }
           else modem_nb_ovrn = (uint8_t)((int)modem_nb_ovrn + 1);
@@ -3006,7 +3014,8 @@ __inline static void timer_init_0(void)
 __inline static bool_t timer_periodic_0(void)
 {
   bool_t __retres;
-  if (! ((int)*((uint8_t volatile *)(0x36 + 0x20)) & (1 << 6))) {
+  if (! ((int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+         0x36 + 0x20)))) & (1 << 6))) {
     __retres = (bool_t)0;
     goto return_label;
   }
@@ -3072,11 +3081,12 @@ void modem_init(void)
                                                    0x11 + 0x20)) | ((
                                                                     1 << 7) | (
                                                                     1 << 6)));
-  *((uint8_t volatile *)(0x12 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                   0x12 + 0x20)) | (1 << 6));
-  *((uint8_t volatile *)(0x12 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                   0x12 + 0x20)) & ~ (
-                                                   1 << 7));
+  *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x12 + 0x20)))) = (uint8_t)(
+  (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x12 + 0x20)))) | (
+  1 << 6));
+  *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x12 + 0x20)))) = (uint8_t)(
+  (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x12 + 0x20)))) & ~ (
+  1 << 7));
   *((uint8_t volatile *)(0x3A + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
                                                    0x3A + 0x20)) | (1 << 1));
   return;
@@ -3087,27 +3097,30 @@ void __vector_5(void) __attribute__((__signal__));
 void __vector_5(void) __attribute__((__signal__));
 void __vector_5(void)
 {
-  if ((int)tx_byte_idx == 0) *((uint8_t volatile *)(0x12 + 0x20)) = (uint8_t)(
-                             (int)*((uint8_t volatile *)(0x12 + 0x20)) & ~ (
-                             1 << 6));
+  if ((int)tx_byte_idx == 0) *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+                             0x12 + 0x20)))) = (uint8_t)((int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+                                                         0x12 + 0x20)))) & ~ (
+                                                         1 << 6));
   else 
     if ((int)tx_byte_idx < 9) {
-      if ((int)tx_byte & 0x01) *((uint8_t volatile *)(0x12 + 0x20)) = (uint8_t)(
-                               (int)*((uint8_t volatile *)(0x12 + 0x20)) | (
-                               1 << 6));
-      else *((uint8_t volatile *)(0x12 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                            0x12 + 0x20)) & ~ (
-                                                            1 << 6));
+      if ((int)tx_byte & 0x01) *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+                               0x12 + 0x20)))) = (uint8_t)((int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+                                                           0x12 + 0x20)))) | (
+                                                           1 << 6));
+      else *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x12 + 0x20)))) = (uint8_t)(
+           (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+           0x12 + 0x20)))) & ~ (1 << 6));
       tx_byte = (uint8_t)((int)tx_byte >> 1);
     }
-    else *((uint8_t volatile *)(0x12 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                          0x12 + 0x20)) | (
-                                                          1 << 6));
+    else *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x12 + 0x20)))) = (uint8_t)(
+         (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+         0x12 + 0x20)))) | (1 << 6));
   tx_byte_idx = (uint8_t)((int)tx_byte_idx + 1);
   if ((int)tx_byte_idx >= 10) 
-    if ((int)tx_head == (int)tx_tail) *((uint8_t volatile *)(0x39 + 0x20)) = (uint8_t)(
-                                      (int)*((uint8_t volatile *)(0x39 + 0x20)) & ~ (
-                                      1 << 4));
+    if ((int)tx_head == (int)tx_tail) *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+                                      0x39 + 0x20)))) = (uint8_t)((int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+                                                                  0x39 + 0x20)))) & ~ (
+                                                                  1 << 4));
     else {
       tx_byte = tx_buf[tx_tail];
       tx_byte_idx = (uint8_t)0;
@@ -4109,16 +4122,20 @@ void spi_init(void)
                                                    0x17 + 0x20)) | ((
                                                                     1 << 2) | (
                                                                     1 << 1)));
-  *((uint8_t volatile *)(0x17 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                   0x17 + 0x20)) | (1 << 0));
+  *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x17 + 0x20)))) = (uint8_t)(
+  (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x17 + 0x20)))) | (
+  1 << 0));
   spi_cur_slave = (uint8_t)0;
-  *((uint8_t volatile *)(0x18 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                   0x18 + 0x20)) | (1 << 0));
-  *((uint8_t volatile *)(0x02 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                   0x02 + 0x20)) | (1 << 7));
+  *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x18 + 0x20)))) = (uint8_t)(
+  (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x18 + 0x20)))) | (
+  1 << 0));
+  *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x02 + 0x20)))) = (uint8_t)(
+  (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x02 + 0x20)))) | (
+  1 << 7));
   spi_cur_slave = (uint8_t)0;
-  *((uint8_t volatile *)(0x03 + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                   0x03 + 0x20)) | (1 << 7));
+  *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x03 + 0x20)))) = (uint8_t)(
+  (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x03 + 0x20)))) | (
+  1 << 7));
   spi_cur_slave = (uint8_t)0;
   return;
 }
@@ -4148,9 +4165,9 @@ void uart0_transmit(unsigned char data)
   }
   else {
     *((uint8_t volatile *)(0x0C + 0x20)) = data;
-    *((uint8_t volatile *)(0x0A + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                     0x0A + 0x20)) | (
-                                                     1 << 6));
+    *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x0A + 0x20)))) = (uint8_t)(
+    (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x0A + 0x20)))) | (
+    1 << 6));
   }
   return_label: return;
 }
@@ -4164,8 +4181,9 @@ void uart1_transmit(unsigned char data)
   }
   else {
     *((uint8_t volatile *)0x9C) = data;
-    *((uint8_t volatile *)0x9A) = (uint8_t)((int)*((uint8_t volatile *)0x9A) | (
-                                            1 << 6));
+    *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)0x9A))) = (uint8_t)(
+    (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)0x9A))) | (
+    1 << 6));
   }
   return_label: return;
 }
@@ -4211,9 +4229,10 @@ void __vector_20(void) __attribute__((__signal__));
 void __vector_20(void) __attribute__((__signal__));
 void __vector_20(void)
 {
-  if ((int)tx_head0 == (int)tx_tail0) *((uint8_t volatile *)(0x0A + 0x20)) = (uint8_t)(
-                                      (int)*((uint8_t volatile *)(0x0A + 0x20)) & ~ (
-                                      1 << 6));
+  if ((int)tx_head0 == (int)tx_tail0) *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+                                      0x0A + 0x20)))) = (uint8_t)((int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(
+                                                                  0x0A + 0x20)))) & ~ (
+                                                                  1 << 6));
   else {
     *((uint8_t volatile *)(0x0C + 0x20)) = tx_buf0[tx_tail0];
     tx_tail0 = (uint8_t)((int)tx_tail0 + 1);
@@ -4226,8 +4245,8 @@ void __vector_32(void) __attribute__((__signal__));
 void __vector_32(void) __attribute__((__signal__));
 void __vector_32(void)
 {
-  if ((int)tx_head1 == (int)tx_tail1) *((uint8_t volatile *)0x9A) = (uint8_t)(
-                                      (int)*((uint8_t volatile *)0x9A) & ~ (
+  if ((int)tx_head1 == (int)tx_tail1) *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)0x9A))) = (uint8_t)(
+                                      (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)0x9A))) & ~ (
                                       1 << 6));
   else {
     *((uint8_t volatile *)0x9C) = tx_buf1[tx_tail1];
@@ -4243,8 +4262,9 @@ void uart0_init(void)
   *((uint8_t volatile *)(0x0B + 0x20)) = (uint8_t)0;
   *((uint8_t volatile *)(0x0A + 0x20)) = (uint8_t)((1 << 4) | (1 << 3));
   *((uint8_t volatile *)0x95) = (uint8_t)((1 << 2) | (1 << 1));
-  *((uint8_t volatile *)(0x0A + 0x20)) = (uint8_t)((int)*((uint8_t volatile *)(
-                                                   0x0A + 0x20)) | (1 << 7));
+  *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x0A + 0x20)))) = (uint8_t)(
+  (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)(0x0A + 0x20)))) | (
+  1 << 7));
   return;
 }
 
@@ -4255,8 +4275,9 @@ void uart1_init(void)
   *((uint8_t volatile *)0x9B) = (uint8_t)0;
   *((uint8_t volatile *)0x9A) = (uint8_t)((1 << 4) | (1 << 3));
   *((uint8_t volatile *)0x9D) = (uint8_t)((1 << 2) | (1 << 1));
-  *((uint8_t volatile *)0x9A) = (uint8_t)((int)*((uint8_t volatile *)0x9A) | (
-                                          1 << 7));
+  *((uint8_t volatile *)((uint16_t)((uint8_t volatile *)0x9A))) = (uint8_t)(
+  (int)*((uint8_t volatile *)((uint16_t)((uint8_t volatile *)0x9A))) | (
+  1 << 7));
   return;
 }
 
