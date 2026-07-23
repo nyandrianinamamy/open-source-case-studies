@@ -1,0 +1,5 @@
+directory	file	line	function	property kind	status	property
+memory/zero_alloc	13_loop_for_pointer_arithmetic.c	41	zero_alloc_for_pointer	mem_access	Unknown	\valid(pointers[i])
+memory/zero_alloc	13_loop_for_pointer_arithmetic.c	46	zero_alloc_for_pointer	dangling_pointer	Unknown	¬\dangling(pointers_alias)
+memory/zero_alloc	13_loop_for_pointer_arithmetic.c	47	zero_alloc_for_pointer	initialization	Unknown	\initialized(*pointers_alias)
+memory/zero_alloc	13_loop_for_pointer_arithmetic.c	47	zero_alloc_for_pointer	mem_access	Unknown	\valid_read(*pointers_alias)

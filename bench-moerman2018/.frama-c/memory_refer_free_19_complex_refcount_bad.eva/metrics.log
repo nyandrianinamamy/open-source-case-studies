@@ -1,0 +1,23 @@
+[metrics:eva:coverage] 
+  Eva coverage statistics
+  =======================
+  Syntactically reachable functions = 7 (out of 7)
+  Semantically reached functions = 6
+  Coverage estimation = 85.7% 
+  
+  Unreached functions (1) =
+    <memory/refer_free/19_complex_refcount.c>: refer_free_cont_get_pointer;
+[metrics:eva:unreached] 
+  References to non-analyzed functions
+  ------------------------------------
+  Function main calls refer_free_cont_get_pointer (at memory/refer_free/19_complex_refcount.c:65)
+[metrics:eva:reached-stmts] 
+  Statements analyzed by Eva
+  --------------------------
+  34 stmts in analyzed functions, 31 stmts analyzed (91.2%)
+  refer_free_cont_init: 3 stmts out of 3 (100.0%)
+  refer_free_cont_new: 4 stmts out of 4 (100.0%)
+  refer_free_cont_ref: 3 stmts out of 3 (100.0%)
+  refer_free_cont_set_pointer: 2 stmts out of 2 (100.0%)
+  refer_free_cont_unref: 4 stmts out of 4 (100.0%)
+  main: 15 stmts out of 18 (83.3%)

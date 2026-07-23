@@ -1,0 +1,22 @@
+[metrics:eva:coverage] 
+  Eva coverage statistics
+  =======================
+  Syntactically reachable functions = 5 (out of 9)
+  Semantically reached functions = 4
+  Coverage estimation = 80.0% 
+  
+  Unreached functions (1) =
+    <memory/access_uninit/18_complex_struct_multiple_methods.c>:
+      uninit_malloc_cont_set_value;
+[metrics:eva:unreached] 
+  References to non-analyzed functions
+  ------------------------------------
+  Function uninit_malloc_struct calls uninit_malloc_cont_set_value (at memory/access_uninit/18_complex_struct_multiple_methods.c:73)
+[metrics:eva:reached-stmts] 
+  Statements analyzed by Eva
+  --------------------------
+  24 stmts in analyzed functions, 20 stmts analyzed (83.3%)
+  main: 3 stmts out of 3 (100.0%)
+  uninit_malloc_cont_init: 3 stmts out of 3 (100.0%)
+  uninit_malloc_cont_get_value: 5 stmts out of 6 (83.3%)
+  uninit_malloc_struct: 9 stmts out of 12 (75.0%)

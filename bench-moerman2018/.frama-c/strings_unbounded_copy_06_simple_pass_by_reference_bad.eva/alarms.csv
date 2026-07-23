@@ -1,0 +1,5 @@
+directory	file	line	function	property kind	status	property
+FRAMAC_SHARE/libc	stdio.h	239	printf_va_1	precondition	Unknown	valid_read_string(param0)
+FRAMAC_SHARE/libc	string.h	435	strcpy	precondition	Invalid or unreachable	room_string: \valid(dest + (0 .. strlen(src)))
+strings/unbounded_copy	06_simple_pass_by_reference.c	30	string_copy_pass_by_reference	precondition of strcpy	Invalid or unreachable	room_string: \valid(dest + (0 .. strlen(src)))
+strings/unbounded_copy	06_simple_pass_by_reference.c	33	string_copy_pass_by_reference	precondition of printf_va_1	Unknown	valid_read_string(param0)
