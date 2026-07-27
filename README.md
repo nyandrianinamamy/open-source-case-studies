@@ -209,7 +209,7 @@ when available. We also summarize the license of each directory below.
 - `libmodbus`: LGPL
 - `libspng`: BSD 2-clause, see `LICENSE`
 - `libyaml`: MIT, see `License`
-- `line-following-robot`: MIT + modified BSD (for included `avr-libc`),
+- `line-follower-robot`: MIT + modified BSD (for included `avr-libc`),
                           see `LICENSE` and `avr-libc/include/LICENSE`
 - `mibench`: several, see `LICENSE` file inside each subdirectory
 - `mini-gmp`:  LGPL or GPL

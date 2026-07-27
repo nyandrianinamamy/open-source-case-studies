@@ -76,7 +76,7 @@ TARGETS=\
   libmodbus \
   libspng \
   libyaml \
-  line-following-robot \
+  line-follower-robot \
   microstrain \
   mini-gmp \
   miniz \
