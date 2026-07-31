@@ -211,6 +211,7 @@ when available. We also summarize the license of each directory below.
 - `libyaml`: MIT, see `License`
 - `line-follower-robot`: MIT + modified BSD (for included `avr-libc`),
                           see `LICENSE` and `avr-libc/include/LICENSE`
+- `matrixmult`: GPL
 - `mibench`: several, see `LICENSE` file inside each subdirectory
 - `mini-gmp`:  LGPL or GPL
 - `miniz`:  MIT

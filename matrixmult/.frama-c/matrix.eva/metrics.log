@@ -1,0 +1,25 @@
+[metrics:eva:coverage] 
+  Eva coverage statistics
+  =======================
+  Syntactically reachable functions = 11 (out of 11)
+  Semantically reached functions = 10
+  Coverage estimation = 90.9% 
+  
+  Unreached functions (1) =
+    <main.c>: thread_per_element;
+[metrics:eva:unreached] 
+  References to non-analyzed functions
+  ------------------------------------
+  Function thread_per_element_main references thread_per_element (at main.c:212)
+[metrics:eva:reached-stmts] 
+  Statements analyzed by Eva
+  --------------------------
+  373 stmts in analyzed functions, 353 stmts analyzed (94.6%)
+  read_matrix: 41 stmts out of 41 (100.0%)
+  write_matrix: 36 stmts out of 36 (100.0%)
+  thread_per_row_main: 53 stmts out of 55 (96.4%)
+  thread_per_matrix_main: 33 stmts out of 35 (94.3%)
+  main: 81 stmts out of 86 (94.2%)
+  thread_per_element_main: 63 stmts out of 68 (92.6%)
+  thread_per_matrix: 26 stmts out of 29 (89.7%)
+  thread_per_row: 20 stmts out of 23 (87.0%)
