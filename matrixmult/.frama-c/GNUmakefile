@@ -13,6 +13,7 @@ MACHDEP = x86_32
 
 ## Preprocessing flags (for -cpp-extra-args)
 CPPFLAGS    += \
+  -DMTHREAD_NUMBER_IDS=66 \
 
 ## General flags
 FCFLAGS     += \
@@ -24,11 +25,7 @@ FCFLAGS     += \
 ## Eva-specific flags
 EVAFLAGS    += \
   -eva-warn-key builtins:missing-spec=abort \
-  -no-eva \
   -mthread \
-  -mt-keep-analyses last \
-  -mt-shared-accesses-synchronization \
-  -mt-verbose 3 \
   -eva-verbose 3 \
   -eva-precision 4 \
 
