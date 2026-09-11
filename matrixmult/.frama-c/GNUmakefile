@@ -24,11 +24,7 @@ FCFLAGS     += \
 ## Eva-specific flags
 EVAFLAGS    += \
   -eva-warn-key builtins:missing-spec=abort \
-  -no-eva \
   -mthread \
-  -mt-keep-analyses last \
-  -mt-shared-accesses-synchronization \
-  -mt-verbose 3 \
   -eva-verbose 3 \
   -eva-precision 4 \
 
