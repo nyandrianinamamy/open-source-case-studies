@@ -13,6 +13,7 @@ MACHDEP = x86_32
 
 ## Preprocessing flags (for -cpp-extra-args)
 CPPFLAGS    += \
+  -DMTHREAD_NUMBER_IDS=66 \
 
 ## General flags
 FCFLAGS     += \

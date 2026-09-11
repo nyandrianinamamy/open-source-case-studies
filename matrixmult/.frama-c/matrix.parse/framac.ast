@@ -22,9 +22,9 @@ struct multiplication {
    struct matrix *C ;
 };
 int __fc_mthread_threads_running __attribute__((__fc_stdlib_internal__)) = 0;
-int __fc_mthread_threads[32] __attribute__((__fc_stdlib_internal__));
-int __fc_mthread_mutexes[32] __attribute__((__fc_stdlib_internal__));
-int __fc_mthread_queues[32] __attribute__((__fc_stdlib_internal__));
+int __fc_mthread_threads[66] __attribute__((__fc_stdlib_internal__));
+int __fc_mthread_mutexes[66] __attribute__((__fc_stdlib_internal__));
+int __fc_mthread_queues[66] __attribute__((__fc_stdlib_internal__));
 extern int volatile NON_DET_JOIN;
 
 FILE *file;
