@@ -187,6 +187,7 @@ when available. We also summarize the license of each directory below.
 - `basic-cwe-examples`: see `LICENSE`
 - `bench-moerman2018`: MIT
 - `c-testsuite`: see `LICENSE` and `LICENSE-tests`
+- `c-thread-pool` : MIT
 - `c-utils` : MIT
 - `cerberus`: see `LICENSE`
 - `chrony`: GPL

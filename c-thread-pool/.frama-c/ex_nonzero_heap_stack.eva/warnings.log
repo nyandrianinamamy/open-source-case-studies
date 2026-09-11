@@ -1,0 +1,213 @@
+[eva:experimental] Warning: The mthread domain is experimental.
+[eva:experimental] Warning: 
+  Analysis of concurrent programs is an experimental feature.
+[eva] thpool.c:531: Warning: 
+  Trying to initialize mutex __malloc_jobqueue_init_l427.mutex, but it might already be unlocked (and initialized).
+  pthread_mutex_init :: thpool.c:531 <-
+  bsem_init :: thpool.c:541 <-
+  bsem_reset :: thpool.c:448 <-
+  jobqueue_clear :: thpool.c:514 <-
+  jobqueue_destroy :: thpool.c:170 <-
+  thpool_init :: tests/src/nonzero_heap_stack.c:44 <-
+  main
+[eva] FRAMAC_SHARE/eva/mthread_pthread.c:36: Warning: 
+  The mutex __malloc_jobqueue_init_l427.mutex is already registered.
+[from] FRAMAC_SHARE/eva/mthread_pthread.c:17: Warning: 
+  variadic call detected. Using only 2 argument(s).
+[eva:garbled-mix:assigns] thpool.c:362: Warning: 
+  The specification of function sigaction
+  has generated a garbled mix of addresses
+  for assigns clause __fc_sigaction[signum].
+[eva] thpool.c:565: Warning: 
+  During mutex lock: invalid mutex id. Non-integer or imprecise value: {2; 4}. Ignoring.
+  pthread_mutex_lock :: thpool.c:565 <- bsem_wait :: thpool.c:373 <- thread_do
+[eva] FRAMAC_SHARE/eva/mthread_pthread.c:78: Warning: 
+  During mutex unlock: invalid mutex id. Non-integer or imprecise value: {2; 4}. Ignoring.
+  pthread_mutex_unlock :: FRAMAC_SHARE/eva/mthread_pthread.c:78 <-
+  pthread_cond_wait :: thpool.c:567 <-
+  bsem_wait :: thpool.c:373 <-
+  thread_do
+[eva] FRAMAC_SHARE/eva/mthread_pthread.c:81: Warning: 
+  During mutex lock: invalid mutex id. Non-integer or imprecise value: {2; 4}. Ignoring.
+  pthread_mutex_lock :: FRAMAC_SHARE/eva/mthread_pthread.c:81 <-
+  pthread_cond_wait :: thpool.c:567 <-
+  bsem_wait :: thpool.c:373 <-
+  thread_do
+[eva] thpool.c:565: Warning: 
+  During mutex lock: invalid mutex id. Non-integer or imprecise value: {2; 4; 5; 6}. Ignoring.
+  pthread_mutex_lock :: thpool.c:565 <- bsem_wait :: thpool.c:373 <- thread_do
+[eva] FRAMAC_SHARE/eva/mthread_pthread.c:78: Warning: 
+  During mutex unlock: invalid mutex id. Non-integer or imprecise value: {2; 4; 5; 6}. Ignoring.
+  pthread_mutex_unlock :: FRAMAC_SHARE/eva/mthread_pthread.c:78 <-
+  pthread_cond_wait :: thpool.c:567 <-
+  bsem_wait :: thpool.c:373 <-
+  thread_do
+[eva] FRAMAC_SHARE/eva/mthread_pthread.c:81: Warning: 
+  During mutex lock: invalid mutex id. Non-integer or imprecise value: {2; 4; 5; 6}. Ignoring.
+  pthread_mutex_lock :: FRAMAC_SHARE/eva/mthread_pthread.c:81 <-
+  pthread_cond_wait :: thpool.c:567 <-
+  bsem_wait :: thpool.c:373 <-
+  thread_do
+[eva] thpool.c:570: Warning: 
+  During mutex unlock: invalid mutex id. Non-integer or imprecise value: {2; 4; 5; 6}. Ignoring.
+  pthread_mutex_unlock :: thpool.c:570 <-
+  bsem_wait :: thpool.c:373 <-
+  thread_do
+[eva] thpool.c:485: Warning: 
+  During mutex lock: invalid mutex id. Non-integer or imprecise value: {1; 7}. Ignoring.
+  pthread_mutex_lock :: thpool.c:485 <-
+  jobqueue_pull :: thpool.c:443 <-
+  jobqueue_clear :: thpool.c:514 <-
+  jobqueue_destroy :: thpool.c:170 <-
+  thpool_init :: tests/src/nonzero_heap_stack.c:44 <-
+  main
+[eva] thpool.c:507: Warning: 
+  During mutex unlock: invalid mutex id. Non-integer or imprecise value: {1; 7}. Ignoring.
+  pthread_mutex_unlock :: thpool.c:507 <-
+  jobqueue_pull :: thpool.c:443 <-
+  jobqueue_clear :: thpool.c:514 <-
+  jobqueue_destroy :: thpool.c:170 <-
+  thpool_init :: tests/src/nonzero_heap_stack.c:44 <-
+  main
+[eva] thpool.c:458: Warning: 
+  During mutex lock: invalid mutex id. Non-integer or imprecise value: {1; 7}. Ignoring.
+  pthread_mutex_lock :: thpool.c:458 <-
+  jobqueue_push :: thpool.c:209 <-
+  thpool_add_work :: tests/src/nonzero_heap_stack.c:49 <-
+  main
+[eva] thpool.c:547: Warning: 
+  During mutex lock: invalid mutex id. Non-integer or imprecise value: [2..2147483647]. Ignoring.
+  pthread_mutex_lock :: thpool.c:547 <-
+  bsem_post :: thpool.c:475 <-
+  jobqueue_push :: thpool.c:209 <-
+  thpool_add_work :: tests/src/nonzero_heap_stack.c:49 <-
+  main
+[eva] FRAMAC_SHARE/eva/mthread_pthread.c:46: Warning: 
+  Too many values to enumerate, try increasing ilevel.
+[eva] thpool.c:550: Warning: 
+  During mutex unlock: invalid mutex id. Non-integer or imprecise value: [2..2147483647]. Ignoring.
+  pthread_mutex_unlock :: thpool.c:550 <-
+  bsem_post :: thpool.c:475 <-
+  jobqueue_push :: thpool.c:209 <-
+  thpool_add_work :: tests/src/nonzero_heap_stack.c:49 <-
+  main
+[eva] FRAMAC_SHARE/eva/mthread_pthread.c:56: Warning: 
+  Too many values to enumerate, try increasing ilevel.
+[eva] thpool.c:476: Warning: 
+  During mutex unlock: invalid mutex id. Non-integer or imprecise value: {1; 7}. Ignoring.
+  pthread_mutex_unlock :: thpool.c:476 <-
+  jobqueue_push :: thpool.c:209 <-
+  thpool_add_work :: tests/src/nonzero_heap_stack.c:49 <-
+  main
+[eva] thpool.c:556: Warning: 
+  During mutex lock: invalid mutex id. Non-integer or imprecise value: [2..2147483647]. Ignoring.
+  pthread_mutex_lock :: thpool.c:556 <-
+  bsem_post_all :: thpool.c:241 <-
+  thpool_destroy :: tests/src/nonzero_heap_stack.c:53 <-
+  main
+[eva] thpool.c:559: Warning: 
+  During mutex unlock: invalid mutex id. Non-integer or imprecise value: [2..2147483647]. Ignoring.
+  pthread_mutex_unlock :: thpool.c:559 <-
+  bsem_post_all :: thpool.c:241 <-
+  thpool_destroy :: tests/src/nonzero_heap_stack.c:53 <-
+  main
+[eva] thpool.c:556: Warning: 
+  During mutex lock: invalid mutex id. Non-integer or imprecise value: [2..2147483647]. Ignoring.
+  pthread_mutex_lock :: thpool.c:556 <-
+  bsem_post_all :: thpool.c:248 <-
+  thpool_destroy :: tests/src/nonzero_heap_stack.c:53 <-
+  main
+[eva] thpool.c:559: Warning: 
+  During mutex unlock: invalid mutex id. Non-integer or imprecise value: [2..2147483647]. Ignoring.
+  pthread_mutex_unlock :: thpool.c:559 <-
+  bsem_post_all :: thpool.c:248 <-
+  thpool_destroy :: tests/src/nonzero_heap_stack.c:53 <-
+  main
+[eva] thpool.c:485: Warning: 
+  During mutex lock: invalid mutex id. Non-integer or imprecise value: {1; 7}. Ignoring.
+  pthread_mutex_lock :: thpool.c:485 <-
+  jobqueue_pull :: thpool.c:443 <-
+  jobqueue_clear :: thpool.c:514 <-
+  jobqueue_destroy :: thpool.c:253 <-
+  thpool_destroy :: tests/src/nonzero_heap_stack.c:53 <-
+  main
+[eva] thpool.c:547: Warning: 
+  During mutex lock: invalid mutex id. Non-integer or imprecise value: [2..2147483647]. Ignoring.
+  pthread_mutex_lock :: thpool.c:547 <-
+  bsem_post :: thpool.c:503 <-
+  jobqueue_pull :: thpool.c:443 <-
+  jobqueue_clear :: thpool.c:514 <-
+  jobqueue_destroy :: thpool.c:253 <-
+  thpool_destroy :: tests/src/nonzero_heap_stack.c:53 <-
+  main
+[eva] thpool.c:550: Warning: 
+  During mutex unlock: invalid mutex id. Non-integer or imprecise value: [2..2147483647]. Ignoring.
+  pthread_mutex_unlock :: thpool.c:550 <-
+  bsem_post :: thpool.c:503 <-
+  jobqueue_pull :: thpool.c:443 <-
+  jobqueue_clear :: thpool.c:514 <-
+  jobqueue_destroy :: thpool.c:253 <-
+  thpool_destroy :: tests/src/nonzero_heap_stack.c:53 <-
+  main
+[eva] thpool.c:507: Warning: 
+  During mutex unlock: invalid mutex id. Non-integer or imprecise value: {1; 7}. Ignoring.
+  pthread_mutex_unlock :: thpool.c:507 <-
+  jobqueue_pull :: thpool.c:443 <-
+  jobqueue_clear :: thpool.c:514 <-
+  jobqueue_destroy :: thpool.c:253 <-
+  thpool_destroy :: tests/src/nonzero_heap_stack.c:53 <-
+  main
+[eva] thpool.c:367: Warning: 
+  During mutex lock: invalid mutex id. Non-integer or imprecise value: {3; 8}. Ignoring.
+  pthread_mutex_lock :: thpool.c:367 <- thread_do
+[eva] thpool.c:369: Warning: 
+  During mutex unlock: invalid mutex id. Non-integer or imprecise value: {3; 8}. Ignoring.
+  pthread_mutex_unlock :: thpool.c:369 <- thread_do
+[eva] thpool.c:565: Warning: 
+  During mutex lock: invalid mutex id. Non-integer or imprecise value: [2..2147483647]. Ignoring.
+  pthread_mutex_lock :: thpool.c:565 <- bsem_wait :: thpool.c:373 <- thread_do
+[eva] FRAMAC_SHARE/eva/mthread_pthread.c:78: Warning: 
+  During mutex unlock: invalid mutex id. Non-integer or imprecise value: [2..2147483647]. Ignoring.
+  pthread_mutex_unlock :: FRAMAC_SHARE/eva/mthread_pthread.c:78 <-
+  pthread_cond_wait :: thpool.c:567 <-
+  bsem_wait :: thpool.c:373 <-
+  thread_do
+[eva] FRAMAC_SHARE/eva/mthread_pthread.c:81: Warning: 
+  During mutex lock: invalid mutex id. Non-integer or imprecise value: [2..2147483647]. Ignoring.
+  pthread_mutex_lock :: FRAMAC_SHARE/eva/mthread_pthread.c:81 <-
+  pthread_cond_wait :: thpool.c:567 <-
+  bsem_wait :: thpool.c:373 <-
+  thread_do
+[eva] thpool.c:570: Warning: 
+  During mutex unlock: invalid mutex id. Non-integer or imprecise value: [2..2147483647]. Ignoring.
+  pthread_mutex_unlock :: thpool.c:570 <-
+  bsem_wait :: thpool.c:373 <-
+  thread_do
+[eva] thpool.c:377: Warning: 
+  During mutex lock: invalid mutex id. Non-integer or imprecise value: {3; 8}. Ignoring.
+  pthread_mutex_lock :: thpool.c:377 <- thread_do
+[eva] thpool.c:379: Warning: 
+  During mutex unlock: invalid mutex id. Non-integer or imprecise value: {3; 8}. Ignoring.
+  pthread_mutex_unlock :: thpool.c:379 <- thread_do
+[eva] thpool.c:485: Warning: 
+  During mutex lock: invalid mutex id. Non-integer or imprecise value: {1; 7}. Ignoring.
+  pthread_mutex_lock :: thpool.c:485 <-
+  jobqueue_pull :: thpool.c:384 <-
+  thread_do
+[eva] thpool.c:507: Warning: 
+  During mutex unlock: invalid mutex id. Non-integer or imprecise value: {1; 7}. Ignoring.
+  pthread_mutex_unlock :: thpool.c:507 <-
+  jobqueue_pull :: thpool.c:384 <-
+  thread_do
+[eva] thpool.c:392: Warning: 
+  During mutex lock: invalid mutex id. Non-integer or imprecise value: {3; 8}. Ignoring.
+  pthread_mutex_lock :: thpool.c:392 <- thread_do
+[eva] thpool.c:397: Warning: 
+  During mutex unlock: invalid mutex id. Non-integer or imprecise value: {3; 8}. Ignoring.
+  pthread_mutex_unlock :: thpool.c:397 <- thread_do
+[eva] thpool.c:401: Warning: 
+  During mutex lock: invalid mutex id. Non-integer or imprecise value: {3; 8}. Ignoring.
+  pthread_mutex_lock :: thpool.c:401 <- thread_do
+[eva] thpool.c:403: Warning: 
+  During mutex unlock: invalid mutex id. Non-integer or imprecise value: {3; 8}. Ignoring.
+  pthread_mutex_unlock :: thpool.c:403 <- thread_do

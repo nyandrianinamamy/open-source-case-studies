@@ -1,0 +1,32 @@
+[metrics:eva:coverage] 
+  Eva coverage statistics
+  =======================
+  Syntactically reachable functions = 16 (out of 22)
+  Semantically reached functions = 14
+  Coverage estimation = 87.5% 
+  
+  Unreached functions (2) =
+    <thpool.c>: bsem_post; thread_hold;
+[metrics:eva:unreached] 
+  References to non-analyzed functions
+  ------------------------------------
+  Function jobqueue_pull calls bsem_post (at thpool.c:503)
+  Function thread_do references thread_hold (at thpool.c:361)
+[metrics:eva:reached-stmts] 
+  Statements analyzed by Eva
+  --------------------------
+  206 stmts in analyzed functions, 188 stmts analyzed (91.3%)
+  bsem_post_all: 5 stmts out of 5 (100.0%)
+  bsem_reset: 4 stmts out of 4 (100.0%)
+  bsem_wait: 9 stmts out of 9 (100.0%)
+  jobqueue_destroy: 3 stmts out of 3 (100.0%)
+  jobqueue_init: 12 stmts out of 12 (100.0%)
+  main: 9 stmts out of 9 (100.0%)
+  thpool_destroy: 34 stmts out of 34 (100.0%)
+  thpool_init: 41 stmts out of 41 (100.0%)
+  thread_destroy: 2 stmts out of 2 (100.0%)
+  thread_init: 12 stmts out of 12 (100.0%)
+  thread_do: 37 stmts out of 41 (90.2%)
+  jobqueue_clear: 8 stmts out of 11 (72.7%)
+  bsem_init: 6 stmts out of 10 (60.0%)
+  jobqueue_pull: 6 stmts out of 13 (46.2%)

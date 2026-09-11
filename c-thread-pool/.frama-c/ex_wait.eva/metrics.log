@@ -1,0 +1,26 @@
+[metrics:eva:coverage] 
+  Eva coverage statistics
+  =======================
+  Syntactically reachable functions = 17 (out of 23)
+  Semantically reached functions = 1
+  Coverage estimation = 5.9% 
+  
+  Unreached functions (16) =
+    <tests/src/wait.c>: sleep_1; 
+    <thpool.c>: bsem_init; bsem_post; bsem_reset; bsem_wait; jobqueue_clear;
+      jobqueue_destroy; jobqueue_init; jobqueue_pull; jobqueue_push;
+      thpool_add_work; thpool_init; thpool_wait; thread_do; thread_hold;
+      thread_init;
+[metrics:eva:unreached] 
+  References to non-analyzed functions
+  ------------------------------------
+  Function main calls thpool_init (at tests/src/wait.c:38)
+  Function main calls thpool_add_work (at tests/src/wait.c:42)
+  Function main references sleep_1 (at tests/src/wait.c:42)
+  Function main calls thpool_wait (at tests/src/wait.c:44)
+  Function main calls thpool_wait (at tests/src/wait.c:47)
+[metrics:eva:reached-stmts] 
+  Statements analyzed by Eva
+  --------------------------
+  27 stmts in analyzed functions, 5 stmts analyzed (18.5%)
+  main: 5 stmts out of 27 (18.5%)

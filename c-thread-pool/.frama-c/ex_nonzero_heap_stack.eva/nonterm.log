@@ -1,0 +1,13 @@
+[nonterm:stmt] thpool.c:386: Warning: 
+  non-terminating statement
+  stack 1: thread_do
+  stack 2: thread_do
+[nonterm:stmt] thpool.c:500: Warning: 
+  non-terminating statement
+  stack 1: jobqueue_pull :: thpool.c:443 <-
+           jobqueue_clear :: thpool.c:514 <-
+           jobqueue_destroy :: thpool.c:170 <-
+           thpool_init :: tests/src/nonzero_heap_stack.c:44 <-
+           main
+  stack 2: jobqueue_pull :: thpool.c:384 <- thread_do
+  stack 3: jobqueue_pull :: thpool.c:384 <- thread_do

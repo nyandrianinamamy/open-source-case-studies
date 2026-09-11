@@ -1,0 +1,43 @@
+[metrics] Defined functions (23)
+  ======================
+   bsem_init (2 calls); bsem_post (2 calls); bsem_post_all (2 calls);
+   bsem_reset (1 call); bsem_wait (1 call); jobqueue_clear (1 call);
+   jobqueue_destroy (2 calls); jobqueue_init (1 call); jobqueue_pull (2 calls);
+   jobqueue_push (1 call); main (0 call);
+   sleep_2_secs (address taken) (0 call); thpool_add_work (6 calls);
+   thpool_destroy (0 call); thpool_init (2 calls);
+   thpool_num_threads_working (3 calls); thpool_pause (0 call);
+   thpool_resume (0 call); thpool_wait (0 call); thread_destroy (1 call);
+   thread_do (address taken) (0 call); thread_hold (address taken) (0 call);
+   thread_init (1 call); 
+  
+  Specified-only functions (0)
+  ============================
+   
+  
+  Undefined and unspecified functions (0)
+  =======================================
+   
+  
+  'Extern' global variables (1)
+  =============================
+   NON_DET_JOIN
+  
+  Potential entry points (5)
+  ==========================
+   main; thpool_destroy; thpool_pause; thpool_resume; thpool_wait; 
+  
+  Global metrics
+  ============== 
+  Sloc = 282
+  Decision point = 32
+  Global variables = 7
+  If = 29
+  Loop = 11
+  Goto = 10
+  Assignment = 86
+  Exit point = 23
+  Function = 23
+  Function call = 100
+  Pointer dereferencing = 125
+  Cyclomatic complexity = 55
