@@ -13,11 +13,11 @@ MACHDEP = gcc_x86_32
 
 ## Preprocessing flags (for -cpp-extra-args)
 CPPFLAGS    += \
-  -std=c99 \
+  -std=c11 \
   -I .. \
   -D__gmp_asprintf=asprintf
 
-# note: '-std=c99' is used to avoid issues with old GCCs (< 5) due to the
+# note: '-std=c11' is used to avoid issues with very old GCCs due to the
 #       presence of inline attributes.
 
 ## General flags
