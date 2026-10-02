@@ -2136,7 +2136,7 @@ out:
   @ ensures (buf == \null) ==> \result < 0;
   @ ensures (param == \null) ==> \result < 0;
   @ ensures \result < 0 || \result == 0;
-  @ ensures \result == 0 ==> (param->null_param == null_encoded_val);
+  @ ensures \result == 0 ==> (param->null_param == &null_encoded_val[0]);
   @ assigns param->null_param;
   @*/
 static int parse_algoid_params_rsa(const u8 *buf, u16 len, alg_param *param)
