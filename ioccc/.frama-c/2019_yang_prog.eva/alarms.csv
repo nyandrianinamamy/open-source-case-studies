@@ -94,9 +94,9 @@ directory	file	line	function	property kind	status	property
 2019/yang	prog.c	22	main	initialization	Unknown	\initialized(&(U + h)->z)
 2019/yang	prog.c	22	main	mem_access	Unknown	\valid_read(&(U + h)->z)
 2019/yang	prog.c	23	main	signed_overflow	Unknown	q - y ≤ 2147483647
-FRAMAC_SHARE/libc	stdio.h	148	fclose	precondition	Unknown	valid_stream: \valid(stream)
-FRAMAC_SHARE/libc	stdio.h	178	fopen	precondition	Unknown	valid_filename: valid_read_string(filename)
-FRAMAC_SHARE/libc	stdio.h	288	fgetc	precondition	Unknown	valid_stream: \valid(stream)
-FRAMAC_SHARE/libc	stdio.h	311	fputc	precondition	Unknown	valid_stream: \valid(stream)
-FRAMAC_SHARE/libc	stdio.h	514	perror	precondition	Unknown	valid_string_s: valid_read_string(s)
-FRAMAC_SHARE/libc	stdlib.h	883	abs	precondition	Unknown	abs_representable: j > -2147483647 - 1
+FRAMAC_SHARE/libc	stdio.h	147	fclose	precondition	Unknown	valid_stream: \valid(stream)
+FRAMAC_SHARE/libc	stdio.h	177	fopen	precondition	Unknown	valid_filename: valid_read_string(filename)
+FRAMAC_SHARE/libc	stdio.h	287	fgetc	precondition	Unknown	valid_stream: \valid(stream)
+FRAMAC_SHARE/libc	stdio.h	310	fputc	precondition	Unknown	valid_stream: \valid(stream)
+FRAMAC_SHARE/libc	stdio.h	513	perror	precondition	Unknown	valid_string_s: valid_read_string(s)
+FRAMAC_SHARE/libc	stdlib.h	882	abs	precondition	Unknown	abs_representable: j > -2147483647 - 1
