@@ -202,9 +202,9 @@ directory	file	line	function	property kind	status	property
 .	grayskull.h	822	gs_lbp_detect	signed_overflow	Unknown	y + step ≤ 2147483647
 .	grayskull.h	823	gs_lbp_detect	signed_overflow	Unknown	x + win_w ≤ 2147483647
 .	grayskull.h	823	gs_lbp_detect	signed_overflow	Unknown	x + step ≤ 2147483647
-FRAMAC_SHARE/libc	stdio.h	235	fprintf_va_44	precondition	Unknown	valid_read_string(param0)
-FRAMAC_SHARE/libc	stdio.h	381	fread	precondition	Unknown	valid_ptr_block: \valid((char *)ptr + (0 .. nmemb * size - 1))
-FRAMAC_SHARE/libc	stdio.h	394	fwrite	precondition	Unknown	valid_ptr_block: \valid_read((char *)ptr + (0 .. nmemb * size - 1))
+FRAMAC_SHARE/libc	stdio.h	234	fprintf_va_44	precondition	Unknown	valid_read_string(param0)
+FRAMAC_SHARE/libc	stdio.h	380	fread	precondition	Unknown	valid_ptr_block: \valid((char *)ptr + (0 .. nmemb * size - 1))
+FRAMAC_SHARE/libc	stdio.h	393	fwrite	precondition	Unknown	valid_ptr_block: \valid_read((char *)ptr + (0 .. nmemb * size - 1))
 FRAMAC_SHARE/libc	stdlib.c	21	abs	signed_overflow	Unknown	-i ≤ 2147483647
 FRAMAC_SHARE/libc	stdlib.c	31	atoi	mem_access	Unknown	\valid_read(up)
 FRAMAC_SHARE/libc	stdlib.c	33	atoi	mem_access	Unknown	\valid_read(up)

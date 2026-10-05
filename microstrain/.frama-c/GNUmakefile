@@ -23,6 +23,7 @@ FCFLAGS     += \
   -add-symbolic-path=..:. \
   -kernel-warn-key annot:missing-spec=abort \
   -kernel-warn-key typing:implicit-function-declaration=abort \
+  -kernel-warn-key typing:addr-of-packed-field=inactive \
   -eva-precision 2 \
   -main eva_main \
 
