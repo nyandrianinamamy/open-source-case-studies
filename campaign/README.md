@@ -394,7 +394,10 @@ programs, outside the manifest:
   `get`, `r` is `{3}` in both runs under the callstack of the first call,
   `{5}` with caching off and no answer with memexec under the callstack of
   the second call, and over all callstacks `{3; 5}` with caching off against
-  `{3}` with memexec, which must be reported as narrower;
+  `{3}` with memexec, which must be reported as narrower. At the exit of
+  `get`, `r` is `{0}`. A fourth run, with `-eva-no-results`, must answer no
+  query, write each one as unavailable for lack of results, and end with a
+  done line that counts these lines;
 - `same-line.c`: two calls to `f` on one line, one on each branch of an `if`
   whose condition is a global set by `-DSIDE`; the runs with `SIDE` 0 and 1
   analyse the same AST and take opposite branches. Their calls to `f` must

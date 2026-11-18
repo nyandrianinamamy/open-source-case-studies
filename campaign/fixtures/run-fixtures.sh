@@ -19,7 +19,10 @@
 #   issue #3: before "r = 0;" in get, the raw answers are {3} in both runs
 #   for the first call, {5} with caching disabled and none with memexec for
 #   the second call, and over all callstacks {3; 5} with caching disabled
-#   against {3} with memexec, which the comparison reports as narrower.
+#   against {3} with memexec, which the comparison reports as narrower. At
+#   the exit of get, r is {0}. With -eva-no-results (noresults), no state
+#   is saved: no query is answered, each is written unavailable, and the
+#   done line counts these lines.
 # - same-line.c, analysed twice with memexec, with SIDE 0 (side0) and SIDE 1
 #   (side1): the two runs reach different calls of one line, which the
 #   alignment reports as unmatched, not aligned.
@@ -45,16 +48,18 @@ families=$(awk -F'\t' 'NR==1{for(i=1;i<=NF;i++)c[$i]=i;next} $1=="test"{print $c
   "$output/provenance/binaries.tsv")
 for fixture in frame nested-hit same-line; do
   modes=(nocache cache cache.2)
+  if [[ $fixture == frame ]]; then modes+=(noresults); fi
   if [[ $fixture == same-line ]]; then modes=(side0 side1); fi
   for mode in "${modes[@]}"; do
     case "$mode" in
-      nocache) flag=-eva-no-memexec ;;
+      nocache|noresults) flag=-eva-no-memexec ;;
       *) flag=-eva-memexec ;;
     esac
     extra=()
     case "$mode" in
       side0) extra=(-cpp-extra-args=-DSIDE=0) ;;
       side1) extra=(-cpp-extra-args=-DSIDE=1) ;;
+      noresults) extra=(-eva-no-results) ;;
     esac
     case_id="fixtures/$fixture.c/default"
     run="$output/runs/$case_id/$mode"
@@ -87,6 +92,7 @@ for fixture in frame nested-hit same-line; do
     gzip -nf "$run/eva.log" "$run/records.jsonl" "$run/queries.tsv"
   done
   pairs=(nocache:cache cache:cache.2)
+  if [[ $fixture == frame ]]; then pairs+=(nocache:noresults); fi
   if [[ $fixture == same-line ]]; then pairs=(side0:side1); fi
   for pair in "${pairs[@]}"; do
     a=${pair%%:*} b=${pair##*:}
@@ -151,6 +157,25 @@ check "frame: the callstack of the second call has no answer with memexec" \
   grep -qxF "$(printf 'get\tget:11:0\tbefore\tmain|get@main:21:1\tr\tunavailable in B (no-callstack)\tMNULL=S5\t')" "$frame"
 check "frame: the callstack of the first call answers {3} in both runs" \
   bash -c "! grep -q \$'get\tget:11:0\tbefore\tmain|get@main:19:1\tr\t' '$frame'"
+
+check "frame: at the exit of get, r is {0} without caching" \
+  test "$(gzip -dc "$frame_runs/nocache/queries.tsv.gz" |
+    awk -F'\t' '$1=="answer" && $3=="get:exit" && $4=="exit" && $5=="*" && $6=="r" {print $9}')" = MNULL=S0
+# Lines of the answer file of the run without saved results, by kind.
+lines() {
+  gzip -dc "$frame_runs/noresults/queries.tsv.gz" | awk -F'\t' -v k="$1" '$1==k' | wc -l
+}
+check "frame: with -eva-no-results, no query is answered" \
+  test "$(lines answer)" = 0
+check "frame: with -eva-no-results, the queries are unavailable for lack of results" \
+  test "$(gzip -dc "$frame_runs/noresults/queries.tsv.gz" |
+    awk -F'\t' '$1=="unavailable" && $NF!="no-results"' | wc -l)/$(( $(lines unavailable) > 0 ))" = 0/1
+check "frame: with -eva-no-results, the done line counts the unavailable lines" \
+  test "$(gzip -dc "$frame_runs/noresults/queries.tsv.gz" |
+    awk -F'\t' '$1=="done"{print $2}')" = "$(( $(lines unavailable) + $(lines error) ))"
+noresults="$cmp_dir/frame.c/default/nocache-vs-noresults/queries-summary.tsv"
+check "frame: the comparison with the run without results answers nothing in it" \
+  test "$(value "$noresults" answered_b)/$(value "$noresults" complete_b)" = 0/complete
 
 same_line="$cmp_dir/same-line.c/default/side0-vs-side1/alignment-summary.tsv"
 check "same-line: the two calls of line 10 are unmatched, not aligned" \
