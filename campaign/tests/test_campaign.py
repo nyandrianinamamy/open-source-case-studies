@@ -127,6 +127,40 @@ class Parser(unittest.TestCase):
         self.assertEqual(campaign.kinds(record),
                          ("rejected", "analysed", "refused"))
 
+    def test_producers_with_later_forms(self):
+        # The producer of a hit is found when the storage disposition has a
+        # collector verdict after it; a rejected lookup names an entry but
+        # is not a hit.
+        text = """
+[eva:cache] nested.c:9:
+  call to leaf: lookup: no-candidate; execution: analysed; storage: stored (entry 1) [collector: kept]
+  stack: leaf :: nested.c:9 <- main
+[eva:cache] nested.c:10:
+  call to leaf: lookup: hit (entry 1); execution: not-analysed; storage: none
+  stack: leaf :: nested.c:10 <- main
+[eva:cache] nested.c:11:
+  call to leaf: lookup: rejected (entry 1: hint-generation); execution: analysed; storage: none; collector: swept (2)
+  stack: leaf :: nested.c:11 <- main
+[eva:cache]
+  call to main: lookup: no-candidate; execution: analysed; storage: refused (not-cacheable)
+  stack: main
+"""
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, "eva.log")
+            with open(path, "w") as f:
+                f.write(text)
+            out = os.path.join(tmp, "records.jsonl")
+            with contextlib.redirect_stderr(io.StringIO()):
+                campaign.main(["records", path, out])
+            rows = {r["site"]: r for r in campaign.load_records(out)}
+        self.assertEqual(rows["nested.c:9"]["storage"], "stored")
+        self.assertEqual(rows["nested.c:10"]["hit_of"],
+                         "main#0 > leaf@nested.c:9#0")
+        self.assertEqual(rows["nested.c:11"]["lookup"], "rejected")
+        self.assertIsNone(rows["nested.c:11"]["hit_of"])
+        self.assertEqual(rows["nested.c:11"]["dispositions"]["collector"],
+                         "swept (2)")
+
     def test_other_messages_are_ignored(self):
         lines = log("[eva:cache] not a call\n[eva] call to x: y")
         self.assertEqual(campaign.cache_records(lines), [])
@@ -428,6 +462,18 @@ class Counts(unittest.TestCase):
         self.assertFalse(counts["in_set_a"])
         self.assertEqual(counts["hits"], 3)
         self.assertEqual(counts["refused"], 1)
+
+    def test_unknown_cache_counters_are_ignored(self):
+        stats = ("memexec-hits\tf\t\t3\n"
+                 "memexec-collector-swept\tf\t\t7\n")
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, "stats.csv")
+            with open(path, "w") as f:
+                f.write(stats)
+            counts = campaign.run_counts(path)
+            rows = campaign.function_counts(path)
+        self.assertEqual((counts["hits"], counts["misses"]), (3, 0))
+        self.assertEqual(rows, [["f", 3, 0, 0, 0]])
 
 
 class Tables(unittest.TestCase):
