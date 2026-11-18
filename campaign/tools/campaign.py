@@ -858,8 +858,13 @@ TIMED_MODES = ("nocache", "cache", "reference")
 
 def time_rows(runs):
     """Elapsed times of the first run of each mode of each case, and the
-    ratios cache/nocache and cache/reference when both runs completed. A run
-    that did not complete gives its outcome instead of a time."""
+    ratios cache/nocache and cache/reference when both runs completed and
+    were measured. A run that did not complete gives its outcome instead of
+    a time; the runs of the fixtures are not measured."""
+    def measured(r):
+        return (r is not None and r.get("outcome") == "completed"
+                and r.get("elapsed_s", "") != "")
+
     by_case = OrderedDict()
     for r in runs:
         if r.get("mode") in TIMED_MODES:
@@ -873,13 +878,14 @@ def time_rows(runs):
                 cells.append("not run")
             elif r.get("outcome") != "completed":
                 cells.append(r.get("outcome", ""))
+            elif not measured(r):
+                cells.append("not measured")
             else:
-                cells.append(r.get("elapsed_s", ""))
+                cells.append(r["elapsed_s"])
 
         def ratio(mode):
             a, b = modes.get("cache"), modes.get(mode)
-            if (a is None or b is None or a.get("outcome") != "completed"
-                    or b.get("outcome") != "completed"):
+            if not (measured(a) and measured(b)):
                 return "n/a"
             denominator = float(b["elapsed_s"])
             if denominator == 0:

@@ -437,10 +437,13 @@ class Tables(unittest.TestCase):
              "elapsed_s": "180.00"},
             {"case": "d", "mode": "nocache", "outcome": "completed",
              "elapsed_s": "1.00"},
+            {"case": "e", "mode": "nocache", "outcome": "completed"},
+            {"case": "e", "mode": "cache", "outcome": "completed"},
         ]
         self.assertEqual(campaign.time_rows(runs), [
             ["c", "2.00", "0.50", "timeout", "0.250", "n/a"],
             ["d", "1.00", "not run", "not run", "n/a", "n/a"],
+            ["e", "not measured", "not measured", "not run", "n/a", "n/a"],
         ])
 
 
