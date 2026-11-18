@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# Stands for frama-c in the recipes of the case studies (make FRAMAC=...).
+# The invocation that runs Eva (an argument -eva) is measured when
+# CAMPAIGN_MEASURE names a file: it runs under timeout with the limit
+# CAMPAIGN_TIMEOUT in seconds (SIGTERM, then SIGKILL 60 s later if it is
+# still running), optionally with the address-space limit
+# CAMPAIGN_MEMORY_LIMIT in bytes, and GNU time writes its elapsed time,
+# CPU times, peak resident memory and exit status to CAMPAIGN_MEASURE.
+# Every other invocation runs the binary CAMPAIGN_FRAMAC unchanged.
+set -euo pipefail
+real=${CAMPAIGN_FRAMAC:?CAMPAIGN_FRAMAC must name the frama-c binary}
+measured=false
+if [[ -n ${CAMPAIGN_MEASURE:-} ]]; then
+  for arg in "$@"; do
+    if [[ $arg == -eva ]]; then measured=true; fi
+  done
+fi
+if ! $measured; then
+  exec "$real" "$@"
+fi
+limit=()
+if [[ -n ${CAMPAIGN_MEMORY_LIMIT:-} ]]; then
+  limit=(prlimit "--as=$CAMPAIGN_MEMORY_LIMIT")
+fi
+exec /usr/bin/time -o "$CAMPAIGN_MEASURE" \
+  -f 'elapsed_s\t%e\nuser_s\t%U\nsys_s\t%S\nmaxrss_kib\t%M\nstatus\t%x' \
+  timeout --kill-after=60 "${CAMPAIGN_TIMEOUT:?}" "${limit[@]}" "$real" "$@"
