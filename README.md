@@ -189,6 +189,19 @@ when available. We also summarize the license of each directory below.
 - `c-testsuite`: see `LICENSE` and `LICENSE-tests`
 - `c-thread-pool` : MIT
 - `c-utils` : MIT
+- `campaign`: LGPL 2.1, the licence of Frama-C, whose binaries it runs and
+              whose API its query module uses. It is written for this
+              repository, except:
+  - `reference/set-a-recorded.tsv`: the columns `case` and `in_A` of the
+    file `per-target.tsv` of branch `research/allocation-builtin-count` of
+    `nyandrianinamamy/frama-c` (commit `6195218f5d`), the measurement of
+    issue #28 of that repository, by its author;
+  - `fixtures/frame.c`: the program of the example run of issue #3 of
+    `nyandrianinamamy/frama-c`, by its author;
+  - the log excerpts of `tests/test_campaign.py`: output of Frama-C on the
+    tests of `nyandrianinamamy/frama-c`;
+  - `manifest.tsv`: the commands written by the makefiles of the case
+    studies, under the licence of each directory.
 - `cerberus`: see `LICENSE`
 - `chrony`: GPL
 - `debie1`: distribution and use authorized by Patria Aviation Oy,
