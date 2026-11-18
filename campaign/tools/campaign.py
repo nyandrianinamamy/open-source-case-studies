@@ -1050,9 +1050,9 @@ def tables_command(args):
     # Outcomes, time and memory.
     header = ["case", "mode", "outcome", "exit", "elapsed_s", "user_s",
               "maxrss_kib", "limit_s"]
-    rows = [[r.get(k, "") for k in ["case", "mode", "outcome", "exit",
-                                     "elapsed_s", "user_s", "maxrss_kib",
-                                     "timeout_s"]] for r in runs]
+    rows = [[r.get(k) or "-" for k in ["case", "mode", "outcome", "exit",
+                                        "elapsed_s", "user_s", "maxrss_kib",
+                                        "timeout_s"]] for r in runs]
     write_tsv(os.path.join(out_dir, "outcomes.tsv"), header, rows)
     md.write("## Outcomes, time and memory per invocation\n\n")
     md.write(markdown_table(header, rows) + "\n")
@@ -1143,7 +1143,7 @@ def tables_command(args):
                              pair["candidate"]] + ["n/a"] * len(keys))
                 continue
             rows.append([pair["case"], pair["baseline"], pair["candidate"]]
-                        + [values.get(k, "") for k in keys])
+                        + [values.get(k) or "-" for k in keys])
         write_tsv(os.path.join(out_dir, name + ".tsv"), header, rows)
         md.write("## %s\n\nRun A is the baseline, run B the candidate.\n\n"
                  % title)

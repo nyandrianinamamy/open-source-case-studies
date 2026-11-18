@@ -4,7 +4,9 @@ Run from the root of the repository:
   python3 -I -m unittest discover -s campaign/tests -v
 """
 
+import contextlib
 import importlib.util
+import io
 import json
 import os
 import tempfile
@@ -442,6 +444,22 @@ class Tables(unittest.TestCase):
                 f.write(stats)
             rows = campaign.function_counts(path)
         self.assertEqual(rows, [["f", 3, 1, 0, 0], ["g", 0, 2, 0, 1]])
+
+    def test_unmeasured_runs_leave_no_empty_cell(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            run = os.path.join(tmp, "runs", "fixtures", "f.c", "default",
+                               "cache")
+            os.makedirs(run)
+            with open(os.path.join(run, "run.tsv"), "w") as f:
+                f.write("case\tfixtures/f.c/default\nmode\tcache\n"
+                        "outcome\tcompleted\nexit\t0\n")
+            with contextlib.redirect_stdout(io.StringIO()):
+                campaign.main(["tables", tmp])
+            for name in os.listdir(os.path.join(tmp, "tables")):
+                with open(os.path.join(tmp, "tables", name)) as f:
+                    for line in f:
+                        self.assertEqual(line.rstrip("\n"), line.rstrip(),
+                                         name)
 
     def test_times_and_ratios(self):
         runs = [

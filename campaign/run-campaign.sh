@@ -87,7 +87,8 @@ mkdir "$output"
 mkdir -p "$output/provenance" "$output/runs" "$output/tools"
 # Paths under the home directory are written from ~ in the provenance.
 private() { sed "s|$HOME|~|g"; }
-printf '%q ' "${invocation[@]}" | private > "$output/provenance/command.txt"
+printf '%q ' "${invocation[@]}" | sed 's/ $//' | private \
+  > "$output/provenance/command.txt"
 printf '\n' >> "$output/provenance/command.txt"
 cp "$manifest" "$output/provenance/manifest.tsv"
 
