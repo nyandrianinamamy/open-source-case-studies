@@ -280,6 +280,24 @@ class Values(unittest.TestCase):
         self.assertTrue(self.inc("Fnan", "F0x1p+0..0x1p+0;nan"))
         self.assertFalse(self.inc("S1", "F0x1p+0..0x1p+0"))
 
+    def test_nan_suffix_in_a_map(self):
+        value = campaign.parse_value("MNULL=F-infinity..infinity;nan;x=S1")
+        self.assertEqual(value[1]["NULL"],
+                         ("float", float("-inf"), float("inf"), True))
+        self.assertEqual(value[1]["x"], ("set", frozenset([1])))
+        self.assertEqual(
+            campaign.classify((1, 0, "MNULL=F-infinity..infinity;nan"),
+                              (1, 0, "MNULL=F-infinity..infinity;nan")),
+            "equal")
+        self.assertEqual(
+            campaign.classify((1, 0, "MNULL=F0x0p+0..0x1p+0"),
+                              (1, 0, "MNULL=F-infinity..infinity;nan")),
+            "wider")
+
+    def test_same_written_answers_are_equal(self):
+        self.assertEqual(campaign.classify((1, 0, "Mx=Iunparsed"),
+                                           (1, 0, "Mx=Iunparsed")), "equal")
+
     def test_classify(self):
         c = campaign.classify
         self.assertEqual(c((1, 0, "MNULL=S3,5"), (1, 0, "MNULL=S3")),

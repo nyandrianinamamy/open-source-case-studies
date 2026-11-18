@@ -220,11 +220,17 @@ AST: a statement is `FUNCTION:LINE:K`, a callstack is
 Values: `T` (top), `G` and the bases of a garbled mix, or `M` and
 `BASE=OFFSETS` for each base, where `NULL` holds the integers. Offsets:
 `S1,2,3` (small set), `IMIN..MAX%R/M` (empty bound: unbounded), `FMIN..MAX`
-in hexadecimal with `;nan` when NaN is possible, `Fnan`, `B` (bottom).
+in hexadecimal with `;nan` when NaN is possible, `Fnan`, `B` (bottom). Base
+names never contain `;` or `=`, so the suffix `;nan` is told apart from the
+separator of the bases.
 
 `campaign.py queries A B PREFIX` compares the answer of B with that of A:
 `equal`, `wider`, `narrower`, `incomparable`, or `undecided` when the written
-forms do not decide inclusion. It counts top answers on each side, and the
+forms do not decide inclusion. Two identical written answers are `equal`. An
+answer that may be uninitialized or an escaping address is included only in
+another that may be too. The answer over all callstacks is an evaluation in
+the state joined over the callstacks, which can differ from the join of the
+answers of each callstack. It counts top answers on each side, and the
 queries without an answer on a side by reason: `unreached`, `no-callstack`
 (the statement is reached but not under that callstack), `error`, `missing`.
 Every query that is not `equal` is listed in `queries-differences.tsv`. The

@@ -587,11 +587,19 @@ def parse_value(text):
     if text.startswith("G"):
         return ("garbled", frozenset(x for x in text[1:].split(";") if x))
     if text.startswith("M"):
-        entries = {}
+        # Items are separated by ";", which also starts the suffix ";nan" of
+        # a float: base names never contain ";" or "=", so an item with no
+        # "=" is that suffix and belongs to the previous item.
+        items = []
         for item in text[1:].split(";"):
-            if item:
-                base, _, ival = item.partition("=")
-                entries[base] = parse_ival(ival)
+            if item and "=" not in item and items:
+                items[-1] += ";" + item
+            elif item:
+                items.append(item)
+        entries = {}
+        for item in items:
+            base, _, ival = item.partition("=")
+            entries[base] = parse_ival(ival)
         return ("map", entries)
     raise Undecided(text)
 
@@ -641,7 +649,10 @@ def is_top_answer(value):
 
 def classify(a, b):
     """Compares answer [b] of the candidate run with answer [a] of the
-    baseline run: equal, wider, narrower, incomparable or undecided."""
+    baseline run: equal, wider, narrower, incomparable or undecided. The
+    same written answer is equal, even when its form is not understood."""
+    if a == b:
+        return "equal"
     try:
         ab = answer_included(a, b)
         ba = answer_included(b, a)
@@ -1111,7 +1122,7 @@ def tables_command(args):
                   "aligned_other_dispositions", "hit_a_analysed_b",
                   "analysed_a_hit_b", "nested_under_hit_a",
                   "nested_under_hit_b", "unmatched_a", "unmatched_b",
-                  "undecided_groups", "complete"]
+                  "undecided_groups", "accounted", "complete"]
     query_keys = ["queries", "answered_both", "equal", "wider", "narrower",
                   "incomparable", "undecided", "top_a", "top_b",
                   "unavailable_a_no-callstack", "unavailable_b_no-callstack",
