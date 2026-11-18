@@ -90,7 +90,9 @@ private() { sed "s|$HOME|~|g"; }
 printf '%q ' "${invocation[@]}" | sed 's/ $//' | private \
   > "$output/provenance/command.txt"
 printf '\n' >> "$output/provenance/command.txt"
+# The manifest actually used, kept in the provenance and in the archive.
 cp "$manifest" "$output/provenance/manifest.tsv"
+sha256sum < "$manifest" | cut -d' ' -f1 > "$output/provenance/manifest.sha256"
 
 eval "$(opam env --switch="$switch" --set-switch)"
 export PATH="$switch/_opam/setup-venv/bin:$PATH"
@@ -98,27 +100,13 @@ export LC_ALL=C TERM=dumb
 
 # ----- Binaries -------------------------------------------------------------
 
-# Records the revision of a checkout, refusing a git tree with local changes.
-checkout_revision() {
-  local dir=$1
-  if [[ -f $dir/CAMPAIGN_REVISION ]]; then
-    cat "$dir/CAMPAIGN_REVISION"
-  elif git -C "$dir" rev-parse --git-dir > /dev/null 2>&1; then
-    if [[ -n $(git -C "$dir" status --porcelain --untracked-files=no) ]]; then
-      printf 'The checkout %s has local changes.\n' "$dir" >&2
-      return 1
-    fi
-    git -C "$dir" rev-parse HEAD
-  else
-    printf 'No revision for %s.\n' "$dir" >&2
-    return 1
-  fi
-}
-
+# Records the binary of a role: its revision and the patch applied on top of
+# it (see campaign.py provenance), the SHA-256 of the executable and of the
+# Eva plugin, the counter families of the plugin, and the version.
 prepare_binary() {
-  local role=$1 dir=$2 revision
+  local role=$1 dir=$2 provenance
   dir=$(realpath "$dir")
-  revision=$(checkout_revision "$dir")
+  provenance=$("${tool[@]}" provenance "$dir" "$role" "$output/provenance/patches")
   local tools="$output/tools/$role"
   mkdir -p "$tools"
   (cd "$dir" && dune exec --no-build -- env) |
@@ -138,13 +126,17 @@ prepare_binary() {
   bash "$campaign/tools/build-queries.sh" "$tools/sites.env" "$tools" \
     > "$tools/build-queries.log" 2>&1
   printf '%s\n' "$dir" > "$tools/checkout"
-  printf '%s\t%s\t%s\t%s\t%s\t%s\n' "$role" "$(private <<< "$dir")" "$revision" \
+  local cmxs="$dir/_build/default/plugins/eva/src/eva.cmxs"
+  "${tool[@]}" families "$cmxs" > "$tools/counter-families"
+  printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\n' "$role" "$(private <<< "$dir")" \
+    "$provenance" \
     "$(sha256sum < "$bin/frama-c" | cut -d' ' -f1)" \
-    "$(sha256sum < "$dir/_build/default/plugins/eva/src/eva.cmxs" | cut -d' ' -f1)" \
+    "$(sha256sum < "$cmxs" | cut -d' ' -f1)" \
+    "$(cat "$tools/counter-families")" \
     "$(cat "$tools/version")" >> "$output/provenance/binaries.tsv"
 }
 
-printf 'role\tcheckout\trevision\tframa_c_sha256\teva_cmxs_sha256\tversion\n' \
+printf 'role\tcheckout\trevision\tpatch_sha256\tpatch\tframa_c_sha256\teva_cmxs_sha256\tcounter_families\tversion\n' \
   > "$output/provenance/binaries.tsv"
 prepare_binary test "$test_checkout"
 if [[ -n $reference_checkout ]]; then
@@ -176,10 +168,18 @@ printf '%s\n' "${cases[@]}" > "$output/provenance/cases.txt"
 
 field() { "${tool[@]}" manifest-get "$manifest" "$1" "$2"; }
 
-# Writes the outcome of a run from its measure, its exit status, its log
-# and its records (see classify_outcome in tools/campaign.py).
+# Writes the outcome of a run and the evidence of exhausted memory, from its
+# measure, its exit status, its log and its records (see classify_outcome
+# in tools/campaign.py).
 classify() {
   "${tool[@]}" outcome "$1" "$2" "$3" "$timeout_s"
+}
+
+# A column of the row of a role in binaries.tsv.
+binary_field() {
+  awk -F'\t' -v r="$1" -v c="$2" '
+    NR == 1 { for (i = 1; i <= NF; i++) col[$i] = i; next }
+    $1 == r { print $col[c] }' "$output/provenance/binaries.tsv"
 }
 
 run_one() {
@@ -235,8 +235,8 @@ run_one() {
     "${tool[@]}" records "$run/eva.log" "$run/records.jsonl" \
       2> "$run/records-problems.log" || true
   fi
-  local outcome
-  outcome=$(classify "$run" "$parse_exit" "$make_exit")
+  local outcome evidence
+  IFS=$'\t' read -r outcome evidence < <(classify "$run" "$parse_exit" "$make_exit")
   # Untimed: state queries on the saved session, with the same limits.
   local queries_exit=-
   if [[ $outcome == completed && -f $analysis/framac.sav ]]; then
@@ -253,9 +253,12 @@ run_one() {
   fi
   {
     printf 'case\t%s\nmode\t%s\nrole\t%s\nflag\t%s\n' "$id" "$mode" "$role" "$flag"
-    printf 'revision\t%s\n' "$(awk -F'\t' -v r="$role" '$1==r{print $3}' "$output/provenance/binaries.tsv")"
+    printf 'revision\t%s\n' "$(binary_field "$role" revision)"
+    printf 'patch_sha256\t%s\n' "$(binary_field "$role" patch_sha256)"
+    printf 'counter_families\t%s\n' "$(binary_field "$role" counter_families)"
     printf 'oscs_revision\t%s\nstarted\t%s\n' "$revision" "$started"
-    printf 'outcome\t%s\nparse_exit\t%s\nmake_exit\t%s\n' "$outcome" "$parse_exit" "$make_exit"
+    printf 'outcome\t%s\noom_evidence\t%s\n' "$outcome" "$evidence"
+    printf 'parse_exit\t%s\nmake_exit\t%s\n' "$parse_exit" "$make_exit"
     if [[ -f $run/measure ]]; then "${tool[@]}" measure "$run/measure"; fi
     printf 'timeout_s\t%s\nmemory_limit\t%s\nextra_eva_flags\t%s\nqueries_exit\t%s\n' \
       "$timeout_s" "${memory_limit:--}" "${extra_flags:--}" "$queries_exit"
@@ -282,21 +285,31 @@ compare() {
   local dir="$output/comparisons/$id/$a-vs-$b"
   mkdir -p "$dir"
   printf 'case\t%s\nbaseline\t%s\ncandidate\t%s\n' "$id" "$a" "$b" > "$dir/pair.tsv"
+  # Statement numbers are comparable when both runs used the same revision
+  # and patch of the analyzer: they parse the same sources alike.
+  local numbering=()
+  if [[ $(run_field "$ra" revision)/$(run_field "$ra" patch_sha256) == \
+        "$(run_field "$rb" revision)/$(run_field "$rb" patch_sha256)" ]]; then
+    numbering=(--same-numbering)
+  fi
   if [[ -f $ra/records.jsonl.gz && -f $rb/records.jsonl.gz ]]; then
-    "${tool[@]}" align "$ra/records.jsonl.gz" "$rb/records.jsonl.gz" "$dir/alignment-" \
-      > /dev/null
+    "${tool[@]}" align "${numbering[@]}" "$ra/records.jsonl.gz" \
+      "$rb/records.jsonl.gz" "$dir/alignment-" > /dev/null
   fi
   if [[ -f $ra/queries.tsv.gz && -f $rb/queries.tsv.gz ]]; then
     "${tool[@]}" queries "$ra/queries.tsv.gz" "$rb/queries.tsv.gz" "$dir/queries-" \
       > /dev/null
   fi
   if [[ -f $ra/alarms.csv && -f $rb/alarms.csv ]]; then
-    "${tool[@]}" alarms "$ra/alarms.csv" "$rb/alarms.csv" |
-      grep -v '^difference' > "$dir/alarms-summary.tsv"
-    "${tool[@]}" alarms "$ra/alarms.csv" "$rb/alarms.csv" |
-      grep '^difference' > "$dir/alarms-differences.tsv" || true
+    "${tool[@]}" alarms --root-a "$ra/src" --root-b "$rb/src" \
+      "$ra/alarms.csv" "$rb/alarms.csv" > "$dir/alarms.out"
+    grep -v '^difference' "$dir/alarms.out" > "$dir/alarms-summary.tsv"
+    grep '^difference' "$dir/alarms.out" > "$dir/alarms-differences.tsv" || true
+    rm "$dir/alarms.out"
   fi
 }
+
+run_field() { awk -F'\t' -v k="$2" '$1==k{print $2}' "$1/run.tsv"; }
 
 for id in "${cases[@]}"; do
   compare "$id" nocache cache
