@@ -17,6 +17,7 @@ caching and compares the runs. It implements the benchmark protocol of
 | `tools/build-reference.sh` | builds a Frama-C binary pinned by revision |
 | `tools/make-manifest.sh` | regenerates the manifest |
 | `tools/outcome-demo.sh` | constructed runs for each outcome class |
+| `tools/archive-logs.sh` | packs the raw logs of a campaign, with their SHA-256 |
 | `fixtures/` | constructed programs and the checks run on them |
 | `reference/set-a-recorded.tsv` | set A membership recorded by issue #28 |
 | `tests/test_campaign.py` | tests of `campaign.py` |
@@ -292,7 +293,14 @@ in the modes `nocache` and `cache` through the same runner.
 `results/NAME/` keeps the tables, provenance and checks of a campaign that
 ran. The raw logs (`runs/`, `comparisons/`, the outcome demonstration) are
 not committed: they go to an archive, whose SHA-256 is recorded in
-`results/NAME/raw-logs.sha256`. The protocol attaches this archive to the tag
+`results/NAME/raw-logs.sha256`:
+
+```sh
+campaign/tools/archive-logs.sh OUTPUT /outside/the/tree/NAME.tar.gz
+```
+
+The archive writes the paths under the home directory from `~` and leaves
+out the compiled query modules; the same output gives the same archive. The protocol attaches this archive to the tag
 of the campaign on GitHub, which is made when the branch is published. To
 check a copy of the archive, run `sha256sum -c raw-logs.sha256` in its
 directory.
