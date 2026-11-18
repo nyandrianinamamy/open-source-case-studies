@@ -20,14 +20,30 @@
    [sallstmts]; a callstack is the entry point followed by CALLEE@CALLSITE for
    each call, from the outermost.
 
+   The exit queries ask, for every function whose results are available, for
+   each scalar lvalue that occurs in its body, in the state at the end of the
+   function ([Eva.Results.at_end_of]): its exit state. Their statement is
+   written FUNCTION:exit and their point [exit].
+
+   A query is answered only when Eva saved the results of its function
+   ([Eva.Results.are_available]): with [-eva-no-results], or for a function
+   analysed through its specification or a builtin, the states are not
+   saved and the query is written as unavailable, never evaluated.
+
    Output, tab-separated:
    - [reach FUNCTION STMT] for each reached statement;
    - [answer FUNCTION STMT POINT CALLSTACK LVALUE INIT ESC VALUE] where INIT
      and ESC tell whether the value may be uninitialized or an escaping
      address, and VALUE is written as described at [value_to_string];
-   - [error FUNCTION STMT POINT CALLSTACK LVALUE REASON] when Eva gives no
-     answer;
-   - [done COUNT] at the end, with the number of answers. *)
+   - [unavailable FUNCTION STMT POINT CALLSTACK LVALUE REASON] when the state
+     of the query was not saved: [no-results] when the results of the
+     function are not available, [top-state] or [disabled-domain] when Eva
+     returns no state for the query;
+   - [error FUNCTION STMT POINT CALLSTACK LVALUE REASON] when the evaluation
+     raises an exception;
+   - [done COUNT] at the end, with the number of answer, unavailable and
+     error lines written before it. A file without this line, or whose count
+     differs, is incomplete. *)
 
 open Cil_types
 
@@ -158,28 +174,54 @@ let count = ref 0
 
 let print fmt = Printf.fprintf !out fmt
 
-let answer kf stmt point cs_key request lval_text eval =
-  let fname = Kernel_function.get_name kf in
-  let skey = stmt_key stmt in
-  let point = match point with `Before -> "before" | `After -> "after" in
-  match Eva.Results.as_cvalue_or_uninitialized eval with
-  | v ->
-    incr count;
-    let init = if Cvalue.V_Or_Uninitialized.is_initialized v then 1 else 0 in
-    let esc = if Cvalue.V_Or_Uninitialized.is_noesc v then 0 else 1 in
-    let value = Cvalue.V_Or_Uninitialized.get_v v in
-    let value =
-      if Cvalue.V.is_bottom value && Eva.Results.is_empty request
-      then "B" else value_to_string value
-    in
-    print "answer\t%s\t%s\t%s\t%s\t%s\t%d\t%d\t%s\n"
-      fname skey point cs_key lval_text init esc value
-  | exception exn ->
-    print "error\t%s\t%s\t%s\t%s\t%s\t%s\n" fname skey point cs_key lval_text
-      (escape (Printexc.to_string exn))
+let point_name = function
+  | `Before -> "before"
+  | `After -> "after"
+  | `Exit -> "exit"
 
-let requests stmt =
-  let before = Eva.Results.before stmt and after = Eva.Results.after stmt in
+let unavailable fname skey point cs_key lval_text reason =
+  incr count;
+  print "unavailable\t%s\t%s\t%s\t%s\t%s\t%s\n"
+    fname skey (point_name point) cs_key lval_text reason
+
+(* Writes the answer of one query. [available] tells whether the results of
+   the function were saved; it is checked before any evaluation, since the
+   evaluation in a state that was not saved gives a top value. *)
+let answer ~available ~fname ~skey point cs_key request lval_text eval =
+  let point_text = point_name point in
+  if not available then
+    unavailable fname skey point cs_key lval_text "no-results"
+  else
+    match eval request with
+    | exception exn ->
+      incr count;
+      print "error\t%s\t%s\t%s\t%s\t%s\t%s\n"
+        fname skey point_text cs_key lval_text
+        (escape (Printexc.to_string exn))
+    | eval ->
+      match Eva.Results.as_cvalue_result eval with
+      | Error Eva.Results.Top ->
+        unavailable fname skey point cs_key lval_text "top-state"
+      | Error Eva.Results.DisabledDomain ->
+        unavailable fname skey point cs_key lval_text "disabled-domain"
+      | Ok _ | Error Eva.Results.Bottom ->
+        incr count;
+        let v = Eva.Results.as_cvalue_or_uninitialized eval in
+        let init =
+          if Cvalue.V_Or_Uninitialized.is_initialized v then 1 else 0
+        in
+        let esc = if Cvalue.V_Or_Uninitialized.is_noesc v then 0 else 1 in
+        let value = Cvalue.V_Or_Uninitialized.get_v v in
+        let value =
+          if Cvalue.V.is_bottom value && Eva.Results.is_empty request
+          then "B" else value_to_string value
+        in
+        print "answer\t%s\t%s\t%s\t%s\t%s\t%d\t%d\t%s\n"
+          fname skey point_text cs_key lval_text init esc value
+
+(* The requests of a query: over all callstacks ([*]), then in each
+   callstack in which the point is reached. *)
+let requests_at before after =
   let callstacks =
     Eva.Results.callstacks before @ Eva.Results.callstacks after
     |> List.sort_uniq Eva.Callstack.compare
@@ -191,15 +233,20 @@ let requests stmt =
        Eva.Results.in_callstack cs before, Eva.Results.in_callstack cs after)
     callstacks
 
-let query_stmt kf stmt lvals =
+let requests stmt =
+  requests_at (Eva.Results.before stmt) (Eva.Results.after stmt)
+
+let query_stmt ~available kf stmt lvals =
+  let fname = Kernel_function.get_name kf and skey = stmt_key stmt in
   List.iter
     (fun (cs_key, before, after) ->
        List.iter
          (fun (text, eval) ->
-            answer kf stmt `Before cs_key before text (eval before);
-            answer kf stmt `After cs_key after text (eval after))
+            answer ~available ~fname ~skey `Before cs_key before text eval;
+            answer ~available ~fname ~skey `After cs_key after text eval)
          lvals)
-    (requests stmt)
+    (if available then requests stmt
+     else [ "*", Eva.Results.before stmt, Eva.Results.after stmt ])
 
 let lval_query lv =
   Format.asprintf "%a" Printer.pp_lval lv, Eva.Results.eval_lval lv
@@ -208,14 +255,46 @@ let enumerated kf =
   match kf.fundec with
   | Declaration _ -> ()
   | Definition (fundec, _) ->
+    let available = Eva.Results.are_available kf in
     List.iter
       (fun stmt ->
          if Eva.Results.is_reachable stmt then begin
            print "reach\t%s\t%s\n" (Kernel_function.get_name kf)
              (stmt_key stmt);
-           query_stmt kf stmt (List.map lval_query (lvals_of_stmt stmt))
+           query_stmt ~available kf stmt
+             (List.map lval_query (lvals_of_stmt stmt))
          end)
       fundec.sallstmts
+
+(* The exit queries of a function: the scalar lvalues of its body, in the
+   state at the end of the function, when its results are available and its
+   return statement is reached. *)
+let exit_queries kf =
+  match kf.fundec with
+  | Declaration _ -> ()
+  | Definition (fundec, _) ->
+    let return = Kernel_function.find_return kf in
+    if Eva.Results.are_available kf && Eva.Results.is_reachable return
+    then begin
+      let module S = Cil_datatype.LvalStructEq.Set in
+      let lvals =
+        List.fold_left (fun acc stmt -> S.union acc (S.of_list
+                                                      (lvals_of_stmt stmt)))
+          S.empty fundec.sallstmts
+      in
+      let fname = Kernel_function.get_name kf in
+      let skey = fname ^ ":exit" in
+      let at_end = Eva.Results.at_end_of kf in
+      List.iter
+        (fun (cs_key, _, request) ->
+           S.iter
+             (fun lv ->
+                let text, eval = lval_query lv in
+                answer ~available:true ~fname ~skey `Exit cs_key request text
+                  eval)
+             lvals)
+        (requests_at at_end at_end)
+    end
 
 let find_variable kf name =
   let locals = Kernel_function.(get_formals kf @ get_locals kf) in
@@ -240,23 +319,28 @@ let named file =
             | Some vi -> vi
             | None -> failwith ("unknown variable " ^ var)
           in
-          let query = "named:" ^ var, Eva.Results.eval_var vi in
+          let text = "named:" ^ var and eval = Eva.Results.eval_var vi in
+          let available = Eva.Results.are_available kf in
+          let fname = Kernel_function.get_name kf in
           let stmts = (Kernel_function.get_definition kf).sallstmts in
           List.iter
             (fun stmt ->
                let loc = Cil_datatype.Stmt.loc stmt in
+               let skey = stmt_key stmt in
                if Fileloc.line loc = line_no then
                  List.iter
                    (fun (cs_key, before, after) ->
                       match point with
                       | "before" ->
-                        answer kf stmt `Before cs_key before (fst query)
-                          (snd query before)
+                        answer ~available ~fname ~skey `Before cs_key before
+                          text eval
                       | "after" ->
-                        answer kf stmt `After cs_key after (fst query)
-                          (snd query after)
+                        answer ~available ~fname ~skey `After cs_key after
+                          text eval
                       | _ -> failwith ("unknown point " ^ point))
-                   (requests stmt))
+                   (if available then requests stmt
+                    else [ "*", Eva.Results.before stmt,
+                           Eva.Results.after stmt ]))
             stmts
         | [] | [ "" ] -> ()
         | _ -> failwith ("malformed named query: " ^ line)
@@ -280,6 +364,7 @@ let run () =
             (Kernel_function.get_name b))
     in
     List.iter enumerated functions;
+    List.iter exit_queries functions;
     Option.iter named (Sys.getenv_opt "CAMPAIGN_QUERIES_NAMED");
     print "done\t%d\n" !count;
     close_out !out
