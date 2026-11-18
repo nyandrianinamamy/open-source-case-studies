@@ -53,12 +53,15 @@ peak RSS separately because Make also runs parsing and setup.
 ## Replay the jsmn memexec pilot
 
 From this checkout, run `bash stage1-pilot.sh /absolute/fresh/output` after
-building Frama-C as above. The script captures the Dune sites itself and
-accepts `FRAMA_C_CHECKOUT` for a different build checkout. It runs
-`jsmn-main.eva` and `jsmn-example.eva` serially with memexec on and off.
-Each run gets a fresh source snapshot and a one-hour timeout. Compare
-`alarms.csv`, `metrics.log`, and `nonterm.log` across each pair. Count
-actual memexec hits using `Reusing old results for call to` in `eva.log`.
-Compare the `[eva:final-states]` entries for the available joined Cvalue
-exit-state prints. See `provenance.log` for revisions and executable hashes,
-and `make-time.txt` for the full Make invocation's resource use.
+building Frama-C as above. The script runs `jsmn-main.eva` and
+`jsmn-example.eva` with memexec on and off through the campaign runner,
+`campaign/run-campaign.sh`, which takes a fresh source snapshot per run,
+measures each Eva invocation under a one-hour limit and compares the runs.
+`FRAMA_C_CHECKOUT` selects a different build checkout. The layout of the
+output and the comparisons are described in `campaign/README.md`.
+
+## Campaign
+
+The case-study campaign of reuse within one analysis lives in `campaign/`:
+manifest of the cases, runner, tools, pilot and result tables. Start with
+`campaign/README.md`.
