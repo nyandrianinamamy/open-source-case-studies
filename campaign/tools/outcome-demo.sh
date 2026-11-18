@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 # Shows that the runner tells the outcomes of a run apart, on constructed
 # runs of the case studies:
-# - timeout: jsmn-main with a limit of 1 s;
-# - oom: jsmn-main with an address-space limit of 550 MB;
+# - timeout: jsmn-main with a limit of 1 s, at which the watchdog fires;
+# - oom: jsmn-main with an address-space limit of 550 MB, at which Frama-C
+#   reports that memory is exhausted;
 # - error: 2048 with -eva-stop-at-nth-alarm 1, which aborts the analysis;
-# - killed: jsmn-main killed with SIGKILL after 1.5 s, as the out-of-memory
-#   killer of the system would.
+# - killed: jsmn-main killed with SIGKILL from outside the watchdog after
+#   1.5 s. The demonstration cannot make the out-of-memory killer of the
+#   system act, so there is no evidence of it, and the cause is unknown.
 # None of these runs is retried.
 #
 # Usage: outcome-demo.sh OUTPUT TEST_CHECKOUT [SWITCH]
@@ -55,9 +57,11 @@ for expected in timeout oom error killed; do
   observed=$(awk -F'\t' '$1=="outcome"{print $2}' "$run_tsv")
   verdict=PASS
   if [[ $observed != "$expected" ]]; then verdict=FAIL; status=1; fi
-  printf '%s\texpected %s\tobserved %s\texit %s\telapsed_s %s\n' "$verdict" \
-    "$expected" "$observed" "$(awk -F'\t' '$1=="exit"{print $2}' "$run_tsv")" \
-    "$(awk -F'\t' '$1=="elapsed_s"{print $2}' "$run_tsv")" >> "$output/summary.tsv"
+  field() { awk -F'\t' -v k="$1" '$1==k{print $2}' "$run_tsv"; }
+  printf '%s\texpected %s\tobserved %s\texit %s\tsignal %s\twatchdog %s\toom_evidence %s\telapsed_s %s\n' \
+    "$verdict" "$expected" "$observed" "$(field exit)" "$(field signal)" \
+    "$(field watchdog)" "$(field oom_evidence)" "$(field elapsed_s)" \
+    >> "$output/summary.tsv"
 done
 cat "$output/summary.tsv"
 exit "$status"
