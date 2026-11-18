@@ -1,0 +1,22 @@
+PASS nested-hit: two runs of the same binary align completely
+PASS nested-hit: one call analysed without caching is a hit with memexec
+PASS nested-hit: the two nested calls are reported under the hit
+PASS nested-hit: no alignment is undecided or unmatched
+PASS nested-hit: every record is aligned or nested under the hit
+PASS nested-hit: the nested records are the calls to leaf under the second call to outer
+PASS frame: first call, raw answer {3} without caching
+PASS frame: first call, raw answer {3} with memexec
+PASS frame: second call, raw answer {5} without caching
+PASS frame: second call, no raw answer with memexec
+PASS frame: all callstacks, raw answer {3; 5} without caching
+PASS frame: all callstacks, raw answer {3} with memexec
+PASS frame: before r = 0, all callstacks, memexec answer {3} is narrower than {3; 5}
+PASS frame: the callstack of the second call has no answer with memexec
+PASS frame: the callstack of the first call answers {3} in both runs
+PASS frame: at the exit of get, r is {0} without caching
+PASS frame: with -eva-no-results, no query is answered
+PASS frame: with -eva-no-results, the queries are unavailable for lack of results
+PASS frame: with -eva-no-results, the done line counts the unavailable lines
+PASS frame: the comparison with the run without results answers nothing in it
+PASS same-line: the two calls of line 10 are unmatched, not aligned
+PASS same-line: the alignment is not complete

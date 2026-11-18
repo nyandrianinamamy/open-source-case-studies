@@ -10,11 +10,30 @@ genann_init	genann_init:136:0	before	*	ret->output	wider	M__malloc_genann_init_l
 genann_init	genann_init:137:0	before	*	ret->delta	wider	M__malloc_genann_init_l123_5=S496224	M__malloc_genann_init_l123=S96;__malloc_genann_init_l123_1=S96;__malloc_genann_init_l123_2=S112;__malloc_genann_init_l123_3=S112;__malloc_genann_init_l123_5=S496224;__malloc_genann_init_l123_6=I96..34359738384%0/8
 genann_init	genann_init:142:0	after	*	ret->activation_output	wider	Mgenann_act_sigmoid_cached=S0	Mgenann_act_sigmoid_cached=S0;genann_act_threshold=S0
 genann_init	genann_init:142:0	before	*	ret->activation_output	wider	Mgenann_act_sigmoid_cached=S0	Mgenann_act_sigmoid_cached=S0;genann_act_threshold=S0
+genann_init	genann_init:exit	exit	*	ret->activation_output	wider	Mgenann_act_sigmoid_cached=S0	Mgenann_act_sigmoid_cached=S0;genann_act_threshold=S0
 genann_randomize	genann_randomize:200:0	after	*	*(ann->weight + i)	wider	MNULL=F-0x1p-1..0x1p-1	MNULL=F-infinity..infinity;nan
 genann_randomize	genann_randomize:200:0	before	*	*(ann->weight + i)	wider	MNULL=F-0x1p-1..0x1p-1	MNULL=F-infinity..infinity;nan
+genann_randomize	genann_randomize:exit	exit	*	*(ann->weight + i)	wider	MNULL=F-0x1p-1..0x1p-1	MNULL=F-infinity..infinity;nan
 genann_train	genann_train:293:0	after	*	ann->activation_output	wider	Mgenann_act_sigmoid_cached=S0	Mgenann_act_sigmoid_cached=S0;genann_act_threshold=S0
 genann_train	genann_train:293:0	before	*	ann->activation_output	wider	Mgenann_act_sigmoid_cached=S0	Mgenann_act_sigmoid_cached=S0;genann_act_threshold=S0
 genann_train	genann_train:299:4	after	*	*o	wider	MNULL=F0x0p+0..0x1.fffff5a900e73p-1	MNULL=F0x0p+0..0x1p+0
 genann_train	genann_train:299:4	before	*	*o	wider	MNULL=F0x0p+0..0x1.fffff5a900e73p-1	MNULL=F0x0p+0..0x1p+0
+genann_train	genann_train:exit	exit	*	ann->activation_output	wider	Mgenann_act_sigmoid_cached=S0	Mgenann_act_sigmoid_cached=S0;genann_act_threshold=S0
 persist	persist:220:0	after	*	second	incomparable	M	M__malloc_genann_init_l123_6=S0
 persist	persist:220:0	after	main|persist@main:269:5	second	incomparable	M	M__malloc_genann_init_l123_6=S0
+persist	persist:exit	exit	*	*(second->weight + i)	wider	M	MNULL=F-infinity..infinity;nan
+persist	persist:exit	exit	*	second	incomparable	M	M__malloc_genann_init_l123_6=S0
+persist	persist:exit	exit	*	second->hidden	wider	M	MNULL=I-2147483648..2147483647%0/1
+persist	persist:exit	exit	*	second->hidden_layers	wider	M	MNULL=I0..2147483647%0/1
+persist	persist:exit	exit	*	second->inputs	wider	M	MNULL=I1..2147483646%0/1
+persist	persist:exit	exit	*	second->outputs	wider	M	MNULL=I1..2147483646%0/1
+persist	persist:exit	exit	*	second->total_weights	wider	M	MNULL=I2..2147483645%0/1
+persist	persist:exit	exit	*	second->weight	wider	M	M__malloc_genann_init_l123_6=S64
+persist	persist:exit	exit	main|persist@main:269:5	*(second->weight + i)	wider	M	MNULL=F-infinity..infinity;nan
+persist	persist:exit	exit	main|persist@main:269:5	second	incomparable	M	M__malloc_genann_init_l123_6=S0
+persist	persist:exit	exit	main|persist@main:269:5	second->hidden	wider	M	MNULL=I-2147483648..2147483647%0/1
+persist	persist:exit	exit	main|persist@main:269:5	second->hidden_layers	wider	M	MNULL=I0..2147483647%0/1
+persist	persist:exit	exit	main|persist@main:269:5	second->inputs	wider	M	MNULL=I1..2147483646%0/1
+persist	persist:exit	exit	main|persist@main:269:5	second->outputs	wider	M	MNULL=I1..2147483646%0/1
+persist	persist:exit	exit	main|persist@main:269:5	second->total_weights	wider	M	MNULL=I2..2147483645%0/1
+persist	persist:exit	exit	main|persist@main:269:5	second->weight	wider	M	M__malloc_genann_init_l123_6=S64
