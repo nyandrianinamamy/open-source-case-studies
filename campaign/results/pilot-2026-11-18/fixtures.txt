@@ -1,0 +1,9 @@
+PASS nested-hit: two runs of the same binary align completely
+PASS nested-hit: one call analysed without caching is a hit with memexec
+PASS nested-hit: the two nested calls are reported under the hit
+PASS nested-hit: no alignment is undecided or unmatched
+PASS nested-hit: every record is aligned or nested under the hit
+PASS nested-hit: the nested records are the calls to leaf under the second call to outer
+PASS frame: before r = 0, all callstacks, memexec answer {3} is narrower than {3; 5}
+PASS frame: the callstack of the second call has no answer with memexec
+PASS frame: the callstack of the first call answers {3} in both runs
