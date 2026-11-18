@@ -6,7 +6,8 @@
 #   ARCHIVE: the .tar.gz file to write, outside any working tree
 # The archive holds a copy of OUTPUT in which the paths under the home
 # directory are written from ~, without the compiled query modules of
-# tools/ and the copies of the manifest, which campaign/manifest.tsv holds.
+# tools/. It keeps provenance/manifest.tsv, the manifest the runner used,
+# which may differ from campaign/manifest.tsv (option --manifest).
 # Its members are sorted and dated at the epoch, with no owner.
 set -euo pipefail
 output=$(realpath "${1:?Supply the campaign output directory}")
@@ -18,9 +19,9 @@ cp -a "$output" "$stage/$name"
 find "$stage/$name" -path '*/tools/*' \
   \( -name '*.cmxs' -o -name '*.cmx' -o -name '*.cmi' -o -name '*.o' \
      -o -name '*.ml' \) -delete
-find "$stage/$name" -path '*/provenance/manifest.tsv' -delete
+# grep exits 1 when no file holds the path, and xargs then exits 123.
 find "$stage/$name" -type f ! -name '*.gz' -print0 |
-  xargs -0 -r grep -lIZF "$HOME" |
+  { xargs -0 -r grep -lIZF "$HOME" || [[ $? == 123 ]]; } |
   xargs -0 -r sed -i "s|$HOME|~|g"
 find "$stage/$name" -type f -name '*.gz' -print0 |
   while IFS= read -r -d '' file; do

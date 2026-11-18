@@ -1,15 +1,23 @@
 #!/usr/bin/env bash
 # Builds a Frama-C binary pinned by revision, outside any working tree.
-# Usage: build-reference.sh REPOSITORY REVISION DESTINATION [SWITCH]
+# Usage: build-reference.sh [--no-build] REPOSITORY REVISION DESTINATION [SWITCH]
 #   REPOSITORY: a clone of Frama-C that has REVISION
 #   DESTINATION: fresh directory; it receives the sources of REVISION, their
-#                build and the file CAMPAIGN_REVISION, and serves as
+#                build and the provenance files below, and serves as
 #                --reference-checkout or --test-checkout of run-campaign.sh
 #   SWITCH: opam switch of the build (default: the local switch of
 #           REPOSITORY)
-# A patch to apply on top of REVISION can be given in CAMPAIGN_PATCH; its
-# SHA-256 is then appended to CAMPAIGN_REVISION.
+#   --no-build: write the sources and the provenance files, without building
+# Provenance files in DESTINATION:
+#   CAMPAIGN_REVISION      the full revision, alone on its line
+#   CAMPAIGN_PATCH.patch   a copy of the patch named by CAMPAIGN_PATCH, applied
+#                          on top of REVISION, if any
+#   CAMPAIGN_PATCH_SHA256  the SHA-256 of that patch
+# run-campaign.sh records the revision and the SHA-256 in separate columns of
+# provenance/binaries.tsv and keeps the patch in provenance/patches/.
 set -euo pipefail
+build=true
+if [[ ${1:-} == --no-build ]]; then build=false; shift; fi
 repository=$(realpath "${1:?Supply a Frama-C repository}")
 revision=$(git -C "$repository" rev-parse --verify "${2:?Supply a revision}^{commit}")
 destination=$(realpath -m "${3:?Supply a fresh destination}")
@@ -18,9 +26,14 @@ mkdir "$destination"
 git -C "$repository" archive "$revision" | tar -x -C "$destination"
 printf '%s\n' "$revision" > "$destination/CAMPAIGN_REVISION"
 if [[ -n ${CAMPAIGN_PATCH:-} ]]; then
-  patch -d "$destination" -p1 < "$CAMPAIGN_PATCH"
-  printf 'patch %s\n' "$(sha256sum < "$CAMPAIGN_PATCH" | cut -d' ' -f1)" \
-    >> "$destination/CAMPAIGN_REVISION"
+  cp "$CAMPAIGN_PATCH" "$destination/CAMPAIGN_PATCH.patch"
+  patch -s -d "$destination" -p1 < "$destination/CAMPAIGN_PATCH.patch"
+  sha256sum < "$destination/CAMPAIGN_PATCH.patch" | cut -d' ' -f1 \
+    > "$destination/CAMPAIGN_PATCH_SHA256"
+fi
+if ! $build; then
+  printf 'Prepared %s in %s\n' "$revision" "$destination"
+  exit 0
 fi
 cd "$destination"
 eval "$(opam env --switch="$switch" --set-switch)"
