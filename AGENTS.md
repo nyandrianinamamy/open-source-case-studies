@@ -57,7 +57,8 @@ building Frama-C as above. The script runs `jsmn-main.eva` and
 `jsmn-example.eva` with memexec on and off through the campaign runner,
 `campaign/run-campaign.sh`, which takes a fresh source snapshot per run,
 measures each Eva invocation under a one-hour limit and compares the runs.
-`FRAMA_C_CHECKOUT` selects a different build checkout. The layout of the
+`FRAMA_C_CHECKOUT` selects a different build checkout and `FRAMA_C_SWITCH`
+its opam switch, for a worktree that has none. The layout of the
 output and the comparisons are described in `campaign/README.md`.
 
 ## Campaign
