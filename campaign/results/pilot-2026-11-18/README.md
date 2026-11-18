@@ -23,8 +23,9 @@ campaign/pilot.sh ~/.t3/worktrees/campaign-pilot-2026-11-18 \
   `5bf903b27a432f6998ed1b9c9c812b0abd49d371` of `nyandrianinamamy/frama-c`.
   The test binary is a git worktree at that revision; the reference binary
   was built from the same revision by `tools/build-reference.sh`. Their
-  `eva.cmxs` are identical; the `frama-c` executables differ by the paths
-  of their builds. The mode `reference` is therefore a second build of the
+  `eva.cmxs` are identical; the `frama-c` executables differ, each holding
+  the path of its build (with that path replaced, the output of `strings`
+  is the same for both). The mode `reference` is therefore a second build of the
   binary under test, not an earlier memexec.
 - Machine (`provenance/machine.txt`): Intel Core i5-14600KF, 20 hardware
   threads, 31 GB, Ubuntu 24.04, OCaml 5.2.1, Dune 3.21.1. The machine was
@@ -68,7 +69,10 @@ The tables are in `tables/tables.md`; `fixtures.txt` and
   to `genann_free`, which are hits.
 - State queries, `nocache` against `cache`: the answers given by both runs
   are equal except in 2048 (20 narrower), jsmn-main (6 narrower) and genann
-  (17 wider, 2 incomparable, listed in `genann-query-differences.tsv`). The
+  (17 wider, 2 incomparable, listed in `genann-query-differences.tsv`). That
+  file is not written by `pilot.sh`: it is extracted from
+  `comparisons/genann/genann.eva/default/nocache-vs-cache/queries-differences.tsv`
+  of the raw logs with `awk -F'\t' 'NR==1 || $6 !~ /^unavailable/'`. The
   answers that only `nocache` gives are for callstacks that memexec does not
   analyse.
 - Fixtures: the second call to `outer` in `nested-hit.c` is reported as a
