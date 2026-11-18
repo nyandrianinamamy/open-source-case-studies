@@ -690,22 +690,22 @@ class LookupCandidates(unittest.TestCase):
     def test_records_keep_each_candidate(self):
         rows = {r["function"]: r for r in records_of(SUPPLIED_LOG_PRODUCT)}
         self.assertEqual(rows["precise_first"]["lookup"], "rejected")
-        self.assertEqual(rows["precise_first"]["lookup_rejected"],
+        self.assertEqual(rows["precise_first"].get("lookup_rejected"),
                          [[3, "product"], [4, "product"]])
-        self.assertIsNone(rows["precise_first"]["lookup_hit_entry"])
-        self.assertEqual(rows["step"]["collector"], "refused")
+        self.assertIsNone(rows["precise_first"].get("lookup_hit_entry"))
+        self.assertEqual(rows["step"].get("collector"), "refused")
         self.assertEqual(
             rows["step"]["dispositions"]["collector"], "refused (builtin)")
         rows = {r["function"]: r for r in records_of(SUPPLIED_LOG_DEFAULT)}
-        self.assertEqual(rows["step"]["lookup_rejected"],
+        self.assertEqual(rows["step"].get("lookup_rejected"),
                          [[1, "key-differs"]])
         self.assertEqual(rows["wide_first"]["lookup"], "hit")
-        self.assertEqual(rows["wide_first"]["lookup_hit_entry"], 5)
+        self.assertEqual(rows["wide_first"].get("lookup_hit_entry"), 5)
         rows = {r["function"]: r for r in records_of(SUPPLIED_LOG_BOTH)}
         hit = rows["wide_first"]
         self.assertEqual(hit["lookup"], "hit")
-        self.assertEqual(hit["lookup_rejected"], [[4, "key-differs"]])
-        self.assertEqual(hit["lookup_hit_entry"], 5)
+        self.assertEqual(hit.get("lookup_rejected"), [[4, "key-differs"]])
+        self.assertEqual(hit.get("lookup_hit_entry"), 5)
 
 
 # Counters of the statistics file of the analyzer of issue #54 for the test
@@ -750,6 +750,12 @@ class CounterFamilies(unittest.TestCase):
             return campaign.run_counts(path, families)
 
     def test_families(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, "stats.csv")
+            write(path, STATS)
+            c = campaign.run_counts(path)
+        self.assertEqual(c.get("supplied_hits"), 9)
+        self.assertEqual(c.get("collector_would_store"), 1)
         c = self.counts(STATS, set(campaign.FAMILIES))
         self.assertEqual(c["supplied_hits"], 9)
         self.assertEqual(c["supplied_rejected"], 2)
@@ -797,48 +803,70 @@ done\t3
 """
 
 
+def compare_queries_files(a, b):
+    """The summary, differences and statements reached in one run written
+    by the queries subcommand, as the runner calls it, for two answer
+    files. The values of the summary are strings."""
+    with tempfile.TemporaryDirectory() as tmp:
+        pa, pb = os.path.join(tmp, "a"), os.path.join(tmp, "b")
+        write(pa, a)
+        write(pb, b)
+        prefix = os.path.join(tmp, "queries-")
+        with contextlib.redirect_stdout(io.StringIO()):
+            campaign.main(["queries", pa, pb, prefix])
+        with open(prefix + "summary.tsv") as f:
+            summary = dict(l.rstrip("\n").split("\t", 1) for l in f)
+        with open(prefix + "differences.tsv") as f:
+            details = [tuple(l.rstrip("\n").split("\t"))
+                       for l in list(f)[1:]]
+        reach = []
+        if os.path.exists(prefix + "reached-in-one-run.tsv"):
+            with open(prefix + "reached-in-one-run.tsv") as f:
+                reach = [tuple(l.rstrip("\n").split("\t"))
+                         for l in list(f)[1:]]
+        return summary, details, reach
+
+
 class QueryAvailability(unittest.TestCase):
     """H3 and H8: unavailable states, completion, exit states."""
 
     def compare(self, a, b):
-        with tempfile.TemporaryDirectory() as tmp:
-            pa, pb = os.path.join(tmp, "a"), os.path.join(tmp, "b")
-            write(pa, a)
-            write(pb, b)
-            return campaign.compare_queries(pa, pb)
+        return compare_queries_files(a, b)
 
     def test_unavailable_state_is_not_an_answer(self):
         summary, details, _ = self.compare(QUERIES_RESULTS,
                                            QUERIES_NO_RESULTS)
-        self.assertEqual(summary["answered_both"], 0)
-        self.assertEqual(summary["unavailable_b_no-results"], 2)
-        self.assertEqual(summary["top_a"], 1)
-        self.assertEqual(summary["top_b"], 0)
-        self.assertEqual(summary["comparison"], "complete")
+        self.assertEqual(summary.get("answered_both"), "0")
+        self.assertEqual(summary.get("unavailable_b_no-results"), "2")
+        self.assertEqual(summary.get("top_a"), "1")
+        self.assertEqual(summary.get("top_b"), "0")
+        self.assertEqual(summary.get("comparison"), "complete")
         self.assertIn(("get", "get:10:0", "before", "*", "t[i]",
                        "unavailable in B (no-results)", "T", ""), details)
 
     def test_done_line_is_checked(self):
         cut = QUERIES_RESULTS.replace("done\t3\n", "")
         summary, _, _ = self.compare(QUERIES_RESULTS, cut)
-        self.assertEqual(summary["complete_b"], "incomplete: no done line")
-        self.assertEqual(summary["comparison"], "incomplete")
+        self.assertEqual(summary.get("complete_b"),
+                         "incomplete: no done line")
+        self.assertEqual(summary.get("comparison"), "incomplete")
         wrong = QUERIES_RESULTS.replace("done\t3", "done\t4")
         summary, _, _ = self.compare(QUERIES_RESULTS, wrong)
-        self.assertEqual(summary["complete_b"], "incomplete: done 4, 3 lines")
+        self.assertEqual(summary.get("complete_b"),
+                         "incomplete: done 4, 3 lines")
 
     def test_exit_states_are_compared(self):
         other = QUERIES_RESULTS.replace("get:exit\texit\t*\tr\t1\t0\tMNULL=S0",
                                         "get:exit\texit\t*\tr\t1\t0\tMNULL=S0,1")
         summary, details, _ = self.compare(QUERIES_RESULTS, other)
-        self.assertEqual(summary["wider"], 1)
+        self.assertEqual(summary.get("wider"), "1")
         self.assertIn(("get", "get:exit", "exit", "*", "r", "wider",
                        "MNULL=S0", "MNULL=S0,1"), details)
         missing = QUERIES_RESULTS.replace(
             "answer\tget\tget:exit\texit\t*\tr\t1\t0\tMNULL=S0\n", "")
         missing = missing.replace("done\t3", "done\t2")
         summary, _, _ = self.compare(QUERIES_RESULTS, missing)
-        self.assertEqual(summary["unavailable_b_missing"], 1)
+        self.assertEqual(summary.get("unavailable_b_missing"), "1")
 
     def test_statements_reached_in_one_run_are_listed(self):
         other = QUERIES_RESULTS + "reach\tget\tget:11:0\n"
@@ -905,12 +933,9 @@ class MixedForms(unittest.TestCase):
     def test_one_sided_top(self):
         a = "answer\tf\tf:1:0\tbefore\t*\tx\t1\t0\tT\ndone\t1\n"
         b = "done\t0\n"
-        with tempfile.TemporaryDirectory() as tmp:
-            pa, pb = os.path.join(tmp, "a"), os.path.join(tmp, "b")
-            write(pa, a)
-            write(pb, b)
-            summary, _, _ = campaign.compare_queries(pa, pb)
-        self.assertEqual((summary["top_a"], summary["top_b"]), (1, 0))
+        summary, _, _ = compare_queries_files(a, b)
+        self.assertEqual((summary.get("top_a"), summary.get("top_b")),
+                         ("1", "0"))
 
 
 class Interruption(unittest.TestCase):
@@ -921,7 +946,7 @@ class Interruption(unittest.TestCase):
     def test_one_open_chain(self):
         with contextlib.redirect_stderr(io.StringIO()):
             rows = records_of(self.CUT)
-        inferred = [r["id"] for r in rows if r["inferred"]]
+        inferred = [r["id"] for r in rows if r.get("inferred")]
         self.assertEqual(inferred,
                          ["main#0", "main#0 > outer@nested.c:13/s12#0"])
         outer = [r for r in rows if r["function"] == "outer"]
@@ -935,17 +960,20 @@ class Interruption(unittest.TestCase):
             write(path, self.CUT)
             with contextlib.redirect_stderr(io.StringIO()):
                 campaign.main(["records", path, out])
-            rows, problems = campaign.load_records_and_problems(out)
-        summary = campaign.summarize_alignment(
-            rows, rows, campaign.align(rows, rows), problems, problems)
-        self.assertEqual(summary["records_a"], 2)
-        self.assertEqual(summary["inferred_a"], 2)
-        self.assertEqual(summary["aligned"], 2)
-        self.assertEqual(summary["aligned_with_inferred"], 2)
-        self.assertTrue(summary["interrupted_a"])
-        self.assertFalse(summary["complete"])
-        self.assertIn("interrupted", summary["verdict"])
-        self.assertIn("structural problems", summary["verdict"])
+            prefix = os.path.join(tmp, "alignment-")
+            with contextlib.redirect_stdout(io.StringIO()):
+                campaign.main(["align", "--same-numbering", out, out,
+                               prefix])
+            with open(prefix + "summary.tsv") as f:
+                summary = dict(l.rstrip("\n").split("\t", 1) for l in f)
+        self.assertEqual(summary.get("records_a"), "2")
+        self.assertEqual(summary.get("inferred_a"), "2")
+        self.assertEqual(summary.get("aligned"), "2")
+        self.assertEqual(summary.get("aligned_with_inferred"), "2")
+        self.assertEqual(summary.get("interrupted_a"), "True")
+        self.assertEqual(summary.get("complete"), "False")
+        self.assertIn("interrupted", summary.get("verdict", ""))
+        self.assertIn("structural problems", summary.get("verdict", ""))
 
 
 WATCHDOG = os.path.join(HERE, "..", "bin", "watchdog.py")
@@ -995,6 +1023,16 @@ class Watchdog(unittest.TestCase):
         m.update(kernel_log_oom="unreadable")
         self.assertEqual(campaign.classify_outcome(0, 2, m, "", False),
                          "killed")
+        # The counter of the cgroup counts every process of the cgroup: it
+        # is evidence only for a SIGKILL that the watchdog did not send.
+        done = {"status": "0", "exit": "0", "signal": "-", "watchdog": "none",
+                "oom_kill_events": "3", "kernel_log_oom": "-"}
+        self.assertEqual(campaign.oom_evidence(done, ""), "")
+        self.assertEqual(campaign.classify_outcome(0, 0, done, "", True),
+                         "completed")
+        failed = dict(done, status="1", exit="1")
+        self.assertEqual(campaign.classify_outcome(0, 2, failed, "", False),
+                         "error")
 
 
 BUILD_REFERENCE = os.path.join(HERE, "..", "tools", "build-reference.sh")
@@ -1064,6 +1102,24 @@ class Provenance(unittest.TestCase):
 class Alarms(unittest.TestCase):
     """H8: directories and duplicate keys of the alarms."""
 
+    def test_duplicate_keys_on_the_command_line(self):
+        a = (self.HEADER
+             + "/run/a/src/x\tf.c\t3\tf\tmem_access\tValid\tp\n"
+             + "/run/a/src/y\tf.c\t3\tf\tmem_access\tValid\tp\n")
+        b = (self.HEADER
+             + "/run/a/src/x\tf.c\t3\tf\tmem_access\tValid\tp\n"
+             + "/run/a/src/y\tf.c\t3\tf\tmem_access\tUnknown\tp\n")
+        with tempfile.TemporaryDirectory() as tmp:
+            pa, pb = os.path.join(tmp, "a"), os.path.join(tmp, "b")
+            write(pa, a)
+            write(pb, b)
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                campaign.main(["alarms", pa, pb])
+        lines = out.getvalue().splitlines()
+        self.assertIn("other_status\t1", lines)
+        self.assertIn("same_status\t1", lines)
+
     HEADER = "directory\tfile\tline\tfunction\tproperty kind\tstatus\tproperty\n"
 
     def test_directory_and_duplicates(self):
@@ -1108,8 +1164,11 @@ class Manifest(unittest.TestCase):
             write(os.path.join(base, "genann." + step, "command"), command)
         targets = os.path.join(tmp, name + ".txt")
         write(targets, "genann/.frama-c/genann.eva\n")
+        trees = os.path.join(tmp, name + "-trees.tsv")
+        write(trees, "genann\t" + "1" * 40 + "\n")
         out = os.path.join(tmp, name + ".tsv")
-        campaign.main(["manifest", snapshot, targets, "0" * 40, out])
+        campaign.main(["manifest", snapshot, targets, "0" * 40, out,
+                       "--trees", trees])
         with open(out) as f:
             return f.read()
 
