@@ -1692,8 +1692,11 @@ TIMED_MODES = ("nocache", "cache", "reference")
 def time_rows(runs):
     """Elapsed times of the first run of each mode of each case, and the
     ratios cache/nocache and cache/reference when both runs completed and
-    were measured. A run that did not complete gives its outcome instead of
-    a time; the runs of the fixtures are not measured."""
+    have a time. A run that did not complete gives its outcome instead of
+    a time. The other cells say what the directory lacks: "no run" when it
+    has no run of the mode, "no outcome" when the run records none, "no
+    time" when a completed run records none, as the runs of the fixtures,
+    which run without the watchdog."""
     def measured(r):
         return (r is not None and r.get("outcome") == "completed"
                 and r.get("elapsed_s", "") != "")
@@ -1708,11 +1711,13 @@ def time_rows(runs):
         for mode in TIMED_MODES:
             r = modes.get(mode)
             if r is None:
-                cells.append("not run")
-            elif r.get("outcome") != "completed":
-                cells.append(r.get("outcome", ""))
+                cells.append("no run")
+            elif r.get("outcome") in (None, "", "-"):
+                cells.append("no outcome")
+            elif r["outcome"] != "completed":
+                cells.append(r["outcome"])
             elif not measured(r):
-                cells.append("not measured")
+                cells.append("no time")
             else:
                 cells.append(r["elapsed_s"])
 
@@ -2030,7 +2035,9 @@ def classify_outcome(parse_exit, make_exit, measure, log_text,
     """The outcome of one run:
     - parse-error: the parsing step failed, Eva did not run;
     - harness-error: the Eva invocation was not measured, its measure has
-      no valid status, or make failed after a successful invocation;
+      no valid status, make failed after a successful invocation, or the
+      exit status of the parse step or of make is not recorded ([parse_exit]
+      or [make_exit] is None);
     - timeout: the watchdog sent its signal at the wall-time limit; a run
       measured by an earlier revision of this harness, which did not record
       it, is never classified as a timeout;
@@ -2047,7 +2054,7 @@ def classify_outcome(parse_exit, make_exit, measure, log_text,
     - completed.
     [timeout_s] is not used: the outcome does not depend on the elapsed
     time."""
-    if parse_exit != 0:
+    if parse_exit is not None and parse_exit != 0:
         return "parse-error"
     if measure is None or decimal(measure.get("status")) is None:
         return "harness-error"
@@ -2063,7 +2070,7 @@ def classify_outcome(parse_exit, make_exit, measure, log_text,
         return "killed"
     if status != 0:
         return "error"
-    if make_exit != 0:
+    if parse_exit is None or make_exit != 0:
         return "harness-error"
     if not entry_analysed:
         return "incomplete"
@@ -2089,14 +2096,19 @@ def existing(path):
 
 
 def run_outcome(run, parse_exit, make_exit, dedicated_scope=False,
-                entry_point="main"):
+                entry_point="main", status=None):
     """The outcome of a run and the evidence of exhausted memory, from its
     measure, its log and its records, compressed or not, the statement of
     the runner that the command ran in a scope of its own, and the entry
     point configured for its target. The entry point is analysed when the
     records are one tree, whose root is the analysed call of [entry_point]
-    and whose callstacks all end in it."""
+    and whose callstacks all end in it. [status], when given, is the exit
+    status of an invocation that ran without the watchdog, as the fixtures
+    do (invocation_outcome_command): it stands for the measure, which such
+    a run does not have."""
     measure = read_measure(os.path.join(run, "measure"))
+    if status is not None:
+        measure = OrderedDict(status=str(status))
     log_text = ""
     log = existing(os.path.join(run, "eva.log"))
     if log:
@@ -2121,6 +2133,17 @@ def run_outcome(run, parse_exit, make_exit, dedicated_scope=False,
 def outcome_command(args):
     print("%s\t%s" % run_outcome(args.run, args.parse_exit, args.make_exit,
                                  args.dedicated_scope, args.entry_point))
+    return 0
+
+
+def invocation_outcome_command(args):
+    """The outcome of a run that is one invocation of the analyzer, which
+    parses and analyses, without the watchdog and without make: a fixture.
+    Its exit status is that of the whole run, so there is no other step
+    whose status could be missing; a status of 0 alone does not make the
+    run completed, its records must show the analysed entry point."""
+    print("%s\t%s" % run_outcome(args.run, 0, 0, False, args.entry_point,
+                                 args.exit_status))
     return 0
 
 
@@ -2510,12 +2533,9 @@ def compare_command(args):
 
 
 def exit_status(text):
-    """An exit status recorded in run.tsv: 0 when it was not recorded (-),
-    1 when it is not a bounded decimal."""
-    if text in (None, "", "-"):
-        return 0
-    value = decimal(text)
-    return 1 if value is None else value
+    """An exit status recorded in run.tsv, or None when it was not recorded
+    or is not a bounded decimal: an absent status is not a success."""
+    return decimal(text)
 
 
 DIGEST_COLUMNS = ("case", "mode", "ast_format", "ast_sha256",
@@ -2883,9 +2903,12 @@ def tables_command(args):
               "cache_over_nocache", "cache_over_reference"]
     rows = time_rows(runs)
     write_tsv(os.path.join(out_dir, "times.tsv"), header, rows)
-    md.write("## Elapsed time per mode\n\nElapsed time of the first run of "
-             "each mode, or its outcome when it did not complete. A ratio is "
-             "given only when both runs completed.\n\n")
+    md.write("## Elapsed time per mode\n\nFrom the `run.tsv` of the first "
+             "run of each mode: its elapsed time, or its outcome when it "
+             "did not complete. `no run` means that the directory has no "
+             "run of the mode, `no outcome` and `no time` that the run "
+             "records none. A ratio is given only when both runs completed "
+             "and have a time.\n\n")
     md.write(markdown_table(header, rows) + "\n")
 
     # Comparisons.
@@ -3223,6 +3246,14 @@ def main(argv=None):
     p.add_argument("--entry-point", default="main",
                    help="the entry point configured for the target (main)")
     p.set_defaults(func=outcome_command)
+
+    p = sub.add_parser("invocation-outcome")
+    p.add_argument("run")
+    p.add_argument("exit_status", type=int,
+                   help="the exit status of the one invocation of the run")
+    p.add_argument("--entry-point", required=True,
+                   help="the entry point configured for the target")
+    p.set_defaults(func=invocation_outcome_command)
     p = sub.add_parser("tables")
     p.add_argument("run_dir")
     p.add_argument("--recorded-set-a")

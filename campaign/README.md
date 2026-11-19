@@ -223,7 +223,7 @@ extra options, and the SHA-256 and size of the AST listing.
 | Outcome | Meaning |
 |---|---|
 | `parse-error` | the parse recipe failed; Eva did not run |
-| `harness-error` | the Eva invocation was not measured, or make failed after it |
+| `harness-error` | the Eva invocation was not measured, make failed after it, or `run.tsv` does not record the exit status of the parse step or of make |
 | `timeout` | the watchdog fired at the wall-time limit |
 | `oom` | Frama-C or the OCaml runtime reports exhausted memory; or the kernel log identifies the measured process as the victim of a SIGKILL that the watchdog did not send |
 | `killed` | killed by SIGKILL that the watchdog did not send, with no evidence that the out-of-memory killer chose this process: cause unknown |
@@ -557,7 +557,9 @@ writes `tables/`, which `run-campaign.sh` does at the end:
   and refusals of supplied entries by reason, per run;
 - `functions.tsv`: memexec activity and collector verdicts per function;
 - `times.tsv`: elapsed time per mode and the ratios cache/nocache and
-  cache/reference when both runs completed;
+  cache/reference when both runs completed and have a time; `no run`, `no
+  outcome` and `no time` say what the directory or the run does not
+  record;
 - `alignment.tsv`, `queries.tsv`, `alarms.tsv`: the comparison summaries,
   with `both_completed` for each pair, and for each comparison the number of
   pairs, of pairs compared, and of pairs whose two runs completed;
@@ -644,6 +646,9 @@ of numbering:
   `header.h`. The statement lines must be the same and the global lines
   differ in that global; the digests must differ and the calls must not be
   aligned.
+
+The outcome of each of these runs is `completed` only when its records show
+the analysed call of `main` (`campaign.py invocation-outcome`).
 
 `stage1-pilot.sh` at the root of the case studies runs the two jsmn targets
 in the modes `nocache` and `cache` through the same runner, and exits with 1

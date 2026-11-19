@@ -473,6 +473,10 @@ class Outcomes(unittest.TestCase):
         self.assertEqual(self.outcome(0, parse=2), "parse-error")
         self.assertEqual(self.outcome(0, measured=False), "harness-error")
         self.assertEqual(self.outcome(0, make=2), "harness-error")
+        # A status that is not recorded is not a success.
+        self.assertEqual(self.outcome(0, make=None), "harness-error")
+        self.assertEqual(self.outcome(0, parse=None), "harness-error")
+        self.assertEqual(self.outcome(1, parse=None), "error")
 
 
 class Measure(unittest.TestCase):
@@ -570,11 +574,15 @@ class Tables(unittest.TestCase):
              "elapsed_s": "1.00"},
             {"case": "e", "mode": "nocache", "outcome": "completed"},
             {"case": "e", "mode": "cache", "outcome": "completed"},
+            {"case": "f", "mode": "nocache", "elapsed_s": "1.00"},
+            {"case": "f", "mode": "cache", "outcome": "-",
+             "elapsed_s": "1.00"},
         ]
         self.assertEqual(campaign.time_rows(runs), [
             ["c", "2.00", "0.50", "timeout", "0.250", "n/a"],
-            ["d", "1.00", "not run", "not run", "n/a", "n/a"],
-            ["e", "not measured", "not measured", "not run", "n/a", "n/a"],
+            ["d", "1.00", "no run", "no run", "n/a", "n/a"],
+            ["e", "no time", "no time", "no run", "n/a", "n/a"],
+            ["f", "no outcome", "no outcome", "no run", "n/a", "n/a"],
         ])
 
 
@@ -2927,6 +2935,60 @@ class EntryPoint(unittest.TestCase):
         self.assertEqual(outcomes, ["completed", "incomplete"])
         self.assertEqual(s.get("entry_point_b"), "False")
         self.assertEqual(s.get("complete"), "False")
+
+
+class RecordedStatuses(unittest.TestCase):
+    """An exit status that run.tsv does not record is not a success, and a
+    run of one invocation is completed only with the record of its entry
+    point."""
+
+    def recompute(self, **fields):
+        with tempfile.TemporaryDirectory() as tmp:
+            run = os.path.join(tmp, "runs", "c", "x")
+            os.makedirs(run)
+            values = {"case": "c", "mode": "x", "entry_point": "main",
+                      "parse_exit": "0", "make_exit": "0", "outcome": "-"}
+            values.update(fields)
+            write(os.path.join(run, "run.tsv"), "".join(
+                "%s\t%s\n" % kv for kv in values.items()
+                if kv[1] is not None))
+            write(os.path.join(run, "measure"), EntryPoint.MEASURE)
+            write(os.path.join(run, "eva.log"), SITES_NUMBERED)
+            code, _, error = run_main(["recompute", tmp])
+            self.assertEqual((code, error), (0, None))
+            return read_summary(os.path.join(run, "run.tsv"))["outcome"]
+
+    def test_exit_status_that_is_not_recorded(self):
+        self.assertEqual(self.recompute(), "completed")
+        for field in ("parse_exit", "make_exit"):
+            for value in (None, "-", "", "zero"):
+                with self.subTest(field=field, value=value):
+                    self.assertEqual(self.recompute(**{field: value}),
+                                     "harness-error")
+        self.assertEqual(self.recompute(make_exit="2"), "harness-error")
+        self.assertEqual(self.recompute(parse_exit="1"), "parse-error")
+
+    def test_outcome_of_one_invocation(self):
+        # A fixture is one invocation: exit status 0 does not make it
+        # completed without the record of its entry point.
+        with tempfile.TemporaryDirectory() as tmp:
+            log = os.path.join(tmp, "eva.log")
+
+            def outcome(text, status, entry):
+                write(log, text)
+                run_main(["records", log, os.path.join(tmp, "records.jsonl")])
+                code, out, error = run_main(
+                    ["invocation-outcome", tmp, status, "--entry-point",
+                     entry])
+                self.assertEqual((code, error), (0, None))
+                return out.split("\t")[0]
+            self.assertEqual(outcome(SITES_NUMBERED, "0", "main"),
+                             "completed")
+            self.assertEqual(outcome(SITES_NUMBERED, "1", "main"), "error")
+            self.assertEqual(outcome("[eva] done\n", "0", "main"),
+                             "incomplete")
+            self.assertEqual(outcome(SITES_NUMBERED, "0", "f"), "incomplete")
+            self.assertEqual(outcome(ALIEN_LOG, "0", "main"), "incomplete")
 
 
 class PilotResults(unittest.TestCase):

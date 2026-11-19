@@ -53,6 +53,8 @@
 # - header.c, analysed as sites.c: the macro sets the initial value of a
 #   global of the included header.h. The two listings differ in that global
 #   only, the digests differ, and the calls are not aligned.
+# The outcome of a run is completed only when its records show the analysed
+# call of main (campaign.py invocation-outcome).
 # Prints one line per check, PASS or FAIL, and exits with 1 if one fails.
 set -euo pipefail
 fixtures=$(dirname "$(realpath "$0")")
@@ -132,8 +134,10 @@ for fixture in frame nested-hit same-line sites branches header; do
     )
     "${tool[@]}" records "$run/eva.log" "$run/records.jsonl" \
       2> "$run/records-problems.log"
-    outcome=completed
-    if [[ $exit_code != 0 ]]; then outcome=error; fi
+    # A status of 0 does not make the run completed: its records must show
+    # the analysed call of main, the entry point of every fixture.
+    outcome=$("${tool[@]}" invocation-outcome "$run" "$exit_code" \
+      --entry-point main | cut -f1)
     flags="${cpp[*]} ${extra[*]}"
     flags=${flags# }
     {
