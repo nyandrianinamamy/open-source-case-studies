@@ -2032,7 +2032,8 @@ class CounterEvidence(unittest.TestCase):
                         "-eva-statistics-file eva-stats.csv "
                         "-then -eva-no-memexec\n")
 
-    def tables(self, command, stats, log=None, families=None):
+    def tables(self, command, stats, log=None, families=None,
+               recorded_log=None):
         with tempfile.TemporaryDirectory() as tmp:
             run = os.path.join(tmp, "runs", "c", "cache")
             os.makedirs(run)
@@ -2052,7 +2053,7 @@ class CounterEvidence(unittest.TestCase):
                 with gzip.open(os.path.join(run, "records.jsonl.gz"),
                                "wt") as f:
                     f.write("".join(json.dumps(r) + "\n"
-                                    for r in records_of(log)))
+                                    for r in records_of(recorded_log or log)))
             code, _, error = run_main(["tables", tmp])
             self.assertEqual((code, error), (0, None))
             result = {}
@@ -2133,6 +2134,12 @@ class CounterEvidence(unittest.TestCase):
         t = self.tables(self.MEMEXEC_THEN_OFF, "",
                         NESTED_LOG + ANALYSIS_BANNER + NESTED_LOG_OFF)
         self.assertEqual(t["activity"]["hits"], "-")
+
+    def test_dispositions_come_from_the_measured_log(self):
+        tables = self.tables(self.MEMEXEC_THEN_OFF, "", NESTED_LOG_OFF,
+                             recorded_log=COLLECTED_LOG)
+        self.assertEqual(tables["activity"]["hits"], "-")
+        self.assertEqual(tables["collector"]["collector_would_store"], "-")
 
     def test_disabled_storage_is_no_evidence(self):
         t = self.tables(self.MEMEXEC_THEN_OFF, "", NESTED_LOG_OFF)

@@ -1729,12 +1729,15 @@ def counts_command(args):
     binary = args.families.split(",") if args.families is not None else None
     starts = analysis_starts(args.log)
     records = []
-    if starts == 1:
+    if starts == 1 and binary is not None:
+        with open_text(args.log) as f:
+            records = cache_records(f)
         if args.records:
-            records, _ = load_records_and_problems(args.records)
-        else:
-            with open_text(args.log) as f:
-                records = cache_records(f)
+            supplied, _ = load_records_and_problems(args.records)
+            if [r.get("dispositions") for r in supplied] != [
+                    r.get("dispositions") for r in records]:
+                print("Counter records disagree with the Eva log.", file=sys.stderr)
+                records = []
     families = families_of_run(binary, static_command(args.flags or ""),
                                args.stats, records, starts)
     for key, value in run_counts(args.stats, families).items():
@@ -2669,15 +2672,6 @@ def effective_options(run_dir, run):
     return static_command(flags)
 
 
-def records_of_run(run_dir):
-    """The per-call records of a run, or none."""
-    for name in ("records.jsonl.gz", "records.jsonl"):
-        path = os.path.join(run_dir, name)
-        if os.path.exists(path):
-            return load_records_and_problems(path)[0]
-    return []
-
-
 ANALYSIS_START = re.compile(
     r"\[eva\] Analyzing (?:a complete|an incomplete) application starting at .+"
 )
@@ -2759,7 +2753,10 @@ def run_families(run, stats_path, run_dir=None):
         binary = [f for f in run["counter_families"].split(",") if f]
     log = existing(os.path.join(run_dir, "eva.log"))
     starts = analysis_starts(log)
-    records = records_of_run(run_dir) if starts == 1 else []
+    records = []
+    if starts == 1 and binary is not None:
+        with open_text(log) as f:
+            records = cache_records(f)
     return families_of_run(binary, effective_options(run_dir, run), stats_path,
                            records, starts)
 
