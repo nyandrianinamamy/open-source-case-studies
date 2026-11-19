@@ -189,9 +189,12 @@ when available. We also summarize the license of each directory below.
 - `c-testsuite`: see `LICENSE` and `LICENSE-tests`
 - `c-thread-pool` : MIT
 - `c-utils` : MIT
-- `campaign`: LGPL 2.1, the licence of Frama-C, whose binaries it runs and
-              whose API its query module uses. It is written for this
-              repository, except:
+- `campaign`: the licence of this directory is not yet decided by the
+              owner of the repository. LGPL 2.1, the licence of Frama-C, is
+              proposed: the directory runs Frama-C binaries, and its query
+              module uses their API. Until the decision, no licence is
+              granted for these files beyond what the repository already
+              states. The directory is written for this repository, except:
   - `reference/set-a-recorded.tsv`: the columns `case` and `in_A` of the
     file `per-target.tsv` of branch `research/allocation-builtin-count` of
     `nyandrianinamamy/frama-c` (commit `6195218f5d`), the measurement of

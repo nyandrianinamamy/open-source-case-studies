@@ -2025,5 +2025,24 @@ class Scripts(unittest.TestCase):
         self.assertEqual(wrong, [])
 
 
+class Licence(unittest.TestCase):
+    """Finding 11: the licence of campaign/ is not decided; the inventory
+    of the repository proposes one and grants none."""
+
+    def test_inventory_entry(self):
+        readme = os.path.join(CAMPAIGN, "..", "README.md")
+        with open(readme) as f:
+            text = f.read()
+        entry = re.search(r"^- `campaign`:(.*?)^- `", text, re.M | re.S)
+        self.assertIsNotNone(entry)
+        entry = " ".join(entry.group(1).split())
+        self.assertIn("not yet decided by the owner of the repository",
+                      entry)
+        self.assertIn("LGPL 2.1, the licence of Frama-C, is proposed", entry)
+        self.assertIn("no licence is granted for these files beyond what "
+                      "the repository already states", entry)
+        self.assertNotRegex(entry, r"^\s*LGPL")
+
+
 if __name__ == "__main__":
     unittest.main()
