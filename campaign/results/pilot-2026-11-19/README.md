@@ -17,7 +17,7 @@ campaign/pilot.sh ~/.t3/worktrees/campaign-pilot-2026-11-19 \
 - Harness: the runs were made at revision `12644c58` of this repository
   (`provenance/campaign-revision.txt`); the command it ran is
   `provenance/command.txt`. The tables were then recomputed from the raw
-  logs with the tools at `0803efe8`; see "Recomputed tables" below.
+  logs, last with the tools at `2ade013e`; see "Recomputed tables" below.
 - Case studies: revision `168321b6306abdacee95b22c9c94996f1174ab2c`, the
   manifest `campaign/manifest.tsv` at the harness revision (its SHA-256 is
   `provenance/manifest.sha256`).
@@ -54,9 +54,10 @@ campaign/pilot.sh ~/.t3/worktrees/campaign-pilot-2026-11-19 \
 
 ## Recomputed tables
 
-The second review of issue #54 found cases where the tools reported a
-result they had not established. The tables were recomputed from the
-archive of the raw logs, without running the pilot again:
+The second and the third review of issue #54 found cases where the tools
+reported a result they had not established. After each, the tables were
+recomputed from the archive of the raw logs, without running the pilot
+again:
 
 ```sh
 campaign/tools/export-ast.sh OUTPUT test ~/.t3/worktrees/frama-c/t3-7ff6e3ed-f506bb46ca39d7d6 ~/Project/frama-c \
@@ -67,53 +68,102 @@ python3 -I campaign/tools/campaign.py recompute OUTPUT \
   --recorded-set-a campaign/reference/set-a-recorded.tsv
 ```
 
-where `OUTPUT` is the directory extracted from the archive, whose SHA-256
-was checked against `raw-logs.sha256`, and `SCRATCH` a directory outside
-the working tree: the listing is written there and compared with the
-committed one, which the replay does not overwrite. The tables of
-`OUTPUT/tables/` are those committed here.
+where `OUTPUT` is the directory `campaign-pilot-2026-11-19` extracted from
+the archive, whose SHA-256 was checked against `raw-logs.sha256` (the name
+of the directory is written in `tables/tables.md`), and `SCRATCH` a
+directory outside the working tree: the listing is written there and
+compared with the committed one, which the replay does not overwrite. The
+tables of `OUTPUT/tables/` are those committed here. A second `recompute`
+with the same file gives the same tables.
 
-- The runs of the pilot have no digest of their AST: the runner did not
-  list it yet. `export-ast.sh` listed it again for each run of the binary
-  under test, fixtures included, by re-running only the parsing step with
-  that binary, whose SHA-256 it checked against `binaries.tsv`
-  (`ast-digests.tsv`; it took 28 s). The three or four runs of each case
-  have one digest. The reference binary is no longer on the machine, so the
-  runs of the mode `reference` have no digest: the 16 pairs that involve one
-  have the numbering `asserted` (same case, revision, patch, case-study
-  revision and options), not checked by digest. The 22 other pairs have
-  the numbering `same`.
-- `alignment.tsv` gains the column `numbering`. The 12 pairs with a
-  reference run that were `complete` now have the verdict `numbering
-  asserted from equal revision, patch, options and preprocessing, not
-  checked by digest`, and `complete` False; the 4 others (`nocache` against
-  `reference` where hits nest calls) add this reason. No other cell of the
-  alignment changes: every log has a record of the entry point, no stack is
-  malformed, and every run completed.
-- `activity.tsv`: `refused_by_reason` is `none` instead of `-` in the 21
-  runs where memexec was measured and refused nothing; `-` now means only
-  that the family was not measured. The measured families are now read
-  from the Eva command of each run; they are the same as before.
-- `collector.tsv` gains `supplied_refused_by_reason`, `none` in every run;
-  `supplied_rejected_by_reason` is `none` instead of `-` for the same
-  reason as above.
-- `queries.tsv` gains a column per side for each reason of an unanswered
-  query; all are 0 but one. In the comparison of `frame.c` without caching
-  against the run with `-eva-no-results`, the 46 queries of a statement in
-  one callstack now take the reason of the same query over all callstacks,
-  `no-results`, instead of `no-callstack` (78 `no-results` instead of 32).
-  The 30 exit queries are `missing`, 18 of which were `no-callstack`: the
-  query module of the pilot left out the exit queries of a run without
-  saved results, and its answer file does not list the reached exits. The
-  current module writes them as unavailable (`no-results`).
-- Every answer file is still complete under the stricter reader: one done
+### After the third review
+
+- `ast-digests.tsv` was listed again with the listing of format 2, which
+  records the columns of each statement and the global declarations with
+  their initial values. It has 33 runs of the binary under test: three for
+  each of the eight cases (`nocache`, `cache`, `cache.2`), four for
+  `frame.c`, three for `nested-hit.c` and two for `same-line.c`. Each case
+  and fixture has one digest over its runs, except `same-line.c`: its two
+  runs set the initial value of a global with `-DSIDE=0` and `-DSIDE=1`, and
+  their digests now differ. Every row passed the checks of the import.
+- The archived runs have no digest of their preprocessing, and
+  `export-ast.sh` does not list it again: its parse is not the parse of the
+  run. They are compared by the preprocessing their commands record (the
+  `Command:` lines of `parse.log`, with the snapshot written `${SRC}`, and
+  the revision and patch of the binary; for a fixture, its source and its
+  `-cpp` options). Of the 22 pairs of runs of the binary under test that had
+  the numbering `same`, the 21 other than `same-line.c` have equal AST
+  digests and equal recorded preprocessing: their numbering is now `recorded
+  command`. Their calls and queries are still paired, but no alignment and
+  no query comparison of the pilot is complete. The 16 that were complete
+  now have the verdict `AST digests equal, preprocessing compared by the
+  recorded command only`; the 5 others (`nocache` against `cache` where hits
+  nest calls) add this reason to `not every record aligned`. The 16 pairs
+  with a `reference` run keep the numbering `asserted`.
+- `same-line.c`, `side0` against `side1`: the numbering is `different`. Its
+  two calls on one line, unmatched before, are 2 undecided groups. Of its 34
+  queries, the 28 that name a statement or a callstack below the entry point
+  are unpaired; the 6 exit queries over all callstacks are compared (3
+  equal, 3 incomparable).
+- `queries.tsv` gains the columns `numbering` and `unpaired`, and
+  `comparison` gives its reasons: `incomplete: preprocessing compared by the
+  recorded command only` for 21 pairs, `incomplete: numbering asserted, not
+  checked by digest` for 16, `incomplete: AST digests differ` for
+  `same-line.c`. All 38 were `complete` before. Over the 38 comparisons, the
+  unanswered queries are B `no-callstack` 13,474, B `no-results` 78 and B
+  `missing` 30, and 0 for every other reason and side; the 6 A and 6 B
+  `no-callstack` of `same-line.c` are now unpaired.
+- `activity.tsv`, `collector.tsv`, `functions.tsv`, `outcomes.tsv`,
+  `times.tsv` and `alarms.tsv` are unchanged. The counter families are now
+  read from the evidence of each run; the Eva command of each run of the
+  pilot has one stage, and the families measured are the same as before. The
+  outcomes now require one tree of the entry point `main`, which every
+  completed run of the pilot has.
+
+### After the second review
+
+- The runs of the pilot have no digest of their AST: the runner did not list
+  it yet. `export-ast.sh` listed it again for each run of the binary under
+  test, fixtures included, by re-running only the parsing step with that
+  binary, whose SHA-256 it checked against `binaries.tsv` (it took 28 s).
+  Each case had one digest over its three runs (`nocache`, `cache`,
+  `cache.2`), and each fixture over its runs: four for `frame.c`, three for
+  `nested-hit.c`, two for `same-line.c`, whose listing had the statements
+  only. The reference binary is no longer on the machine, so the runs of the
+  mode `reference` have no digest: the 16 pairs that involve one have the
+  numbering `asserted` (same case, revision, patch, case-study revision and
+  options), not checked by digest. The 22 other pairs had the numbering
+  `same`.
+- `alignment.tsv` gained the column `numbering`. The 12 pairs with a
+  reference run that were `complete` got the verdict `numbering asserted
+  from equal revision, patch, options and preprocessing, not checked by
+  digest`, and `complete` False; the 4 others (`nocache` against `reference`
+  where hits nest calls) added this reason. No other cell of the alignment
+  changed.
+- `activity.tsv`: `refused_by_reason` became `none` instead of `-` in the 21
+  runs where memexec was measured and refused nothing; `-` means only that
+  the family was not measured.
+- `collector.tsv` gained `supplied_refused_by_reason`, `none` in every run;
+  `supplied_rejected_by_reason` became `none` instead of `-` for the same
+  reason.
+- `queries.tsv` gained a column per side for each reason of an unanswered
+  query. Over the 38 comparisons, they were A `no-callstack` 6, B
+  `no-callstack` 13,480, B `no-results` 78 and B `missing` 30, and 0 for
+  every other reason and side. In the comparison of `frame.c` without
+  caching against the run with `-eva-no-results`, the 46 queries of a
+  statement in one callstack took the reason of the same query over all
+  callstacks, `no-results`, instead of `no-callstack` (78 `no-results`
+  instead of 32). The 30 exit queries are `missing`, 18 of which were
+  `no-callstack`: the query module of the pilot left out the exit queries of
+  a run without saved results, and its answer file does not list the reached
+  exits. The current module writes them as unavailable (`no-results`).
+- Every answer file was still complete under the stricter reader: one done
   line, last, with the count of the rows.
-- `outcomes.tsv`, `times.tsv`, `alarms.tsv` and `functions.tsv` are
-  unchanged. The runs of the outcome demonstration get the same classes
-  under the current rules: its `killed` run has no `oom_kill` rise.
-- `tables.md` now ends with the checks of `fixtures.txt` and
-  `outcome-demo.txt`, which `campaign.py tables` adds itself; the text is
-  the same as before.
+- `outcomes.tsv`, `times.tsv`, `alarms.tsv` and `functions.tsv` were
+  unchanged. The runs of the outcome demonstration got the same classes
+  under the rules of that revision: its `killed` run has no `oom_kill` rise.
+- `tables.md` ended with the checks of `fixtures.txt` and
+  `outcome-demo.txt`, which `campaign.py tables` adds itself.
 
 ## Results
 
@@ -124,13 +174,17 @@ ran them.
 - All 32 runs completed (8 cases; modes `nocache`, `cache`, `cache.2`,
   `reference`). No watchdog fired.
 - Two runs of the same binary, `cache` and `cache.2`, have the same AST
-  digest and align completely in every case, with equal state-query
-  answers and equal alarms. `reference` against `cache` aligns every
-  record, with equal answers and alarms, but the numbering of the reference
-  runs is asserted, not checked by digest. In all 38 alignments, both runs
-  completed, neither was interrupted and both logs give the statement
-  numbers; the numbering is `same` in 22 and `asserted` in 16
-  (`alignment-summary.tsv` of each pair).
+  digest and align every record in every case, with equal state-query
+  answers and equal alarms; their preprocessing is compared by the recorded
+  commands only, so the alignment is not complete. `reference` against
+  `cache` aligns every record, with equal answers and alarms, but the
+  numbering of the reference runs is asserted, not checked by digest. In all
+  38 alignments, both runs completed, neither was interrupted and both logs
+  give the statement numbers; the numbering is `recorded command` in 21,
+  `asserted` in 16 and `different` in 1, `same-line.c`
+  (`alignment-summary.tsv` of each pair). The fixtures run apart with the
+  current harness give the numbering `same` and complete alignments for two
+  runs of the same binary (see below).
 - Between `nocache` and `cache`, every record is aligned or nested under a
   hit (`accounted` is true), with no undecided group, no unmatched record
   and no inferred call. Alarms and property statuses are equal in every
@@ -165,11 +219,14 @@ ran them.
   caching and no answer with memexec for the second, and `{3; 5}` against
   `{3}` over all callstacks; a run with `-eva-no-results` answers no query;
   the two calls on one line of `same-line.c` are unmatched. All 22 checks
-  of the pilot pass. The fixtures of the current harness have 35 checks:
-  they add the AST digests, `sites.c` and a run with
-  `-eva-no-results-domain cvalue`, which the archive does not have. Run
-  apart from the pilot with the same binary
-  (`campaign/fixtures/run-fixtures.sh`), all 35 pass.
+  of the pilot pass. Recomputed with the listing of format 2, the two
+  archived runs of `same-line.c` have different digests and their calls are
+  undecided. The fixtures of the current harness have 48 checks: they add
+  the digests of the AST and of the preprocessing, `sites.c`, `branches.c`,
+  `header.c`, an unused macro in `nested-hit.c`, a run with
+  `-eva-no-results-domain cvalue`, and a `same-line.c` whose two runs differ
+  by `-lib-entry`, which the archive does not have. Run apart from the pilot
+  with the same binary (`campaign/fixtures/run-fixtures.sh`), all 48 pass.
 - Outcome classes: the constructed runs are classified `timeout` (the
   watchdog sent SIGTERM; status 143), `oom` (Frama-C reports exhausted
   memory; status 6), `error` (status 1) and `killed` (SIGKILL that the
