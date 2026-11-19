@@ -1497,15 +1497,18 @@ RELEASE = ["free", "vla_free"]
 #              produced from the bodies observed by the collector, unless
 #              -eva-no-cache-collect
 FAMILIES = ("builtin", "memexec", "supplied", "collector", "producer")
+MEMEXEC_REFUSALS = ("not-cacheable", "no-inout", "footprint-top",
+                    "relate-top", "relate-unclosed", "exception")
 COUNTER_NAMES = {
-    "memexec": {"memexec-hits", "memexec-misses", "memexec-stored"},
+    "memexec": {"memexec-hits", "memexec-misses", "memexec-stored",
+                *("memexec-refused-" + reason for reason in MEMEXEC_REFUSALS)},
     "supplied": {"cache-hits"},
     "collector": {"collector-would-store"},
     "producer": {"cache-produced"},
 }
 COUNTER_REASONS = {
     "builtin": ("builtin-applied-",),
-    "memexec": ("memexec-refused-",),
+    "memexec": (),
     "supplied": ("cache-rejected-", "cache-refused-"),
     "collector": ("collector-refused-",),
     "producer": ("cache-production-refused-",),
@@ -2686,8 +2689,7 @@ def analysis_starts(log):
 
 
 MEMEXEC_REFUSAL = re.compile(
-    r"refused \((?:not-cacheable|no-inout|footprint-top|relate-top|"
-    r"relate-unclosed|exception)\)"
+    r"refused \((?:" + "|".join(MEMEXEC_REFUSALS) + r")\)"
 )
 ENTRY_STORED = re.compile(r"stored \(entry [0-9]+\)")
 COLLECTOR_REFUSALS = ("indirect-call|builtin|sweep|contract|annotation|"

@@ -3078,7 +3078,8 @@ class FourthReview(unittest.TestCase):
         self.assertEqual(tables["collector"]["supplied_refused"], "0")
         for stat in ("memexec-hits\tf\t\tbroken\n",
                      "memexec-hits\tf\t\t5",
-                     "memexec-made-up\tf\t\t3\n"):
+                     "memexec-made-up\tf\t\t3\n",
+                     "memexec-refused-supplied-only\tf\t\t3\n"):
             tables = CounterEvidence.tables(
                 self, CounterEvidence.MEMEXEC_THEN_OFF, stat, self.START + supplied)
             self.assertEqual(tables["activity"]["hits"], "-")
