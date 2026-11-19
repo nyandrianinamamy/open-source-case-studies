@@ -3122,9 +3122,10 @@ def tables_command(args):
     write_tsv(os.path.join(out_dir, "activity.tsv"), activity_header,
               activity_rows)
     md.write("## Counters of the statistics file: cache activity and set "
-             "A\n\nSource: the rows of `eva-stats.csv`, which the last "
-             "analysis of the invocation wrote when it ended. A number is "
-             "the sum of the rows of its counter. `-` means that the file "
+             "A\n\nSource: the rows of `eva-stats.csv`, which holds the "
+             "export of the last analysis of the invocation that ended. A "
+             "number is the sum of the rows of its counter. `-` means that "
+             "the file "
              "has no row of that counter, or is not a complete export "
              "(`export_rows`, the number of its rows, is then `-` too). The "
              "analyzer writes a row for a counter only once it has "
