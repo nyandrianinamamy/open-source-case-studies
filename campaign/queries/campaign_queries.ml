@@ -452,24 +452,80 @@ let stmt_text stmt =
   let labels = List.map (fun l -> p "%a" Printer.pp_label l) stmt.labels in
   flat (String.concat " " (labels @ [ body ]))
 
+(* The source range of a statement or a global: the file and line where it
+   starts, as Frama-C prints them (relative to the current directory), then
+   the line and column of its start and of its end in the text that was
+   parsed, after preprocessing. Two occurrences of one text on one line, such
+   as the two branches of [if (c) f(1); else f(1);], have different
+   columns. *)
+let range = function
+  | None -> "-"
+  | Some loc ->
+    let start, stop = Fileloc.positions loc in
+    if Filepos.is_empty start then "-"
+    else
+      let original = Filepos.original start in
+      Printf.sprintf "%s:%d@%d:%d-%d:%d"
+        (Filepath.to_string (Filepos.path original)) (Filepos.line original)
+        (Filepos.input_line start) (Filepos.input_column start)
+        (Filepos.input_line stop) (Filepos.input_column stop)
+
+(* A global without the body or the contract of a function: the body is
+   listed statement by statement, and the analysis may add a contract to a
+   function that has none. *)
+let global_line g =
+  let p = Format.asprintf in
+  match g with
+  | GFun (fundec, loc) ->
+    let locals = List.map (p "%a" Printer.pp_vdecl) fundec.slocals in
+    "function", fundec.svar.vname, Some loc,
+    p "%a; locals {%s}" Printer.pp_vdecl fundec.svar
+      (String.concat "; " locals)
+  | GFunDecl (_, vi, loc) ->
+    "declaration", vi.vname, Some loc, p "%a" Printer.pp_vdecl vi
+  | GVarDecl (vi, loc) ->
+    "variable", vi.vname, Some loc, p "%a" Printer.pp_global g
+  | GVar (vi, _, loc) ->
+    "definition", vi.vname, Some loc, p "%a" Printer.pp_global g
+  | GType (ti, loc) -> "type", ti.tname, Some loc, p "%a" Printer.pp_global g
+  | GCompTag (ci, loc) | GCompTagDecl (ci, loc) ->
+    "composite", ci.cname, Some loc, p "%a" Printer.pp_global g
+  | GEnumTag (ei, loc) | GEnumTagDecl (ei, loc) ->
+    "enumeration", ei.ename, Some loc, p "%a" Printer.pp_global g
+  | GAnnot (_, loc) -> "annotation", "-", Some loc, p "%a" Printer.pp_global g
+  | GAsm (_, loc) -> "asm", "-", Some loc, p "%a" Printer.pp_global g
+  | GPragma (_, loc) -> "pragma", "-", Some loc, p "%a" Printer.pp_global g
+  | GText text -> "text", "-", None, text
+
+(* The AST listing: the line "format 2", then for each global a line
+   [global KIND NAME RANGE TEXT], followed for a function by a line
+   [stmt FUNCTION SID RANGE TEXT] for each of its statements, then the line
+   [done COUNT], COUNT being the number of global and stmt lines. The
+   format 1, written by earlier revisions, listed the statements alone,
+   without their columns. *)
 let export_ast file =
   let channel = open_out file in
-  let statements = ref 0 in
+  let lines = ref 0 in
+  let line kind name id loc text =
+    incr lines;
+    Printf.fprintf channel "%s\t%s\t%s\t%s\t%s\n" kind name id
+      (flat (range loc)) (flat text)
+  in
+  output_string channel "format\t2\n";
   List.iter
-    (function
-      | GFun (fundec, _) ->
-        List.iter
-          (fun stmt ->
-             incr statements;
-             Printf.fprintf channel "stmt\t%s\t%d\t%s\t%s\n"
-               fundec.svar.vname stmt.sid
-               (flat (Format.asprintf "%a" Fileloc.pretty
-                        (Cil_datatype.Stmt.loc stmt)))
-               (stmt_text stmt))
-          fundec.sallstmts
-      | _ -> ())
+    (fun g ->
+       let kind, name, loc, text = global_line g in
+       line "global" kind name loc text;
+       match g with
+       | GFun (fundec, _) ->
+         List.iter
+           (fun stmt ->
+              line "stmt" fundec.svar.vname (string_of_int stmt.sid)
+                (Some (Cil_datatype.Stmt.loc stmt)) (stmt_text stmt))
+           fundec.sallstmts
+       | _ -> ())
     (Ast.get ()).globals;
-  Printf.fprintf channel "done\t%d\n" !statements;
+  Printf.fprintf channel "done\t%d\n" !lines;
   close_out channel
 
 let run () =

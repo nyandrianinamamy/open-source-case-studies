@@ -7,7 +7,11 @@
 # bytes when it is set, and writes to CAMPAIGN_MEASURE its elapsed time, CPU
 # times, peak resident memory, wait status, whether the watchdog fired, and
 # the evidence of the out-of-memory killer it could read.
-# Every other invocation runs the binary CAMPAIGN_FRAMAC unchanged.
+# Every other invocation runs the binary CAMPAIGN_FRAMAC, unchanged unless
+# CAMPAIGN_PP_DIR names a directory: then, for the parse step, it runs with
+# TMPDIR set to that directory and the options -keep-temp-files and
+# -kernel-msg-key pp, so that Frama-C prints its preprocessing commands and
+# keeps the preprocessed files there (see campaign.py preprocessing).
 set -euo pipefail
 real=${CAMPAIGN_FRAMAC:?CAMPAIGN_FRAMAC must name the frama-c binary}
 measured=false
@@ -17,6 +21,10 @@ if [[ -n ${CAMPAIGN_MEASURE:-} ]]; then
   done
 fi
 if ! $measured; then
+  if [[ -n ${CAMPAIGN_PP_DIR:-} ]]; then
+    TMPDIR=$CAMPAIGN_PP_DIR exec "$real" -keep-temp-files -kernel-msg-key pp \
+      "$@"
+  fi
   exec "$real" "$@"
 fi
 exec python3 -I "$(dirname "$(realpath "$0")")/watchdog.py" \

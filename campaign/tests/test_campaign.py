@@ -1043,7 +1043,9 @@ class Interruption(unittest.TestCase):
             with contextlib.redirect_stdout(io.StringIO()):
                 campaign.main(["align", "--ast-a", DIGEST_0, "--ast-b",
                                DIGEST_0, "--outcome-a", "completed",
-                               "--outcome-b", "completed", out, out, prefix])
+                               "--outcome-b", "completed"]
+                              + campaign_numbering_options()
+                              + [out, out, prefix])
             with open(prefix + "summary.tsv") as f:
                 summary = dict(l.rstrip("\n").split("\t", 1) for l in f)
         self.assertEqual(summary.get("records_a"), "2")
@@ -1343,6 +1345,9 @@ SITES_NUMBERED = """
   stack: main
 """
 DIGEST_0, DIGEST_1 = "0" * 64, "1" * 64
+# Digests of the preprocessing of a run, as align takes them.
+PP_0 = "%s:%s" % ("a" * 64, "b" * 64)
+PP_1 = "%s:%s" % ("a" * 64, "c" * 64)
 
 
 class NumberingEvidence(unittest.TestCase):
@@ -1394,12 +1399,37 @@ class NumberingEvidence(unittest.TestCase):
     def test_equal_digests(self):
         code, error, s, _ = self.align(
             SITES_NUMBERED, SITES_NUMBERED, "--ast-a", DIGEST_0,
-            "--ast-b", DIGEST_0, "--outcome-a", "completed",
-            "--outcome-b", "completed")
+            "--ast-b", DIGEST_0, "--pp-a", PP_0, "--pp-b", PP_0,
+            "--outcome-a", "completed", "--outcome-b", "completed")
         self.assertEqual((code, error), (0, None))
         self.assertEqual(s.get("numbering"), "same")
         self.assertEqual(s.get("aligned"), "2")
         self.assertEqual(s.get("verdict"), "complete")
+
+    def test_equal_ast_digests_alone(self):
+        # The two runs of the probe of the review, if (SIDE) f(1); else
+        # f(1); with SIDE 0 and 1, had equal digests of statement lines:
+        # without the evidence of their preprocessing, nothing is paired.
+        code, error, s, undecided = self.align(
+            SITES_NUMBERED, SITES_NUMBERED, "--ast-a", DIGEST_0,
+            "--ast-b", DIGEST_0, "--outcome-a", "completed",
+            "--outcome-b", "completed")
+        self.assertEqual((code, error), (0, None))
+        self.assertEqual(s.get("numbering"), "not established")
+        self.assertEqual(s.get("aligned"), "1")
+        self.assertEqual(undecided[0][-1], "numbering not established")
+        self.assertEqual(s.get("complete"), "False")
+
+    def test_preprocessing_differs(self):
+        code, error, s, undecided = self.align(
+            SITES_NUMBERED, SITES_NUMBERED, "--ast-a", DIGEST_0,
+            "--ast-b", DIGEST_0, "--pp-a", PP_0, "--pp-b", PP_1,
+            "--outcome-a", "completed", "--outcome-b", "completed")
+        self.assertEqual((code, error), (0, None))
+        self.assertEqual(s.get("numbering"), "preprocessing differs")
+        self.assertEqual(s.get("aligned"), "1")
+        self.assertEqual(undecided[0][-1], "preprocessing differs")
+        self.assertIn("preprocessing differs", s.get("verdict", ""))
 
     def test_asserted_numbering_is_a_verdict_of_its_own(self):
         code, error, s, _ = self.align(
@@ -1420,21 +1450,37 @@ class NumberingEvidence(unittest.TestCase):
         self.assertNotEqual(code, 0)
 
     def test_ast_listing_digest(self):
-        listing = ("stmt\tmain\t4\tsites.c:4\tf(2);\n"
-                   "stmt\tmain\t5\tsites.c:5\treturn 0;\n")
+        listing = ("format\t2\n"
+                   "global\tfunction\tmain\tsites.c:3@3:5-6:2\t"
+                   "int main(void); locals {}\n"
+                   "stmt\tmain\t4\tsites.c:4@4:13-4:18\tf(2);\n"
+                   "stmt\tmain\t5\tsites.c:5@5:3-5:12\treturn 0;\n")
         with tempfile.TemporaryDirectory() as tmp:
             path = os.path.join(tmp, "ast.tsv")
-            write(path, listing + "done\t2\n")
-            code, out, error = run_main(["ast", path])
             write(path, listing + "done\t3\n")
-            _, wrong, _ = run_main(["ast", path])
-            write(path, listing)
-            _, cut, _ = run_main(["ast", path])
+            code, out, error = run_main(["ast", path])
+            outputs = []
+            for text in (listing + "done\t2\n", listing,
+                         # The format 1: statement lines without columns.
+                         "stmt\tmain\t4\tsites.c:4\tf(2);\ndone\t1\n",
+                         listing.replace("format\t2", "format\t1")
+                         + "done\t3\n",
+                         listing.replace("\tf(2);", "") + "done\t3\n"):
+                write(path, text)
+                outputs.append(run_main(["ast", path])[1])
         self.assertEqual((code, error), (0, None))
         digest = hashlib.sha256(listing.encode()).hexdigest()
-        self.assertEqual(out, "ast_sha256\t%s\nast_statements\t2\n" % digest)
-        self.assertEqual(wrong, "ast_sha256\t-\nast_statements\t-\n")
-        self.assertEqual(cut, "ast_sha256\t-\nast_statements\t-\n")
+        self.assertEqual(out, "ast_format\t2\nast_sha256\t%s\n"
+                         "ast_statements\t2\n" % digest)
+        for output in outputs:
+            self.assertEqual(output, "ast_format\t-\nast_sha256\t-\n"
+                             "ast_statements\t-\n")
+
+
+# The fields of run.tsv of a run of this runner whose AST and preprocessing
+# were listed.
+FRESH = {"ast_format": "2", "ast_sha256": DIGEST_0,
+         "pp_command_sha256": "a" * 64, "pp_text_sha256": "b" * 64}
 
 
 class CompareRuns(unittest.TestCase):
@@ -1467,8 +1513,7 @@ class CompareRuns(unittest.TestCase):
         return code, error, summary
 
     def test_equal_digests(self):
-        code, error, s = self.compare({"ast_sha256": DIGEST_0},
-                                      {"ast_sha256": DIGEST_0})
+        code, error, s = self.compare(FRESH, FRESH)
         self.assertEqual((code, error), (0, None))
         self.assertEqual((s.get("numbering"), s.get("verdict")),
                          ("same", "complete"))
@@ -1501,6 +1546,172 @@ class CompareRuns(unittest.TestCase):
                                {"ast_sha256": DIGEST_0, "outcome": "timeout"})
         self.assertEqual(s.get("complete"), "False")
         self.assertIn("outcome of B: timeout", s.get("verdict", ""))
+
+
+# A Command line of parse.log, as analysis.mk writes it, in the snapshot of
+# the run of mode MODE.
+PARSE_LOG = ("Command: ~/c/bin/frama-c-measure -machdep gcc_x86_64 "
+             "-cpp-extra-args=\"-ffile-prefix-map=~/out/runs/c/MODE/src/c=.\" "
+             "../c.c\n[kernel] Parsing c.c (with preprocessing)\n")
+
+
+class PreprocessingNumbering(unittest.TestCase):
+    """The numbering is same only when the AST digests and the digests of
+    the preprocessing are equal; runs of an archive whose AST was listed
+    again have their preprocessing compared by their recorded commands."""
+
+    def compare(self, fields_a, fields_b, files_a=None, files_b=None):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = CompareRuns.output(None, tmp, fields_a, fields_b)
+            for mode, files in (("x", files_a), ("y", files_b)):
+                for name, text in (files or {}).items():
+                    write(os.path.join(root, "runs", "c", mode, name),
+                          text.replace("MODE", mode))
+            code, _, error = run_main(["compare", root, "c", "x", "y"])
+            self.assertEqual((code, error), (0, None))
+            return read_summary(os.path.join(
+                root, "comparisons", "c", "x-vs-y", "alignment-summary.tsv"))
+
+    def test_preprocessing_digests(self):
+        s = self.compare(FRESH, dict(FRESH, pp_text_sha256="c" * 64))
+        self.assertEqual(s["numbering"], "preprocessing differs")
+        self.assertEqual(s["aligned"], "1")
+        for missing in ("-", None):
+            s = self.compare(FRESH, dict(FRESH, pp_text_sha256=missing))
+            self.assertEqual(s["numbering"], "not established")
+
+    def test_listing_of_another_format(self):
+        # A digest of the statement lines alone, written by the previous
+        # runner, establishes nothing.
+        for fields in (dict(FRESH, ast_format=None),
+                       dict(FRESH, ast_format="1")):
+            s = self.compare(fields, fields)
+            self.assertEqual(s["numbering"], "not established")
+
+    def test_archived_runs_compared_by_their_commands(self):
+        imported = {"ast_format": "2", "ast_sha256": DIGEST_0,
+                    "ast_source": "imported"}
+        s = self.compare(imported, imported, {"parse.log": PARSE_LOG},
+                         {"parse.log": PARSE_LOG})
+        self.assertEqual(s["numbering"], "recorded command")
+        self.assertEqual(s["aligned"], "2")
+        self.assertEqual(s["complete"], "False")
+        self.assertEqual(s["verdict"], "AST digests equal, preprocessing "
+                         "compared by the recorded command only")
+        other = PARSE_LOG.replace("-machdep gcc_x86_64", "-machdep x86_32")
+        s = self.compare(imported, imported, {"parse.log": PARSE_LOG},
+                         {"parse.log": other})
+        self.assertEqual(s["numbering"], "not established")
+        self.assertEqual(s["aligned"], "1")
+        s = self.compare(imported, imported)
+        self.assertEqual(s["numbering"], "not established")
+        s = self.compare(imported, dict(imported, ast_sha256=DIGEST_1),
+                         {"parse.log": PARSE_LOG}, {"parse.log": PARSE_LOG})
+        self.assertEqual(s["numbering"], "different")
+        # Only two imported runs: against a run of this runner, the
+        # preprocessing of the imported run is not known.
+        s = self.compare(imported, FRESH, {"parse.log": PARSE_LOG},
+                         {"parse.log": PARSE_LOG})
+        self.assertEqual(s["numbering"], "not established")
+
+    def test_archived_fixtures(self):
+        imported = {"case": "fixtures/f.c/default", "ast_format": "2",
+                    "ast_sha256": DIGEST_0, "ast_source": "imported"}
+        with tempfile.TemporaryDirectory() as tmp:
+            root = CompareRuns.output(
+                None, tmp, dict(imported, extra_eva_flags="-cpp-extra-args="
+                                "-DSIDE=0"),
+                dict(imported, extra_eva_flags="-cpp-extra-args=-DSIDE=1"))
+            for mode in "xy":
+                write(os.path.join(root, "runs", "c", mode, "f.c"),
+                      "int main(void) { return SIDE; }\n")
+            run_main(["compare", root, "c", "x", "y"])
+            s = read_summary(os.path.join(
+                root, "comparisons", "c", "x-vs-y", "alignment-summary.tsv"))
+        self.assertEqual(s["numbering"], "not established")
+
+
+class PreprocessingEvidence(unittest.TestCase):
+    """The digests of the preprocessing of a parse step: its commands and
+    the preprocessed text, with the paths of the run written alike."""
+
+    def parse(self, root, define, suffix="78d26c", files=("side.c",),
+              parsed=None, keep=True):
+        """A parse step of [files] in [root]/src, with its temporary files
+        in [root]/tmp, as Frama-C writes its log and keeps its files."""
+        src, tmp = os.path.join(root, "src"), os.path.join(root, "tmp")
+        share = os.path.join(root, "share")
+        os.makedirs(src)
+        os.makedirs(os.path.join(tmp, "__fc_machdep%s.dir" % suffix))
+        log = []
+        for name in files:
+            output = os.path.join(tmp, "%s%s.i" % (name, suffix))
+            log.append(
+                "[kernel:pp] \n  preprocessing with \"gcc -E -C -I. "
+                "-I'%s/__fc_machdep%s.dir' -I'%s/libc' -dD %s '%s/%s' "
+                "-o '%s'\"" % (tmp, suffix, share, define, src, name, output))
+            log.append("[kernel] Parsing %s (with preprocessing)" % name)
+            if keep:
+                write(output, '# 1 "%s/%s"\n# 1 "%s/__fc_machdep%s.dir/'
+                      '__fc_machdep.h" 1\n#define %s\nint x;\n'
+                      % (src, name, tmp, suffix,
+                         define[2:].replace("=", " ")))
+        for line in parsed or []:
+            log.append(line)
+        write(os.path.join(root, "parse.log"), "\n".join(log) + "\n")
+        return campaign.preprocessing_evidence(
+            os.path.join(root, "parse.log"), tmp, [src], [share])
+
+    def test_runs_in_two_directories(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            a, _ = self.parse(os.path.join(tmp, "cache"), "-DSIDE=0")
+            b, commands = self.parse(os.path.join(tmp, "deeper", "cache.2"),
+                                     "-DSIDE=0", suffix="0a1b2c")
+            c, _ = self.parse(os.path.join(tmp, "side1"), "-DSIDE=1")
+        self.assertEqual(a["pp_problem"], "-")
+        self.assertEqual(a["pp_files"], "1")
+        self.assertEqual(a, b)
+        self.assertEqual(commands, [
+            "gcc -E -C -I. -I'${TMP}/__fc_machdep.dir' "
+            "-I'${FRAMAC_SHARE}/libc' -dD -DSIDE=0 '${SRC}/side.c' "
+            "-o '${TMP}/side.c.i'"])
+        self.assertNotEqual(a["pp_command_sha256"], c["pp_command_sha256"])
+        self.assertNotEqual(a["pp_text_sha256"], c["pp_text_sha256"])
+
+    def test_no_evidence(self):
+        cases = (({"keep": False},
+                  "a preprocessed file is not kept in the directory"),
+                 ({"parsed": ["[kernel] Parsing x.i (no preprocessing)"]},
+                  "a file parsed without preprocessing"),
+                 ({"parsed": ["[kernel] Parsing y.c (with preprocessing)"]},
+                  "1 preprocessing commands for 2 files"),
+                 ({"files": ()}, "no preprocessing command in the log"))
+        for options, problem in cases:
+            with tempfile.TemporaryDirectory() as tmp:
+                fields, commands = self.parse(tmp, "-DSIDE=0", **options)
+            self.assertEqual(fields["pp_problem"], problem)
+            self.assertEqual(fields["pp_command_sha256"], "-")
+            self.assertEqual(fields["pp_text_sha256"], "-")
+            self.assertEqual(commands, [])
+
+    def test_command_line(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            self.parse(tmp, "-DSIDE=0", files=("a.c", "b.c"))
+            out = os.path.join(tmp, "commands.txt")
+            code, text, error = run_main(
+                ["preprocessing", os.path.join(tmp, "parse.log"),
+                 os.path.join(tmp, "tmp"), "--source-root",
+                 os.path.join(tmp, "src"), "--share",
+                 os.path.join(tmp, "share"), "--commands", out])
+            with open(out) as f:
+                commands = f.read().splitlines()
+        self.assertEqual((code, error), (0, None))
+        fields = dict(l.split("\t") for l in text.splitlines())
+        self.assertEqual(fields["pp_files"], "2")
+        self.assertTrue(re.fullmatch("[0-9a-f]{64}",
+                                     fields["pp_text_sha256"]))
+        self.assertEqual(len(commands), 2)
+        self.assertNotIn(tmp, "".join(commands))
 
 
 class EffectiveOptions(unittest.TestCase):
@@ -2069,11 +2280,13 @@ class BoundedDecimals(unittest.TestCase):
             results = []
             for count in (self.SUPERSCRIPT_TWO, self.FULLWIDTH_ONE,
                           self.LONG):
-                write(path, listing + "done\t" + count + "\n")
+                write(path, "format\t2\n" + listing + "done\t" + count
+                      + "\n")
                 results.append(run_main(["ast", path]))
         for code, out, error in results:
             self.assertEqual((code, error), (0, None))
-            self.assertEqual(out, "ast_sha256\t-\nast_statements\t-\n")
+            self.assertEqual(out, "ast_format\t-\nast_sha256\t-\n"
+                             "ast_statements\t-\n")
 
     def test_measure_counters(self):
         for events in (self.SUPERSCRIPT_TWO, self.LONG):
@@ -2448,8 +2661,8 @@ class EntryPoint(unittest.TestCase):
 
 def campaign_numbering_options():
     """The options of align that give equal evidence of numbering besides
-    the AST digests, when the tools ask for it."""
-    return []
+    the AST digests: equal digests of the preprocessing."""
+    return ["--pp-a", PP_0, "--pp-b", PP_0]
 
 
 if __name__ == "__main__":

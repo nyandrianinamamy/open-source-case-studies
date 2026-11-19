@@ -21,8 +21,10 @@
 # parse session from the directory of the analysis. For a run of a fixture
 # (case fixtures/FILE.c/default), it parses the copy of FILE.c kept in the
 # run with the preprocessing options (-cpp-*) of extra_eva_flags. No
-# analysis is run. Prints the columns case, mode, ast_sha256,
+# analysis is run. Prints the columns case, mode, ast_format, ast_sha256,
 # ast_statements and parse_exit, after comment lines that name the binary.
+# The preprocessing of the runs is not listed again: the parse step that
+# this script runs is not the one of the run.
 set -euo pipefail
 campaign=$(dirname "$(dirname "$(realpath "$0")")")
 oscs=$(dirname "$campaign")
@@ -66,7 +68,7 @@ run_field() { awk -F'\t' -v k="$2" '$1==k{print $2}' "$1/run.tsv"; }
 printf '# Listed by tools/export-ast.sh from a parse alone, role %s, revision %s,\n' \
   "$role" "$(binary_field revision)"
 printf '# frama-c SHA-256 %s.\n' "$(binary_field frama_c_sha256)"
-printf 'case\tmode\tast_sha256\tast_statements\tparse_exit\n'
+printf 'case\tmode\tast_format\tast_sha256\tast_statements\tparse_exit\n'
 while IFS= read -r -d '' tsv; do
   run=$(dirname "$tsv")
   [[ $(run_field "$run" role) == "$role" ]] || continue
@@ -117,5 +119,6 @@ while IFS= read -r -d '' tsv; do
   "${tool[@]}" ast "$listing" |
     awk -F'\t' -v c="$id" -v m="$mode" -v e="$parse_exit" '
       { v[$1] = $2 }
-      END { print c "\t" m "\t" v["ast_sha256"] "\t" v["ast_statements"] "\t" e }'
+      END { print c "\t" m "\t" v["ast_format"] "\t" v["ast_sha256"] "\t" \
+                  v["ast_statements"] "\t" e }'
 done < <(find "$output/runs" -name run.tsv -print0 | sort -z)

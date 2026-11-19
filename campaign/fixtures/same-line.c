@@ -1,9 +1,11 @@
-/* Two calls on one line. The macro SIDE sets the initial value of side,
-   not the condition, so both runs parse the same statements: with SIDE 0
-   the analysis reaches the call f(2) only, with SIDE 1 the call f(1) only.
-   The two calls have one call site, line 10, and must not be aligned. */
+/* Two calls on one line. With the initial state of the program, side is 0
+   and the analysis reaches the call f(2) only; with -lib-entry, side may
+   hold any value and it reaches f(1) too. The two runs parse the same
+   program, so their statement numbers are comparable: the calls f(2)
+   align, and the call f(1), on the same line and call site, is unmatched,
+   not aligned with f(2). */
 volatile int observable;
-int side = SIDE;
+int side = 0;
 void f(int v) { observable = v; }
 
 int main(void) {

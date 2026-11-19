@@ -12,6 +12,7 @@ Subcommands:
   home ACTION ...            find or write ~ for the home directory
   tables RUN_DIR             result tables of a campaign output directory
   ast LISTING                SHA-256 of an AST listing of the query module
+  preprocessing LOG TMPDIR   digests of the preprocessing of a parse step
   compare OUTPUT CASE A B    compare two runs of a case as the runner does
   recompute RUN_DIR          records, outcomes, comparisons and tables again
   manifest ...               see manifest --help
@@ -512,29 +513,63 @@ def descendants(row, children):
     return count
 
 
-# The evidence that two runs number the statements of their programs alike:
-# - same: the digests of their ASTs are equal;
-# - asserted: a run recorded before the digest existed, whose numbering is
-#   asserted from the equal revision, patch, options and preprocessing of
-#   the two runs;
-# - different: the digests differ;
-# - not established: a digest is missing.
+# The evidence that two runs number the statements of their programs alike.
+# A run of this runner records the digest of the listing of its AST
+# (ast_sha256, of the format AST_FORMAT) and the digests of its
+# preprocessing (pp_command_sha256 and pp_text_sha256, see
+# preprocessing_evidence). The numbering of two runs is:
+# - same: equal AST digests and equal preprocessing digests;
+# - preprocessing differs: equal AST digests, but the preprocessing digests
+#   differ;
+# - different: the AST digests differ;
+# - recorded command: runs of an archive whose AST was listed again
+#   afterwards (ast_source imported) and that have no preprocessing digest:
+#   equal AST digests, and equal preprocessing recorded by their commands
+#   (recorded_preprocessing); the preprocessed text was not compared;
+# - asserted: runs recorded before the AST digest existed, whose numbering
+#   is asserted from the equal revision, patch, options and preprocessing
+#   of the two runs;
+# - not established: anything else, such as a digest missing or a listing
+#   of another format.
 # The pairs below the entry point depend on the statement numbers: they are
-# made only when the numbering is the same or asserted.
+# made only when the numbering is same, recorded command or asserted, and
+# only same makes an alignment complete.
+AST_FORMAT = "2"
+SHA256 = re.compile(r"[0-9a-f]{64}")
 NUMBERING_REASONS = {"different": "AST digests differ",
+                     "preprocessing differs": "preprocessing differs",
                      "not established": "numbering not established"}
 ASSERTED_VERDICT = ("numbering asserted from equal revision, patch, options "
                     "and preprocessing, not checked by digest")
+RECORDED_VERDICT = ("AST digests equal, preprocessing compared by the "
+                    "recorded command only")
+# The numberings that pair the calls below the entry point but leave an
+# alignment incomplete: the reason, and the verdict when it is the only one.
+WEAK_NUMBERING = {
+    "asserted": ("numbering asserted, not checked by digest",
+                 ASSERTED_VERDICT),
+    "recorded command": ("preprocessing compared by the recorded command "
+                         "only", RECORDED_VERDICT)}
 
 
-def numbering_state(digest_a, digest_b, asserted=False):
-    """The numbering of two runs from the digests of their ASTs, a missing
-    digest being empty or -: same, different, asserted (when [asserted] and
-    a digest is missing) or not established."""
-    def known(digest):
-        return bool(digest) and digest != "-"
-    if known(digest_a) and known(digest_b):
-        return "same" if digest_a == digest_b else "different"
+def known_digest(digest):
+    """Whether a digest of run.tsv or of the options is given: not empty,
+    not -."""
+    return bool(digest) and digest != "-"
+
+
+def numbering_state(digest_a, digest_b, asserted=False, pp_a=None,
+                    pp_b=None):
+    """The numbering of two runs from the digests of their ASTs and of their
+    preprocessing, a missing digest being None, empty or -: same,
+    preprocessing differs, different, asserted (when [asserted] and an AST
+    digest is missing) or not established."""
+    if known_digest(digest_a) and known_digest(digest_b):
+        if digest_a != digest_b:
+            return "different"
+        if known_digest(pp_a) and known_digest(pp_b):
+            return "same" if pp_a == pp_b else "preprocessing differs"
+        return "not established"
     return "asserted" if asserted else "not established"
 
 
@@ -606,6 +641,8 @@ def align(rows_a, rows_b, numbering="not established"):
         keys_b = [child_key(r) for r in kids_b]
         no_number = any(r.get("stmt") is None for r in kids_a + kids_b)
         unpaired = NUMBERING_REASONS.get(numbering)
+        if numbering not in WEAK_NUMBERING and numbering != "same":
+            unpaired = unpaired or "numbering not established"
         if not unpaired and not no_number and keys_a == keys_b:
             for x, y in zip(kids_a, kids_b):
                 visit(x, y)
@@ -791,16 +828,19 @@ def summarize_alignment(rows_a, rows_b, result, problems_a=(),
         reasons.append("statement numbers missing")
     if numbering in NUMBERING_REASONS:
         reasons.append(NUMBERING_REASONS[numbering])
+    elif numbering != "same" and numbering not in WEAK_NUMBERING:
+        reasons.append("numbering not established")
     if not (len(observed) == summary["records_a"] == summary["records_b"]
             and len(pairs) == len(rows_a) == len(rows_b)):
         reasons.append("not every record aligned")
-    if numbering == "asserted":
-        reasons.append("numbering asserted, not checked by digest")
+    weak = WEAK_NUMBERING.get(numbering)
+    if weak:
+        reasons.append(weak[0])
     summary["complete"] = not reasons
     if not reasons:
         summary["verdict"] = "complete"
-    elif reasons == ["numbering asserted, not checked by digest"]:
-        summary["verdict"] = ASSERTED_VERDICT
+    elif weak and reasons == [weak[0]]:
+        summary["verdict"] = weak[1]
     else:
         summary["verdict"] = "incomplete: " + ", ".join(reasons)
     return summary
@@ -856,7 +896,7 @@ def write_alignment(prefix, path_a, path_b, numbering, outcomes,
 
 def align_command(args):
     numbering = numbering_state(args.ast_a, args.ast_b,
-                                args.assert_numbering)
+                                args.assert_numbering, args.pp_a, args.pp_b)
     summary = write_alignment(args.output, args.a, args.b, numbering,
                               (args.outcome_a, args.outcome_b),
                               args.entry_point)
@@ -1939,49 +1979,221 @@ def outcome_command(args):
 # ----- Identity of the AST --------------------------------------------------
 
 def load_ast(path):
-    """The SHA-256 of the statement lines of an AST listing written by the
-    query module (CAMPAIGN_AST_OUT) and their number, or (None, None) when
-    the file is missing or incomplete: it must end with done COUNT, COUNT
-    being the number of statement lines."""
+    """The SHA-256 of an AST listing written by the query module
+    (CAMPAIGN_AST_OUT) and its number of statement lines, or (None, None)
+    when the file is missing, incomplete or of another format. It must start
+    with the line format AST_FORMAT, hold lines global or stmt of five
+    fields, and end with done COUNT, COUNT being the number of these lines.
+    The digest covers every line but the done line."""
     path = existing(path) if path else None
     if not path:
         return None, None
     with open_text(path) as f:
         text = f.read()
     lines = text.split("\n")
-    if lines[-1] != "" or len(lines) < 2:
+    if lines[-1] != "" or len(lines) < 3:
         return None, None
     lines.pop()
     done = lines.pop().split("\t")
-    body = [l for l in lines]
-    if len(done) != 2 or done[0] != "done" or \
-       decimal(done[1]) != len(body) or \
-       any(not l.startswith("stmt\t") for l in body):
+    body = lines[1:]
+    if lines[0] != "format\t" + AST_FORMAT or len(done) != 2 or \
+       done[0] != "done" or decimal(done[1]) != len(body) or \
+       any(l.split("\t", 1)[0] not in ("global", "stmt")
+           or len(l.split("\t")) != 5 for l in body):
         return None, None
-    data = "".join(l + "\n" for l in body).encode("utf-8", "surrogateescape")
-    return hashlib.sha256(data).hexdigest(), len(body)
+    data = "".join(l + "\n" for l in lines).encode("utf-8", "surrogateescape")
+    return (hashlib.sha256(data).hexdigest(),
+            sum(1 for l in body if l.startswith("stmt\t")))
 
 
 def ast_command(args):
     digest, statements = load_ast(args.listing)
-    print("ast_sha256\t%s\nast_statements\t%s"
-          % (digest or "-", "-" if statements is None else statements))
+    print("ast_format\t%s\nast_sha256\t%s\nast_statements\t%s"
+          % (AST_FORMAT if digest else "-", digest or "-",
+             "-" if statements is None else statements))
     return 0
+
+
+# ----- Preprocessing evidence ---------------------------------------------
+
+# The messages of the parse step run with -kernel-msg-key pp: one command
+# per file parsed with preprocessing, before the line that names the file.
+PP_COMMAND = re.compile(r'^\s*preprocessing with "(.*)"\s*$')
+PP_PARSED = re.compile(r"^\[kernel\] Parsing .* \((with|no) preprocessing\)$")
+PP_OUTPUT = re.compile(r"\s-o\s+'([^']*)'(?:\s|$)")
+# The random part of the name of a temporary file of Frama-C (six hex
+# digits before .i or .dir), once its directory is written ${TMP}.
+PP_TEMP_NAME = re.compile(
+    rb"(\$\{TMP\}/[^/'\"\s]*?)[0-9a-f]{6}(\.i|\.dir)(?=[/'\"\s]|$)")
+
+
+def path_pattern(roots):
+    """A pattern of the spellings of directories (token, path) as written,
+    and physical: the longest first, not followed by a character of a
+    name."""
+    spellings = {}
+    for token, path in roots:
+        for spelling in (path.rstrip("/"), os.path.realpath(path)):
+            if spelling and spelling != "/":
+                spellings.setdefault(spelling.encode(), token.encode())
+    if not spellings:
+        return None, spellings
+    ordered = sorted(spellings, key=len, reverse=True)
+    return re.compile(b"(" + b"|".join(re.escape(x) for x in ordered)
+                      + rb")(?![A-Za-z0-9._+-])"), spellings
+
+
+def normalize_paths(data, pattern, spellings):
+    """[data] with each spelling of [pattern] written as its token, and the
+    random part of the temporary names removed."""
+    if pattern is not None:
+        data = pattern.sub(lambda m: spellings[m.group(1)], data)
+    return PP_TEMP_NAME.sub(rb"\1\2", data)
+
+
+def preprocessing_evidence(log_path, tmp_dir, source_roots=(), shares=()):
+    """The evidence of the preprocessing of a parse step run with
+    -kernel-msg-key pp -keep-temp-files and TMPDIR=[tmp_dir]: the commands
+    printed in its log, in their order, and the preprocessed files they
+    wrote, which Frama-C keeps in [tmp_dir]. Paths are written ${TMP} for
+    [tmp_dir], ${SRC} for [source_roots] (the directory of the sources of
+    the run) and ${FRAMAC_SHARE} for [shares] (the share directory of the
+    binary), and the random part of the temporary names is removed, in the
+    commands and in the text alike. Returns the fields of run.tsv
+    (pp_files, pp_command_sha256, pp_text_sha256, pp_problem) and the
+    commands so written. Without one command per file parsed, every file
+    parsed with preprocessing, and each preprocessed file in [tmp_dir], the
+    digests are - and pp_problem says why."""
+    fields = OrderedDict([("pp_files", "-"), ("pp_command_sha256", "-"),
+                          ("pp_text_sha256", "-"), ("pp_problem", "-")])
+    path = existing(log_path) if log_path else None
+    if not path or not os.path.isdir(tmp_dir):
+        fields["pp_problem"] = "no parse log or no temporary directory"
+        return fields, []
+    with open_text(path) as f:
+        log = f.read().split("\n")
+    commands = [m.group(1) for m in map(PP_COMMAND.match, log) if m]
+    parsed = [m.group(1) for m in map(PP_PARSED.match, log) if m]
+    pattern, spellings = path_pattern(
+        [("${TMP}", tmp_dir)] + [("${SRC}", r) for r in source_roots]
+        + [("${FRAMAC_SHARE}", r) for r in shares])
+    tmp = os.path.realpath(tmp_dir)
+    problem = None
+    if "no" in parsed:
+        problem = "a file parsed without preprocessing"
+    elif not commands:
+        problem = "no preprocessing command in the log"
+    elif len(commands) != len(parsed):
+        problem = ("%d preprocessing commands for %d files"
+                   % (len(commands), len(parsed)))
+    texts = []
+    for command in [] if problem else commands:
+        output = PP_OUTPUT.search(command)
+        target = os.path.realpath(output.group(1)) if output else None
+        if not target or os.path.dirname(target) != tmp or \
+           not os.path.isfile(target):
+            problem = "a preprocessed file is not kept in the directory"
+            break
+        with open(target, "rb") as f:
+            texts.append(hashlib.sha256(
+                normalize_paths(f.read(), pattern, spellings)).hexdigest())
+    if problem:
+        fields["pp_problem"] = problem
+        return fields, []
+    written = [normalize_paths(c.encode("utf-8", "surrogateescape"),
+                               pattern, spellings) for c in commands]
+    fields["pp_files"] = str(len(commands))
+    fields["pp_command_sha256"] = hashlib.sha256(
+        b"".join(c + b"\n" for c in written)).hexdigest()
+    fields["pp_text_sha256"] = hashlib.sha256(
+        "".join(t + "\n" for t in texts).encode()).hexdigest()
+    return fields, [c.decode("utf-8", "surrogateescape") for c in written]
+
+
+def preprocessing_command(args):
+    fields, commands = preprocessing_evidence(
+        args.log, args.tmp_dir, args.source_root or [], args.share or [])
+    if args.commands:
+        with open_text(args.commands, "w") as f:
+            for command in commands:
+                f.write(command + "\n")
+    for key, value in fields.items():
+        print("%s\t%s" % (key, value))
+    return 0
+
+
+def preprocessing_digest(run):
+    """The digests of the preprocessing of a run, from its run.tsv, as one
+    value PP_COMMAND_SHA256:PP_TEXT_SHA256, or None."""
+    pair = (run.get("pp_command_sha256"), run.get("pp_text_sha256"))
+    if all(SHA256.fullmatch(x or "") for x in pair):
+        return "%s:%s" % pair
+    return None
+
+
+def recorded_preprocessing(run_dir, run):
+    """The preprocessing of a run as its commands record it, for a run that
+    has no preprocessing digest: the revision and patch of its binary, and
+    the Command lines of its parse log (parse.log, written by analysis.mk)
+    with the directory of its source snapshot written ${SRC}; for a run of a
+    fixture, which has no parse log, the SHA-256 of the copy of the fixture
+    kept in the run and the options -cpp* of its extra options. None when
+    the run recorded neither."""
+    binary = "%s %s" % (run.get("revision", "-"), run.get("patch_sha256", "-"))
+    log = existing(os.path.join(run_dir, "parse.log"))
+    case, mode = run.get("case", ""), run.get("mode", "")
+    if log:
+        with open_text(log) as f:
+            lines = [l.rstrip("\n")[len("Command: "):] for l in f
+                     if l.startswith("Command: ")]
+        snapshot = re.compile(r"[^\s=\"']*/runs/%s/%s/src(?=[/=\s\"']|$)"
+                              % (re.escape(case), re.escape(mode)))
+        if lines:
+            return "\n".join([binary] + [snapshot.sub("${SRC}", l)
+                                         for l in lines])
+        return None
+    fixture = re.fullmatch(r"fixtures/([^/]+)/default", case)
+    source = fixture and os.path.join(run_dir, fixture.group(1))
+    if source and os.path.isfile(source):
+        with open(source, "rb") as f:
+            digest = hashlib.sha256(f.read()).hexdigest()
+        cpp = [x for x in run.get("extra_eva_flags", "").split()
+               if x.startswith("-cpp")]
+        return "\n".join([binary, digest] + cpp)
+    return None
 
 
 # ----- Comparison of two runs -----------------------------------------------
 
-def run_numbering(run_a, run_b):
+def run_numbering(run_a, run_b, recorded_a=None, recorded_b=None):
     """The evidence that two runs number the statements alike, from their
-    run.tsv. A run written by this revision of the runner records the
-    SHA-256 of its AST (ast_sha256, - when it could not be exported). A run
-    recorded before the digest existed has no such field: the numbering of
-    the two runs is then asserted when they have the same case, revision
-    and patch of the analyzer, revision of the case studies and extra
-    options, the extra options being the only ones that differ between the
-    preprocessing of two modes; otherwise it is not established."""
+    run.tsv (see numbering_state). A run of this runner records the SHA-256
+    of its AST listing (ast_sha256, - when it could not be listed), the
+    format of the listing and the digests of its preprocessing; a listing of
+    another format establishes nothing. When both runs have their AST
+    listed again after the campaign (ast_source imported) and no digest of
+    their preprocessing, equal AST digests and equal [recorded_a] and
+    [recorded_b] (recorded_preprocessing) give the numbering recorded
+    command. A run recorded before the AST digest existed has no such
+    field: the numbering of the two runs is then asserted when they have
+    the same case, revision and patch of the analyzer, revision of the case
+    studies and extra options, the extra options being the only ones that
+    differ between the preprocessing of two modes; otherwise it is not
+    established."""
     if "ast_sha256" in run_a and "ast_sha256" in run_b:
-        return numbering_state(run_a["ast_sha256"], run_b["ast_sha256"])
+        if any(r.get("ast_format") != AST_FORMAT for r in (run_a, run_b)):
+            return "not established"
+        digest_a, digest_b = run_a["ast_sha256"], run_b["ast_sha256"]
+        archived = all(r.get("ast_source") == "imported"
+                       and "pp_command_sha256" not in r
+                       for r in (run_a, run_b))
+        if archived and known_digest(digest_a) and digest_a == digest_b:
+            if recorded_a is not None and recorded_a == recorded_b:
+                return "recorded command"
+            return "not established"
+        return numbering_state(digest_a, digest_b,
+                               pp_a=preprocessing_digest(run_a),
+                               pp_b=preprocessing_digest(run_b))
     if "-" in (run_a.get("ast_sha256"), run_b.get("ast_sha256")):
         # A run of this runner whose AST could not be listed.
         return "not established"
@@ -2045,7 +2257,10 @@ def compare_runs(output, case, mode_a, mode_b):
     records_b = existing(os.path.join(run_b, "records.jsonl"))
     if records_a and records_b:
         write_alignment(os.path.join(out, "alignment-"), records_a,
-                        records_b, run_numbering(tsv_a, tsv_b),
+                        records_b, run_numbering(
+                            tsv_a, tsv_b,
+                            recorded_preprocessing(run_a, tsv_a),
+                            recorded_preprocessing(run_b, tsv_b)),
                         (tsv_a.get("outcome"), tsv_b.get("outcome")),
                         configured_entry_point(output, run_a, tsv_a),
                         configured_entry_point(output, run_b, tsv_b))
@@ -2115,8 +2330,10 @@ def recompute_command(args):
                 configured_entry_point(args.run_dir, dirpath, run))
         row = digests.get((run.get("case"), run.get("mode")))
         if row:
+            run["ast_format"] = row.get("ast_format", "-")
             run["ast_sha256"] = row["ast_sha256"]
             run["ast_statements"] = row["ast_statements"]
+            run["ast_source"] = "imported"
         with open_text(os.path.join(dirpath, "run.tsv"), "w") as f:
             for key, value in run.items():
                 f.write("%s\t%s\n" % (key, value))
@@ -2574,6 +2791,9 @@ def main(argv=None):
                    help="prefix of the output files")
     p.add_argument("--ast-a", help="SHA-256 of the AST of run A")
     p.add_argument("--ast-b", help="SHA-256 of the AST of run B")
+    p.add_argument("--pp-a", help="digests of the preprocessing of run A, "
+                   "PP_COMMAND_SHA256:PP_TEXT_SHA256")
+    p.add_argument("--pp-b", help="digests of the preprocessing of run B")
     p.add_argument("--assert-numbering", action="store_true",
                    help="for runs recorded before the AST digest: assert "
                    "that a run without digest numbers the statements as "
@@ -2642,6 +2862,18 @@ def main(argv=None):
     p = sub.add_parser("ast")
     p.add_argument("listing", help="AST listing written by the query module")
     p.set_defaults(func=ast_command)
+    p = sub.add_parser("preprocessing")
+    p.add_argument("log", help="log of a parse step run with "
+                   "-kernel-msg-key pp -keep-temp-files")
+    p.add_argument("tmp_dir", help="the TMPDIR of that parse step")
+    p.add_argument("--source-root", action="append",
+                   help="directory of the sources of the run, written ${SRC}")
+    p.add_argument("--share", action="append",
+                   help="share directory of the binary, written "
+                   "${FRAMAC_SHARE}")
+    p.add_argument("--commands", help="file to write the commands to, with "
+                   "the paths so written")
+    p.set_defaults(func=preprocessing_command)
     p = sub.add_parser("compare")
     p.add_argument("output", help="campaign output directory")
     p.add_argument("case")

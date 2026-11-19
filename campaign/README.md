@@ -156,7 +156,14 @@ Each run:
 
 1. extracts the case-study sources at `oscs_revision` with `git archive` into
    a fresh directory, and removes any saved parse or Eva result;
-2. runs the parse recipe of the target (`make TARGET.parse`);
+2. runs the parse recipe of the target (`make TARGET.parse`). For this step
+   alone, `bin/frama-c-measure` adds `-keep-temp-files` and `-kernel-msg-key
+   pp` and sets `TMPDIR` to a directory of the run: Frama-C prints each
+   preprocessing command and keeps each preprocessed file there.
+   `campaign.py preprocessing` records their digests in `run.tsv` (see
+   Alignment of two runs) and the commands in `preprocessing.txt`, then the
+   directory is removed. The Eva recipe loads the session of this parse and
+   does not preprocess again;
 3. runs the Eva recipe (`make TARGET.eva`) with `FRAMAC=bin/frama-c-measure`.
    The wrapper runs the Eva invocation under `bin/watchdog.py`, in a
    session of its own, with an address-space limit when a memory limit is
@@ -171,8 +178,9 @@ Each run:
 4. builds the per-call records from the log and classifies the outcome;
 5. loads the session saved by the parse recipe, which the Eva recipe loads,
    and lists its AST (see Alignment of two runs); `run.tsv` records the
-   SHA-256 of the listing (`ast_sha256`, `-` when it could not be written)
-   and its number of statements. This step is not timed;
+   format of the listing (`ast_format`), its SHA-256 (`ast_sha256`, `-` when
+   it could not be written) and its number of statements. This step is not
+   timed;
 6. when the run completed, loads the session saved by Eva and answers the
    state queries. This step is not timed.
 
@@ -333,35 +341,64 @@ number the statements alike, which is established from the program, not
 from the binary: two runs of one binary whose preprocessing differs (a
 macro in a condition, say) can give one statement number to different calls.
 
-The query module lists the AST when `CAMPAIGN_AST_OUT` names a file: one
-line `stmt FUNCTION SID LOCATION TEXT` per statement of each function with a
-body, in the order of the globals and of the statements, where `TEXT` is the
-printed statement with its sub-statements named by their numbers, then
-`done COUNT`. Locations are written relative to the directory of the
-analysis, so two snapshots give the same listing. `campaign.py ast LISTING`
-prints its SHA-256 (`ast_sha256`) over the statement lines, or `-` when the
-listing is missing or cut. The numbering of two runs is:
+The query module lists the AST when `CAMPAIGN_AST_OUT` names a file. The
+listing starts with the line `format 2`. Then, for each global in order, a
+line `global KIND NAME RANGE TEXT`, where `TEXT` is the printed declaration
+with its initial value (for a function, its prototype and locals, without
+body or contract), followed for a function by a line `stmt FUNCTION SID
+RANGE TEXT` for each of its statements, where `TEXT` is the printed
+statement with its sub-statements named by their numbers. It ends with `done
+COUNT`, the number of these lines. `RANGE` is `FILE:LINE@L1:C1-L2:C2`: the
+file and line where the element starts, relative to the directory of the
+analysis, then the line and column of its start and of its end in the text
+that Frama-C parsed. Two calls of one text on one line, such as the branches
+of `if (c) f(1); else f(1);`, have different ranges. Paths of the libc of
+Frama-C are written from `FRAMAC_SHARE`, so two snapshots and two builds
+give the same listing. `campaign.py ast LISTING` prints its format
+(`ast_format`) and its SHA-256 (`ast_sha256`) over every line but the last,
+or `-` when the listing is missing, cut or of another format. The format 1
+of the previous revisions listed the statements alone, without their
+columns; its digests establish nothing.
+
+The parse step of each run also records the evidence of its preprocessing
+(`campaign.py preprocessing LOG TMPDIR`): one command per file parsed, read
+from the messages `preprocessing with "..."`, and the preprocessed file that
+each wrote, kept in `TMPDIR`. In both, the temporary directory is written
+`${TMP}`, the directory of the sources of the run `${SRC}`, the share
+directory of the binary `${FRAMAC_SHARE}`, and the random part of the
+temporary names is removed. `run.tsv` records the number of files
+(`pp_files`), the SHA-256 of the commands (`pp_command_sha256`) and of the
+digests of the preprocessed texts (`pp_text_sha256`). The preprocessed text
+keeps the macro definitions (`-dD`), so a macro that no statement uses still
+changes it. When a file is parsed without preprocessing, a command or a
+preprocessed file is missing, the digests are `-` and `pp_problem` says why.
+The numbering of two runs is:
 
 | Numbering | When |
 |---|---|
-| `same` | both digests are given and equal |
-| `different` | both are given and differ |
-| `not established` | a digest is missing |
+| `same` | the AST digests are equal, and so are the preprocessing digests |
+| `preprocessing differs` | the AST digests are equal, the preprocessing digests differ |
+| `different` | the AST digests differ |
+| `recorded command` | runs of an archive whose AST was listed again afterwards, see Results: equal AST digests and equal recorded preprocessing |
+| `not established` | anything else: a digest missing, a listing of another format |
 | `asserted` | runs recorded before the digest existed, see Results |
 
-`align` takes the digests (`--ast-a`, `--ast-b`), the outcomes of the runs
-(`--outcome-a`, `--outcome-b`) and the entry point configured for the target
-(`--entry-point`); `campaign.py compare OUTPUT CASE A B` reads them from the
-`run.tsv` of two runs and writes all the comparisons of the pair, as the
-runner does. A run recorded before `run.tsv` held the entry point takes the
-one of its case in `provenance/manifest.tsv`, else the last `-main` of its
-Eva command, else `main`. Each log must be one tree of that entry point:
-one root, its call, and every callstack ending in it. A second root, a root
-of another function or a stack that ends elsewhere is a structural problem
-of that log, and the alignment is not complete without the entry point.
-Unless the numbering is `same` or `asserted`, every group of calls below
-the entry point is undecided, with the reason
-`AST digests differ` or `numbering not established`, and none is aligned.
+`align` takes the digests (`--ast-a`, `--ast-b`, and `--pp-a`, `--pp-b` for
+the preprocessing, as `PP_COMMAND_SHA256:PP_TEXT_SHA256`), the outcomes of
+the runs (`--outcome-a`, `--outcome-b`) and the entry point configured for
+the target (`--entry-point`); `campaign.py compare OUTPUT CASE A B` reads
+them from the `run.tsv` of two runs and writes all the comparisons of the
+pair, as the runner does. A run recorded before `run.tsv` held the entry
+point takes the one of its case in `provenance/manifest.tsv`, else the last
+`-main` of its Eva command, else `main`. Each log must be one tree of that
+entry point: one root, its call, and every callstack ending in it. A second
+root, a root of another function or a stack that ends elsewhere is a
+structural problem of that log, and the alignment is not complete without
+the entry point.
+Unless the numbering is `same`, `recorded command` or `asserted`, every
+group of calls below the entry point is undecided, with the reason `AST
+digests differ`, `preprocessing differs` or `numbering not established`, and
+none is aligned. Only `same` lets an alignment be complete.
 Two calls align when their parents align and they have the same function and
 call site, and either the sequence of (function, site) of the siblings is the
 same in both runs (aligned by position), or the pair (function, site) occurs
@@ -391,14 +428,15 @@ whether each log has the record of the entry point as its only root
 (`entry_point_a`, `entry_point_b`) and the outcome of each run. `accounted`
 is true when every record is in exactly one of these classes. `complete` is
 true when both runs completed, both logs have that record, every record of
-both runs is aligned, no call is inferred or interrupted, no problem was found,
-both logs give the statement numbers and the numbering is `same`; `verdict`
-is then `complete`. When the only reason against it is an `asserted`
-numbering, `verdict` is `numbering asserted from equal revision, patch,
-options and preprocessing, not checked by digest`; otherwise it lists the
-reasons. The individual records are in
-`alignment-differences`, `-under-hit`, `-unmatched` and `-undecided.tsv`,
-and the problems in `alignment-problems.tsv`.
+both runs is aligned, no call is inferred or interrupted, no problem was
+found, both logs give the statement numbers and the numbering is `same`;
+`verdict` is then `complete`. When the only reason against it is an
+`asserted` numbering, `verdict` is `numbering asserted from equal revision,
+patch, options and preprocessing, not checked by digest`; when it is a
+`recorded command` numbering, `AST digests equal, preprocessing compared by
+the recorded command only`; otherwise it lists the reasons. The individual
+records are in `alignment-differences`, `-under-hit`, `-unmatched` and
+`-undecided.tsv`, and the problems in `alignment-problems.tsv`.
 
 ### State queries
 
@@ -528,33 +566,45 @@ checks go to `fixtures.txt` and `outcome-demo.txt`, and writes the tables
 again, which adds these checks to `tables/tables.md`. It exits with 1 when
 a check fails.
 
-The fixtures (`fixtures/run-fixtures.sh`) run Frama-C directly on four
-programs, outside the manifest. Each run lists its AST from a parse alone
-and from the session saved by Eva; the two listings must have the same
-digest, and the comparisons take the first as the evidence of numbering:
+The fixtures (`fixtures/run-fixtures.sh`) run Frama-C directly on six
+programs, outside the manifest. Each run lists its AST from a parse alone,
+run as the runner runs the parse step, and from the session saved by Eva;
+the two listings must have the same digest, and the comparisons take the
+first, with the digests of the preprocessing of that parse, as the evidence
+of numbering:
 
-- `nested-hit.c`: the second call to `outer` is analysed with caching off and
-  a hit with memexec; the two calls to `leaf` inside it must be reported as
-  nested under the hit, and two runs with memexec must have equal digests
-  and align completely;
+- `nested-hit.c`: the second call to `outer` is analysed with caching off
+  and a hit with memexec; the two calls to `leaf` inside it must be reported
+  as nested under the hit, and two runs with memexec must have the numbering
+  `same` and align completely. Two runs with the unused macro `UNUSED` set
+  to 0 and to 1 must have equal AST digests, the numbering `preprocessing
+  differs`, and their calls must be undecided;
 - `frame.c`: the program of the example run of issue #3. Before `r = 0;` in
   `get`, `r` is `{3}` in both runs under the callstack of the first call,
   `{5}` with caching off and no answer with memexec under the callstack of
   the second call, and over all callstacks `{3; 5}` with caching off against
   `{3}` with memexec, which must be reported as narrower. At the exit of
   `get`, `r` is `{0}`. A run with `-eva-no-results` and one with
-  `-eva-no-results-domain cvalue` must answer no query, write each one,
-  the exit queries included, as unavailable for that reason (`no-results`,
+  `-eva-no-results-domain cvalue` must answer no query, write each one, the
+  exit queries included, as unavailable for that reason (`no-results`,
   `disabled-domain`), and end with a done line that counts these lines;
 - `same-line.c`: two calls to `f` on one line, one on each branch of an `if`
-  whose condition is a global set by `-DSIDE`; the runs with `SIDE` 0 and 1
-  analyse the same statements, have equal digests, and take opposite
-  branches. Their calls to `f` must be unmatched, not aligned, and the
-  alignment must not be complete;
-- `sites.c`: the same calls, with `SIDE` as the condition itself; the two
-  runs give one call site and statement number to different calls. Their
-  digests must differ, the calls must be undecided, not aligned, and the
-  alignment must not be complete.
+  whose condition is a global. Analysed as it is, the analysis reaches
+  `f(2)` only; with `-lib-entry`, `f(1)` too. The two runs parse the same
+  program and must have the numbering `same`; the calls `f(2)` must align,
+  and `f(1)` must be unmatched, not aligned with `f(2)`;
+- `sites.c`: the same calls, with the macro `SIDE` as the condition itself;
+  the runs with `SIDE` 0 and 1 give one call site and statement number to
+  different calls. Their digests must differ, the calls must be undecided,
+  not aligned, and the alignment must not be complete;
+- `branches.c`: `if (SIDE) f(1); else f(1);` on one line, with `SIDE` 0 and
+  1. The statement lines of the two listings must have the same numbers,
+  lines and texts, and differ in their columns only; the digests must differ
+  and the calls must not be aligned;
+- `header.c`: `SIDE` sets the initial value of a global of the included
+  `header.h`. The statement lines must be the same and the global lines
+  differ in that global; the digests must differ and the calls must not be
+  aligned.
 
 `stage1-pilot.sh` at the root of the case studies runs the two jsmn targets
 in the modes `nocache` and `cache` through the same runner, and exits with 1
@@ -596,9 +646,24 @@ campaign.py recompute OUTPUT --ast-digests DIGESTS --recorded-set-a ...
 ```
 
 `export-ast.sh` checks that the binary has the SHA-256 recorded for the
-role. When it cannot be run (the binary is gone), a pair of runs of which
-one or both have no digest, and whose case, analyzer revision and patch,
-case-study revision and extra options are equal, has the numbering
+role, and prints the format of each listing. The digests so imported are
+marked `ast_source imported` in `run.tsv`. The preprocessing of an archived
+run is not listed again: the parse that `export-ast.sh` runs is not the one
+of the run. Two imported runs without preprocessing digests are compared by
+the preprocessing that their commands record instead: the revision and patch
+of the binary and the `Command:` lines of `parse.log`, with the directory of
+the source snapshot written `${SRC}`; for a fixture, which has no parse log,
+the SHA-256 of the copy of the fixture kept in the run and the options
+`-cpp*` of its extra options. Equal AST digests and equal recorded
+preprocessing give the numbering `recorded command`: the calls are paired,
+the preprocessed text was not compared, and the alignment is not complete.
+Equal AST digests with different or missing recorded preprocessing give `not
+established`. An imported run is never compared by its commands with a run
+that has preprocessing digests.
+
+When `export-ast.sh` cannot be run (the binary is gone), a pair of runs of
+which one or both have no digest, and whose case, analyzer revision and
+patch, case-study revision and extra options are equal, has the numbering
 `asserted`: the same program parsed alike is expected to be numbered alike,
 but no digest checks it. Such a pair is otherwise `not established`.
 

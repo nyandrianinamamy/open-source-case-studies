@@ -139,6 +139,7 @@ prepare_binary() {
     while IFS= read -r setting; do export "$setting"; done < "$tools/sites.env"
     "$bin/frama-c" -version > "$tools/version"
     "$bin/frama-c" -plugins > "$tools/plugins" 2>&1
+    "$bin/frama-c" -print-share-path > "$tools/share-path"
   )
   if ! grep -q '^Eva ' "$tools/plugins" ||
      grep -q 'failed to load plugin' "$tools/plugins"; then
@@ -236,13 +237,23 @@ run_one() {
                    "FRAMAC=$campaign/bin/frama-c-measure")
   local started parse_exit=0 make_exit=0
   started=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+  # The parse step prints its preprocessing commands and keeps the
+  # preprocessed files in a directory of the run (see bin/frama-c-measure),
+  # whose digests are the evidence of its preprocessing. The Eva step loads
+  # the session of this parse and does not preprocess again.
+  local pp_dir="$run/pp"
+  mkdir -p "$pp_dir"
   (
     while IFS= read -r setting; do export "$setting"; done < "$tools/sites.env"
-    export CAMPAIGN_FRAMAC="$bin/frama-c"
+    export CAMPAIGN_FRAMAC="$bin/frama-c" CAMPAIGN_PP_DIR="$pp_dir"
     printf '%q ' "${make_args[@]}" "${target%.eva}.parse" > "$run/parse-command"
     timeout "$timeout_s" "${make_args[@]}" "${target%.eva}.parse" \
       > "$run/parse.log" 2>&1
   ) || parse_exit=$?
+  "${tool[@]}" preprocessing "$run/parse.log" "$pp_dir" --source-root "$src" \
+    --share "$(cat "$tools/share-path")" --commands "$run/preprocessing.txt" \
+    > "$run/preprocessing.tsv"
+  rm -rf -- "$pp_dir"
   if [[ $parse_exit == 0 ]]; then
     (
       while IFS= read -r setting; do export "$setting"; done < "$tools/sites.env"
@@ -311,7 +322,9 @@ run_one() {
       "$timeout_s" "${memory_limit:--}" "${extra_flags:--}" "$queries_exit"
     printf 'ast_exit\t%s\n' "$ast_exit"
     "${tool[@]}" ast "$run/ast.tsv"
+    cat "$run/preprocessing.tsv"
   } > "$run/run.tsv"
+  rm -f -- "$run/preprocessing.tsv"
   for file in eva.log records.jsonl queries.tsv ast.tsv make-eva.log parse.log; do
     if [[ -f $run/$file ]]; then gzip -n "$run/$file"; fi
   done

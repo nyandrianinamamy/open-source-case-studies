@@ -12,15 +12,21 @@
 # Each fixture is analysed with caching disabled (nocache), with memexec
 # (cache) and with memexec again (cache.2). Each run lists its AST from a
 # parse alone (ast.tsv), as the runner lists it from the parse session, and
-# from the session saved by Eva (ast-eva.tsv); its run.tsv records the
-# digest of the first, which the comparisons take as evidence that two runs
+# from the session saved by Eva (ast-eva.tsv). The parse alone runs as the
+# runner runs the parse step, with -keep-temp-files and -kernel-msg-key pp
+# and a temporary directory of its own, and its run.tsv records the digest
+# of the first listing and the digests of the preprocessing (campaign.py
+# preprocessing), which the comparisons take as evidence that two runs
 # number the statements alike (campaign.py compare). Checks:
-# - every run: the two listings of its AST have the same digest.
+# - every run: the two listings of its AST have the same digest, and the
+#   run has the digests of its preprocessing.
 # - nested-hit.c: the per-call records of cache and cache.2 align
 #   completely, with equal digests; between nocache and cache, the second
 #   call to outer is reported as analysed in one run and a hit in the other,
 #   and the two calls to leaf nested in it as nested under a hit, not
-#   aligned.
+#   aligned. With the unused macro UNUSED set to 0 (unused0) and to 1
+#   (unused1), the two runs have equal AST digests and their preprocessing
+#   differs: the calls below the entry point are not aligned.
 # - frame.c: the state queries show the difference of the example run of
 #   issue #3: before "r = 0;" in get, the raw answers are {3} in both runs
 #   for the first call, {5} with caching disabled and none with memexec for
@@ -31,14 +37,20 @@
 #   the domain cvalue: no query is answered, each one, the exit queries
 #   included, is written unavailable for that reason, and the done line
 #   counts these lines.
-# - same-line.c, analysed twice with memexec, with SIDE 0 (side0) and SIDE 1
-#   (side1): the macro sets an initial value, so the ASTs have the same
-#   digest; the two runs reach different calls of one line, which the
-#   alignment reports as unmatched, not aligned.
-# - sites.c, analysed as same-line.c: the macro is the condition of the two
-#   calls, so the two runs give one statement number to different calls;
-#   the digests differ, and the alignment leaves the calls undecided and is
-#   not complete.
+# - same-line.c, analysed with memexec as it is (entry) and with -lib-entry
+#   (libentry): the two runs parse the same program and the numbering is
+#   the same; the second run reaches a second call of the line, which the
+#   alignment reports as unmatched, not aligned with the first.
+# - sites.c, analysed twice with memexec, with SIDE 0 (side0) and SIDE 1
+#   (side1): the macro is the condition of the two calls, so the two runs
+#   give one statement number to different calls; the digests differ, and
+#   the alignment leaves the calls undecided and is not complete.
+# - branches.c, analysed as sites.c: if (SIDE) f(1); else f(1); on one line.
+#   The statement lines of the two listings differ in the columns only, the
+#   digests differ, and the calls are not aligned.
+# - header.c, analysed as sites.c: the macro sets the initial value of a
+#   global of the included header.h. The two listings differ in that global
+#   only, the digests differ, and the calls are not aligned.
 # Prints one line per check, PASS or FAIL, and exits with 1 if one fails.
 set -euo pipefail
 fixtures=$(dirname "$(realpath "$0")")
@@ -59,11 +71,17 @@ check() {
 
 families=$(awk -F'\t' 'NR==1{for(i=1;i<=NF;i++)c[$i]=i;next} $1=="test"{print $c["counter_families"]}' \
   "$output/provenance/binaries.tsv")
-for fixture in frame nested-hit same-line sites; do
+share=$(
+  while IFS= read -r setting; do export "$setting"; done < "$tools/sites.env"
+  "$bin" -print-share-path
+)
+for fixture in frame nested-hit same-line sites branches header; do
   modes=(nocache cache cache.2)
   case $fixture in
     frame) modes+=(noresults nodomain) ;;
-    same-line|sites) modes=(side0 side1) ;;
+    nested-hit) modes+=(unused0 unused1) ;;
+    same-line) modes=(entry libentry) ;;
+    sites|branches|header) modes=(side0 side1) ;;
   esac
   for mode in "${modes[@]}"; do
     case "$mode" in
@@ -72,21 +90,28 @@ for fixture in frame nested-hit same-line sites; do
     esac
     cpp=() extra=()
     case "$mode" in
-      side0) cpp=(-cpp-extra-args=-DSIDE=0) ;;
-      side1) cpp=(-cpp-extra-args=-DSIDE=1) ;;
+      side0|side1) cpp=(-cpp-extra-args=-DSIDE=${mode#side}) ;;
+      unused0|unused1) cpp=(-cpp-extra-args=-DUNUSED=${mode#unused}) ;;
       noresults) extra=(-eva-no-results) ;;
       nodomain) extra=(-eva-no-results-domain cvalue) ;;
+      libentry) extra=(-lib-entry) ;;
     esac
     case_id="fixtures/$fixture.c/default"
     run="$output/runs/$case_id/$mode"
-    mkdir -p "$run"
+    mkdir -p "$run/pp"
     cp "$fixtures/$fixture.c" "$run/"
+    if [[ -f $fixtures/$fixture.h ]]; then cp "$fixtures/$fixture.h" "$run/"; fi
     (
       cd "$run"
       while IFS= read -r setting; do export "$setting"; done < "$tools/sites.env"
-      CAMPAIGN_AST_OUT=ast.tsv "$bin" "$fixture.c" "${cpp[@]}" \
+      TMPDIR="$run/pp" CAMPAIGN_AST_OUT=ast.tsv "$bin" -keep-temp-files \
+        -kernel-msg-key pp "$fixture.c" "${cpp[@]}" \
         -load-module "$tools/campaign_queries.cmxs" > ast.log 2>&1
     ) || true
+    "${tool[@]}" preprocessing "$run/ast.log" "$run/pp" --source-root "$run" \
+      --share "$share" --commands "$run/preprocessing.txt" \
+      > "$run/preprocessing.tsv"
+    rm -rf -- "$run/pp"
     args=("$bin" -eva "$fixture.c" "$flag" "${cpp[@]}" "${extra[@]}"
           -eva-msg-key cache,callstacks
           -eva-statistics-file eva-stats.csv -save framac.sav)
@@ -115,15 +140,21 @@ for fixture in frame nested-hit same-line sites; do
         "$case_id" "$mode" "$flag" "${flags:--}" "$revision" "$families" \
         "$outcome" "$exit_code"
       "${tool[@]}" ast "$run/ast.tsv"
+      cat "$run/preprocessing.tsv"
     } > "$run/run.tsv"
+    rm -f -- "$run/preprocessing.tsv"
     rm -f "$run/framac.sav"
     for file in eva.log records.jsonl queries.tsv ast.tsv ast-eva.tsv; do
       if [[ -f $run/$file ]]; then gzip -nf "$run/$file"; fi
     done
   done
   pairs=(nocache:cache cache:cache.2)
-  if [[ $fixture == frame ]]; then pairs+=(nocache:noresults nocache:nodomain); fi
-  if [[ $fixture == same-line || $fixture == sites ]]; then pairs=(side0:side1); fi
+  case $fixture in
+    frame) pairs+=(nocache:noresults nocache:nodomain) ;;
+    nested-hit) pairs+=(unused0:unused1) ;;
+    same-line) pairs=(entry:libentry) ;;
+    sites|branches|header) pairs=(side0:side1) ;;
+  esac
   for pair in "${pairs[@]}"; do
     "${tool[@]}" compare "$output" "fixtures/$fixture.c/default" \
       "${pair%%:*}" "${pair##*:}"
@@ -146,8 +177,20 @@ for run in "$output"/runs/fixtures/*/default/*/; do
 done
 check "every run: the AST listed from the parse is the AST of the Eva session" \
   test "$listed/$differing" = "$(ls -d "$output"/runs/fixtures/*/default/*/ | wc -l)/0"
+evidence=0
+for run in "$output"/runs/fixtures/*/default/*/; do
+  if [[ $(value "$run/run.tsv" pp_problem) == - &&
+        $(value "$run/run.tsv" pp_text_sha256) =~ ^[0-9a-f]{64}$ &&
+        $(value "$run/run.tsv" pp_command_sha256) =~ ^[0-9a-f]{64}$ ]]; then
+    evidence=$((evidence + 1))
+  fi
+done
+check "every run: the digests of its preprocessing are recorded" \
+  test "$evidence" = "$(ls -d "$output"/runs/fixtures/*/default/*/ | wc -l)"
 
 nested="$cmp_dir/nested-hit.c/default"
+check "nested-hit: the numbering of nocache and cache is the same" \
+  test "$(value "$nested/nocache-vs-cache/alignment-summary.tsv" numbering)" = same
 check "nested-hit: two runs of the same binary align completely" \
   test "$(value "$nested/cache-vs-cache.2/alignment-summary.tsv" complete)" = True
 check "nested-hit: the two runs have equal AST digests" \
@@ -236,14 +279,30 @@ for mode in noresults nodomain; do
 done
 check "frame: the exit queries are answered without caching" \
   test -n "$(exits_answered)"
+check "frame: the numbering of nocache and cache is the same" \
+  test "$(value "$cmp_dir/frame.c/default/nocache-vs-cache/alignment-summary.tsv" numbering)" = same
 
-same_line="$cmp_dir/same-line.c/default/side0-vs-side1/alignment-summary.tsv"
-check "same-line: the two calls of line 10 are unmatched, not aligned" \
-  test "$(value "$same_line" aligned)/$(value "$same_line" unmatched_a)/$(value "$same_line" unmatched_b)" = 1/1/1
+unused="$cmp_dir/nested-hit.c/default/unused0-vs-unused1/alignment-summary.tsv"
+unused_runs="$output/runs/fixtures/nested-hit.c/default"
+check "unused macro: the two runs have equal AST digests" \
+  test "$(digest "$unused_runs/unused0/ast.tsv.gz")" = "$(digest "$unused_runs/unused1/ast.tsv.gz")"
+check "unused macro: the preprocessing of the two runs differs" \
+  test "$(value "$unused" numbering)" = "preprocessing differs"
+check "unused macro: only the entry point is aligned; the calls are undecided" \
+  test "$(value "$unused" aligned)/$(value "$unused" complete)/$(tail -n +2 "${unused%summary.tsv}undecided.tsv" | cut -f8 | sort -u)" \
+       = "1/False/preprocessing differs"
+
+same_line="$cmp_dir/same-line.c/default/entry-vs-libentry/alignment-summary.tsv"
+check "same-line: the two runs have the same numbering" \
+  test "$(value "$same_line" numbering)" = same
+check "same-line: the calls f(2) align, the call f(1) of the same line is unmatched" \
+  test "$(value "$same_line" aligned)/$(value "$same_line" unmatched_a)/$(value "$same_line" unmatched_b)" = 2/0/1
+check "same-line: the unmatched call is the call f(1), not the call f(2)" \
+  test "$(tail -n +2 "${same_line%summary.tsv}unmatched.tsv" | cut -f2 | sed 's|.*/s\([0-9]*\)#.*|\1|')" \
+       = "$(gzip -dc "$output/runs/fixtures/same-line.c/default/entry/ast.tsv.gz" |
+            awk -F'\t' '$1=="stmt" && $5=="f(1);" {print $3}')"
 check "same-line: the alignment is not complete" \
   test "$(value "$same_line" complete)" = False
-check "same-line: the two runs have equal AST digests" \
-  test "$(value "$same_line" numbering)" = same
 
 sites="$cmp_dir/sites.c/default/side0-vs-side1/alignment-summary.tsv"
 check "sites: the two runs have different AST digests" \
@@ -252,4 +311,28 @@ check "sites: only the entry point is aligned; the calls are undecided" \
   test "$(value "$sites" aligned)/$(value "$sites" undecided_groups)" = 1/1
 check "sites: the alignment is not complete" \
   test "$(value "$sites" complete)" = False
+
+# The statement lines of a listing without their ranges, and its global
+# lines.
+statements() {
+  gzip -dc "$1" | awk -F'\t' -v OFS='\t' '$1=="stmt" {$4=""; print}'
+}
+globals() { gzip -dc "$1" | awk -F'\t' '$1=="global"'; }
+branch_runs="$output/runs/fixtures/branches.c/default"
+branches="$cmp_dir/branches.c/default/side0-vs-side1/alignment-summary.tsv"
+check "branches: the statements have the same numbers, lines and texts" \
+  test "$(statements "$branch_runs/side0/ast.tsv.gz")" = "$(statements "$branch_runs/side1/ast.tsv.gz")"
+check "branches: the two runs have different AST digests" \
+  test "$(value "$branches" numbering)" = different
+check "branches: only the entry point is aligned; the calls are undecided" \
+  test "$(value "$branches" aligned)/$(value "$branches" undecided_groups)/$(value "$branches" complete)" = 1/1/False
+header_runs="$output/runs/fixtures/header.c/default"
+header="$cmp_dir/header.c/default/side0-vs-side1/alignment-summary.tsv"
+check "header: the statement lines are the same, the global side differs" \
+  test "$(statements "$header_runs/side0/ast.tsv.gz" | md5sum)/$(diff <(globals "$header_runs/side0/ast.tsv.gz") <(globals "$header_runs/side1/ast.tsv.gz") | grep -c '^[<>]')" \
+       = "$(statements "$header_runs/side1/ast.tsv.gz" | md5sum)/2"
+check "header: the two runs have different AST digests" \
+  test "$(value "$header" numbering)" = different
+check "header: only the entry point is aligned; the calls are undecided" \
+  test "$(value "$header" aligned)/$(value "$header" complete)" = 1/False
 exit "$status"
