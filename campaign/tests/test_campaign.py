@@ -1443,6 +1443,12 @@ class CompareRuns(unittest.TestCase):
             {"ast_sha256": None, "extra_eva_flags": "-cpp-extra-args=-DX"})
         self.assertEqual(s.get("numbering"), "not established")
 
+    def test_failed_listing_against_a_run_before_the_digest(self):
+        # A run of this runner whose AST could not be listed gives no
+        # evidence, even against an older run with equal provenance.
+        _, _, s = self.compare({"ast_sha256": "-"}, {"ast_sha256": None})
+        self.assertEqual(s.get("numbering"), "not established")
+
     def test_outcome_enters_the_verdict(self):
         _, _, s = self.compare({"ast_sha256": DIGEST_0},
                                {"ast_sha256": DIGEST_0, "outcome": "timeout"})

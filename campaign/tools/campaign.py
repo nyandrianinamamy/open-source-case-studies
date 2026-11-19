@@ -1800,6 +1800,9 @@ def run_numbering(run_a, run_b):
     preprocessing of two modes; otherwise it is not established."""
     if "ast_sha256" in run_a and "ast_sha256" in run_b:
         return numbering_state(run_a["ast_sha256"], run_b["ast_sha256"])
+    if "-" in (run_a.get("ast_sha256"), run_b.get("ast_sha256")):
+        # A run of this runner whose AST could not be listed.
+        return "not established"
     same = all(run_a.get(k) and run_a.get(k) == run_b.get(k)
                for k in ("case", "revision", "patch_sha256", "oscs_revision",
                          "extra_eva_flags"))
