@@ -2995,5 +2995,36 @@ class FourthReview(unittest.TestCase):
             0, 0, measure, "", True, dedicated_scope=True), "timeout")
 
 
+    def test_archive_symbolic_link_targets(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            home, physical = HomeSpellings.homes(self, tmp)
+            output = os.path.join(tmp, "output")
+            archive = os.path.join(tmp, "archive.tar.gz")
+            os.mkdir(output)
+            os.mkdir(os.path.join(physical, "directory"))
+            write(os.path.join(output, "file"), "ordinary data")
+            path = os.path.join(output, "link")
+            for target in (os.path.join(physical, "dangling"),
+                           os.path.join(home, "directory"),
+                           os.path.join(tmp, "output-other", "outside"),
+                           os.path.join(output, "..", "outside"),
+                           os.path.join(physical, "directory")):
+                with self.subTest(target=target):
+                    os.symlink(target, path)
+                    run = subprocess.run(["bash", ARCHIVE, output, archive],
+                                         env=dict(os.environ, HOME=home + "/"),
+                                         capture_output=True, text=True)
+                    os.unlink(path)
+                    self.assertNotEqual(run.returncode, 0)
+                    self.assertIn("symbolic link", run.stderr)
+                    self.assertFalse(os.path.exists(archive))
+                    self.assertFalse(os.path.exists(archive + ".sha256"))
+            os.symlink("file", path)
+            run = subprocess.run(["bash", ARCHIVE, output, archive],
+                                 env=dict(os.environ, HOME=home),
+                                 capture_output=True, text=True)
+            self.assertEqual(run.returncode, 0, run.stderr)
+
+
 if __name__ == "__main__":
     unittest.main()

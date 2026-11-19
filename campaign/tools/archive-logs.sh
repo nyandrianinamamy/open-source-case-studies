@@ -23,6 +23,8 @@ name=$(basename "$archive" .tar.gz)
 home=(python3 -I "$(dirname "$(realpath "$0")")/campaign.py" home)
 if [[ -z ${HOME%/} ]]; then printf 'HOME is not set.\n' >&2; exit 2; fi
 
+"${home[@]}" check-links "$output"
+
 # The hashed files, as paths relative to OUTPUT, and their recorded digests.
 hashed=()
 check_hashed() {
@@ -62,8 +64,8 @@ find "$stage/$name" -path '*/tools/*' \
 keep=()
 for file in "${hashed[@]}"; do keep+=(--keep "$file"); done
 "${home[@]}" redact-tree "$stage/$name" "${keep[@]}"
-if ! "${home[@]}" check-tree "$stage"; then
-  printf 'A path under the home directory is left in the archive.\n' >&2
+if ! "${home[@]}" check-tree "$stage/$name" --link-root "$output"; then
+  printf 'The archive failed the final path check.\n' >&2
   exit 1
 fi
 tar --sort=name --owner=0 --group=0 --numeric-owner --mtime=@0 \

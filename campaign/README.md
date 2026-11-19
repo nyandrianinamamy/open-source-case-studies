@@ -644,7 +644,10 @@ its spellings, keeping the separator that follows (`HOME/file` becomes
 the same archive. The files whose SHA-256 the provenance records (the
 manifest and the patches) are archived as they were hashed: the script
 checks them against their digests and stops when one of them holds the home
-directory. The protocol attaches this archive to the tag of the campaign on
+directory. The check also reads the targets of all symbolic links,
+including directory links and dangling links. It rejects a target that
+contains either spelling of the home directory or an absolute target
+outside the output directory before writing the archive. The protocol attaches this archive to the tag of the campaign on
 GitHub, which is made when the branch is published. To check a copy of the
 archive, run `sha256sum -c raw-logs.sha256` in its directory.
 

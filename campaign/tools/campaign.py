@@ -1740,10 +1740,42 @@ def read_maybe_gz(path):
     return data, False
 
 
+def check_symlinks(root, link_root):
+    """Check all link targets without descending through directory links."""
+    valid = True
+
+    def inside(path):
+        return os.path.commonpath((path, link_root)) == link_root
+
+    def fail(error):
+        raise error
+
+    for directory, dirs, files in os.walk(root, onerror=fail):
+        for name in dirs + files:
+            path = os.path.join(directory, name)
+            if not os.path.islink(path):
+                continue
+            target = os.readlink(path)
+            if holds_home(os.fsencode(target)):
+                problem = "holds the home directory"
+            elif os.path.isabs(target) and (
+                    not inside(os.path.normpath(target))
+                    or not inside(os.path.realpath(target))):
+                problem = "is an absolute path outside the output directory"
+            else:
+                continue
+            print("Target of symbolic link %s %s." % (path, problem),
+                  file=sys.stderr)
+            valid = False
+    return valid
+
+
 def home_command(args):
     """check FILE...: exits with 1 when a file (decompressed when its name
     ends in .gz) holds the home directory, and names it. check-tree DIR:
-    the same for every file under DIR. redact: copies the standard input to
+    the same for every file and symbolic link under DIR. check-links DIR:
+    checks just the symbolic links, including their absolute targets.
+    redact: copies the standard input to
     the standard output with the home directory written ~. redact-tree DIR
     [--keep PATH]...: rewrites in place every text file under DIR, but the
     kept ones (relative to DIR), with the home directory written ~; a
@@ -1751,16 +1783,21 @@ def home_command(args):
     if args.action == "redact":
         sys.stdout.buffer.write(redact_home(sys.stdin.buffer.read()))
         return 0
-    if args.action in ("check", "redact-tree", "check-tree") and \
-       not home_spellings():
+    if not home_spellings():
         print("HOME is not set.", file=sys.stderr)
         return 2
     paths = list(args.paths)
-    if args.action in ("check-tree", "redact-tree"):
+    if args.action in ("check-tree", "redact-tree", "check-links"):
         if len(paths) != 1:
             print("Supply one directory.", file=sys.stderr)
             return 2
         root = paths[0]
+        link_root = args.link_root or os.path.realpath(root)
+        if args.action in ("check-tree", "check-links"):
+            if not check_symlinks(root, link_root):
+                return 1
+            if args.action == "check-links":
+                return 0
         kept = {os.path.normpath(os.path.join(root, k)) for k in args.keep}
         paths = []
         for dirpath, _, filenames in os.walk(root):
@@ -2981,10 +3018,12 @@ def main(argv=None):
     p.set_defaults(func=provenance_command)
     p = sub.add_parser("home")
     p.add_argument("action",
-                   choices=("check", "check-tree", "redact", "redact-tree"))
+                   choices=("check", "check-tree", "check-links", "redact",
+                            "redact-tree"))
     p.add_argument("paths", nargs="*")
     p.add_argument("--keep", action="append", default=[],
                    help="a file of the tree, relative to it, left as it is")
+    p.add_argument("--link-root", help="original root for checking a staged copy")
     p.set_defaults(func=home_command)
     p = sub.add_parser("measure")
     p.add_argument("measure")
