@@ -20,7 +20,7 @@
 # target TARGET.parse with the mode.mk of the run, and lists the AST of the
 # parse session from the directory of the analysis. For a run of a fixture
 # (case fixtures/FILE.c/default), it parses the copy of FILE.c kept in the
-# run with the preprocessing options (-cpp-*) of extra_eva_flags. No
+# run with the preprocessing options of extra_eva_flags. No
 # analysis is run. Prints the columns case, mode, ast_format, ast_sha256,
 # ast_statements and parse_exit, after comment lines that name the binary.
 # The preprocessing of the runs is not listed again: the parse step that
@@ -77,11 +77,9 @@ while IFS= read -r -d '' tsv; do
   parse_exit=0
   if [[ $id == fixtures/*/default ]]; then
     file=$(basename "$(dirname "$id")")
-    read -r -a flags <<< "$(run_field "$run" extra_eva_flags)"
-    cpp=()
-    for flag in "${flags[@]}"; do
-      if [[ $flag == -cpp-* ]]; then cpp+=("$flag"); fi
-    done
+    "${tool[@]}" fixture-preprocessing -- "$(run_field "$run" extra_eva_flags)" \
+      > "$work/fixture-argv"
+    mapfile -d '' -t cpp < "$work/fixture-argv"
     dir="$work/runs/$id/$mode/src"
     mkdir -p "$dir"
     cp "$run/$file" "$dir/"

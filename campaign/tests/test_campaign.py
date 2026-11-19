@@ -1318,11 +1318,12 @@ done
 
 # ----- Second review of issue #54 ------------------------------------------
 
-def run_main(args):
+def run_main(args, stderr=None):
     """Runs campaign.py in this process. Returns (exit code, standard
     output, error), the error being the text of an exception that escaped,
     or None: a check that would raise fails instead of erroring."""
-    out, err = io.StringIO(), io.StringIO()
+    out = io.StringIO()
+    err = io.StringIO() if stderr is None else stderr
     try:
         with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
             code = campaign.main(args)
@@ -1836,8 +1837,8 @@ class DigestImport(unittest.TestCase):
                                       "unknown column(s) 'X'")):
                 write(path, header + "\nc\tx\t%s\t2\t0\n" % DIGEST_0)
                 stderr = io.StringIO()
-                with contextlib.redirect_stderr(stderr):
-                    code, _, error = run_main(["recompute", root, "--ast-digests", path])
+                code, _, error = run_main(["recompute", root, "--ast-digests",
+                                           path], stderr=stderr)
                 self.assertEqual((code, error), (1, None))
                 self.assertIn(expected, stderr.getvalue())
                 self.assertEqual(read_summary(run), before)
@@ -3107,8 +3108,7 @@ class FourthReview(unittest.TestCase):
                     with self.subTest(args=args[0], reason=reason):
                         write(path, "\t".join(header) + "\n")
                         stderr = io.StringIO()
-                        with contextlib.redirect_stderr(stderr):
-                            code, _, error = run_main(args)
+                        code, _, error = run_main(args, stderr=stderr)
                         self.assertEqual((code, error), (1, None))
                         self.assertIn(reason + " column", stderr.getvalue())
 
@@ -3137,6 +3137,11 @@ class FourthReview(unittest.TestCase):
             self.assertIsNone(key("-cpp-extra-args -cpp-command"))
             self.assertIsNotNone(key("-cpp-extra-args-per-file 'f.c:-DDEBUG'"))
             self.assertIsNotNone(key("-cpp-frama-c-compliant"))
+            argv = subprocess.run(
+                [sys.executable, "-I", campaign.__file__, "fixture-preprocessing",
+                 "--", '-cpp-extra-args "-DA=1 -DB=1" -eva-no-results'],
+                check=True, capture_output=True).stdout
+            self.assertEqual(argv, b"-cpp-extra-args\0-DA=1 -DB=1\0")
 
     def test_ambiguous_archived_parse_command(self):
         imported = {"ast_format": "2", "ast_sha256": DIGEST_0,

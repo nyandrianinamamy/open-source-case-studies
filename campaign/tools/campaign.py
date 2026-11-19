@@ -2324,6 +2324,17 @@ def fixture_preprocessing(text):
     return tuple(kept)
 
 
+def fixture_preprocessing_command(args):
+    options = fixture_preprocessing(args.flags)
+    if options is None:
+        print("Cannot decode the archived fixture options.", file=sys.stderr)
+        return 1
+    for group in options:
+        for arg in group:
+            sys.stdout.buffer.write(arg.encode("utf-8", "surrogateescape") + b"\0")
+    return 0
+
+
 def recorded_preprocessing(run_dir, run):
     """The archived binary provenance and preprocessing command arguments,
     or None when the recorded command cannot be interpreted. Fixtures
@@ -3226,6 +3237,9 @@ def main(argv=None):
     p.add_argument("a", help="mode of the baseline run")
     p.add_argument("b", help="mode of the candidate run")
     p.set_defaults(func=compare_command)
+    p = sub.add_parser("fixture-preprocessing")
+    p.add_argument("flags")
+    p.set_defaults(func=fixture_preprocessing_command)
     p = sub.add_parser("recompute")
     p.add_argument("run_dir", help="campaign output directory")
     p.add_argument("--ast-digests",
