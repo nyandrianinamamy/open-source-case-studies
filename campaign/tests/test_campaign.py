@@ -2622,8 +2622,9 @@ class Scripts(unittest.TestCase):
 
 
 class Licence(unittest.TestCase):
-    """Finding 11: the licence of campaign/ is not decided; the inventory
-    of the repository proposes one and grants none."""
+    """The licence of campaign/ is LGPL 2.1, by decision of the owner of
+    the repository: the inventory states it and the text is in the
+    directory."""
 
     def test_inventory_entry(self):
         readme = os.path.join(CAMPAIGN, "..", "README.md")
@@ -2632,12 +2633,16 @@ class Licence(unittest.TestCase):
         entry = re.search(r"^- `campaign`:(.*?)^- `", text, re.M | re.S)
         self.assertIsNotNone(entry)
         entry = " ".join(entry.group(1).split())
-        self.assertIn("not yet decided by the owner of the repository",
-                      entry)
-        self.assertIn("LGPL 2.1, the licence of Frama-C, is proposed", entry)
-        self.assertIn("no licence is granted for these files beyond what "
-                      "the repository already states", entry)
-        self.assertNotRegex(entry, r"^\s*LGPL")
+        self.assertRegex(entry, r"^LGPL 2\.1, the licence of Frama-C, "
+                                r"see `LICENSE`")
+        self.assertNotIn("not yet decided", entry)
+        self.assertNotIn("proposed", entry)
+
+    def test_licence_text(self):
+        with open(os.path.join(CAMPAIGN, "LICENSE")) as f:
+            head = f.read(200)
+        self.assertIn("GNU LESSER GENERAL PUBLIC LICENSE", head)
+        self.assertIn("Version 2.1, February 1999", head)
 
 
 class HomeSpellings(unittest.TestCase):
