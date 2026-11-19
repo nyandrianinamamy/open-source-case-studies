@@ -26,7 +26,9 @@ caching and compares the runs. It implements the benchmark protocol of
 | `results/` | tables and provenance of campaigns that ran |
 
 `campaign.py` uses the Python standard library only. Run it with
-`python3 -I`. Its tests: `python3 -I -B -m unittest discover -s campaign/tests`.
+`python3 -I`, which its first line also does. Its tests:
+`python3 -I -B -m unittest discover -s campaign/tests`. Every script with a
+`#!` line is executable.
 
 ## Cases
 

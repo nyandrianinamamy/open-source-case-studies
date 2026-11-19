@@ -60,14 +60,17 @@ archive of the raw logs, without running the pilot again:
 
 ```sh
 campaign/tools/export-ast.sh OUTPUT test ~/.t3/worktrees/frama-c/t3-7ff6e3ed-f506bb46ca39d7d6 ~/Project/frama-c \
-  > campaign/results/pilot-2026-11-19/ast-digests.tsv
+  > SCRATCH/ast-digests.tsv
+diff SCRATCH/ast-digests.tsv campaign/results/pilot-2026-11-19/ast-digests.tsv
 python3 -I campaign/tools/campaign.py recompute OUTPUT \
   --ast-digests campaign/results/pilot-2026-11-19/ast-digests.tsv \
   --recorded-set-a campaign/reference/set-a-recorded.tsv
 ```
 
 where `OUTPUT` is the directory extracted from the archive, whose SHA-256
-was checked against `raw-logs.sha256`. The tables of
+was checked against `raw-logs.sha256`, and `SCRATCH` a directory outside
+the working tree: the listing is written there and compared with the
+committed one, which the replay does not overwrite. The tables of
 `OUTPUT/tables/` are those committed here.
 
 - The runs of the pilot have no digest of their AST: the runner did not

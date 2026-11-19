@@ -12,6 +12,7 @@ import importlib.util
 import io
 import json
 import os
+import re
 import signal
 import subprocess
 import sys
@@ -1968,6 +1969,60 @@ class BoundedDecimals(unittest.TestCase):
         except Exception as e:
             outcome = "exception %s" % type(e).__name__
         self.assertEqual(outcome, "harness-error")
+
+
+CAMPAIGN = os.path.normpath(os.path.join(HERE, ".."))
+
+
+def campaign_files():
+    for dirpath, dirnames, filenames in os.walk(CAMPAIGN):
+        dirnames[:] = [d for d in dirnames if d != "__pycache__"]
+        for name in filenames:
+            yield os.path.join(dirpath, name)
+
+
+class Scripts(unittest.TestCase):
+    """Finding 9: the scripts that the READMEs run are executable, and the
+    documented replay does not write into a committed file."""
+
+    def test_every_script_is_executable(self):
+        scripts = []
+        for path in campaign_files():
+            with open(path, "rb") as f:
+                if f.read(2) == b"#!":
+                    scripts.append(path)
+        self.assertIn(os.path.join(CAMPAIGN, "tools", "export-ast.sh"),
+                      scripts)
+        not_executable = [os.path.relpath(p, CAMPAIGN) for p in scripts
+                          if not os.access(p, os.X_OK)]
+        self.assertEqual(not_executable, [])
+        tracked = subprocess.run(
+            ["git", "-C", CAMPAIGN, "ls-files", "-s", "--", "."],
+            capture_output=True, text=True)
+        if tracked.returncode == 0 and tracked.stdout:
+            modes = {}
+            for line in tracked.stdout.splitlines():
+                info, _, name = line.partition("\t")
+                modes[os.path.normpath(os.path.join(CAMPAIGN, name))] = \
+                    info.split()[0]
+            self.assertEqual(
+                [os.path.relpath(p, CAMPAIGN) for p in scripts
+                 if modes.get(p, "100755") != "100755"], [])
+
+    def test_documented_commands_write_no_committed_file(self):
+        redirect = re.compile(r">\s*(\S+)")
+        wrong = []
+        for path in campaign_files():
+            if not path.endswith(".md"):
+                continue
+            with open(path) as f:
+                text = f.read()
+            for block in re.findall(r"```sh\n(.*?)```", text, re.S):
+                for target in redirect.findall(block):
+                    if target.strip("'\"").startswith("campaign/"):
+                        wrong.append((os.path.relpath(path, CAMPAIGN),
+                                      target))
+        self.assertEqual(wrong, [])
 
 
 if __name__ == "__main__":

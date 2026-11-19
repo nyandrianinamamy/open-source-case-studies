@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S python3 -I
 """Tools of the case-study campaign: records, alignment, queries, tables.
 
 Subcommands:
