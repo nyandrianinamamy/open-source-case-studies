@@ -1214,20 +1214,47 @@ def missing_reason(q, key):
     return "missing"
 
 
-def compare_queries(path_a, path_b):
+def numbered_query(key):
+    """Whether the key (function, statement, point, callstack, lvalue) of a
+    query depends on the numbering of the program: it names a statement
+    (FUNCTION:LINE:K, the K-th statement of a line) or a callstack below the
+    entry point (with a call site CALLEE@CALLER:LINE:K). The exit of a
+    function over all callstacks, or in the entry point, does not."""
+    return not key[1].endswith(":exit") or "|" in key[3]
+
+
+def numbering_reasons(numbering):
+    """The reasons that a numbering gives against a complete comparison,
+    and whether it pairs the statements of two runs (same, or one of
+    WEAK_NUMBERING)."""
+    if numbering == "same":
+        return [], True
+    if numbering in WEAK_NUMBERING:
+        return [WEAK_NUMBERING[numbering][0]], True
+    return [NUMBERING_REASONS.get(numbering, "numbering not established")], \
+        False
+
+
+def compare_queries(path_a, path_b, numbering="not established"):
     """Compares the answers of run B with those of run A, query by query.
 
     Each query asked in either run is counted once: answered in both runs
-    (equal, wider, narrower, incomparable or undecided), or without an
-    answer on a side, with the reason. Top answers are counted on each side
-    over all the answers of that side. Returns the summary, the queries that
-    are not equal, and the statements reached in one run only."""
+    (equal, wider, narrower, incomparable or undecided), without an answer
+    on a side, with the reason, or unpaired. A query whose key depends on
+    the numbering (numbered_query) is unpaired unless [numbering] pairs the
+    statements of the two runs (numbering_reasons): its key may name
+    different statements in the two runs. Top answers are counted on each
+    side over all the answers of that side. The comparison is complete when
+    both files are complete and the numbering is same. Returns the summary,
+    the queries that are not equal, the unpaired queries and the statements
+    reached in one run only."""
     qa, qb = load_queries(path_a), load_queries(path_b)
+    against, paired = numbering_reasons(numbering)
     ans_a, ans_b = qa["answers"], qb["answers"]
     keys = (set(ans_a) | set(ans_b) | set(qa["unavailable"])
             | set(qb["unavailable"]))
     counts = Counter()
-    details = []
+    details, unpaired = [], []
     for side, q in (("a", qa), ("b", qb)):
         for answer in q["answers"].values():
             if is_top_answer(answer[2]):
@@ -1236,6 +1263,10 @@ def compare_queries(path_a, path_b):
                 counts["garbled_" + side] += 1
     for key in sorted(keys):
         a, b = ans_a.get(key), ans_b.get(key)
+        if not paired and numbered_query(key):
+            unpaired.append(key + (against[0], a[2] if a else "",
+                                   b[2] if b else ""))
+            continue
         if a is not None and b is not None:
             verdict = classify(a, b)
             counts[verdict] += 1
@@ -1253,6 +1284,8 @@ def compare_queries(path_a, path_b):
                                       a[2] if a else "", b[2] if b else ""))
     summary = OrderedDict()
     summary["queries"] = len(keys)
+    summary["numbering"] = numbering
+    summary["unpaired"] = len(unpaired)
     summary["answered_a"] = len(ans_a)
     summary["answered_b"] = len(ans_b)
     summary["answered_both"] = sum(counts[k] for k in (
@@ -1266,33 +1299,47 @@ def compare_queries(path_a, path_b):
                 counts["unavailable_%s_%s" % (side, reason)]
     summary["reached_a"] = len(qa["reach"])
     summary["reached_b"] = len(qb["reach"])
-    summary["reached_a_only"] = len(qa["reach"] - qb["reach"])
-    summary["reached_b_only"] = len(qb["reach"] - qa["reach"])
+    # The statements reached in one run only, compared by their keys: only
+    # when the numbering pairs the statements.
+    reach = []
+    if paired:
+        reach = sorted([s + ("A",) for s in qa["reach"] - qb["reach"]]
+                       + [s + ("B",) for s in qb["reach"] - qa["reach"]])
+    summary["reached_a_only"] = (len(qa["reach"] - qb["reach"]) if paired
+                                 else "-")
+    summary["reached_b_only"] = (len(qb["reach"] - qa["reach"]) if paired
+                                 else "-")
     summary["complete_a"] = qa["status"]
     summary["complete_b"] = qb["status"]
-    summary["comparison"] = (
-        "complete" if qa["status"] == qb["status"] == "complete"
-        else "incomplete")
-    reach = sorted([s + ("A",) for s in qa["reach"] - qb["reach"]]
-                   + [s + ("B",) for s in qb["reach"] - qa["reach"]])
-    return summary, details, reach
+    reasons = ["answer file of %s incomplete" % side
+               for side, q in (("A", qa), ("B", qb))
+               if q["status"] != "complete"] + against
+    summary["comparison"] = ("incomplete: " + ", ".join(reasons) if reasons
+                             else "complete")
+    return summary, details, unpaired, reach
 
 
-def write_queries(prefix, summary, details, reach):
+def write_queries(prefix, summary, details, unpaired, reach):
     with open_text(prefix + "summary.tsv", "w") as f:
         for key, value in summary.items():
             f.write("%s\t%s\n" % (key, value))
     write_tsv(prefix + "differences.tsv",
               ["function", "stmt", "point", "callstack", "lvalue",
                "verdict", "answer_a", "answer_b"], details)
+    write_tsv(prefix + "unpaired.tsv",
+              ["function", "stmt", "point", "callstack", "lvalue",
+               "reason", "answer_a", "answer_b"], unpaired)
     write_tsv(prefix + "reached-in-one-run.tsv",
               ["function", "stmt", "reached_only_in"], reach)
 
 
 def queries_command(args):
-    summary, details, reach = compare_queries(args.a, args.b)
+    numbering = numbering_state(args.ast_a, args.ast_b,
+                                args.assert_numbering, args.pp_a, args.pp_b)
+    summary, details, unpaired, reach = compare_queries(args.a, args.b,
+                                                        numbering)
     if args.output:
-        write_queries(args.output, summary, details, reach)
+        write_queries(args.output, summary, details, unpaired, reach)
     for key, value in summary.items():
         print("%s\t%s" % (key, value))
     return 0
@@ -2253,22 +2300,24 @@ def compare_runs(output, case, mode_a, mode_b):
                 % (case, mode_a, mode_b))
     tsv_a = read_kv(os.path.join(run_a, "run.tsv"))
     tsv_b = read_kv(os.path.join(run_b, "run.tsv"))
+    numbering = run_numbering(tsv_a, tsv_b,
+                              recorded_preprocessing(run_a, tsv_a),
+                              recorded_preprocessing(run_b, tsv_b))
     records_a = existing(os.path.join(run_a, "records.jsonl"))
     records_b = existing(os.path.join(run_b, "records.jsonl"))
     if records_a and records_b:
         write_alignment(os.path.join(out, "alignment-"), records_a,
-                        records_b, run_numbering(
-                            tsv_a, tsv_b,
-                            recorded_preprocessing(run_a, tsv_a),
-                            recorded_preprocessing(run_b, tsv_b)),
+                        records_b, numbering,
                         (tsv_a.get("outcome"), tsv_b.get("outcome")),
                         configured_entry_point(output, run_a, tsv_a),
                         configured_entry_point(output, run_b, tsv_b))
     queries_a = existing(os.path.join(run_a, "queries.tsv"))
     queries_b = existing(os.path.join(run_b, "queries.tsv"))
     if queries_a and queries_b:
-        summary, details, reach = compare_queries(queries_a, queries_b)
-        write_queries(os.path.join(out, "queries-"), summary, details, reach)
+        summary, details, unpaired, reach = compare_queries(
+            queries_a, queries_b, numbering)
+        write_queries(os.path.join(out, "queries-"), summary, details,
+                      unpaired, reach)
     alarms_a = os.path.join(run_a, "alarms.csv")
     alarms_b = os.path.join(run_b, "alarms.csv")
     if os.path.exists(alarms_a) and os.path.exists(alarms_b):
@@ -2678,8 +2727,9 @@ def tables_command(args):
                   "nested_under_hit_b", "unmatched_a", "unmatched_b",
                   "undecided_groups", "problems_a", "problems_b",
                   "numbering", "accounted", "complete", "verdict"]
-    query_keys = (["queries", "answered_both", "equal", "wider", "narrower",
-                   "incomparable", "undecided", "top_a", "top_b"]
+    query_keys = (["queries", "numbering", "unpaired", "answered_both",
+                   "equal", "wider", "narrower", "incomparable", "undecided",
+                   "top_a", "top_b"]
                   + ["unavailable_%s_%s" % (side, reason)
                      for reason in UNAVAILABLE_REASONS + ("other",)
                      for side in ("a", "b")]
@@ -2880,6 +2930,13 @@ def main(argv=None):
     p.add_argument("a")
     p.add_argument("b")
     p.add_argument("output", nargs="?")
+    p.add_argument("--ast-a", help="SHA-256 of the AST of run A")
+    p.add_argument("--ast-b", help="SHA-256 of the AST of run B")
+    p.add_argument("--pp-a", help="digests of the preprocessing of run A, "
+                   "PP_COMMAND_SHA256:PP_TEXT_SHA256")
+    p.add_argument("--pp-b", help="digests of the preprocessing of run B")
+    p.add_argument("--assert-numbering", action="store_true",
+                   help="as for align")
     p.set_defaults(func=queries_command)
     p = sub.add_parser("alarms")
     p.add_argument("a")

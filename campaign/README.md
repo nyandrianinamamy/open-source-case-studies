@@ -448,8 +448,11 @@ lvalue. The enumerated queries are, for each reached statement, the scalar
 lvalues of the statement itself, and, for each function analysed, the
 scalar lvalues of its body at its exit (`FUNCTION:exit`, point `exit`).
 `CAMPAIGN_QUERIES_NAMED` adds named queries (`FUNCTION LINE POINT
-VARIABLE`). Keys do not depend on the numbering of the AST: a statement is
-`FUNCTION:LINE:K`, a callstack is `main|CALLEE@CALLER:LINE:K|...`.
+VARIABLE`). Keys do not use the statement numbers: a statement is
+`FUNCTION:LINE:K`, the K-th statement of its line, and a callstack is
+`main|CALLEE@CALLER:LINE:K|...`. They still name different statements in two
+runs whose programs differ: in `sites.c`, `main|f@main:9:0` is the call
+`f(2)` with `SIDE` 0 and `f(1)` with `SIDE` 1.
 
 Before it evaluates a query, the module checks that the state is available.
 When it is not, it writes an `unavailable` line with the reason instead of
@@ -476,7 +479,22 @@ in hexadecimal with `;nan` when NaN is possible, `Fnan`, `B` (bottom). Base
 names never contain `;` or `=`, so the suffix `;nan` is told apart from the
 separator of the bases.
 
-`campaign.py queries A B PREFIX` compares the answer of B with that of A:
+`campaign.py queries A B PREFIX` takes the same evidence of numbering as
+`align` (`--ast-a`, `--ast-b`, `--pp-a`, `--pp-b`, `--assert-numbering`),
+and `compare` the one of the two runs. A query whose key names a statement,
+or a callstack below the entry point, is paired only when the numbering is
+`same`, `recorded command` or `asserted`. Otherwise it is *unpaired*: it
+counts among the queries, not among the answers compared, and is listed in
+`queries-unpaired.tsv` with the reason of the numbering; the statements
+reached in one run only are not listed, and their counts are `-`. The exit
+of a function over all callstacks names no statement and is always paired.
+The comparison (`comparison`) is `complete` when both answer files are
+complete and the numbering is `same`; otherwise it is `incomplete:` followed
+by the reasons, among them `numbering asserted, not checked by digest` or
+`preprocessing compared by the recorded command only` when the queries were
+paired on that evidence.
+
+For each paired query, the answer of B is compared with that of A:
 `equal`, `wider`, `narrower`, `incomparable`, or `undecided` when the written
 forms do not decide inclusion. Two identical written answers are `equal`. An
 answer that may be uninitialized or an escaping address is included only in
@@ -493,21 +511,21 @@ mix, or an address with an unbounded offset (`Mx=I..%0/1`), is not top: it
 keeps its bases. Top answers are counted on each side over all the answers
 of that side, whatever the other run answers.
 
-The summary counts the queries answered in both runs and on each side, and
-the queries without an answer on a side by reason: `unreached`,
-`no-callstack` (the statement is reached but not under that callstack),
-`no-results`, `top-state`, `disabled-domain`, `error`, `missing`. A query
-in one callstack of a function whose state was not saved takes the reason
-of the same query over all callstacks. An exit query is `unreached` when its
-exit is not listed as reached. A file without `format 2` lists no exit; its
-module wrote the exit queries of a function only when its results were
-saved and its exit reached. An exit query that such a file does not answer
-is `no-callstack` when the file has the same query over all callstacks, and
-`missing` otherwise. It says
-whether each file is complete (`complete_a`, `complete_b`) and whether the
-comparison is (`comparison`). Every query that is not `equal` is listed in
-`queries-differences.tsv`, and the statements reached in one run only in
-`queries-reached-in-one-run.tsv`.
+The summary gives the numbering, counts the unpaired queries (`unpaired`),
+the queries answered in both runs and on each side, and the queries without
+an answer on a side by reason: `unreached`, `no-callstack` (the statement is
+reached but not under that callstack), `no-results`, `top-state`,
+`disabled-domain`, `error`, `missing`. A query in one callstack of a
+function whose state was not saved takes the reason of the same query over
+all callstacks. An exit query is `unreached` when its exit is not listed as
+reached. A file without `format 2` lists no exit; its module wrote the exit
+queries of a function only when its results were saved and its exit reached.
+An exit query that such a file does not answer is `no-callstack` when the
+file has the same query over all callstacks, and `missing` otherwise. It
+says whether each file is complete (`complete_a`, `complete_b`) and whether
+the comparison is (`comparison`, see above). Every paired query that is not
+`equal` is listed in `queries-differences.tsv`, and the statements reached
+in one run only in `queries-reached-in-one-run.tsv`.
 
 ### Alarms
 

@@ -419,7 +419,7 @@ class Queries(unittest.TestCase):
                 f.write(nocache)
             with open(b, "w") as f:
                 f.write(cache)
-            summary, details, _ = campaign.compare_queries(a, b)
+            summary, details, _, _ = campaign.compare_queries(a, b, "same")
         self.assertEqual(summary["queries"], 3)
         self.assertEqual(summary["answered_both"], 2)
         self.assertEqual(summary["equal"], 1)
@@ -856,7 +856,9 @@ def compare_queries_files(a, b):
         write(pb, b)
         prefix = os.path.join(tmp, "queries-")
         with contextlib.redirect_stdout(io.StringIO()):
-            campaign.main(["queries", pa, pb, prefix])
+            campaign.main(["queries", pa, pb, prefix, "--ast-a", DIGEST_0,
+                           "--ast-b", DIGEST_0]
+                          + campaign_numbering_options())
         with open(prefix + "summary.tsv") as f:
             summary = dict(l.rstrip("\n").split("\t", 1) for l in f)
         with open(prefix + "differences.tsv") as f:
@@ -892,7 +894,8 @@ class QueryAvailability(unittest.TestCase):
         summary, _, _ = self.compare(QUERIES_RESULTS, cut)
         self.assertEqual(summary.get("complete_b"),
                          "incomplete: no done line")
-        self.assertEqual(summary.get("comparison"), "incomplete")
+        self.assertEqual(summary.get("comparison"),
+                         "incomplete: answer file of B incomplete")
         wrong = QUERIES_RESULTS.replace("done\t3", "done\t4")
         summary, _, _ = self.compare(QUERIES_RESULTS, wrong)
         self.assertEqual(summary.get("complete_b"),
@@ -1813,6 +1816,100 @@ class DigestImport(unittest.TestCase):
         self.assertEqual((code, error), (0, None))
         self.assertEqual(runs[0]["ast_sha256"], "-")
         self.assertIn("no column ast_format", report)
+
+
+# The answer files of sites.c with SIDE 0 and SIDE 1: the line 9 keeps one
+# call in each run, f(2) and f(1), and the key of its statement and of the
+# callstack is the same. The exit of f over all callstacks names neither.
+SITES_QUERIES = """format\t2
+reach\tf\tf:7:0
+reach\tf\tf:exit
+answer\tf\tf:7:0\tbefore\tmain|f@main:9:0\tv\t1\t0\tMNULL=SVALUE
+answer\tf\tf:7:0\tbefore\t*\tv\t1\t0\tMNULL=SVALUE
+answer\tf\tf:exit\texit\t*\tobservable\t1\t0\tMNULL=SVALUE
+done\t3
+"""
+
+
+class QueryNumbering(unittest.TestCase):
+    """A query whose key names a statement or a callstack below the entry
+    point is paired only when the numbering of the two runs pairs the calls
+    of their alignment."""
+
+    def compare(self, *options):
+        with tempfile.TemporaryDirectory() as tmp:
+            pa, pb = os.path.join(tmp, "a"), os.path.join(tmp, "b")
+            write(pa, SITES_QUERIES.replace("VALUE", "2"))
+            write(pb, SITES_QUERIES.replace("VALUE", "1"))
+            prefix = os.path.join(tmp, "q-")
+            code, _, error = run_main(["queries", pa, pb, prefix]
+                                      + list(options))
+            self.assertEqual((code, error), (0, None))
+            summary = read_summary(prefix + "summary.tsv")
+            with open(prefix + "differences.tsv") as f:
+                details = [l.rstrip("\n").split("\t") for l in list(f)[1:]]
+            with open(prefix + "unpaired.tsv") as f:
+                unpaired = [l.rstrip("\n").split("\t") for l in list(f)[1:]]
+        return summary, details, unpaired
+
+    def test_sites_with_different_digests(self):
+        s, details, unpaired = self.compare("--ast-a", DIGEST_0,
+                                            "--ast-b", DIGEST_1)
+        self.assertEqual(s["numbering"], "different")
+        self.assertEqual(s["queries"], "3")
+        self.assertEqual(s["unpaired"], "2")
+        self.assertEqual(s["answered_both"], "1")  # the exit of f
+        self.assertEqual(s["equal"], "0")
+        self.assertEqual(s["incomparable"], "1")
+        self.assertEqual(s["comparison"], "incomplete: AST digests differ")
+        # v = 2 and v = 1 are not compared under the key of line 9.
+        self.assertEqual(details, [["f", "f:exit", "exit", "*",
+                                    "observable", "incomparable",
+                                    "MNULL=S2", "MNULL=S1"]])
+        self.assertEqual(sorted(u[3] for u in unpaired),
+                         ["*", "main|f@main:9:0"])
+        self.assertEqual(unpaired[0][5], "AST digests differ")
+
+    def test_without_evidence(self):
+        s, _, unpaired = self.compare()
+        self.assertEqual(s["numbering"], "not established")
+        self.assertEqual(s["unpaired"], "2")
+        self.assertEqual(s["comparison"],
+                         "incomplete: numbering not established")
+
+    def test_same_numbering(self):
+        s, details, unpaired = self.compare(
+            "--ast-a", DIGEST_0, "--ast-b", DIGEST_0,
+            *campaign_numbering_options())
+        self.assertEqual(s["numbering"], "same")
+        self.assertEqual((s["unpaired"], s["incomparable"]), ("0", "3"))
+        self.assertEqual(s["comparison"], "complete")
+        self.assertEqual(unpaired, [])
+
+    def test_asserted_numbering(self):
+        s, _, _ = self.compare("--assert-numbering")
+        self.assertEqual(s["numbering"], "asserted")
+        self.assertEqual((s["unpaired"], s["incomparable"]), ("0", "3"))
+        self.assertEqual(s["comparison"], "incomplete: numbering "
+                         "asserted, not checked by digest")
+
+    def test_runs_compared_as_the_runner_does(self):
+        # The fixture sites.c: the alignment leaves the calls undecided, and
+        # so does the comparison of the queries.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = CompareRuns.output(None, tmp, FRESH,
+                                      dict(FRESH, ast_sha256=DIGEST_1))
+            for mode, value in (("x", "2"), ("y", "1")):
+                with gzip.open(os.path.join(root, "runs", "c", mode,
+                                            "queries.tsv.gz"), "wt") as f:
+                    f.write(SITES_QUERIES.replace("VALUE", value))
+            run_main(["compare", root, "c", "x", "y"])
+            s = read_summary(os.path.join(root, "comparisons", "c", "x-vs-y",
+                                          "queries-summary.tsv"))
+        self.assertEqual(s["comparison"], "incomplete: AST digests differ")
+        self.assertEqual(s["incomparable"], "1")  # the exit of f only
+        self.assertEqual(s.get("numbering"), "different")
+        self.assertEqual(s.get("unpaired"), "2")
 
 
 class EffectiveOptions(unittest.TestCase):
