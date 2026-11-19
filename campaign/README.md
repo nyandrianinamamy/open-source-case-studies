@@ -206,11 +206,14 @@ then the entry used, as in `rejected (entry 1: key-differs), hit (entry 2)`.
 The collector verdict `C` (`would-store` or `refused (REASON)`) follows an
 analysed call when the collector is on. `N` is the number of the call
 statement in the AST: two calls on one line differ. A long stack is broken
-over several lines. The producer prints its own messages in the category
-`cache-producer`, read in the same way. An analysed or interrupted call is
-printed after the calls it contains; a hit is printed at its lookup.
-`campaign.py records LOG` rebuilds the tree of calls from this order and the
-callstacks, and writes one JSON object per call:
+over several lines. When the category `cache-producer` is enabled, the
+message of a call whose body produced an entry or a refusal is printed in
+that category instead, with the verdict of the producer as its last field
+(`producer: stored (entry N)` or `producer: refused (REASON)`); `records`
+reads both categories. The runner does not enable it. An analysed or
+interrupted call is printed after the calls it contains; a hit is printed at
+its lookup. `campaign.py records LOG` rebuilds the tree of calls from this
+order and the callstacks, and writes one JSON object per call:
 
 | Field | Content |
 |---|---|

@@ -669,6 +669,36 @@ SUPPLIED_LOG_BOTH = SUPPLIED_LOG_DEFAULT.replace(
     "hit (entry 5)")
 
 
+# A program with two calls to leaf on line 3, analysed by the analyzer of
+# issue #54 under -eva-msg-key cache,cache-producer,callstacks: each message
+# is printed in the category cache-producer, with the verdict of the
+# producer as its last field.
+PRODUCER_LOG = """
+[eva:cache-producer] prod.c:3:
+  call to leaf: lookup: no-candidate; execution: analysed; storage: stored (entry 1); collector: would-store; producer: stored (entry 1)
+  stack: leaf :: prod.c:3 (stmt 5) <- main
+[eva:cache-producer] prod.c:3:
+  call to leaf: lookup: no-candidate; execution: analysed; storage: stored (entry 2); collector: would-store; producer: stored (entry 2)
+  stack: leaf :: prod.c:3 (stmt 6) <- main
+[eva:cache-producer]
+  call to main: lookup: no-candidate; execution: analysed; storage: stored (entry 3); collector: refused (sweep); producer: refused (sweep)
+  stack: main
+"""
+
+
+class ProducerMessages(unittest.TestCase):
+    """The messages of the category cache-producer are records too."""
+
+    def test_records(self):
+        rows = {r["id"]: r for r in records_of(PRODUCER_LOG)}
+        self.assertEqual(
+            {i: r["dispositions"].get("producer") for i, r in rows.items()},
+            {"main#0": "refused (sweep)",
+             "main#0 > leaf@prod.c:3/s5#0": "stored (entry 1)",
+             "main#0 > leaf@prod.c:3/s6#0": "stored (entry 2)"})
+        self.assertEqual({r["storage"] for r in rows.values()}, {"stored"})
+
+
 class LookupCandidates(unittest.TestCase):
     """H2: the lookup disposition is a sequence of candidates."""
 
