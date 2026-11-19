@@ -37,9 +37,7 @@ bin="$checkout/_build/install/default/bin"
 cmxs="$checkout/_build/default/plugins/eva/src/eva.cmxs"
 
 binary_field() {
-  awk -F'\t' -v r="$role" -v c="$1" '
-    NR == 1 { for (i = 1; i <= NF; i++) col[$i] = i; next }
-    $1 == r { print $col[c] }' "$output/provenance/binaries.tsv"
+  "${tool[@]}" binaries-get "$output/provenance/binaries.tsv" "$1" --role "$role"
 }
 for pair in "frama_c_sha256:$bin/frama-c" "eva_cmxs_sha256:$cmxs"; do
   recorded=$(binary_field "${pair%%:*}")

@@ -203,9 +203,7 @@ classify() {
 
 # A column of the row of a role in binaries.tsv.
 binary_field() {
-  awk -F'\t' -v r="$1" -v c="$2" '
-    NR == 1 { for (i = 1; i <= NF; i++) col[$i] = i; next }
-    $1 == r { print $col[c] }' "$output/provenance/binaries.tsv"
+  "${tool[@]}" binaries-get "$output/provenance/binaries.tsv" "$2" --role "$1"
 }
 
 run_one() {

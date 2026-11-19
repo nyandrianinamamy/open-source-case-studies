@@ -20,7 +20,8 @@ set -euo pipefail
 output=$(realpath "${1:?Supply the campaign output directory}")
 archive=$(realpath -m "${2:?Supply the archive to write}")
 name=$(basename "$archive" .tar.gz)
-home=(python3 -I "$(dirname "$(realpath "$0")")/campaign.py" home)
+tool=(python3 -I "$(dirname "$(realpath "$0")")/campaign.py")
+home=("${tool[@]}" home)
 if [[ -z ${HOME%/} ]]; then printf 'HOME is not set.\n' >&2; exit 2; fi
 
 "${home[@]}" check-links "$output"
@@ -47,12 +48,13 @@ if [[ -f $output/provenance/manifest.sha256 ]]; then
   check_hashed provenance/manifest.tsv "$(cat "$output/provenance/manifest.sha256")"
 fi
 if [[ -f $output/provenance/binaries.tsv ]]; then
-  while IFS=$'\t' read -r digest file; do
-    if [[ $digest != - && $file != - ]]; then check_hashed "$file" "$digest"; fi
-  done < <(awk -F'\t' '
-      NR == 1 { for (i = 1; i <= NF; i++) col[$i] = i; next }
-      col["patch"] { print $col["patch_sha256"] "\t" $col["patch"] }' \
-      "$output/provenance/binaries.tsv")
+  patches=$("${tool[@]}" binaries-get \
+    "$output/provenance/binaries.tsv" patch_sha256 patch)
+  if [[ -n $patches ]]; then
+    while IFS=$'\t' read -r digest file; do
+      if [[ $digest != - && $file != - ]]; then check_hashed "$file" "$digest"; fi
+    done <<< "$patches"
+  fi
 fi
 
 stage=$(mktemp -d)

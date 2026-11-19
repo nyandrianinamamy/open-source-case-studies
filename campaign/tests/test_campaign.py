@@ -1825,12 +1825,22 @@ class DigestImport(unittest.TestCase):
 
     def test_header_without_a_column(self):
         old = {"ast_sha256": None}
-        code, error, runs, s, report = self.recompute(
-            old, old, "case\tmode\tast_sha256\tast_statements\t"
-            "parse_exit\nc\tx\t%s\t2\t0\n" % DIGEST_0)
-        self.assertEqual((code, error), (0, None))
-        self.assertEqual(runs[0]["ast_sha256"], "-")
-        self.assertIn("no column ast_format", report)
+        with tempfile.TemporaryDirectory() as tmp:
+            root = CompareRuns.output(None, tmp, old, old)
+            run = os.path.join(root, "runs", "c", "x", "run.tsv")
+            before = read_summary(run)
+            path = os.path.join(tmp, "digests.tsv")
+            for header, expected in (("case\tmode\tast_sha256\tast_statements\t"
+                                      "parse_exit", "missing column(s) 'ast_format'"),
+                                     (self.HEADER.rstrip("\n") + "\tX",
+                                      "unknown column(s) 'X'")):
+                write(path, header + "\nc\tx\t%s\t2\t0\n" % DIGEST_0)
+                stderr = io.StringIO()
+                with contextlib.redirect_stderr(stderr):
+                    code, _, error = run_main(["recompute", root, "--ast-digests", path])
+                self.assertEqual((code, error), (1, None))
+                self.assertIn(expected, stderr.getvalue())
+                self.assertEqual(read_summary(run), before)
 
 
 # The answer files of sites.c with SIDE 0 and SIDE 1: the line 9 keeps one
@@ -2349,10 +2359,13 @@ class HomeDirectory(unittest.TestCase):
             with open(os.path.join(prov, "patches", "reference.patch"),
                       "wb") as f:
                 f.write(patch)
+            columns = campaign.BINARIES_COLUMNS
+            row = {"role": "reference", "patch_sha256":
+                   hashlib.sha256(patch).hexdigest(),
+                   "patch": "provenance/patches/reference.patch"}
             write(os.path.join(prov, "binaries.tsv"),
-                  "role\tpatch_sha256\tpatch\nreference\t%s\t"
-                  "provenance/patches/reference.patch\n"
-                  % hashlib.sha256(patch).hexdigest())
+                  "\t".join(columns) + "\n"
+                  + "\t".join(row.get(col, "-") for col in columns) + "\n")
             write(os.path.join(out, "log.txt"), "%s/x\n" % home)
             archive = os.path.join(home, "logs.tar.gz")
             run = subprocess.run(["bash", ARCHIVE, out, archive],
@@ -2857,8 +2870,11 @@ class EntryPoint(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = os.path.join(tmp, "out")
             os.makedirs(os.path.join(root, "provenance"))
+            header = campaign.MANIFEST_HEADER
+            row = {"case": "c", "entry_point": "main"}
             write(os.path.join(root, "provenance", "manifest.tsv"),
-                  "case\tentry_point\nc\tmain\n")
+                  "\t".join(header) + "\n"
+                  + "\t".join(row.get(col, "-") for col in header) + "\n")
             for mode, text in (("x", SITES_NUMBERED), ("y", MAIN_THEN_ALIEN)):
                 run = os.path.join(root, "runs", "c", mode)
                 os.makedirs(run)
@@ -3064,6 +3080,37 @@ class FourthReview(unittest.TestCase):
             self, "frama-c -eva\n", malformed, self.START + COLLECTED_LOG)
         self.assertEqual(tables["collector"]["collector_refused"], "-")
         self.assertEqual(tables["collector"]["producer_refused"], "-")
+
+
+    def test_duplicate_digest_header(self):
+        data = (DigestImport.HEADER.rstrip("\n") + "\tparse_exit\n"
+                "c\tx\t2\t%s\t2\t1\t0\n" % DIGEST_0)
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, "digests.tsv")
+            write(path, data)
+            with self.assertRaisesRegex(ValueError, "duplicate.*parse_exit"):
+                campaign.load_ast_digests(path)
+
+    def test_other_tsv_headers(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, "import.tsv")
+            for args, columns in (
+                    (["manifest-get", path, "entry_point", "c"],
+                     campaign.MANIFEST_HEADER),
+                    (["alarms", path, path], campaign.ALARMS_COLUMNS),
+                    (["tables", tmp, "--recorded-set-a", path], ("target", "in_A")),
+                    (["binaries-get", path, "revision"], campaign.BINARIES_COLUMNS)):
+                first = columns[0]
+                for header, reason in ((tuple(columns) + (first,), "duplicate"),
+                                       (columns[1:], "missing"),
+                                       (tuple(columns) + ("bogus",), "unknown")):
+                    with self.subTest(args=args[0], reason=reason):
+                        write(path, "\t".join(header) + "\n")
+                        stderr = io.StringIO()
+                        with contextlib.redirect_stderr(stderr):
+                            code, _, error = run_main(args)
+                        self.assertEqual((code, error), (1, None))
+                        self.assertIn(reason + " column", stderr.getvalue())
 
 
 if __name__ == "__main__":

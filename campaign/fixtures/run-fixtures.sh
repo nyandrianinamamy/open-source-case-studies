@@ -62,7 +62,7 @@ output=$(realpath "${1:?Supply the campaign output directory}")
 tools=$(realpath "${2:?Supply the prepared tools directory}")
 checkout=$(realpath "${3:?Supply the Frama-C build}")
 bin="$checkout/_build/install/default/bin/frama-c"
-revision=$(awk -F'\t' '$1=="test"{print $3}' "$output/provenance/binaries.tsv")
+revision=$("${tool[@]}" binaries-get "$output/provenance/binaries.tsv" revision --role test)
 
 status=0
 check() {
@@ -71,8 +71,7 @@ check() {
   else printf 'FAIL %s\n' "$name"; status=1; fi
 }
 
-families=$(awk -F'\t' 'NR==1{for(i=1;i<=NF;i++)c[$i]=i;next} $1=="test"{print $c["counter_families"]}' \
-  "$output/provenance/binaries.tsv")
+families=$("${tool[@]}" binaries-get "$output/provenance/binaries.tsv" counter_families --role test)
 share=$(
   while IFS= read -r setting; do export "$setting"; done < "$tools/sites.env"
   "$bin" -print-share-path

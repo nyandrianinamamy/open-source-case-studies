@@ -58,6 +58,40 @@ def open_text(path, mode="r"):
     return open(path, mode, encoding="utf-8", errors="replace")
 
 
+class TSVError(ValueError):
+    pass
+
+
+def validate_tsv_header(path, fields, expected):
+    fields = fields or []
+    problems = []
+    duplicates = [name for name, count in Counter(fields).items() if count > 1]
+    missing = [name for name in expected if name not in fields]
+    unknown = [name for name in fields if name not in expected]
+    for label, names in (("duplicate", duplicates), ("missing", missing),
+                         ("unknown", unknown)):
+        if names:
+            problems.append("%s column(s) %s" % (label, ", ".join(map(repr, names))))
+    if problems:
+        raise TSVError("%s: %s" % (path, "; ".join(problems)))
+
+
+def read_header_tsv(path, expected, comments=False):
+    """Read a named-column TSV after checking its schema."""
+    with open_text(path) as f:
+        lines = (line for line in f if not line.startswith("#")) if comments else f
+        reader = csv.DictReader(lines, delimiter="\t", strict=True)
+        try:
+            validate_tsv_header(path, reader.fieldnames, expected)
+            for row in reader:
+                if None in row or None in row.values():
+                    raise TSVError("%s: row %d has the wrong number of columns"
+                                   % (path, reader.line_num))
+                yield row
+        except csv.Error as error:
+            raise TSVError("%s: %s" % (path, error)) from error
+
+
 # ----- Log messages ----------------------------------------------------------
 
 HEADER = re.compile(r"^\[([A-Za-z0-9_-]+)(?::([^\]]*))?\] ?(.*)$")
@@ -1370,6 +1404,10 @@ def normalize_directory(directory, roots=()):
     return directory
 
 
+ALARMS_COLUMNS = ("directory", "file", "line", "function", "property kind",
+                  "status", "property")
+
+
 def load_alarms(path, roots=()):
     """The alarms and properties of an alarms.csv file written by
     -report-csv, as a multiset: (directory, file, line, function, kind,
@@ -1377,12 +1415,11 @@ def load_alarms(path, roots=()):
     [normalize_directory]. Returns the multiset and the number of keys that
     occur more than once."""
     result = defaultdict(Counter)
-    with open_text(path) as f:
-        for row in csv.DictReader(f, delimiter="\t"):
-            key = (normalize_directory(row.get("directory", ""), roots),
-                   row["file"], row["line"], row["function"],
-                   row["property kind"], row["property"])
-            result[key][row["status"]] += 1
+    for row in read_header_tsv(path, ALARMS_COLUMNS):
+        key = (normalize_directory(row["directory"], roots),
+               row["file"], row["line"], row["function"],
+               row["property kind"], row["property"])
+        result[key][row["status"]] += 1
     duplicates = sum(1 for c in result.values() if sum(c.values()) > 1)
     return result, duplicates
 
@@ -2419,43 +2456,40 @@ def load_ast_digests(path):
     of 64 hexadecimal digits, a statement count that is a bounded decimal
     and the parse exit 0, ends with a newline, and is the only row of its
     run. Comment lines start with #."""
-    with open(path, "rb") as f:
-        text = f.read().decode("utf-8", "surrogateescape")
-    lines = text.split("\n")
-    cut = lines.pop()
-    lines = [(l, None) for l in lines if not l.startswith("#")]
-    if cut and not cut.startswith("#"):
-        lines.append((cut, "the file does not end with a complete line"))
     valid, invalid = OrderedDict(), OrderedDict()
-    if not lines:
-        return valid, invalid
-    header = lines[0][0].split("\t")
-    missing = [c for c in DIGEST_COLUMNS if c not in header]
-    for line, problem in lines[1:]:
-        fields = line.split("\t")
-        row = dict(zip(header, fields))
-        key = (row.get("case", ""), row.get("mode", ""))
-        if not problem:
-            if missing:
-                problem = "no column %s" % ", ".join(missing)
+    with open(path, encoding="utf-8", errors="surrogateescape") as f:
+        lines = (line for line in f if not line.startswith("#"))
+        first = next(lines, "")
+        if not first.endswith("\n"):
+            raise TSVError("%s: missing or incomplete header" % path)
+        header = first.rstrip("\n").split("\t")
+        validate_tsv_header(path, header, DIGEST_COLUMNS)
+        for line in lines:
+            fields = line.rstrip("\n").split("\t")
+            row = dict(zip(header, fields))
+            key = (row.get("case", ""), row.get("mode", ""))
+            problem = None
+            if not line.endswith("\n"):
+                problem = "the file does not end with a complete line"
             elif len(fields) != len(header):
-                problem = ("%d fields instead of %d"
-                           % (len(fields), len(header)))
+                problem = "%d fields instead of %d" % (len(fields), len(header))
+            elif not all(key):
+                problem = "missing case or mode"
             elif row["ast_format"] != AST_FORMAT:
                 problem = "listing format %s" % row["ast_format"]
-            elif not SHA256.fullmatch(row["ast_sha256"]):
+            elif not valid_sha256(row["ast_sha256"]):
                 problem = "invalid SHA-256"
             elif decimal(row["ast_statements"]) is None:
                 problem = "invalid statement count"
             elif row["parse_exit"] != "0":
                 problem = "parse exit %s" % row["parse_exit"]
-        if key in valid or key in invalid:
-            valid.pop(key, None)
-            problem = "listed twice"
-        if problem:
-            invalid[key] = problem
-        else:
-            valid[key] = row
+            if key in valid or key in invalid:
+                valid.pop(key, None)
+                problem = "listed twice"
+            if problem:
+                invalid[key] = problem
+            else:
+                valid[key] = row
     return valid, invalid
 
 
@@ -2686,11 +2720,14 @@ def tables_command(args):
     runs.sort(key=lambda r: (r.get("case", ""), r.get("mode", "")))
     by_run = {(r.get("case"), r.get("mode")): r for r in runs}
     recorded = {}
-    if args.recorded_set_a and os.path.exists(args.recorded_set_a):
-        with open_text(args.recorded_set_a) as f:
-            for row in csv.DictReader(
-                    (l for l in f if not l.startswith("#")), delimiter="\t"):
-                recorded[row["target"]] = row["in_A"]
+    if args.recorded_set_a:
+        for row in read_header_tsv(args.recorded_set_a, ("target", "in_A"),
+                                   comments=True):
+            target = row["target"]
+            if not target or target in recorded or row["in_A"] not in ("True", "False"):
+                raise TSVError("%s: invalid or repeated set A entry %r"
+                               % (args.recorded_set_a, target))
+            recorded[target] = row["in_A"]
     out_dir = os.path.join(root, "tables")
     os.makedirs(out_dir, exist_ok=True)
     md = io.StringIO()
@@ -2961,9 +2998,29 @@ def manifest_command(args):
 
 
 def read_manifest(path):
-    with open_text(path) as f:
-        return list(csv.DictReader((l for l in f if not l.startswith("#")),
-                                   delimiter="\t"))
+    return list(read_header_tsv(path, MANIFEST_HEADER, comments=True))
+
+
+BINARIES_COLUMNS = ("role", "checkout", "revision", "patch_sha256", "patch",
+                    "frama_c_sha256", "eva_cmxs_sha256", "counter_families",
+                    "version")
+
+
+def binaries_get_command(args):
+    rows = {}
+    for row in read_header_tsv(args.binaries, BINARIES_COLUMNS):
+        role = row["role"]
+        if not role or role in rows:
+            raise TSVError("%s: empty or repeated binary role %r"
+                           % (args.binaries, role))
+        rows[role] = row
+    if args.role is not None:
+        if args.role not in rows:
+            raise TSVError("%s: missing binary role %r" % (args.binaries, args.role))
+        rows = {args.role: rows[args.role]}
+    for row in rows.values():
+        print("\t".join(row[field] for field in args.fields))
+    return 0
 
 
 def manifest_get_command(args):
@@ -3115,6 +3172,11 @@ def main(argv=None):
     p.add_argument("field")
     p.add_argument("cases", nargs="+")
     p.set_defaults(func=manifest_get_command)
+    p = sub.add_parser("binaries-get")
+    p.add_argument("binaries")
+    p.add_argument("fields", nargs="+", choices=BINARIES_COLUMNS)
+    p.add_argument("--role")
+    p.set_defaults(func=binaries_get_command)
     args = parser.parse_args(argv)
     if getattr(args, "trees", None) is not None and \
        isinstance(args.trees, str):
@@ -3124,7 +3186,11 @@ def main(argv=None):
                 directory, _, tree = line.strip().partition("\t")
                 trees[directory] = tree
         args.trees = trees
-    return args.func(args)
+    try:
+        return args.func(args)
+    except (TSVError, FileNotFoundError) as error:
+        print(error, file=sys.stderr)
+        return 1
 
 
 if __name__ == "__main__":

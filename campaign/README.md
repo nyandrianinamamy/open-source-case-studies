@@ -680,6 +680,11 @@ Equal AST digests with different or missing recorded preprocessing give `not
 established`. An imported run is never compared by its commands with a run
 that has preprocessing digests.
 
+Before reading rows, the harness checks the headers of the AST digest
+import, the case manifest, `alarms.csv`, the recorded set A
+`set-a-recorded.tsv` and `provenance/binaries.tsv`. Each expected column
+must occur once, and unexpected columns are rejected.
+
 `recompute` checks every row of the file of digests before it updates any
 run. A row is valid when it has every column (`case`, `mode`, `ast_format`,
 `ast_sha256`, `ast_statements`, `parse_exit`), the listing format 2, a
