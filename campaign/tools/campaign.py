@@ -2297,18 +2297,92 @@ def exit_status(text):
     return 1 if value is None else value
 
 
+DIGEST_COLUMNS = ("case", "mode", "ast_format", "ast_sha256",
+                  "ast_statements", "parse_exit")
+
+
+def load_ast_digests(path):
+    """The rows of a file of AST digests written by tools/export-ast.sh,
+    each checked before any run is updated: the rows that are valid, by
+    (case, mode), and the reasons of those that are not. A valid row has
+    every column of DIGEST_COLUMNS, the listing format AST_FORMAT, a SHA-256
+    of 64 hexadecimal digits, a statement count that is a bounded decimal
+    and the parse exit 0, ends with a newline, and is the only row of its
+    run. Comment lines start with #."""
+    with open(path, "rb") as f:
+        text = f.read().decode("utf-8", "surrogateescape")
+    lines = text.split("\n")
+    cut = lines.pop()
+    lines = [(l, None) for l in lines if not l.startswith("#")]
+    if cut and not cut.startswith("#"):
+        lines.append((cut, "the file does not end with a complete line"))
+    valid, invalid = OrderedDict(), OrderedDict()
+    if not lines:
+        return valid, invalid
+    header = lines[0][0].split("\t")
+    missing = [c for c in DIGEST_COLUMNS if c not in header]
+    for line, problem in lines[1:]:
+        fields = line.split("\t")
+        row = dict(zip(header, fields))
+        key = (row.get("case", ""), row.get("mode", ""))
+        if not problem:
+            if missing:
+                problem = "no column %s" % ", ".join(missing)
+            elif len(fields) != len(header):
+                problem = ("%d fields instead of %d"
+                           % (len(fields), len(header)))
+            elif row["ast_format"] != AST_FORMAT:
+                problem = "listing format %s" % row["ast_format"]
+            elif not SHA256.fullmatch(row["ast_sha256"]):
+                problem = "invalid SHA-256"
+            elif decimal(row["ast_statements"]) is None:
+                problem = "invalid statement count"
+            elif row["parse_exit"] != "0":
+                problem = "parse exit %s" % row["parse_exit"]
+        if key in valid or key in invalid:
+            valid.pop(key, None)
+            problem = "listed twice"
+        if problem:
+            invalid[key] = problem
+        else:
+            valid[key] = row
+    return valid, invalid
+
+
+def import_digest(run, valid, invalid):
+    """Sets in [run] (its run.tsv) the digest of its AST from the rows of
+    load_ast_digests. A run that recorded its digest itself keeps it; the
+    digest imported earlier by recompute is replaced. An invalid row sets
+    the digest -, so that the numbering of the run is not established.
+    Returns the reason of an invalid row of the run, or None."""
+    key = (run.get("case"), run.get("mode"))
+    if key not in valid and key not in invalid:
+        return None
+    problem = invalid.get(key)
+    if "ast_sha256" in run and run.get("ast_source") != "imported":
+        return problem
+    if problem:
+        run.update(ast_format="-", ast_sha256="-", ast_statements="-")
+    else:
+        row = valid[key]
+        run.update((k, row[k]) for k in ("ast_format", "ast_sha256",
+                                         "ast_statements"))
+    run["ast_source"] = "imported"
+    run["ast_import_problem"] = problem or "-"
+    return problem
+
+
 def recompute_command(args):
     """Recomputes from the raw logs of a campaign output directory what the
     tools derive from them: the records of each run, its outcome (for a
     measured run), the comparisons of every pair already compared, and the
     tables. With --ast-digests, sets the digest of the AST of the runs that
-    it lists, re-exported after the campaign by tools/export-ast.sh."""
-    digests = {}
+    it lists, re-exported after the campaign by tools/export-ast.sh: every
+    row is checked first (load_ast_digests), and the invalid ones are
+    reported on the standard error."""
+    valid, invalid = OrderedDict(), OrderedDict()
     if args.ast_digests:
-        with open_text(args.ast_digests) as f:
-            for row in csv.DictReader(
-                    (l for l in f if not l.startswith("#")), delimiter="\t"):
-                digests[(row["case"], row["mode"])] = row
+        valid, invalid = load_ast_digests(args.ast_digests)
     for dirpath, _, filenames in sorted(os.walk(os.path.join(args.run_dir,
                                                              "runs"))):
         if "run.tsv" not in filenames:
@@ -2328,12 +2402,10 @@ def recompute_command(args):
                 exit_status(run.get("make_exit")),
                 run.get("dedicated_scope") == "yes",
                 configured_entry_point(args.run_dir, dirpath, run))
-        row = digests.get((run.get("case"), run.get("mode")))
-        if row:
-            run["ast_format"] = row.get("ast_format", "-")
-            run["ast_sha256"] = row["ast_sha256"]
-            run["ast_statements"] = row["ast_statements"]
-            run["ast_source"] = "imported"
+        problem = import_digest(run, valid, invalid)
+        if problem:
+            sys.stderr.write("ast-digests: %s %s: %s\n"
+                             % (run.get("case"), run.get("mode"), problem))
         with open_text(os.path.join(dirpath, "run.tsv"), "w") as f:
             for key, value in run.items():
                 f.write("%s\t%s\n" % (key, value))

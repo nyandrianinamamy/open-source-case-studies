@@ -661,6 +661,17 @@ Equal AST digests with different or missing recorded preprocessing give `not
 established`. An imported run is never compared by its commands with a run
 that has preprocessing digests.
 
+`recompute` checks every row of the file of digests before it updates any
+run. A row is valid when it has every column (`case`, `mode`, `ast_format`,
+`ast_sha256`, `ast_statements`, `parse_exit`), the listing format 2, a
+SHA-256 of 64 hexadecimal digits, a statement count that is a decimal, the
+parse exit 0, ends with a newline, and is the only row of its run. A run
+with an invalid row gets the digest `-`, so its numbering is `not
+established`, and the reason in `ast_import_problem`; the reason is also
+printed on the standard error. A run that recorded its digest itself keeps
+it, whatever the file holds. Running `recompute` again with the same file
+gives the same result.
+
 When `export-ast.sh` cannot be run (the binary is gone), a pair of runs of
 which one or both have no digest, and whose case, analyzer revision and
 patch, case-study revision and extra options are equal, has the numbering

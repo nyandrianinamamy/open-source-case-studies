@@ -1714,6 +1714,107 @@ class PreprocessingEvidence(unittest.TestCase):
         self.assertNotIn(tmp, "".join(commands))
 
 
+class DigestImport(unittest.TestCase):
+    """recompute --ast-digests checks every row before it updates a run, and
+    never replaces a digest that a run recorded itself."""
+
+    HEADER = ("# Listed by tools/export-ast.sh\n"
+              "case\tmode\tast_format\tast_sha256\tast_statements\t"
+              "parse_exit\n")
+
+    def recompute(self, fields_a, fields_b, digests):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = CompareRuns.output(None, tmp, fields_a, fields_b)
+            os.makedirs(os.path.join(root, "comparisons", "c", "x-vs-y"))
+            write(os.path.join(root, "comparisons", "c", "x-vs-y",
+                               "pair.tsv"),
+                  "case\tc\nbaseline\tx\ncandidate\ty\n")
+            path = os.path.join(tmp, "digests.tsv")
+            write(path, digests)
+            results = []
+            for _ in range(2):  # a second recompute changes nothing
+                stderr, error = io.StringIO(), None
+                with contextlib.redirect_stderr(stderr), \
+                        contextlib.redirect_stdout(io.StringIO()):
+                    try:
+                        code = campaign.main(["recompute", root,
+                                              "--ast-digests", path])
+                    except Exception as e:
+                        code, error = None, "%s: %s" % (type(e).__name__, e)
+                runs = [read_summary(os.path.join(root, "runs", "c", m,
+                                                  "run.tsv"))
+                        for m in "xy"]
+                s = read_summary(os.path.join(
+                    root, "comparisons", "c", "x-vs-y",
+                    "alignment-summary.tsv"))
+                results.append((code, error, runs, s, stderr.getvalue()))
+        self.assertEqual(results[0][:4], results[1][:4])
+        return results[0]
+
+    def test_rows_of_the_review(self):
+        # The runs recorded different digests; a row with parse exit 1 and
+        # a row cut after the digest field gave them equal digests.
+        own_a = dict(FRESH)
+        own_b = dict(FRESH, ast_sha256=DIGEST_1)
+        digests = (self.HEADER + "c\tx\t2\t%s\t2\t1\nc\ty\t2\t%s"
+                   % (DIGEST_0, DIGEST_0))
+        code, error, runs, s, report = self.recompute(own_a, own_b, digests)
+        self.assertEqual((code, error), (0, None))
+        self.assertEqual(s["numbering"], "different")
+        self.assertEqual([r["ast_sha256"] for r in runs],
+                         [DIGEST_0, DIGEST_1])
+        self.assertIn("c x: parse exit 1", report)
+        self.assertIn("c y: the file does not end with a complete line",
+                      report)
+
+    def test_invalid_rows_establish_nothing(self):
+        # Runs recorded before the digest: their numbering would be
+        # asserted, but an invalid row leaves it not established.
+        old = {"ast_sha256": None}
+        for row, reason in (
+                ("c\tx\t2\t%s\t2\t1\n" % DIGEST_0, "parse exit 1"),
+                ("c\tx\t2\t%s\t2\n" % DIGEST_0,
+                 "5 fields instead of 6"),
+                ("c\tx\t2\t%s\t-\t0\n" % DIGEST_0,
+                 "invalid statement count"),
+                ("c\tx\t2\t%s\t2\t0\n" % DIGEST_0[:63],
+                 "invalid SHA-256"),
+                ("c\tx\t1\t%s\t2\t0\n" % DIGEST_0, "listing format 1"),
+                ("c\tx\t2\t%s\t2\t0\nc\tx\t2\t%s\t2\t0\n"
+                 % (DIGEST_0, DIGEST_0), "listed twice")):
+            code, error, runs, s, report = self.recompute(
+                old, old, self.HEADER + row
+                + "c\ty\t2\t%s\t2\t0\n" % DIGEST_0)
+            self.assertEqual((code, error), (0, None))
+            self.assertEqual(runs[0]["ast_sha256"], "-", reason)
+            self.assertEqual(runs[0]["ast_import_problem"], reason)
+            self.assertEqual(runs[1]["ast_sha256"], DIGEST_0)
+            self.assertEqual(runs[1]["ast_import_problem"], "-")
+            self.assertEqual(s["numbering"], "not established", reason)
+            self.assertIn("c x: " + reason, report)
+
+    def test_valid_rows(self):
+        old = {"ast_sha256": None}
+        code, error, runs, s, report = self.recompute(
+            old, old, self.HEADER + "c\tx\t2\t%s\t2\t0\n"
+            "c\ty\t2\t%s\t2\t0\n" % (DIGEST_0, DIGEST_0))
+        self.assertEqual((code, error, report), (0, None, ""))
+        self.assertEqual([(r["ast_sha256"], r["ast_source"]) for r in runs],
+                         [(DIGEST_0, "imported")] * 2)
+        # No parse log: the preprocessing recorded by the commands is not
+        # known.
+        self.assertEqual(s["numbering"], "not established")
+
+    def test_header_without_a_column(self):
+        old = {"ast_sha256": None}
+        code, error, runs, s, report = self.recompute(
+            old, old, "case\tmode\tast_sha256\tast_statements\t"
+            "parse_exit\nc\tx\t%s\t2\t0\n" % DIGEST_0)
+        self.assertEqual((code, error), (0, None))
+        self.assertEqual(runs[0]["ast_sha256"], "-")
+        self.assertIn("no column ast_format", report)
+
+
 class EffectiveOptions(unittest.TestCase):
     """H2: the measured families follow the effective options, in their
     order, and the dispositions printed."""
