@@ -221,7 +221,7 @@ extra options, and the SHA-256 and size of the AST listing.
 | `parse-error` | the parse recipe failed; Eva did not run |
 | `harness-error` | the Eva invocation was not measured, or make failed after it |
 | `timeout` | the watchdog fired at the wall-time limit |
-| `oom` | Frama-C or the OCaml runtime reports exhausted memory; or a SIGKILL that the watchdog did not send, and the kernel log names the process, or `oom_kill` rose in a scope that the runner states it created for the measured invocation (`--dedicated-scope`) |
+| `oom` | Frama-C or the OCaml runtime reports exhausted memory; or the kernel log identifies the measured process as the victim of a SIGKILL that the watchdog did not send |
 | `killed` | killed by SIGKILL that the watchdog did not send, with no evidence that the out-of-memory killer chose this process: cause unknown |
 | `error` | any other nonzero status: 1 invalid input, 3 unimplemented, 4 internal error, 125 unexpected exception, another signal, or 124 |
 | `incomplete` | status 0, but the records are not one tree whose root is the analysed call of the entry point |
@@ -252,17 +252,14 @@ samples. Without other evidence the run is `killed`, and the rise and the
 samples are kept in `oom_evidence` (`cgroup oom_kill +N, samples exclusive
 yes, no dedicated scope`).
 
-The runner does not create cgroups. A rise of the counter is the cause only
-when the watchdog runs in a scope created for the measured invocation, and
-the runner says so with `--dedicated-scope`, which `run.tsv` records as
-`dedicated_scope yes`. To provide it, start the watchdog in a transient
-scope: in `bin/frama-c-measure`, replace `exec python3 -I` by
-`exec systemd-run --user --scope --quiet -p MemoryMax=BYTES python3 -I`, and
-pass `--dedicated-scope` to the runner. The scope then holds the watchdog and
-the session of the command; the watchdog survives a kill, since it writes
-the measure, so the process that the killer chose is the measured command.
-The runner checks neither the scope nor the statement. Without it, `oom`
-after a SIGKILL needs the kernel log, which `dmesg` may not let a user read.
+The runner records `--dedicated-scope` as `dedicated_scope yes`. To
+provide a scope, start the watchdog with `systemd-run --user --scope`
+in `bin/frama-c-measure` and pass `--dedicated-scope` to the runner.
+With a rising counter but no victim identified by the kernel log, the
+class is `killed` and the evidence includes `scope oom event, victim not
+identified`. A sample that saw a foreign process stays visible as
+`samples exclusive no`. Access to the kernel log depends on whether
+`dmesg` is readable.
 
 ### Per-call records
 

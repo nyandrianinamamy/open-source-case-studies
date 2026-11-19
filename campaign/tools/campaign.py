@@ -1892,37 +1892,30 @@ def read_measure_text(text):
 
 
 def oom_findings(measure, log_text, dedicated_scope=False):
-    """The evidence that memory was exhausted, as (conclusive, text). The
-    message of Frama-C or of the OCaml runtime in the log is conclusive. For
-    a command killed by SIGKILL that the watchdog did not send:
-    - the kernel log that names the process is conclusive;
-    - an increase of oom_kill in the memory events of the cgroup of the
-      watchdog is conclusive only when the runner states that it started the
-      watchdog in a scope of its own ([dedicated_scope], recorded in
-      run.tsv): then the killer chose a process of that scope, and the
-      watchdog, which wrote the measure, survived. Otherwise the cgroup may
-      hold other processes, and the samples of its processes taken by the
-      watchdog do not show that the command was in it or that it was alone
-      between two samples: the increase and the samples are kept as
-      evidence, not as a cause."""
-    if OUT_OF_MEMORY.search(log_text):
-        return True, "log"
-    if measure.get("signal") == "9" and measure.get("watchdog") != "kill":
-        conclusive, parts = False, []
-        if measure.get("kernel_log_oom") == "yes":
-            conclusive = True
-            parts.append("kernel log")
-        events = measure.get("oom_kill_events", "")
-        if (decimal(events) or 0) > 0:
-            if dedicated_scope:
-                conclusive = True
-                parts.append("cgroup oom_kill +%s, dedicated scope" % events)
-            else:
-                parts.append("cgroup oom_kill +%s, samples exclusive %s, "
-                             "no dedicated scope"
-                             % (events, measure.get("cgroup_exclusive", "-")))
-        return conclusive, ", ".join(parts)
-    return False, ""
+    """Return whether exhausted memory is established, and the evidence.
+    A SIGKILL requires the kernel log to identify this particular victim.
+    A rising cgroup counter describes its scope even when dedicated.
+    """
+    if measure.get("watchdog", "none") != "none":
+        return False, ""
+    status = decimal(measure.get("status"))
+    if measure.get("signal") != "9":
+        reported = bool(status and OUT_OF_MEMORY.search(log_text))
+        return reported, "log" if reported else ""
+    if status != 137:
+        return False, ""
+
+    identified = measure.get("kernel_log_oom") == "yes"
+    parts = ["kernel log"] if identified else []
+    events = measure.get("oom_kill_events", "")
+    if (decimal(events) or 0) > 0:
+        parts.append("cgroup oom_kill +%s, samples exclusive %s"
+                     % (events, measure.get("cgroup_exclusive", "-")))
+        if not dedicated_scope:
+            parts.append("no dedicated scope")
+        elif not identified:
+            parts.append("scope oom event, victim not identified")
+    return identified, ", ".join(parts)
 
 
 def oom_evidence(measure, log_text, dedicated_scope=False):
@@ -1942,8 +1935,7 @@ def classify_outcome(parse_exit, make_exit, measure, log_text,
       it, is never classified as a timeout;
     - oom: Frama-C or the OCaml runtime reports that memory is exhausted, or
       the out-of-memory killer of the system is reported to have killed it:
-      by the kernel log, or by the counter of a scope of its own when
-      [dedicated_scope] (see [oom_findings]);
+      by the kernel log (see [oom_findings]);
     - killed: killed by SIGKILL that the watchdog did not send, with no
       conclusive evidence of the out-of-memory killer: cause unknown;
     - error: any other nonzero exit status or signal, such as 1 (invalid
@@ -1958,11 +1950,14 @@ def classify_outcome(parse_exit, make_exit, measure, log_text,
         return "parse-error"
     if measure is None or decimal(measure.get("status")) is None:
         return "harness-error"
-    if measure.get("watchdog", "none") != "none":
+    watchdog = measure.get("watchdog", "none")
+    if watchdog in ("term", "kill"):
         return "timeout"
+    status = decimal(measure["status"])
+    if watchdog != "none" or (measure.get("signal") == "9" and status != 137):
+        return "harness-error"
     if oom_findings(measure, log_text, dedicated_scope)[0]:
         return "oom"
-    status = decimal(measure["status"])
     if measure.get("signal") == "9":
         return "killed"
     if status != 0:

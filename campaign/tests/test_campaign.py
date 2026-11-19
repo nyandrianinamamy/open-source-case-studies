@@ -2720,9 +2720,7 @@ class HomeSpellings(unittest.TestCase):
 class DedicatedScope(unittest.TestCase):
     """Finding 4: the counter of the cgroup and the samples of its
     processes are evidence only. A SIGKILL that the watchdog did not send is
-    an out-of-memory kill when the kernel log names the process, or when the
-    runner states that the command ran in a scope of its own and the counter
-    of that scope rose."""
+    an out-of-memory kill when the kernel log names the process."""
 
     # A child that killed itself with SIGKILL while the counter of a cgroup
     # in which the samples saw only the watchdog rose by 1.
@@ -2751,8 +2749,8 @@ class DedicatedScope(unittest.TestCase):
 
     def test_dedicated_scope(self):
         outcome, evidence = self.outcome("--dedicated-scope")
-        self.assertEqual(outcome, "oom")
-        self.assertIn("dedicated scope", evidence)
+        self.assertEqual(outcome, "killed")
+        self.assertIn("scope oom event, victim not identified", evidence)
         # The flag alone is not evidence: the counter must have risen.
         m = campaign.read_measure_text(
             self.MEASURE.replace("oom_kill_events\t1", "oom_kill_events\t0"))
@@ -2772,9 +2770,12 @@ class DedicatedScope(unittest.TestCase):
             code, _, error = run_main(["recompute", os.path.join(tmp, "out")])
             for flag in ("yes", "no"):
                 outcomes[flag] = read_summary(os.path.join(
-                    tmp, "out", "runs", "c", flag, "run.tsv"))["outcome"]
+                    tmp, "out", "runs", "c", flag, "run.tsv"))
         self.assertEqual((code, error), (0, None))
-        self.assertEqual(outcomes, {"yes": "oom", "no": "killed"})
+        self.assertEqual({row["outcome"] for row in outcomes.values()}, {"killed"})
+        self.assertIn("scope oom event, victim not identified",
+                      outcomes["yes"]["oom_evidence"])
+        self.assertIn("no dedicated scope", outcomes["no"]["oom_evidence"])
 
 
 # A log whose every stack ends in another function than the configured
@@ -2974,6 +2975,24 @@ class FourthReview(unittest.TestCase):
                 summary, _, _ = QueryNumbering.compare(self, *options)
                 self.assertEqual(summary["numbering"], "not established")
                 self.assertEqual(summary["unpaired"], "2")
+
+
+    def test_scope_that_observed_a_foreign_process(self):
+        measure = campaign.read_measure_text(
+            DedicatedScope.MEASURE.replace("exclusive\tyes", "exclusive\tno"))
+        self.assertEqual(campaign.classify_outcome(
+            0, 0, measure, "", True, dedicated_scope=True), "killed")
+        evidence = campaign.oom_evidence(measure, "", dedicated_scope=True)
+        self.assertIn("scope oom event, victim not identified", evidence)
+        self.assertIn("samples exclusive no", evidence)
+        measure["kernel_log_oom"] = "yes"
+        self.assertEqual(campaign.classify_outcome(
+            0, 0, measure, "", True, dedicated_scope=True), "oom")
+        self.assertIn("samples exclusive no",
+                      campaign.oom_evidence(measure, "", dedicated_scope=True))
+        measure["watchdog"] = "kill"
+        self.assertEqual(campaign.classify_outcome(
+            0, 0, measure, "", True, dedicated_scope=True), "timeout")
 
 
 if __name__ == "__main__":
