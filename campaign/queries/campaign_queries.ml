@@ -3,7 +3,7 @@
    Loaded into Frama-C after an Eva analysis, or after [-load] of a session
    saved by one, this module writes the answers of enumerated and named state
    queries to the file named by the environment variable
-   [CAMPAIGN_QUERIES_OUT]. Without that variable it does nothing.
+   [CAMPAIGN_QUERIES_OUT]. Without that variable it writes no answer.
 
    A query is a statement, a point (before or after the statement), a
    callstack or all callstacks (written [*]), and a scalar lvalue. The
@@ -20,30 +20,52 @@
    [sallstmts]; a callstack is the entry point followed by CALLEE@CALLSITE for
    each call, from the outermost.
 
-   The exit queries ask, for every function whose results are available, for
-   each scalar lvalue that occurs in its body, in the state at the end of the
-   function ([Eva.Results.at_end_of]): its exit state. Their statement is
-   written FUNCTION:exit and their point [exit].
+   The exit queries ask, for every function whose return statement is
+   reached, for each scalar lvalue that occurs in its body, in the state at
+   the end of the function ([Eva.Results.at_end_of]): its exit state. Their
+   statement is written FUNCTION:exit and their point [exit].
 
-   A query is answered only when Eva saved the results of its function
-   ([Eva.Results.are_available]): with [-eva-no-results], or for a function
-   analysed through its specification or a builtin, the states are not
-   saved and the query is written as unavailable, never evaluated.
+   A query is answered only when the state of its function was saved. The
+   results of a function are not saved with [-eva-no-results], or for a
+   function analysed through its specification or a builtin
+   ([Eva.Results.are_available]); the states of the cvalue domain are not
+   saved with [-eva-no-results-domain cvalue], and Eva then gives the top
+   state of that domain at every point. In both cases the
+   query is written as unavailable, never evaluated, whether it is a query of
+   a statement or of the exit.
 
    Output, tab-separated:
-   - [reach FUNCTION STMT] for each reached statement;
+   - [format 2] first: the exit points are declared reached;
+   - [reach FUNCTION STMT] for each reached statement, and [reach FUNCTION
+     FUNCTION:exit] for each function whose return statement is reached;
    - [answer FUNCTION STMT POINT CALLSTACK LVALUE INIT ESC VALUE] where INIT
      and ESC tell whether the value may be uninitialized or an escaping
      address, and VALUE is written as described at [value_to_string];
    - [unavailable FUNCTION STMT POINT CALLSTACK LVALUE REASON] when the state
      of the query was not saved: [no-results] when the results of the
-     function are not available, [top-state] or [disabled-domain] when Eva
-     returns no state for the query;
+     function are not available, [disabled-domain] when the states of the
+     cvalue domain were not saved or the domain is disabled, [top-state]
+     when Eva returns no state for the query; the queries of a function
+     whose state was not saved are written over all callstacks only;
    - [error FUNCTION STMT POINT CALLSTACK LVALUE REASON] when the evaluation
      raises an exception;
    - [done COUNT] at the end, with the number of answer, unavailable and
      error lines written before it. A file without this line, or whose count
-     differs, is incomplete. *)
+     differs, is incomplete.
+
+   With the environment variable [CAMPAIGN_AST_OUT], the module also writes
+   to the file it names the identity of the AST, whether Eva ran or not (a
+   session saved after parsing is enough): one line per statement of each
+   function with a body, in the order of the globals and of [sallstmts],
+
+     stmt FUNCTION SID LOCATION TEXT
+
+   where SID is the number of the statement, LOCATION its source location as
+   Frama-C prints it (relative to the current directory), and TEXT the
+   statement itself, without the statements it contains, which are named by
+   their numbers. The file ends with [done COUNT], the number of statement
+   lines. Two runs number the statements of their programs alike when these
+   lines are the same. *)
 
 open Cil_types
 
@@ -184,14 +206,47 @@ let unavailable fname skey point cs_key lval_text reason =
   print "unavailable\t%s\t%s\t%s\t%s\t%s\t%s\n"
     fname skey (point_name point) cs_key lval_text reason
 
-(* Writes the answer of one query. [available] tells whether the results of
-   the function were saved; it is checked before any evaluation, since the
-   evaluation in a state that was not saved gives a top value. *)
-let answer ~available ~fname ~skey point cs_key request lval_text eval =
+(* Whether Eva saved the states of the cvalue domain. It does not when the
+   option -eva-no-results-domain names that domain; the option is saved with
+   the session. Its value is the text of its settings in their order: a
+   comma-separated list where NAME or +NAME adds a domain, -NAME removes it,
+   and @default stands for the default value, which is empty. *)
+let cvalue_states_saved =
+  lazy
+    (match Typed_parameter.get "-eva-no-results-domain" with
+     | exception Not_found -> true
+     | parameter ->
+       List.fold_left
+         (fun saved item ->
+            match item with
+            | "cvalue" | "+cvalue" -> false
+            | "-cvalue" -> true
+            | _ -> saved)
+         true
+         (String.split_on_char ',' (Typed_parameter.get_value parameter)))
+
+(* Whether the state of a function was saved, checked once per function
+   before any evaluation: the evaluation in a state that was not saved gives
+   a top value. [Unavailable "no-results"] when the results of the function
+   are not available, [Unavailable "disabled-domain"] when the states of the
+   cvalue domain were not saved: Eva then gives the top state of that domain
+   at every point. *)
+type availability = Available | Unavailable of string
+
+let availability kf =
+  if not (Eva.Results.are_available kf) then Unavailable "no-results"
+  else if not (Lazy.force cvalue_states_saved) then
+    Unavailable "disabled-domain"
+  else Available
+
+(* Writes the answer of one query, or the reason why the state of its
+   function is not available. *)
+let answer ~availability ~fname ~skey point cs_key request lval_text eval =
   let point_text = point_name point in
-  if not available then
-    unavailable fname skey point cs_key lval_text "no-results"
-  else
+  match availability with
+  | Unavailable reason ->
+    unavailable fname skey point cs_key lval_text reason
+  | Available ->
     match eval request with
     | exception exn ->
       incr count;
@@ -233,20 +288,24 @@ let requests_at before after =
        Eva.Results.in_callstack cs before, Eva.Results.in_callstack cs after)
     callstacks
 
-let requests stmt =
-  requests_at (Eva.Results.before stmt) (Eva.Results.after stmt)
+(* The requests of a statement: in each callstack when the state of its
+   function was saved, over all callstacks only otherwise. *)
+let requests availability stmt =
+  let before = Eva.Results.before stmt and after = Eva.Results.after stmt in
+  match availability with
+  | Available -> requests_at before after
+  | Unavailable _ -> [ "*", before, after ]
 
-let query_stmt ~available kf stmt lvals =
+let query_stmt ~availability kf stmt lvals =
   let fname = Kernel_function.get_name kf and skey = stmt_key stmt in
   List.iter
     (fun (cs_key, before, after) ->
        List.iter
          (fun (text, eval) ->
-            answer ~available ~fname ~skey `Before cs_key before text eval;
-            answer ~available ~fname ~skey `After cs_key after text eval)
+            answer ~availability ~fname ~skey `Before cs_key before text eval;
+            answer ~availability ~fname ~skey `After cs_key after text eval)
          lvals)
-    (if available then requests stmt
-     else [ "*", Eva.Results.before stmt, Eva.Results.after stmt ])
+    (requests availability stmt)
 
 let lval_query lv =
   Format.asprintf "%a" Printer.pp_lval lv, Eva.Results.eval_lval lv
@@ -255,46 +314,56 @@ let enumerated kf =
   match kf.fundec with
   | Declaration _ -> ()
   | Definition (fundec, _) ->
-    let available = Eva.Results.are_available kf in
+    let availability = availability kf in
     List.iter
       (fun stmt ->
          if Eva.Results.is_reachable stmt then begin
            print "reach\t%s\t%s\n" (Kernel_function.get_name kf)
              (stmt_key stmt);
-           query_stmt ~available kf stmt
+           query_stmt ~availability kf stmt
              (List.map lval_query (lvals_of_stmt stmt))
          end)
       fundec.sallstmts
 
 (* The exit queries of a function: the scalar lvalues of its body, in the
-   state at the end of the function, when its results are available and its
-   return statement is reached. *)
+   state at the end of the function, when its return statement is reached.
+   They go through the same check of availability as the queries of the
+   statements: a function whose state was not saved gets one unavailable
+   line per lvalue, over all callstacks. *)
 let exit_queries kf =
   match kf.fundec with
   | Declaration _ -> ()
   | Definition (fundec, _) ->
-    let return = Kernel_function.find_return kf in
-    if Eva.Results.are_available kf && Eva.Results.is_reachable return
-    then begin
-      let module S = Cil_datatype.LvalStructEq.Set in
-      let lvals =
-        List.fold_left (fun acc stmt -> S.union acc (S.of_list
-                                                      (lvals_of_stmt stmt)))
-          S.empty fundec.sallstmts
-      in
-      let fname = Kernel_function.get_name kf in
-      let skey = fname ^ ":exit" in
-      let at_end = Eva.Results.at_end_of kf in
-      List.iter
-        (fun (cs_key, _, request) ->
-           S.iter
-             (fun lv ->
-                let text, eval = lval_query lv in
-                answer ~available:true ~fname ~skey `Exit cs_key request text
-                  eval)
-             lvals)
-        (requests_at at_end at_end)
-    end
+    match Kernel_function.find_return kf with
+    | exception Kernel_function.No_Statement -> ()
+    | return ->
+      if Eva.Results.is_reachable return then begin
+        let module S = Cil_datatype.LvalStructEq.Set in
+        let lvals =
+          List.fold_left (fun acc stmt -> S.union acc (S.of_list
+                                                        (lvals_of_stmt stmt)))
+            S.empty fundec.sallstmts
+        in
+        let fname = Kernel_function.get_name kf in
+        let skey = fname ^ ":exit" in
+        print "reach\t%s\t%s\n" fname skey;
+        let availability = availability kf in
+        let at_end = Eva.Results.at_end_of kf in
+        let requests =
+          match availability with
+          | Available -> requests_at at_end at_end
+          | Unavailable _ -> [ "*", at_end, at_end ]
+        in
+        List.iter
+          (fun (cs_key, _, request) ->
+             S.iter
+               (fun lv ->
+                  let text, eval = lval_query lv in
+                  answer ~availability ~fname ~skey `Exit cs_key request text
+                    eval)
+               lvals)
+          requests
+      end
 
 let find_variable kf name =
   let locals = Kernel_function.(get_formals kf @ get_locals kf) in
@@ -320,7 +389,7 @@ let named file =
             | None -> failwith ("unknown variable " ^ var)
           in
           let text = "named:" ^ var and eval = Eva.Results.eval_var vi in
-          let available = Eva.Results.are_available kf in
+          let availability = availability kf in
           let fname = Kernel_function.get_name kf in
           let stmts = (Kernel_function.get_definition kf).sallstmts in
           List.iter
@@ -332,15 +401,13 @@ let named file =
                    (fun (cs_key, before, after) ->
                       match point with
                       | "before" ->
-                        answer ~available ~fname ~skey `Before cs_key before
-                          text eval
+                        answer ~availability ~fname ~skey `Before cs_key
+                          before text eval
                       | "after" ->
-                        answer ~available ~fname ~skey `After cs_key after
-                          text eval
+                        answer ~availability ~fname ~skey `After cs_key
+                          after text eval
                       | _ -> failwith ("unknown point " ^ point))
-                   (if available then requests stmt
-                    else [ "*", Eva.Results.before stmt,
-                           Eva.Results.after stmt ]))
+                   (requests availability stmt))
             stmts
         | [] | [ "" ] -> ()
         | _ -> failwith ("malformed named query: " ^ line)
@@ -349,13 +416,70 @@ let named file =
   in
   loop ()
 
+(* ----- Identity of the AST ---------------------------------------------- *)
+
+let flat text =
+  String.map (function '\t' | '\n' | '\r' -> ' ' | c -> c) text
+
+let sids stmts = String.concat "," (List.map (fun s -> string_of_int s.sid) stmts)
+
+(* The statement itself, its labels included, without the statements it
+   contains: those are named by their numbers. *)
+let stmt_text stmt =
+  let p = Format.asprintf in
+  let body =
+    match stmt.skind with
+    | Instr instr -> p "%a" Printer.pp_instr instr
+    | Return (None, _) -> "return"
+    | Return (Some e, _) -> p "return %a" Printer.pp_exp e
+    | Goto (target, _) -> p "goto %d" !target.sid
+    | Break _ -> "break"
+    | Continue _ -> "continue"
+    | If (e, b1, b2, _) ->
+      p "if %a then {%s} else {%s}" Printer.pp_exp e (sids b1.bstmts)
+        (sids b2.bstmts)
+    | Switch (e, b, cases, _) ->
+      p "switch %a {%s} cases {%s}" Printer.pp_exp e (sids b.bstmts)
+        (sids cases)
+    | Loop (_, b, _, _, _) -> p "loop {%s}" (sids b.bstmts)
+    | Block b -> p "block {%s}" (sids b.bstmts)
+    | UnspecifiedSequence l ->
+      p "sequence {%s}" (sids (List.map (fun (s, _, _, _, _) -> s) l))
+    | Throw _ | TryCatch _ | TryFinally _ | TryExcept _ ->
+      p "%a" Printer.pp_stmt stmt
+  in
+  let labels = List.map (fun l -> p "%a" Printer.pp_label l) stmt.labels in
+  flat (String.concat " " (labels @ [ body ]))
+
+let export_ast file =
+  let channel = open_out file in
+  let statements = ref 0 in
+  List.iter
+    (function
+      | GFun (fundec, _) ->
+        List.iter
+          (fun stmt ->
+             incr statements;
+             Printf.fprintf channel "stmt\t%s\t%d\t%s\t%s\n"
+               fundec.svar.vname stmt.sid
+               (flat (Format.asprintf "%a" Fileloc.pretty
+                        (Cil_datatype.Stmt.loc stmt)))
+               (stmt_text stmt))
+          fundec.sallstmts
+      | _ -> ())
+    (Ast.get ()).globals;
+  Printf.fprintf channel "done\t%d\n" !statements;
+  close_out channel
+
 let run () =
+  Option.iter export_ast (Sys.getenv_opt "CAMPAIGN_AST_OUT");
   match Sys.getenv_opt "CAMPAIGN_QUERIES_OUT" with
   | None -> ()
   | Some file ->
     if not (Eva.Analysis.is_computed ()) then
       failwith "campaign queries: no Eva results";
     out := open_out file;
+    print "format\t2\n";
     Globals.Functions.iter compute_stmt_keys;
     let functions =
       Globals.Functions.fold (fun kf acc -> kf :: acc) []
