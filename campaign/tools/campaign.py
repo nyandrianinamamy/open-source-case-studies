@@ -2866,14 +2866,9 @@ def recompute_command(args):
         with open_text(os.path.join(dirpath, "run.tsv"), "w") as f:
             for key, value in run.items():
                 f.write("%s\t%s\n" % (key, value))
-    pairs = []
-    for dirpath, _, filenames in os.walk(os.path.join(args.run_dir,
-                                                      "comparisons")):
-        if "pair.tsv" in filenames:
-            pair = read_kv(os.path.join(dirpath, "pair.tsv"))
-            pairs.append((pair["case"], pair["baseline"], pair["candidate"]))
-    for case, mode_a, mode_b in sorted(pairs):
-        compare_runs(args.run_dir, case, mode_a, mode_b)
+    for _, pair in comparison_pairs(args.run_dir)[0]:
+        compare_runs(args.run_dir, pair["case"], pair["baseline"],
+                     pair["candidate"])
     return tables_command(args)
 
 
@@ -2905,6 +2900,131 @@ def cell(value):
     if value is True or value is False:
         return "True" if value else "False"
     return value
+
+
+# The summaries of a comparison, as this tool writes them: each field in
+# its order, with the check of its value. A table reads a summary only when
+# the file holds exactly these fields with valid values (read_summary):
+# a field of a file cut, edited or written by another revision is not
+# evidence of a result.
+def _count(value):
+    return decimal(value) is not None
+
+
+def _flag(value):
+    return value in ("True", "False")
+
+
+def _text(value):
+    return value != ""
+
+
+def _status(value):
+    return value == "complete" or value.startswith("incomplete: ")
+
+
+ALIGNMENT_SUMMARY = (
+    [(k, _count) for k in (
+        "records_a", "records_b", "inferred_a", "inferred_b", "aligned",
+        "aligned_with_inferred", "aligned_same_dispositions",
+        "aligned_other_dispositions", "hit_a_analysed_b", "analysed_a_hit_b",
+        "nested_under_hit_a", "nested_under_hit_b", "unmatched_a",
+        "unmatched_b", "undecided_groups", "undecided_records_a",
+        "undecided_records_b")]
+    + [("interrupted_a", _flag), ("interrupted_b", _flag),
+       ("problems_a", _count), ("problems_b", _count),
+       ("statement_numbers_a", ("all", "none", "some").__contains__),
+       ("statement_numbers_b", ("all", "none", "some").__contains__),
+       ("numbering", NUMBERINGS.__contains__), ("entry_point", _text),
+       ("entry_point_a", _flag), ("entry_point_b", _flag),
+       ("outcome_a", _text), ("outcome_b", _text), ("accounted", _flag),
+       ("complete", _flag), ("verdict", _text)])
+QUERIES_SUMMARY = (
+    [("queries", _count), ("numbering", NUMBERINGS.__contains__)]
+    + [(k, _count) for k in (
+        "unpaired", "answered_a", "answered_b", "answered_both", "equal",
+        "wider", "narrower", "incomparable", "undecided", "top_a", "top_b",
+        "garbled_a", "garbled_b")]
+    + [("unavailable_%s_%s" % (side, reason), _count)
+       for side in ("a", "b") for reason in UNAVAILABLE_REASONS + ("other",)]
+    + [("reached_a", _count), ("reached_b", _count),
+       ("reached_a_only", lambda v: v == "-" or _count(v)),
+       ("reached_b_only", lambda v: v == "-" or _count(v)),
+       ("complete_a", _status), ("complete_b", _status),
+       ("comparison", _status)])
+ALARMS_SUMMARY = [(k, _count) for k in (
+    "properties_a", "properties_b", "keys_a", "keys_b", "duplicate_keys_a",
+    "duplicate_keys_b", "same_status", "other_status", "a_only", "b_only")]
+# For each summary: its fields, and a check that its verdict does not say
+# more than its other fields.
+SUMMARIES = {
+    "alignment": (ALIGNMENT_SUMMARY, lambda s: (
+        (s["complete"] == "True") == (s["verdict"] == "complete"))),
+    "queries": (QUERIES_SUMMARY, lambda s: s["comparison"] != "complete" or (
+        s["complete_a"] == s["complete_b"] == "complete"
+        and s["numbering"] == "same")),
+    "alarms": (ALARMS_SUMMARY, lambda s: True),
+}
+
+
+def read_summary(path, name):
+    """The summary [name] (alignment, queries or alarms) of a comparison,
+    or {} when the file is missing or is not a summary of this tool: every
+    field of SUMMARIES[name], once, in its order, on a complete line, with a
+    valid value, and a verdict that its other fields allow."""
+    fields, consistent = SUMMARIES[name]
+    if not os.path.exists(path):
+        return {}
+    with open_text(path) as f:
+        lines = f.read().split("\n")
+    if lines.pop() != "" or len(lines) != len(fields):
+        return {}
+    summary = OrderedDict()
+    for line, (key, valid) in zip(lines, fields):
+        found, separator, value = line.partition("\t")
+        if found != key or not separator or not valid(value):
+            return {}
+        summary[key] = value
+    return summary if consistent(summary) else {}
+
+
+def read_pair(root, dirpath):
+    """The case and the two modes of a comparison directory, from its
+    pair.tsv, or None when the file does not give them or names another
+    directory than comparisons/CASE/A-vs-B."""
+    pair = read_kv(os.path.join(dirpath, "pair.tsv"))
+    if not all(pair.get(k) for k in ("case", "baseline", "candidate")):
+        return None
+    named = os.path.join(pair["case"], "%s-vs-%s" % (pair["baseline"],
+                                                    pair["candidate"]))
+    if os.path.relpath(dirpath, os.path.join(root, "comparisons")) != named:
+        return None
+    return pair
+
+
+def comparison_pairs(root):
+    """The comparison directories of an output directory with their pairs
+    (read_pair), sorted, and the directories left out, relative to [root]:
+    those whose pair.tsv is not valid, which are named on the standard
+    error too."""
+    comparisons, left_out = [], []
+    for dirpath, _, filenames in os.walk(os.path.join(root, "comparisons")):
+        if "pair.tsv" not in filenames:
+            continue
+        pair = read_pair(root, dirpath)
+        if pair is None:
+            print("%s: pair.tsv does not name this comparison; left out"
+                  % dirpath, file=sys.stderr)
+            left_out.append(os.path.relpath(dirpath, root))
+        else:
+            comparisons.append((dirpath, pair))
+    comparisons.sort(key=lambda c: (c[1]["case"], c[1]["baseline"],
+                                    c[1]["candidate"]))
+    return comparisons, left_out
+
+
+NESTED_HIT_CHECK = ("PASS nested-hit: two runs of the same binary align "
+                    "completely")
 
 
 def tables_command(args):
@@ -2942,9 +3062,11 @@ def tables_command(args):
              "`%s`. A cell `-` means that the source of its column does "
              "not give the value; it is never a zero. Each table names its "
              "source.\n\n" % os.path.basename(os.path.abspath(root)))
+    comparisons, unnamed = comparison_pairs(root)
+    left_out += unnamed
     if left_out:
-        md.write("Left out of every table, because the `run.tsv` of the "
-                 "directory does not name it: %s.\n\n"
+        md.write("Left out of every table, because the `run.tsv` or the "
+                 "`pair.tsv` of the directory does not name it: %s.\n\n"
                  % ", ".join("`%s`" % d for d in sorted(left_out)))
 
     # Outcomes, time and memory.
@@ -3082,19 +3204,14 @@ def tables_command(args):
     md.write(markdown_table(header, rows) + "\n")
 
     # Comparisons.
-    comparisons = []
-    comp_dir = os.path.join(root, "comparisons")
-    for dirpath, _, filenames in os.walk(comp_dir):
-        if "pair.tsv" in filenames:
-            comparisons.append((dirpath, read_kv(
-                os.path.join(dirpath, "pair.tsv"))))
-    comparisons.sort(key=lambda c: (c[1].get("case", ""),
-                                    c[1].get("baseline", ""),
-                                    c[1].get("candidate", "")))
-
     def completed(pair):
-        return all(by_run.get((pair["case"], pair[k]), {}).get("outcome")
-                   == "completed" for k in ("baseline", "candidate"))
+        """Whether both runs of a pair completed, or None when the outcome
+        of one is not recorded."""
+        outcomes = [by_run.get((pair["case"], pair[k]), {}).get("outcome")
+                    for k in ("baseline", "candidate")]
+        if any(o in (None, "", "-") for o in outcomes):
+            return None
+        return all(o == "completed" for o in outcomes)
 
     align_keys = ["records_a", "records_b", "inferred_a", "inferred_b",
                   "aligned", "aligned_other_dispositions", "hit_a_analysed_b",
@@ -3122,66 +3239,78 @@ def tables_command(args):
         rows = []
         compared = both = 0
         for dirpath, pair in comparisons:
-            values = read_kv(os.path.join(dirpath, name + "-summary.tsv"))
+            path = os.path.join(dirpath, name + "-summary.tsv")
+            values = read_summary(path, name)
+            if not values and os.path.exists(path):
+                print("%s: not a valid summary; its fields are not read"
+                      % path, file=sys.stderr)
             done = completed(pair)
             if name == "alignment":
                 key = (pair["case"], pair["baseline"], pair["candidate"])
                 alignment_results[key] = values
             if values:
                 compared += 1
-                both += done
+                both += done is True
             rows.append([pair["case"], pair["baseline"], pair["candidate"],
                          cell(done)]
                         + [cell(values.get(k)) for k in keys])
         write_tsv(os.path.join(out_dir, name + ".tsv"), header, rows)
         md.write("## %s\n\nRun A is the baseline, run B the candidate. "
-                 "Pairs: %d, compared: %d, with both runs completed: %d.\n\n"
+                 "Pairs: %d, with a valid summary: %d, of which both runs "
+                 "completed: %d. A pair without a valid summary has `-` in "
+                 "every column of the comparison; `both_completed` is `-` "
+                 "when the outcome of a run is not recorded.\n\n"
                  % (title, len(comparisons), compared, both))
         md.write(markdown_table(header, rows) + "\n")
     # The checks of the fixtures and of the outcome demonstration, which
-    # pilot.sh writes next to the runs.
+    # pilot.sh writes next to the runs. They are copied as they were
+    # recorded: the tables do not run them again.
+    revision_path = os.path.join(root, "provenance", "campaign-revision.txt")
+    revision = "unavailable"
+    if os.path.isfile(revision_path):
+        with open_text(revision_path) as f:
+            first = f.readline().split()
+        if first and re.fullmatch(r"[0-9a-f]{7,40}", first[0]):
+            revision = first[0]
     sections = []
-    for name, title, intro in (
-            ("fixtures.txt", "Checks on the constructed cases", ""),
+    for name, title, what in (
+            ("fixtures.txt", "Checks on the constructed cases",
+             "Checks of `fixtures/run-fixtures.sh`"),
             ("outcome-demo.txt", "Outcome classes of the runner",
-             "Constructed runs of tools/outcome-demo.sh, caching "
-             "disabled.\n\n")):
+             "Constructed runs of `tools/outcome-demo.sh`, caching "
+             "disabled,")):
         path = os.path.join(args.run_dir, name)
-        if os.path.exists(path):
-            with open_text(path) as f:
-                checks = f.read()
-            nested_hit = alignment_results.get(
-                ("fixtures/nested-hit.c/default", "cache", "cache.2"), {})
-            if (name == "fixtures.txt"
-                    and "PASS nested-hit: two runs of the same binary align completely"
-                    in checks.splitlines() and nested_hit.get("complete") != "True"):
-                revision_path = os.path.join(root, "provenance",
-                                             "campaign-revision.txt")
-                revision = "unavailable"
-                if os.path.isfile(revision_path):
-                    with open_text(revision_path) as f:
-                        first = f.readline().split()
-                    if first and re.fullmatch(r"[0-9a-f]{7,40}", first[0]):
-                        revision = first[0]
-                count = sum(row.get("complete") == "True"
-                            for row in alignment_results.values())
-                if nested_hit:
-                    intro = ("Historical checks at revision `%s` (alignment "
-                             "result superseded).\n\n" % revision)
-                    intro += (
-                        "Current result: %d of %d alignments are complete. "
-                        "The two archived memexec runs of `nested-hit.c` "
-                        "have numbering `%s`, `complete=False`.\n\n"
-                        % (count, len(alignment_results),
-                           nested_hit.get("numbering", "-")))
-                else:
-                    intro = ("Checks recorded at revision `%s`.\n\n"
-                             % revision)
-                    intro += ("Current alignment unavailable: the comparison "
-                              "of the two memexec runs of `nested-hit.c` is "
-                              "not in this directory.\n\n")
-            sections.append("## %s\n\n%s```\n%s```\n"
-                            % (title, intro, checks))
+        if not os.path.exists(path):
+            continue
+        with open_text(path) as f:
+            checks = f.read()
+        intro = ("%s as recorded when the campaign ran (harness revision "
+                 "`%s`). `tables` copies these lines and does not check "
+                 "them again.\n\n" % (what, revision))
+        if name == "fixtures.txt" and NESTED_HIT_CHECK in checks.splitlines():
+            key = ("fixtures/nested-hit.c/default", "cache", "cache.2")
+            nested_hit = alignment_results.get(key)
+            valid = [s for s in alignment_results.values() if s]
+            count = sum(s["complete"] == "True" for s in valid)
+            if not nested_hit:
+                intro += ("Current alignment unavailable: this directory "
+                          "has no valid alignment summary of the two "
+                          "memexec runs of `nested-hit.c`.\n\n")
+            elif nested_hit["complete"] == "False":
+                intro += (
+                    "The alignment result of the recorded check is "
+                    "superseded. Current result: %d of %d alignments with "
+                    "a valid summary are complete. The alignment of the "
+                    "two memexec runs of `nested-hit.c` in this directory "
+                    "has numbering `%s`, `complete=False` and the verdict "
+                    "`%s`.\n\n"
+                    % (count, len(valid), nested_hit["numbering"],
+                       nested_hit["verdict"]))
+            else:
+                intro += ("Current result: the alignment of the two "
+                          "memexec runs of `nested-hit.c` in this "
+                          "directory is `complete=True`.\n\n")
+        sections.append("## %s\n\n%s```\n%s```\n" % (title, intro, checks))
     md.write("\n".join(sections))
     with open_text(os.path.join(out_dir, "tables.md"), "w") as f:
         f.write(md.getvalue())

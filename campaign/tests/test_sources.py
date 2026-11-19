@@ -665,6 +665,169 @@ class LogCounts(unittest.TestCase):
                          ("0", "-", "no disposition line"))
 
 
+class Summaries(unittest.TestCase):
+    """A comparison table reads a summary only when the file is one that
+    the tool writes, whole: a field of a partial file is not a result."""
+
+    CASE = "fixtures/nested-hit.c/default"
+    HISTORICAL = ("PASS nested-hit: two runs of the same binary align "
+                  "completely")
+
+    def summary(self, *options):
+        """The alignment summary that the tool writes for two runs of one
+        log, both completed unless [options] say otherwise."""
+        with tempfile.TemporaryDirectory() as tmp:
+            log = os.path.join(tmp, "eva.log")
+            records = os.path.join(tmp, "records.jsonl")
+            write(log, HIT_LOG)
+            main(["records", log, records])
+            arguments = {"--ast-a": "0" * 64, "--ast-b": "0" * 64,
+                         "--pp-a": "a" * 64 + ":" + "b" * 64,
+                         "--pp-b": "a" * 64 + ":" + "b" * 64,
+                         "--outcome-a": "completed",
+                         "--outcome-b": "completed",
+                         "--entry-point": "main"}
+            arguments.update(zip(options[::2], options[1::2]))
+            main(["align"] + [x for kv in arguments.items() for x in kv]
+                 + [records, records, os.path.join(tmp, "alignment-")])
+            with open(os.path.join(tmp, "alignment-summary.tsv")) as f:
+                return f.read()
+
+    def tables(self, summary, directory=None, name="alignment", runs=True):
+        with tempfile.TemporaryDirectory() as tmp:
+            pair = os.path.join(
+                tmp, "comparisons",
+                directory or os.path.join(self.CASE, "cache-vs-cache.2"))
+            write(os.path.join(pair, "pair.tsv"),
+                  "case\t%s\nbaseline\tcache\ncandidate\tcache.2\n"
+                  % self.CASE)
+            if summary is not None:
+                write(os.path.join(pair, name + "-summary.tsv"), summary)
+            write(os.path.join(tmp, "fixtures.txt"), self.HISTORICAL + "\n")
+            if runs:
+                for mode in ("cache", "cache.2"):
+                    add_run(tmp, case=self.CASE, mode=mode)
+            return Result(tmp)
+
+    def assert_unavailable(self, result, table="alignment"):
+        self.assertEqual(result.code, 0)
+        self.assertIn("Current alignment unavailable", result.md)
+        self.assertNotIn("complete=False", result.md)
+        self.assertNotIn("complete=True", result.md)
+        self.assertNotIn("superseded", result.md)
+        for row in result.tables[table]:
+            self.assertEqual(
+                {k: v for k, v in row.items()
+                 if k not in ("case", "A", "B", "both_completed")},
+                {k: "-" for k in row
+                 if k not in ("case", "A", "B", "both_completed")})
+
+    def test_summary_with_the_numbering_alone(self):
+        # Finding 5 of the fifth review: with numbering=same alone, the
+        # tables printed complete=False and called the recorded result
+        # superseded, while alignment.tsv showed -.
+        result = self.tables("numbering\tsame\n")
+        self.assert_unavailable(result)
+        self.assertEqual(result.row("alignment")["numbering"], "-")
+        self.assertIn("with a valid summary: 0", result.md)
+        self.assertIn("not a valid summary", result.err)
+
+    def test_validated_values(self):
+        whole = self.summary()
+        result = self.tables(whole)
+        self.assertIn("is `complete=True`", result.md)
+        self.assertEqual((result.row("alignment")["complete"],
+                          result.row("alignment")["verdict"]),
+                         ("True", "complete"))
+        result = self.tables(self.summary("--outcome-b", "timeout"))
+        self.assertIn("superseded", result.md)
+        self.assertIn("`complete=False`", result.md)
+        self.assertIn("0 of 1 alignments with a valid summary are complete",
+                      result.md)
+        self.assertIn("the verdict `incomplete: outcome of B: timeout`",
+                      result.md)
+        self.assertEqual(result.row("alignment")["complete"], "False")
+
+    def test_every_field_is_needed_and_checked(self):
+        # A summary without one of its fields, with a field that is not a
+        # value of its kind, with a line twice or with a line cut is not
+        # read at all.
+        whole = self.summary("--outcome-b", "timeout")
+        lines = whole.splitlines(keepends=True)
+        self.assertEqual(len(lines), len(campaign.ALIGNMENT_SUMMARY))
+        for index, line in enumerate(lines):
+            key = line.split("\t")[0]
+            for name, text in (
+                    ("without", "".join(lines[:index] + lines[index + 1:])),
+                    ("empty", whole.replace(line, key + "\t\n")),
+                    ("invalid", whole.replace(line, key + "\tperhaps\n")),
+                    ("twice", whole.replace(line, line + line)),
+                    ("no value", whole.replace(line, key + "\n"))):
+                if name == "invalid" and key in (
+                        "entry_point", "outcome_a", "outcome_b", "verdict"):
+                    continue  # free text: any word is a value
+                with self.subTest(field=key, change=name):
+                    self.assert_unavailable(self.tables(text))
+        self.assert_unavailable(self.tables(whole[:-1]))
+        self.assert_unavailable(self.tables(whole + "later\t1\n"))
+        self.assert_unavailable(self.tables(""))
+        self.assert_unavailable(self.tables(None))
+
+    def test_verdict_that_its_fields_do_not_allow(self):
+        whole = self.summary("--outcome-b", "timeout")
+        self.assertIn("complete\tFalse\n", whole)
+        self.assert_unavailable(self.tables(
+            whole.replace("complete\tFalse\n", "complete\tTrue\n")))
+        self.assert_unavailable(self.tables(
+            self.summary().replace("complete\tTrue\n", "complete\tFalse\n")))
+
+    def test_pair_that_names_another_directory(self):
+        # The directory of the review: comparisons/fixture, whose pair.tsv
+        # names another comparison. Its cells would go to that one.
+        result = self.tables(self.summary(), directory="fixture")
+        self.assertIn("Current alignment unavailable", result.md)
+        self.assertEqual(result.tables["alignment"], [])
+        self.assertIn("Left out of every table", result.md)
+        self.assertIn("`comparisons/fixture`", result.md)
+        self.assertIn("left out", result.err)
+
+    def test_other_summaries(self):
+        for name, text in (("queries", "queries\t5\nequal\t5\n"
+                            "comparison\tcomplete\n"),
+                           ("alarms", "properties_a\t3\nsame_status\t3\n")):
+            with self.subTest(summary=name):
+                result = self.tables(text, name=name)
+                row = result.row(name)
+                self.assertEqual(
+                    {v for k, v in row.items()
+                     if k not in ("case", "A", "B", "both_completed")},
+                    {"-"})
+                self.assertIn("with a valid summary: 0", result.md)
+
+    def test_both_completed_needs_the_two_outcomes(self):
+        # Without the run.tsv of a run, or without its outcome, the tables
+        # do not say that the runs did not complete.
+        whole = self.summary()
+        result = self.tables(whole, runs=False)
+        self.assertEqual(result.row("alignment")["both_completed"], "-")
+        self.assertIn("of which both runs completed: 0", result.md)
+        with tempfile.TemporaryDirectory() as tmp:
+            pair = os.path.join(tmp, "comparisons", "c", "x-vs-y")
+            write(os.path.join(pair, "pair.tsv"),
+                  "case\tc\nbaseline\tx\ncandidate\ty\n")
+            write(os.path.join(pair, "alignment-summary.tsv"), whole)
+            add_run(tmp, mode="x")
+            add_run(tmp, mode="y", fields={"outcome": None})
+            self.assertEqual(
+                Result(tmp).row("alignment")["both_completed"], "-")
+            add_run(tmp, mode="y", fields={"outcome": "timeout"})
+            self.assertEqual(
+                Result(tmp).row("alignment")["both_completed"], "False")
+            add_run(tmp, mode="y")
+            self.assertEqual(
+                Result(tmp).row("alignment")["both_completed"], "True")
+
+
 class Runs(unittest.TestCase):
     """What a run does not record is not taken from its command or from a
     default."""

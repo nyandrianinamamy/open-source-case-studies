@@ -41,6 +41,22 @@ def export(rows=""):
     return "".join(sorted(lines, key=lambda line: line.split("\t")[0]))
 
 
+def summary_file(fields, values):
+    """A summary of a comparison as the tool writes it: every field of
+    [fields] (campaign.ALIGNMENT_SUMMARY, QUERIES_SUMMARY or
+    ALARMS_SUMMARY) in its order, a count of 0 unless [values] gives the
+    field."""
+    return "".join("%s\t%s\n" % (key, values.get(key, "0"))
+                   for key, _ in fields)
+
+
+def queries_summary(**values):
+    whole = {"numbering": "same", "complete_a": "complete",
+             "complete_b": "complete", "comparison": "complete"}
+    whole.update(values)
+    return summary_file(campaign.QUERIES_SUMMARY, whole)
+
+
 # Messages in the forms Eva prints them: header and body on two lines or on
 # one, the entry point without a location, a callstack broken over several
 # lines, and other messages in between.
@@ -837,9 +853,9 @@ class QueryAvailability(unittest.TestCase):
             write(os.path.join(pair, "pair.tsv"),
                   "case\tc\nbaseline\tx\ncandidate\ty\n")
             write(os.path.join(pair, "queries-summary.tsv"),
-                  "queries\t1\ncomplete_a\tcomplete\n"
-                  "complete_b\tincomplete: no done line\n"
-                  "comparison\tincomplete\n")
+                  queries_summary(
+                      queries="1", complete_b="incomplete: no done line",
+                      comparison="incomplete: answers of B incomplete"))
             for mode in ("x", "y"):
                 run = os.path.join(tmp, "runs", "c", mode)
                 os.makedirs(run)
@@ -851,11 +867,12 @@ class QueryAvailability(unittest.TestCase):
                 rows = list(csv.DictReader(f, delimiter="\t"))
             with open(os.path.join(tmp, "tables", "tables.md")) as f:
                 md = f.read()
-        self.assertEqual(rows[0]["comparison"], "incomplete")
+        self.assertEqual(rows[0]["comparison"],
+                         "incomplete: answers of B incomplete")
         self.assertEqual(rows[0]["complete_b"], "incomplete: no done line")
         self.assertEqual(rows[0]["both_completed"], "True")
-        self.assertIn("Pairs: 1, compared: 1, with both runs completed: 1",
-                      md)
+        self.assertIn("Pairs: 1, with a valid summary: 1, of which both "
+                      "runs completed: 1", md)
 
 
     def test_every_reason_of_an_unanswered_query_is_a_column(self):
@@ -867,8 +884,10 @@ class QueryAvailability(unittest.TestCase):
             write(os.path.join(pair, "pair.tsv"),
                   "case\tc\nbaseline\tx\ncandidate\ty\n")
             write(os.path.join(pair, "queries-summary.tsv"),
-                  "queries\t5\nunavailable_b_missing\t3\n"
-                  "unavailable_b_disabled-domain\t2\n")
+                  queries_summary(**{
+                      "queries": "5", "unavailable_b_missing": "3",
+                      "unavailable_b_disabled-domain": "2",
+                      "comparison": "incomplete: unanswered queries"}))
             with contextlib.redirect_stdout(io.StringIO()):
                 campaign.main(["tables", tmp])
             with open(os.path.join(tmp, "tables", "queries.tsv")) as f:
@@ -886,11 +905,18 @@ class QueryAvailability(unittest.TestCase):
                 campaign.main(["tables", tmp])
             with open(os.path.join(tmp, "tables", "tables.md")) as f:
                 md = f.read()
+        # They are the lines recorded when the campaign ran: the tables
+        # say that they copy them, not that they checked them.
         self.assertTrue(md.endswith(
-            "## Checks on the constructed cases\n\n```\nPASS a\n```\n\n"
+            "## Checks on the constructed cases\n\nChecks of "
+            "`fixtures/run-fixtures.sh` as recorded when the campaign ran "
+            "(harness revision `unavailable`). `tables` copies these lines "
+            "and does not check them again.\n\n```\nPASS a\n```\n\n"
             "## Outcome classes of the runner\n\nConstructed runs of "
-            "tools/outcome-demo.sh, caching disabled.\n\n```\nPASS b\n"
-            "```\n"), md[-300:])
+            "`tools/outcome-demo.sh`, caching disabled, as recorded when "
+            "the campaign ran (harness revision `unavailable`). `tables` "
+            "copies these lines and does not check them again.\n\n```\n"
+            "PASS b\n```\n"), md[-600:])
 
 
 class MixedForms(unittest.TestCase):
@@ -2871,8 +2897,14 @@ class FourthReview(unittest.TestCase):
             os.makedirs(pair)
             write(os.path.join(pair, "pair.tsv"),
                   "case\t%s\nbaseline\tcache\ncandidate\tcache.2\n" % case)
+            rows = records_of(SITES_NUMBERED)
+            summary = campaign.summarize_alignment(
+                rows, rows, campaign.align(rows, rows, "recorded command"),
+                numbering="recorded command",
+                outcomes=("completed", "completed"), entry_point="main")
+            self.assertEqual(summary["verdict"], campaign.RECORDED_VERDICT)
             write(os.path.join(pair, "alignment-summary.tsv"),
-                  "numbering\trecorded command\ncomplete\tFalse\n")
+                  "".join("%s\t%s\n" % kv for kv in summary.items()))
             os.makedirs(os.path.join(tmp, "provenance"))
             write(os.path.join(tmp, "provenance", "campaign-revision.txt"),
                   "12644c58\n")
@@ -2883,8 +2915,11 @@ class FourthReview(unittest.TestCase):
             self.assertIn(historical, out)
             self.assertIn("12644c58", out)
             self.assertIn("superseded", out)
-            self.assertIn("0 of 1 alignments are complete", out)
-            self.assertIn("numbering `recorded command`, `complete=False`", out)
+            self.assertIn("0 of 1 alignments with a valid summary are "
+                          "complete", out)
+            self.assertIn("numbering `recorded command`, `complete=False` "
+                          "and the verdict `%s`" % campaign.RECORDED_VERDICT,
+                          out)
 
     def test_historical_check_without_its_comparison(self):
         with tempfile.TemporaryDirectory() as tmp:

@@ -691,19 +691,28 @@ writes `tables/`, which `run-campaign.sh` does at the end:
   record;
 - `alignment.tsv`, `queries.tsv`, `alarms.tsv`: the comparison summaries,
   with `both_completed` for each pair, and for each comparison the number of
-  pairs, of pairs compared, and of pairs whose two runs completed;
-  `queries.tsv` has a column per side for each reason of an unanswered
-  query;
+  pairs, of pairs with a valid summary, and of those whose two runs
+  completed; `queries.tsv` has a column per side for each reason of an
+  unanswered query;
 - `tables.md`: all of the above but `functions.tsv`, as Markdown, followed
   by the checks of `fixtures.txt` and `outcome-demo.txt` when the output
-  directory holds them, as the pilot's does.
+  directory holds them, as the pilot's does. These lines are copied as
+  they were recorded when the campaign ran: `tables` does not run the
+  checks again.
 
 A cell `-` means that the source of its column does not give the value. It
 is never a zero: in the tables of the statistics file a number is the sum
 of rows of the file, and in `log.tsv` a number is a count of lines of the
 log.
 
-A run whose `run.tsv` names another case or mode than its directory is
+A comparison table reads a summary only when the file is one that
+`campaign.py` writes, whole: every field, once, in its order, with a value
+of its kind, and a verdict that the other fields allow. Any other file
+gives `-` in every column of its pair and is not counted among the valid
+summaries; `complete` is `False` only for a summary that says so.
+`both_completed` is `-` when the outcome of one of the two runs is not
+recorded. A run whose `run.tsv` names another case or mode than its
+directory, and a comparison whose `pair.tsv` names another directory, are
 left out of every table and listed at the top of `tables.md`.
 
 ## Pilot
