@@ -792,7 +792,14 @@ of numbering:
   aligned.
 
 The outcome of each of these runs is `completed` only when its records show
-the analysed call of `main` (`campaign.py invocation-outcome`).
+the analysed call of `main` (`campaign.py invocation-outcome`). The last
+checks read the tables of `campaign.py tables` for these runs: every
+statistics file must be a complete export, every log must have one
+analysis start, and `sources` must say that the rows of the file and the
+lines of the log agree. For `nested-hit.c`, the hit with memexec must be a
+row of the file and a line of the log; with caching off, `hits` must be
+`-`, since the file has no memexec row, and `lookup_hit` must be 0 among
+the 7 disposition lines of the log.
 
 `stage1-pilot.sh` at the root of the case studies runs the two jsmn targets
 in the modes `nocache` and `cache` through the same runner, and exits with 1

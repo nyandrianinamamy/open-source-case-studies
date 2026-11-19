@@ -53,6 +53,12 @@
 # - header.c, analysed as sites.c: the macro sets the initial value of a
 #   global of the included header.h. The two listings differ in that global
 #   only, the digests differ, and the calls are not aligned.
+# - every run, in the tables of campaign.py tables: the statistics file is
+#   a complete export, the log has one analysis start, and the rows of the
+#   file and the disposition lines of the log give the same number for
+#   every kind that both count. For nested-hit.c, the hit with memexec is a
+#   row of the file and a line of the log; with caching disabled the file
+#   has no memexec row (-) and the log no hit line (0 among its lines).
 # The outcome of a run is completed only when its records show the analysed
 # call of main (campaign.py invocation-outcome).
 # Prints one line per check, PASS or FAIL, and exits with 1 if one fails.
@@ -347,4 +353,34 @@ check "header: the two runs have different AST digests" \
   test "$(value "$header" numbering)" = different
 check "header: only the entry point is aligned; the calls are undecided" \
   test "$(value "$header" aligned)/$(value "$header" complete)" = 1/False
+
+# The two sources of the activity tables on the runs of the fixtures: the
+# rows of the statistics file and the disposition lines of the log.
+"${tool[@]}" tables "$output" > /dev/null
+tables="$output/tables"
+fixture_runs=$(ls -d "$output"/runs/fixtures/*/default/*/ | wc -l)
+# The rows of the fixtures in a table for which an awk condition holds; the
+# condition reads the column NAME as $col["NAME"].
+fixture_rows() {
+  awk -F'\t' 'NR==1 {for (i = 1; i <= NF; i++) col[$i] = i; next}
+               $1 ~ /^fixtures\// && ('"$2"')' "$tables/$1.tsv" | wc -l
+}
+# The cell of a column for a run of a fixture.
+table_cell() {
+  awk -F'\t' -v c="fixtures/$2.c/default" -v m="$3" -v k="$4" \
+    'NR==1 {for (i = 1; i <= NF; i++) if ($i == k) n = i; next}
+     $1 == c && $2 == m {print $n}' "$tables/$1.tsv"
+}
+check "every run: the outcome is completed, with the record of main" \
+  test "$(fixture_rows outcomes '$col["outcome"] == "completed"')" = "$fixture_runs"
+check "every run: the statistics file is a complete export" \
+  test "$(fixture_rows activity '$col["export_rows"] ~ /^[0-9]+$/')" = "$fixture_runs"
+check "every run: the log has one analysis start and its disposition lines are counted" \
+  test "$(fixture_rows log '$col["analysis_starts"] == 1 && $col["log_note"] == "-"')" = "$fixture_runs"
+check "every run: the rows of the statistics file and the lines of the log give the same numbers" \
+  test "$(fixture_rows log '$col["sources"] ~ /^agree on /')" = "$fixture_runs"
+check "nested-hit: with memexec, the hit is a row of the statistics file and a line of the log" \
+  test "$(table_cell activity nested-hit cache hits)/$(table_cell log nested-hit cache lookup_hit)" = 1/1
+check "nested-hit: without caching, the statistics file has no memexec row and the log no hit line among its 7 disposition lines" \
+  test "$(table_cell activity nested-hit nocache hits)/$(table_cell activity nested-hit nocache misses)/$(table_cell log nested-hit nocache lookup_hit)/$(table_cell log nested-hit nocache disposition_lines)" = -/-/0/7
 exit "$status"
