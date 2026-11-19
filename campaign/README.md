@@ -639,16 +639,15 @@ not committed: they go to an archive, whose SHA-256 is recorded in
 campaign/tools/archive-logs.sh OUTPUT /outside/the/tree/NAME.tar.gz
 ```
 
-The archive writes the paths under the home directory from `~`, in any
-of its spellings, keeping the separator that follows (`HOME/file` becomes
+The archive writes the paths under the home directory from `~`, in any of
+its spellings, keeping the separator that follows (`HOME/file` becomes
 `~/file`), and leaves out the compiled query modules; the same output gives
-the same archive. The
-files whose SHA-256 the provenance records (the manifest and the patches)
-are archived as they were hashed: the script checks them against their
-digests and stops when one of them holds the home directory. The protocol attaches this archive to the tag
-of the campaign on GitHub, which is made when the branch is published. To
-check a copy of the archive, run `sha256sum -c raw-logs.sha256` in its
-directory.
+the same archive. The files whose SHA-256 the provenance records (the
+manifest and the patches) are archived as they were hashed: the script
+checks them against their digests and stops when one of them holds the home
+directory. The protocol attaches this archive to the tag of the campaign on
+GitHub, which is made when the branch is published. To check a copy of the
+archive, run `sha256sum -c raw-logs.sha256` in its directory.
 
 `campaign.py recompute OUTPUT --recorded-set-a reference/set-a-recorded.tsv`
 derives again, from the raw logs of an output directory or of its archive,
