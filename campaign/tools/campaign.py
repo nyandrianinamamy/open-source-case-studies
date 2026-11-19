@@ -6,8 +6,9 @@ Subcommands:
   align A B [OUT_PREFIX]     align the per-call records of two runs
   queries A B [OUT_PREFIX]   compare the state-query answers of two runs
   alarms A B                 compare two alarms.csv files
-  counts STATS               builtin applications and cache activity of a run
-  families CMXS              counter families of a compiled Eva plugin
+  counts STATS [--log LOG]   counters of a statistics file, and the
+                             dispositions counted in the log of its run
+  families CMXS              counter names held by a compiled Eva plugin
   provenance CHECKOUT ROLE DIR  revision and patch of a Frama-C checkout
   home ACTION ...            find or write ~ for the home directory
   tables RUN_DIR             result tables of a campaign output directory
@@ -561,8 +562,8 @@ def descendants(row, children):
 #   equal AST digests, and equal preprocessing recorded by their commands
 #   (recorded_preprocessing); the preprocessed text was not compared;
 # - asserted: runs recorded before the AST digest existed, whose numbering
-#   is asserted from the equal revision, patch, options and preprocessing
-#   of the two runs;
+#   is asserted, on the command line or by run_numbering; nothing of their
+#   programs is compared;
 # - not established: anything else, such as a digest missing or a listing
 #   of another format.
 # The pairs below the entry point depend on the statement numbers: they are
@@ -570,11 +571,16 @@ def descendants(row, children):
 # only same makes an alignment complete.
 AST_FORMAT = "2"
 SHA256 = re.compile(r"[0-9a-f]{64}", re.I | re.ASCII)
+NUMBERINGS = ("same", "preprocessing differs", "different",
+              "recorded command", "not established", "asserted")
 NUMBERING_REASONS = {"different": "AST digests differ",
                      "preprocessing differs": "preprocessing differs",
                      "not established": "numbering not established"}
-ASSERTED_VERDICT = ("numbering asserted from equal revision, patch, options "
-                    "and preprocessing, not checked by digest")
+# An asserted numbering rests on the fields that run_numbering compares in
+# the two run.tsv, and on no digest: the verdict names those fields and
+# claims nothing about the preprocessing.
+ASSERTED_VERDICT = ("numbering asserted from equal recorded revisions, "
+                    "patch and extra options, not checked by digest")
 RECORDED_VERDICT = ("AST digests equal, preprocessing compared by the "
                     "recorded command only")
 # The numberings that pair the calls below the entry point but leave an
@@ -1462,7 +1468,7 @@ def alarms_command(args):
     return 0
 
 
-# ----- Builtin applications and cache activity -------------------------------
+# ----- Counters of the statistics file ---------------------------------------
 
 # Names under which the allocation and release builtins are applied: the
 # replaced libc function or the builtin itself, as in the measurement of
@@ -1482,20 +1488,20 @@ ALLOCATION = ["malloc", "calloc", "realloc", "reallocarray", "alloca",
 RELEASE = ["free", "vla_free"]
 
 
-# Counter families of the statistics file. A family is measured in a run
-# when the invocation that wrote the statistics gives evidence for it (see
-# run_families): then a counter with no row is a measured zero. Otherwise
-# its value is absent, written -.
-#   builtin:   builtin-applied-NAME, every run of a binary that has it
-#   memexec:   memexec-hits, -misses, -stored, -refused-REASON, with
-#              -eva-memexec
+# The counters of the statistics file (-eva-statistics-file) that the tables
+# read, in families:
+#   builtin:   builtin-applied-NAME
+#   memexec:   memexec-hits, -misses, -stored, -refused-REASON
 #   supplied:  cache-hits, cache-rejected-REASON, cache-refused-REASON, the
 #              entries supplied by a test module
-#   collector: collector-would-store, collector-refused-REASON, unless
-#              -eva-no-cache-collect
-#   producer:  cache-produced, cache-production-refused-REASON, the entries
-#              produced from the bodies observed by the collector, unless
-#              -eva-no-cache-collect
+#   collector: collector-would-store, collector-refused-REASON
+#   producer:  cache-produced, cache-production-refused-REASON
+# The analyzer creates the row of a counter when it increments it and
+# writes no row for a counter it never incremented. A counter is therefore a
+# number only when the file holds a row of it; without a row it is absent,
+# written -, never 0. Nothing else gives it a value: not the options of
+# the run, not its log, not another row of its family (README.md, Counters
+# and dispositions).
 FAMILIES = ("builtin", "memexec", "supplied", "collector", "producer")
 MEMEXEC_REFUSALS = ("not-cacheable", "no-inout", "footprint-top",
                     "relate-top", "relate-unclosed", "exception")
@@ -1513,177 +1519,381 @@ COUNTER_REASONS = {
     "collector": ("collector-refused-",),
     "producer": ("cache-production-refused-",),
 }
-# A counter name of each family, looked for in the compiled Eva plugin to
-# tell whether a binary has the family.
+# The counters summed over their reasons: the prefix of their rows.
+REASON_PREFIXES = ("memexec-refused-", "cache-rejected-", "cache-refused-",
+                   "collector-refused-", "cache-production-refused-")
+# A counter name of each family, looked for in the compiled Eva plugin and
+# recorded with the binary. It decides no cell of the tables.
 FAMILY_MARKERS = {"builtin": b"builtin-applied-", "memexec": b"memexec-hits",
                   "supplied": b"cache-rejected-",
                   "collector": b"collector-would-store",
                   "producer": b"cache-production-refused-"}
+# The last row of an export. The analyzer writes the file when an analysis
+# ends, one row per statistic that was set, sorted by name, and it sets
+# stmt-coverage before every export: a file that ends with this row was
+# written whole.
+EXPORT_LAST_ROW = "stmt-coverage"
 
 
-def stats_rows(stats_path):
-    """Recognised counter rows and families with a malformed counter row."""
-    rows, invalid = [], set()
-    with open_text(stats_path) as f:
-        for line in f:
-            fields = line.rstrip("\n").split("\t")
-            name = fields[0]
-            for family, prefixes in COUNTER_REASONS.items():
-                if (name not in COUNTER_NAMES.get(family, ())
-                        and not any(name.startswith(p) and len(name) > len(p)
-                                    for p in prefixes)):
-                    continue
-                value = decimal(fields[3]) if len(fields) == 4 else None
-                if value is None or not line.endswith("\n") or not fields[1]:
-                    invalid.add(family)
-                else:
-                    rows.append((family, name, fields[1], value))
-                break
-    return rows, invalid
+def counter_family(name):
+    """The family of a counter that the tables read, or None for another
+    row of the statistics file."""
+    for family, prefixes in COUNTER_REASONS.items():
+        if name in COUNTER_NAMES.get(family, ()) or any(
+                name.startswith(p) and len(name) > len(p) for p in prefixes):
+            return family
+    return None
 
 
-def last_switch(flags, on, off, default):
-    """The value of a boolean option in an argument vector: its last
-    occurrence, positive [on] or negative [off], or [default]."""
-    value = default
-    for flag in flags:
-        if flag == on:
-            value = True
-        elif flag == off:
-            value = False
-    return value
+def read_statistics(path):
+    """The counters of a statistics file. Returns (rows, count, None): the
+    rows of the counters that the tables read, as (name, function, value),
+    and the number of rows of the file; or ([], None, reason) when the file
+    is not a complete export, and then none of its rows is read.
 
-
-# The options that make a command run more than one stage, or read more
-# options from a file: its options alone then do not say which options the
-# invocation that wrote the statistics had.
-SEQUENCING = ("-then", "-then-last", "-then-on", "-then-replace",
-              "-commands-file")
-
-
-def single_stage(flags):
-    """Whether an argument vector (a list, or a string split on blanks) runs
-    one stage: none of the options of SEQUENCING, alone or as -OPTION=."""
-    if isinstance(flags, str):
-        flags = flags.split()
-    return not any(f.split("=", 1)[0] in SEQUENCING for f in flags)
-
-
-def measured_families(binary_families, flags):
-    """The families that the options of a single-stage command measure,
-    from the families of its binary and its options, in their order (a
-    list, or a string split on blanks): memexec when the last of
-    -eva-memexec and -eva-no-memexec is the first, the collector and the
-    producer unless the last of -eva-cache-collect and -eva-no-cache-collect
-    is the second."""
-    if isinstance(flags, str):
-        flags = flags.split()
-    families = set(binary_families)
-    if not last_switch(flags, "-eva-memexec", "-eva-no-memexec", False):
-        families.discard("memexec")
-    if not last_switch(flags, "-eva-cache-collect", "-eva-no-cache-collect",
-                       True):
-        families.discard("collector")
-        families.discard("producer")
-    return families
+    A complete export has four fields separated by tabulations on every
+    line (name, function, location, value), each line ended by a newline,
+    the names in ascending order, and stmt-coverage as its last row. Every
+    row of a counter of the tables must have a function and a bounded
+    decimal value."""
+    if not path or not os.path.exists(path):
+        return [], None, "no statistics file"
+    with open_text(path) as f:
+        text = f.read()
+    if not text:
+        return [], None, "the statistics file is empty"
+    if not text.endswith("\n"):
+        return [], None, "the last line of the statistics file is cut"
+    rows, names = [], []
+    for number, line in enumerate(text[:-1].split("\n"), 1):
+        fields = line.split("\t")
+        if len(fields) != 4 or not fields[0]:
+            return [], None, ("line %d of the statistics file does not "
+                              "have four fields" % number)
+        names.append(fields[0])
+        if counter_family(fields[0]) is not None:
+            value = decimal(fields[3])
+            if value is None or not fields[1]:
+                return [], None, ("line %d of the statistics file is not "
+                                  "the count of a function" % number)
+            rows.append((fields[0], fields[1], value))
+    if names != sorted(names):
+        return [], None, ("the rows of the statistics file are not sorted "
+                          "by name")
+    if names[-1] != EXPORT_LAST_ROW:
+        return [], None, ("the statistics file does not end with the row "
+                          + EXPORT_LAST_ROW)
+    return rows, len(names), None
 
 
 def family_of_binary(cmxs_path):
-    """The counter families that a compiled Eva plugin has."""
+    """The counter families whose names a compiled Eva plugin holds."""
     with open(cmxs_path, "rb") as f:
         data = f.read()
     return [k for k in FAMILIES if FAMILY_MARKERS[k] in data]
 
 
-def run_counts(stats_path, measured=FAMILIES):
-    """Builtin applications, cache activity and collector verdicts from an
-    Eva statistics file (-eva-statistics-file). A counter of a family that
-    the run did not measure is None."""
-    builtins = Counter()
-    values = Counter()
-    by_reason = defaultdict(Counter)
-    rows, invalid = stats_rows(stats_path)
-    measured = set(measured) - invalid
-    for family, name, _, value in rows:
-        if family == "builtin":
+def statistics_counts(rows, export_rows):
+    """The cells that the rows of a complete export give (read_statistics):
+    builtin applications, cache activity, collector verdicts, produced and
+    supplied entries. A counter is the sum of its rows, and None when the
+    export has no row of it; a list by reason is None when no reason has a
+    row. [export_rows] is the number of rows of the export, None when the
+    file is not one: every cell is then None."""
+    builtins, values, by_reason = {}, {}, {}
+    builtin_rows = 0
+    for name, _, value in rows:
+        if name.startswith("builtin-applied-"):
             canonical = CANONICAL_BUILTINS.get(name[len("builtin-applied-"):])
             if canonical:
-                builtins[canonical] += value
+                builtins[canonical] = builtins.get(canonical, 0) + value
+                builtin_rows += 1
             continue
-        for prefix in ("memexec-refused-", "cache-rejected-",
-                       "cache-refused-", "collector-refused-",
-                       "cache-production-refused-"):
+        for prefix in REASON_PREFIXES:
             if name.startswith(prefix):
-                by_reason[prefix[:-1]][name[len(prefix):]] += value
+                reasons = by_reason.setdefault(prefix[:-1], {})
+                reason = name[len(prefix):]
+                reasons[reason] = reasons.get(reason, 0) + value
                 name = prefix[:-1]
-        values[name] += value
-
-    def get(family, value):
-        return value if family in measured else None
+        values[name] = values.get(name, 0) + value
 
     def reasons(key):
-        """The counts by reason, or none when there is no row: a family
-        that is measured has no reason, which is not written -."""
-        return ",".join("%s=%d" % kv
-                        for kv in sorted(by_reason[key].items())) or "none"
+        if key not in by_reason:
+            return None
+        return ",".join("%s=%d" % kv for kv in sorted(by_reason[key].items()))
 
     counts = OrderedDict()
+    counts["export_rows"] = export_rows
     for k in ALLOCATION + RELEASE:
-        counts[k] = get("builtin", builtins[k])
-    total = sum(builtins.values())
-    counts["allocation_and_release"] = get("builtin", total)
-    counts["in_set_a"] = get("builtin", total == 0)
-    counts["hits"] = get("memexec", values["memexec-hits"])
-    counts["misses"] = get("memexec", values["memexec-misses"])
-    counts["stored"] = get("memexec", values["memexec-stored"])
-    counts["refused"] = get("memexec", values["memexec-refused"])
-    counts["refused_by_reason"] = get("memexec", reasons("memexec-refused"))
-    counts["supplied_hits"] = get("supplied", values["cache-hits"])
-    counts["supplied_rejected"] = get("supplied", values["cache-rejected"])
-    counts["supplied_rejected_by_reason"] = \
-        get("supplied", reasons("cache-rejected"))
-    counts["supplied_refused"] = get("supplied", values["cache-refused"])
-    counts["supplied_refused_by_reason"] = \
-        get("supplied", reasons("cache-refused"))
-    counts["collector_would_store"] = \
-        get("collector", values["collector-would-store"])
-    counts["collector_refused"] = get("collector", values["collector-refused"])
-    counts["collector_refused_by_reason"] = \
-        get("collector", reasons("collector-refused"))
-    counts["producer_stored"] = get("producer", values["cache-produced"])
-    counts["producer_refused"] = \
-        get("producer", values["cache-production-refused"])
+        counts[k] = builtins.get(k)
+    # The rows of the allocation and release builtins: their number, which
+    # is a fact of the file, and their sum. Without a row there is no sum,
+    # and no membership in set A either way.
+    counts["allocation_and_release_rows"] = \
+        None if export_rows is None else builtin_rows
+    total = sum(builtins.values()) if builtin_rows else None
+    counts["allocation_and_release"] = total
+    counts["in_set_a"] = None if total is None else total == 0
+    counts["hits"] = values.get("memexec-hits")
+    counts["misses"] = values.get("memexec-misses")
+    counts["stored"] = values.get("memexec-stored")
+    counts["refused"] = values.get("memexec-refused")
+    counts["refused_by_reason"] = reasons("memexec-refused")
+    counts["supplied_hits"] = values.get("cache-hits")
+    counts["supplied_rejected"] = values.get("cache-rejected")
+    counts["supplied_rejected_by_reason"] = reasons("cache-rejected")
+    counts["supplied_refused"] = values.get("cache-refused")
+    counts["supplied_refused_by_reason"] = reasons("cache-refused")
+    counts["collector_would_store"] = values.get("collector-would-store")
+    counts["collector_refused"] = values.get("collector-refused")
+    counts["collector_refused_by_reason"] = reasons("collector-refused")
+    counts["producer_stored"] = values.get("cache-produced")
+    counts["producer_refused"] = values.get("cache-production-refused")
     counts["producer_refused_by_reason"] = \
-        get("producer", reasons("cache-production-refused"))
+        reasons("cache-production-refused")
     return counts
 
 
-def function_counts(stats_path, measured=FAMILIES):
-    """Cache activity and collector verdicts per function from an Eva
-    statistics file: rows [function, hits, misses, stored, refused,
-    collector_would_store, collector_refused], sorted by function, None for
-    a family the run did not measure."""
-    table = defaultdict(Counter)
-    rows, invalid = stats_rows(stats_path)
-    measured = set(measured) - invalid
-    for family, name, function, value in rows:
-        if family not in ("memexec", "collector"):
+def run_counts(stats_path):
+    """The cells of a statistics file (statistics_counts): every one is
+    None when the file is not a complete export."""
+    rows, export_rows, _ = read_statistics(stats_path)
+    return statistics_counts(rows, export_rows)
+
+
+def function_counts(rows):
+    """The memexec and collector counters of each function in the rows of
+    a complete export (read_statistics): rows [function, hits, misses,
+    stored, refused, collector_would_store, collector_refused], sorted by
+    function, None where the function has no row of the counter."""
+    table = defaultdict(dict)
+    for name, function, value in rows:
+        if counter_family(name) not in ("memexec", "collector"):
             continue
         for prefix in ("memexec-refused-", "collector-refused-"):
             if name.startswith(prefix):
                 name = prefix[:-1]
-        table[function][name] += value
+        table[function][name] = table[function].get(name, 0) + value
+    return [[function] + [c.get(k) for k in (
+        "memexec-hits", "memexec-misses", "memexec-stored", "memexec-refused",
+        "collector-would-store", "collector-refused")]
+            for function, c in sorted(table.items())]
 
-    def get(family, value):
-        return value if family in measured else None
 
-    return [[kf, get("memexec", c["memexec-hits"]),
-             get("memexec", c["memexec-misses"]),
-             get("memexec", c["memexec-stored"]),
-             get("memexec", c["memexec-refused"]),
-             get("collector", c["collector-would-store"]),
-             get("collector", c["collector-refused"])]
-            for kf, c in sorted(table.items())]
+# ----- Dispositions counted in the Eva log -----------------------------------
+
+# What a log shows is reported as what the log shows: counts of its
+# disposition lines by the words of their fields, next to the number of
+# analysis starts of that log. A count of 0 means that there is no such line
+# among the disposition lines of the log. These counts are never turned
+# into counters of the statistics file, and no counter into a count.
+ANALYSIS_START = re.compile(
+    r"\[eva\] Analyzing (?:a complete|an incomplete) application starting at .+"
+)
+LOG_REJECTED = r"rejected \(entry [0-9]{1,18}: ([^(),;]+)\)"
+LOG_HIT = r"hit \(entry [0-9]{1,18}\)"
+LOG_LOOKUP = re.compile(
+    r"no-candidate|%s|%s(?:, %s)*(?:, %s)?"
+    % (LOG_HIT, LOG_REJECTED, LOG_REJECTED, LOG_HIT))
+LOG_EXECUTIONS = ("analysed", "not-analysed", "interrupted")
+LOG_STORAGE = re.compile(
+    r"none|stored \(entry [0-9]{1,18}\)|refused \(([^(),;]+)\)")
+LOG_COLLECTOR = re.compile(r"would-store|refused \(([^(),;]+)\)")
+LOG_PRODUCER = re.compile(
+    r"stored \(entry [0-9]{1,18}\)|refused \(([^(),;]+)\)")
+LOG_FIELDS = (["lookup", "execution", "storage"],
+              ["lookup", "execution", "storage", "collector"],
+              ["lookup", "execution", "storage", "collector", "producer"])
+LOG_COLUMNS = [
+    "analysis_starts", "disposition_lines", "lookup_hit",
+    "lookup_no_candidate", "lookup_rejected", "lookup_rejected_by_reason",
+    "storage_stored", "storage_none", "storage_refused",
+    "storage_refused_by_reason", "collector_would_store",
+    "collector_refused", "collector_refused_by_reason", "producer_stored",
+    "producer_refused", "producer_refused_by_reason", "log_note", "sources"]
+
+
+def disposition_kinds(dispositions):
+    """The kinds that one disposition line shows, each in the words of the
+    message: "lookup: hit", "lookup: no-candidate", "lookup: rejected
+    (REASON)" once per rejected candidate, "storage: stored", "storage:
+    none", "storage: refused (REASON)", "collector: would-store",
+    "collector: refused (REASON)", "producer: stored" and "producer:
+    refused (REASON)". None when the line has another field or a field of
+    another form than the pinned analyzer prints: a line that the tool does
+    not understand shows nothing."""
+    if list(dispositions) not in LOG_FIELDS:
+        return None
+    lookup = dispositions["lookup"]
+    storage = LOG_STORAGE.fullmatch(dispositions["storage"])
+    if not LOG_LOOKUP.fullmatch(lookup) or not storage or \
+       dispositions["execution"] not in LOG_EXECUTIONS:
+        return None
+    kinds = ["lookup: rejected (%s)" % reason
+             for reason in re.findall(LOG_REJECTED, lookup)]
+    if re.search(LOG_HIT, lookup):
+        kinds.append("lookup: hit")
+    elif lookup == "no-candidate":
+        kinds.append("lookup: no-candidate")
+    kinds.append("storage: " + re.sub(r" \(entry [0-9]+\)", "",
+                                      storage.group(0)))
+    for field, pattern in (("collector", LOG_COLLECTOR),
+                           ("producer", LOG_PRODUCER)):
+        if field in dispositions:
+            match = pattern.fullmatch(dispositions[field])
+            if not match:
+                return None
+            kinds.append("%s: %s" % (field, re.sub(r" \(entry [0-9]+\)", "",
+                                                   match.group(0))))
+    return kinds
+
+
+def log_counts(log_path):
+    """What an Eva log shows of the dispositions of its calls. Returns the
+    cells of LOG_COLUMNS but sources, and the counter of the kinds
+    (disposition_kinds), or None when the kinds are not counted.
+
+    analysis_starts is the number of lines that announce an analysis, and
+    disposition_lines the number of messages of the categories cache and
+    cache-producer that are call dispositions of a known form. The kinds
+    are counted only when the log has exactly one analysis start, at least
+    one disposition line and no cache message of another form; otherwise
+    their cells are None and log_note says why. A count of 0 then means
+    that no disposition line of this log shows the kind. The cells of the
+    collector and of the producer are None when no disposition line has
+    that field: a field that the log does not print shows no count."""
+    counts = OrderedDict((k, None) for k in LOG_COLUMNS[:-1])
+    if not log_path:
+        counts["log_note"] = "no log"
+        return counts, None
+    with open_text(log_path) as f:
+        lines = f.read().split("\n")
+    starts = sum(ANALYSIS_START.fullmatch(line.rstrip("\r")) is not None
+                 for line in lines)
+    kinds, known, unknown = Counter(), 0, 0
+    for plugin, category, text in messages(lines):
+        if plugin != "eva" or category not in ("cache", "cache-producer"):
+            continue
+        # The fields come before the callstack: a message cut inside its
+        # stack still shows them.
+        record = parse_cache_message(text.partition("\nstack:")[0])
+        found = disposition_kinds(record["dispositions"]) if record else None
+        if found is None:
+            unknown += 1
+        else:
+            known += 1
+            kinds.update(found)
+    counts["analysis_starts"] = starts
+    counts["disposition_lines"] = known
+    if unknown:
+        counts["log_note"] = ("%d cache message(s) of another form than a "
+                              "disposition line" % unknown)
+    elif starts != 1:
+        counts["log_note"] = "%d analysis starts" % starts
+    elif not known:
+        counts["log_note"] = "no disposition line"
+    if counts["log_note"]:
+        return counts, None
+
+    def by_reason(prefix):
+        found = sorted((k[len(prefix):-1], n) for k, n in kinds.items()
+                       if k.startswith(prefix))
+        return (sum(n for _, n in found),
+                ",".join("%s=%d" % kv for kv in found) or "none")
+
+    counts["lookup_hit"] = kinds["lookup: hit"]
+    counts["lookup_no_candidate"] = kinds["lookup: no-candidate"]
+    counts["lookup_rejected"], counts["lookup_rejected_by_reason"] = \
+        by_reason("lookup: rejected (")
+    counts["storage_stored"] = kinds["storage: stored"]
+    counts["storage_none"] = kinds["storage: none"]
+    counts["storage_refused"], counts["storage_refused_by_reason"] = \
+        by_reason("storage: refused (")
+    if printed(kinds, "collector"):
+        counts["collector_would_store"] = kinds["collector: would-store"]
+        counts["collector_refused"], \
+            counts["collector_refused_by_reason"] = \
+            by_reason("collector: refused (")
+    if printed(kinds, "producer"):
+        counts["producer_stored"] = kinds["producer: stored"]
+        counts["producer_refused"], counts["producer_refused_by_reason"] = \
+            by_reason("producer: refused (")
+    return counts, kinds
+
+
+def printed(kinds, field):
+    """Whether a disposition line counted in [kinds] has the field
+    [field]."""
+    return any(k.startswith(field + ": ") for k in kinds)
+
+
+# The kinds of a disposition line that have a counter at the seam of the
+# pinned analyzer, which increments it before it prints the line: the
+# counter of each kind. memexec-misses is incremented at the lookup and has
+# no kind of its own; "lookup: no-candidate", "storage: none" and "storage:
+# refused (disabled)" have no counter.
+def counter_kind(name):
+    """The kind of disposition line that a counter of the statistics file
+    counts, or None."""
+    if name in ("memexec-hits", "cache-hits"):
+        return "lookup: hit"
+    if name == "memexec-stored":
+        return "storage: stored"
+    if name == "collector-would-store":
+        return "collector: would-store"
+    if name == "cache-produced":
+        return "producer: stored"
+    for prefix, kind in (("memexec-refused-", "storage: refused (%s)"),
+                         ("cache-refused-", "storage: refused (%s)"),
+                         ("collector-refused-", "collector: refused (%s)"),
+                         ("cache-rejected-", "lookup: rejected (%s)"),
+                         ("cache-production-refused-",
+                          "producer: refused (%s)")):
+        if name.startswith(prefix) and len(name) > len(prefix):
+            return kind % name[len(prefix):]
+    return None
+
+
+UNCOUNTED_KINDS = ("lookup: no-candidate", "storage: none",
+                   "storage: refused (disabled)")
+
+
+def compare_sources(kinds, rows, problem):
+    """Whether the kinds counted in a log (log_counts) and the rows of the
+    statistics file of the same run (read_statistics) give the same
+    numbers, kind by kind. It reports and fills no cell: None when either
+    source is not usable; "disagree: ..." with each kind whose two numbers
+    differ, or that the log shows and no row counts; otherwise the number
+    of kinds that have the same number in both, or "no kind in both".
+
+    A kind without a line is compared as the log count 0 with the rows of
+    its counter. The kinds of the collector and of the producer are
+    compared only when a disposition line of the log has that field: the
+    analyzer prints the producer field under a category of its own."""
+    if kinds is None or problem:
+        return None
+    counted = {}
+    for name, _, value in rows:
+        kind = counter_kind(name)
+        if kind:
+            counted[kind] = counted.get(kind, 0) + value
+    absent = tuple(field + ": " for field in ("collector", "producer")
+                   if not printed(kinds, field))
+    equal, differing = 0, []
+    for kind in sorted(set(kinds) | set(counted)):
+        if kind in UNCOUNTED_KINDS or kind.startswith(absent):
+            continue
+        seen, row = kinds.get(kind, 0), counted.get(kind)
+        if row == seen:
+            equal += 1
+        elif row is not None or seen:
+            differing.append('"%s" log %d, statistics %s'
+                             % (kind, seen, "-" if row is None else row))
+    if differing:
+        return "disagree: " + "; ".join(differing)
+    if not equal:
+        return "no kind in both"
+    return "agree on %d kind%s" % (equal, "" if equal == 1 else "s")
 
 
 TIMED_MODES = ("nocache", "cache", "reference")
@@ -1734,22 +1944,22 @@ def time_rows(runs):
 
 
 def counts_command(args):
-    binary = args.families.split(",") if args.families is not None else None
-    starts = analysis_starts(args.log)
-    records = []
-    if starts == 1 and binary is not None:
-        with open_text(args.log) as f:
-            records = cache_records(f)
-        if args.records:
-            supplied, _ = load_records_and_problems(args.records)
-            if [r.get("dispositions") for r in supplied] != [
-                    r.get("dispositions") for r in records]:
-                print("Counter records disagree with the Eva log.", file=sys.stderr)
-                records = []
-    families = families_of_run(binary, static_command(args.flags or ""),
-                               args.stats, records, starts)
-    for key, value in run_counts(args.stats, families).items():
+    """Prints the cells of a statistics file and, with --log, what the log
+    of the same invocation shows, each count of the log under a name that
+    starts with log_."""
+    rows, export_rows, problem = read_statistics(args.stats)
+    if problem:
+        print("%s: %s; its counters are not read" % (args.stats, problem),
+              file=sys.stderr)
+    for key, value in statistics_counts(rows, export_rows).items():
         print("%s\t%s" % (key, cell(value)))
+    if args.log:
+        logged, kinds = log_counts(args.log)
+        logged["sources"] = compare_sources(kinds, rows, problem)
+        for key, value in logged.items():
+            if key != "sources" and not key.startswith("log_"):
+                key = "log_" + key
+            print("%s\t%s" % (key, cell(value)))
     return 0
 
 
@@ -2035,9 +2245,10 @@ def classify_outcome(parse_exit, make_exit, measure, log_text,
     """The outcome of one run:
     - parse-error: the parsing step failed, Eva did not run;
     - harness-error: the Eva invocation was not measured, its measure has
-      no valid status, make failed after a successful invocation, or the
-      exit status of the parse step or of make is not recorded ([parse_exit]
-      or [make_exit] is None);
+      no valid status, make failed after a successful invocation, or what
+      a completed run needs is not recorded: the exit status of the parse
+      step or of make ([parse_exit] or [make_exit] is None), or the entry
+      point of the target ([entry_analysed] is None);
     - timeout: the watchdog sent its signal at the wall-time limit; a run
       measured by an earlier revision of this harness, which did not record
       it, is never classified as a timeout;
@@ -2070,7 +2281,7 @@ def classify_outcome(parse_exit, make_exit, measure, log_text,
         return "killed"
     if status != 0:
         return "error"
-    if parse_exit is None or make_exit != 0:
+    if parse_exit is None or make_exit != 0 or entry_analysed is None:
         return "harness-error"
     if not entry_analysed:
         return "incomplete"
@@ -2096,16 +2307,17 @@ def existing(path):
 
 
 def run_outcome(run, parse_exit, make_exit, dedicated_scope=False,
-                entry_point="main", status=None):
+                entry_point=None, status=None):
     """The outcome of a run and the evidence of exhausted memory, from its
     measure, its log and its records, compressed or not, the statement of
     the runner that the command ran in a scope of its own, and the entry
     point configured for its target. The entry point is analysed when the
     records are one tree, whose root is the analysed call of [entry_point]
-    and whose callstacks all end in it. [status], when given, is the exit
-    status of an invocation that ran without the watchdog, as the fixtures
-    do (invocation_outcome_command): it stands for the measure, which such
-    a run does not have."""
+    and whose callstacks all end in it; without [entry_point], that is not
+    decided, and the run is not completed. [status], when given, is the
+    exit status of an invocation that ran without the watchdog, as the
+    fixtures do (invocation_outcome_command): it stands for the measure,
+    which such a run does not have."""
     measure = read_measure(os.path.join(run, "measure"))
     if status is not None:
         measure = OrderedDict(status=str(status))
@@ -2114,9 +2326,9 @@ def run_outcome(run, parse_exit, make_exit, dedicated_scope=False,
     if log:
         with open_text(log) as f:
             log_text = f.read()
-    entry_analysed = False
+    entry_analysed = None if entry_point is None else False
     records = existing(os.path.join(run, "records.jsonl"))
-    if records:
+    if records and entry_point is not None:
         rows = load_records(records)
         entry_analysed = (
             entry_point_recorded(rows, entry_point)
@@ -2302,6 +2514,11 @@ def preprocessing_digest(run):
     return None
 
 
+# The options that make a command run more than one stage, or read more
+# options from a file: a parse command that has one does not record the
+# preprocessing of its run by itself.
+SEQUENCING = ("-then", "-then-last", "-then-on", "-then-replace",
+              "-commands-file")
 SHELL_WORD = re.compile(
     r"""(?:[-A-Za-z0-9_./,:=+%@~]+|\\[ -~]|'[^'\r\n]*'|"""
     r""""(?:[^"\\`$\r\n]|\\["\\])*")+(?=[ \t]|$)"""
@@ -2386,7 +2603,8 @@ def recorded_preprocessing(run_dir, run):
                 if not line.startswith("Command: "):
                     continue
                 args = static_command(line[len("Command: "):].rstrip("\n"))
-                if (not args or not line.endswith("\n") or not single_stage(args)
+                if (not args or not line.endswith("\n")
+                        or any(a.split("=", 1)[0] in SEQUENCING for a in args)
                         or os.path.basename(args[0]) not in ("frama-c", "frama-c-measure")):
                     return None
                 commands.append(tuple(snapshot.sub("${SRC}", arg) for arg in args))
@@ -2449,13 +2667,12 @@ def run_numbering(run_a, run_b, recorded_a=None, recorded_b=None):
 MANIFESTS = {}
 
 
-def configured_entry_point(output, run_dir, run):
+def configured_entry_point(output, run):
     """The entry point configured for the target of a run: the field
     entry_point of its run.tsv; for a run recorded before the field
     existed, the column entry_point of the manifest that the campaign used
-    (provenance/manifest.tsv) for its case, else the last option -main of
-    its recorded Eva command (a fixture), else main, the default of
-    Frama-C."""
+    (provenance/manifest.tsv) for its case. None when neither records it:
+    it is not read from the command of the run, and it has no default."""
     if run.get("entry_point") not in (None, "", "-"):
         return run["entry_point"]
     manifest = os.path.join(output, "provenance", "manifest.tsv")
@@ -2465,10 +2682,7 @@ def configured_entry_point(output, run_dir, run):
             MANIFESTS[manifest] = {r.get("case"): r.get("entry_point")
                                    for r in read_manifest(manifest)}
     entry = MANIFESTS[manifest].get(run.get("case"))
-    if entry:
-        return entry
-    mains = option_values(effective_options(run_dir, run) or (), "-main")
-    return mains[-1] if mains else "main"
+    return entry if entry not in (None, "", "-") else None
 
 
 def snapshot_pattern(case, mode):
@@ -2501,11 +2715,16 @@ def compare_runs(output, case, mode_a, mode_b):
     records_a = existing(os.path.join(run_a, "records.jsonl"))
     records_b = existing(os.path.join(run_b, "records.jsonl"))
     if records_a and records_b:
+        # Without the entry point of both runs, the alignment has none: the
+        # one of a run is not taken for the other.
+        entry_a = configured_entry_point(output, tsv_a)
+        entry_b = configured_entry_point(output, tsv_b)
+        if entry_a is None or entry_b is None:
+            entry_a = entry_b = None
         write_alignment(os.path.join(out, "alignment-"), records_a,
                         records_b, numbering,
-                        (tsv_a.get("outcome"), tsv_b.get("outcome")),
-                        configured_entry_point(output, run_a, tsv_a),
-                        configured_entry_point(output, run_b, tsv_b))
+                        (tsv_a.get("outcome") or None,
+                         tsv_b.get("outcome") or None), entry_a, entry_b)
     queries_a = existing(os.path.join(run_a, "queries.tsv"))
     queries_b = existing(os.path.join(run_b, "queries.tsv"))
     if queries_a and queries_b:
@@ -2639,7 +2858,7 @@ def recompute_command(args):
                 dirpath, exit_status(run.get("parse_exit")),
                 exit_status(run.get("make_exit")),
                 run.get("dedicated_scope") == "yes",
-                configured_entry_point(args.run_dir, dirpath, run))
+                configured_entry_point(args.run_dir, run))
         problem = import_digest(run, valid, invalid)
         if problem:
             sys.stderr.write("ast-digests: %s %s: %s\n"
@@ -2680,113 +2899,6 @@ def markdown_table(header, rows):
     return out.getvalue()
 
 
-def effective_options(run_dir, run):
-    """The options of the Eva invocation of a run, in their order: the
-    command it recorded (the file command written by the makefiles, or
-    eva-command of a fixture), or else the mode option followed by the
-    extra options of run.tsv. The makefiles of a case can add options after
-    those of the mode."""
-    for name in ("command", "eva-command"):
-        path = os.path.join(run_dir, name)
-        if os.path.exists(path):
-            with open_text(path) as f:
-                return static_command(f.read().rstrip("\n"))
-    flags = " ".join(run.get(k, "") for k in ("flag", "extra_eva_flags"))
-    return static_command(flags)
-
-
-ANALYSIS_START = re.compile(
-    r"\[eva\] Analyzing (?:a complete|an incomplete) application starting at .+"
-)
-
-
-def analysis_starts(log):
-    if log is None:
-        return 0
-    with open_text(log) as f:
-        return sum(ANALYSIS_START.fullmatch(line.rstrip("\r\n")) is not None
-                   for line in f)
-
-
-MEMEXEC_REFUSAL = re.compile(
-    r"refused \((?:" + "|".join(MEMEXEC_REFUSALS) + r")\)"
-)
-ENTRY_STORED = re.compile(r"stored \(entry [0-9]+\)")
-COLLECTOR_REFUSALS = ("indirect-call|builtin|sweep|contract|annotation|"
-                      "nested-call|allocated-block|footprint-top|side-table")
-COLLECTOR_DISPOSITION = re.compile(
-    "would-store|refused \\((?:" + COLLECTOR_REFUSALS + ")\\)"
-)
-PRODUCER_REFUSAL = re.compile(
-    "refused \\((?:" + COLLECTOR_REFUSALS
-    + "|product|invalid-footprint|relate-top|key-limit|preconditions|"
-    "not-cacheable|input-state|exit-state|exit-binding)\\)"
-)
-
-
-def logged_families(records):
-    """Identify the families in validated call dispositions of one analysis."""
-    found = set()
-    for record in records:
-        d = record.get("dispositions", {})
-        if d.get("execution") != "analysed":
-            continue
-        storage = d.get("storage", "")
-        if storage == "refused (supplied-only)":
-            found.add("supplied")
-        if d.get("lookup") == "no-candidate" and (
-                ENTRY_STORED.fullmatch(storage) or MEMEXEC_REFUSAL.fullmatch(storage)):
-            found.add("memexec")
-        if COLLECTOR_DISPOSITION.fullmatch(d.get("collector", "")):
-            found.add("collector")
-        producer = d.get("producer", "")
-        if ENTRY_STORED.fullmatch(producer) or PRODUCER_REFUSAL.fullmatch(producer):
-            found.add("producer")
-    return found
-
-
-def families_of_run(binary_families, flags, stats_path, records, starts):
-    """Counter families with rows in the statistics, plus evidence from the
-    invocation when its command is an unambiguous single stage. The log
-    alone does not show how many analyses ran: a later analysis can be
-    silent, so one logged start is evidence only together with such a
-    command. The supplied family is established by its rows only: each of
-    its dispositions increments a counter, so a disposition without a row
-    is a contradiction and gives no count. A binary whose families are
-    unknown can only supply evidence through the rows.
-    """
-    rows, invalid = stats_rows(stats_path)
-    found = {family for family, _, _, _ in rows}
-    if binary_families is None or starts > 1:
-        return found - invalid
-    if flags is not None and single_stage(flags):
-        if starts == 1:
-            found |= (logged_families(records) - {"supplied"}) \
-                & set(binary_families)
-        found |= measured_families(binary_families, flags) - {
-            "memexec", "supplied"}
-    return found - invalid
-
-
-def run_families(run, stats_path, run_dir=None):
-    """The counter families measured by a run (families_of_run), from the
-    families of its binary recorded in run.tsv, its recorded command and its
-    records. For a run that does not record the families of its binary,
-    the families with at least one row in its statistics."""
-    run_dir = run_dir or os.path.dirname(stats_path)
-    binary = None
-    if run.get("counter_families", "") != "":
-        binary = [f for f in run["counter_families"].split(",") if f]
-    log = existing(os.path.join(run_dir, "eva.log"))
-    starts = analysis_starts(log)
-    records = []
-    if starts == 1 and binary is not None:
-        with open_text(log) as f:
-            records = cache_records(f)
-    return families_of_run(binary, effective_options(run_dir, run), stats_path,
-                           records, starts)
-
-
 def cell(value):
     if value is None or value == "":
         return "-"
@@ -2798,12 +2910,22 @@ def cell(value):
 def tables_command(args):
     root = args.run_dir
     runs_dir = os.path.join(root, "runs")
-    runs = []
+    runs, left_out = [], []
     for dirpath, _, filenames in os.walk(runs_dir):
-        if "run.tsv" in filenames:
-            runs.append(read_kv(os.path.join(dirpath, "run.tsv")))
-    runs.sort(key=lambda r: (r.get("case", ""), r.get("mode", "")))
-    by_run = {(r.get("case"), r.get("mode")): r for r in runs}
+        if "run.tsv" not in filenames:
+            continue
+        run = read_kv(os.path.join(dirpath, "run.tsv"))
+        named = os.path.join(run.get("case", ""), run.get("mode", ""))
+        if os.path.relpath(dirpath, runs_dir) != named:
+            # The files of a run are read from runs/CASE/MODE: a run.tsv
+            # that names another run would give its cells to that one.
+            print("%s: run.tsv does not name this run; left out" % dirpath,
+                  file=sys.stderr)
+            left_out.append(os.path.relpath(dirpath, root))
+            continue
+        runs.append(run)
+    runs.sort(key=lambda r: (r["case"], r["mode"]))
+    by_run = {(r["case"], r["mode"]): r for r in runs}
     recorded = {}
     if args.recorded_set_a:
         for row in read_header_tsv(args.recorded_set_a, ("target", "in_A"),
@@ -2817,8 +2939,13 @@ def tables_command(args):
     os.makedirs(out_dir, exist_ok=True)
     md = io.StringIO()
     md.write("# Result tables\n\nProduced by `campaign.py tables` from "
-             "`%s`. A cell `-` is a value that was not measured.\n\n"
-             % os.path.basename(os.path.abspath(root)))
+             "`%s`. A cell `-` means that the source of its column does "
+             "not give the value; it is never a zero. Each table names its "
+             "source.\n\n" % os.path.basename(os.path.abspath(root)))
+    if left_out:
+        md.write("Left out of every table, because the `run.tsv` of the "
+                 "directory does not name it: %s.\n\n"
+                 % ", ".join("`%s`" % d for d in sorted(left_out)))
 
     # Outcomes, time and memory.
     keys = ["case", "mode", "outcome", "exit", "signal", "watchdog",
@@ -2826,77 +2953,120 @@ def tables_command(args):
     header = keys[:-1] + ["limit_s"]
     rows = [[cell(r.get(k)) for k in keys] for r in runs]
     write_tsv(os.path.join(out_dir, "outcomes.tsv"), header, rows)
-    md.write("## Outcomes, time and memory per invocation\n\n`watchdog` is "
-             "the last signal sent at the wall-time limit (`none` when it "
-             "did not fire); `oom_evidence` the evidence that memory was "
-             "exhausted.\n\n")
+    md.write("## Outcomes, time and memory per invocation\n\nFrom the "
+             "`run.tsv` of each run. `watchdog` is the last signal sent at "
+             "the wall-time limit (`none` when it did not fire); "
+             "`oom_evidence` the evidence that memory was exhausted.\n\n")
     md.write(markdown_table(header, rows) + "\n")
 
-    def stats_of(r):
-        path = os.path.join(root, "runs", r["case"], r["mode"],
-                            "eva-stats.csv")
-        return path if os.path.exists(path) else None
-
-    # Cache activity and builtin applications.
-    header = ["case", "mode", "hits", "misses", "stored", "refused",
-              "refused_by_reason", "allocation_and_release", "in_set_a",
-              "recorded_in_set_a", "agrees"]
-    rows = []
-    collector_rows, function_rows = [], []
+    # Counters of the statistics file, and dispositions counted in the log:
+    # two sources, each in its own tables.
+    activity_header = [
+        "case", "mode", "export_rows", "hits", "misses", "stored", "refused",
+        "refused_by_reason", "allocation_and_release_rows",
+        "allocation_and_release", "in_set_a", "recorded_in_set_a", "agrees"]
+    collector_keys = [
+        "collector_would_store", "collector_refused",
+        "collector_refused_by_reason", "producer_stored", "producer_refused",
+        "producer_refused_by_reason", "supplied_hits", "supplied_rejected",
+        "supplied_refused", "supplied_rejected_by_reason",
+        "supplied_refused_by_reason"]
+    activity_rows, collector_rows, function_rows, log_rows = [], [], [], []
     for r in runs:
-        stats = stats_of(r)
-        if stats is None:
-            rows.append([r["case"], r["mode"]] + ["-"] * 9)
-            collector_rows.append([r["case"], r["mode"]] + ["-"] * 11)
-            continue
-        families = run_families(r, stats)
-        c = run_counts(stats, families)
-        function_rows.extend([r["case"], r["mode"]] + [cell(x) for x in row]
-                             for row in function_counts(stats, families))
-        target = r["case"].rsplit("/", 1)[0]
-        rec = recorded.get(target, "")
-        mine = cell(c["in_set_a"])
-        agrees = "-"
-        if rec and mine != "-":
-            agrees = "yes" if rec == mine else "NO"
-        rows.append([r["case"], r["mode"]] + [cell(c[k]) for k in (
-            "hits", "misses", "stored", "refused", "refused_by_reason",
-            "allocation_and_release")] + [mine, rec or "-", agrees])
-        collector_rows.append([r["case"], r["mode"]] + [cell(c[k]) for k in (
-            "collector_would_store", "collector_refused",
-            "collector_refused_by_reason", "producer_stored",
-            "producer_refused", "producer_refused_by_reason",
-            "supplied_hits", "supplied_rejected", "supplied_refused",
-            "supplied_rejected_by_reason", "supplied_refused_by_reason")])
-    write_tsv(os.path.join(out_dir, "activity.tsv"), header, rows)
-    md.write("## Cache activity and set A\n\nTotals per case of the "
-             "statistics file; memexec counts require memexec evidence "
-             "for the analysis that wrote it. `allocation_and_release` sums the "
-             "applications of the allocation and release builtins; a run "
-             "is in set A when it is 0. `recorded_in_set_a` is the "
-             "membership recorded by the earlier measurement.\n\n")
-    md.write(markdown_table(header, rows) + "\n")
-    header = ["case", "mode", "collector_would_store", "collector_refused",
-              "collector_refused_by_reason", "producer_stored",
-              "producer_refused", "producer_refused_by_reason",
-              "supplied_hits", "supplied_rejected", "supplied_refused",
-              "supplied_rejected_by_reason", "supplied_refused_by_reason"]
+        run_dir = os.path.join(runs_dir, r["case"], r["mode"])
+        name = [r["case"], r["mode"]]
+        stats = os.path.join(run_dir, "eva-stats.csv")
+        counters, export_rows, problem = read_statistics(stats)
+        if problem and os.path.exists(stats):
+            print("%s: %s; its counters are not read" % (stats, problem),
+                  file=sys.stderr)
+        c = statistics_counts(counters, export_rows)
+        function_rows.extend(name + [cell(x) for x in row]
+                             for row in function_counts(counters))
+        rec = recorded.get(r["case"].rsplit("/", 1)[0])
+        agrees = None
+        if rec and c["in_set_a"] is not None:
+            agrees = "yes" if rec == cell(c["in_set_a"]) else "NO"
+        activity_rows.append(name + [cell(c[k]) for k in (
+            "export_rows", "hits", "misses", "stored", "refused",
+            "refused_by_reason", "allocation_and_release_rows",
+            "allocation_and_release", "in_set_a")] + [cell(rec),
+                                                       cell(agrees)])
+        collector_rows.append(name + [cell(c[k]) for k in collector_keys])
+        logged, kinds = log_counts(existing(os.path.join(run_dir,
+                                                         "eva.log")))
+        logged["sources"] = compare_sources(kinds, counters, problem)
+        log_rows.append(name + [cell(logged[k]) for k in LOG_COLUMNS])
+    write_tsv(os.path.join(out_dir, "activity.tsv"), activity_header,
+              activity_rows)
+    md.write("## Counters of the statistics file: cache activity and set "
+             "A\n\nSource: the rows of `eva-stats.csv`, which the last "
+             "analysis of the invocation wrote when it ended. A number is "
+             "the sum of the rows of its counter. `-` means that the file "
+             "has no row of that counter, or is not a complete export "
+             "(`export_rows`, the number of its rows, is then `-` too). The "
+             "analyzer writes a row for a counter only once it has "
+             "incremented it: a cell is 0 only when a row holds 0, and no "
+             "value is taken from the options of the run, from its log or "
+             "from another row. `hits`, `misses`, `stored` and `refused` "
+             "are the `memexec-*` rows. `allocation_and_release` sums the "
+             "rows of the allocation and release builtins, and "
+             "`allocation_and_release_rows` counts them: its 0 means that "
+             "there is no such row among the `export_rows` rows of this "
+             "file. `in_set_a` is `False` when that sum is positive, "
+             "`True` when rows give the sum 0, and `-` without such a row. "
+             "`recorded_in_set_a` is the membership recorded by the "
+             "earlier measurement; `agrees` compares the two when "
+             "`in_set_a` is not `-`.\n\n")
+    md.write(markdown_table(activity_header, activity_rows) + "\n")
+    header = ["case", "mode"] + collector_keys
     write_tsv(os.path.join(out_dir, "collector.tsv"), header,
               collector_rows)
-    md.write("## Collector verdicts, produced and supplied entries\n\n"
-             "Verdicts of the body access collector on the bodies analysed "
-             "to completion, the entries the producer stored from them or "
-             "refused (no lookup reads them), and the counters of entries "
-             "supplied by a test module, which no campaign run supplies.\n\n")
+    md.write("## Counters of the statistics file: collector, producer and "
+             "supplied entries\n\nSame source and same reading as the "
+             "previous table: the rows `collector-*` (verdicts of the body "
+             "access collector), `cache-produced` and "
+             "`cache-production-refused-*` (the producer), and "
+             "`cache-hits`, `cache-rejected-*` and `cache-refused-*` "
+             "(entries supplied by a test module).\n\n")
     md.write(markdown_table(header, collector_rows) + "\n")
 
-    # Cache activity per function, in a file of its own.
+    # Counters per function, in a file of its own.
     write_tsv(os.path.join(out_dir, "functions.tsv"),
               ["case", "mode", "function", "hits", "misses", "stored",
                "refused", "collector_would_store", "collector_refused"],
               function_rows)
-    md.write("The hits, misses, stores, refusals and collector verdicts per "
-             "function are in `functions.tsv`.\n\n")
+    md.write("The `memexec-*` and `collector-*` rows of each function are "
+             "in `functions.tsv`, read in the same way: `-` where the "
+             "function has no row of the counter.\n\n")
+
+    header = ["case", "mode"] + LOG_COLUMNS
+    write_tsv(os.path.join(out_dir, "log.tsv"), header, log_rows)
+    md.write("## Dispositions counted in the Eva log (log-derived)\n\n"
+             "Source: the `[eva:cache]` messages of `eva.log`, one "
+             "disposition line per call, counted by the words of their "
+             "fields. These are counts of lines of the log, not counters "
+             "of the statistics file: the two sources are never added, and "
+             "neither stands for the other. `analysis_starts` counts the "
+             "lines `[eva] Analyzing ... application starting at ...`. A "
+             "count of 0, or `none` in a list by reason, means that there "
+             "is no such line among the `disposition_lines` disposition "
+             "lines of this log. The counts by kind are `-` unless the log "
+             "has exactly one analysis start, at least one disposition "
+             "line, and no cache message of a form the tool does not "
+             "know; `log_note` then says why. The columns of the collector "
+             "and of the producer are `-` when no disposition line has "
+             "that field: the analyzer prints the producer field only "
+             "under the message category `cache-producer`, and the kinds "
+             "of a field that the log does not print are not compared. "
+             "`lookup_rejected` counts the "
+             "rejected candidates, the other columns count lines. `sources` "
+             "compares each kind that has a counter with the rows of the "
+             "statistics file: `agree on N kind(s)` when N kinds have the "
+             "same number in both, `disagree:` followed by each kind whose "
+             "two numbers differ or that the log shows and no row "
+             "counts.\n\n")
+    md.write(markdown_table(header, log_rows) + "\n")
 
     # Times of the modes.
     header = ["case", "nocache_s", "cache_s", "reference_s",
@@ -3179,8 +3349,7 @@ def main(argv=None):
     p.add_argument("--assert-numbering", action="store_true",
                    help="for runs recorded before the AST digest: assert "
                    "that a run without digest numbers the statements as "
-                   "the other, from equal revision, patch, options and "
-                   "preprocessing")
+                   "the other; nothing of the two programs is compared")
     p.add_argument("--outcome-a", help="outcome of run A")
     p.add_argument("--outcome-b", help="outcome of run B")
     p.add_argument("--entry-point",
@@ -3207,13 +3376,9 @@ def main(argv=None):
                    help="root of the sources of run B, written ${SRC}")
     p.set_defaults(func=alarms_command)
     p = sub.add_parser("counts")
-    p.add_argument("stats")
-    p.add_argument("--families",
-                   help="counter families of the binary, comma-separated "
-                   "(default: infer families from statistics rows)")
-    p.add_argument("--flags", help="Eva options of the run")
-    p.add_argument("--log", help="Eva log of the invocation")
-    p.add_argument("--records", help="records derived from --log")
+    p.add_argument("stats", help="statistics file of an Eva invocation")
+    p.add_argument("--log", help="Eva log of the same invocation: its "
+                   "dispositions are counted too, under their own names")
     p.set_defaults(func=counts_command)
     p = sub.add_parser("families")
     p.add_argument("cmxs", help="the compiled Eva plugin of a binary")
@@ -3243,8 +3408,9 @@ def main(argv=None):
     p.add_argument("--dedicated-scope", action="store_true",
                    help="the runner started the watchdog in a scope of its "
                    "own")
-    p.add_argument("--entry-point", default="main",
-                   help="the entry point configured for the target (main)")
+    p.add_argument("--entry-point",
+                   help="the entry point configured for the target; without "
+                   "it, no run is completed")
     p.set_defaults(func=outcome_command)
 
     p = sub.add_parser("invocation-outcome")

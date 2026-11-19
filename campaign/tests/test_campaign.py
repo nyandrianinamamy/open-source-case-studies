@@ -33,6 +33,14 @@ def log(text):
     return text.strip("\n").split("\n")
 
 
+def export(rows=""):
+    """A statistics file as the analyzer exports it: the given rows and
+    rows that every export has, sorted by name, stmt-coverage last."""
+    lines = (rows + "alarm-count\t\t\t0\nstmt-coverage\t\t\t1.\n") \
+        .splitlines(keepends=True)
+    return "".join(sorted(lines, key=lambda line: line.split("\t")[0]))
+
+
 # Messages in the forms Eva prints them: header and body on two lines or on
 # one, the entry point without a location, a callstack broken over several
 # lines, and other messages in between.
@@ -498,11 +506,11 @@ class Measure(unittest.TestCase):
 class Counts(unittest.TestCase):
 
     def test_builtins_and_cache(self):
-        stats = ("builtin-applied-malloc\tmalloc\t\t2\n"
-                 "builtin-applied-Frama_C_free\tmy_free\t\t1\n"
-                 "builtin-applied-strlen\tstrlen\t\t5\n"
-                 "memexec-hits\tf\t\t3\n"
-                 "memexec-refused-not-cacheable\tg\t\t1\n")
+        stats = export("builtin-applied-malloc\tmalloc\t\t2\n"
+                       "builtin-applied-Frama_C_free\tmy_free\t\t1\n"
+                       "builtin-applied-strlen\tstrlen\t\t5\n"
+                       "memexec-hits\tf\t\t3\n"
+                       "memexec-refused-not-cacheable\tg\t\t1\n")
         with tempfile.TemporaryDirectory() as tmp:
             path = os.path.join(tmp, "stats.csv")
             with open(path, "w") as f:
@@ -515,34 +523,9 @@ class Counts(unittest.TestCase):
         self.assertEqual(counts["hits"], 3)
         self.assertEqual(counts["refused"], 1)
 
-    def test_unknown_cache_counters_are_ignored(self):
-        stats = ("memexec-hits\tf\t\t3\n"
-                 "memexec-collector-swept\tf\t\t7\n")
-        with tempfile.TemporaryDirectory() as tmp:
-            path = os.path.join(tmp, "stats.csv")
-            with open(path, "w") as f:
-                f.write(stats)
-            counts = campaign.run_counts(path)
-            rows = campaign.function_counts(path)
-        self.assertEqual((counts["hits"], counts["misses"]), (3, 0))
-        self.assertEqual(rows, [["f", 3, 0, 0, 0, 0, 0]])
 
 
 class Tables(unittest.TestCase):
-
-    def test_cache_activity_per_function(self):
-        stats = ("memexec-hits\tf\t\t3\n"
-                 "memexec-misses\tf\t\t1\n"
-                 "memexec-misses\tg\t\t2\n"
-                 "memexec-refused-not-cacheable\tg\t\t1\n"
-                 "builtin-applied-strlen\tstrlen\t\t5\n")
-        with tempfile.TemporaryDirectory() as tmp:
-            path = os.path.join(tmp, "stats.csv")
-            with open(path, "w") as f:
-                f.write(stats)
-            rows = campaign.function_counts(path)
-        self.assertEqual(rows, [["f", 3, 1, 0, 0, 0, 0],
-                                ["g", 0, 2, 0, 1, 0, 0]])
 
     def test_unmeasured_runs_leave_no_empty_cell(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -758,88 +741,6 @@ class LookupCandidates(unittest.TestCase):
         self.assertEqual(hit["lookup"], "hit")
         self.assertEqual(hit.get("lookup_rejected"), [[4, "key-differs"]])
         self.assertEqual(hit.get("lookup_hit_entry"), 5)
-
-
-# Counters of the statistics file of the analyzer of issue #54 for the test
-# plugins/eva/tests/value/cache_supplied.c of the analyzer, default run
-# (the rows of the times, iterations and coverage left out). The producer
-# and the collector are on by default.
-STATS = """alarm-count\t\t\t0
-cache-hits\tstep\t\t1
-cache-hits\tset_out\t\t1
-cache-hits\tprecise_first\t\t1
-cache-hits\twide_first\t\t1
-cache-hits\tloop_on_4\t\t1
-cache-hits\twrite_then_spin\t\t1
-cache-hits\tnever_returns\t\t1
-cache-hits\ttwice\t\t1
-cache-hits\tleak_address\t\t1
-cache-produced\ttwice\t\t1
-cache-production-refused-builtin\tstep\t\t1
-cache-production-refused-builtin\tplain\t\t2
-cache-production-refused-builtin\tmain\t\t1
-cache-refused-supplied-only\tstep\t\t1
-cache-refused-supplied-only\tplain\t\t2
-cache-refused-supplied-only\ttwice\t\t1
-cache-refused-supplied-only\tmain\t\t1
-cache-rejected-key-differs\tstep\t\t1
-cache-rejected-key-differs\ttwice\t\t1
-collector-refused-builtin\tstep\t\t1
-collector-refused-builtin\tplain\t\t2
-collector-refused-builtin\tmain\t\t1
-collector-would-store\ttwice\t\t1
-partitioning-index-misses\t\t\t60
-"""
-
-
-class CounterFamilies(unittest.TestCase):
-    """H2: counter families, absent counters and measured zeros."""
-
-    def counts(self, text, families):
-        with tempfile.TemporaryDirectory() as tmp:
-            path = os.path.join(tmp, "stats.csv")
-            write(path, text)
-            return campaign.run_counts(path, families)
-
-    def test_families(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            path = os.path.join(tmp, "stats.csv")
-            write(path, STATS)
-            c = campaign.run_counts(path)
-        self.assertEqual(c.get("supplied_hits"), 9)
-        self.assertEqual(c.get("collector_would_store"), 1)
-        c = self.counts(STATS, set(campaign.FAMILIES))
-        self.assertEqual(c["supplied_hits"], 9)
-        self.assertEqual(c["supplied_rejected"], 2)
-        self.assertEqual(c["supplied_rejected_by_reason"], "key-differs=2")
-        self.assertEqual(c["supplied_refused"], 5)
-        self.assertEqual(c["collector_would_store"], 1)
-        self.assertEqual(c["collector_refused"], 4)
-        self.assertEqual(c["collector_refused_by_reason"], "builtin=4")
-        self.assertEqual(c["producer_stored"], 1)
-        self.assertEqual(c["producer_refused"], 4)
-        self.assertEqual(c["hits"], 0)  # measured zero: no memexec counter
-        self.assertEqual(c["malloc"], 0)
-        c = self.counts(STATS, set(campaign.FAMILIES) - {"memexec"})
-        self.assertIsNone(c["hits"])  # memexec not measured
-
-    def test_absent_builtin_counter_is_not_set_a(self):
-        c = self.counts("memexec-hits\tf\t\t1\n", {"memexec"})
-        self.assertIsNone(c["in_set_a"])
-        self.assertIsNone(c["allocation_and_release"])
-        c = self.counts("memexec-hits\tf\t\t1\n", {"memexec", "builtin"})
-        self.assertTrue(c["in_set_a"])
-        self.assertEqual(c["misses"], 0)
-
-    def test_measured_families_of_a_run(self):
-        binary = ["builtin", "memexec", "collector", "producer"]
-        self.assertEqual(
-            campaign.measured_families(binary, "-eva-no-memexec"),
-            {"builtin", "collector", "producer"})
-        self.assertEqual(
-            campaign.measured_families(
-                binary, "-eva-memexec -eva-no-cache-collect"),
-            {"builtin", "memexec"})
 
 
 QUERIES_NO_RESULTS = """reach\tget\tget:10:0
@@ -1454,8 +1355,8 @@ class NumberingEvidence(unittest.TestCase):
         self.assertEqual(s.get("complete"), "False")
         self.assertEqual(
             s.get("verdict"),
-            "numbering asserted from equal revision, patch, options and "
-            "preprocessing, not checked by digest")
+            "numbering asserted from equal recorded revisions, patch and "
+            "extra options, not checked by digest")
 
     def test_the_old_flag_no_longer_grants_the_numbering(self):
         code, _, _, _ = self.align(SITES_NUMBERED, SITES_NUMBERED,
@@ -1507,7 +1408,8 @@ class CompareRuns(unittest.TestCase):
             os.makedirs(run)
             base = {"case": "c", "mode": mode, "revision": "a" * 40,
                     "patch_sha256": "-", "oscs_revision": "o" * 40,
-                    "extra_eva_flags": "-", "outcome": "completed"}
+                    "extra_eva_flags": "-", "outcome": "completed",
+                    "entry_point": "main"}
             base.update(fields)
             write(os.path.join(run, "run.tsv"), "".join(
                 "%s\t%s\n" % kv for kv in base.items() if kv[1] is not None))
@@ -1945,230 +1847,6 @@ class QueryNumbering(unittest.TestCase):
         self.assertEqual(s["incomparable"], "1")  # the exit of f only
         self.assertEqual(s.get("numbering"), "different")
         self.assertEqual(s.get("unpaired"), "2")
-
-
-class EffectiveOptions(unittest.TestCase):
-    """H2: the measured families follow the effective options, in their
-    order, and the dispositions printed."""
-
-    def test_last_option_wins(self):
-        binary = ["builtin", "memexec", "collector", "producer"]
-        self.assertNotIn("memexec", campaign.measured_families(
-            binary, "-eva-memexec -eva-no-memexec"))
-        self.assertIn("memexec", campaign.measured_families(
-            binary, "-eva-no-memexec -eva-memexec"))
-        self.assertIn("collector", campaign.measured_families(
-            binary, "-eva-no-cache-collect -eva-cache-collect"))
-
-    def tables(self, run_fields, files):
-        with tempfile.TemporaryDirectory() as tmp:
-            run = os.path.join(tmp, "runs", "c", "cache")
-            os.makedirs(run)
-            fields = {"case": "c", "mode": "cache", "flag": "-eva-memexec",
-                      "extra_eva_flags": "-", "outcome": "completed",
-                      "counter_families":
-                      "builtin,memexec,supplied,collector,producer"}
-            fields.update(run_fields)
-            write(os.path.join(run, "run.tsv"),
-                  "".join("%s\t%s\n" % kv for kv in fields.items()))
-            write(os.path.join(run, "eva-stats.csv"),
-                  "cache-refused-supplied-only\tf\t\t2\n"
-                  "collector-would-store\tf\t\t1\n")
-            for name, text in files.items():
-                if name.endswith(".gz"):
-                    with gzip.open(os.path.join(run, name), "wt") as f:
-                        f.write(text)
-                else:
-                    write(os.path.join(run, name), text)
-            code, _, error = run_main(["tables", tmp])
-            result = {}
-            for name in ("activity", "collector"):
-                path = os.path.join(tmp, "tables", name + ".tsv")
-                if os.path.exists(path):
-                    with open(path) as f:
-                        result[name] = list(csv.DictReader(
-                            f, delimiter="\t"))[0]
-        self.assertEqual((code, error), (0, None))
-        return result
-
-    def test_option_after_the_mode_flag(self):
-        t = self.tables({}, {"command": "frama-c -eva -eva-memexec "
-                             "-eva-msg-key=+cache,+callstacks "
-                             "-eva-no-memexec\n"})
-        self.assertEqual(t["activity"]["hits"], "-")
-        self.assertEqual(t["activity"]["refused_by_reason"], "-")
-
-    def test_extra_flags_after_the_mode_flag(self):
-        t = self.tables({"extra_eva_flags": "-eva-no-memexec"}, {})
-        self.assertEqual(t["activity"]["hits"], "-")
-
-    def test_disabled_storage_printed(self):
-        records = "".join(json.dumps(r) + "\n"
-                          for r in records_of(NESTED_LOG_OFF))
-        t = self.tables({}, {"records.jsonl.gz": records,
-                             "eva.log": ANALYSIS_BANNER + NESTED_LOG_OFF})
-        self.assertEqual(t["activity"]["hits"], "-")
-
-    def test_memexec_flag_without_memexec_evidence(self):
-        t = self.tables({}, {})
-        self.assertEqual(t["activity"]["hits"], "-")
-        self.assertEqual(t["activity"]["refused_by_reason"], "-")
-
-    def test_supplied_refusals_by_reason(self):
-        t = self.tables({}, {})
-        self.assertEqual(t["collector"].get("supplied_refused_by_reason"),
-                         "supplied-only=2")
-        self.assertEqual(t["collector"].get("supplied_rejected_by_reason"),
-                         "none")
-
-
-ANALYSIS_BANNER = "[eva] Analyzing a complete application starting at main\n"
-
-
-COLLECTED_LOG = NESTED_LOG.replace(
-    "storage: stored (entry 1)",
-    "storage: stored (entry 1); collector: would-store")
-
-
-class CounterEvidence(unittest.TestCase):
-    """A family is measured when the invocation that wrote the statistics
-    gives evidence for it: its rows, or its dispositions in the log. The
-    command line decides alone only when it has one stage."""
-
-    MEMEXEC_THEN_OFF = ("frama-c -eva -eva-memexec "
-                        "-eva-msg-key=+cache,+callstacks "
-                        "-eva-statistics-file eva-stats.csv "
-                        "-then -eva-no-memexec\n")
-
-    def tables(self, command, stats, log=None, families=None,
-               recorded_log=None):
-        with tempfile.TemporaryDirectory() as tmp:
-            run = os.path.join(tmp, "runs", "c", "cache")
-            os.makedirs(run)
-            fields = {"case": "c", "mode": "cache", "flag": "-eva-memexec",
-                      "extra_eva_flags": "-", "outcome": "completed",
-                      "counter_families": families or
-                      "builtin,memexec,supplied,collector,producer"}
-            write(os.path.join(run, "run.tsv"),
-                  "".join("%s\t%s\n" % kv for kv in fields.items()))
-            write(os.path.join(run, "command"), command)
-            write(os.path.join(run, "eva-stats.csv"), stats)
-            if log is not None:
-                if not log.startswith(ANALYSIS_BANNER):
-                    log = ANALYSIS_BANNER + log
-                with gzip.open(os.path.join(run, "eva.log.gz"), "wt") as f:
-                    f.write(log)
-                with gzip.open(os.path.join(run, "records.jsonl.gz"),
-                               "wt") as f:
-                    f.write("".join(json.dumps(r) + "\n"
-                                    for r in records_of(recorded_log or log)))
-            code, _, error = run_main(["tables", tmp])
-            self.assertEqual((code, error), (0, None))
-            result = {}
-            for name in ("activity", "collector"):
-                with open(os.path.join(tmp, "tables", name + ".tsv")) as f:
-                    result[name] = list(csv.DictReader(
-                        f, delimiter="\t"))[0]
-            return result
-
-    def test_memexec_then_no_memexec(self):
-        # Eva runs once, with memexec; the second stage does not run it
-        # again, and its statistics hold the hit.
-        t = self.tables(self.MEMEXEC_THEN_OFF,
-                        "memexec-hits\touter\t\t1\n"
-                        "memexec-misses\tleaf\t\t2\n", NESTED_LOG)
-        self.assertEqual(t["activity"]["hits"], "1")
-        self.assertEqual(t["activity"]["misses"], "2")
-
-    SINGLE = ("frama-c -eva -eva-memexec -eva-msg-key=+cache,+callstacks "
-              "-eva-statistics-file eva-stats.csv\n")
-
-    def test_dispositions_are_evidence(self):
-        # No memexec row, but the log of a single-stage command shows
-        # entries stored: a measured zero.
-        t = self.tables(self.SINGLE, "", NESTED_LOG)
-        self.assertEqual(t["activity"]["hits"], "0")
-
-    def test_dispositions_of_a_sequence_are_not_evidence(self):
-        # A later analysis can be silent (-eva-verbose 0) and write the
-        # statistics: one logged start does not attribute the dispositions.
-        for command in (
-                self.MEMEXEC_THEN_OFF,
-                "frama-c -load framac.sav -then -eva -eva-no-cache-collect "
-                "-eva-no-memexec -eva-verbose 0\n",
-                "frama-c -eva -commands-file cmds\n"):
-            with self.subTest(command=command):
-                t = self.tables(command, "", COLLECTED_LOG)
-                self.assertEqual(t["activity"]["hits"], "-")
-                self.assertEqual(t["collector"]["collector_would_store"], "-")
-                self.assertEqual(t["collector"]["collector_refused"], "-")
-
-    def test_commands_file_without_evidence(self):
-        # The commands file may disable the collector and the producer:
-        # without their rows or dispositions, they were not measured.
-        t = self.tables("frama-c -eva -eva-memexec -commands-file cmds\n",
-                        "memexec-hits\touter\t\t1\n", NESTED_LOG)
-        self.assertEqual(t["activity"]["hits"], "1")
-        for k in ("collector_would_store", "collector_refused",
-                  "producer_stored", "producer_refused",
-                  "supplied_refused"):
-            self.assertEqual(t["collector"][k], "-", k)
-        # Nor the builtins: no row, so no set A membership.
-        self.assertEqual(t["activity"]["in_set_a"], "-")
-
-    def test_collector_field_is_evidence(self):
-        t = self.tables("frama-c -eva -eva-no-cache-collect "
-                        "-eva-cache-collect\n", "", COLLECTED_LOG)
-        self.assertEqual(t["collector"]["collector_would_store"], "0")
-
-    def test_producer_rows_are_evidence(self):
-        t = self.tables("frama-c -eva -then-on p -eva\n",
-                        "cache-produced\tleaf\t\t2\n", NESTED_LOG_OFF)
-        self.assertEqual(t["collector"]["producer_stored"], "2")
-        self.assertEqual(t["activity"]["hits"], "-")
-
-    def test_every_sequencing_option(self):
-        for command in ("frama-c -eva -eva-memexec -then-last -print",
-                        "frama-c -eva -eva-memexec -then-replace -print",
-                        "frama-c -eva -eva-memexec -then-on p -print",
-                        "frama-c -eva -eva-memexec -commands-file=cmds"):
-            t = self.tables(command + "\n", "")
-            self.assertEqual(t["activity"]["hits"], "-", command)
-            self.assertEqual(t["activity"]["in_set_a"], "-", command)
-
-    def test_single_stage_command(self):
-        # Single-stage options establish builtin and collector coverage.
-        # Memexec and supplied entries require evidence of their own path.
-        t = self.tables("frama-c -eva -eva-memexec\n", "")
-        self.assertEqual(t["activity"]["hits"], "-")
-        self.assertEqual(t["collector"]["supplied_hits"], "-")
-        self.assertEqual(t["collector"]["collector_refused"], "0")
-        self.assertEqual(t["activity"]["in_set_a"], "True")
-        t = self.tables("frama-c -eva -eva-no-memexec\n", "")
-        self.assertEqual(t["activity"]["hits"], "-")
-
-    def test_dispositions_of_a_family_the_binary_lacks(self):
-        # A binary without the memexec counters writes none: the
-        # dispositions do not make a zero of a counter that does not exist.
-        t = self.tables(self.MEMEXEC_THEN_OFF, "", NESTED_LOG,
-                        families="builtin,collector,producer")
-        self.assertEqual(t["activity"]["hits"], "-")
-
-    def test_dispositions_of_two_analyses(self):
-        # Each analysis starts and prints a tree.
-        t = self.tables(self.MEMEXEC_THEN_OFF, "",
-                        NESTED_LOG + ANALYSIS_BANNER + NESTED_LOG_OFF)
-        self.assertEqual(t["activity"]["hits"], "-")
-
-    def test_dispositions_come_from_the_measured_log(self):
-        tables = self.tables(self.MEMEXEC_THEN_OFF, "", NESTED_LOG_OFF,
-                             recorded_log=COLLECTED_LOG)
-        self.assertEqual(tables["activity"]["hits"], "-")
-        self.assertEqual(tables["collector"]["collector_would_store"], "-")
-
-    def test_disabled_storage_is_no_evidence(self):
-        t = self.tables(self.MEMEXEC_THEN_OFF, "", NESTED_LOG_OFF)
-        self.assertEqual(t["activity"]["hits"], "-")
 
 
 class StrictDoneLine(unittest.TestCase):
@@ -3047,28 +2725,6 @@ def campaign_numbering_options():
 
 
 class FourthReview(unittest.TestCase):
-    START = "[eva] Analyzing a complete application starting at main\n"
-
-    def test_starts_control_attribution(self):
-        cmd = ("frama-c -eva -eva-memexec -then -eva -eva-no-memexec "
-               "-eva-no-cache-collect -eva-msg-key=-cache\n")
-        first = self.START + COLLECTED_LOG.replace(
-            "collector: would-store", "collector: would-store; "
-            "producer: stored (entry 1)")
-        for banner in (self.START, self.START.replace("a complete",
-                                                       "an incomplete")):
-            for command in (cmd, "frama-c -eva -eva-memexec\n"):
-                with self.subTest(banner=banner, command=command):
-                    tables = CounterEvidence.tables(
-                        self, command, "builtin-applied-malloc\tm\t\t1\n",
-                        first + banner + "[eva] done\n")
-                    self.assertEqual(tables["activity"]["hits"], "-")
-                    self.assertEqual(tables["collector"]["collector_refused"], "-")
-                    self.assertEqual(tables["collector"]["producer_stored"], "-")
-                    tables = CounterEvidence.tables(
-                        self, command, "memexec-hits\tf\t\t3\n", first + banner)
-                    self.assertEqual(tables["activity"]["hits"], "3")
-
 
     def test_bad_numbering_evidence(self):
         for ast, pp in ((DIGEST_0, "-:-"), (DIGEST_0, "a" * 64 + ":-"),
@@ -3134,49 +2790,6 @@ class FourthReview(unittest.TestCase):
                                  env=dict(os.environ, HOME=home),
                                  capture_output=True, text=True)
             self.assertEqual(run.returncode, 0, run.stderr)
-
-
-    def test_supplied_evidence_establishes_no_memexec(self):
-        supplied = NESTED_LOG.replace("stored (entry 1)", "refused (supplied-only)")
-        supplied = supplied.replace("stored (entry 2)", "refused (supplied-only)")
-        supplied = supplied.replace("refused (not-cacheable)", "refused (supplied-only)")
-        for log in (supplied, supplied.split("[eva:cache]")[0] +
-                    "[eva:cache] call to f: lookup: hit (entry 2); "
-                    "execution: not-analysed; storage: none\n"):
-            for command in (CounterEvidence.MEMEXEC_THEN_OFF,
-                            "frama-c -eva -eva-memexec\n"):
-                tables = CounterEvidence.tables(
-                    self, command, "cache-refused-supplied-only\tf\t\t1\n",
-                    self.START + log)
-                self.assertEqual(tables["activity"]["hits"], "-")
-                self.assertEqual(tables["collector"]["supplied_refused"], "1")
-        for storage in ("stored", "stored (entry bogus)", "refused (unknown)",
-                        "refused (disabled)", "none"):
-            with self.subTest(storage=storage):
-                log = NESTED_LOG_OFF.replace("refused (disabled)", storage)
-                tables = CounterEvidence.tables(
-                    self, CounterEvidence.MEMEXEC_THEN_OFF, "", self.START + log)
-                self.assertEqual(tables["activity"]["hits"], "-")
-        # A supplied disposition without its counter row contradicts the
-        # statistics: the count is not established, in a sequence or not.
-        for command in (CounterEvidence.MEMEXEC_THEN_OFF,
-                        "frama-c -eva -eva-memexec\n"):
-            tables = CounterEvidence.tables(
-                self, command, "", self.START + supplied)
-            self.assertEqual(tables["collector"]["supplied_refused"], "-")
-        for stat in ("memexec-hits\tf\t\tbroken\n",
-                     "memexec-hits\tf\t\t5",
-                     "memexec-made-up\tf\t\t3\n",
-                     "memexec-refused-supplied-only\tf\t\t3\n"):
-            tables = CounterEvidence.tables(
-                self, CounterEvidence.MEMEXEC_THEN_OFF, stat, self.START + supplied)
-            self.assertEqual(tables["activity"]["hits"], "-")
-        malformed = ("collector-refused-builtin\tf\t\t-1\n"
-                     "cache-production-refused-builtin\tf\t\tbad\n")
-        tables = CounterEvidence.tables(
-            self, "frama-c -eva\n", malformed, self.START + COLLECTED_LOG)
-        self.assertEqual(tables["collector"]["collector_refused"], "-")
-        self.assertEqual(tables["collector"]["producer_refused"], "-")
 
 
     def test_duplicate_digest_header(self):

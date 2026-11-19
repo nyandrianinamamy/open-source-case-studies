@@ -23,6 +23,7 @@ caching and compares the runs. It implements the benchmark protocol of
 | `fixtures/` | constructed programs and the checks run on them |
 | `reference/set-a-recorded.tsv` | set A membership recorded by issue #28 |
 | `tests/test_campaign.py` | tests of `campaign.py` |
+| `tests/test_sources.py` | tests of its tables of counters, of log counts and of summaries |
 | `results/` | tables and provenance of campaigns that ran |
 
 `campaign.py` uses the Python standard library only. Run it with
@@ -77,14 +78,22 @@ also gets `-eva-msg-key=+cache,+callstacks`, and the options of
 The binaries must print the `[eva:cache]` message of each call and the
 `builtin-applied-NAME` statistics. Both come from the call-cache seam of
 `nyandrianinamamy/frama-c` (`docs/eva/reuse-correspondence/call-cache-seam.md`
-there). In the binaries of the pilot, the body access collector and the
-producer of cache entries are on by default in every mode: each analysed
-call gets a collector verdict, and the producer stores entries that no
-lookup reads. `--extra-eva-flags -eva-no-cache-collect` turns both off.
+there). In the pinned analyzer the option `-eva-cache-collect` is on by
+default ([`parameters.ml` 1017–1024](https://github.com/nyandrianinamamy/frama-c/blob/9168ba2e235fc436b2c1bbf393b04447312a5504/plugins/eva/src/parameters.ml#L1017-L1024)): the seam then asks the body access collector for a verdict
+on each body that it analyses and gives the verdict to the producer of
+cache entries ([`call_cache.ml` 240–260](https://github.com/nyandrianinamamy/frama-c/blob/9168ba2e235fc436b2c1bbf393b04447312a5504/plugins/eva/src/engine/call_cache.ml#L240-L260)). A produced entry is a lookup candidate only through
+the supplied-entry fixture of the tests of the analyzer ([`cache_producer.mli` 9–10](https://github.com/nyandrianinamamy/frama-c/blob/9168ba2e235fc436b2c1bbf393b04447312a5504/plugins/eva/src/engine/cache_producer.mli#L9-L10)).
+`--extra-eva-flags -eva-no-cache-collect` asks for both to be off. Whether
+a run had them is read in its statistics file and in its log, not in its
+options (see Counters and dispositions).
 
-A checkout is either a git working tree with no local change, whose `HEAD`
-is recorded, or a directory made by `tools/build-reference.sh`, which records
-its revision in `CAMPAIGN_REVISION`:
+A checkout is either a git working tree with no change to its tracked
+files, whose `HEAD` is recorded, or a directory made by
+`tools/build-reference.sh`, which records its revision in
+`CAMPAIGN_REVISION`. The runner records that revision with the SHA-256 of
+the `frama-c` executable and of the `eva.cmxs` that it runs. It does not
+check that they were built from the revision, and it does not look at the
+untracked files of the checkout:
 
 ```sh
 campaign/tools/build-reference.sh [--no-build] FRAMA_C_REPOSITORY REVISION DESTINATION [SWITCH]
@@ -97,41 +106,153 @@ two columns of `provenance/binaries.tsv`, and copies the patch to
 `provenance/patches/ROLE.patch`; it stops when the patch no longer matches
 its SHA-256. `--no-build` makes the directory without building Frama-C.
 
-The counters that a binary can write are read from its `eva.cmxs`, in
-families: `builtin` (`builtin-applied-*`), `memexec` (`memexec-*`),
-`supplied` (`cache-hits`, `cache-rejected-*`, `cache-refused-*`),
-`collector` (`collector-*`) and `producer` (`cache-produced`,
-`cache-production-refused-*`). A family is measured by a run when the
-invocation that wrote its statistics file gives evidence for it. A valid
-counter row is evidence for its family. A memexec, collector or producer
-disposition in the Eva log is evidence for its family only when the
-recorded command is a single stage and the log has exactly one analysis
-start. In every other case only rows in the statistics file count: a
-later analysis can be silent (`-eva-verbose 0`) and write the statistics,
-so the log does not show how many analyses ran. The supplied family is
-established by its rows only: each of its dispositions increments a
-counter, so a disposition without a row gives no count.
+## Counters and dispositions
 
-For memexec, the unambiguous storage dispositions are `stored (entry N)`
-and `refused` with one of `not-cacheable`, `no-inout`, `footprint-top`,
-`relate-top`, `relate-unclosed` or `exception`. In the pinned analyzer
-[`call_cache.ml`, lines 197–238](https://github.com/nyandrianinamamy/frama-c/blob/9168ba2e235fc436b2c1bbf393b04447312a5504/plugins/eva/src/engine/call_cache.ml#L197-L238),
-the memexec lookup can be bypassed by the supplied lookup. A hit can
-come from either path, and `no-candidate`, `storage: none` and
-`refused (disabled)` do not establish memexec activity. This reverses
-the previous review's treatment of `refused (supplied-only)`. That
-disposition establishes only the supplied family. Both lookup paths
-can print `hit`. [`call_cache.ml`, lines 180–215](https://github.com/nyandrianinamamy/frama-c/blob/9168ba2e235fc436b2c1bbf393b04447312a5504/plugins/eva/src/engine/call_cache.ml#L180-L215)
+The tables report the cache activity of a run from two sources, each in
+tables of its own: the rows of the statistics file, and the disposition
+lines of the Eva log. The two are never added, and neither gives a value
+to a cell of the other. The line numbers below are those of the pinned
+analyzer, revision `9168ba2e235fc436b2c1bbf393b04447312a5504`.
 
-A single-stage command can also establish builtin coverage and whether
-the collector and producer were enabled. The harness uses the recorded
-command in order, including options added by the case makefile. The
-last of `-eva-cache-collect` and `-eva-no-cache-collect` wins, with the
-collector and producer enabled by default on a binary that has them.
-With `-then`, `-then-on`, `-then-last`, `-then-replace` or
-`-commands-file`, the command's flags alone do not decide. The reporting
-stage that `analysis.mk` adds runs no analysis. A missing counter of a
-measured family is reported as 0. An unmeasured family is written `-`.
+### What a statistics number is
+
+`eva-stats.csv` is the file of the option `-eva-statistics-file`. In the
+analyzer:
+
+- an analysis clears every statistic when it starts ([`analysis.ml` 81](https://github.com/nyandrianinamamy/frama-c/blob/9168ba2e235fc436b2c1bbf393b04447312a5504/plugins/eva/src/engine/analysis.ml#L81)) and
+  exports them when it ends, after its summary ([`analysis.ml` 131–133](https://github.com/nyandrianinamamy/frama-c/blob/9168ba2e235fc436b2c1bbf393b04447312a5504/plugins/eva/src/engine/analysis.ml#L131-L133)). Each
+  export rewrites the file, which therefore holds the statistics of the
+  last analysis of the invocation that ended;
+- the export writes one line `NAME<TAB>FUNCTION<TAB>STATEMENT<TAB>VALUE`
+  for each statistic that has a value, sorted by name ([`statistics.ml` 260–287](https://github.com/nyandrianinamamy/frama-c/blob/9168ba2e235fc436b2c1bbf393b04447312a5504/plugins/eva/src/utils/statistics.ml#L260-L287)). It
+  writes no header, no count of analyses and nothing about the options;
+- a counter of the cache gets a value only when the seam increments it
+  ([`statistics.ml` 225–226](https://github.com/nyandrianinamamy/frama-c/blob/9168ba2e235fc436b2c1bbf393b04447312a5504/plugins/eva/src/utils/statistics.ml#L225-L226), called from [`call_cache.ml` 186–259](https://github.com/nyandrianinamamy/frama-c/blob/9168ba2e235fc436b2c1bbf393b04447312a5504/plugins/eva/src/engine/call_cache.ml#L186-L259) and, for `builtin-applied-NAME`, from
+  [`compute_functions.ml` 177](https://github.com/nyandrianinamamy/frama-c/blob/9168ba2e235fc436b2c1bbf393b04447312a5504/plugins/eva/src/engine/compute_functions.ml#L177)). Nothing writes a row that holds 0 for these counters: a
+  counter that was never incremented has no row;
+- five rows are written at every export, whatever the analysis did:
+  `memory-usage` ([`statistics.ml` 354–360](https://github.com/nyandrianinamamy/frama-c/blob/9168ba2e235fc436b2c1bbf393b04447312a5504/plugins/eva/src/utils/statistics.ml#L354-L360), applied at line 261), `stmt-coverage`,
+  `fun-coverage` and `alarm-count` ([`summary.ml` 283–286](https://github.com/nyandrianinamamy/frama-c/blob/9168ba2e235fc436b2c1bbf393b04447312a5504/plugins/eva/src/utils/summary.ml#L283-L286), in the summary that
+  precedes the export) and `analysis-time` ([`eva_perf.ml` 297–300](https://github.com/nyandrianinamamy/frama-c/blob/9168ba2e235fc436b2c1bbf393b04447312a5504/plugins/eva/src/utils/eva_perf.ml#L297-L300)). None of them says
+  which options the analysis had, or how many analyses the invocation ran.
+
+`campaign.py` therefore reads the file by one rule. A counter is a number
+only when the file holds a row of it: the number is the sum of its rows,
+one per function. Without a row the cell is `-`. A cell is 0 only when a
+row holds 0, which the pinned analyzer never writes. No value comes from
+the options or the mode of the run, from the counter names found in the
+binary, from the log, or from another row of the same family.
+
+That a counter has no row is a fact of the file only when the file is
+whole. The file is read only when it is a complete export: four fields on
+every line, every line ended, the names in ascending order, and
+`stmt-coverage` in the last row, the last name in that order among the
+statistics that the analyzer registers ([`statistics.ml` 307–350](https://github.com/nyandrianinamamy/frama-c/blob/9168ba2e235fc436b2c1bbf393b04447312a5504/plugins/eva/src/utils/statistics.ml#L307-L350)). Otherwise every
+cell of the run is `-`, `export_rows` included, and the reason is printed
+on the standard error.
+
+| Columns | Rows of the file |
+|---|---|
+| `export_rows` | every row |
+| `hits`, `misses`, `stored` | `memexec-hits`, `memexec-misses`, `memexec-stored` |
+| `refused`, `refused_by_reason` | `memexec-refused-REASON` |
+| `supplied_hits` | `cache-hits` |
+| `supplied_rejected`, `supplied_refused` and their lists by reason | `cache-rejected-REASON`, `cache-refused-REASON` |
+| `collector_would_store`, `collector_refused` and its list by reason | `collector-would-store`, `collector-refused-REASON` |
+| `producer_stored`, `producer_refused` and its list by reason | `cache-produced`, `cache-production-refused-REASON` |
+| `allocation_and_release`, `allocation_and_release_rows` | `builtin-applied-NAME` for `malloc`, `calloc`, `realloc`, `reallocarray`, `alloca`, the VLA allocator, `free` and the VLA release, under their libc or `Frama_C_` names |
+
+Set A is the set of targets that apply no allocation or release builtin.
+The analyzer writes no row for a builtin that it did not apply, so the
+file never states that membership. `allocation_and_release` is the sum of
+the rows of these builtins and `-` without such a row;
+`allocation_and_release_rows` is their number, and its 0 means that there
+is no such row among the `export_rows` rows of the file. `in_set_a` is
+`False` when the sum is positive, `True` when rows give the sum 0, and
+`-` without a row. `agrees` compares `in_set_a` with the membership
+recorded by the earlier measurement (`reference/set-a-recorded.tsv`) and
+is `-` when `in_set_a` is. For a target recorded in set A, a run can
+show only that no row contradicts the record.
+
+The counter names found in the `eva.cmxs` of a binary (`campaign.py
+families`) are recorded in `provenance/binaries.tsv` and in `run.tsv` as
+`counter_families`. They are provenance: they decide no cell.
+
+### What a log count is
+
+`eva.log` holds, under the message category `cache`, one disposition line
+per call: `call to F: lookup: ...; execution: ...; storage: ...`, then
+`; collector: ...` when the collector gave a verdict and `; producer: ...`
+when the category `cache-producer` is enabled ([`call_cache.ml` 124–149](https://github.com/nyandrianinamamy/frama-c/blob/9168ba2e235fc436b2c1bbf393b04447312a5504/plugins/eva/src/engine/call_cache.ml#L124-L149)). The table
+`log.tsv` counts these lines by the words of their fields:
+
+| Columns | Lines counted |
+|---|---|
+| `analysis_starts` | `[eva] Analyzing a complete application starting at F`, or `an incomplete` ([`analysis.ml` 253–255](https://github.com/nyandrianinamamy/frama-c/blob/9168ba2e235fc436b2c1bbf393b04447312a5504/plugins/eva/src/engine/analysis.ml#L253-L255)) |
+| `disposition_lines` | the disposition lines |
+| `lookup_hit`, `lookup_no_candidate` | `lookup: hit (entry N)`, alone or after rejected candidates, and `lookup: no-candidate` |
+| `lookup_rejected` and its list by reason | each `rejected (entry N: REASON)`: candidates, not lines |
+| `storage_stored`, `storage_none` | `storage: stored (entry N)`, `storage: none` |
+| `storage_refused` and its list by reason | `storage: refused (REASON)` |
+| `collector_would_store`, `collector_refused` and its list | `collector: would-store`, `collector: refused (REASON)` |
+| `producer_stored`, `producer_refused` and its list | `producer: stored (entry N)`, `producer: refused (REASON)` |
+
+A count of 0, or `none` in a list by reason, means that there is no such
+line among the `disposition_lines` disposition lines of this log. It is
+not a counter of the analysis. The counts by kind are `-`, and `log_note`
+says why, unless the log has exactly one analysis start, at least one
+disposition line, and no message of the two categories that is of another
+form than a disposition line. The columns of the collector and of the
+producer are `-` when no disposition line has that field.
+
+`analysis_starts` is what the log shows. The analyzer prints the line as
+feedback of Eva, so an analysis run with `-eva-verbose 0` prints none: one
+start in the log does not establish that the invocation ran one analysis.
+
+### What identifies a lookup path
+
+The seam looks a call up on one of three paths ([`call_cache.ml` 197–215](https://github.com/nyandrianinamamy/frama-c/blob/9168ba2e235fc436b2c1bbf393b04447312a5504/plugins/eva/src/engine/call_cache.ml#L197-L215)): none when
+memexec is off, the entries supplied by a test module when one registered
+some, memexec otherwise. The lookup field of a disposition line does not
+name the path: `no-candidate` is printed on the three, `hit (entry N)` on
+the last two. What names it:
+
+- for a call whose body was analysed, the storage field: `refused
+  (disabled)` without a cache, `refused (supplied-only)` on the supplied
+  path, `stored (entry N)` or `refused` with a reason of memexec
+  (`not-cacheable`, `no-inout`, `footprint-top`, `relate-top`,
+  `relate-unclosed`, `exception`) on the memexec path ([`call_cache.ml` 222–238](https://github.com/nyandrianinamamy/frama-c/blob/9168ba2e235fc436b2c1bbf393b04447312a5504/plugins/eva/src/engine/call_cache.ml#L222-L238));
+- for a hit, only the counter: `memexec-hits` (line 212) or `cache-hits`
+  (line 192). The log shows the line `lookup: hit`, in `lookup_hit`; the
+  statistics file tells the two paths apart, in `hits` and
+  `supplied_hits`.
+
+`memexec-misses` is incremented when the memexec lookup finds nothing
+(line 209) and has no line of its own. `lookup: no-candidate`, `storage:
+none` and `storage: refused (disabled)` have no counter.
+
+### When the two sources disagree
+
+The seam increments the counters of a call before it prints its line
+([`call_cache.ml` 222–263](https://github.com/nyandrianinamamy/frama-c/blob/9168ba2e235fc436b2c1bbf393b04447312a5504/plugins/eva/src/engine/call_cache.ml#L222-L263)), under names that the line repeats. For each kind of line
+that has a counter, the column `sources` of `log.tsv` compares the count
+of the log with the rows of the statistics file: `agree on N kind(s)`
+when N kinds have the same number in both, `disagree:` followed by each
+kind whose two numbers differ or that the log shows and no row counts,
+each with both numbers, `no kind in both`, or `-` when one of the two
+sources is not usable. A kind of the collector or of the producer is
+compared only when the log prints that field. The column reports; it
+changes no cell, and each table keeps the number of its source.
+
+Neither source says which analysis wrote the statistics file when an
+invocation ran more than one. The command of a run does not say it either:
+`FRAMAC_DEVONLY_OPTIONS_PRE` and `_POST`, a module loaded with
+`-load-module` and a session restored with `-load` change the analyses of
+an invocation without changing its command, and a later analysis can print
+nothing and write the file. `sources` then shows a disagreement when the
+logged analysis counted what the file lacks. Equal numbers do not prove
+that the file is of the logged analysis. The analyzer was not instrumented
+to settle this.
 
 ## Running
 
@@ -202,13 +323,14 @@ OUTPUT/
   comparisons/CASE/A-vs-B/
                pair.tsv alignment-*.tsv queries-*.tsv alarms-*.tsv
   tables/      outcomes.tsv activity.tsv collector.tsv functions.tsv
-               times.tsv alignment.tsv queries.tsv alarms.tsv tables.md
+               log.tsv times.tsv alignment.tsv queries.tsv alarms.tsv
+               tables.md
 ```
 
 `provenance/` records the command, the machine (kernel, OS, CPU, memory,
 toolchain, load at the start), for each binary its revision, the SHA-256 and
-copy of its patch, the SHA-256 of the binary and of its `eva.cmxs` and its
-counter families, the revision of this harness, and the manifest actually
+copy of its patch, the SHA-256 of the binary and of its `eva.cmxs`, the
+counter names found in it, the revision of this harness, and the manifest actually
 used (`--manifest` may name another one than `manifest.tsv`) with its
 SHA-256. Paths under the home directory are written from `~`.
 
@@ -223,7 +345,7 @@ extra options, and the SHA-256 and size of the AST listing.
 | Outcome | Meaning |
 |---|---|
 | `parse-error` | the parse recipe failed; Eva did not run |
-| `harness-error` | the Eva invocation was not measured, make failed after it, or `run.tsv` does not record the exit status of the parse step or of make |
+| `harness-error` | the Eva invocation was not measured, make failed after it, or `run.tsv` does not record the exit status of the parse step or of make, or the entry point of the target |
 | `timeout` | the watchdog fired at the wall-time limit |
 | `oom` | Frama-C or the OCaml runtime reports exhausted memory; or the kernel log identifies the measured process as the victim of a SIGKILL that the watchdog did not send |
 | `killed` | killed by SIGKILL that the watchdog did not send, with no evidence that the out-of-memory killer chose this process: cause unknown |
@@ -390,8 +512,10 @@ the runs (`--outcome-a`, `--outcome-b`) and the entry point configured for
 the target (`--entry-point`); `campaign.py compare OUTPUT CASE A B` reads
 them from the `run.tsv` of two runs and writes all the comparisons of the
 pair, as the runner does. A run recorded before `run.tsv` held the entry
-point takes the one of its case in `provenance/manifest.tsv`, else the last
-`-main` of its Eva command, else `main`. Each log must be one tree of that
+point takes the one of its case in `provenance/manifest.tsv`. The entry
+point is not read from the command of the run and has no default: when
+neither file records it for both runs, the alignment has none, and its
+verdict says `entry point not given`. Each log must be one tree of that
 entry point: one root, its call, and every callstack ending in it. A second
 root, a root of another function or a stack that ends elsewhere is a
 structural problem of that log, and the alignment is not complete without
@@ -432,10 +556,12 @@ true when both runs completed, both logs have that record, every record of
 both runs is aligned, no call is inferred or interrupted, no problem was
 found, both logs give the statement numbers and the numbering is `same`;
 `verdict` is then `complete`. When the only reason against it is an
-`asserted` numbering, `verdict` is `numbering asserted from equal revision,
-patch, options and preprocessing, not checked by digest`; when it is a
-`recorded command` numbering, `AST digests equal, preprocessing compared by
-the recorded command only`; otherwise it lists the reasons. The individual
+`asserted` numbering, `verdict` is `numbering asserted from equal recorded
+revisions, patch and extra options, not checked by digest`: these fields
+of the two `run.tsv` are what was compared, and nothing of the two
+programs; when it is a `recorded command` numbering, `AST digests equal,
+preprocessing compared by the recorded command only`; otherwise it lists
+the reasons. The individual
 records are in `alignment-differences`, `-under-hit`, `-unmatched` and
 `-undecided.tsv`, and the problems in `alignment-problems.tsv`.
 
@@ -547,15 +673,18 @@ writes `tables/`, which `run-campaign.sh` does at the end:
 - `outcomes.tsv`: outcome, exit status, signal, whether the watchdog fired,
   the out-of-memory evidence, elapsed and user time, peak resident memory
   and limit of each invocation;
-- `activity.tsv`: memexec hits, misses, stores and refusals per run, the
-  applications of the allocation and release builtins (`malloc`, `calloc`,
-  `realloc`, `reallocarray`, `alloca`, the VLA allocator, `free`, the VLA
-  release, under their libc or `Frama_C_` names), set A membership (no such
-  application) and its agreement with the recorded count;
-- `collector.tsv`: the collector verdicts, the entries stored or refused by
-  the producer, and the counters of supplied entries, with the rejections
-  and refusals of supplied entries by reason, per run;
-- `functions.tsv`: memexec activity and collector verdicts per function;
+- `activity.tsv`: from the statistics file of each run, the number of its
+  rows, the memexec hits, misses, stores and refusals, the applications of
+  the allocation and release builtins, set A membership and its agreement
+  with the recorded count (see Counters and dispositions);
+- `collector.tsv`: from the statistics file, the collector verdicts, the
+  entries stored or refused by the producer, and the counters of supplied
+  entries, with the refusals and rejections by reason;
+- `functions.tsv`: the memexec and collector rows of the statistics file
+  per function;
+- `log.tsv`: from the Eva log of each run, the number of analysis starts
+  and of disposition lines, the lines counted by kind, and the comparison
+  of the two sources (`sources`);
 - `times.tsv`: elapsed time per mode and the ratios cache/nocache and
   cache/reference when both runs completed and have a time; `no run`, `no
   outcome` and `no time` say what the directory or the run does not
@@ -569,9 +698,13 @@ writes `tables/`, which `run-campaign.sh` does at the end:
   by the checks of `fixtures.txt` and `outcome-demo.txt` when the output
   directory holds them, as the pilot's does.
 
-A cell `-` is a value that was not measured, such as a memexec counter in
-the mode `nocache`. A list of counts by reason is `none` when the family is
-measured and no count is positive.
+A cell `-` means that the source of its column does not give the value. It
+is never a zero: in the tables of the statistics file a number is the sum
+of rows of the file, and in `log.tsv` a number is a count of lines of the
+log.
+
+A run whose `run.tsv` names another case or mode than its directory is
+left out of every table and listed at the top of `tables.md`.
 
 ## Pilot
 
@@ -589,8 +722,10 @@ a check fails.
 
 In the archived pilot, 0 of 38 alignments are complete. For the two
 archived memexec runs of `nested-hit.c`, numbering is `recorded command`
-and `complete=False`. The historical PASS line from harness revision
-`12644c58` remains in the tables as a superseded alignment result.
+and `complete=False`; the archived runs of the fixtures do not record their
+entry point, so their verdicts also say `entry point not given`. The
+historical PASS line from harness revision `12644c58` remains in the tables
+as a superseded alignment result.
 
 To run the current fixtures on their own, first run a one-case smoke test
 to prepare the Eva tool environment and query module. From the repository
