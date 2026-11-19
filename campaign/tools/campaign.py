@@ -34,6 +34,18 @@ import sys
 from collections import Counter, OrderedDict, defaultdict
 
 
+# A count, a status or a version written in a file of the tools: ASCII
+# digits, at most 18. str.isdigit accepts other digits, such as superscripts,
+# that int then rejects, and int rejects a decimal of several thousand
+# digits: a file that holds one is malformed, never a reason to stop.
+DECIMAL = re.compile(r"[0-9]{1,18}")
+
+
+def decimal(text):
+    """The value of [text] when it is a bounded ASCII decimal, else None."""
+    return int(text) if DECIMAL.fullmatch(text or "") else None
+
+
 def open_text(path, mode="r"):
     """Opens a text file, compressed with gzip when its name ends in .gz."""
     if path == "-":
@@ -100,9 +112,9 @@ def disposition_kind(value):
     return match.group(0) if match else value
 
 
-ENTRY = re.compile(r"\bentry (\d+)")
-REJECTED = re.compile(r"^rejected \(entry (\d+): (.*)\)$")
-HIT = re.compile(r"^hit \(entry (\d+)\)$")
+ENTRY = re.compile(r"\bentry ([0-9]{1,18})\b")
+REJECTED = re.compile(r"^rejected \(entry ([0-9]{1,18}): (.*)\)$")
+HIT = re.compile(r"^hit \(entry ([0-9]{1,18})\)$")
 
 
 def parse_lookup(value):
@@ -142,7 +154,7 @@ def parse_lookup(value):
 # A frame of a printed callstack: the called function, the call site, and
 # the number of the call statement, which the cache messages print after
 # the call site since issue #54.
-FRAME = re.compile(r"^(.*?) :: (.*?)(?: \(stmt (\d+)\))?$")
+FRAME = re.compile(r"^(.*?) :: (.*?)(?: \(stmt ([0-9]{1,18})\))?$")
 
 
 def parse_stack(text):
@@ -206,7 +218,7 @@ def parse_cache_message(text):
 
 
 IDENTIFIER = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
-SITE = re.compile(r"^\S.*:\d+$")
+SITE = re.compile(r"^\S.*:[0-9]{1,18}$")
 
 
 def stack_problem(record, numbered):
@@ -1039,8 +1051,8 @@ def load_queries(path):
             problem = problem or "a line after the done line"
             break
         if kind == "done":
-            if len(fields) == 2 and fields[1].isdigit():
-                done = int(fields[1])
+            if len(fields) == 2 and decimal(fields[1]) is not None:
+                done = decimal(fields[1])
             else:
                 problem = problem or "malformed done line"
                 break
@@ -1049,8 +1061,8 @@ def load_queries(path):
             problem = problem or "malformed line %d" % number
             continue
         if kind == "format":
-            if fields[1].isdigit():
-                version = int(fields[1])
+            if decimal(fields[1]) is not None:
+                version = decimal(fields[1])
             else:
                 problem = problem or "malformed line %d" % number
         elif kind == "reach":
@@ -1611,7 +1623,7 @@ OUT_OF_MEMORY = re.compile(
     r"^\[kernel\] Unexpected error \(Out of memory\)|"
     r"^Fatal error: (exception Out of memory|out of memory|"
     r"Not enough heap memory|allocation failure)", re.M)
-SIGNAL = re.compile(r"^Command terminated by signal (\d+)", re.M)
+SIGNAL = re.compile(r"^Command terminated by signal ([0-9]{1,3})$", re.M)
 
 
 def read_measure(path):
@@ -1652,7 +1664,7 @@ def oom_findings(measure, log_text):
             conclusive = True
             parts.append("kernel log")
         events = measure.get("oom_kill_events", "")
-        if events.isdigit() and int(events) > 0:
+        if (decimal(events) or 0) > 0:
             if measure.get("cgroup_exclusive") == "yes":
                 conclusive = True
                 parts.append("cgroup oom_kill +" + events)
@@ -1672,8 +1684,8 @@ def classify_outcome(parse_exit, make_exit, measure, log_text,
                      entry_analysed, timeout_s=None):
     """The outcome of one run:
     - parse-error: the parsing step failed, Eva did not run;
-    - harness-error: the Eva invocation was not measured, or make failed
-      after a successful invocation;
+    - harness-error: the Eva invocation was not measured, its measure has
+      no valid status, or make failed after a successful invocation;
     - timeout: the watchdog sent its signal at the wall-time limit; a run
       measured by an earlier revision of this harness, which did not record
       it, is never classified as a timeout;
@@ -1692,13 +1704,13 @@ def classify_outcome(parse_exit, make_exit, measure, log_text,
     time."""
     if parse_exit != 0:
         return "parse-error"
-    if measure is None:
+    if measure is None or decimal(measure.get("status")) is None:
         return "harness-error"
     if measure.get("watchdog", "none") != "none":
         return "timeout"
     if oom_findings(measure, log_text)[0]:
         return "oom"
-    status = int(measure["status"])
+    status = decimal(measure["status"])
     if measure.get("signal") == "9":
         return "killed"
     if status != 0:
@@ -1772,8 +1784,8 @@ def load_ast(path):
     lines.pop()
     done = lines.pop().split("\t")
     body = [l for l in lines]
-    if len(done) != 2 or done[0] != "done" or not done[1].isdigit() or \
-       int(done[1]) != len(body) or \
+    if len(done) != 2 or done[0] != "done" or \
+       decimal(done[1]) != len(body) or \
        any(not l.startswith("stmt\t") for l in body):
         return None, None
     data = "".join(l + "\n" for l in body).encode("utf-8", "surrogateescape")
@@ -1864,6 +1876,15 @@ def compare_command(args):
     return 0
 
 
+def exit_status(text):
+    """An exit status recorded in run.tsv: 0 when it was not recorded (-),
+    1 when it is not a bounded decimal."""
+    if text in (None, "", "-"):
+        return 0
+    value = decimal(text)
+    return 1 if value is None else value
+
+
 def recompute_command(args):
     """Recomputes from the raw logs of a campaign output directory what the
     tools derive from them: the records of each run, its outcome (for a
@@ -1891,8 +1912,8 @@ def recompute_command(args):
                 records_command(argparse.Namespace(log=log, output=records))
         if os.path.exists(os.path.join(dirpath, "measure")):
             run["outcome"], run["oom_evidence"] = run_outcome(
-                dirpath, int(run.get("parse_exit", "0") or 0),
-                int(run.get("make_exit", "0") or 0))
+                dirpath, exit_status(run.get("parse_exit")),
+                exit_status(run.get("make_exit")))
         row = digests.get((run.get("case"), run.get("mode")))
         if row:
             run["ast_sha256"] = row["ast_sha256"]

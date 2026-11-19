@@ -381,7 +381,10 @@ reached included (`FUNCTION:exit`). It ends with `done COUNT`, where COUNT is
 the number of answer, unavailable and error lines. A file is complete only
 when every line is well formed and the done line is the last line, given
 once, with that count; otherwise the comparison is incomplete and gives the
-first reason found.
+first reason found. The version of `format` and the count of `done` are
+ASCII decimals of at most 18 digits: another digit, such as `²`, or a longer
+number makes the line malformed. The same holds for the count of an AST
+listing, the statuses of a measure and the numbers of a log.
 
 Values: `T` (top), `G` and the bases of a garbled mix, or `M` and
 `BASE=OFFSETS` for each base, where `NULL` holds the integers. Offsets:

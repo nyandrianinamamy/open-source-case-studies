@@ -1898,5 +1898,77 @@ class ExitQueries(unittest.TestCase):
         self.assertEqual(s.get("unavailable_b_no-callstack"), "1")
 
 
+# ----- Third review of issue #54 -------------------------------------------
+
+class BoundedDecimals(unittest.TestCase):
+    """Finding 8: a count is a bounded ASCII decimal. Anything else makes
+    the file incomplete, with the reason shown, never an exception."""
+
+    ROW = StrictDoneLine.ROW
+    SUPERSCRIPT_TWO, FULLWIDTH_ONE = "\u00b2", "\uff11"
+    LONG = "1" * 5000
+
+    def status(self, text):
+        return StrictDoneLine.status(self, text)
+
+    def test_answer_file(self):
+        row = self.ROW
+        for text, reason in (
+                (row + "done\t" + self.SUPERSCRIPT_TWO + "\n",
+                 "malformed done line"),
+                (row + "done\t" + self.FULLWIDTH_ONE + "\n",
+                 "malformed done line"),
+                (row + "done\t" + self.LONG + "\n", "malformed done line"),
+                ("format\t" + self.SUPERSCRIPT_TWO + "\n" + row
+                 + "done\t1\n", "malformed line 1"),
+                ("format\t" + self.LONG + "\n" + row + "done\t1\n",
+                 "malformed line 1")):
+            status = self.status(text)
+            self.assertTrue(status.startswith("incomplete"), (text, status))
+            self.assertIn(reason, status)
+
+    def test_comparison_of_a_malformed_file(self):
+        bad = self.ROW + "done\t" + self.SUPERSCRIPT_TWO + "\n"
+        with tempfile.TemporaryDirectory() as tmp:
+            pa, pb = os.path.join(tmp, "a"), os.path.join(tmp, "b")
+            write(pa, self.ROW + "done\t1\n")
+            write(pb, bad)
+            code, out, error = run_main(["queries", pa, pb,
+                                         os.path.join(tmp, "q-")])
+        self.assertEqual((code, error), (0, None))
+        self.assertIn("complete_b\tincomplete: malformed done line", out)
+        self.assertIn("comparison\tincomplete", out)
+
+    def test_ast_listing(self):
+        listing = "stmt\tmain\t4\tsites.c:4\tf(2);\n"
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, "ast.tsv")
+            results = []
+            for count in (self.SUPERSCRIPT_TWO, self.FULLWIDTH_ONE,
+                          self.LONG):
+                write(path, listing + "done\t" + count + "\n")
+                results.append(run_main(["ast", path]))
+        for code, out, error in results:
+            self.assertEqual((code, error), (0, None))
+            self.assertEqual(out, "ast_sha256\t-\nast_statements\t-\n")
+
+    def test_measure_counters(self):
+        for events in (self.SUPERSCRIPT_TWO, self.LONG):
+            m = {"status": "137", "signal": "9", "watchdog": "none",
+                 "oom_kill_events": events, "kernel_log_oom": "no"}
+            try:
+                outcome = campaign.classify_outcome(0, 2, m, "", False)
+            except Exception as e:
+                outcome = "exception %s" % type(e).__name__
+            self.assertEqual(outcome, "killed")
+        m = {"status": self.SUPERSCRIPT_TWO, "signal": "-",
+             "watchdog": "none"}
+        try:
+            outcome = campaign.classify_outcome(0, 0, m, "", True)
+        except Exception as e:
+            outcome = "exception %s" % type(e).__name__
+        self.assertEqual(outcome, "harness-error")
+
+
 if __name__ == "__main__":
     unittest.main()
