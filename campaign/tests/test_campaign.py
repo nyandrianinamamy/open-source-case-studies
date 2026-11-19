@@ -1392,7 +1392,7 @@ class NumberingEvidence(unittest.TestCase):
     def test_different_digests(self):
         code, error, s, undecided = self.align(
             SITES_NUMBERED, SITES_NUMBERED, "--ast-a", DIGEST_0,
-            "--ast-b", DIGEST_1)
+            "--ast-b", DIGEST_1, *campaign_numbering_options())
         self.assertEqual((code, error), (0, None))
         self.assertEqual(s.get("numbering"), "different")
         self.assertEqual(s.get("aligned"), "1")
@@ -1583,6 +1583,20 @@ class PreprocessingNumbering(unittest.TestCase):
         for missing in ("-", None):
             s = self.compare(FRESH, dict(FRESH, pp_text_sha256=missing))
             self.assertEqual(s["numbering"], "not established")
+
+    def test_incomplete_digest_fields_preclude_a_numbering_verdict(self):
+        for fields in (dict(FRESH, ast_sha256="bad"),
+                       dict(FRESH, ast_sha256=DIGEST_1,
+                            pp_command_sha256="bad"),
+                       dict(FRESH, ast_sha256=DIGEST_1,
+                            pp_text_sha256=None)):
+            self.assertEqual(self.compare(FRESH, fields)["numbering"],
+                             "not established")
+        imported = {"ast_format": "2", "ast_sha256": DIGEST_0,
+                    "ast_source": "imported", "pp_text_sha256": "-"}
+        summary = self.compare(imported, imported, {"parse.log": PARSE_LOG},
+                               {"parse.log": PARSE_LOG})
+        self.assertEqual(summary["numbering"], "not established")
 
     def test_listing_of_another_format(self):
         # A digest of the statement lines alone, written by the previous
@@ -1855,7 +1869,8 @@ class QueryNumbering(unittest.TestCase):
 
     def test_sites_with_different_digests(self):
         s, details, unpaired = self.compare("--ast-a", DIGEST_0,
-                                            "--ast-b", DIGEST_1)
+                                            "--ast-b", DIGEST_1,
+                                            *campaign_numbering_options())
         self.assertEqual(s["numbering"], "different")
         self.assertEqual(s["queries"], "3")
         self.assertEqual(s["unpaired"], "2")
@@ -2942,6 +2957,23 @@ class FourthReview(unittest.TestCase):
                     tables = CounterEvidence.tables(
                         self, command, "memexec-hits\tf\t\t3\n", first + banner)
                     self.assertEqual(tables["activity"]["hits"], "3")
+
+
+    def test_bad_numbering_evidence(self):
+        for ast, pp in ((DIGEST_0, "-:-"), (DIGEST_0, "a" * 64 + ":-"),
+                        (DIGEST_0, "-:" + "b" * 64), (DIGEST_0, PP_0 + ":x"),
+                        (DIGEST_0, "x" * 64 + ":" + "b" * 64),
+                        ("invalid", PP_0), (DIGEST_0 + " ", PP_0)):
+            with self.subTest(ast=ast, pp=pp):
+                options = ["--ast-a=" + ast, "--ast-b=" + ast,
+                           "--pp-a=" + pp, "--pp-b=" + pp]
+                _, _, summary, _ = NumberingEvidence.align(
+                    self, SITES_NUMBERED, SITES_NUMBERED, *options)
+                self.assertEqual(summary["numbering"], "not established")
+                self.assertEqual(summary["complete"], "False")
+                summary, _, _ = QueryNumbering.compare(self, *options)
+                self.assertEqual(summary["numbering"], "not established")
+                self.assertEqual(summary["unpaired"], "2")
 
 
 if __name__ == "__main__":

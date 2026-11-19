@@ -535,7 +535,7 @@ def descendants(row, children):
 # made only when the numbering is same, recorded command or asserted, and
 # only same makes an alignment complete.
 AST_FORMAT = "2"
-SHA256 = re.compile(r"[0-9a-f]{64}")
+SHA256 = re.compile(r"[0-9a-f]{64}", re.I | re.ASCII)
 NUMBERING_REASONS = {"different": "AST digests differ",
                      "preprocessing differs": "preprocessing differs",
                      "not established": "numbering not established"}
@@ -552,25 +552,30 @@ WEAK_NUMBERING = {
                          "only", RECORDED_VERDICT)}
 
 
-def known_digest(digest):
-    """Whether a digest of run.tsv or of the options is given: not empty,
-    not -."""
-    return bool(digest) and digest != "-"
+def valid_sha256(digest):
+    return SHA256.fullmatch(digest or "") is not None
+
+
+def valid_preprocessing(pair):
+    command, separator, text = (pair or "").partition(":")
+    return bool(separator and valid_sha256(command) and valid_sha256(text))
 
 
 def numbering_state(digest_a, digest_b, asserted=False, pp_a=None,
                     pp_b=None):
-    """The numbering of two runs from the digests of their ASTs and of their
-    preprocessing, a missing digest being None, empty or -: same,
-    preprocessing differs, different, asserted (when [asserted] and an AST
-    digest is missing) or not established."""
-    if known_digest(digest_a) and known_digest(digest_b):
-        if digest_a != digest_b:
-            return "different"
-        if known_digest(pp_a) and known_digest(pp_b):
-            return "same" if pp_a == pp_b else "preprocessing differs"
+    """Compare two AST digests and two command:text digest pairs. An
+    explicit assertion is available for runs recorded before AST digests."""
+    digests = (digest_a, digest_b)
+    if not all(valid_sha256(d) for d in digests):
+        if (asserted and pp_a is None and pp_b is None
+                and all(d is None or valid_sha256(d) for d in digests)):
+            return "asserted"
         return "not established"
-    return "asserted" if asserted else "not established"
+    if not (valid_preprocessing(pp_a) and valid_preprocessing(pp_b)):
+        return "not established"
+    if digest_a.lower() != digest_b.lower():
+        return "different"
+    return "same" if pp_a.lower() == pp_b.lower() else "preprocessing differs"
 
 
 def align(rows_a, rows_b, numbering="not established"):
@@ -2233,16 +2238,19 @@ def run_numbering(run_a, run_b, recorded_a=None, recorded_b=None):
         digest_a, digest_b = run_a["ast_sha256"], run_b["ast_sha256"]
         archived = all(r.get("ast_source") == "imported"
                        and "pp_command_sha256" not in r
+                       and "pp_text_sha256" not in r
                        for r in (run_a, run_b))
-        if archived and known_digest(digest_a) and digest_a == digest_b:
+        if archived and valid_sha256(digest_a) and valid_sha256(digest_b):
+            if digest_a.lower() != digest_b.lower():
+                return "different"
             if recorded_a is not None and recorded_a == recorded_b:
                 return "recorded command"
             return "not established"
         return numbering_state(digest_a, digest_b,
                                pp_a=preprocessing_digest(run_a),
                                pp_b=preprocessing_digest(run_b))
-    if "-" in (run_a.get("ast_sha256"), run_b.get("ast_sha256")):
-        # A run of this runner whose AST could not be listed.
+    if any("pp_command_sha256" in r or "pp_text_sha256" in r
+           for r in (run_a, run_b)):
         return "not established"
     same = all(run_a.get(k) and run_a.get(k) == run_b.get(k)
                for k in ("case", "revision", "patch_sha256", "oscs_revision",
