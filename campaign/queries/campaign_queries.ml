@@ -421,7 +421,8 @@ let named file =
 let flat text =
   String.map (function '\t' | '\n' | '\r' -> ' ' | c -> c) text
 
-let sids stmts = String.concat "," (List.map (fun s -> string_of_int s.sid) stmts)
+let sids stmts =
+  String.concat "," (List.map (fun s -> string_of_int s.sid) stmts)
 
 (* The statement itself, its labels included, without the statements it
    contains: those are named by their numbers. *)

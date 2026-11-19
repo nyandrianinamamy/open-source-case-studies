@@ -96,6 +96,9 @@ def records_of(text):
         return campaign.load_records(out)
 
 
+# Two runs that completed, with equal AST digests.
+SAME_COMPLETED = {"numbering": "same", "outcomes": ("completed", "completed")}
+
 class Parser(unittest.TestCase):
 
     def test_forms_of_messages(self):
@@ -237,14 +240,15 @@ class Alignment(unittest.TestCase):
     def test_same_run_aligns_completely(self):
         rows = records_of(NESTED_LOG)
         summary = campaign.summarize_alignment(
-            rows, rows, campaign.align(rows, rows, "same"), numbering="same", outcomes=("completed", "completed"))
+            rows, rows, campaign.align(rows, rows, "same"), **SAME_COMPLETED)
         self.assertTrue(summary["complete"])
         self.assertEqual(summary["aligned"], 5)
 
     def test_hit_against_nested_lookups(self):
         off, on = records_of(NESTED_LOG_OFF), records_of(NESTED_LOG)
         result = campaign.align(off, on, "same")
-        summary = campaign.summarize_alignment(off, on, result, numbering="same", outcomes=("completed", "completed"))
+        summary = campaign.summarize_alignment(off, on, result,
+                                               **SAME_COMPLETED)
         self.assertEqual(summary["aligned"], 5)
         self.assertEqual(summary["analysed_a_hit_b"], 2)
         self.assertEqual(summary["nested_under_hit_b"], 2)
@@ -281,7 +285,7 @@ class Alignment(unittest.TestCase):
              r("m > f@a.c:3#2", "m", 2, "f", "a.c:3"),
              r("m > g@a.c:4#0", "m", 3, "g", "a.c:4")]
         result = campaign.align(a, b, "same")
-        summary = campaign.summarize_alignment(a, b, result, numbering="same", outcomes=("completed", "completed"))
+        summary = campaign.summarize_alignment(a, b, result, **SAME_COMPLETED)
         self.assertEqual(result["undecided"],
                          [("m", "m", "f@a.c:3/s3", 2, 3, 2, 3,
                            "repeated calls in another order")])
@@ -611,7 +615,7 @@ class SameLineCalls(unittest.TestCase):
     def test_two_statements_of_one_line_are_unmatched(self):
         a, b = records_of(SAME_LINE_SIDE0), records_of(SAME_LINE_SIDE1)
         result = campaign.align(a, b, "same")
-        summary = campaign.summarize_alignment(a, b, result, numbering="same", outcomes=("completed", "completed"))
+        summary = campaign.summarize_alignment(a, b, result, **SAME_COMPLETED)
         self.assertEqual(summary["aligned"], 1)  # main only
         self.assertEqual((summary["unmatched_a"], summary["unmatched_b"]),
                          (1, 1))
@@ -620,7 +624,7 @@ class SameLineCalls(unittest.TestCase):
     def test_without_statement_numbers_nothing_below_main_aligns(self):
         a, b = records_of(SITES_LEGACY_0), records_of(SITES_LEGACY_0)
         result = campaign.align(a, b, "same")
-        summary = campaign.summarize_alignment(a, b, result, numbering="same", outcomes=("completed", "completed"))
+        summary = campaign.summarize_alignment(a, b, result, **SAME_COMPLETED)
         self.assertEqual(summary["aligned"], 1)
         self.assertEqual(result["undecided"],
                          [("main#0", "main#0", "f@sites.c:4", 1, 1, 1, 1,
@@ -631,7 +635,7 @@ class SameLineCalls(unittest.TestCase):
     def test_same_run_with_numbers_aligns_completely(self):
         rows = records_of(SAME_LINE_SIDE0)
         summary = campaign.summarize_alignment(
-            rows, rows, campaign.align(rows, rows, "same"), numbering="same", outcomes=("completed", "completed"))
+            rows, rows, campaign.align(rows, rows, "same"), **SAME_COMPLETED)
         self.assertTrue(summary["complete"])
         self.assertEqual(summary["verdict"], "complete")
 
@@ -1590,7 +1594,8 @@ class StrictDoneLine(unittest.TestCase):
                 (row + "done\n", "malformed done line"),
                 (row + row + "done\t1\n", "done 1, 2 lines"),
                 (row, "no done line"),
-                ("answer\tf\tf:1:0\tbefore\n" + "done\t1\n", "malformed line 1"),
+                ("answer\tf\tf:1:0\tbefore\n" + "done\t1\n",
+                 "malformed line 1"),
                 ("answer\tf\tf:1:0\tbefore\t*\tx\tone\t0\tT\ndone\t1\n",
                  "malformed line 1"),
                 ("nonsense\ndone\t0\n", "malformed line 1")):
