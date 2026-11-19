@@ -320,6 +320,11 @@ ran them.
   such row among the 12 to 117 rows of each of their 20 files
   (`allocation_and_release_rows` is 0), so `in_set_a` and `agrees` are
   `-`: no run contradicts the record, and no file states the membership.
+  Both binaries hold the `builtin` counters (`provenance/binaries.tsv`),
+  and the analyzer increments the counter before its only application of
+  a builtin ("What a statistics number is" in `campaign/README.md`), so
+  these 20 analyses applied no allocation or release builtin: the five
+  targets are in set A by that argument, which the tables do not make.
 - State queries, `nocache` against `cache`: every query answered by both
   runs gets the same answer except in 2048 (25 narrower), jsmn-main (6
   narrower) and genann (34 wider, 4 incomparable, listed in

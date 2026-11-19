@@ -171,8 +171,19 @@ is no such row among the `export_rows` rows of the file. `in_set_a` is
 `False` when the sum is positive, `True` when rows give the sum 0, and
 `-` without a row. `agrees` compares `in_set_a` with the membership
 recorded by the earlier measurement (`reference/set-a-recorded.tsv`) and
-is `-` when `in_set_a` is. For a target recorded in set A, a run can
+is `-` when `in_set_a` is. For a target recorded in set A, the cells
 show only that no row contradicts the record.
+
+The membership of such a target follows from the file and from the source
+of the analyzer, and the tables do not make that step. At revision
+`9168ba2e23` the counter is incremented in `compute_builtin`
+(`plugins/eva/src/engine/compute_functions.ml`, line 177), before the
+only call to `Builtins.apply_builtin` of the engine, under no option. A
+file with `export_rows` rows and `allocation_and_release_rows` 0, written
+by a binary whose `counter_families` holds `builtin`, is therefore the
+export of an analysis that applied no allocation or release builtin. The
+argument holds for the analysis that wrote the file and for a binary of
+that revision; check both lines again for another revision.
 
 The counter names found in the `eva.cmxs` of a binary (`campaign.py
 families`) are recorded in `provenance/binaries.tsv` and in `run.tsv` as
