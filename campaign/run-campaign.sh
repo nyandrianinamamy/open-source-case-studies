@@ -83,6 +83,22 @@ for mode in "${mode_list[@]}"; do
   esac
 done
 
+# The SHA-256 of the manifest and of a patch is recorded on their bytes, and
+# the archive of the logs keeps those bytes: they must not hold the home
+# directory, which the archive would otherwise publish.
+refuse_home() {
+  local file=$1 what=$2 home=${HOME%/}
+  if [[ -n $home && -f $file ]] && grep -qF -- "$home" "$file"; then
+    printf 'The %s %s holds the home directory %s. Write it as ~ or as a variable: the %s is kept unchanged with its SHA-256.\n' \
+      "$what" "$file" "$home" "$what" >&2
+    exit 2
+  fi
+}
+refuse_home "$manifest" manifest
+for checkout in "$test_checkout" "$reference_checkout"; do
+  if [[ -n $checkout ]]; then refuse_home "$checkout/CAMPAIGN_PATCH.patch" patch; fi
+done
+
 mkdir "$output"
 mkdir -p "$output/provenance" "$output/runs" "$output/tools"
 # Paths under the home directory are written from ~ in the provenance.
@@ -237,6 +253,24 @@ run_one() {
   fi
   local outcome evidence
   IFS=$'\t' read -r outcome evidence < <(classify "$run" "$parse_exit" "$make_exit")
+  # Untimed: the identity of the AST that Eva analysed, listed from the parse
+  # session that the Eva step loads, with the same limits. It runs from the
+  # directory of the analysis, as the Eva step does, so the locations are
+  # written alike in every snapshot (see campaign.py ast).
+  local ast_exit=- frama_c_dir="$src/$directory/.frama-c"
+  if [[ $parse_exit == 0 && -f $frama_c_dir/${target%.eva}.parse/framac.sav ]]; then
+    ast_exit=0
+    (
+      while IFS= read -r setting; do export "$setting"; done < "$tools/sites.env"
+      export CAMPAIGN_AST_OUT="$run/ast.tsv"
+      cd "$frama_c_dir"
+      limit=()
+      if [[ -n $memory_limit ]]; then limit=(prlimit "--as=$memory_limit"); fi
+      timeout "$timeout_s" "${limit[@]}" "$bin/frama-c" \
+        -load "${target%.eva}.parse/framac.sav" \
+        -load-module "$tools/campaign_queries.cmxs" > "$run/ast.log" 2>&1
+    ) || ast_exit=$?
+  fi
   # Untimed: state queries on the saved session, with the same limits.
   local queries_exit=-
   if [[ $outcome == completed && -f $analysis/framac.sav ]]; then
@@ -262,8 +296,10 @@ run_one() {
     if [[ -f $run/measure ]]; then "${tool[@]}" measure "$run/measure"; fi
     printf 'timeout_s\t%s\nmemory_limit\t%s\nextra_eva_flags\t%s\nqueries_exit\t%s\n' \
       "$timeout_s" "${memory_limit:--}" "${extra_flags:--}" "$queries_exit"
+    printf 'ast_exit\t%s\n' "$ast_exit"
+    "${tool[@]}" ast "$run/ast.tsv"
   } > "$run/run.tsv"
-  for file in eva.log records.jsonl queries.tsv make-eva.log parse.log; do
+  for file in eva.log records.jsonl queries.tsv ast.tsv make-eva.log parse.log; do
     if [[ -f $run/$file ]]; then gzip -n "$run/$file"; fi
   done
   if ! $keep; then rm -rf -- "$src"; fi
@@ -278,38 +314,9 @@ done
 
 # ----- Comparisons ---------------------------------------------------------
 
-compare() {
-  local id=$1 a=$2 b=$3
-  local ra="$output/runs/$id/$a" rb="$output/runs/$id/$b"
-  [[ -d $ra && -d $rb ]] || return 0
-  local dir="$output/comparisons/$id/$a-vs-$b"
-  mkdir -p "$dir"
-  printf 'case\t%s\nbaseline\t%s\ncandidate\t%s\n' "$id" "$a" "$b" > "$dir/pair.tsv"
-  # Statement numbers are comparable when both runs used the same revision
-  # and patch of the analyzer: they parse the same sources alike.
-  local numbering=()
-  if [[ $(run_field "$ra" revision)/$(run_field "$ra" patch_sha256) == \
-        "$(run_field "$rb" revision)/$(run_field "$rb" patch_sha256)" ]]; then
-    numbering=(--same-numbering)
-  fi
-  if [[ -f $ra/records.jsonl.gz && -f $rb/records.jsonl.gz ]]; then
-    "${tool[@]}" align "${numbering[@]}" "$ra/records.jsonl.gz" \
-      "$rb/records.jsonl.gz" "$dir/alignment-" > /dev/null
-  fi
-  if [[ -f $ra/queries.tsv.gz && -f $rb/queries.tsv.gz ]]; then
-    "${tool[@]}" queries "$ra/queries.tsv.gz" "$rb/queries.tsv.gz" "$dir/queries-" \
-      > /dev/null
-  fi
-  if [[ -f $ra/alarms.csv && -f $rb/alarms.csv ]]; then
-    "${tool[@]}" alarms --root-a "$ra/src" --root-b "$rb/src" \
-      "$ra/alarms.csv" "$rb/alarms.csv" > "$dir/alarms.out"
-    grep -v '^difference' "$dir/alarms.out" > "$dir/alarms-summary.tsv"
-    grep '^difference' "$dir/alarms.out" > "$dir/alarms-differences.tsv" || true
-    rm "$dir/alarms.out"
-  fi
-}
-
-run_field() { awk -F'\t' -v k="$2" '$1==k{print $2}' "$1/run.tsv"; }
+# Alignment of the records, with the digests of the ASTs and the outcomes of
+# the runs as evidence, state queries and alarms (see campaign.py compare).
+compare() { "${tool[@]}" compare "$output" "$@"; }
 
 for id in "${cases[@]}"; do
   compare "$id" nocache cache

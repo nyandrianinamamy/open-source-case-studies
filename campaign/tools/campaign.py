@@ -10,12 +10,16 @@ Subcommands:
   families CMXS              counter families of a compiled Eva plugin
   provenance CHECKOUT ROLE DIR  revision and patch of a Frama-C checkout
   tables RUN_DIR             result tables of a campaign output directory
+  ast LISTING                SHA-256 of an AST listing of the query module
+  compare OUTPUT CASE A B    compare two runs of a case as the runner does
+  recompute RUN_DIR          records, outcomes, comparisons and tables again
   manifest ...               see manifest --help
 
 Only the Python standard library is used. Run with python3 -I.
 """
 
 import argparse
+import contextlib
 import csv
 import gzip
 import hashlib
@@ -144,7 +148,8 @@ FRAME = re.compile(r"^(.*?) :: (.*?)(?: \(stmt (\d+)\))?$")
 def parse_stack(text):
     """Parses a printed Eva callstack. Returns (entry point, frames), the
     frames being (called function, call site, statement number or None)
-    from the outermost call to the innermost one."""
+    from the outermost call to the innermost one. Raises ValueError on a
+    frame that does not have the form FUNCTION :: SITE."""
     text = " ".join(text.split())
     text = re.sub(r"^<[^>]*> ", "", text)  # callstack hash, if printed
     parts = text.split(" <- ")
@@ -166,7 +171,7 @@ def parse_cache_message(text):
     point), the called function, the dispositions in their order (every
     field is kept verbatim, known or not), the callstack and the number of
     the call statement when the callstack gives it, or None when the message
-    is not a call disposition."""
+    is not a call disposition. Raises ValueError on a malformed callstack."""
     body, _, stack = text.partition("\nstack:")
     flat = " ".join(body.split())
     if flat.startswith("call to "):
@@ -200,16 +205,84 @@ def parse_cache_message(text):
     return record
 
 
-def cache_records(lines):
-    """The per-call records of a log, in the order of their messages."""
-    records = []
+IDENTIFIER = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
+SITE = re.compile(r"^\S.*:\d+$")
+
+
+def stack_problem(record, numbered):
+    """Why the callstack of a record is malformed, or None. The terminal
+    frame is the name of an entry point. A record without other frames is
+    the call of that entry point, whose message has no location; every
+    other record has a location, and each of its frames a function name and
+    a call site FILE:LINE, with the number of its statement when the log
+    numbers the statements; its innermost frame is the called function. A
+    log cut inside a message leaves such a record."""
+    entry, frames = record["entry_point"], record["frames"]
+    if not IDENTIFIER.match(entry):
+        return "malformed callstack: entry point %r" % entry
+    if not frames and (record["function"] != entry or record["site"]):
+        return ("malformed callstack: %s at %s is not the entry point %s"
+                % (record["function"], record["site"] or "no location",
+                   entry))
+    if frames and not record["site"]:
+        return "malformed message: the call to %s has no location" \
+            % record["function"]
+    for function, site, stmt in frames:
+        if not IDENTIFIER.match(function) or not SITE.match(site) or \
+           (numbered and stmt is None):
+            return "malformed callstack frame: %s :: %s%s" % (
+                function, site, "" if stmt is None else " (stmt %d)" % stmt)
+    if frames and frames[-1][0] != record["function"]:
+        return ("malformed callstack: the innermost frame %s is not the "
+                "called function %s" % (frames[-1][0], record["function"]))
+    return None
+
+
+def parse_log(lines):
+    """The per-call records of a log, in the order of their messages, and
+    the structural problems of the log.
+
+    A message of the categories cache and cache-producer that is not a call
+    disposition, has no callstack or has a malformed one is a problem, and
+    gives no record: a log cut inside a message leaves one. The log numbers
+    the statements when a frame of one of its messages has a number; then
+    every frame must have one."""
+    parsed, problems = [], []
+    count = 0
     for plugin, category, text in messages(lines):
-        if plugin == "eva" and category in ("cache", "cache-producer"):
+        if plugin != "eva" or category not in ("cache", "cache-producer"):
+            continue
+        count += 1
+        try:
             record = parse_cache_message(text)
-            if record is not None:
-                record["seq"] = len(records)
-                records.append(record)
-    return records
+        except ValueError as e:
+            problems.append("message %d: %s" % (count, e))
+            continue
+        if record is None:
+            problems.append("message %d is not a call disposition: %r"
+                            % (count, " ".join(text.split())[:80]))
+        elif "frames" not in record:
+            problems.append("message %d has no callstack: enable the "
+                            "categories cache and callstacks" % count)
+        else:
+            record["message"] = count
+            parsed.append(record)
+    numbered = any(f[2] is not None for r in parsed for f in r["frames"])
+    records = []
+    for record in parsed:
+        problem = stack_problem(record, numbered)
+        if problem:
+            problems.append("message %d: %s" % (record["message"], problem))
+            continue
+        record["seq"] = len(records)
+        records.append(record)
+    return records, problems
+
+
+def cache_records(lines):
+    """The well-formed per-call records of a log, in the order of their
+    messages."""
+    return parse_log(lines)[0]
 
 
 # ----- Call tree and invocation identity -------------------------------------
@@ -348,8 +421,9 @@ def collector_kind(value):
 
 def records_command(args):
     with open_text(args.log) as lines:
-        records = cache_records(lines)
-    roots, problems = build_tree(records)
+        records, problems = parse_log(lines)
+    roots, tree_problems = build_tree(records)
+    problems += tree_problems
     producers = {}
     for root in roots:
         for record in walk(root):
@@ -424,7 +498,33 @@ def descendants(row, children):
     return count
 
 
-def align(rows_a, rows_b):
+# The evidence that two runs number the statements of their programs alike:
+# - same: the digests of their ASTs are equal;
+# - asserted: a run recorded before the digest existed, whose numbering is
+#   asserted from the equal revision, patch, options and preprocessing of
+#   the two runs;
+# - different: the digests differ;
+# - not established: a digest is missing.
+# The pairs below the entry point depend on the statement numbers: they are
+# made only when the numbering is the same or asserted.
+NUMBERING_REASONS = {"different": "AST digests differ",
+                     "not established": "numbering not established"}
+ASSERTED_VERDICT = ("numbering asserted from equal revision, patch, options "
+                    "and preprocessing, not checked by digest")
+
+
+def numbering_state(digest_a, digest_b, asserted=False):
+    """The numbering of two runs from the digests of their ASTs, a missing
+    digest being empty or -: same, different, asserted (when [asserted] and
+    a digest is missing) or not established."""
+    def known(digest):
+        return bool(digest) and digest != "-"
+    if known(digest_a) and known(digest_b):
+        return "same" if digest_a == digest_b else "different"
+    return "asserted" if asserted else "not established"
+
+
+def align(rows_a, rows_b, numbering="not established"):
     """Aligns the per-call records of two runs, from the entry point down.
 
     Two records are aligned when their parents are aligned and they have the
@@ -434,12 +534,15 @@ def align(rows_a, rows_b):
     - otherwise, a (function, call site, statement) that occurs exactly once
       on each side.
     Any other group of siblings is undecided: its records are reported and
-    not aligned. When a record does not give the number of its call
-    statement (a log of a binary that does not print it), two calls on one
-    line cannot be told apart: every group of siblings of its parent is
-    undecided. The records nested in a call that is a hit in one run and
-    analysed in the other are reported as nested under a hit; records
-    present in one run only are reported as unmatched."""
+    not aligned. The statement numbers of two runs are compared only when
+    [numbering] is same or asserted (see [numbering_state]): otherwise every
+    group of siblings below the entry point is undecided. When a record does
+    not give the number of its call statement (a log of a binary that does
+    not print it), two calls on one line cannot be told apart: every group
+    of siblings of its parent is undecided. The records nested in a call
+    that is a hit in one run and analysed in the other are reported as
+    nested under a hit; records present in one run only are reported as
+    unmatched."""
     def index(rows):
         children = defaultdict(list)
         roots = []
@@ -488,7 +591,8 @@ def align(rows_a, rows_b):
         keys_a = [child_key(r) for r in kids_a]
         keys_b = [child_key(r) for r in kids_b]
         no_number = any(r.get("stmt") is None for r in kids_a + kids_b)
-        if not no_number and keys_a == keys_b:
+        unpaired = NUMBERING_REASONS.get(numbering)
+        if not unpaired and not no_number and keys_a == keys_b:
             for x, y in zip(kids_a, kids_b):
                 visit(x, y)
             return
@@ -496,7 +600,9 @@ def align(rows_a, rows_b):
         for key in sorted(set(count_a) | set(count_b)):
             group_a = [r for r in kids_a if child_key(r) == key]
             group_b = [r for r in kids_b if child_key(r) == key]
-            if no_number:
+            if unpaired:
+                undecided(a, b, key, group_a, group_b, unpaired)
+            elif no_number:
                 undecided(a, b, key, group_a, group_b,
                           "no statement number")
             elif count_a[key] == 1 and count_b[key] == 1:
@@ -541,18 +647,28 @@ def statement_numbers(rows):
     return "none" if known == 0 else "some"
 
 
+def entry_point_recorded(rows):
+    """Whether the log has the record of an entry point: the message of a
+    call without a parent, not inferred from the stacks of its callees."""
+    return any(r["parent"] is None and not r.get("inferred") for r in rows)
+
+
 def summarize_alignment(rows_a, rows_b, result, problems_a=(),
-                        problems_b=(), numbering="same"):
+                        problems_b=(), numbering="not established",
+                        outcomes=(None, None)):
     """Counts of an alignment and its verdict.
 
     The records of each run are counted apart from the calls inferred from
-    the callstacks of an interrupted log. [numbering] is "same" when both
-    runs are known to number the statements of the program alike (the same
-    revision of the analyzer on the same case), "not established"
-    otherwise. The alignment is complete when every record of both runs is
-    aligned, no call is inferred or interrupted, no structural problem was
-    found in either log, both logs give the statement numbers and the
-    numbering is the same; [verdict] says why it is not."""
+    the callstacks of an interrupted log. [numbering] is the evidence that
+    both runs number the statements of their programs alike (see
+    [numbering_state]); [outcomes] are the outcomes of the two runs, None
+    when not given. The alignment is complete when every record of both
+    runs is aligned, no call is inferred or interrupted, no structural
+    problem was found in either log, both logs have the record of the entry
+    point and give the statement numbers, the digests of the two ASTs are
+    equal, and both runs completed; [verdict] says why it is not. When the
+    only reason is a numbering asserted without digest, the verdict says so
+    instead of complete."""
     def inferred(row):
         return bool(row.get("inferred"))
 
@@ -600,6 +716,10 @@ def summarize_alignment(rows_a, rows_b, result, problems_a=(),
     summary["statement_numbers_a"] = statement_numbers(rows_a)
     summary["statement_numbers_b"] = statement_numbers(rows_b)
     summary["numbering"] = numbering
+    summary["entry_point_a"] = entry_point_recorded(rows_a)
+    summary["entry_point_b"] = entry_point_recorded(rows_b)
+    summary["outcome_a"] = outcomes[0] or "-"
+    summary["outcome_b"] = outcomes[1] or "-"
     accounted_a = (len(pairs) + summary["nested_under_hit_b"]
                    + summary["unmatched_a"] + undecided_a)
     accounted_b = (len(pairs) + summary["nested_under_hit_a"]
@@ -607,6 +727,15 @@ def summarize_alignment(rows_a, rows_b, result, problems_a=(),
     summary["accounted"] = (accounted_a == len(rows_a)
                             and accounted_b == len(rows_b))
     reasons = []
+    for side, outcome in zip("AB", outcomes):
+        if outcome is None:
+            reasons.append("outcome of %s not given" % side)
+        elif outcome != "completed":
+            reasons.append("outcome of %s: %s" % (side, outcome))
+    for side in "ab":
+        if not summary["entry_point_" + side]:
+            reasons.append("no record of the entry point in "
+                           + side.upper())
     if not summary["accounted"]:
         reasons.append("records not accounted for")
     if summary["interrupted_a"] or summary["interrupted_b"]:
@@ -616,14 +745,20 @@ def summarize_alignment(rows_a, rows_b, result, problems_a=(),
     if summary["statement_numbers_a"] != "all" or \
        summary["statement_numbers_b"] != "all":
         reasons.append("statement numbers missing")
-    if numbering != "same":
-        reasons.append("numbering not established")
+    if numbering in NUMBERING_REASONS:
+        reasons.append(NUMBERING_REASONS[numbering])
     if not (len(observed) == summary["records_a"] == summary["records_b"]
             and len(pairs) == len(rows_a) == len(rows_b)):
         reasons.append("not every record aligned")
+    if numbering == "asserted":
+        reasons.append("numbering asserted, not checked by digest")
     summary["complete"] = not reasons
-    summary["verdict"] = "complete" if not reasons else \
-        "incomplete: " + ", ".join(reasons)
+    if not reasons:
+        summary["verdict"] = "complete"
+    elif reasons == ["numbering asserted, not checked by digest"]:
+        summary["verdict"] = ASSERTED_VERDICT
+    else:
+        summary["verdict"] = "incomplete: " + ", ".join(reasons)
     return summary
 
 
@@ -634,33 +769,42 @@ def write_tsv(path, header, rows):
         writer.writerows(rows)
 
 
-def align_command(args):
-    rows_a, problems_a = load_records_and_problems(args.a)
-    rows_b, problems_b = load_records_and_problems(args.b)
-    result = align(rows_a, rows_b)
-    numbering = "same" if args.same_numbering else "not established"
+def write_alignment(prefix, path_a, path_b, numbering, outcomes):
+    """Aligns the records files of two runs and writes the summary and the
+    lists of an alignment under [prefix]. Returns the summary."""
+    rows_a, problems_a = load_records_and_problems(path_a)
+    rows_b, problems_b = load_records_and_problems(path_b)
+    result = align(rows_a, rows_b, numbering)
     summary = summarize_alignment(rows_a, rows_b, result, problems_a,
-                                  problems_b, numbering)
-    if args.output:
-        with open_text(args.output + "summary.tsv", "w") as f:
+                                  problems_b, numbering, outcomes)
+    if prefix:
+        with open_text(prefix + "summary.tsv", "w") as f:
             for key, value in summary.items():
                 f.write("%s\t%s\n" % (key, value))
-        write_tsv(args.output + "differences.tsv",
+        write_tsv(prefix + "differences.tsv",
                   ["id_a", "id_b", "dispositions_a", "dispositions_b"],
                   [(a["id"], b["id"], json.dumps(a["dispositions"]),
                     json.dumps(b["dispositions"]))
                    for a, b in result["pairs"]
                    if a["dispositions"] != b["dispositions"]])
-        write_tsv(args.output + "under-hit.tsv",
+        write_tsv(prefix + "under-hit.tsv",
                   ["side", "id", "hit_in"], result["under_hit"])
-        write_tsv(args.output + "unmatched.tsv",
+        write_tsv(prefix + "unmatched.tsv",
                   ["side", "id", "reason"], result["unmatched"])
-        write_tsv(args.output + "undecided.tsv",
+        write_tsv(prefix + "undecided.tsv",
                   ["parent_a", "parent_b", "call", "calls_a", "calls_b",
                    "records_a", "records_b", "reason"], result["undecided"])
-        write_tsv(args.output + "problems.tsv", ["side", "problem"],
+        write_tsv(prefix + "problems.tsv", ["side", "problem"],
                   [("A", p) for p in problems_a]
                   + [("B", p) for p in problems_b])
+    return summary
+
+
+def align_command(args):
+    numbering = numbering_state(args.ast_a, args.ast_b,
+                                args.assert_numbering)
+    summary = write_alignment(args.output, args.a, args.b, numbering,
+                              (args.outcome_a, args.outcome_b))
     for key, value in summary.items():
         print("%s\t%s" % (key, value))
     return 0
@@ -865,43 +1009,107 @@ def classify(a, b):
     return "incomparable"
 
 
+QUERY_FIELDS = {"format": 2, "reach": 3, "answer": 9, "unavailable": 7,
+                "error": 7}
+
+
 def load_queries(path):
     """Reads the answers of a run. Returns a dictionary: the reached
     statements, the answers, the queries without an answer by reason
-    (unavailable or error), whether the file is complete and why not. A
-    file is complete when it ends with its done line and the count of that
-    line is the number of answer, unavailable and error lines."""
+    (unavailable or error), whether the file declares its reached exit
+    points (format 2), whether the file is complete and why not.
+
+    A file is complete when every line is well formed, ends with a newline,
+    and the last line, and only it, is a done line whose count is the number
+    of answer, unavailable and error lines. Any other file is incomplete,
+    with the first reason found; it never raises an exception."""
     reach, answers, unavailable = set(), {}, {}
-    done, rows = None, 0
+    done, rows, problem, version = None, 0, None, 1
     with open_text(path) as f:
-        for line in f:
-            fields = line.rstrip("\n").split("\t")
-            if fields[0] == "reach":
-                reach.add((fields[1], fields[2]))
-            elif fields[0] == "answer":
-                rows += 1
-                answers[tuple(fields[1:6])] = \
-                    (int(fields[6]), int(fields[7]), fields[8])
-            elif fields[0] == "unavailable":
-                rows += 1
-                unavailable[tuple(fields[1:6])] = fields[6]
-            elif fields[0] == "error":
-                rows += 1
-                unavailable[tuple(fields[1:6])] = "error"
-            elif fields[0] == "done":
+        text = f.read()
+    lines = text.split("\n")
+    if lines[-1] == "":
+        lines.pop()
+    elif text:
+        problem = "the last line is cut"
+    for number, line in enumerate(lines, 1):
+        fields = line.split("\t")
+        kind = fields[0]
+        if done is not None:
+            problem = problem or "a line after the done line"
+            break
+        if kind == "done":
+            if len(fields) == 2 and fields[1].isdigit():
                 done = int(fields[1])
-    if done is None:
+            else:
+                problem = problem or "malformed done line"
+                break
+            continue
+        if QUERY_FIELDS.get(kind) != len(fields):
+            problem = problem or "malformed line %d" % number
+            continue
+        if kind == "format":
+            if fields[1].isdigit():
+                version = int(fields[1])
+            else:
+                problem = problem or "malformed line %d" % number
+        elif kind == "reach":
+            reach.add((fields[1], fields[2]))
+        elif kind == "answer":
+            if not (fields[6] in ("0", "1") and fields[7] in ("0", "1")):
+                problem = problem or "malformed line %d" % number
+                continue
+            rows += 1
+            answers[tuple(fields[1:6])] = \
+                (int(fields[6]), int(fields[7]), fields[8])
+        elif kind == "unavailable":
+            rows += 1
+            unavailable[tuple(fields[1:6])] = fields[6]
+        else:
+            rows += 1
+            unavailable[tuple(fields[1:6])] = "error"
+    if problem:
+        status = "incomplete: " + problem
+    elif done is None:
         status = "incomplete: no done line"
     elif done != rows:
         status = "incomplete: done %d, %d lines" % (done, rows)
     else:
         status = "complete"
     return {"reach": reach, "answers": answers, "unavailable": unavailable,
-            "status": status}
+            "exits_declared": version >= 2, "status": status}
 
 
 UNAVAILABLE_REASONS = ("unreached", "no-callstack", "no-results",
                        "top-state", "disabled-domain", "error", "missing")
+
+
+def missing_reason(q, key):
+    """Why the answers [q] of a run have no answer to the query [key]:
+    - the reason written for it (unavailable or error);
+    - for a query in one callstack, the reason no-results or
+      disabled-domain written for the same query over all callstacks: the
+      state of the function was not saved, so no callstack is enumerated;
+    - unreached, when its statement, or for an exit query the exit point of
+      its function, is not reached; a file written before the exit points
+      were declared (without format 2) gives no reached exit point, and its
+      exit queries are not said unreached;
+    - no-callstack, when the statement is reached but not in that
+      callstack;
+    - missing otherwise."""
+    if key in q["unavailable"]:
+        return q["unavailable"][key]
+    if key[3] != "*":
+        over_all = q["unavailable"].get(key[:3] + ("*",) + key[4:])
+        if over_all in ("no-results", "disabled-domain"):
+            return over_all
+    exit_query = key[2] == "exit"
+    if (q["exits_declared"] or not exit_query) and \
+       (key[0], key[1]) not in q["reach"]:
+        return "unreached"
+    if key[3] != "*":
+        return "no-callstack"
+    return "missing"
 
 
 def compare_queries(path_a, path_b):
@@ -925,7 +1133,6 @@ def compare_queries(path_a, path_b):
             if is_garbled_answer(answer[2]):
                 counts["garbled_" + side] += 1
     for key in sorted(keys):
-        stmt = (key[0], key[1])
         a, b = ans_a.get(key), ans_b.get(key)
         if a is not None and b is not None:
             verdict = classify(a, b)
@@ -935,14 +1142,7 @@ def compare_queries(path_a, path_b):
             continue
         for side, answer, q in (("a", a, qa), ("b", b, qb)):
             if answer is None:
-                if key in q["unavailable"]:
-                    reason = q["unavailable"][key]
-                elif key[2] != "exit" and stmt not in q["reach"]:
-                    reason = "unreached"
-                elif key[3] != "*":
-                    reason = "no-callstack"
-                else:
-                    reason = "missing"
+                reason = missing_reason(q, key)
                 if reason not in UNAVAILABLE_REASONS:
                     reason = "other"
                 counts["unavailable_%s_%s" % (side, reason)] += 1
@@ -976,17 +1176,21 @@ def compare_queries(path_a, path_b):
     return summary, details, reach
 
 
+def write_queries(prefix, summary, details, reach):
+    with open_text(prefix + "summary.tsv", "w") as f:
+        for key, value in summary.items():
+            f.write("%s\t%s\n" % (key, value))
+    write_tsv(prefix + "differences.tsv",
+              ["function", "stmt", "point", "callstack", "lvalue",
+               "verdict", "answer_a", "answer_b"], details)
+    write_tsv(prefix + "reached-in-one-run.tsv",
+              ["function", "stmt", "reached_only_in"], reach)
+
+
 def queries_command(args):
     summary, details, reach = compare_queries(args.a, args.b)
     if args.output:
-        with open_text(args.output + "summary.tsv", "w") as f:
-            for key, value in summary.items():
-                f.write("%s\t%s\n" % (key, value))
-        write_tsv(args.output + "differences.tsv",
-                  ["function", "stmt", "point", "callstack", "lvalue",
-                   "verdict", "answer_a", "answer_b"], details)
-        write_tsv(args.output + "reached-in-one-run.tsv",
-                  ["function", "stmt", "reached_only_in"], reach)
+        write_queries(args.output, summary, details, reach)
     for key, value in summary.items():
         print("%s\t%s" % (key, value))
     return 0
@@ -997,8 +1201,15 @@ def queries_command(args):
 def normalize_directory(directory, roots=()):
     """The directory of an alarm with the root of the run removed: the
     source snapshot of each run is a fresh directory, so a path under one of
-    [roots] is written relative to it, from ${SRC}."""
+    [roots] is written relative to it, from ${SRC}. A root is a path, or a
+    compiled pattern that matches the root at the start of the
+    directory."""
     for root in roots:
+        if hasattr(root, "match"):
+            match = root.match(directory)
+            if match:
+                return "${SRC}" + directory[match.end():]
+            continue
         root = root.rstrip("/")
         if root and (directory == root or directory.startswith(root + "/")):
             return "${SRC}" + directory[len(root):]
@@ -1122,15 +1333,31 @@ def stats_rows(stats_path):
     return rows
 
 
-def measured_families(binary_families, mode_flags):
-    """The families measured by a run: those of the binary, without
-    memexec unless the run enables it, and without the collector when the
-    run disables it."""
-    flags = mode_flags.split()
+def last_switch(flags, on, off, default):
+    """The value of a boolean option in an argument vector: its last
+    occurrence, positive [on] or negative [off], or [default]."""
+    value = default
+    for flag in flags:
+        if flag == on:
+            value = True
+        elif flag == off:
+            value = False
+    return value
+
+
+def measured_families(binary_families, flags):
+    """The families measured by a run, from the families of its binary and
+    its effective options, in their order (a list, or a string split on
+    blanks): memexec when the last of -eva-memexec and -eva-no-memexec is
+    the first, the collector and the producer unless the last of
+    -eva-cache-collect and -eva-no-cache-collect is the second."""
+    if isinstance(flags, str):
+        flags = flags.split()
     families = set(binary_families)
-    if "-eva-memexec" not in flags:
+    if not last_switch(flags, "-eva-memexec", "-eva-no-memexec", False):
         families.discard("memexec")
-    if "-eva-no-cache-collect" in flags:
+    if not last_switch(flags, "-eva-cache-collect", "-eva-no-cache-collect",
+                       True):
         families.discard("collector")
         families.discard("producer")
     return families
@@ -1168,7 +1395,10 @@ def run_counts(stats_path, measured=FAMILIES):
         return value if family in measured else None
 
     def reasons(key):
-        return ",".join("%s=%d" % kv for kv in sorted(by_reason[key].items()))
+        """The counts by reason, or none when there is no row: a family
+        that is measured has no reason, which is not written -."""
+        return ",".join("%s=%d" % kv
+                        for kv in sorted(by_reason[key].items())) or "none"
 
     counts = OrderedDict()
     for k in ALLOCATION + RELEASE:
@@ -1286,6 +1516,18 @@ def families_command(args):
 
 # ----- Provenance of a binary ------------------------------------------------
 
+def home_directory():
+    """The home directory, or None when it is not set or is the root."""
+    home = os.environ.get("HOME", "").rstrip("/")
+    return home or None
+
+
+def holds_home(data):
+    """Whether the bytes [data] hold the literal home directory."""
+    home = home_directory()
+    return bool(home) and home.encode() in data
+
+
 def checkout_provenance(checkout):
     """The revision of a Frama-C checkout and the patch applied on top of
     it: (revision, patch SHA-256, patch file). A directory made by
@@ -1307,7 +1549,14 @@ def checkout_provenance(checkout):
                 raise ValueError("%s has no patch" % digest_file)
             return lines[0], "", ""
         with open(patch, "rb") as f:
-            digest = hashlib.sha256(f.read()).hexdigest()
+            data = f.read()
+        digest = hashlib.sha256(data).hexdigest()
+        if holds_home(data):
+            raise ValueError(
+                "the patch %s holds the home directory %s: its SHA-256 is "
+                "recorded on its bytes, which the public archive keeps; "
+                "write the directory as ~ or as a variable"
+                % (patch, home_directory()))
         with open(digest_file) as f:
             recorded = f.read().strip()
         if recorded != digest:
@@ -1379,20 +1628,37 @@ def read_measure(path):
     return measure
 
 
-def oom_evidence(measure, log_text):
-    """The evidence that memory was exhausted: the message of Frama-C or of
-    the OCaml runtime in the log, or for a command killed by SIGKILL that
-    the watchdog did not send, the out-of-memory killer in the memory
-    events of the cgroup or in the kernel log. Empty when there is none."""
+def oom_findings(measure, log_text):
+    """The evidence that memory was exhausted, as (conclusive, text). The
+    message of Frama-C or of the OCaml runtime in the log is conclusive. For
+    a command killed by SIGKILL that the watchdog did not send, the kernel
+    log that names the process is conclusive, and so is an increase of
+    oom_kill in the memory events of the cgroup of the watchdog when the
+    cgroup held the watchdog and the measured process alone
+    (cgroup_exclusive yes). In a shared cgroup the event may be another
+    process: the increase is kept as evidence, not as a cause."""
     if OUT_OF_MEMORY.search(log_text):
-        return "log"
+        return True, "log"
     if measure.get("signal") == "9" and measure.get("watchdog") != "kill":
+        conclusive, parts = False, []
+        if measure.get("kernel_log_oom") == "yes":
+            conclusive = True
+            parts.append("kernel log")
         events = measure.get("oom_kill_events", "")
         if events.isdigit() and int(events) > 0:
-            return "cgroup oom_kill +" + events
-        if measure.get("kernel_log_oom") == "yes":
-            return "kernel log"
-    return ""
+            if measure.get("cgroup_exclusive") == "yes":
+                conclusive = True
+                parts.append("cgroup oom_kill +" + events)
+            else:
+                parts.append("cgroup oom_kill +%s, shared cgroup" % events)
+        return conclusive, ", ".join(parts)
+    return False, ""
+
+
+def oom_evidence(measure, log_text):
+    """The text of the evidence that memory was exhausted, empty when there
+    is none (see [oom_findings])."""
+    return oom_findings(measure, log_text)[1]
 
 
 def classify_outcome(parse_exit, make_exit, measure, log_text,
@@ -1405,9 +1671,10 @@ def classify_outcome(parse_exit, make_exit, measure, log_text,
       measured by an earlier revision of this harness, which did not record
       it, is never classified as a timeout;
     - oom: Frama-C or the OCaml runtime reports that memory is exhausted, or
-      the out-of-memory killer of the system is reported to have killed it;
+      the out-of-memory killer of the system is reported to have killed it
+      (see [oom_findings]);
     - killed: killed by SIGKILL that the watchdog did not send, with no
-      evidence of the out-of-memory killer: cause unknown;
+      conclusive evidence of the out-of-memory killer: cause unknown;
     - error: any other nonzero exit status or signal, such as 1 (invalid
       user input), 3 (unimplemented feature), 4 (internal error), 125
       (unexpected exception), or 124 when the watchdog did not fire;
@@ -1422,7 +1689,7 @@ def classify_outcome(parse_exit, make_exit, measure, log_text,
         return "harness-error"
     if measure.get("watchdog", "none") != "none":
         return "timeout"
-    if oom_evidence(measure, log_text):
+    if oom_findings(measure, log_text)[0]:
         return "oom"
     status = int(measure["status"])
     if measure.get("signal") == "9":
@@ -1446,24 +1713,192 @@ def measure_command(args):
     return 0
 
 
-def outcome_command(args):
-    run = args.run
+def existing(path):
+    """[path], or [path].gz when only the compressed file exists, or None."""
+    for candidate in (path, path + ".gz"):
+        if os.path.exists(candidate):
+            return candidate
+    return None
+
+
+def run_outcome(run, parse_exit, make_exit):
+    """The outcome of a run and the evidence of exhausted memory, from its
+    measure, its log and its records, compressed or not."""
     measure = read_measure(os.path.join(run, "measure"))
     log_text = ""
-    if os.path.exists(os.path.join(run, "eva.log")):
-        with open_text(os.path.join(run, "eva.log")) as f:
+    log = existing(os.path.join(run, "eva.log"))
+    if log:
+        with open_text(log) as f:
             log_text = f.read()
     entry_analysed = False
-    records = os.path.join(run, "records.jsonl")
-    if os.path.exists(records):
+    records = existing(os.path.join(run, "records.jsonl"))
+    if records:
         entry_analysed = any(r["parent"] is None and
                              r["execution"] == "analysed"
                              for r in load_records(records))
-    outcome = classify_outcome(args.parse_exit, args.make_exit, measure,
-                               log_text, entry_analysed)
+    outcome = classify_outcome(parse_exit, make_exit, measure, log_text,
+                               entry_analysed)
     evidence = oom_evidence(measure, log_text) if measure else ""
-    print("%s\t%s" % (outcome, evidence or "-"))
+    return outcome, evidence or "-"
+
+
+def outcome_command(args):
+    print("%s\t%s" % run_outcome(args.run, args.parse_exit, args.make_exit))
     return 0
+
+
+# ----- Identity of the AST --------------------------------------------------
+
+def load_ast(path):
+    """The SHA-256 of the statement lines of an AST listing written by the
+    query module (CAMPAIGN_AST_OUT) and their number, or (None, None) when
+    the file is missing or incomplete: it must end with done COUNT, COUNT
+    being the number of statement lines."""
+    path = existing(path) if path else None
+    if not path:
+        return None, None
+    with open_text(path) as f:
+        text = f.read()
+    lines = text.split("\n")
+    if lines[-1] != "" or len(lines) < 2:
+        return None, None
+    lines.pop()
+    done = lines.pop().split("\t")
+    body = [l for l in lines]
+    if len(done) != 2 or done[0] != "done" or not done[1].isdigit() or \
+       int(done[1]) != len(body) or \
+       any(not l.startswith("stmt\t") for l in body):
+        return None, None
+    data = "".join(l + "\n" for l in body).encode("utf-8", "surrogateescape")
+    return hashlib.sha256(data).hexdigest(), len(body)
+
+
+def ast_command(args):
+    digest, statements = load_ast(args.listing)
+    print("ast_sha256\t%s\nast_statements\t%s"
+          % (digest or "-", "-" if statements is None else statements))
+    return 0
+
+
+# ----- Comparison of two runs -----------------------------------------------
+
+def run_numbering(run_a, run_b):
+    """The evidence that two runs number the statements alike, from their
+    run.tsv. A run written by this revision of the runner records the
+    SHA-256 of its AST (ast_sha256, - when it could not be exported). A run
+    recorded before the digest existed has no such field: the numbering of
+    the two runs is then asserted when they have the same case, revision
+    and patch of the analyzer, revision of the case studies and extra
+    options, the extra options being the only ones that differ between the
+    preprocessing of two modes; otherwise it is not established."""
+    if "ast_sha256" in run_a and "ast_sha256" in run_b:
+        return numbering_state(run_a["ast_sha256"], run_b["ast_sha256"])
+    same = all(run_a.get(k) and run_a.get(k) == run_b.get(k)
+               for k in ("case", "revision", "patch_sha256", "oscs_revision",
+                         "extra_eva_flags"))
+    return numbering_state(run_a.get("ast_sha256"), run_b.get("ast_sha256"),
+                           asserted=same)
+
+
+def snapshot_pattern(case, mode):
+    """The directory of the source snapshot of a run, wherever the output
+    directory is: written ${SRC} in the alarms."""
+    return re.compile(r"^.*/runs/%s/%s/src(?=/|$)"
+                      % (re.escape(case), re.escape(mode)))
+
+
+def compare_runs(output, case, mode_a, mode_b):
+    """Compares two runs of a case of a campaign output directory as the
+    runner does: alignment of the records, with the evidence of numbering
+    and the outcomes of run.tsv, state queries and alarms. Writes
+    comparisons/CASE/A-vs-B/. Does nothing when a run is missing."""
+    run_a = os.path.join(output, "runs", case, mode_a)
+    run_b = os.path.join(output, "runs", case, mode_b)
+    if not (os.path.isdir(run_a) and os.path.isdir(run_b)):
+        return
+    out = os.path.join(output, "comparisons", case,
+                       "%s-vs-%s" % (mode_a, mode_b))
+    os.makedirs(out, exist_ok=True)
+    with open_text(os.path.join(out, "pair.tsv"), "w") as f:
+        f.write("case\t%s\nbaseline\t%s\ncandidate\t%s\n"
+                % (case, mode_a, mode_b))
+    tsv_a = read_kv(os.path.join(run_a, "run.tsv"))
+    tsv_b = read_kv(os.path.join(run_b, "run.tsv"))
+    records_a = existing(os.path.join(run_a, "records.jsonl"))
+    records_b = existing(os.path.join(run_b, "records.jsonl"))
+    if records_a and records_b:
+        write_alignment(os.path.join(out, "alignment-"), records_a,
+                        records_b, run_numbering(tsv_a, tsv_b),
+                        (tsv_a.get("outcome"), tsv_b.get("outcome")))
+    queries_a = existing(os.path.join(run_a, "queries.tsv"))
+    queries_b = existing(os.path.join(run_b, "queries.tsv"))
+    if queries_a and queries_b:
+        summary, details, reach = compare_queries(queries_a, queries_b)
+        write_queries(os.path.join(out, "queries-"), summary, details, reach)
+    alarms_a = os.path.join(run_a, "alarms.csv")
+    alarms_b = os.path.join(run_b, "alarms.csv")
+    if os.path.exists(alarms_a) and os.path.exists(alarms_b):
+        summary, details = compare_alarms(
+            alarms_a, alarms_b, [snapshot_pattern(case, mode_a)],
+            [snapshot_pattern(case, mode_b)])
+        with open_text(os.path.join(out, "alarms-summary.tsv"), "w") as f:
+            for key, value in summary.items():
+                f.write("%s\t%s\n" % (key, value))
+        with open_text(os.path.join(out, "alarms-differences.tsv"), "w") as f:
+            for row in details:
+                f.write("difference\t" + "\t".join(row) + "\n")
+
+
+def compare_command(args):
+    compare_runs(args.output, args.case, args.a, args.b)
+    return 0
+
+
+def recompute_command(args):
+    """Recomputes from the raw logs of a campaign output directory what the
+    tools derive from them: the records of each run, its outcome (for a
+    measured run), the comparisons of every pair already compared, and the
+    tables. With --ast-digests, sets the digest of the AST of the runs that
+    it lists, re-exported after the campaign by tools/export-ast.sh."""
+    digests = {}
+    if args.ast_digests:
+        with open_text(args.ast_digests) as f:
+            for row in csv.DictReader(
+                    (l for l in f if not l.startswith("#")), delimiter="\t"):
+                digests[(row["case"], row["mode"])] = row
+    for dirpath, _, filenames in sorted(os.walk(os.path.join(args.run_dir,
+                                                             "runs"))):
+        if "run.tsv" not in filenames:
+            continue
+        run = read_kv(os.path.join(dirpath, "run.tsv"))
+        log = existing(os.path.join(dirpath, "eva.log"))
+        if log:
+            records = os.path.join(dirpath, "records.jsonl")
+            if log.endswith(".gz"):
+                records += ".gz"
+            with open_text(os.path.join(dirpath, "records-problems.log"),
+                           "w") as err, contextlib.redirect_stderr(err):
+                records_command(argparse.Namespace(log=log, output=records))
+        if os.path.exists(os.path.join(dirpath, "measure")):
+            run["outcome"], run["oom_evidence"] = run_outcome(
+                dirpath, int(run.get("parse_exit", "0") or 0),
+                int(run.get("make_exit", "0") or 0))
+        row = digests.get((run.get("case"), run.get("mode")))
+        if row:
+            run["ast_sha256"] = row["ast_sha256"]
+            run["ast_statements"] = row["ast_statements"]
+        with open_text(os.path.join(dirpath, "run.tsv"), "w") as f:
+            for key, value in run.items():
+                f.write("%s\t%s\n" % (key, value))
+    pairs = []
+    for dirpath, _, filenames in os.walk(os.path.join(args.run_dir,
+                                                      "comparisons")):
+        if "pair.tsv" in filenames:
+            pair = read_kv(os.path.join(dirpath, "pair.tsv"))
+            pairs.append((pair["case"], pair["baseline"], pair["candidate"]))
+    for case, mode_a, mode_b in sorted(pairs):
+        compare_runs(args.run_dir, case, mode_a, mode_b)
+    return tables_command(args)
 
 
 # ----- Tables ------------------------------------------------------------
@@ -1488,14 +1923,49 @@ def markdown_table(header, rows):
     return out.getvalue()
 
 
-def run_families(run, stats_path):
+def effective_options(run_dir, run):
+    """The options of the Eva invocation of a run, in their order: the
+    command it recorded (the file command written by the makefiles, or
+    eva-command of a fixture), or else the mode option followed by the
+    extra options of run.tsv. The makefiles of a case can add options after
+    those of the mode."""
+    for name in ("command", "eva-command"):
+        path = os.path.join(run_dir, name)
+        if os.path.exists(path):
+            with open_text(path) as f:
+                try:
+                    return shlex.split(f.read())
+                except ValueError:
+                    pass
+    return " ".join(run.get(k, "") for k in ("flag", "extra_eva_flags")
+                    ).split()
+
+
+def storage_disabled(run_dir):
+    """Whether the records of a run show a storage refused because caching
+    is disabled: then memexec was not on, whatever the options say."""
+    for name in ("records.jsonl.gz", "records.jsonl"):
+        path = os.path.join(run_dir, name)
+        if os.path.exists(path):
+            rows, _ = load_records_and_problems(path)
+            return any(r["dispositions"].get("storage", "")
+                       .startswith("refused (disabled)") for r in rows)
+    return False
+
+
+def run_families(run, stats_path, run_dir=None):
     """The counter families measured by a run: from the families of its
-    binary and its options, recorded in run.tsv, or, for a run that does not
-    record them, the families with at least one row in its statistics."""
+    binary, recorded in run.tsv, and its effective options and printed
+    dispositions; or, for a run that does not record the families of its
+    binary, the families with at least one row in its statistics."""
     if run.get("counter_families", "") not in ("",):
         binary = [f for f in run["counter_families"].split(",") if f]
-        flags = " ".join(run.get(k, "") for k in ("flag", "extra_eva_flags"))
-        return measured_families(binary, flags)
+        run_dir = run_dir or os.path.dirname(stats_path)
+        families = measured_families(binary,
+                                     effective_options(run_dir, run))
+        if storage_disabled(run_dir):
+            families.discard("memexec")
+        return families
     return {family for family, _, _, _ in stats_rows(stats_path)}
 
 
@@ -1556,7 +2026,7 @@ def tables_command(args):
         stats = stats_of(r)
         if stats is None:
             rows.append([r["case"], r["mode"]] + ["-"] * 9)
-            collector_rows.append([r["case"], r["mode"]] + ["-"] * 10)
+            collector_rows.append([r["case"], r["mode"]] + ["-"] * 11)
             continue
         c = run_counts(stats, run_families(r, stats))
         target = r["case"].rsplit("/", 1)[0]
@@ -1573,7 +2043,7 @@ def tables_command(args):
             "collector_refused_by_reason", "producer_stored",
             "producer_refused", "producer_refused_by_reason",
             "supplied_hits", "supplied_rejected", "supplied_refused",
-            "supplied_rejected_by_reason")])
+            "supplied_rejected_by_reason", "supplied_refused_by_reason")])
     write_tsv(os.path.join(out_dir, "activity.tsv"), header, rows)
     md.write("## Cache activity and set A\n\nTotals per case of the "
              "statistics file; memexec counts only in the modes that "
@@ -1586,7 +2056,7 @@ def tables_command(args):
               "collector_refused_by_reason", "producer_stored",
               "producer_refused", "producer_refused_by_reason",
               "supplied_hits", "supplied_rejected", "supplied_refused",
-              "supplied_rejected_by_reason"]
+              "supplied_rejected_by_reason", "supplied_refused_by_reason"]
     write_tsv(os.path.join(out_dir, "collector.tsv"), header,
               collector_rows)
     md.write("## Collector verdicts, produced and supplied entries\n\n"
@@ -1641,7 +2111,7 @@ def tables_command(args):
                   "analysed_a_hit_b", "nested_under_hit_a",
                   "nested_under_hit_b", "unmatched_a", "unmatched_b",
                   "undecided_groups", "problems_a", "problems_b",
-                  "accounted", "complete", "verdict"]
+                  "numbering", "accounted", "complete", "verdict"]
     query_keys = ["queries", "answered_both", "equal", "wider", "narrower",
                   "incomparable", "undecided", "top_a", "top_b",
                   "unavailable_a_no-callstack", "unavailable_b_no-callstack",
@@ -1811,9 +2281,15 @@ def main(argv=None):
     p.add_argument("b")
     p.add_argument("output", nargs="?",
                    help="prefix of the output files")
-    p.add_argument("--same-numbering", action="store_true",
-                   help="both runs number the statements alike: the same "
-                   "revision of the analyzer on the same case")
+    p.add_argument("--ast-a", help="SHA-256 of the AST of run A")
+    p.add_argument("--ast-b", help="SHA-256 of the AST of run B")
+    p.add_argument("--assert-numbering", action="store_true",
+                   help="for runs recorded before the AST digest: assert "
+                   "that a run without digest numbers the statements as "
+                   "the other, from equal revision, patch, options and "
+                   "preprocessing")
+    p.add_argument("--outcome-a", help="outcome of run A")
+    p.add_argument("--outcome-b", help="outcome of run B")
     p.set_defaults(func=align_command)
     p = sub.add_parser("queries")
     p.add_argument("a")
@@ -1856,6 +2332,21 @@ def main(argv=None):
     p.add_argument("run_dir")
     p.add_argument("--recorded-set-a")
     p.set_defaults(func=tables_command)
+    p = sub.add_parser("ast")
+    p.add_argument("listing", help="AST listing written by the query module")
+    p.set_defaults(func=ast_command)
+    p = sub.add_parser("compare")
+    p.add_argument("output", help="campaign output directory")
+    p.add_argument("case")
+    p.add_argument("a", help="mode of the baseline run")
+    p.add_argument("b", help="mode of the candidate run")
+    p.set_defaults(func=compare_command)
+    p = sub.add_parser("recompute")
+    p.add_argument("run_dir", help="campaign output directory")
+    p.add_argument("--ast-digests",
+                   help="digests of the ASTs re-exported after the campaign")
+    p.add_argument("--recorded-set-a")
+    p.set_defaults(func=recompute_command)
     p = sub.add_parser("manifest")
     p.add_argument("snapshot")
     p.add_argument("targets")

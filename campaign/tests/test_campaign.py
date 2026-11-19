@@ -6,6 +6,7 @@ Run from the root of the repository:
 
 import contextlib
 import csv
+import gzip
 import hashlib
 import importlib.util
 import io
@@ -16,6 +17,7 @@ import sys
 import tarfile
 import tempfile
 import unittest
+from unittest import mock
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SPEC = importlib.util.spec_from_file_location(
@@ -217,12 +219,16 @@ class Tree(unittest.TestCase):
         self.assertEqual(
             by_id["main#0 > outer@nested.c:14/s13#0"]["execution"], "open")
 
-    def test_missing_callstack_is_an_error(self):
-        records = campaign.cache_records(log(
+    def test_missing_callstack_is_a_problem(self):
+        # A message without callstack is a structural problem of the log,
+        # not an exception (issue #54, second review).
+        records, problems = campaign.parse_log(log(
             "[eva:cache] a.c:1: \n  call to f: lookup: no-candidate; "
             "execution: analysed; storage: none"))
-        with self.assertRaises(ValueError):
-            campaign.build_tree(records)
+        self.assertEqual(records, [])
+        self.assertEqual(problems, [
+            "message 1 has no callstack: enable the categories cache and "
+            "callstacks"])
 
 
 class Alignment(unittest.TestCase):
@@ -230,14 +236,14 @@ class Alignment(unittest.TestCase):
     def test_same_run_aligns_completely(self):
         rows = records_of(NESTED_LOG)
         summary = campaign.summarize_alignment(
-            rows, rows, campaign.align(rows, rows))
+            rows, rows, campaign.align(rows, rows, "same"), numbering="same", outcomes=("completed", "completed"))
         self.assertTrue(summary["complete"])
         self.assertEqual(summary["aligned"], 5)
 
     def test_hit_against_nested_lookups(self):
         off, on = records_of(NESTED_LOG_OFF), records_of(NESTED_LOG)
-        result = campaign.align(off, on)
-        summary = campaign.summarize_alignment(off, on, result)
+        result = campaign.align(off, on, "same")
+        summary = campaign.summarize_alignment(off, on, result, numbering="same", outcomes=("completed", "completed"))
         self.assertEqual(summary["aligned"], 5)
         self.assertEqual(summary["analysed_a_hit_b"], 2)
         self.assertEqual(summary["nested_under_hit_b"], 2)
@@ -273,8 +279,8 @@ class Alignment(unittest.TestCase):
              r("m > f@a.c:3#1", "m", 1, "f", "a.c:3"),
              r("m > f@a.c:3#2", "m", 2, "f", "a.c:3"),
              r("m > g@a.c:4#0", "m", 3, "g", "a.c:4")]
-        result = campaign.align(a, b)
-        summary = campaign.summarize_alignment(a, b, result)
+        result = campaign.align(a, b, "same")
+        summary = campaign.summarize_alignment(a, b, result, numbering="same", outcomes=("completed", "completed"))
         self.assertEqual(result["undecided"],
                          [("m", "m", "f@a.c:3/s3", 2, 3, 2, 3,
                            "repeated calls in another order")])
@@ -292,7 +298,7 @@ class Alignment(unittest.TestCase):
              r("m > f@a.c:3#0", "m", 0, "f", "a.c:3"),
              r("m > f@a.c:3#1", "m", 1, "f", "a.c:3"),
              r("m > g@a.c:4#0", "m", 2, "g", "a.c:4")]
-        result = campaign.align(a, b)
+        result = campaign.align(a, b, "same")
         self.assertEqual(len(result["undecided"]), 1)
         self.assertEqual([x["id"] for x, _ in result["pairs"]],
                          ["m", "m > g@a.c:4#0"])
@@ -302,7 +308,7 @@ class Alignment(unittest.TestCase):
         a = [r("m", None, 9, "main", ""),
              r("m > f@a.c:3#0", "m", 0, "f", "a.c:3")]
         b = [r("m", None, 9, "main", "")]
-        result = campaign.align(a, b)
+        result = campaign.align(a, b, "same")
         self.assertEqual(result["unmatched"],
                          [("A", "m > f@a.c:3#0", "no call at this site in B")])
 
@@ -603,8 +609,8 @@ class SameLineCalls(unittest.TestCase):
 
     def test_two_statements_of_one_line_are_unmatched(self):
         a, b = records_of(SAME_LINE_SIDE0), records_of(SAME_LINE_SIDE1)
-        result = campaign.align(a, b)
-        summary = campaign.summarize_alignment(a, b, result)
+        result = campaign.align(a, b, "same")
+        summary = campaign.summarize_alignment(a, b, result, numbering="same", outcomes=("completed", "completed"))
         self.assertEqual(summary["aligned"], 1)  # main only
         self.assertEqual((summary["unmatched_a"], summary["unmatched_b"]),
                          (1, 1))
@@ -612,8 +618,8 @@ class SameLineCalls(unittest.TestCase):
 
     def test_without_statement_numbers_nothing_below_main_aligns(self):
         a, b = records_of(SITES_LEGACY_0), records_of(SITES_LEGACY_0)
-        result = campaign.align(a, b)
-        summary = campaign.summarize_alignment(a, b, result)
+        result = campaign.align(a, b, "same")
+        summary = campaign.summarize_alignment(a, b, result, numbering="same", outcomes=("completed", "completed"))
         self.assertEqual(summary["aligned"], 1)
         self.assertEqual(result["undecided"],
                          [("main#0", "main#0", "f@sites.c:4", 1, 1, 1, 1,
@@ -624,7 +630,7 @@ class SameLineCalls(unittest.TestCase):
     def test_same_run_with_numbers_aligns_completely(self):
         rows = records_of(SAME_LINE_SIDE0)
         summary = campaign.summarize_alignment(
-            rows, rows, campaign.align(rows, rows))
+            rows, rows, campaign.align(rows, rows, "same"), numbering="same", outcomes=("completed", "completed"))
         self.assertTrue(summary["complete"])
         self.assertEqual(summary["verdict"], "complete")
 
@@ -899,7 +905,8 @@ class QueryAvailability(unittest.TestCase):
         self.assertEqual(summary.get("unavailable_b_missing"), "1")
 
     def test_statements_reached_in_one_run_are_listed(self):
-        other = QUERIES_RESULTS + "reach\tget\tget:11:0\n"
+        other = QUERIES_RESULTS.replace("done\t3\n",
+                                        "reach\tget\tget:11:0\ndone\t3\n")
         _, _, reach = self.compare(QUERIES_RESULTS, other)
         self.assertEqual(reach, [("get", "get:11:0", "B")])
 
@@ -992,8 +999,9 @@ class Interruption(unittest.TestCase):
                 campaign.main(["records", path, out])
             prefix = os.path.join(tmp, "alignment-")
             with contextlib.redirect_stdout(io.StringIO()):
-                campaign.main(["align", "--same-numbering", out, out,
-                               prefix])
+                campaign.main(["align", "--ast-a", DIGEST_0, "--ast-b",
+                               DIGEST_0, "--outcome-a", "completed",
+                               "--outcome-b", "completed", out, out, prefix])
             with open(prefix + "summary.tsv") as f:
                 summary = dict(l.rstrip("\n").split("\t", 1) for l in f)
         self.assertEqual(summary.get("records_a"), "2")
@@ -1044,10 +1052,20 @@ class Watchdog(unittest.TestCase):
                 campaign.classify_outcome(0, 2, m, "", False), "killed")
 
     def test_out_of_memory_evidence(self):
+        # The counter of a cgroup that the watchdog shares with other
+        # processes does not say which process the killer chose: the run is
+        # killed, cause unknown, and the counter is kept as evidence (issue
+        # #54, second review).
         m = {"status": "137", "signal": "9", "watchdog": "none",
              "oom_kill_events": "1", "kernel_log_oom": "unreadable"}
+        self.assertEqual(campaign.oom_evidence(m, ""),
+                         "cgroup oom_kill +1, shared cgroup")
+        self.assertEqual(campaign.classify_outcome(0, 2, m, "", False),
+                         "killed")
+        m.update(cgroup_exclusive="yes")
         self.assertEqual(campaign.oom_evidence(m, ""), "cgroup oom_kill +1")
         self.assertEqual(campaign.classify_outcome(0, 2, m, "", False), "oom")
+        m.update(cgroup_exclusive="no")
         m.update(oom_kill_events="unreadable", kernel_log_oom="yes")
         self.assertEqual(campaign.classify_outcome(0, 2, m, "", False), "oom")
         m.update(kernel_log_oom="unreadable")
@@ -1242,6 +1260,556 @@ done
         self.assertEqual(failed.returncode, 1)
         self.assertIn("jsmn/jsmn-example.eva/default cache: outcome error",
                       failed.stderr)
+
+
+# ----- Second review of issue #54 ------------------------------------------
+
+def run_main(args):
+    """Runs campaign.py in this process. Returns (exit code, standard
+    output, error), the error being the text of an exception that escaped,
+    or None: a check that would raise fails instead of erroring."""
+    out, err = io.StringIO(), io.StringIO()
+    try:
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+            code = campaign.main(args)
+    except BaseException as e:  # SystemExit of an unknown option included
+        return None, out.getvalue(), "%s: %s" % (type(e).__name__, e)
+    return code, out.getvalue(), None
+
+
+def read_summary(path):
+    with open(path) as f:
+        return dict(l.rstrip("\n").split("\t", 1) for l in f if "\t" in l)
+
+
+# The reviewer's program sites.c, "if (SIDE) f(1); else f(2);" on line 4,
+# analysed with -DSIDE=0 and -DSIDE=1: the dead branch is removed when the
+# program is parsed, and the call left is statement 4 in both runs, f(2) in
+# one and f(1) in the other. The two logs are the same text.
+SITES_NUMBERED = """
+[eva:cache] sites.c:4:
+  call to f: lookup: no-candidate; execution: analysed; storage: stored (entry 1)
+  stack: f :: sites.c:4 (stmt 4) <- main
+[eva:cache]
+  call to main: lookup: no-candidate; execution: analysed; storage: stored (entry 2)
+  stack: main
+"""
+DIGEST_0, DIGEST_1 = "0" * 64, "1" * 64
+
+
+class NumberingEvidence(unittest.TestCase):
+    """H1: the numbering is established from the program, not from the
+    binary, before records are paired."""
+
+    def align(self, text_a, text_b, *options):
+        with tempfile.TemporaryDirectory() as tmp:
+            paths = []
+            for name, text in (("a", text_a), ("b", text_b)):
+                log_path = os.path.join(tmp, name + ".log")
+                write(log_path, text)
+                paths.append(os.path.join(tmp, name + ".jsonl"))
+                run_main(["records", log_path, paths[-1]])
+            prefix = os.path.join(tmp, "alignment-")
+            code, _, error = run_main(["align"] + list(options)
+                                      + paths + [prefix])
+            summary = {}
+            if os.path.exists(prefix + "summary.tsv"):
+                summary = read_summary(prefix + "summary.tsv")
+            undecided = []
+            if os.path.exists(prefix + "undecided.tsv"):
+                with open(prefix + "undecided.tsv") as f:
+                    undecided = [l.rstrip("\n").split("\t")
+                                 for l in list(f)[1:]]
+        return code, error, summary, undecided
+
+    def test_without_evidence_nothing_below_the_entry_point_is_paired(self):
+        code, error, s, undecided = self.align(SITES_NUMBERED, SITES_NUMBERED)
+        self.assertEqual((code, error), (0, None))
+        self.assertEqual(s.get("aligned"), "1")  # the entry point only
+        self.assertEqual(s.get("numbering"), "not established")
+        self.assertEqual([u[2] for u in undecided], ["f@sites.c:4/s4"])
+        self.assertEqual(undecided[0][-1], "numbering not established")
+        self.assertEqual(s.get("accounted"), "True")
+        self.assertEqual(s.get("complete"), "False")
+
+    def test_different_digests(self):
+        code, error, s, undecided = self.align(
+            SITES_NUMBERED, SITES_NUMBERED, "--ast-a", DIGEST_0,
+            "--ast-b", DIGEST_1)
+        self.assertEqual((code, error), (0, None))
+        self.assertEqual(s.get("numbering"), "different")
+        self.assertEqual(s.get("aligned"), "1")
+        self.assertEqual(undecided[0][-1], "AST digests differ")
+        self.assertIn("AST digests differ", s.get("verdict", ""))
+        self.assertEqual(s.get("complete"), "False")
+
+    def test_equal_digests(self):
+        code, error, s, _ = self.align(
+            SITES_NUMBERED, SITES_NUMBERED, "--ast-a", DIGEST_0,
+            "--ast-b", DIGEST_0, "--outcome-a", "completed",
+            "--outcome-b", "completed")
+        self.assertEqual((code, error), (0, None))
+        self.assertEqual(s.get("numbering"), "same")
+        self.assertEqual(s.get("aligned"), "2")
+        self.assertEqual(s.get("verdict"), "complete")
+
+    def test_asserted_numbering_is_a_verdict_of_its_own(self):
+        code, error, s, _ = self.align(
+            SITES_NUMBERED, SITES_NUMBERED, "--assert-numbering",
+            "--outcome-a", "completed", "--outcome-b", "completed")
+        self.assertEqual((code, error), (0, None))
+        self.assertEqual(s.get("numbering"), "asserted")
+        self.assertEqual(s.get("aligned"), "2")
+        self.assertEqual(s.get("complete"), "False")
+        self.assertEqual(
+            s.get("verdict"),
+            "numbering asserted from equal revision, patch, options and "
+            "preprocessing, not checked by digest")
+
+    def test_the_old_flag_no_longer_grants_the_numbering(self):
+        code, _, _, _ = self.align(SITES_NUMBERED, SITES_NUMBERED,
+                                   "--same-numbering")
+        self.assertNotEqual(code, 0)
+
+    def test_ast_listing_digest(self):
+        listing = ("stmt\tmain\t4\tsites.c:4\tf(2);\n"
+                   "stmt\tmain\t5\tsites.c:5\treturn 0;\n")
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, "ast.tsv")
+            write(path, listing + "done\t2\n")
+            code, out, error = run_main(["ast", path])
+            write(path, listing + "done\t3\n")
+            _, wrong, _ = run_main(["ast", path])
+            write(path, listing)
+            _, cut, _ = run_main(["ast", path])
+        self.assertEqual((code, error), (0, None))
+        digest = hashlib.sha256(listing.encode()).hexdigest()
+        self.assertEqual(out, "ast_sha256\t%s\nast_statements\t2\n" % digest)
+        self.assertEqual(wrong, "ast_sha256\t-\nast_statements\t-\n")
+        self.assertEqual(cut, "ast_sha256\t-\nast_statements\t-\n")
+
+
+class CompareRuns(unittest.TestCase):
+    """H1 and H5: the evidence of numbering and the outcomes come from the
+    runs, as the runner compares them."""
+
+    def output(self, tmp, fields_a, fields_b):
+        root = os.path.join(tmp, "out")
+        for mode, fields in (("x", fields_a), ("y", fields_b)):
+            run = os.path.join(root, "runs", "c", mode)
+            os.makedirs(run)
+            base = {"case": "c", "mode": mode, "revision": "r" * 40,
+                    "patch_sha256": "-", "oscs_revision": "o" * 40,
+                    "extra_eva_flags": "-", "outcome": "completed"}
+            base.update(fields)
+            write(os.path.join(run, "run.tsv"), "".join(
+                "%s\t%s\n" % kv for kv in base.items() if kv[1] is not None))
+            with gzip.open(os.path.join(run, "records.jsonl.gz"), "wt") as f:
+                f.write("".join(json.dumps(r) + "\n"
+                                for r in records_of(SITES_NUMBERED)))
+        return root
+
+    def compare(self, fields_a, fields_b):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self.output(tmp, fields_a, fields_b)
+            code, _, error = run_main(["compare", root, "c", "x", "y"])
+            path = os.path.join(root, "comparisons", "c", "x-vs-y",
+                                "alignment-summary.tsv")
+            summary = read_summary(path) if os.path.exists(path) else {}
+        return code, error, summary
+
+    def test_equal_digests(self):
+        code, error, s = self.compare({"ast_sha256": DIGEST_0},
+                                      {"ast_sha256": DIGEST_0})
+        self.assertEqual((code, error), (0, None))
+        self.assertEqual((s.get("numbering"), s.get("verdict")),
+                         ("same", "complete"))
+
+    def test_missing_digest(self):
+        _, _, s = self.compare({"ast_sha256": DIGEST_0}, {"ast_sha256": "-"})
+        self.assertEqual(s.get("numbering"), "not established")
+
+    def test_runs_recorded_before_the_digest(self):
+        # No ast_sha256 field: the numbering is asserted when the revision,
+        # patch, case-study revision and options are equal.
+        _, _, s = self.compare({"ast_sha256": None}, {"ast_sha256": DIGEST_0})
+        self.assertEqual(s.get("numbering"), "asserted")
+        _, _, s = self.compare({"ast_sha256": None},
+                               {"ast_sha256": None, "patch_sha256": "p"})
+        self.assertEqual(s.get("numbering"), "not established")
+        _, _, s = self.compare(
+            {"ast_sha256": None},
+            {"ast_sha256": None, "extra_eva_flags": "-cpp-extra-args=-DX"})
+        self.assertEqual(s.get("numbering"), "not established")
+
+    def test_outcome_enters_the_verdict(self):
+        _, _, s = self.compare({"ast_sha256": DIGEST_0},
+                               {"ast_sha256": DIGEST_0, "outcome": "timeout"})
+        self.assertEqual(s.get("complete"), "False")
+        self.assertIn("outcome of B: timeout", s.get("verdict", ""))
+
+
+class EffectiveOptions(unittest.TestCase):
+    """H2: the measured families follow the effective options, in their
+    order, and the dispositions printed."""
+
+    def test_last_option_wins(self):
+        binary = ["builtin", "memexec", "collector", "producer"]
+        self.assertNotIn("memexec", campaign.measured_families(
+            binary, "-eva-memexec -eva-no-memexec"))
+        self.assertIn("memexec", campaign.measured_families(
+            binary, "-eva-no-memexec -eva-memexec"))
+        self.assertIn("collector", campaign.measured_families(
+            binary, "-eva-no-cache-collect -eva-cache-collect"))
+
+    def tables(self, run_fields, files):
+        with tempfile.TemporaryDirectory() as tmp:
+            run = os.path.join(tmp, "runs", "c", "cache")
+            os.makedirs(run)
+            fields = {"case": "c", "mode": "cache", "flag": "-eva-memexec",
+                      "extra_eva_flags": "-", "outcome": "completed",
+                      "counter_families":
+                      "builtin,memexec,supplied,collector,producer"}
+            fields.update(run_fields)
+            write(os.path.join(run, "run.tsv"),
+                  "".join("%s\t%s\n" % kv for kv in fields.items()))
+            write(os.path.join(run, "eva-stats.csv"),
+                  "cache-refused-supplied-only\tf\t\t2\n"
+                  "collector-would-store\tf\t\t1\n")
+            for name, text in files.items():
+                if name.endswith(".gz"):
+                    with gzip.open(os.path.join(run, name), "wt") as f:
+                        f.write(text)
+                else:
+                    write(os.path.join(run, name), text)
+            code, _, error = run_main(["tables", tmp])
+            result = {}
+            for name in ("activity", "collector"):
+                path = os.path.join(tmp, "tables", name + ".tsv")
+                if os.path.exists(path):
+                    with open(path) as f:
+                        result[name] = list(csv.DictReader(
+                            f, delimiter="\t"))[0]
+        self.assertEqual((code, error), (0, None))
+        return result
+
+    def test_option_after_the_mode_flag(self):
+        t = self.tables({}, {"command": "frama-c -eva -eva-memexec "
+                             "-eva-msg-key=+cache,+callstacks "
+                             "-eva-no-memexec\n"})
+        self.assertEqual(t["activity"]["hits"], "-")
+        self.assertEqual(t["activity"]["refused_by_reason"], "-")
+
+    def test_extra_flags_after_the_mode_flag(self):
+        t = self.tables({"extra_eva_flags": "-eva-no-memexec"}, {})
+        self.assertEqual(t["activity"]["hits"], "-")
+
+    def test_disabled_storage_printed(self):
+        records = "".join(json.dumps(r) + "\n"
+                          for r in records_of(NESTED_LOG_OFF))
+        t = self.tables({}, {"records.jsonl.gz": records})
+        self.assertEqual(t["activity"]["hits"], "-")
+
+    def test_measured_memexec(self):
+        t = self.tables({}, {})
+        self.assertEqual(t["activity"]["hits"], "0")
+        # A measured family with no refusal has no reason: not "-".
+        self.assertEqual(t["activity"]["refused_by_reason"], "none")
+
+    def test_supplied_refusals_by_reason(self):
+        t = self.tables({}, {})
+        self.assertEqual(t["collector"].get("supplied_refused_by_reason"),
+                         "supplied-only=2")
+        self.assertEqual(t["collector"].get("supplied_rejected_by_reason"),
+                         "none")
+
+
+class StrictDoneLine(unittest.TestCase):
+    """H3b: one well-formed done line, last, counting the rows."""
+
+    ROW = "answer\tf\tf:1:0\tbefore\t*\tx\t1\t0\tT\n"
+
+    def status(self, text):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, "q")
+            write(path, text)
+            try:
+                return campaign.load_queries(path)["status"]
+            except Exception as e:
+                return "exception %s: %s" % (type(e).__name__, e)
+
+    def test_forms(self):
+        row = self.ROW
+        self.assertEqual(self.status(row + "done\t1\n"), "complete")
+        for text, reason in (
+                ("done\t1\n" + row, "a line after the done line"),
+                (row + "done\t1\ndone\t1\n", "a line after the done line"),
+                (row + "done\toops\n", "malformed done line"),
+                (row + "done\n", "malformed done line"),
+                (row + row + "done\t1\n", "done 1, 2 lines"),
+                (row, "no done line"),
+                ("answer\tf\tf:1:0\tbefore\n" + "done\t1\n", "malformed line 1"),
+                ("answer\tf\tf:1:0\tbefore\t*\tx\tone\t0\tT\ndone\t1\n",
+                 "malformed line 1"),
+                ("nonsense\ndone\t0\n", "malformed line 1")):
+            status = self.status(text)
+            self.assertTrue(status.startswith("incomplete"), (text, status))
+            self.assertIn(reason, status, text)
+
+    def test_every_cut_of_a_file_is_incomplete(self):
+        text = QUERIES_RESULTS
+        for end in range(len(text)):
+            status = self.status(text[:end])
+            self.assertTrue(status.startswith("incomplete"),
+                            (text[:end], status))
+        self.assertEqual(self.status(text), "complete")
+
+
+class CutLogs(unittest.TestCase):
+    """H5: a log cut anywhere gives structural problems, never an exception
+    and never a complete alignment."""
+
+    def verdict(self, text):
+        """The verdict of the alignment of a log with itself, as if both
+        runs had completed and numbered their statements alike."""
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, "eva.log")
+            out = os.path.join(tmp, "records.jsonl")
+            write(path, text)
+            code, _, error = run_main(["records", path, out])
+            if error:
+                return "exception in records: " + error
+            prefix = os.path.join(tmp, "alignment-")
+            code, _, error = run_main(
+                ["align", "--ast-a", DIGEST_0, "--ast-b", DIGEST_0,
+                 "--outcome-a", "completed", "--outcome-b", "completed",
+                 out, out, prefix])
+            if error:
+                return "exception in align: " + error
+            return read_summary(prefix + "summary.tsv")["verdict"]
+
+    def test_every_cut_of_a_log(self):
+        text = NESTED_LOG.strip("\n") + "\n"
+        # The message of the entry point ends the records of the log.
+        whole = text.index("  stack: main\n") + len("  stack: main")
+        wrong = []
+        for end in range(len(text) + 1):
+            verdict = self.verdict(text[:end])
+            if (verdict == "complete") != (end >= whole):
+                wrong.append((end, text[max(0, end - 30):end], verdict))
+        self.assertEqual(wrong, [])
+
+    def test_cut_inside_a_stack(self):
+        # The archived log of jsmn-main cut after its line 11, inside a
+        # stack printed over several lines.
+        text = ("[eva:cache] test/testutil.h:78:\n"
+                "  call to jsmn_init: lookup: no-candidate; execution: "
+                "analysed; storage: stored (entry 1); collector: would-store\n"
+                "  stack: jsmn_init :: test/testutil.h:78 (stmt 415) <-\n")
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, "eva.log")
+            write(path, text)
+            out = os.path.join(tmp, "records.jsonl")
+            code, _, error = run_main(["records", path, out])
+            self.assertEqual((code, error), (0, None))
+            rows, problems = campaign.load_records_and_problems(out)
+        self.assertEqual(rows, [])
+        self.assertEqual(len(problems), 1)
+        self.assertIn("malformed callstack", problems[0])
+
+    def test_no_record_of_the_entry_point(self):
+        self.assertIn("no record of the entry point", self.verdict(""))
+
+
+class SharedCgroup(unittest.TestCase):
+    """H6: the counter of a shared cgroup does not name the process."""
+
+    KILLED = {"status": "137", "signal": "9", "watchdog": "none",
+              "oom_kill_events": "1", "kernel_log_oom": "no"}
+
+    def test_shared_cgroup_is_killed(self):
+        m = dict(self.KILLED)
+        self.assertEqual(campaign.classify_outcome(0, 2, m, "", False),
+                         "killed")
+        self.assertIn("oom_kill +1", campaign.oom_evidence(m, ""))
+        m["cgroup_exclusive"] = "no"
+        self.assertEqual(campaign.classify_outcome(0, 2, m, "", False),
+                         "killed")
+
+    def test_exclusive_cgroup_or_kernel_log(self):
+        m = dict(self.KILLED, cgroup_exclusive="yes")
+        self.assertEqual(campaign.classify_outcome(0, 2, m, "", False), "oom")
+        m = dict(self.KILLED, kernel_log_oom="yes")
+        self.assertEqual(campaign.classify_outcome(0, 2, m, "", False), "oom")
+
+    def test_watchdog_records_whether_the_cgroup_is_shared(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, "measure")
+            subprocess.run([sys.executable, "-I", WATCHDOG, path, "5", "1",
+                            "-", "--", "sleep", "0.2"], check=True)
+            m = campaign.read_measure(path)
+        self.assertIn(m.get("cgroup_exclusive"), ("yes", "no", "unreadable"))
+
+
+RUNNER = os.path.join(HERE, "..", "run-campaign.sh")
+
+
+class HomeDirectory(unittest.TestCase):
+    """H7: the bytes of the manifest and patches whose digests are recorded
+    are archived unchanged; a run refuses the home directory in them."""
+
+    def env(self, home):
+        return dict(os.environ, HOME=home)
+
+    def test_runner_refuses_the_home_directory_in_the_manifest(self):
+        with tempfile.TemporaryDirectory() as home:
+            manifest = os.path.join(home, "manifest.tsv")
+            write(manifest, "case\tflags\nc\t-I%s/include\n" % home)
+            out = os.path.join(home, "out")
+            run = subprocess.run(
+                ["bash", RUNNER, "--manifest", manifest, "--modes", "cache",
+                 "--test-checkout",
+                 home, out], env=self.env(home), capture_output=True,
+                text=True, stdin=subprocess.DEVNULL)
+            self.assertEqual(run.returncode, 2, run.stderr)
+            self.assertIn("~", run.stderr)
+            self.assertIn("manifest", run.stderr)
+            self.assertFalse(os.path.exists(out))
+
+    def test_runner_refuses_the_home_directory_in_a_patch(self):
+        with tempfile.TemporaryDirectory() as home:
+            checkout = os.path.join(home, "ref")
+            os.makedirs(checkout)
+            write(os.path.join(checkout, "CAMPAIGN_REVISION"), "a" * 40 + "\n")
+            patch = "+%s/test\n" % home
+            write(os.path.join(checkout, "CAMPAIGN_PATCH.patch"), patch)
+            write(os.path.join(checkout, "CAMPAIGN_PATCH_SHA256"),
+                  hashlib.sha256(patch.encode()).hexdigest() + "\n")
+            manifest = os.path.join(home, "manifest.tsv")
+            write(manifest, "case\tflags\nc\t-\n")
+            out = os.path.join(home, "out")
+            run = subprocess.run(
+                ["bash", RUNNER, "--manifest", manifest, "--modes", "cache",
+                 "--test-checkout",
+                 checkout, out], env=self.env(home), capture_output=True,
+                text=True, stdin=subprocess.DEVNULL)
+            self.assertEqual(run.returncode, 2, run.stderr)
+            self.assertIn("patch", run.stderr)
+            self.assertFalse(os.path.exists(out))
+            with mock.patch.dict(os.environ, {"HOME": home}):
+                code, _, _ = run_main(["provenance", checkout, "test",
+                                       os.path.join(home, "patches")])
+            self.assertNotEqual(code, 0)
+
+    def test_archive_keeps_the_hashed_bytes(self):
+        with tempfile.TemporaryDirectory() as home:
+            out = os.path.join(home, "pilot")
+            prov = os.path.join(out, "provenance")
+            os.makedirs(os.path.join(prov, "patches"))
+            manifest = b"case\tflags\nc\t-I~/include\n"
+            patch = b"+~/test\n"
+            with open(os.path.join(prov, "manifest.tsv"), "wb") as f:
+                f.write(manifest)
+            write(os.path.join(prov, "manifest.sha256"),
+                  hashlib.sha256(manifest).hexdigest() + "\n")
+            with open(os.path.join(prov, "patches", "reference.patch"),
+                      "wb") as f:
+                f.write(patch)
+            write(os.path.join(prov, "binaries.tsv"),
+                  "role\tpatch_sha256\tpatch\nreference\t%s\t"
+                  "provenance/patches/reference.patch\n"
+                  % hashlib.sha256(patch).hexdigest())
+            write(os.path.join(out, "log.txt"), "%s/x\n" % home)
+            archive = os.path.join(home, "logs.tar.gz")
+            run = subprocess.run(["bash", ARCHIVE, out, archive],
+                                 env=self.env(home), capture_output=True)
+            self.assertEqual(run.returncode, 0, run.stderr)
+            with tarfile.open(archive) as tar:
+                kept = {n: tar.extractfile(n).read() for n in (
+                    "logs/provenance/manifest.tsv",
+                    "logs/provenance/patches/reference.patch",
+                    "logs/log.txt")}
+        self.assertEqual(kept["logs/provenance/manifest.tsv"], manifest)
+        self.assertEqual(kept["logs/provenance/patches/reference.patch"],
+                         patch)
+        self.assertEqual(kept["logs/log.txt"], b"~/x\n")
+
+    def test_archive_refuses_a_hashed_file_with_the_home_directory(self):
+        with tempfile.TemporaryDirectory() as home:
+            out = os.path.join(home, "pilot")
+            prov = os.path.join(out, "provenance")
+            os.makedirs(prov)
+            manifest = ("case\tflags\nc\t-I%s/include\n" % home).encode()
+            with open(os.path.join(prov, "manifest.tsv"), "wb") as f:
+                f.write(manifest)
+            write(os.path.join(prov, "manifest.sha256"),
+                  hashlib.sha256(manifest).hexdigest() + "\n")
+            archive = os.path.join(home, "logs.tar.gz")
+            run = subprocess.run(["bash", ARCHIVE, out, archive],
+                                 env=self.env(home), capture_output=True)
+            self.assertNotEqual(run.returncode, 0)
+            self.assertFalse(os.path.exists(archive))
+            # A manifest that no longer matches its recorded digest.
+            with open(os.path.join(prov, "manifest.tsv"), "wb") as f:
+                f.write(b"case\tflags\nc\t-\n")
+            run = subprocess.run(["bash", ARCHIVE, out, archive],
+                                 env=self.env(home), capture_output=True)
+            self.assertNotEqual(run.returncode, 0)
+            self.assertFalse(os.path.exists(archive))
+
+
+class ExitQueries(unittest.TestCase):
+    """H8: exit queries and per-callstack queries of a run without
+    results."""
+
+    ANSWERS = ("format\t2\n"
+               "reach\tget\tget:11:0\n"
+               "answer\tget\tget:11:0\tbefore\t*\tr\t1\t0\tMNULL=S3,5\n"
+               "answer\tget\tget:11:0\tbefore\tmain|get@main:19:1\tr\t1\t0\t"
+               "MNULL=S3\n"
+               "reach\tget\tget:exit\n"
+               "answer\tget\tget:exit\texit\t*\tr\t1\t0\tMNULL=S0\n"
+               "answer\tget\tget:exit\texit\tmain|get@main:19:1\tr\t1\t0\t"
+               "MNULL=S0\n"
+               "done\t4\n")
+    NO_RESULTS = ("format\t2\n"
+                  "reach\tget\tget:11:0\n"
+                  "unavailable\tget\tget:11:0\tbefore\t*\tr\tno-results\n"
+                  "reach\tget\tget:exit\n"
+                  "unavailable\tget\tget:exit\texit\t*\tr\tno-results\n"
+                  "done\t2\n")
+
+    def test_no_results_on_every_callstack(self):
+        s, _, _ = compare_queries_files(self.ANSWERS, self.NO_RESULTS)
+        self.assertEqual(s.get("unavailable_b_no-results"), "4")
+        self.assertEqual(s.get("unavailable_b_no-callstack"), "0")
+        self.assertEqual(s.get("unavailable_b_missing"), "0")
+
+    def test_exit_not_reached(self):
+        b = ("format\t2\n"
+             "reach\tget\tget:11:0\n"
+             "answer\tget\tget:11:0\tbefore\t*\tr\t1\t0\tMNULL=S3,5\n"
+             "answer\tget\tget:11:0\tbefore\tmain|get@main:19:1\tr\t1\t0\t"
+             "MNULL=S3\n"
+             "done\t2\n")
+        s, _, _ = compare_queries_files(self.ANSWERS, b)
+        self.assertEqual(s.get("unavailable_b_unreached"), "2")
+        self.assertEqual(s.get("unavailable_b_missing"), "0")
+
+    def test_files_written_before_exit_reachability(self):
+        # A file without the format line declares no reached exit point:
+        # an exit query that it does not answer is missing, as before.
+        a = self.ANSWERS.replace("format\t2\n", "").replace(
+            "reach\tget\tget:exit\n", "")
+        b = ("reach\tget\tget:11:0\n"
+             "answer\tget\tget:11:0\tbefore\t*\tr\t1\t0\tMNULL=S3,5\n"
+             "answer\tget\tget:11:0\tbefore\tmain|get@main:19:1\tr\t1\t0\t"
+             "MNULL=S3\n"
+             "done\t2\n")
+        s, _, _ = compare_queries_files(a, b)
+        self.assertEqual(s.get("unavailable_b_missing"), "1")
+        self.assertEqual(s.get("unavailable_b_no-callstack"), "1")
+
 
 if __name__ == "__main__":
     unittest.main()
