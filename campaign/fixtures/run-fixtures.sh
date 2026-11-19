@@ -10,22 +10,35 @@
 #   CHECKOUT: the Frama-C build of that binary
 #
 # Each fixture is analysed with caching disabled (nocache), with memexec
-# (cache) and with memexec again (cache.2). Checks:
+# (cache) and with memexec again (cache.2). Each run lists its AST from a
+# parse alone (ast.tsv), as the runner lists it from the parse session, and
+# from the session saved by Eva (ast-eva.tsv); its run.tsv records the
+# digest of the first, which the comparisons take as evidence that two runs
+# number the statements alike (campaign.py compare). Checks:
+# - every run: the two listings of its AST have the same digest.
 # - nested-hit.c: the per-call records of cache and cache.2 align
-#   completely; between nocache and cache, the second call to outer is
-#   reported as analysed in one run and a hit in the other, and the two
-#   calls to leaf nested in it as nested under a hit, not aligned.
+#   completely, with equal digests; between nocache and cache, the second
+#   call to outer is reported as analysed in one run and a hit in the other,
+#   and the two calls to leaf nested in it as nested under a hit, not
+#   aligned.
 # - frame.c: the state queries show the difference of the example run of
 #   issue #3: before "r = 0;" in get, the raw answers are {3} in both runs
 #   for the first call, {5} with caching disabled and none with memexec for
 #   the second call, and over all callstacks {3; 5} with caching disabled
 #   against {3} with memexec, which the comparison reports as narrower. At
 #   the exit of get, r is {0}. With -eva-no-results (noresults), no state
-#   is saved: no query is answered, each is written unavailable, and the
-#   done line counts these lines.
+#   is saved, and with -eva-no-results-domain cvalue (nodomain), no state of
+#   the domain cvalue: no query is answered, each one, the exit queries
+#   included, is written unavailable for that reason, and the done line
+#   counts these lines.
 # - same-line.c, analysed twice with memexec, with SIDE 0 (side0) and SIDE 1
-#   (side1): the two runs reach different calls of one line, which the
+#   (side1): the macro sets an initial value, so the ASTs have the same
+#   digest; the two runs reach different calls of one line, which the
 #   alignment reports as unmatched, not aligned.
+# - sites.c, analysed as same-line.c: the macro is the condition of the two
+#   calls, so the two runs give one statement number to different calls;
+#   the digests differ, and the alignment leaves the calls undecided and is
+#   not complete.
 # Prints one line per check, PASS or FAIL, and exits with 1 if one fails.
 set -euo pipefail
 fixtures=$(dirname "$(realpath "$0")")
@@ -46,26 +59,35 @@ check() {
 
 families=$(awk -F'\t' 'NR==1{for(i=1;i<=NF;i++)c[$i]=i;next} $1=="test"{print $c["counter_families"]}' \
   "$output/provenance/binaries.tsv")
-for fixture in frame nested-hit same-line; do
+for fixture in frame nested-hit same-line sites; do
   modes=(nocache cache cache.2)
-  if [[ $fixture == frame ]]; then modes+=(noresults); fi
-  if [[ $fixture == same-line ]]; then modes=(side0 side1); fi
+  case $fixture in
+    frame) modes+=(noresults nodomain) ;;
+    same-line|sites) modes=(side0 side1) ;;
+  esac
   for mode in "${modes[@]}"; do
     case "$mode" in
-      nocache|noresults) flag=-eva-no-memexec ;;
+      nocache|noresults|nodomain) flag=-eva-no-memexec ;;
       *) flag=-eva-memexec ;;
     esac
-    extra=()
+    cpp=() extra=()
     case "$mode" in
-      side0) extra=(-cpp-extra-args=-DSIDE=0) ;;
-      side1) extra=(-cpp-extra-args=-DSIDE=1) ;;
+      side0) cpp=(-cpp-extra-args=-DSIDE=0) ;;
+      side1) cpp=(-cpp-extra-args=-DSIDE=1) ;;
       noresults) extra=(-eva-no-results) ;;
+      nodomain) extra=(-eva-no-results-domain cvalue) ;;
     esac
     case_id="fixtures/$fixture.c/default"
     run="$output/runs/$case_id/$mode"
     mkdir -p "$run"
     cp "$fixtures/$fixture.c" "$run/"
-    args=("$bin" -eva "$fixture.c" "$flag" "${extra[@]}"
+    (
+      cd "$run"
+      while IFS= read -r setting; do export "$setting"; done < "$tools/sites.env"
+      CAMPAIGN_AST_OUT=ast.tsv "$bin" "$fixture.c" "${cpp[@]}" \
+        -load-module "$tools/campaign_queries.cmxs" > ast.log 2>&1
+    ) || true
+    args=("$bin" -eva "$fixture.c" "$flag" "${cpp[@]}" "${extra[@]}"
           -eva-msg-key cache,callstacks
           -eva-statistics-file eva-stats.csv -save framac.sav)
     printf '%q ' "${args[@]}" > "$run/eva-command"
@@ -78,43 +100,58 @@ for fixture in frame nested-hit same-line; do
     (
       cd "$run"
       while IFS= read -r setting; do export "$setting"; done < "$tools/sites.env"
-      CAMPAIGN_QUERIES_OUT=queries.tsv "$bin" -load framac.sav \
+      CAMPAIGN_QUERIES_OUT=queries.tsv CAMPAIGN_AST_OUT=ast-eva.tsv \
+        "$bin" -load framac.sav \
         -load-module "$tools/campaign_queries.cmxs" > queries.log 2>&1
     )
     "${tool[@]}" records "$run/eva.log" "$run/records.jsonl" \
       2> "$run/records-problems.log"
     outcome=completed
     if [[ $exit_code != 0 ]]; then outcome=error; fi
-    printf 'case\t%s\nmode\t%s\nrole\ttest\nflag\t%s\nextra_eva_flags\t%s\nrevision\t%s\ncounter_families\t%s\noutcome\t%s\nexit\t%s\n' \
-      "$case_id" "$mode" "$flag" "${extra[*]:--}" "$revision" "$families" \
-      "$outcome" "$exit_code" > "$run/run.tsv"
+    flags="${cpp[*]} ${extra[*]}"
+    flags=${flags# }
+    {
+      printf 'case\t%s\nmode\t%s\nrole\ttest\nflag\t%s\nextra_eva_flags\t%s\nrevision\t%s\ncounter_families\t%s\noutcome\t%s\nexit\t%s\n' \
+        "$case_id" "$mode" "$flag" "${flags:--}" "$revision" "$families" \
+        "$outcome" "$exit_code"
+      "${tool[@]}" ast "$run/ast.tsv"
+    } > "$run/run.tsv"
     rm -f "$run/framac.sav"
-    gzip -nf "$run/eva.log" "$run/records.jsonl" "$run/queries.tsv"
+    for file in eva.log records.jsonl queries.tsv ast.tsv ast-eva.tsv; do
+      if [[ -f $run/$file ]]; then gzip -nf "$run/$file"; fi
+    done
   done
   pairs=(nocache:cache cache:cache.2)
-  if [[ $fixture == frame ]]; then pairs+=(nocache:noresults); fi
-  if [[ $fixture == same-line ]]; then pairs=(side0:side1); fi
+  if [[ $fixture == frame ]]; then pairs+=(nocache:noresults nocache:nodomain); fi
+  if [[ $fixture == same-line || $fixture == sites ]]; then pairs=(side0:side1); fi
   for pair in "${pairs[@]}"; do
-    a=${pair%%:*} b=${pair##*:}
-    dir="$output/comparisons/fixtures/$fixture.c/default/$a-vs-$b"
-    ra="$output/runs/fixtures/$fixture.c/default/$a"
-    rb="$output/runs/fixtures/$fixture.c/default/$b"
-    mkdir -p "$dir"
-    printf 'case\tfixtures/%s.c/default\nbaseline\t%s\ncandidate\t%s\n' \
-      "$fixture" "$a" "$b" > "$dir/pair.tsv"
-    "${tool[@]}" align --same-numbering "$ra/records.jsonl.gz" \
-      "$rb/records.jsonl.gz" "$dir/alignment-" > /dev/null
-    "${tool[@]}" queries "$ra/queries.tsv.gz" "$rb/queries.tsv.gz" \
-      "$dir/queries-" > /dev/null
+    "${tool[@]}" compare "$output" "fixtures/$fixture.c/default" \
+      "${pair%%:*}" "${pair##*:}"
   done
 done
 
 value() { awk -F'\t' -v k="$2" '$1==k{print $2}' "$1"; }
 cmp_dir="$output/comparisons/fixtures"
 
+# The digest of the AST of a run listed from the parse or from the session
+# saved by Eva.
+digest() {
+  "${tool[@]}" ast "$1" | awk -F'\t' '$1=="ast_sha256"{print $2}'
+}
+differing=0 listed=0
+for run in "$output"/runs/fixtures/*/default/*/; do
+  parse=$(digest "$run/ast.tsv.gz") eva=$(digest "$run/ast-eva.tsv.gz")
+  if [[ $parse != - ]]; then listed=$((listed + 1)); fi
+  if [[ $parse == - || $parse != "$eva" ]]; then differing=$((differing + 1)); fi
+done
+check "every run: the AST listed from the parse is the AST of the Eva session" \
+  test "$listed/$differing" = "$(ls -d "$output"/runs/fixtures/*/default/*/ | wc -l)/0"
+
 nested="$cmp_dir/nested-hit.c/default"
 check "nested-hit: two runs of the same binary align completely" \
   test "$(value "$nested/cache-vs-cache.2/alignment-summary.tsv" complete)" = True
+check "nested-hit: the two runs have equal AST digests" \
+  test "$(value "$nested/cache-vs-cache.2/alignment-summary.tsv" numbering)" = same
 check "nested-hit: one call analysed without caching is a hit with memexec" \
   test "$(value "$nested/nocache-vs-cache/alignment-summary.tsv" analysed_a_hit_b)" = 1
 check "nested-hit: the two nested calls are reported under the hit" \
@@ -161,25 +198,58 @@ check "frame: the callstack of the first call answers {3} in both runs" \
 check "frame: at the exit of get, r is {0} without caching" \
   test "$(gzip -dc "$frame_runs/nocache/queries.tsv.gz" |
     awk -F'\t' '$1=="answer" && $3=="get:exit" && $4=="exit" && $5=="*" && $6=="r" {print $9}')" = MNULL=S0
-# Lines of the answer file of the run without saved results, by kind.
+# Lines of the answer file of a run of frame.c, by kind.
 lines() {
-  gzip -dc "$frame_runs/noresults/queries.tsv.gz" | awk -F'\t' -v k="$1" '$1==k' | wc -l
+  gzip -dc "$frame_runs/$1/queries.tsv.gz" | awk -F'\t' -v k="$2" '$1==k' | wc -l
 }
-check "frame: with -eva-no-results, no query is answered" \
-  test "$(lines answer)" = 0
-check "frame: with -eva-no-results, the queries are unavailable for lack of results" \
-  test "$(gzip -dc "$frame_runs/noresults/queries.tsv.gz" |
-    awk -F'\t' '$1=="unavailable" && $NF!="no-results"' | wc -l)/$(( $(lines unavailable) > 0 ))" = 0/1
-check "frame: with -eva-no-results, the done line counts the unavailable lines" \
-  test "$(gzip -dc "$frame_runs/noresults/queries.tsv.gz" |
-    awk -F'\t' '$1=="done"{print $2}')" = "$(( $(lines unavailable) + $(lines error) ))"
-noresults="$cmp_dir/frame.c/default/nocache-vs-noresults/queries-summary.tsv"
-check "frame: the comparison with the run without results answers nothing in it" \
-  test "$(value "$noresults" answered_b)/$(value "$noresults" complete_b)" = 0/complete
+# The exit queries answered over all callstacks without caching, and those
+# written unavailable for a reason in another run: function, statement and
+# lvalue of each.
+exits_answered() {
+  gzip -dc "$frame_runs/nocache/queries.tsv.gz" |
+    awk -F'\t' '$1=="answer" && $4=="exit" && $5=="*" {print $2, $3, $6}' | sort
+}
+exits_unavailable() {
+  gzip -dc "$frame_runs/$1/queries.tsv.gz" |
+    awk -F'\t' -v r="$2" '$1=="unavailable" && $4=="exit" && $7==r {print $2, $3, $6}' |
+    sort
+}
+for mode in noresults nodomain; do
+  case $mode in
+    noresults) reason=no-results option=-eva-no-results ;;
+    nodomain) reason=disabled-domain option="-eva-no-results-domain cvalue" ;;
+  esac
+  check "frame: with $option, no query is answered" \
+    test "$(lines $mode answer)" = 0
+  check "frame: with $option, every query is unavailable ($reason)" \
+    test "$(gzip -dc "$frame_runs/$mode/queries.tsv.gz" |
+      awk -F'\t' -v r="$reason" '$1=="unavailable" && $NF!=r' | wc -l)/$(( $(lines $mode unavailable) > 0 ))" = 0/1
+  check "frame: with $option, the exit queries are written unavailable ($reason)" \
+    test "$(exits_unavailable $mode $reason | tr '\n' '|')" = "$(exits_answered | tr '\n' '|')"
+  check "frame: with $option, the done line counts the unavailable lines" \
+    test "$(gzip -dc "$frame_runs/$mode/queries.tsv.gz" |
+      awk -F'\t' '$1=="done"{print $2}')" = "$(( $(lines $mode unavailable) + $(lines $mode error) ))"
+  summary="$cmp_dir/frame.c/default/nocache-vs-$mode/queries-summary.tsv"
+  check "frame: the comparison with the run with $option answers nothing in it, each query for its reason" \
+    test "$(value "$summary" answered_b)/$(value "$summary" complete_b)/$(value "$summary" unavailable_b_missing)/$(value "$summary" unavailable_b_no-callstack)/$(value "$summary" "unavailable_b_$reason")" \
+         = "0/complete/0/0/$(value "$summary" queries)"
+done
+check "frame: the exit queries are answered without caching" \
+  test -n "$(exits_answered)"
 
 same_line="$cmp_dir/same-line.c/default/side0-vs-side1/alignment-summary.tsv"
 check "same-line: the two calls of line 10 are unmatched, not aligned" \
   test "$(value "$same_line" aligned)/$(value "$same_line" unmatched_a)/$(value "$same_line" unmatched_b)" = 1/1/1
 check "same-line: the alignment is not complete" \
   test "$(value "$same_line" complete)" = False
+check "same-line: the two runs have equal AST digests" \
+  test "$(value "$same_line" numbering)" = same
+
+sites="$cmp_dir/sites.c/default/side0-vs-side1/alignment-summary.tsv"
+check "sites: the two runs have different AST digests" \
+  test "$(value "$sites" numbering)" = different
+check "sites: only the entry point is aligned; the calls are undecided" \
+  test "$(value "$sites" aligned)/$(value "$sites" undecided_groups)" = 1/1
+check "sites: the alignment is not complete" \
+  test "$(value "$sites" complete)" = False
 exit "$status"
