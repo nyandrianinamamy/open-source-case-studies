@@ -17,7 +17,7 @@ campaign/pilot.sh ~/.t3/worktrees/campaign-pilot-2026-11-19 \
 - Harness: the runs were made at revision `12644c58` of this repository
   (`provenance/campaign-revision.txt`); the command it ran is
   `provenance/command.txt`. The tables were then recomputed from the raw
-  logs, last with the tools at `4c43af41`; see "Recomputed tables" below.
+  logs, last with the tools at `4d8096ff`; see "Recomputed tables" below.
 - Case studies: revision `168321b6306abdacee95b22c9c94996f1174ab2c`, the
   manifest `campaign/manifest.tsv` at the harness revision (its SHA-256 is
   `provenance/manifest.sha256`).
@@ -29,10 +29,14 @@ campaign/pilot.sh ~/.t3/worktrees/campaign-pilot-2026-11-19 \
   executables differ, each holding the path of its build. The mode
   `reference` is therefore a second build of the binary under test, not an
   earlier memexec.
-- Collector and producer: at this revision, the body access collector and
-  the producer of cache entries are on by default. Every run of the pilot
-  ran with both, and the statistics give their verdicts (table
-  `collector.tsv`). The producer stores entries that no lookup reads.
+- Collector and producer: at this revision, the option
+  `-eva-cache-collect` is on by default (`parameters.ml`, lines 1017 to
+  1024 of the pinned analyzer). The statistics file of each of the 41 runs
+  has rows of collector verdicts and of producer verdicts (table
+  `collector.tsv`). The entries of the producer are read only by the
+  supplied-entry fixture of the tests of the analyzer
+  (`cache_producer.mli`, lines 9 and 10). No statistics file of the pilot
+  has a row of a supplied-entry counter.
 - Machine (`provenance/machine.txt`): Intel Core i5-14600KF, 20 hardware
   threads, 31 GB, Ubuntu 24.04, OCaml 5.2.1, Dune 3.21.1. The machine was
   shared with other jobs, so the times are not a timing series.
@@ -52,12 +56,16 @@ campaign/pilot.sh ~/.t3/worktrees/campaign-pilot-2026-11-19 \
 | `genann/genann.eva/default` | allocates, hits |
 | `khash/khash.eva/default` | allocates, no hit |
 
+The column gives the reason of the choice, not a result. Set A is the
+membership recorded in `campaign/reference/set-a-recorded.tsv`; what the
+pilot shows of the hits and of set A is under "Results".
+
 ## Recomputed tables
 
-The second, third and fourth reviews of issue #54 found cases where the tools
-reported a result they had not established. After each, the tables were
-recomputed from the archive of the raw logs, without running the pilot
-again:
+The second, third, fourth and fifth reviews of issue #54 found cases where
+the tools reported a result they had not established. After each, the
+tables were recomputed from the archive of the raw logs, without running
+the pilot again:
 
 ```sh
 campaign/tools/export-ast.sh OUTPUT test ~/.t3/worktrees/frama-c/t3-7ff6e3ed-f506bb46ca39d7d6 ~/Project/frama-c \
@@ -75,6 +83,82 @@ directory outside the working tree: the listing is written there and
 compared with the committed one, which the replay does not overwrite. The
 tables of `OUTPUT/tables/` are those committed here. A second `recompute`
 with the same file gives the same tables.
+
+### After the fifth review
+
+The fifth review found four inputs on which the tables printed a zero for a
+counter that has no row in the statistics file, on the evidence of the
+recorded command, of the mode of the run or of another row of the same
+family, and one on which `tables.md` printed `complete=False` for an
+alignment summary that has no such field. The tools at `4d8096ff` infer no
+value: a statistics cell is a number only when the file holds a row of its
+counter, the disposition lines of the log are counted in a table of their
+own, and a comparison summary is read only when it is whole
+(`campaign/README.md`, "Counters and dispositions" and "Tables"). The tables
+were recomputed with these tools from the same archive and the same
+`ast-digests.tsv`, which `export-ast.sh` listed again byte for byte. No
+number that a row or a log line gives has changed. By class of cell:
+
+- `activity.tsv`, new columns. `export_rows` is the number of rows of the
+  statistics file, a number in the 41 runs: every file is a complete
+  export. `allocation_and_release_rows` is the number of rows of an
+  allocation or release builtin: 0 in 29 runs, 2 in the runs of genann and
+  jsmn-main, 4 in those of khash.
+- `activity.tsv`, `hits`: `0` became `-` in the 11 runs with memexec whose
+  file has no `memexec-hits` row: the three of each of jsmn-example, khash
+  and libyaml/test-version, and the two of `same-line.c`.
+- `activity.tsv`, `refused` and `refused_by_reason`: `0` and `none` became
+  `-` in the 21 runs with memexec whose file has no `memexec-refused-*`
+  row. This undoes the change of the second review to that column.
+- `activity.tsv`, `allocation_and_release` and `in_set_a`: `0` and `True`
+  became `-` in the 29 runs without a row of an allocation or release
+  builtin: the 20 runs of the five targets recorded in set A and the 9
+  fixture runs. `agrees` became `-` instead of `yes` in those 20 runs. The
+  analyzer writes no row for a builtin that it did not apply, so the file
+  does not state the membership. The 12 runs of genann, jsmn-main and khash
+  keep their sums, `False` and `yes`.
+- `collector.tsv`, `collector_would_store` and `producer_stored`: `0`
+  became `-` in the 12 runs of genann, khash and solitaire, whose files
+  have no `collector-would-store` and no `cache-produced` row. No other
+  cell of the table changed.
+- `functions.tsv`: `0` became `-` where the function has no row of the
+  counter: 238 cells of `hits`, 78 of `stored`, 248 of `refused`, 372 of
+  `collector_would_store` and 39 of `collector_refused`, over 441 rows. No
+  cell of `misses` changed.
+- `log.tsv` is new. For each of the 41 runs it gives the number of analysis
+  starts and of disposition lines of `eva.log`, and the number of lines of
+  each kind of lookup, storage, collector and producer field. Every log
+  has one analysis start, and a number in every column of lookup, storage
+  and collector. The three producer columns are `-` in every run: no
+  disposition line of the pilot has a producer field, which the analyzer
+  prints only under the message category `cache-producer`. The column
+  `sources` is `agree on N kinds` in the 41 runs, with N from 2 to 8: no
+  kind that both sources count has two different numbers.
+- `alignment.tsv`, `verdict`, 12 pairs with a reference run: `numbering
+  asserted from equal revision, patch, options and preprocessing, not
+  checked by digest` became `numbering asserted from equal recorded
+  revisions, patch and extra options, not checked by digest`. The fields
+  compared for these pairs are those of the two `run.tsv`; the
+  preprocessing is not among them.
+- `alignment.tsv`, `verdict`, the 6 pairs of fixture runs: each gains the
+  reason `entry point not given`. The `run.tsv` of the archived fixture
+  runs does not record the entry point, and the tools no longer take it
+  from the command or assume `main`. The 4 pairs whose verdict was `AST
+  digests equal, preprocessing compared by the recorded command only` now
+  read `incomplete: entry point not given, preprocessing compared by the
+  recorded command only`. `complete` was `False` in the 38 pairs and still
+  is; no count of the table changed.
+- `times.tsv`, the rows of `frame.c` and `nested-hit.c`: `not measured`
+  became `no time` (the `run.tsv` of the run records no elapsed time) and
+  `not run` became `no run` (the directory has no run of the mode).
+- `tables.md`: the new columns and the new table; each table names its
+  source; `-` is described as a value that the source of the column does
+  not give; each comparison table says how many of its pairs have a valid
+  summary (38 of 38 for the alignments and the state queries, 32 of 38 for
+  the alarms, which the fixture pairs do not compare); the checks of
+  `fixtures.txt` and `outcome-demo.txt` are introduced as recorded when
+  the pilot ran, not checked again.
+- `outcomes.tsv`, `queries.tsv` and `alarms.tsv` are unchanged.
 
 ### After the fourth review
 
@@ -201,21 +285,41 @@ ran them.
   38 alignments, both runs completed, neither was interrupted and both logs
   give the statement numbers; the numbering is `recorded command` in 21,
   `asserted` in 16 and `different` in 1, `same-line.c`
-  (`alignment-summary.tsv` of each pair). The fixtures run apart with the
-  current harness give the numbering `same` and complete alignments for two
-  runs of the same binary (see below).
+  (`alignment-summary.tsv` of each pair). The 6 pairs of archived fixture
+  runs also have the reason `entry point not given`, and the outcome
+  `completed` of these runs is what the runner of that revision recorded
+  from their exit status. The fixtures run apart with the current harness
+  give the numbering `same` and complete alignments for two runs of the
+  same binary (see below).
 - Between `nocache` and `cache`, every record is aligned or nested under a
   hit (`accounted` is true), with no undecided group, no unmatched record
   and no inferred call. Alarms and property statuses are equal in every
   case; solitaire has 9 property keys that occur more than once, with the
   same statuses on both sides.
-- Hits with memexec: none in `jsmn-example`, `libyaml/test-version` and
-  `khash`; 10 to 264 in the other cases.
-- Set A: the membership of each run agrees with the count of issue #28 for
-  the eight targets in every mode. Applications of the allocation and
-  release builtins in the mode `cache`: genann `malloc` 13, `free` 10;
-  jsmn-main `malloc` 35, `free` 35; khash `malloc` 1, `calloc` 1,
-  `realloc` 2, `free` 5; none in the other cases.
+- Hits with memexec, from the statistics file (`activity.tsv`): the
+  `memexec-hits` rows sum to 104 in 2048, 170 in genann, 73 in jsmn-main,
+  10 in kgflags-simple and 264 in solitaire. The files of jsmn-example,
+  khash and libyaml/test-version have rows of `memexec-misses` (86, 8 and
+  3) and no `memexec-hits` row, so `hits` is `-` for them: the analyzer
+  writes no row for a counter that it did not increment, and the file
+  does not state a zero.
+- A target with no hit: the source is the log (`log.tsv`). The log of the
+  run `cache` of jsmn-example has one analysis start and 86 disposition
+  lines, of which 0 are `lookup: hit`, 86 are `lookup: no-candidate` and
+  86 are `storage: stored`. The same holds for `cache.2` and `reference`,
+  for khash (0 of 8 lines) and for libyaml/test-version (0 of 3). A count
+  of 0 means that the log has no such line; one start in the log is what
+  the log shows of the number of analyses.
+- Set A, from the statistics file (`activity.tsv`). The three targets
+  recorded outside set A by the count of issue #28 have rows of allocation
+  or release builtins in every mode, so `in_set_a` is `False` and `agrees`
+  is `yes` in their 12 runs. In the mode `cache`: genann `malloc` 13,
+  `free` 10; jsmn-main `malloc` 35, `free` 35; khash `malloc` 1, `calloc`
+  1, `realloc` 2, `free` 5. The five targets recorded in set A (2048,
+  jsmn-example, kgflags-simple, libyaml/test-version, solitaire) have no
+  such row among the 12 to 117 rows of each of their 20 files
+  (`allocation_and_release_rows` is 0), so `in_set_a` and `agrees` are
+  `-`: no run contradicts the record, and no file states the membership.
 - State queries, `nocache` against `cache`: every query answered by both
   runs gets the same answer except in 2048 (25 narrower), jsmn-main (6
   narrower) and genann (34 wider, 4 incomparable, listed in
@@ -227,11 +331,16 @@ ran them.
   answers that only `nocache` gives are for callstacks that memexec does not
   analyse. Every answer file is complete. Top answers: 4 with caching
   disabled and 9 with memexec in genann, none elsewhere.
-- Collector verdicts (`collector.tsv`): with memexec, `would-store` for
-  0 (genann, khash, solitaire) to 188 (jsmn-main) bodies; the reasons of
-  refusal are `sweep`, `builtin`, `contract`, `side-table`,
-  `indirect-call` and `allocated-block`. The producer stored an entry for
-  each `would-store` verdict and refused the others with the same reason.
+- Collector verdicts, from the statistics file (`collector.tsv`): with
+  memexec, `would-store` for 2 (libyaml/test-version) to 188 (jsmn-main)
+  bodies in five cases. The files of genann, khash and solitaire have no
+  `collector-would-store` row (`-`); their logs have 0 lines `collector:
+  would-store` among 753, 8 and 286 disposition lines (`log.tsv`). The
+  reasons of refusal are `sweep`, `builtin`, `contract`, `side-table`,
+  `indirect-call` and `allocated-block`. In each of the 41 runs the
+  producer columns equal the collector columns: as many entries stored as
+  `would-store` verdicts where there is a row, and the same refusals by
+  reason.
 - Fixtures: the second call to `outer` in `nested-hit.c` is reported as a
   hit with its two calls to `leaf` nested under it; the frame example of
   issue #3 gives `{3}` in both runs for the first call, `{5}` without
@@ -240,12 +349,19 @@ ran them.
   the two calls on one line of `same-line.c` are unmatched. All 22 checks
   of the pilot pass. Recomputed with the listing of format 2, the two
   archived runs of `same-line.c` have different digests and their calls are
-  undecided. The fixtures of the current harness have 49 checks: they add
+  undecided. The fixtures of the current harness have 55 checks: they add
   the digests of the AST and of the preprocessing, `sites.c`, `branches.c`,
   `header.c`, an unused macro in `nested-hit.c`, a run with
-  `-eva-no-results-domain cvalue`, and a `same-line.c` whose two runs differ
-  by `-lib-entry`, which the archive does not have. Run apart from the pilot
-  with the same binary (`campaign/fixtures/run-fixtures.sh`), all 49 pass.
+  `-eva-no-results-domain cvalue`, a `same-line.c` whose two runs differ
+  by `-lib-entry`, which the archive does not have, and six checks of the
+  tables of the fixture runs: every run `completed` with the record of
+  its entry point `main`, every statistics file a complete export, one
+  analysis start in every log, no kind on which the two sources disagree,
+  and the
+  cells of the two runs of `nested-hit.c` (`hits` 1 and `lookup_hit` 1
+  with memexec; `hits` `-` and 0 `lookup: hit` among 7 lines with caching
+  disabled). Run apart from the pilot with the same binary and the tools
+  at `4d8096ff` (`campaign/fixtures/run-fixtures.sh`), all 55 pass.
 - Outcome classes: the constructed runs are classified `timeout` (the
   watchdog sent SIGTERM; status 143), `oom` (Frama-C reports exhausted
   memory; status 6), `error` (status 1) and `killed` (SIGKILL that the
