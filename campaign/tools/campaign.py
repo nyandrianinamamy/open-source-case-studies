@@ -2906,6 +2906,7 @@ def tables_command(args):
     alarm_keys = ["properties_a", "properties_b", "duplicate_keys_a",
                   "duplicate_keys_b", "same_status", "other_status",
                   "a_only", "b_only"]
+    alignment_results = {}
     for title, name, keys in (
             ("Alignment of the per-call records", "alignment", align_keys),
             ("State queries", "queries", query_keys),
@@ -2916,6 +2917,9 @@ def tables_command(args):
         for dirpath, pair in comparisons:
             values = read_kv(os.path.join(dirpath, name + "-summary.tsv"))
             done = completed(pair)
+            if name == "alignment":
+                key = (pair["case"], pair["baseline"], pair["candidate"])
+                alignment_results[key] = values
             if values:
                 compared += 1
                 both += done
@@ -2938,8 +2942,31 @@ def tables_command(args):
         path = os.path.join(args.run_dir, name)
         if os.path.exists(path):
             with open_text(path) as f:
-                sections.append("## %s\n\n%s```\n%s```\n"
-                                % (title, intro, f.read()))
+                checks = f.read()
+            nested_hit = alignment_results.get(
+                ("fixtures/nested-hit.c/default", "cache", "cache.2"), {})
+            if (name == "fixtures.txt"
+                    and "PASS nested-hit: two runs of the same binary align completely"
+                    in checks.splitlines() and nested_hit.get("complete") == "False"):
+                revision_path = os.path.join(root, "provenance",
+                                             "campaign-revision.txt")
+                revision = "unavailable"
+                if os.path.isfile(revision_path):
+                    with open_text(revision_path) as f:
+                        first = f.readline().split()
+                    if first and re.fullmatch(r"[0-9a-f]{7,40}", first[0]):
+                        revision = first[0]
+                count = sum(row.get("complete") == "True"
+                            for row in alignment_results.values())
+                intro = ("Historical checks at revision `%s` (alignment "
+                         "result superseded).\n\n"
+                         "Current result: %d of %d alignments are complete. "
+                         "The two archived memexec runs of `nested-hit.c` "
+                         "have numbering `%s`, `complete=False`.\n\n"
+                         % (revision, count, len(alignment_results),
+                            nested_hit.get("numbering", "-")))
+            sections.append("## %s\n\n%s```\n%s```\n"
+                            % (title, intro, checks))
     md.write("\n".join(sections))
     with open_text(os.path.join(out_dir, "tables.md"), "w") as f:
         f.write(md.getvalue())

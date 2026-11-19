@@ -581,6 +581,24 @@ checks go to `fixtures.txt` and `outcome-demo.txt`, and writes the tables
 again, which adds these checks to `tables/tables.md`. It exits with 1 when
 a check fails.
 
+In the archived pilot, 0 of 38 alignments are complete. For the two
+archived memexec runs of `nested-hit.c`, numbering is `recorded command`
+and `complete=False`. The historical PASS line from harness revision
+`12644c58` remains in the tables as a superseded alignment result.
+
+To run the current fixtures on their own, first run a one-case smoke test
+to prepare the Eva tool environment and query module. From the repository
+root, set `TEST_CHECKOUT` to the built analyzer and `SWITCH` to its opam
+switch:
+
+```sh
+scratch=$(mktemp -d)
+printf '%s\n' libyaml/test-version.eva/default > "$scratch/smoke-cases.txt"
+campaign/run-campaign.sh --cases "$scratch/smoke-cases.txt" --modes cache \
+  --test-checkout "$TEST_CHECKOUT" --switch "$SWITCH" "$scratch/smoke"
+campaign/fixtures/run-fixtures.sh "$scratch/smoke" "$scratch/smoke/tools/test" "$TEST_CHECKOUT"
+```
+
 The fixtures (`fixtures/run-fixtures.sh`) run Frama-C directly on six
 programs, outside the manifest. Each run lists its AST from a parse alone,
 run as the runner runs the parse step, and from the session saved by Eva;

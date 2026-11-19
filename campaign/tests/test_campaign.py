@@ -3150,5 +3150,28 @@ class FourthReview(unittest.TestCase):
             self.assertEqual(summary["numbering"], "not established", text)
 
 
+    def test_historical_check_shows_current_alignment(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            case = "fixtures/nested-hit.c/default"
+            pair = os.path.join(tmp, "comparisons", case, "cache-vs-cache.2")
+            os.makedirs(pair)
+            write(os.path.join(pair, "pair.tsv"),
+                  "case\t%s\nbaseline\tcache\ncandidate\tcache.2\n" % case)
+            write(os.path.join(pair, "alignment-summary.tsv"),
+                  "numbering\trecorded command\ncomplete\tFalse\n")
+            os.makedirs(os.path.join(tmp, "provenance"))
+            write(os.path.join(tmp, "provenance", "campaign-revision.txt"),
+                  "12644c58\n")
+            historical = "PASS nested-hit: two runs of the same binary align completely"
+            write(os.path.join(tmp, "fixtures.txt"), historical + "\n")
+            code, out, error = run_main(["tables", tmp])
+            self.assertEqual((code, error), (0, None))
+            self.assertIn(historical, out)
+            self.assertIn("12644c58", out)
+            self.assertIn("superseded", out)
+            self.assertIn("0 of 1 alignments are complete", out)
+            self.assertIn("numbering `recorded command`, `complete=False`", out)
+
+
 if __name__ == "__main__":
     unittest.main()
