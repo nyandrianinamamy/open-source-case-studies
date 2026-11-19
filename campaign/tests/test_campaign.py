@@ -1578,6 +1578,122 @@ class EffectiveOptions(unittest.TestCase):
                          "none")
 
 
+COLLECTED_LOG = NESTED_LOG.replace(
+    "storage: stored (entry 1)",
+    "storage: stored (entry 1); collector: would-store")
+
+
+class CounterEvidence(unittest.TestCase):
+    """A family is measured when the invocation that wrote the statistics
+    gives evidence for it: its rows, or its dispositions in the log. The
+    command line decides alone only when it has one stage."""
+
+    MEMEXEC_THEN_OFF = ("frama-c -eva -eva-memexec "
+                        "-eva-msg-key=+cache,+callstacks "
+                        "-eva-statistics-file eva-stats.csv "
+                        "-then -eva-no-memexec\n")
+
+    def tables(self, command, stats, log=None, families=None):
+        with tempfile.TemporaryDirectory() as tmp:
+            run = os.path.join(tmp, "runs", "c", "cache")
+            os.makedirs(run)
+            fields = {"case": "c", "mode": "cache", "flag": "-eva-memexec",
+                      "extra_eva_flags": "-", "outcome": "completed",
+                      "counter_families": families or
+                      "builtin,memexec,supplied,collector,producer"}
+            write(os.path.join(run, "run.tsv"),
+                  "".join("%s\t%s\n" % kv for kv in fields.items()))
+            write(os.path.join(run, "command"), command)
+            write(os.path.join(run, "eva-stats.csv"), stats)
+            if log is not None:
+                with gzip.open(os.path.join(run, "records.jsonl.gz"),
+                               "wt") as f:
+                    f.write("".join(json.dumps(r) + "\n"
+                                    for r in records_of(log)))
+            code, _, error = run_main(["tables", tmp])
+            self.assertEqual((code, error), (0, None))
+            result = {}
+            for name in ("activity", "collector"):
+                with open(os.path.join(tmp, "tables", name + ".tsv")) as f:
+                    result[name] = list(csv.DictReader(
+                        f, delimiter="\t"))[0]
+            return result
+
+    def test_memexec_then_no_memexec(self):
+        # Eva runs once, with memexec; the second stage does not run it
+        # again, and its statistics hold the hit.
+        t = self.tables(self.MEMEXEC_THEN_OFF,
+                        "memexec-hits\touter\t\t1\n"
+                        "memexec-misses\tleaf\t\t2\n", NESTED_LOG)
+        self.assertEqual(t["activity"]["hits"], "1")
+        self.assertEqual(t["activity"]["misses"], "2")
+
+    def test_dispositions_are_evidence(self):
+        # No memexec row, but the log shows entries stored: a measured zero.
+        t = self.tables(self.MEMEXEC_THEN_OFF, "", NESTED_LOG)
+        self.assertEqual(t["activity"]["hits"], "0")
+
+    def test_commands_file_without_evidence(self):
+        # The commands file may disable the collector and the producer:
+        # without their rows or dispositions, they were not measured.
+        t = self.tables("frama-c -eva -eva-memexec -commands-file cmds\n",
+                        "memexec-hits\touter\t\t1\n", NESTED_LOG)
+        self.assertEqual(t["activity"]["hits"], "1")
+        for k in ("collector_would_store", "collector_refused",
+                  "producer_stored", "producer_refused",
+                  "supplied_refused"):
+            self.assertEqual(t["collector"][k], "-", k)
+        # Nor the builtins: no row, so no set A membership.
+        self.assertEqual(t["activity"]["in_set_a"], "-")
+
+    def test_collector_field_is_evidence(self):
+        t = self.tables("frama-c -eva -commands-file cmds\n", "",
+                        COLLECTED_LOG)
+        self.assertEqual(t["collector"]["collector_would_store"], "0")
+        self.assertEqual(t["collector"]["producer_stored"], "-")
+
+    def test_producer_rows_are_evidence(self):
+        t = self.tables("frama-c -eva -then-on p -eva\n",
+                        "cache-produced\tleaf\t\t2\n", NESTED_LOG_OFF)
+        self.assertEqual(t["collector"]["producer_stored"], "2")
+        self.assertEqual(t["activity"]["hits"], "-")
+
+    def test_every_sequencing_option(self):
+        for command in ("frama-c -eva -eva-memexec -then-last -print",
+                        "frama-c -eva -eva-memexec -then-replace -print",
+                        "frama-c -eva -eva-memexec -then-on p -print",
+                        "frama-c -eva -eva-memexec -commands-file=cmds"):
+            t = self.tables(command + "\n", "")
+            self.assertEqual(t["activity"]["hits"], "-", command)
+            self.assertEqual(t["activity"]["in_set_a"], "-", command)
+
+    def test_single_stage_command(self):
+        # One stage: the options decide, a family without row is zero.
+        t = self.tables("frama-c -eva -eva-memexec\n", "")
+        self.assertEqual(t["activity"]["hits"], "0")
+        self.assertEqual(t["activity"]["in_set_a"], "True")
+        t = self.tables("frama-c -eva -eva-no-memexec\n", "")
+        self.assertEqual(t["activity"]["hits"], "-")
+
+    def test_dispositions_of_a_family_the_binary_lacks(self):
+        # A binary without the memexec counters writes none: the
+        # dispositions do not make a zero of a counter that does not exist.
+        t = self.tables(self.MEMEXEC_THEN_OFF, "", NESTED_LOG,
+                        families="builtin,collector,producer")
+        self.assertEqual(t["activity"]["hits"], "-")
+
+    def test_dispositions_of_two_analyses(self):
+        # Two trees: the log may hold two analyses and the statistics are
+        # those of the last one, so the dispositions are no evidence.
+        t = self.tables(self.MEMEXEC_THEN_OFF, "",
+                        NESTED_LOG + NESTED_LOG_OFF)
+        self.assertEqual(t["activity"]["hits"], "-")
+
+    def test_disabled_storage_is_no_evidence(self):
+        t = self.tables(self.MEMEXEC_THEN_OFF, "", NESTED_LOG_OFF)
+        self.assertEqual(t["activity"]["hits"], "-")
+
+
 class StrictDoneLine(unittest.TestCase):
     """H3b: one well-formed done line, last, counting the rows."""
 

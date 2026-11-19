@@ -1354,8 +1354,9 @@ RELEASE = ["free", "vla_free"]
 
 
 # Counter families of the statistics file. A family is measured in a run
-# when the binary has its counters and the run enables them: then a counter
-# with no row is a measured zero. Otherwise its value is absent, written -.
+# when the invocation that wrote the statistics gives evidence for it (see
+# run_families): then a counter with no row is a measured zero. Otherwise
+# its value is absent, written -.
 #   builtin:   builtin-applied-NAME, every run of a binary that has it
 #   memexec:   memexec-hits, -misses, -stored, -refused-REASON, with
 #              -eva-memexec
@@ -1407,12 +1408,28 @@ def last_switch(flags, on, off, default):
     return value
 
 
+# The options that make a command run more than one stage, or read more
+# options from a file: its options alone then do not say which options the
+# invocation that wrote the statistics had.
+SEQUENCING = ("-then", "-then-last", "-then-on", "-then-replace",
+              "-commands-file")
+
+
+def single_stage(flags):
+    """Whether an argument vector (a list, or a string split on blanks) runs
+    one stage: none of the options of SEQUENCING, alone or as -OPTION=."""
+    if isinstance(flags, str):
+        flags = flags.split()
+    return not any(f.split("=", 1)[0] in SEQUENCING for f in flags)
+
+
 def measured_families(binary_families, flags):
-    """The families measured by a run, from the families of its binary and
-    its effective options, in their order (a list, or a string split on
-    blanks): memexec when the last of -eva-memexec and -eva-no-memexec is
-    the first, the collector and the producer unless the last of
-    -eva-cache-collect and -eva-no-cache-collect is the second."""
+    """The families that the options of a single-stage command measure,
+    from the families of its binary and its options, in their order (a
+    list, or a string split on blanks): memexec when the last of
+    -eva-memexec and -eva-no-memexec is the first, the collector and the
+    producer unless the last of -eva-cache-collect and -eva-no-cache-collect
+    is the second."""
     if isinstance(flags, str):
         flags = flags.split()
     families = set(binary_families)
@@ -1564,8 +1581,12 @@ def time_rows(runs):
 def counts_command(args):
     families = FAMILIES
     if args.families is not None:
-        families = measured_families(
-            [f for f in args.families.split(",") if f], args.flags or "")
+        records = []
+        if args.records:
+            records, _ = load_records_and_problems(args.records)
+        families = families_of_run(
+            [f for f in args.families.split(",") if f],
+            (args.flags or "").split(), args.stats, records)
     for key, value in run_counts(args.stats, families).items():
         print("%s\t%s" % (key, cell(value)))
     return 0
@@ -2150,32 +2171,79 @@ def effective_options(run_dir, run):
                     ).split()
 
 
-def storage_disabled(run_dir):
-    """Whether the records of a run show a storage refused because caching
-    is disabled: then memexec was not on, whatever the options say."""
+def records_of_run(run_dir):
+    """The per-call records of a run, or none."""
     for name in ("records.jsonl.gz", "records.jsonl"):
         path = os.path.join(run_dir, name)
         if os.path.exists(path):
-            rows, _ = load_records_and_problems(path)
-            return any(r["dispositions"].get("storage", "")
-                       .startswith("refused (disabled)") for r in rows)
-    return False
+            return load_records_and_problems(path)[0]
+    return []
+
+
+def logged_families(records):
+    """The families that the dispositions of a log show at work, when the
+    records are one tree: two trees may be two analyses, and the statistics
+    file holds those of the last one only. Memexec: a storage stored or
+    refused for another reason than disabled, or a hit; the collector: a
+    collector field; the producer: a producer field."""
+    if sum(1 for r in records if r.get("parent") is None) != 1:
+        return set()
+    found = set()
+    for r in records:
+        d = r.get("dispositions", {})
+        storage = d.get("storage", "")
+        if (storage.startswith("stored")
+                or (storage.startswith("refused")
+                    and storage != "refused (disabled)")
+                or d.get("lookup", "").startswith("hit")):
+            found.add("memexec")
+        if "collector" in d:
+            found.add("collector")
+        if "producer" in d:
+            found.add("producer")
+    return found
+
+
+def storage_disabled(records):
+    """Whether the records of a run show a storage refused because caching
+    is disabled: then memexec was not on, whatever the options say."""
+    return any(r.get("dispositions", {}).get("storage", "")
+               .startswith("refused (disabled)") for r in records)
+
+
+def families_of_run(binary_families, flags, stats_path, records):
+    """The counter families measured by the invocation that wrote a
+    statistics file: the families with a row in it; those the dispositions
+    of its log show at work (logged_families), among the families of the
+    binary; and, when its command has one stage (single_stage), those its
+    options measure (measured_families), less memexec when the log shows
+    the storage disabled. With -then, -then-on, -then-last, -then-replace or
+    -commands-file, only the evidence counts. [binary_families] None means
+    that the families of the binary are unknown: then only the rows count.
+    """
+    found = {family for family, _, _, _ in stats_rows(stats_path)}
+    if binary_families is None:
+        return found
+    found |= logged_families(records) & set(binary_families)
+    if single_stage(flags):
+        options = measured_families(binary_families, flags)
+        if storage_disabled(records):
+            options.discard("memexec")
+        found |= options
+    return found
 
 
 def run_families(run, stats_path, run_dir=None):
-    """The counter families measured by a run: from the families of its
-    binary, recorded in run.tsv, and its effective options and printed
-    dispositions; or, for a run that does not record the families of its
-    binary, the families with at least one row in its statistics."""
-    if run.get("counter_families", "") not in ("",):
+    """The counter families measured by a run (families_of_run), from the
+    families of its binary recorded in run.tsv, its recorded command and its
+    records. For a run that does not record the families of its binary,
+    the families with at least one row in its statistics."""
+    run_dir = run_dir or os.path.dirname(stats_path)
+    binary = None
+    if run.get("counter_families", "") != "":
         binary = [f for f in run["counter_families"].split(",") if f]
-        run_dir = run_dir or os.path.dirname(stats_path)
-        families = measured_families(binary,
-                                     effective_options(run_dir, run))
-        if storage_disabled(run_dir):
-            families.discard("memexec")
-        return families
-    return {family for family, _, _, _ in stats_rows(stats_path)}
+    return families_of_run(binary, effective_options(run_dir, run),
+                           stats_path, records_of_run(run_dir))
 
 
 def cell(value):
@@ -2535,6 +2603,8 @@ def main(argv=None):
                    help="counter families of the binary, comma-separated "
                    "(default: every family is measured)")
     p.add_argument("--flags", help="Eva options of the run")
+    p.add_argument("--records", help="per-call records of the run, whose "
+                   "dispositions are evidence of the families at work")
     p.set_defaults(func=counts_command)
     p = sub.add_parser("families")
     p.add_argument("cmxs", help="the compiled Eva plugin of a binary")
