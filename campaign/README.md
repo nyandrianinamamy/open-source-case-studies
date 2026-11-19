@@ -413,8 +413,11 @@ the queries without an answer on a side by reason: `unreached`,
 `no-results`, `top-state`, `disabled-domain`, `error`, `missing`. A query
 in one callstack of a function whose state was not saved takes the reason
 of the same query over all callstacks. An exit query is `unreached` when its
-exit is not listed as reached; a file without `format 2` lists no exit, and
-its exit queries are not said unreached. It says
+exit is not listed as reached. A file without `format 2` lists no exit; its
+module wrote the exit queries of a function only when its results were
+saved and its exit reached. An exit query that such a file does not answer
+is `no-callstack` when the file has the same query over all callstacks, and
+`missing` otherwise. It says
 whether each file is complete (`complete_a`, `complete_b`) and whether the
 comparison is (`comparison`). Every query that is not `equal` is listed in
 `queries-differences.tsv`, and the statements reached in one run only in

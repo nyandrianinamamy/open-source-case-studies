@@ -1091,9 +1091,12 @@ def missing_reason(q, key):
       disabled-domain written for the same query over all callstacks: the
       state of the function was not saved, so no callstack is enumerated;
     - unreached, when its statement, or for an exit query the exit point of
-      its function, is not reached; a file written before the exit points
-      were declared (without format 2) gives no reached exit point, and its
-      exit queries are not said unreached;
+      its function, is not reached;
+    - for an exit query of a file written before the exit points were
+      declared (without format 2), which wrote the exit queries of a
+      function only when its results were saved and its exit reached:
+      no-callstack when the same query over all callstacks is in the file,
+      missing otherwise, the file saying nothing of that exit;
     - no-callstack, when the statement is reached but not in that
       callstack;
     - missing otherwise."""
@@ -1103,9 +1106,13 @@ def missing_reason(q, key):
         over_all = q["unavailable"].get(key[:3] + ("*",) + key[4:])
         if over_all in ("no-results", "disabled-domain"):
             return over_all
-    exit_query = key[2] == "exit"
-    if (q["exits_declared"] or not exit_query) and \
-       (key[0], key[1]) not in q["reach"]:
+    if key[2] == "exit" and not q["exits_declared"]:
+        over_all = key[:3] + ("*",) + key[4:]
+        if key[3] != "*" and (over_all in q["answers"]
+                              or over_all in q["unavailable"]):
+            return "no-callstack"
+        return "missing"
+    if (key[0], key[1]) not in q["reach"]:
         return "unreached"
     if key[3] != "*":
         return "no-callstack"

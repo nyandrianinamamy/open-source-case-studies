@@ -1797,8 +1797,11 @@ class ExitQueries(unittest.TestCase):
         self.assertEqual(s.get("unavailable_b_missing"), "0")
 
     def test_files_written_before_exit_reachability(self):
-        # A file without the format line declares no reached exit point:
-        # an exit query that it does not answer is missing, as before.
+        # A file without the format line declares no reached exit point.
+        # Its module wrote the exit queries of a function only when its
+        # results were saved and its exit reached: without the query over
+        # all callstacks, the file says nothing of that exit, and its
+        # queries are missing in every callstack.
         a = self.ANSWERS.replace("format\t2\n", "").replace(
             "reach\tget\tget:exit\n", "")
         b = ("reach\tget\tget:11:0\n"
@@ -1807,7 +1810,14 @@ class ExitQueries(unittest.TestCase):
              "MNULL=S3\n"
              "done\t2\n")
         s, _, _ = compare_queries_files(a, b)
-        self.assertEqual(s.get("unavailable_b_missing"), "1")
+        self.assertEqual(s.get("unavailable_b_missing"), "2")
+        self.assertEqual(s.get("unavailable_b_no-callstack"), "0")
+        # With the query over all callstacks, the exit was reached: a
+        # callstack without an answer is not one of that run.
+        b = b.replace("done\t2\n", "answer\tget\tget:exit\texit\t*\tr\t"
+                      "1\t0\tMNULL=S0\ndone\t3\n")
+        s, _, _ = compare_queries_files(a, b)
+        self.assertEqual(s.get("unavailable_b_missing"), "0")
         self.assertEqual(s.get("unavailable_b_no-callstack"), "1")
 
 
