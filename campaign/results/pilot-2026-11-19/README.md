@@ -54,7 +54,7 @@ campaign/pilot.sh ~/.t3/worktrees/campaign-pilot-2026-11-19 \
 
 ## Recomputed tables
 
-The second and the third review of issue #54 found cases where the tools
+The second, third and fourth reviews of issue #54 found cases where the tools
 reported a result they had not established. After each, the tables were
 recomputed from the archive of the raw logs, without running the pilot
 again:
@@ -75,6 +75,25 @@ directory outside the working tree: the listing is written there and
 compared with the committed one, which the replay does not overwrite. The
 tables of `OUTPUT/tables/` are those committed here. A second `recompute`
 with the same file gives the same tables.
+
+### After the fourth review
+
+- `collector.tsv` now shows `-` in the five supplied-entry columns in
+  all 41 runs. The archive contains neither supplied-entry counters nor
+  dispositions that identify supplied lookup. Collector and producer
+  counts and the memexec counts in `activity.tsv` are unchanged.
+- The recorded preprocessing comparison now keeps option operands and
+  argument boundaries. The corrected decoder leaves the numbering of all
+  38 pairs as it was: 21 `recorded command`, 16 `asserted`, and one
+  `different`. No alignment is complete. The two archived memexec runs
+  of `nested-hit.c` pair all five calls with `recorded command` numbering
+  and `complete=False`.
+- `tables.md` shows the current result beside the historical fixture
+  checks from harness revision `12644c58` and labels the historical
+  alignment as superseded. The raw fixture and outcome check files and
+  the other TSV tables are unchanged. The current fixture replay with
+  preprocessing digests still gives `same` numbering and a complete
+  alignment for the two memexec runs of `nested-hit.c`.
 
 ### After the third review
 
