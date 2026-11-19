@@ -17,7 +17,7 @@ campaign/pilot.sh ~/.t3/worktrees/campaign-pilot-2026-11-19 \
 - Harness: the runs were made at revision `12644c58` of this repository
   (`provenance/campaign-revision.txt`); the command it ran is
   `provenance/command.txt`. The tables were then recomputed from the raw
-  logs, last with the tools at `2ade013e`; see "Recomputed tables" below.
+  logs, last with the tools at `4c43af41`; see "Recomputed tables" below.
 - Case studies: revision `168321b6306abdacee95b22c9c94996f1174ab2c`, the
   manifest `campaign/manifest.tsv` at the harness revision (its SHA-256 is
   `provenance/manifest.sha256`).
