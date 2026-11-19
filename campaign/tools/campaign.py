@@ -1460,10 +1460,19 @@ RELEASE = ["free", "vla_free"]
 #              produced from the bodies observed by the collector, unless
 #              -eva-no-cache-collect
 FAMILIES = ("builtin", "memexec", "supplied", "collector", "producer")
-FAMILY_PREFIXES = (("builtin-applied-", "builtin"), ("memexec-", "memexec"),
-                   ("cache-produced", "producer"),
-                   ("cache-production-", "producer"),
-                   ("cache-", "supplied"), ("collector-", "collector"))
+COUNTER_NAMES = {
+    "memexec": {"memexec-hits", "memexec-misses", "memexec-stored"},
+    "supplied": {"cache-hits"},
+    "collector": {"collector-would-store"},
+    "producer": {"cache-produced"},
+}
+COUNTER_REASONS = {
+    "builtin": ("builtin-applied-",),
+    "memexec": ("memexec-refused-",),
+    "supplied": ("cache-rejected-", "cache-refused-"),
+    "collector": ("collector-refused-",),
+    "producer": ("cache-production-refused-",),
+}
 # A counter name of each family, looked for in the compiled Eva plugin to
 # tell whether a binary has the family.
 FAMILY_MARKERS = {"builtin": b"builtin-applied-", "memexec": b"memexec-hits",
@@ -1473,19 +1482,24 @@ FAMILY_MARKERS = {"builtin": b"builtin-applied-", "memexec": b"memexec-hits",
 
 
 def stats_rows(stats_path):
-    """The rows (name, function, value) of the counters of the families."""
-    rows = []
+    """Recognised counter rows and families with a malformed counter row."""
+    rows, invalid = [], set()
     with open_text(stats_path) as f:
         for line in f:
             fields = line.rstrip("\n").split("\t")
-            if len(fields) < 4:
-                continue
-            for prefix, family in FAMILY_PREFIXES:
-                if fields[0].startswith(prefix):
-                    rows.append((family, fields[0], fields[1],
-                                 int(fields[3])))
-                    break
-    return rows
+            name = fields[0]
+            for family, prefixes in COUNTER_REASONS.items():
+                if (name not in COUNTER_NAMES.get(family, ())
+                        and not any(name.startswith(p) and len(name) > len(p)
+                                    for p in prefixes)):
+                    continue
+                value = decimal(fields[3]) if len(fields) == 4 else None
+                if value is None or not line.endswith("\n") or not fields[1]:
+                    invalid.add(family)
+                else:
+                    rows.append((family, name, fields[1], value))
+                break
+    return rows, invalid
 
 
 def last_switch(flags, on, off, default):
@@ -1548,7 +1562,9 @@ def run_counts(stats_path, measured=FAMILIES):
     builtins = Counter()
     values = Counter()
     by_reason = defaultdict(Counter)
-    for family, name, _, value in stats_rows(stats_path):
+    rows, invalid = stats_rows(stats_path)
+    measured = set(measured) - invalid
+    for family, name, _, value in rows:
         if family == "builtin":
             canonical = CANONICAL_BUILTINS.get(name[len("builtin-applied-"):])
             if canonical:
@@ -1608,7 +1624,9 @@ def function_counts(stats_path, measured=FAMILIES):
     collector_would_store, collector_refused], sorted by function, None for
     a family the run did not measure."""
     table = defaultdict(Counter)
-    for family, name, function, value in stats_rows(stats_path):
+    rows, invalid = stats_rows(stats_path)
+    measured = set(measured) - invalid
+    for family, name, function, value in rows:
         if family not in ("memexec", "collector"):
             continue
         for prefix in ("memexec-refused-", "collector-refused-"):
@@ -1671,14 +1689,17 @@ def time_rows(runs):
 
 
 def counts_command(args):
-    families = FAMILIES
-    if args.families is not None:
-        records = []
+    binary = args.families.split(",") if args.families is not None else None
+    starts = analysis_starts(args.log)
+    records = []
+    if starts == 1:
         if args.records:
             records, _ = load_records_and_problems(args.records)
-        families = families_of_run(
-            [f for f in args.families.split(",") if f],
-            (args.flags or "").split(), args.stats, records)
+        else:
+            with open_text(args.log) as f:
+                records = cache_records(f)
+    families = families_of_run(binary, args.flags.split() if args.flags else None,
+                               args.stats, records, starts)
     for key, value in run_counts(args.stats, families).items():
         print("%s\t%s" % (key, cell(value)))
     return 0
@@ -2566,8 +2587,7 @@ ANALYSIS_START = re.compile(
 )
 
 
-def analysis_starts(run_dir):
-    log = existing(os.path.join(run_dir, "eva.log"))
+def analysis_starts(log):
     if log is None:
         return 0
     with open_text(log) as f:
@@ -2575,32 +2595,42 @@ def analysis_starts(run_dir):
                    for line in f)
 
 
+MEMEXEC_REFUSAL = re.compile(
+    r"refused \((?:not-cacheable|no-inout|footprint-top|relate-top|"
+    r"relate-unclosed|exception)\)"
+)
+ENTRY_STORED = re.compile(r"stored \(entry [0-9]+\)")
+COLLECTOR_REFUSALS = ("indirect-call|builtin|sweep|contract|annotation|"
+                      "nested-call|allocated-block|footprint-top|side-table")
+COLLECTOR_DISPOSITION = re.compile(
+    "would-store|refused \\((?:" + COLLECTOR_REFUSALS + ")\\)"
+)
+PRODUCER_REFUSAL = re.compile(
+    "refused \\((?:" + COLLECTOR_REFUSALS
+    + "|product|invalid-footprint|relate-top|key-limit|preconditions|"
+    "not-cacheable|input-state|exit-state|exit-binding)\\)"
+)
+
+
 def logged_families(records):
-    """The families that the dispositions of a single analysis show at work.
-    Memexec: a storage stored or refused for another reason than disabled,
-    or a hit; the collector: a collector field; the producer: a producer
-    field."""
+    """Identify the families in validated call dispositions of one analysis."""
     found = set()
-    for r in records:
-        d = r.get("dispositions", {})
+    for record in records:
+        d = record.get("dispositions", {})
+        if d.get("execution") != "analysed":
+            continue
         storage = d.get("storage", "")
-        if (storage.startswith("stored")
-                or (storage.startswith("refused")
-                    and storage != "refused (disabled)")
-                or d.get("lookup", "").startswith("hit")):
+        if storage == "refused (supplied-only)":
+            found.add("supplied")
+        if d.get("lookup") == "no-candidate" and (
+                ENTRY_STORED.fullmatch(storage) or MEMEXEC_REFUSAL.fullmatch(storage)):
             found.add("memexec")
-        if "collector" in d:
+        if COLLECTOR_DISPOSITION.fullmatch(d.get("collector", "")):
             found.add("collector")
-        if "producer" in d:
+        producer = d.get("producer", "")
+        if ENTRY_STORED.fullmatch(producer) or PRODUCER_REFUSAL.fullmatch(producer):
             found.add("producer")
     return found
-
-
-def storage_disabled(records):
-    """Whether the records of a run show a storage refused because caching
-    is disabled: then memexec was not on, whatever the options say."""
-    return any(r.get("dispositions", {}).get("storage", "")
-               .startswith("refused (disabled)") for r in records)
 
 
 def families_of_run(binary_families, flags, stats_path, records, starts):
@@ -2610,17 +2640,16 @@ def families_of_run(binary_families, flags, stats_path, records, starts):
     single-stage command can also supply evidence. A binary whose families
     are unknown can only supply evidence through the rows.
     """
-    found = {family for family, _, _, _ in stats_rows(stats_path)}
+    rows, invalid = stats_rows(stats_path)
+    found = {family for family, _, _, _ in rows}
     if binary_families is None or starts > 1:
-        return found
+        return found - invalid
     if starts == 1:
         found |= logged_families(records) & set(binary_families)
     if flags is not None and single_stage(flags):
-        options = measured_families(binary_families, flags)
-        if starts == 1 and storage_disabled(records):
-            options.discard("memexec")
-        found |= options
-    return found
+        found |= measured_families(binary_families, flags) - {
+            "memexec", "supplied"}
+    return found - invalid
 
 
 def run_families(run, stats_path, run_dir=None):
@@ -2632,9 +2661,11 @@ def run_families(run, stats_path, run_dir=None):
     binary = None
     if run.get("counter_families", "") != "":
         binary = [f for f in run["counter_families"].split(",") if f]
-    return families_of_run(binary, effective_options(run_dir, run),
-                           stats_path, records_of_run(run_dir),
-                           analysis_starts(run_dir))
+    log = existing(os.path.join(run_dir, "eva.log"))
+    starts = analysis_starts(log)
+    records = records_of_run(run_dir) if starts == 1 else []
+    return families_of_run(binary, effective_options(run_dir, run), stats_path,
+                           records, starts)
 
 
 def cell(value):
@@ -2689,14 +2720,17 @@ def tables_command(args):
               "refused_by_reason", "allocation_and_release", "in_set_a",
               "recorded_in_set_a", "agrees"]
     rows = []
-    collector_rows = []
+    collector_rows, function_rows = [], []
     for r in runs:
         stats = stats_of(r)
         if stats is None:
             rows.append([r["case"], r["mode"]] + ["-"] * 9)
             collector_rows.append([r["case"], r["mode"]] + ["-"] * 11)
             continue
-        c = run_counts(stats, run_families(r, stats))
+        families = run_families(r, stats)
+        c = run_counts(stats, families)
+        function_rows.extend([r["case"], r["mode"]] + [cell(x) for x in row]
+                             for row in function_counts(stats, families))
         target = r["case"].rsplit("/", 1)[0]
         rec = recorded.get(target, "")
         mine = cell(c["in_set_a"])
@@ -2714,8 +2748,8 @@ def tables_command(args):
             "supplied_rejected_by_reason", "supplied_refused_by_reason")])
     write_tsv(os.path.join(out_dir, "activity.tsv"), header, rows)
     md.write("## Cache activity and set A\n\nTotals per case of the "
-             "statistics file; memexec counts only in the modes that "
-             "enable it. `allocation_and_release` sums the "
+             "statistics file; memexec counts require memexec evidence "
+             "for the analysis that wrote it. `allocation_and_release` sums the "
              "applications of the allocation and release builtins; a run "
              "is in set A when it is 0. `recorded_in_set_a` is the "
              "membership recorded by the earlier measurement.\n\n")
@@ -2735,17 +2769,10 @@ def tables_command(args):
     md.write(markdown_table(header, collector_rows) + "\n")
 
     # Cache activity per function, in a file of its own.
-    rows = []
-    for r in runs:
-        stats = stats_of(r)
-        if stats:
-            rows.extend([r["case"], r["mode"]] + [cell(x) for x in row]
-                        for row in function_counts(stats,
-                                                   run_families(r, stats)))
     write_tsv(os.path.join(out_dir, "functions.tsv"),
               ["case", "mode", "function", "hits", "misses", "stored",
                "refused", "collector_would_store", "collector_refused"],
-              rows)
+              function_rows)
     md.write("The hits, misses, stores, refusals and collector verdicts per "
              "function are in `functions.tsv`.\n\n")
 
@@ -3003,10 +3030,10 @@ def main(argv=None):
     p.add_argument("stats")
     p.add_argument("--families",
                    help="counter families of the binary, comma-separated "
-                   "(default: every family is measured)")
+                   "(default: infer families from statistics rows)")
     p.add_argument("--flags", help="Eva options of the run")
-    p.add_argument("--records", help="per-call records of the run, whose "
-                   "dispositions are evidence of the families at work")
+    p.add_argument("--log", help="Eva log of the invocation")
+    p.add_argument("--records", help="records derived from --log")
     p.set_defaults(func=counts_command)
     p = sub.add_parser("families")
     p.add_argument("cmxs", help="the compiled Eva plugin of a binary")

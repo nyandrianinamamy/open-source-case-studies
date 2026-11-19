@@ -102,32 +102,32 @@ families: `builtin` (`builtin-applied-*`), `memexec` (`memexec-*`),
 `supplied` (`cache-hits`, `cache-rejected-*`, `cache-refused-*`),
 `collector` (`collector-*`) and `producer` (`cache-produced`,
 `cache-production-refused-*`). A family is measured by a run when the
-invocation that wrote its statistics file gives evidence for it: a row of
-the family in that file, or, for a family that the binary has, its
-dispositions in the log: for `memexec` a storage `stored` or `refused` for
-another reason than `disabled`, or a hit; for `collector` a `collector:`
-field; for `producer` a `producer:` field. The dispositions count only when
-the records form one tree: a log of two analyses would not say which one
-wrote the statistics, which Eva writes at the end of each analysis.
+invocation that wrote its statistics file gives evidence for it. A valid
+counter row is evidence for its family. With exactly one analysis start
+in the Eva log, a collector or producer disposition is evidence for its
+family. With more than one start, only rows in the statistics file count,
+even when the log shows only one call tree.
 
-When the command that ran Eva has one stage, its options also decide. The
-options are those of that command (the file `command` written by the
-makefiles, or `eva-command` of a fixture), in their order, so options added
-by a makefile after those of the mode count: the last of `-eva-memexec` and
-`-eva-no-memexec` decides `memexec` (off by default), and the last of
-`-eva-cache-collect` and `-eva-no-cache-collect` decides `collector` and
-`producer` (on by default). A run whose log prints `storage: refused
-(disabled)` did not run memexec, whatever its options, so its options do not
-make `memexec` measured. A command with `-then`, `-then-on`, `-then-last`,
-`-then-replace` or `-commands-file` is resolved by the evidence alone: its
-options do not say which of them the invocation that wrote the statistics
-had. The stage that `analysis.mk` adds after Eva (`-then -report-csv ...
--metrics-eva-cover ... -nonterm`) is not part of the recorded command; it
-sets no Eva option and does not run Eva again, so the recorded command
-counts as one stage. The mode name is not used. The statistics file has no
-row for a counter that stays at 0, so a counter of a measured family with no
-row is a measured 0, and a counter of a family that is not measured is
-written `-` in the tables.
+For memexec, the unambiguous storage dispositions are `stored (entry N)`
+and `refused` with one of `not-cacheable`, `no-inout`, `footprint-top`,
+`relate-top`, `relate-unclosed` or `exception`. In the pinned analyzer
+[`call_cache.ml`, lines 197–238](https://github.com/nyandrianinamamy/frama-c/blob/9168ba2e235fc436b2c1bbf393b04447312a5504/plugins/eva/src/engine/call_cache.ml#L197-L238),
+the memexec lookup can be bypassed by the supplied lookup. A hit can
+come from either path, and `no-candidate`, `storage: none` and
+`refused (disabled)` do not establish memexec activity. This reverses
+the previous review's treatment of `refused (supplied-only)`. That
+disposition establishes only the supplied family. Both lookup paths
+can print `hit`. [`call_cache.ml`, lines 180–215](https://github.com/nyandrianinamamy/frama-c/blob/9168ba2e235fc436b2c1bbf393b04447312a5504/plugins/eva/src/engine/call_cache.ml#L180-L215)
+
+A single-stage command can also establish builtin coverage and whether
+the collector and producer were enabled. The harness uses the recorded
+command in order, including options added by the case makefile. The
+last of `-eva-cache-collect` and `-eva-no-cache-collect` wins, with the
+collector and producer enabled by default on a binary that has them.
+With `-then`, `-then-on`, `-then-last`, `-then-replace` or
+`-commands-file`, the command's flags alone do not decide. The reporting
+stage that `analysis.mk` adds runs no analysis. A missing counter of a
+measured family is reported as 0. An unmeasured family is written `-`.
 
 ## Running
 

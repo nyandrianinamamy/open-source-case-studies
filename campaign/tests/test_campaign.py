@@ -1990,11 +1990,10 @@ class EffectiveOptions(unittest.TestCase):
                              "eva.log": ANALYSIS_BANNER + NESTED_LOG_OFF})
         self.assertEqual(t["activity"]["hits"], "-")
 
-    def test_measured_memexec(self):
+    def test_memexec_flag_without_memexec_evidence(self):
         t = self.tables({}, {})
-        self.assertEqual(t["activity"]["hits"], "0")
-        # A measured family with no refusal has no reason: not "-".
-        self.assertEqual(t["activity"]["refused_by_reason"], "none")
+        self.assertEqual(t["activity"]["hits"], "-")
+        self.assertEqual(t["activity"]["refused_by_reason"], "-")
 
     def test_supplied_refusals_by_reason(self):
         t = self.tables({}, {})
@@ -2101,9 +2100,12 @@ class CounterEvidence(unittest.TestCase):
             self.assertEqual(t["activity"]["in_set_a"], "-", command)
 
     def test_single_stage_command(self):
-        # One stage: the options decide, a family without row is zero.
+        # Single-stage options establish builtin and collector coverage.
+        # Memexec and supplied entries require evidence of their own path.
         t = self.tables("frama-c -eva -eva-memexec\n", "")
-        self.assertEqual(t["activity"]["hits"], "0")
+        self.assertEqual(t["activity"]["hits"], "-")
+        self.assertEqual(t["collector"]["supplied_hits"], "-")
+        self.assertEqual(t["collector"]["collector_refused"], "0")
         self.assertEqual(t["activity"]["in_set_a"], "True")
         t = self.tables("frama-c -eva -eva-no-memexec\n", "")
         self.assertEqual(t["activity"]["hits"], "-")
@@ -3024,6 +3026,44 @@ class FourthReview(unittest.TestCase):
                                  env=dict(os.environ, HOME=home),
                                  capture_output=True, text=True)
             self.assertEqual(run.returncode, 0, run.stderr)
+
+
+    def test_supplied_evidence_establishes_no_memexec(self):
+        supplied = NESTED_LOG.replace("stored (entry 1)", "refused (supplied-only)")
+        supplied = supplied.replace("stored (entry 2)", "refused (supplied-only)")
+        supplied = supplied.replace("refused (not-cacheable)", "refused (supplied-only)")
+        for log in (supplied, supplied.split("[eva:cache]")[0] +
+                    "[eva:cache] call to f: lookup: hit (entry 2); "
+                    "execution: not-analysed; storage: none\n"):
+            for command in (CounterEvidence.MEMEXEC_THEN_OFF,
+                            "frama-c -eva -eva-memexec\n"):
+                tables = CounterEvidence.tables(
+                    self, command, "cache-refused-supplied-only\tf\t\t1\n",
+                    self.START + log)
+                self.assertEqual(tables["activity"]["hits"], "-")
+                self.assertEqual(tables["collector"]["supplied_refused"], "1")
+        for storage in ("stored", "stored (entry bogus)", "refused (unknown)",
+                        "refused (disabled)", "none"):
+            with self.subTest(storage=storage):
+                log = NESTED_LOG_OFF.replace("refused (disabled)", storage)
+                tables = CounterEvidence.tables(
+                    self, CounterEvidence.MEMEXEC_THEN_OFF, "", self.START + log)
+                self.assertEqual(tables["activity"]["hits"], "-")
+        tables = CounterEvidence.tables(
+            self, CounterEvidence.MEMEXEC_THEN_OFF, "", self.START + supplied)
+        self.assertEqual(tables["collector"]["supplied_refused"], "0")
+        for stat in ("memexec-hits\tf\t\tbroken\n",
+                     "memexec-hits\tf\t\t5",
+                     "memexec-made-up\tf\t\t3\n"):
+            tables = CounterEvidence.tables(
+                self, CounterEvidence.MEMEXEC_THEN_OFF, stat, self.START + supplied)
+            self.assertEqual(tables["activity"]["hits"], "-")
+        malformed = ("collector-refused-builtin\tf\t\t-1\n"
+                     "cache-production-refused-builtin\tf\t\tbad\n")
+        tables = CounterEvidence.tables(
+            self, "frama-c -eva\n", malformed, self.START + COLLECTED_LOG)
+        self.assertEqual(tables["collector"]["collector_refused"], "-")
+        self.assertEqual(tables["collector"]["producer_refused"], "-")
 
 
 if __name__ == "__main__":
