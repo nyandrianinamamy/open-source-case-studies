@@ -5,7 +5,9 @@
 #   OUTPUT: a directory written by run-campaign.sh or pilot.sh
 #   ARCHIVE: the .tar.gz file to write, outside any working tree
 # The archive holds a copy of OUTPUT in which the paths under the home
-# directory are written from ~, without the compiled query modules of
+# directory, as given in HOME (without a trailing slash) or by its physical
+# path, are written from ~ (campaign.py home), without the compiled query
+# modules of
 # tools/. It keeps provenance/manifest.tsv, the manifest the runner used,
 # which may differ from campaign/manifest.tsv (option --manifest).
 # Its members are sorted and dated at the epoch, with no owner.
@@ -18,8 +20,8 @@ set -euo pipefail
 output=$(realpath "${1:?Supply the campaign output directory}")
 archive=$(realpath -m "${2:?Supply the archive to write}")
 name=$(basename "$archive" .tar.gz)
-home=${HOME%/}
-if [[ -z $home ]]; then printf 'HOME is not set.\n' >&2; exit 2; fi
+home=(python3 -I "$(dirname "$(realpath "$0")")/campaign.py" home)
+if [[ -z ${HOME%/} ]]; then printf 'HOME is not set.\n' >&2; exit 2; fi
 
 # The hashed files, as paths relative to OUTPUT, and their recorded digests.
 hashed=()
@@ -32,7 +34,7 @@ check_hashed() {
     printf 'The file %s does not match its recorded SHA-256.\n' "$file" >&2
     exit 1
   fi
-  if grep -qF -- "$home" "$output/$file"; then
+  if ! "${home[@]}" check "$output/$file" 2> /dev/null; then
     printf 'The file %s holds the home directory; it is archived unchanged with its SHA-256, so it cannot be rewritten.\n' \
       "$file" >&2
     exit 1
@@ -57,21 +59,10 @@ cp -a "$output" "$stage/$name"
 find "$stage/$name" -path '*/tools/*' \
   \( -name '*.cmxs' -o -name '*.cmx' -o -name '*.cmi' -o -name '*.o' \
      -o -name '*.ml' \) -delete
-exclude=()
-for file in "${hashed[@]}"; do exclude+=(! -path "$stage/$name/$file"); done
-# grep exits 1 when no file holds the path, and xargs then exits 123.
-find "$stage/$name" -type f ! -name '*.gz' "${exclude[@]}" -print0 |
-  { xargs -0 -r grep -lIZF "$HOME" || [[ $? == 123 ]]; } |
-  xargs -0 -r sed -i "s|$HOME|~|g"
-find "$stage/$name" -type f -name '*.gz' -print0 |
-  while IFS= read -r -d '' file; do
-    if zgrep -qF "$HOME" "$file"; then
-      gzip -dc "$file" | sed "s|$HOME|~|g" | gzip -n > "$file.new"
-      mv "$file.new" "$file"
-    fi
-  done
-if grep -rqIF "$HOME" "$stage" ||
-   find "$stage" -name '*.gz' -exec zgrep -qF "$HOME" {} \; -print | grep -q .; then
+keep=()
+for file in "${hashed[@]}"; do keep+=(--keep "$file"); done
+"${home[@]}" redact-tree "$stage/$name" "${keep[@]}"
+if ! "${home[@]}" check-tree "$stage"; then
   printf 'A path under the home directory is left in the archive.\n' >&2
   exit 1
 fi

@@ -2044,5 +2044,122 @@ class Licence(unittest.TestCase):
         self.assertNotRegex(entry, r"^\s*LGPL")
 
 
+class HomeSpellings(unittest.TestCase):
+    """Finding 7: the home directory is matched as given, without its
+    trailing slash, and by its physical path, in the preflight of the
+    runner, in the redaction of the archive and in its final check."""
+
+    def homes(self, tmp):
+        """A home directory reached through a symbolic link: (HOME, its
+        physical path)."""
+        real = os.path.join(tmp, "real-home")
+        os.makedirs(real)
+        link = os.path.join(tmp, "home")
+        os.symlink(real, link)
+        return link, os.path.realpath(real)
+
+    def run_runner(self, home, manifest, out):
+        return subprocess.run(
+            ["bash", RUNNER, "--manifest", manifest, "--modes", "cache",
+             "--test-checkout", home, out],
+            env=dict(os.environ, HOME=home), capture_output=True, text=True,
+            stdin=subprocess.DEVNULL)
+
+    def test_runner_refuses_the_physical_path(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            home, physical = self.homes(tmp)
+            manifest = os.path.join(tmp, "manifest.tsv")
+            write(manifest, "case\tflags\nc\t-I%s/include\n" % physical)
+            out = os.path.join(tmp, "out")
+            run = self.run_runner(home, manifest, out)
+            self.assertEqual(run.returncode, 2, run.stderr)
+            self.assertIn("manifest", run.stderr)
+            self.assertFalse(os.path.exists(out))
+            run = self.run_runner(home + "/", manifest, out)
+            self.assertEqual(run.returncode, 2, run.stderr)
+
+    def test_provenance_refuses_the_physical_path_in_a_patch(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            home, physical = self.homes(tmp)
+            checkout = os.path.join(tmp, "ref")
+            os.makedirs(checkout)
+            write(os.path.join(checkout, "CAMPAIGN_REVISION"), "a" * 40 + "\n")
+            patch = "+%s/test\n" % physical
+            write(os.path.join(checkout, "CAMPAIGN_PATCH.patch"), patch)
+            write(os.path.join(checkout, "CAMPAIGN_PATCH_SHA256"),
+                  hashlib.sha256(patch.encode()).hexdigest() + "\n")
+            with mock.patch.dict(os.environ, {"HOME": home}):
+                code, _, _ = run_main(["provenance", checkout, "test",
+                                       os.path.join(tmp, "patches")])
+            self.assertEqual(code, 1)
+
+    def archive(self, tmp, home, files, manifest=b"case\tflags\nc\t-\n"):
+        out = os.path.join(tmp, "pilot")
+        prov = os.path.join(out, "provenance")
+        os.makedirs(prov)
+        with open(os.path.join(prov, "manifest.tsv"), "wb") as f:
+            f.write(manifest)
+        write(os.path.join(prov, "manifest.sha256"),
+              hashlib.sha256(manifest).hexdigest() + "\n")
+        for name, data in files.items():
+            path = os.path.join(out, name)
+            if name.endswith(".gz"):
+                with gzip.open(path, "wb") as f:
+                    f.write(data)
+            else:
+                with open(path, "wb") as f:
+                    f.write(data)
+        archive = os.path.join(tmp, "logs.tar.gz")
+        run = subprocess.run(["bash", ARCHIVE, out, archive],
+                             env=dict(os.environ, HOME=home),
+                             capture_output=True, text=True)
+        kept = {}
+        if run.returncode == 0:
+            with tarfile.open(archive) as tar:
+                for name in files:
+                    data = tar.extractfile("logs/" + name).read()
+                    kept[name] = gzip.decompress(data) \
+                        if name.endswith(".gz") else data
+        return run, kept
+
+    def test_archive_redacts_every_spelling(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            home, physical = self.homes(tmp)
+            files = {"a.txt": ("%s/x %s/y\n" % (home, physical)).encode(),
+                     "b.log.gz": ("%s/z\n" % physical).encode()}
+            run, kept = self.archive(tmp, home, files)
+            self.assertEqual(run.returncode, 0, run.stderr)
+            self.assertEqual(kept, {"a.txt": b"~/x ~/y\n",
+                                    "b.log.gz": b"~/z\n"})
+
+    def test_home_with_a_trailing_slash(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            home, physical = self.homes(tmp)
+            files = {"a.txt": ("%s/x %s/y\n" % (home, physical)).encode()}
+            run, kept = self.archive(tmp, home + "/", files)
+            self.assertEqual(run.returncode, 0, run.stderr)
+            self.assertEqual(kept["a.txt"], b"~/x ~/y\n")
+
+    def test_archive_refuses_a_hashed_file_with_the_physical_path(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            home, physical = self.homes(tmp)
+            manifest = ("case\tflags\nc\t-I%s/include\n"
+                        % physical).encode()
+            run, _ = self.archive(tmp, home, {}, manifest)
+            self.assertNotEqual(run.returncode, 0)
+            self.assertFalse(os.path.exists(os.path.join(tmp,
+                                                         "logs.tar.gz")))
+
+    def test_another_directory_with_the_same_prefix_is_kept(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            home, physical = self.homes(tmp)
+            files = {"a.txt": ("%s2/x %s/y\n" % (physical, physical)
+                               ).encode()}
+            run, kept = self.archive(tmp, home, files)
+            self.assertEqual(run.returncode, 0, run.stderr)
+            self.assertEqual(kept["a.txt"],
+                             ("%s2/x ~/y\n" % physical).encode())
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -131,7 +131,12 @@ mode that fails does not stop the other modes.
 The runner records the SHA-256 of the manifest and of the patch of each
 binary on their bytes, and the archive keeps these bytes (see below). It
 therefore stops before it writes anything when the manifest or a patch
-contains the home directory: write the path as `~` or as a variable.
+contains the home directory: write the path as `~` or as a variable. The
+home directory is looked for in each of its spellings: the value of `HOME`
+without its trailing slashes and its physical path, when `HOME` is a
+symbolic link, each followed by a separator, by a character that cannot
+continue a file name, or by the end (`campaign.py home`). The provenance,
+the redaction of the archive and its final check use the same spellings.
 
 Each run:
 
@@ -528,8 +533,10 @@ not committed: they go to an archive, whose SHA-256 is recorded in
 campaign/tools/archive-logs.sh OUTPUT /outside/the/tree/NAME.tar.gz
 ```
 
-The archive writes the paths under the home directory from `~` and leaves
-out the compiled query modules; the same output gives the same archive. The
+The archive writes the paths under the home directory from `~`, in any
+of its spellings, keeping the separator that follows (`HOME/file` becomes
+`~/file`), and leaves out the compiled query modules; the same output gives
+the same archive. The
 files whose SHA-256 the provenance records (the manifest and the patches)
 are archived as they were hashed: the script checks them against their
 digests and stops when one of them holds the home directory. The protocol attaches this archive to the tag

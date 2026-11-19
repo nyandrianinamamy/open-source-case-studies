@@ -53,7 +53,8 @@ export PATH="$switch/_opam/setup-venv/bin:$PATH"
 export LC_ALL=C TERM=dumb
 work=$(mktemp -d)
 trap 'rm -rf "$work"' EXIT
-home=${HOME%/}
+home=$HOME
+while [[ $home == */ ]]; do home=${home%/}; done
 sed "s|~|$home|g" "$output/tools/$role/sites.env" > "$work/sites.env"
 bash "$campaign/tools/build-queries.sh" "$work/sites.env" "$work/tools" \
   > "$work/build-queries.log" 2>&1

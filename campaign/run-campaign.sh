@@ -85,12 +85,13 @@ done
 
 # The SHA-256 of the manifest and of a patch is recorded on their bytes, and
 # the archive of the logs keeps those bytes: they must not hold the home
-# directory, which the archive would otherwise publish.
+# directory, as given in HOME or by its physical path, which the archive
+# would otherwise publish (campaign.py home).
 refuse_home() {
-  local file=$1 what=$2 home=${HOME%/}
-  if [[ -n $home && -f $file ]] && grep -qF -- "$home" "$file"; then
-    printf 'The %s %s holds the home directory %s. Write it as ~ or as a variable: the %s is kept unchanged with its SHA-256.\n' \
-      "$what" "$file" "$home" "$what" >&2
+  local file=$1 what=$2
+  if [[ -f $file ]] && ! "${tool[@]}" home check "$file" 2> /dev/null; then
+    printf 'The %s %s holds the home directory. Write it as ~ or as a variable: the %s is kept unchanged with its SHA-256.\n' \
+      "$what" "$file" "$what" >&2
     exit 2
   fi
 }
@@ -102,7 +103,7 @@ done
 mkdir "$output"
 mkdir -p "$output/provenance" "$output/runs" "$output/tools"
 # Paths under the home directory are written from ~ in the provenance.
-private() { sed "s|$HOME|~|g"; }
+private() { "${tool[@]}" home redact; }
 printf '%q ' "${invocation[@]}" | sed 's/ $//' | private \
   > "$output/provenance/command.txt"
 printf '\n' >> "$output/provenance/command.txt"

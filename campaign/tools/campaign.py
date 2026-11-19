@@ -9,6 +9,7 @@ Subcommands:
   counts STATS               builtin applications and cache activity of a run
   families CMXS              counter families of a compiled Eva plugin
   provenance CHECKOUT ROLE DIR  revision and patch of a Frama-C checkout
+  home ACTION ...            find or write ~ for the home directory
   tables RUN_DIR             result tables of a campaign output directory
   ast LISTING                SHA-256 of an AST listing of the query module
   compare OUTPUT CASE A B    compare two runs of a case as the runner does
@@ -31,6 +32,7 @@ import re
 import shlex
 import subprocess
 import sys
+import zlib
 from collections import Counter, OrderedDict, defaultdict
 
 
@@ -1535,16 +1537,100 @@ def families_command(args):
 
 # ----- Provenance of a binary ------------------------------------------------
 
-def home_directory():
-    """The home directory, or None when it is not set or is the root."""
-    home = os.environ.get("HOME", "").rstrip("/")
-    return home or None
+def home_spellings():
+    """The spellings of the home directory: the value of HOME without its
+    trailing slashes, and its physical path, the longest first. None when
+    HOME is not set or is the root."""
+    home = os.environ.get("HOME", "")
+    spellings = {s.rstrip("/") for s in (home, os.path.realpath(home))
+                 if home}
+    return sorted((s for s in spellings if s), key=len, reverse=True)
+
+
+def home_pattern():
+    """A pattern of the bytes of a path under the home directory, in any of
+    its spellings: the spelling followed by a separator, by a character
+    that cannot continue a file name, or by the end. The separator is not
+    part of the match, so that the replacement keeps it. None without a
+    home directory."""
+    spellings = home_spellings()
+    if not spellings:
+        return None
+    return re.compile(b"(?:" + b"|".join(re.escape(s.encode())
+                                         for s in spellings)
+                      + b")(?![A-Za-z0-9._+-])")
 
 
 def holds_home(data):
-    """Whether the bytes [data] hold the literal home directory."""
-    home = home_directory()
-    return bool(home) and home.encode() in data
+    """Whether the bytes [data] hold the home directory, in any of its
+    spellings."""
+    pattern = home_pattern()
+    return bool(pattern) and pattern.search(data) is not None
+
+
+def redact_home(data):
+    """The bytes [data] with every spelling of the home directory written
+    ~, the separator after it kept."""
+    pattern = home_pattern()
+    return pattern.sub(b"~", data) if pattern else data
+
+
+def read_maybe_gz(path):
+    with open(path, "rb") as f:
+        data = f.read()
+    if path.endswith(".gz"):
+        try:
+            return gzip.decompress(data), True
+        except (OSError, EOFError, zlib.error):
+            pass
+    return data, False
+
+
+def home_command(args):
+    """check FILE...: exits with 1 when a file (decompressed when its name
+    ends in .gz) holds the home directory, and names it. check-tree DIR:
+    the same for every file under DIR. redact: copies the standard input to
+    the standard output with the home directory written ~. redact-tree DIR
+    [--keep PATH]...: rewrites in place every text file under DIR, but the
+    kept ones (relative to DIR), with the home directory written ~; a
+    compressed file is compressed again without name or date."""
+    if args.action == "redact":
+        sys.stdout.buffer.write(redact_home(sys.stdin.buffer.read()))
+        return 0
+    if args.action in ("check", "redact-tree", "check-tree") and \
+       not home_spellings():
+        print("HOME is not set.", file=sys.stderr)
+        return 2
+    paths = list(args.paths)
+    if args.action in ("check-tree", "redact-tree"):
+        if len(paths) != 1:
+            print("Supply one directory.", file=sys.stderr)
+            return 2
+        root = paths[0]
+        kept = {os.path.normpath(os.path.join(root, k)) for k in args.keep}
+        paths = []
+        for dirpath, _, filenames in os.walk(root):
+            for name in sorted(filenames):
+                path = os.path.join(dirpath, name)
+                if not os.path.islink(path) and \
+                   os.path.normpath(path) not in kept:
+                    paths.append(path)
+    found = []
+    for path in paths:
+        data, compressed = read_maybe_gz(path)
+        if args.action == "redact-tree":
+            if b"\0" in data[:8192] or not holds_home(data):
+                continue
+            data = redact_home(data)
+            if compressed:
+                data = gzip.compress(data, mtime=0)
+            with open(path, "wb") as f:
+                f.write(data)
+        elif holds_home(data):
+            found.append(path)
+    for path in found:
+        print("%s holds the home directory" % path, file=sys.stderr)
+    return 1 if found else 0
 
 
 def checkout_provenance(checkout):
@@ -1575,7 +1661,7 @@ def checkout_provenance(checkout):
                 "the patch %s holds the home directory %s: its SHA-256 is "
                 "recorded on its bytes, which the public archive keeps; "
                 "write the directory as ~ or as a variable"
-                % (patch, home_directory()))
+                % (patch, " or ".join(home_spellings())))
         with open(digest_file) as f:
             recorded = f.read().strip()
         if recorded != digest:
@@ -2364,6 +2450,13 @@ def main(argv=None):
     p.add_argument("role")
     p.add_argument("patches", help="directory that receives ROLE.patch")
     p.set_defaults(func=provenance_command)
+    p = sub.add_parser("home")
+    p.add_argument("action",
+                   choices=("check", "check-tree", "redact", "redact-tree"))
+    p.add_argument("paths", nargs="*")
+    p.add_argument("--keep", action="append", default=[],
+                   help="a file of the tree, relative to it, left as it is")
+    p.set_defaults(func=home_command)
     p = sub.add_parser("measure")
     p.add_argument("measure")
     p.set_defaults(func=measure_command)
