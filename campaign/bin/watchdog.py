@@ -27,9 +27,11 @@ The watchdog writes to MEASURE one KEY<TAB>VALUE line per value:
       taken at the start and then every half second, lists only the
       watchdog and the processes of the session of the command; no if a
       sample lists another process; unreadable when the list cannot be
-      read. Only with yes does a positive oom_kill_events say that the
-      killer chose the command; a process that starts and ends between two
-      samples is not seen, which a cgroup created for the run excludes.
+      read. This is evidence only: a sample does not show that the command
+      was in the cgroup, nor that no other process ran in it between two
+      samples. A positive oom_kill_events names the command only when the
+      watchdog runs in a scope created for it, which the runner states with
+      --dedicated-scope.
 It exits with the status of the command. Only the Python standard library is
 used.
 """

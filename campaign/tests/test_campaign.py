@@ -1100,12 +1100,18 @@ class Watchdog(unittest.TestCase):
         m = {"status": "137", "signal": "9", "watchdog": "none",
              "oom_kill_events": "1", "kernel_log_oom": "unreadable"}
         self.assertEqual(campaign.oom_evidence(m, ""),
-                         "cgroup oom_kill +1, shared cgroup")
+                         "cgroup oom_kill +1, samples exclusive -, "
+                         "no dedicated scope")
         self.assertEqual(campaign.classify_outcome(0, 2, m, "", False),
                          "killed")
+        # Samples that show the watchdog alone are evidence only (third
+        # review, finding 4).
         m.update(cgroup_exclusive="yes")
-        self.assertEqual(campaign.oom_evidence(m, ""), "cgroup oom_kill +1")
-        self.assertEqual(campaign.classify_outcome(0, 2, m, "", False), "oom")
+        self.assertEqual(campaign.oom_evidence(m, ""),
+                         "cgroup oom_kill +1, samples exclusive yes, "
+                         "no dedicated scope")
+        self.assertEqual(campaign.classify_outcome(0, 2, m, "", False),
+                         "killed")
         m.update(cgroup_exclusive="no")
         m.update(oom_kill_events="unreadable", kernel_log_oom="yes")
         self.assertEqual(campaign.classify_outcome(0, 2, m, "", False), "oom")
@@ -1684,9 +1690,7 @@ class SharedCgroup(unittest.TestCase):
         self.assertEqual(campaign.classify_outcome(0, 2, m, "", False),
                          "killed")
 
-    def test_exclusive_cgroup_or_kernel_log(self):
-        m = dict(self.KILLED, cgroup_exclusive="yes")
-        self.assertEqual(campaign.classify_outcome(0, 2, m, "", False), "oom")
+    def test_kernel_log(self):
         m = dict(self.KILLED, kernel_log_oom="yes")
         self.assertEqual(campaign.classify_outcome(0, 2, m, "", False), "oom")
 
@@ -2159,6 +2163,66 @@ class HomeSpellings(unittest.TestCase):
             self.assertEqual(run.returncode, 0, run.stderr)
             self.assertEqual(kept["a.txt"],
                              ("%s2/x ~/y\n" % physical).encode())
+
+
+class DedicatedScope(unittest.TestCase):
+    """Finding 4: the counter of the cgroup and the samples of its
+    processes are evidence only. A SIGKILL that the watchdog did not send is
+    an out-of-memory kill when the kernel log names the process, or when the
+    runner states that the command ran in a scope of its own and the counter
+    of that scope rose."""
+
+    # A child that killed itself with SIGKILL while the counter of a cgroup
+    # in which the samples saw only the watchdog rose by 1.
+    MEASURE = ("elapsed_s\t0.10\nuser_s\t0.00\nsys_s\t0.00\n"
+               "maxrss_kib\t100\nexit\t-\nsignal\t9\ncore_dumped\tno\n"
+               "status\t137\nwatchdog\tnone\nwatchdog_term_s\t-\n"
+               "watchdog_kill_s\t-\noom_kill_events\t1\n"
+               "kernel_log_oom\tno\ncgroup_exclusive\tyes\n")
+
+    def outcome(self, *options):
+        with tempfile.TemporaryDirectory() as tmp:
+            write(os.path.join(tmp, "measure"), self.MEASURE)
+            code, out, error = run_main(["outcome", tmp, "0", "0", "60"]
+                                        + list(options))
+        self.assertEqual((code, error), (0, None))
+        return out.rstrip("\n").split("\t")
+
+    def test_samples_are_evidence_only(self):
+        outcome, evidence = self.outcome()
+        self.assertEqual(outcome, "killed")
+        self.assertIn("oom_kill +1", evidence)
+        self.assertIn("samples", evidence)
+        m = campaign.read_measure_text(self.MEASURE)
+        self.assertEqual(campaign.classify_outcome(0, 0, m, "", True),
+                         "killed")
+
+    def test_dedicated_scope(self):
+        outcome, evidence = self.outcome("--dedicated-scope")
+        self.assertEqual(outcome, "oom")
+        self.assertIn("dedicated scope", evidence)
+        # The flag alone is not evidence: the counter must have risen.
+        m = campaign.read_measure_text(
+            self.MEASURE.replace("oom_kill_events\t1", "oom_kill_events\t0"))
+        self.assertEqual(campaign.classify_outcome(
+            0, 0, m, "", True, dedicated_scope=True), "killed")
+
+    def test_recompute_reads_the_flag_of_the_run(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            outcomes = {}
+            for flag in ("yes", "no"):
+                run = os.path.join(tmp, "out", "runs", "c", flag)
+                os.makedirs(run)
+                write(os.path.join(run, "measure"), self.MEASURE)
+                write(os.path.join(run, "run.tsv"),
+                      "case\tc\nmode\t%s\nparse_exit\t0\nmake_exit\t0\n"
+                      "outcome\t-\ndedicated_scope\t%s\n" % (flag, flag))
+            code, _, error = run_main(["recompute", os.path.join(tmp, "out")])
+            for flag in ("yes", "no"):
+                outcomes[flag] = read_summary(os.path.join(
+                    tmp, "out", "runs", "c", flag, "run.tsv"))["outcome"]
+        self.assertEqual((code, error), (0, None))
+        self.assertEqual(outcomes, {"yes": "oom", "no": "killed"})
 
 
 if __name__ == "__main__":

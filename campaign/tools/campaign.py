@@ -1720,7 +1720,11 @@ def read_measure(path):
     if not os.path.exists(path):
         return None
     with open_text(path) as f:
-        text = f.read()
+        return read_measure_text(f.read())
+
+
+def read_measure_text(text):
+    """The values of the text of a measure (see [read_measure])."""
     measure = OrderedDict()
     for line in text.splitlines():
         key, sep, value = line.partition("\t")
@@ -1733,15 +1737,20 @@ def read_measure(path):
     return measure
 
 
-def oom_findings(measure, log_text):
+def oom_findings(measure, log_text, dedicated_scope=False):
     """The evidence that memory was exhausted, as (conclusive, text). The
     message of Frama-C or of the OCaml runtime in the log is conclusive. For
-    a command killed by SIGKILL that the watchdog did not send, the kernel
-    log that names the process is conclusive, and so is an increase of
-    oom_kill in the memory events of the cgroup of the watchdog when the
-    cgroup held the watchdog and the measured process alone
-    (cgroup_exclusive yes). In a shared cgroup the event may be another
-    process: the increase is kept as evidence, not as a cause."""
+    a command killed by SIGKILL that the watchdog did not send:
+    - the kernel log that names the process is conclusive;
+    - an increase of oom_kill in the memory events of the cgroup of the
+      watchdog is conclusive only when the runner states that it started the
+      watchdog in a scope of its own ([dedicated_scope], recorded in
+      run.tsv): then the killer chose a process of that scope, and the
+      watchdog, which wrote the measure, survived. Otherwise the cgroup may
+      hold other processes, and the samples of its processes taken by the
+      watchdog do not show that the command was in it or that it was alone
+      between two samples: the increase and the samples are kept as
+      evidence, not as a cause."""
     if OUT_OF_MEMORY.search(log_text):
         return True, "log"
     if measure.get("signal") == "9" and measure.get("watchdog") != "kill":
@@ -1751,23 +1760,25 @@ def oom_findings(measure, log_text):
             parts.append("kernel log")
         events = measure.get("oom_kill_events", "")
         if (decimal(events) or 0) > 0:
-            if measure.get("cgroup_exclusive") == "yes":
+            if dedicated_scope:
                 conclusive = True
-                parts.append("cgroup oom_kill +" + events)
+                parts.append("cgroup oom_kill +%s, dedicated scope" % events)
             else:
-                parts.append("cgroup oom_kill +%s, shared cgroup" % events)
+                parts.append("cgroup oom_kill +%s, samples exclusive %s, "
+                             "no dedicated scope"
+                             % (events, measure.get("cgroup_exclusive", "-")))
         return conclusive, ", ".join(parts)
     return False, ""
 
 
-def oom_evidence(measure, log_text):
+def oom_evidence(measure, log_text, dedicated_scope=False):
     """The text of the evidence that memory was exhausted, empty when there
     is none (see [oom_findings])."""
-    return oom_findings(measure, log_text)[1]
+    return oom_findings(measure, log_text, dedicated_scope)[1]
 
 
 def classify_outcome(parse_exit, make_exit, measure, log_text,
-                     entry_analysed, timeout_s=None):
+                     entry_analysed, timeout_s=None, dedicated_scope=False):
     """The outcome of one run:
     - parse-error: the parsing step failed, Eva did not run;
     - harness-error: the Eva invocation was not measured, its measure has
@@ -1776,8 +1787,9 @@ def classify_outcome(parse_exit, make_exit, measure, log_text,
       measured by an earlier revision of this harness, which did not record
       it, is never classified as a timeout;
     - oom: Frama-C or the OCaml runtime reports that memory is exhausted, or
-      the out-of-memory killer of the system is reported to have killed it
-      (see [oom_findings]);
+      the out-of-memory killer of the system is reported to have killed it:
+      by the kernel log, or by the counter of a scope of its own when
+      [dedicated_scope] (see [oom_findings]);
     - killed: killed by SIGKILL that the watchdog did not send, with no
       conclusive evidence of the out-of-memory killer: cause unknown;
     - error: any other nonzero exit status or signal, such as 1 (invalid
@@ -1794,7 +1806,7 @@ def classify_outcome(parse_exit, make_exit, measure, log_text,
         return "harness-error"
     if measure.get("watchdog", "none") != "none":
         return "timeout"
-    if oom_findings(measure, log_text)[0]:
+    if oom_findings(measure, log_text, dedicated_scope)[0]:
         return "oom"
     status = decimal(measure["status"])
     if measure.get("signal") == "9":
@@ -1826,9 +1838,10 @@ def existing(path):
     return None
 
 
-def run_outcome(run, parse_exit, make_exit):
+def run_outcome(run, parse_exit, make_exit, dedicated_scope=False):
     """The outcome of a run and the evidence of exhausted memory, from its
-    measure, its log and its records, compressed or not."""
+    measure, its log and its records, compressed or not, and the statement
+    of the runner that the command ran in a scope of its own."""
     measure = read_measure(os.path.join(run, "measure"))
     log_text = ""
     log = existing(os.path.join(run, "eva.log"))
@@ -1842,13 +1855,15 @@ def run_outcome(run, parse_exit, make_exit):
                              r["execution"] == "analysed"
                              for r in load_records(records))
     outcome = classify_outcome(parse_exit, make_exit, measure, log_text,
-                               entry_analysed)
-    evidence = oom_evidence(measure, log_text) if measure else ""
+                               entry_analysed, dedicated_scope=dedicated_scope)
+    evidence = oom_evidence(measure, log_text, dedicated_scope) \
+        if measure else ""
     return outcome, evidence or "-"
 
 
 def outcome_command(args):
-    print("%s\t%s" % run_outcome(args.run, args.parse_exit, args.make_exit))
+    print("%s\t%s" % run_outcome(args.run, args.parse_exit, args.make_exit,
+                                 args.dedicated_scope))
     return 0
 
 
@@ -1999,7 +2014,8 @@ def recompute_command(args):
         if os.path.exists(os.path.join(dirpath, "measure")):
             run["outcome"], run["oom_evidence"] = run_outcome(
                 dirpath, exit_status(run.get("parse_exit")),
-                exit_status(run.get("make_exit")))
+                exit_status(run.get("make_exit")),
+                run.get("dedicated_scope") == "yes")
         row = digests.get((run.get("case"), run.get("mode")))
         if row:
             run["ast_sha256"] = row["ast_sha256"]
@@ -2465,6 +2481,9 @@ def main(argv=None):
     p.add_argument("parse_exit", type=int)
     p.add_argument("make_exit", type=int)
     p.add_argument("timeout", type=float)
+    p.add_argument("--dedicated-scope", action="store_true",
+                   help="the runner started the watchdog in a scope of its "
+                   "own")
     p.set_defaults(func=outcome_command)
     p = sub.add_parser("tables")
     p.add_argument("run_dir")

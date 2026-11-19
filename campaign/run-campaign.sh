@@ -25,6 +25,9 @@
 #   --switch DIR            opam switch of the builds (default: the local
 #                           switch of the test checkout)
 #   --keep                  keep the sessions and source snapshots
+#   --dedicated-scope       state that each measured invocation runs in a
+#                           cgroup scope of its own (see README.md, Outcomes);
+#                           the runner does not create it
 #
 # A checkout is a git working tree with no local change, or a directory made
 # by tools/build-reference.sh, which records its revision in the file
@@ -47,6 +50,7 @@ test_checkout=${FRAMA_C_CHECKOUT:-$HOME/Project/frama-c}
 reference_checkout=
 switch=
 keep=false
+dedicated_scope=no
 invocation=("$0" "$@")
 
 while [[ $# -gt 0 ]]; do
@@ -62,6 +66,7 @@ while [[ $# -gt 0 ]]; do
     --reference-checkout) reference_checkout=$2; shift 2 ;;
     --switch) switch=$2; shift 2 ;;
     --keep) keep=true; shift ;;
+    --dedicated-scope) dedicated_scope=yes; shift ;;
     -h|--help) sed -n '2,/^set -euo/p' "$0" | sed '$d; s/^# \{0,1\}//'; exit 0 ;;
     -*) printf 'Unknown option %s\n' "$1" >&2; exit 2 ;;
     *) break ;;
@@ -189,7 +194,9 @@ field() { "${tool[@]}" manifest-get "$manifest" "$1" "$2"; }
 # measure, its exit status, its log and its records (see classify_outcome
 # in tools/campaign.py).
 classify() {
-  "${tool[@]}" outcome "$1" "$2" "$3" "$timeout_s"
+  local scope=()
+  if [[ $dedicated_scope == yes ]]; then scope=(--dedicated-scope); fi
+  "${tool[@]}" outcome "$1" "$2" "$3" "$timeout_s" "${scope[@]}"
 }
 
 # A column of the row of a role in binaries.tsv.
@@ -292,7 +299,8 @@ run_one() {
     printf 'patch_sha256\t%s\n' "$(binary_field "$role" patch_sha256)"
     printf 'counter_families\t%s\n' "$(binary_field "$role" counter_families)"
     printf 'oscs_revision\t%s\nstarted\t%s\n' "$revision" "$started"
-    printf 'outcome\t%s\noom_evidence\t%s\n' "$outcome" "$evidence"
+    printf 'outcome\t%s\noom_evidence\t%s\ndedicated_scope\t%s\n' \
+      "$outcome" "$evidence" "$dedicated_scope"
     printf 'parse_exit\t%s\nmake_exit\t%s\n' "$parse_exit" "$make_exit"
     if [[ -f $run/measure ]]; then "${tool[@]}" measure "$run/measure"; fi
     printf 'timeout_s\t%s\nmemory_limit\t%s\nextra_eva_flags\t%s\nqueries_exit\t%s\n' \

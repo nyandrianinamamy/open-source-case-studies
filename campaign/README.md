@@ -120,8 +120,8 @@ is a measured 0, and a counter of a family that is not measured is written
 ```sh
 campaign/run-campaign.sh [--cases FILE] [--modes nocache,cache,reference] \
   [--repeat MODE] [--timeout SECONDS] [--memory-limit BYTES] \
-  [--extra-eva-flags FLAGS] --test-checkout DIR [--reference-checkout DIR] \
-  [--switch DIR] OUTPUT
+  [--extra-eva-flags FLAGS] [--dedicated-scope] --test-checkout DIR \
+  [--reference-checkout DIR] [--switch DIR] OUTPUT
 ```
 
 `run-campaign.sh --help` lists the options. The default wall-time limit of
@@ -188,8 +188,9 @@ SHA-256. Paths under the home directory are written from `~`.
 
 `run.tsv` holds the case, mode, binary revision and patch SHA-256, counter
 families, case-study revision, start time, outcome and its out-of-memory
-evidence, exit status of each step, the measure, the limits, the extra
-options, and the SHA-256 and size of the AST listing.
+evidence, whether the runner states a dedicated scope (`dedicated_scope`),
+exit status of each step, the measure, the limits, the extra options, and
+the SHA-256 and size of the AST listing.
 
 ### Outcomes
 
@@ -198,7 +199,7 @@ options, and the SHA-256 and size of the AST listing.
 | `parse-error` | the parse recipe failed; Eva did not run |
 | `harness-error` | the Eva invocation was not measured, or make failed after it |
 | `timeout` | the watchdog fired at the wall-time limit |
-| `oom` | Frama-C or the OCaml runtime reports exhausted memory; or a SIGKILL that the watchdog did not send, and the kernel log names the process, or `oom_kill` rose in a cgroup that held only the watchdog and the measured process |
+| `oom` | Frama-C or the OCaml runtime reports exhausted memory; or a SIGKILL that the watchdog did not send, and the kernel log names the process, or `oom_kill` rose in a scope that the runner states it created for the measured invocation (`--dedicated-scope`) |
 | `killed` | killed by SIGKILL that the watchdog did not send, with no evidence that the out-of-memory killer chose this process: cause unknown |
 | `error` | any other nonzero status: 1 invalid input, 3 unimplemented, 4 internal error, 125 unexpected exception, another signal, or 124 |
 | `incomplete` | status 0, but the entry point has no analysed record |
@@ -215,16 +216,26 @@ completion is read from the per-call record of the entry point.
 The counter `oom_kill` belongs to the cgroup of the watchdog, which is
 usually shared with the shell, the runner and anything else started in the
 same session. A rise of it then says that the killer chose some process of
-the cgroup, not this one: the run is `killed`, and the rise is kept as
-evidence (`cgroup oom_kill +N, shared cgroup`). The watchdog samples the
-processes of its cgroup at the start and every half second, and writes
-`cgroup_exclusive yes` when every sample lists only itself and the session of
-the measured command. The runner does not create cgroups. A runner that
-wants this evidence can start each measured invocation in a cgroup of its
-own, for instance by prefixing the command of `bin/frama-c-measure` with
-`systemd-run --user --scope --quiet -p MemoryMax=BYTES`; under such a scope
-the watchdog writes `yes`. Without it, `oom` after a SIGKILL needs the kernel
-log, which `dmesg` may not let a user read.
+the cgroup, not this one. The watchdog also samples the processes of its
+cgroup at the start and every half second, and writes `cgroup_exclusive
+yes` when every sample lists only itself and the session of the measured
+command. Neither decides the class: a sample does not show that the command
+was in the cgroup, nor that no other process ran in it between two
+samples. Without other evidence the run is `killed`, and the rise and the
+samples are kept in `oom_evidence` (`cgroup oom_kill +N, samples exclusive
+yes, no dedicated scope`).
+
+The runner does not create cgroups. A rise of the counter is the cause only
+when the watchdog runs in a scope created for the measured invocation, and
+the runner says so with `--dedicated-scope`, which `run.tsv` records as
+`dedicated_scope yes`. To provide it, start the watchdog in a transient
+scope: in `bin/frama-c-measure`, replace `exec python3 -I` by
+`exec systemd-run --user --scope --quiet -p MemoryMax=BYTES python3 -I`, and
+pass `--dedicated-scope` to the runner. The scope then holds the watchdog and
+the session of the command; the watchdog survives a kill, since it writes
+the measure, so the process that the killer chose is the measured command.
+The runner checks neither the scope nor the statement. Without it, `oom`
+after a SIGKILL needs the kernel log, which `dmesg` may not let a user read.
 
 ### Per-call records
 
