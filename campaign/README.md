@@ -881,7 +881,11 @@ When `export-ast.sh` cannot be run (the binary is gone), a pair of runs of
 which one or both have no digest, and whose case, analyzer revision and
 patch, case-study revision and extra options are equal, has the numbering
 `asserted`: the same program parsed alike is expected to be numbered alike,
-but no digest checks it. Such a pair is otherwise `not established`.
+but no digest checks it. Such a pair is otherwise `not established`. The
+fields must be recorded: the two revisions in full, the patch as its
+SHA-256 or `-` (what the runner writes for a checkout without a patch),
+the extra options as written (`-` for none). Two `run.tsv` that have `-`
+or the same shortened text in place of a revision have no equal revision.
 
 To replay a campaign, build the binaries at the revisions of
 `provenance/binaries.tsv` with `tools/build-reference.sh`, check out this

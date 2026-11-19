@@ -1433,7 +1433,7 @@ class CompareRuns(unittest.TestCase):
             run = os.path.join(root, "runs", "c", mode)
             os.makedirs(run)
             base = {"case": "c", "mode": mode, "revision": "a" * 40,
-                    "patch_sha256": "-", "oscs_revision": "o" * 40,
+                    "patch_sha256": "-", "oscs_revision": "c" * 40,
                     "extra_eva_flags": "-", "outcome": "completed",
                     "entry_point": "main"}
             base.update(fields)
@@ -1475,6 +1475,25 @@ class CompareRuns(unittest.TestCase):
             {"ast_sha256": None},
             {"ast_sha256": None, "extra_eva_flags": "-cpp-extra-args=-DX"})
         self.assertEqual(s.get("numbering"), "not established")
+
+    def test_revisions_that_are_not_recorded_are_not_equal(self):
+        # Two runs before the digest whose run.tsv holds the same text in
+        # place of a revision or of a patch: nothing is known to be equal.
+        for field, text in (("revision", "-"), ("oscs_revision", "-"),
+                            ("revision", "a" * 7), ("oscs_revision", "HEAD"),
+                            ("patch_sha256", "unknown"),
+                            ("patch_sha256", None), ("oscs_revision", None),
+                            ("extra_eva_flags", None)):
+            with self.subTest(field=field, text=text):
+                fields = {"ast_sha256": None, field: text}
+                _, _, s = self.compare(fields, fields)
+                self.assertEqual(s.get("numbering"), "not established")
+                self.assertEqual(s.get("complete"), "False")
+                self.assertIn("numbering not established", s.get("verdict"))
+        # A patch is recorded by its SHA-256.
+        fields = {"ast_sha256": None, "patch_sha256": "D" * 64}
+        _, _, s = self.compare(fields, dict(fields, patch_sha256="d" * 64))
+        self.assertEqual(s.get("numbering"), "asserted")
 
     def test_failed_listing_against_a_run_before_the_digest(self):
         # A run of this runner whose AST could not be listed gives no

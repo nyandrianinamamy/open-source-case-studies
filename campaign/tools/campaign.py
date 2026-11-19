@@ -2622,6 +2622,26 @@ def recorded_preprocessing(run_dir, run):
 
 # ----- Comparison of two runs -----------------------------------------------
 
+GIT_REVISION = re.compile(r"[0-9a-f]{40}", re.ASCII)
+
+
+def recorded_origin(run):
+    """The fields of run.tsv that an asserted numbering compares, or None
+    when one of them holds no value: the case, the revisions of the analyzer
+    and of the case studies in full, the patch of the analyzer as its
+    SHA-256 or - (the runner writes - for a checkout without a patch), and
+    the extra options (- for none). A revision written - or cut short is not
+    a recorded revision."""
+    case, extra = run.get("case"), run.get("extra_eva_flags")
+    revision, oscs = run.get("revision", ""), run.get("oscs_revision", "")
+    patch = run.get("patch_sha256", "")
+    if not (case and extra and GIT_REVISION.fullmatch(revision)
+            and GIT_REVISION.fullmatch(oscs)
+            and (patch == "-" or valid_sha256(patch))):
+        return None
+    return case, revision, patch.lower(), oscs, extra
+
+
 def run_numbering(run_a, run_b, recorded_a=None, recorded_b=None):
     """The evidence that two runs number the statements alike, from their
     run.tsv (see numbering_state). A run of this runner records the SHA-256
@@ -2636,7 +2656,8 @@ def run_numbering(run_a, run_b, recorded_a=None, recorded_b=None):
     the same case, revision and patch of the analyzer, revision of the case
     studies and extra options, the extra options being the only ones that
     differ between the preprocessing of two modes; otherwise it is not
-    established."""
+    established. Each of these fields must hold a value (recorded_origin):
+    two runs whose revision is not recorded have no equal revision."""
     if "ast_sha256" in run_a and "ast_sha256" in run_b:
         if any(r.get("ast_format") != AST_FORMAT for r in (run_a, run_b)):
             return "not established"
@@ -2657,11 +2678,10 @@ def run_numbering(run_a, run_b, recorded_a=None, recorded_b=None):
     if any("pp_command_sha256" in r or "pp_text_sha256" in r
            for r in (run_a, run_b)):
         return "not established"
-    same = all(run_a.get(k) and run_a.get(k) == run_b.get(k)
-               for k in ("case", "revision", "patch_sha256", "oscs_revision",
-                         "extra_eva_flags"))
+    origin_a, origin_b = recorded_origin(run_a), recorded_origin(run_b)
     return numbering_state(run_a.get("ast_sha256"), run_b.get("ast_sha256"),
-                           asserted=same)
+                           asserted=(origin_a is not None
+                                     and origin_a == origin_b))
 
 
 MANIFESTS = {}
