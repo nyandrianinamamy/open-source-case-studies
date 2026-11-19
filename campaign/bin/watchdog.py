@@ -23,6 +23,13 @@ The watchdog writes to MEASURE one KEY<TAB>VALUE line per value:
       did not send: yes if the kernel log reports that the out-of-memory
       killer killed it, no if it does not, unreadable when the log cannot
       be read; - otherwise
+  cgroup_exclusive  yes if every sample of the processes of that cgroup,
+      taken at the start and then every half second, lists only the
+      watchdog and the processes of the session of the command; no if a
+      sample lists another process; unreadable when the list cannot be
+      read. Only with yes does a positive oom_kill_events say that the
+      killer chose the command; a process that starts and ends between two
+      samples is not seen, which a cgroup created for the run excludes.
 It exits with the status of the command. Only the Python standard library is
 used.
 """
@@ -48,6 +55,37 @@ def cgroup_events():
     except OSError:
         pass
     return None
+
+
+def cgroup_procs(events):
+    """The file that lists the processes of the cgroup whose memory events
+    are [events], or None."""
+    if events is None:
+        return None
+    procs = os.path.join(os.path.dirname(events), "cgroup.procs")
+    return procs if os.access(procs, os.R_OK) else None
+
+
+def foreign_processes(procs, session):
+    """Whether the cgroup listed in [procs] holds a process other than this
+    one and those of [session]: True, False, or None when unreadable."""
+    try:
+        with open(procs) as f:
+            pids = [int(line) for line in f if line.strip()]
+    except (OSError, ValueError):
+        return None
+    for pid in pids:
+        if pid == os.getpid():
+            continue
+        try:
+            if os.getsid(pid) == session:
+                continue
+        except ProcessLookupError:
+            continue
+        except OSError:
+            return True
+        return True
+    return False
 
 
 def oom_kills(events):
@@ -106,12 +144,22 @@ def main(argv):
 
     for signum in (signals.SIGTERM, signals.SIGINT, signals.SIGHUP):
         signals.signal(signum, forward)
+    procs = cgroup_procs(events)
+    exclusive = "unreadable" if procs is None else "yes"
+    sampled = None
     watchdog, term_s, kill_s = "none", None, None
     while True:
         pid, status, usage = os.wait4(child.pid, os.WNOHANG)
         if pid == child.pid:
             break
         now = time.monotonic() - start
+        if exclusive == "yes" and (sampled is None or now >= sampled + 0.5):
+            sampled = now
+            foreign = foreign_processes(procs, child.pid)
+            if foreign is None:
+                exclusive = "unreadable"
+            elif foreign:
+                exclusive = "no"
         if watchdog == "none" and now >= timeout_s:
             watchdog, term_s = "term", now
             try:
@@ -158,7 +206,8 @@ def main(argv):
                 ("watchdog_term_s", fmt(term_s)),
                 ("watchdog_kill_s", fmt(kill_s)),
                 ("oom_kill_events", oom_events),
-                ("kernel_log_oom", kernel)):
+                ("kernel_log_oom", kernel),
+                ("cgroup_exclusive", exclusive)):
             f.write("%s\t%s\n" % (key, value))
     return code
 
