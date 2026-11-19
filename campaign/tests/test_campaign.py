@@ -4,6 +4,7 @@ Run from the root of the repository:
   python3 -I -m unittest discover -s campaign/tests -v
 """
 
+import collections
 import contextlib
 import csv
 import gzip
@@ -2855,6 +2856,55 @@ class EntryPoint(unittest.TestCase):
         self.assertEqual(outcomes, ["completed", "incomplete"])
         self.assertEqual(s.get("entry_point_b"), "False")
         self.assertEqual(s.get("complete"), "False")
+
+
+class PilotResults(unittest.TestCase):
+    """The results README of the pilot states the counts of its committed
+    tables."""
+
+    PILOT = os.path.join(os.path.dirname(HERE), "results", "pilot-2026-11-19")
+    WORDS = {2: "two", 3: "three", 4: "four"}
+
+    def readme(self):
+        with open(os.path.join(self.PILOT, "README.md"),
+                  encoding="utf-8") as f:
+            return " ".join(f.read().split())
+
+    def rows(self, *path):
+        with open(os.path.join(self.PILOT, *path), encoding="utf-8",
+                  newline="") as f:
+            lines = [line for line in f if not line.startswith("#")]
+        return list(csv.DictReader(lines, delimiter="\t"))
+
+    def test_unanswered_queries_are_the_totals_of_the_table(self):
+        rows = self.rows("tables", "queries.tsv")
+        totals = []
+        for column in rows[0]:
+            match = re.fullmatch(r"unavailable_([ab])_(.+)", column)
+            if match:
+                total = sum(int(r[column]) for r in rows
+                            if r[column].isdigit())
+                if total:
+                    totals.append("%s `%s` %s" % (match.group(1).upper(),
+                                                  match.group(2),
+                                                  "{:,}".format(total)))
+        stated = ", ".join(totals[:-1]) + " and " + totals[-1]
+        self.assertIn("Over the %d comparisons, the unanswered queries are "
+                      "%s, and 0 for every other reason and side"
+                      % (len(rows), stated), self.readme())
+
+    def test_runs_of_each_case_are_those_of_the_digests(self):
+        counts = collections.Counter(
+            r["case"] for r in self.rows("ast-digests.tsv"))
+        readme = self.readme()
+        for case, count in sorted(counts.items()):
+            if case.startswith("fixtures/"):
+                self.assertIn("%s for `%s`"
+                              % (self.WORDS[count], case.split("/")[1]),
+                              readme)
+            else:
+                self.assertEqual(count, 3, case)
+        self.assertIn("Each case had one digest over its three runs", readme)
 
 
 def campaign_numbering_options():
