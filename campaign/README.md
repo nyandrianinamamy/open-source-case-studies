@@ -19,6 +19,7 @@ caching and compares the runs. It implements the benchmark protocol of
 | `tools/make-manifest.sh` | regenerates the manifest |
 | `tools/outcome-demo.sh` | constructed runs for each outcome class |
 | `tools/archive-logs.sh` | packs the raw logs of a campaign, with their SHA-256 |
+| `tools/export-ast.sh` | lists again the AST of runs recorded before its digest |
 | `fixtures/` | constructed programs and the checks run on them |
 | `reference/set-a-recorded.tsv` | set A membership recorded by issue #28 |
 | `tests/test_campaign.py` | tests of `campaign.py` |
@@ -99,11 +100,18 @@ families: `builtin` (`builtin-applied-*`), `memexec` (`memexec-*`),
 `supplied` (`cache-hits`, `cache-rejected-*`, `cache-refused-*`),
 `collector` (`collector-*`) and `producer` (`cache-produced`,
 `cache-production-refused-*`). A run measures the families of its binary
-that its options do not turn off: `-eva-no-memexec` turns off `memexec`,
-`-eva-no-cache-collect` turns off `collector` and `producer`. The statistics
-file has no row for a counter that stays at 0, so a counter of a measured
-family with no row is a measured 0, and a counter of a family that is not
-measured is written `-` in the tables.
+that its effective options do not turn off. The options are those of the
+command that ran Eva (the file `command` written by the makefiles, or
+`eva-command` of a fixture), in their order, so options added by a makefile
+after those of the mode count: the last of `-eva-memexec` and
+`-eva-no-memexec` decides `memexec` (off by default), and the last of
+`-eva-cache-collect` and `-eva-no-cache-collect` decides `collector` and
+`producer` (on by default). A run whose log prints `storage: refused
+(disabled)` did not run memexec, whatever its options, so `memexec` is not
+measured either. The mode name is not used. The statistics file has no row
+for a counter that stays at 0, so a counter of a measured family with no row
+is a measured 0, and a counter of a family that is not measured is written
+`-` in the tables.
 
 ## Running
 
@@ -116,7 +124,14 @@ campaign/run-campaign.sh [--cases FILE] [--modes nocache,cache,reference] \
 
 `run-campaign.sh --help` lists the options. The default wall-time limit of
 each Eva invocation is 3,600 s. Runs are serial and are not retried; a
-mode that fails does not stop the other modes. Each run:
+mode that fails does not stop the other modes.
+
+The runner records the SHA-256 of the manifest and of the patch of each
+binary on their bytes, and the archive keeps these bytes (see below). It
+therefore stops before it writes anything when the manifest or a patch
+contains the home directory: write the path as `~` or as a variable.
+
+Each run:
 
 1. extracts the case-study sources at `oscs_revision` with `git archive` into
    a fresh directory, and removes any saved parse or Eva result;
@@ -128,12 +143,17 @@ mode that fails does not stop the other modes. Each run:
    and SIGKILL 60 s later. It writes the elapsed time, CPU times, peak
    resident memory, exit status or signal, whether it fired and when, and
    the evidence of the out-of-memory killer that it can read: the increase
-   of `oom_kill` in the memory events of its cgroup, and, for a SIGKILL that
-   it did not send, the kernel log (`unreadable` when `dmesg` is not
-   allowed). Make itself is not measured;
+   of `oom_kill` in the memory events of its cgroup, whether that cgroup
+   held other processes (`cgroup_exclusive`, see Outcomes), and, for a
+   SIGKILL that it did not send, the kernel log (`unreadable` when `dmesg`
+   is not allowed). Make itself is not measured;
 4. builds the per-call records from the log and classifies the outcome;
-5. when the run completed, loads the saved session and answers the state
-   queries. This step is not timed.
+5. loads the session saved by the parse recipe, which the Eva recipe loads,
+   and lists its AST (see Alignment of two runs); `run.tsv` records the
+   SHA-256 of the listing (`ast_sha256`, `-` when it could not be written)
+   and its number of statements. This step is not timed;
+6. when the run completed, loads the session saved by Eva and answers the
+   state queries. This step is not timed.
 
 ## Output
 
@@ -144,7 +164,7 @@ OUTPUT/
   tools/ROLE/  sites.env version plugins campaign_queries.cmxs checkout
   runs/CASE/MODE/
                run.tsv measure mode.mk parse-command eva-command
-               eva.log.gz records.jsonl.gz queries.tsv.gz
+               eva.log.gz records.jsonl.gz queries.tsv.gz ast.tsv.gz
                alarms.csv eva-stats.csv stats.txt metrics.log ...
   comparisons/CASE/A-vs-B/
                pair.tsv alignment-*.tsv queries-*.tsv alarms-*.tsv
@@ -161,8 +181,8 @@ SHA-256. Paths under the home directory are written from `~`.
 
 `run.tsv` holds the case, mode, binary revision and patch SHA-256, counter
 families, case-study revision, start time, outcome and its out-of-memory
-evidence, exit status of each step, the measure, the limits and the extra
-options.
+evidence, exit status of each step, the measure, the limits, the extra
+options, and the SHA-256 and size of the AST listing.
 
 ### Outcomes
 
@@ -171,8 +191,8 @@ options.
 | `parse-error` | the parse recipe failed; Eva did not run |
 | `harness-error` | the Eva invocation was not measured, or make failed after it |
 | `timeout` | the watchdog fired at the wall-time limit |
-| `oom` | Frama-C or the OCaml runtime reports exhausted memory, or the cgroup or the kernel log reports the out-of-memory killer |
-| `killed` | killed by SIGKILL that the watchdog did not send, with no evidence of the out-of-memory killer: cause unknown |
+| `oom` | Frama-C or the OCaml runtime reports exhausted memory; or a SIGKILL that the watchdog did not send, and the kernel log names the process, or `oom_kill` rose in a cgroup that held only the watchdog and the measured process |
+| `killed` | killed by SIGKILL that the watchdog did not send, with no evidence that the out-of-memory killer chose this process: cause unknown |
 | `error` | any other nonzero status: 1 invalid input, 3 unimplemented, 4 internal error, 125 unexpected exception, another signal, or 124 |
 | `incomplete` | status 0, but the entry point has no analysed record |
 | `completed` | status 0 and the entry point was analysed |
@@ -184,6 +204,20 @@ from elsewhere. The case-study options hide the `VALUES COMPUTED` banner, so
 completion is read from the per-call record of the entry point.
 `tools/outcome-demo.sh` constructs one run for `timeout`, `oom`, `error` and
 `killed`.
+
+The counter `oom_kill` belongs to the cgroup of the watchdog, which is
+usually shared with the shell, the runner and anything else started in the
+same session. A rise of it then says that the killer chose some process of
+the cgroup, not this one: the run is `killed`, and the rise is kept as
+evidence (`cgroup oom_kill +N, shared cgroup`). The watchdog samples the
+processes of its cgroup at the start and every half second, and writes
+`cgroup_exclusive yes` when every sample lists only itself and the session of
+the measured command. The runner does not create cgroups. A runner that
+wants this evidence can start each measured invocation in a cgroup of its
+own, for instance by prefixing the command of `bin/frama-c-measure` with
+`systemd-run --user --scope --quiet -p MemoryMax=BYTES`; under such a scope
+the watchdog writes `yes`. Without it, `oom` after a SIGKILL needs the kernel
+log, which `dmesg` may not let a user read.
 
 ### Per-call records
 
@@ -245,13 +279,45 @@ found (an interrupted log, a message whose stack does not fit the calls
 still open) are written as `{"problem": ...}` lines of `records.jsonl` and
 to `records-problems.log`.
 
+A log can also be cut inside a message. Each stack is checked: its last
+frame is the name of the entry point, which is the called function of a
+message without location; every other frame has a function name and a call
+site `FILE:LINE`, with `(stmt N)` when the log numbers the statements; the
+first frame is the called function. A message that is not a call
+disposition, has no stack, or whose stack fails these checks gives a
+structural problem instead of a record; `records` never stops on it.
+
 ### Alignment of two runs
 
 `campaign.py align A B PREFIX` aligns the records of two runs from the entry
 point down. The call site includes the statement number, so two calls on one
-line are told apart; statement numbers are compared only when both runs
-number the statements alike, which the runner asserts with
-`--same-numbering` when the two binaries have the same revision and patch.
+line are told apart. Statement numbers are compared only when both runs
+number the statements alike, which is established from the program, not
+from the binary: two runs of one binary whose preprocessing differs (a
+macro in a condition, say) can give one statement number to different calls.
+
+The query module lists the AST when `CAMPAIGN_AST_OUT` names a file: one
+line `stmt FUNCTION SID LOCATION TEXT` per statement of each function with a
+body, in the order of the globals and of the statements, where `TEXT` is the
+printed statement with its sub-statements named by their numbers, then
+`done COUNT`. Locations are written relative to the directory of the
+analysis, so two snapshots give the same listing. `campaign.py ast LISTING`
+prints its SHA-256 (`ast_sha256`) over the statement lines, or `-` when the
+listing is missing or cut. The numbering of two runs is:
+
+| Numbering | When |
+|---|---|
+| `same` | both digests are given and equal |
+| `different` | both are given and differ |
+| `not established` | a digest is missing |
+| `asserted` | runs recorded before the digest existed, see Results |
+
+`align` takes the digests (`--ast-a`, `--ast-b`) and the outcomes of the runs
+(`--outcome-a`, `--outcome-b`); `campaign.py compare OUTPUT CASE A B` reads
+them from the `run.tsv` of two runs and writes all the comparisons of the
+pair, as the runner does. Unless the numbering is `same` or `asserted`,
+every group of calls below the entry point is undecided, with the reason
+`AST digests differ` or `numbering not established`, and none is aligned.
 Two calls align when their parents align and they have the same function and
 call site, and either the sequence of (function, site) of the siblings is the
 same in both runs (aligned by position), or the pair (function, site) occurs
@@ -276,11 +342,16 @@ a hit of B (`nested_under_hit_b`) and the converse (`nested_under_hit_a`),
 the unmatched records and the undecided groups. It also says whether each
 run was interrupted, how many structural problems each log has, whether the
 logs give the statement numbers (`all`, `none` or `some`) and whether the
-numbering is the same. `accounted` is true when every record is in exactly
-one of these classes. `complete` is true when every record of both runs is
-aligned, no call is inferred or interrupted, no problem was found, both
-logs give the statement numbers and the numbering is the same; `verdict`
-lists the reasons when it is false. The individual records are in
+numbering is the same (`numbering`), whether each log has a record of the
+entry point and the outcome of each run. `accounted` is true when every
+record is in exactly one of these classes. `complete` is true when both runs
+completed, both logs have a record of the entry point, every record of both
+runs is aligned, no call is inferred or interrupted, no problem was found,
+both logs give the statement numbers and the numbering is `same`; `verdict`
+is then `complete`. When the only reason against it is an `asserted`
+numbering, `verdict` is `numbering asserted from equal revision, patch,
+options and preprocessing, not checked by digest`; otherwise it lists the
+reasons. The individual records are in
 `alignment-differences`, `-under-hit`, `-unmatched` and `-undecided.tsv`,
 and the problems in `alignment-problems.tsv`.
 
@@ -300,9 +371,17 @@ VARIABLE`). Keys do not depend on the numbering of the AST: a statement is
 Before it evaluates a query, the module checks that the state is available.
 When it is not, it writes an `unavailable` line with the reason instead of
 an answer: `no-results` (the results of the function were not saved, as
-with `-eva-no-results`), `top-state` or `disabled-domain`. The file ends with
-`done COUNT`, where COUNT is the number of answer, unavailable and error
-lines; a file without this line, or with another count, is incomplete.
+with `-eva-no-results`), `disabled-domain` (the states of the cvalue domain
+were not saved, as with `-eva-no-results-domain cvalue`; Eva would answer
+top everywhere) or `top-state`. The queries of a function whose state was
+not saved are written over all callstacks only. The exit queries go through
+the same check. The file starts with `format 2` and lists the reached
+statements (`reach`), the exit of each function whose return statement is
+reached included (`FUNCTION:exit`). It ends with `done COUNT`, where COUNT is
+the number of answer, unavailable and error lines. A file is complete only
+when every line is well formed and the done line is the last line, given
+once, with that count; otherwise the comparison is incomplete and gives the
+first reason found.
 
 Values: `T` (top), `G` and the bases of a garbled mix, or `M` and
 `BASE=OFFSETS` for each base, where `NULL` holds the integers. Offsets:
@@ -331,7 +410,11 @@ of that side, whatever the other run answers.
 The summary counts the queries answered in both runs and on each side, and
 the queries without an answer on a side by reason: `unreached`,
 `no-callstack` (the statement is reached but not under that callstack),
-`no-results`, `top-state`, `disabled-domain`, `error`, `missing`. It says
+`no-results`, `top-state`, `disabled-domain`, `error`, `missing`. A query
+in one callstack of a function whose state was not saved takes the reason
+of the same query over all callstacks. An exit query is `unreached` when its
+exit is not listed as reached; a file without `format 2` lists no exit, and
+its exit queries are not said unreached. It says
 whether each file is complete (`complete_a`, `complete_b`) and whether the
 comparison is (`comparison`). Every query that is not `equal` is listed in
 `queries-differences.tsv`, and the statements reached in one run only in
@@ -362,7 +445,8 @@ writes `tables/`, which `run-campaign.sh` does at the end:
   release, under their libc or `Frama_C_` names), set A membership (no such
   application) and its agreement with the recorded count;
 - `collector.tsv`: the collector verdicts, the entries stored or refused by
-  the producer, and the counters of supplied entries, per run;
+  the producer, and the counters of supplied entries, with the rejections
+  and refusals of supplied entries by reason, per run;
 - `functions.tsv`: memexec activity and collector verdicts per function;
 - `times.tsv`: elapsed time per mode and the ratios cache/nocache and
   cache/reference when both runs completed;
@@ -372,7 +456,8 @@ writes `tables/`, which `run-campaign.sh` does at the end:
 - `tables.md`: all of the above but `functions.tsv`, as Markdown.
 
 A cell `-` is a value that was not measured, such as a memexec counter in
-the mode `nocache`.
+the mode `nocache`. A list of counts by reason is `none` when the family is
+measured and no count is positive.
 
 ## Pilot
 
@@ -387,24 +472,33 @@ default). It then runs the fixtures and the outcome demonstration, and
 appends their checks to `tables/tables.md`. It exits with 1 when a check
 fails.
 
-The fixtures (`fixtures/run-fixtures.sh`) run Frama-C directly on three
-programs, outside the manifest:
+The fixtures (`fixtures/run-fixtures.sh`) run Frama-C directly on four
+programs, outside the manifest. Each run lists its AST from a parse alone
+and from the session saved by Eva; the two listings must have the same
+digest, and the comparisons take the first as the evidence of numbering:
 
 - `nested-hit.c`: the second call to `outer` is analysed with caching off and
   a hit with memexec; the two calls to `leaf` inside it must be reported as
-  nested under the hit, and two runs with memexec must align completely;
+  nested under the hit, and two runs with memexec must have equal digests
+  and align completely;
 - `frame.c`: the program of the example run of issue #3. Before `r = 0;` in
   `get`, `r` is `{3}` in both runs under the callstack of the first call,
   `{5}` with caching off and no answer with memexec under the callstack of
   the second call, and over all callstacks `{3; 5}` with caching off against
   `{3}` with memexec, which must be reported as narrower. At the exit of
-  `get`, `r` is `{0}`. A fourth run, with `-eva-no-results`, must answer no
-  query, write each one as unavailable for lack of results, and end with a
-  done line that counts these lines;
+  `get`, `r` is `{0}`. A run with `-eva-no-results` and one with
+  `-eva-no-results-domain cvalue` must answer no query, write each one,
+  the exit queries included, as unavailable for that reason (`no-results`,
+  `disabled-domain`), and end with a done line that counts these lines;
 - `same-line.c`: two calls to `f` on one line, one on each branch of an `if`
   whose condition is a global set by `-DSIDE`; the runs with `SIDE` 0 and 1
-  analyse the same AST and take opposite branches. Their calls to `f` must
-  be unmatched, not aligned, and the alignment must not be complete.
+  analyse the same statements, have equal digests, and take opposite
+  branches. Their calls to `f` must be unmatched, not aligned, and the
+  alignment must not be complete;
+- `sites.c`: the same calls, with `SIDE` as the condition itself; the two
+  runs give one call site and statement number to different calls. Their
+  digests must differ, the calls must be undecided, not aligned, and the
+  alignment must not be complete.
 
 `stage1-pilot.sh` at the root of the case studies runs the two jsmn targets
 in the modes `nocache` and `cache` through the same runner, and exits with 1
@@ -422,10 +516,33 @@ campaign/tools/archive-logs.sh OUTPUT /outside/the/tree/NAME.tar.gz
 ```
 
 The archive writes the paths under the home directory from `~` and leaves
-out the compiled query modules; the same output gives the same archive. The protocol attaches this archive to the tag
+out the compiled query modules; the same output gives the same archive. The
+files whose SHA-256 the provenance records (the manifest and the patches)
+are archived as they were hashed: the script checks them against their
+digests and stops when one of them holds the home directory. The protocol attaches this archive to the tag
 of the campaign on GitHub, which is made when the branch is published. To
 check a copy of the archive, run `sha256sum -c raw-logs.sha256` in its
 directory.
+
+`campaign.py recompute OUTPUT --recorded-set-a reference/set-a-recorded.tsv`
+derives again, from the raw logs of an output directory or of its archive,
+the records of each run, the outcome of each measured run, the comparisons
+of each pair and the tables, with the tools of the current revision. Runs
+recorded before the runner listed the AST have no `ast_sha256`. Their
+digests can be listed again by re-running only the parsing step of each
+run, which runs no analysis:
+
+```sh
+campaign/tools/export-ast.sh OUTPUT ROLE CHECKOUT [SWITCH] > DIGESTS
+campaign.py recompute OUTPUT --ast-digests DIGESTS --recorded-set-a ...
+```
+
+`export-ast.sh` checks that the binary has the SHA-256 recorded for the
+role. When it cannot be run (the binary is gone), a pair of runs of which
+one or both have no digest, and whose case, analyzer revision and patch,
+case-study revision and extra options are equal, has the numbering
+`asserted`: the same program parsed alike is expected to be numbered alike,
+but no digest checks it. Such a pair is otherwise `not established`.
 
 To replay a campaign, build the binaries at the revisions of
 `provenance/binaries.tsv` with `tools/build-reference.sh`, check out this
