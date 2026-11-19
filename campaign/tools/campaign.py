@@ -2272,7 +2272,7 @@ def configured_entry_point(output, run_dir, run):
     entry = MANIFESTS[manifest].get(run.get("case"))
     if entry:
         return entry
-    mains = option_values(effective_options(run_dir, run), "-main")
+    mains = option_values(effective_options(run_dir, run) or (), "-main")
     return mains[-1] if mains else "main"
 
 
@@ -2502,11 +2502,14 @@ def effective_options(run_dir, run):
         if os.path.exists(path):
             with open_text(path) as f:
                 try:
-                    return shlex.split(f.read())
+                    return shlex.split(f.read()) or None
                 except ValueError:
-                    pass
-    return " ".join(run.get(k, "") for k in ("flag", "extra_eva_flags")
-                    ).split()
+                    return None
+    flags = " ".join(run.get(k, "") for k in ("flag", "extra_eva_flags"))
+    try:
+        return shlex.split(flags) or None
+    except ValueError:
+        return None
 
 
 def records_of_run(run_dir):
@@ -2518,14 +2521,25 @@ def records_of_run(run_dir):
     return []
 
 
+ANALYSIS_START = re.compile(
+    r"\[eva\] Analyzing (?:a complete|an incomplete) application starting at .+"
+)
+
+
+def analysis_starts(run_dir):
+    log = existing(os.path.join(run_dir, "eva.log"))
+    if log is None:
+        return 0
+    with open_text(log) as f:
+        return sum(ANALYSIS_START.fullmatch(line.rstrip("\r\n")) is not None
+                   for line in f)
+
+
 def logged_families(records):
-    """The families that the dispositions of a log show at work, when the
-    records are one tree: two trees may be two analyses, and the statistics
-    file holds those of the last one only. Memexec: a storage stored or
-    refused for another reason than disabled, or a hit; the collector: a
-    collector field; the producer: a producer field."""
-    if sum(1 for r in records if r.get("parent") is None) != 1:
-        return set()
+    """The families that the dispositions of a single analysis show at work.
+    Memexec: a storage stored or refused for another reason than disabled,
+    or a hit; the collector: a collector field; the producer: a producer
+    field."""
     found = set()
     for r in records:
         d = r.get("dispositions", {})
@@ -2549,23 +2563,21 @@ def storage_disabled(records):
                .startswith("refused (disabled)") for r in records)
 
 
-def families_of_run(binary_families, flags, stats_path, records):
-    """The counter families measured by the invocation that wrote a
-    statistics file: the families with a row in it; those the dispositions
-    of its log show at work (logged_families), among the families of the
-    binary; and, when its command has one stage (single_stage), those its
-    options measure (measured_families), less memexec when the log shows
-    the storage disabled. With -then, -then-on, -then-last, -then-replace or
-    -commands-file, only the evidence counts. [binary_families] None means
-    that the families of the binary are unknown: then only the rows count.
+def families_of_run(binary_families, flags, stats_path, records, starts):
+    """Counter families with rows in the statistics, plus evidence from the
+    invocation when it ran at most one analysis. With exactly one logged
+    start, the dispositions belong to that analysis. An unambiguous
+    single-stage command can also supply evidence. A binary whose families
+    are unknown can only supply evidence through the rows.
     """
     found = {family for family, _, _, _ in stats_rows(stats_path)}
-    if binary_families is None:
+    if binary_families is None or starts > 1:
         return found
-    found |= logged_families(records) & set(binary_families)
-    if single_stage(flags):
+    if starts == 1:
+        found |= logged_families(records) & set(binary_families)
+    if flags is not None and single_stage(flags):
         options = measured_families(binary_families, flags)
-        if storage_disabled(records):
+        if starts == 1 and storage_disabled(records):
             options.discard("memexec")
         found |= options
     return found
@@ -2581,7 +2593,8 @@ def run_families(run, stats_path, run_dir=None):
     if run.get("counter_families", "") != "":
         binary = [f for f in run["counter_families"].split(",") if f]
     return families_of_run(binary, effective_options(run_dir, run),
-                           stats_path, records_of_run(run_dir))
+                           stats_path, records_of_run(run_dir),
+                           analysis_starts(run_dir))
 
 
 def cell(value):

@@ -1971,7 +1971,8 @@ class EffectiveOptions(unittest.TestCase):
     def test_disabled_storage_printed(self):
         records = "".join(json.dumps(r) + "\n"
                           for r in records_of(NESTED_LOG_OFF))
-        t = self.tables({}, {"records.jsonl.gz": records})
+        t = self.tables({}, {"records.jsonl.gz": records,
+                             "eva.log": ANALYSIS_BANNER + NESTED_LOG_OFF})
         self.assertEqual(t["activity"]["hits"], "-")
 
     def test_measured_memexec(self):
@@ -1986,6 +1987,9 @@ class EffectiveOptions(unittest.TestCase):
                          "supplied-only=2")
         self.assertEqual(t["collector"].get("supplied_rejected_by_reason"),
                          "none")
+
+
+ANALYSIS_BANNER = "[eva] Analyzing a complete application starting at main\n"
 
 
 COLLECTED_LOG = NESTED_LOG.replace(
@@ -2016,6 +2020,10 @@ class CounterEvidence(unittest.TestCase):
             write(os.path.join(run, "command"), command)
             write(os.path.join(run, "eva-stats.csv"), stats)
             if log is not None:
+                if not log.startswith(ANALYSIS_BANNER):
+                    log = ANALYSIS_BANNER + log
+                with gzip.open(os.path.join(run, "eva.log.gz"), "wt") as f:
+                    f.write(log)
                 with gzip.open(os.path.join(run, "records.jsonl.gz"),
                                "wt") as f:
                     f.write("".join(json.dumps(r) + "\n"
@@ -2093,10 +2101,9 @@ class CounterEvidence(unittest.TestCase):
         self.assertEqual(t["activity"]["hits"], "-")
 
     def test_dispositions_of_two_analyses(self):
-        # Two trees: the log may hold two analyses and the statistics are
-        # those of the last one, so the dispositions are no evidence.
+        # Each analysis starts and prints a tree.
         t = self.tables(self.MEMEXEC_THEN_OFF, "",
-                        NESTED_LOG + NESTED_LOG_OFF)
+                        NESTED_LOG + ANALYSIS_BANNER + NESTED_LOG_OFF)
         self.assertEqual(t["activity"]["hits"], "-")
 
     def test_disabled_storage_is_no_evidence(self):
@@ -2911,6 +2918,30 @@ def campaign_numbering_options():
     """The options of align that give equal evidence of numbering besides
     the AST digests: equal digests of the preprocessing."""
     return ["--pp-a", PP_0, "--pp-b", PP_0]
+
+
+class FourthReview(unittest.TestCase):
+    START = "[eva] Analyzing a complete application starting at main\n"
+
+    def test_starts_control_attribution(self):
+        cmd = ("frama-c -eva -eva-memexec -then -eva -eva-no-memexec "
+               "-eva-no-cache-collect -eva-msg-key=-cache\n")
+        first = self.START + COLLECTED_LOG.replace(
+            "collector: would-store", "collector: would-store; "
+            "producer: stored (entry 1)")
+        for banner in (self.START, self.START.replace("a complete",
+                                                       "an incomplete")):
+            for command in (cmd, "frama-c -eva -eva-memexec\n"):
+                with self.subTest(banner=banner, command=command):
+                    tables = CounterEvidence.tables(
+                        self, command, "builtin-applied-malloc\tm\t\t1\n",
+                        first + banner + "[eva] done\n")
+                    self.assertEqual(tables["activity"]["hits"], "-")
+                    self.assertEqual(tables["collector"]["collector_refused"], "-")
+                    self.assertEqual(tables["collector"]["producer_stored"], "-")
+                    tables = CounterEvidence.tables(
+                        self, command, "memexec-hits\tf\t\t3\n", first + banner)
+                    self.assertEqual(tables["activity"]["hits"], "3")
 
 
 if __name__ == "__main__":
