@@ -2072,10 +2072,28 @@ class CounterEvidence(unittest.TestCase):
         self.assertEqual(t["activity"]["hits"], "1")
         self.assertEqual(t["activity"]["misses"], "2")
 
+    SINGLE = ("frama-c -eva -eva-memexec -eva-msg-key=+cache,+callstacks "
+              "-eva-statistics-file eva-stats.csv\n")
+
     def test_dispositions_are_evidence(self):
-        # No memexec row, but the log shows entries stored: a measured zero.
-        t = self.tables(self.MEMEXEC_THEN_OFF, "", NESTED_LOG)
+        # No memexec row, but the log of a single-stage command shows
+        # entries stored: a measured zero.
+        t = self.tables(self.SINGLE, "", NESTED_LOG)
         self.assertEqual(t["activity"]["hits"], "0")
+
+    def test_dispositions_of_a_sequence_are_not_evidence(self):
+        # A later analysis can be silent (-eva-verbose 0) and write the
+        # statistics: one logged start does not attribute the dispositions.
+        for command in (
+                self.MEMEXEC_THEN_OFF,
+                "frama-c -load framac.sav -then -eva -eva-no-cache-collect "
+                "-eva-no-memexec -eva-verbose 0\n",
+                "frama-c -eva -commands-file cmds\n"):
+            with self.subTest(command=command):
+                t = self.tables(command, "", COLLECTED_LOG)
+                self.assertEqual(t["activity"]["hits"], "-")
+                self.assertEqual(t["collector"]["collector_would_store"], "-")
+                self.assertEqual(t["collector"]["collector_refused"], "-")
 
     def test_commands_file_without_evidence(self):
         # The commands file may disable the collector and the producer:
@@ -2091,10 +2109,9 @@ class CounterEvidence(unittest.TestCase):
         self.assertEqual(t["activity"]["in_set_a"], "-")
 
     def test_collector_field_is_evidence(self):
-        t = self.tables("frama-c -eva -commands-file cmds\n", "",
-                        COLLECTED_LOG)
+        t = self.tables("frama-c -eva -eva-no-cache-collect "
+                        "-eva-cache-collect\n", "", COLLECTED_LOG)
         self.assertEqual(t["collector"]["collector_would_store"], "0")
-        self.assertEqual(t["collector"]["producer_stored"], "-")
 
     def test_producer_rows_are_evidence(self):
         t = self.tables("frama-c -eva -then-on p -eva\n",
@@ -3073,9 +3090,13 @@ class FourthReview(unittest.TestCase):
                 tables = CounterEvidence.tables(
                     self, CounterEvidence.MEMEXEC_THEN_OFF, "", self.START + log)
                 self.assertEqual(tables["activity"]["hits"], "-")
-        tables = CounterEvidence.tables(
-            self, CounterEvidence.MEMEXEC_THEN_OFF, "", self.START + supplied)
-        self.assertEqual(tables["collector"]["supplied_refused"], "0")
+        # A supplied disposition without its counter row contradicts the
+        # statistics: the count is not established, in a sequence or not.
+        for command in (CounterEvidence.MEMEXEC_THEN_OFF,
+                        "frama-c -eva -eva-memexec\n"):
+            tables = CounterEvidence.tables(
+                self, command, "", self.START + supplied)
+            self.assertEqual(tables["collector"]["supplied_refused"], "-")
         for stat in ("memexec-hits\tf\t\tbroken\n",
                      "memexec-hits\tf\t\t5",
                      "memexec-made-up\tf\t\t3\n",
@@ -3184,6 +3205,16 @@ class FourthReview(unittest.TestCase):
             self.assertIn("superseded", out)
             self.assertIn("0 of 1 alignments are complete", out)
             self.assertIn("numbering `recorded command`, `complete=False`", out)
+
+    def test_historical_check_without_its_comparison(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            historical = "PASS nested-hit: two runs of the same binary align completely"
+            write(os.path.join(tmp, "fixtures.txt"), historical + "\n")
+            code, out, error = run_main(["tables", tmp])
+            self.assertEqual((code, error), (0, None))
+            self.assertIn(historical, out)
+            self.assertIn("Current alignment unavailable", out)
+            self.assertIn("revision `unavailable`", out)
 
 
 if __name__ == "__main__":

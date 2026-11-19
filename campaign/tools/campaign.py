@@ -2727,18 +2727,22 @@ def logged_families(records):
 
 def families_of_run(binary_families, flags, stats_path, records, starts):
     """Counter families with rows in the statistics, plus evidence from the
-    invocation when it ran at most one analysis. With exactly one logged
-    start, the dispositions belong to that analysis. An unambiguous
-    single-stage command can also supply evidence. A binary whose families
-    are unknown can only supply evidence through the rows.
+    invocation when its command is an unambiguous single stage. The log
+    alone does not show how many analyses ran: a later analysis can be
+    silent, so one logged start is evidence only together with such a
+    command. The supplied family is established by its rows only: each of
+    its dispositions increments a counter, so a disposition without a row
+    is a contradiction and gives no count. A binary whose families are
+    unknown can only supply evidence through the rows.
     """
     rows, invalid = stats_rows(stats_path)
     found = {family for family, _, _, _ in rows}
     if binary_families is None or starts > 1:
         return found - invalid
-    if starts == 1:
-        found |= logged_families(records) & set(binary_families)
     if flags is not None and single_stage(flags):
+        if starts == 1:
+            found |= (logged_families(records) - {"supplied"}) \
+                & set(binary_families)
         found |= measured_families(binary_families, flags) - {
             "memexec", "supplied"}
     return found - invalid
@@ -2957,7 +2961,7 @@ def tables_command(args):
                 ("fixtures/nested-hit.c/default", "cache", "cache.2"), {})
             if (name == "fixtures.txt"
                     and "PASS nested-hit: two runs of the same binary align completely"
-                    in checks.splitlines() and nested_hit.get("complete") == "False"):
+                    in checks.splitlines() and nested_hit.get("complete") != "True"):
                 revision_path = os.path.join(root, "provenance",
                                              "campaign-revision.txt")
                 revision = "unavailable"
@@ -2968,13 +2972,21 @@ def tables_command(args):
                         revision = first[0]
                 count = sum(row.get("complete") == "True"
                             for row in alignment_results.values())
-                intro = ("Historical checks at revision `%s` (alignment "
-                         "result superseded).\n\n"
-                         "Current result: %d of %d alignments are complete. "
-                         "The two archived memexec runs of `nested-hit.c` "
-                         "have numbering `%s`, `complete=False`.\n\n"
-                         % (revision, count, len(alignment_results),
-                            nested_hit.get("numbering", "-")))
+                if nested_hit:
+                    intro = ("Historical checks at revision `%s` (alignment "
+                             "result superseded).\n\n" % revision)
+                    intro += (
+                        "Current result: %d of %d alignments are complete. "
+                        "The two archived memexec runs of `nested-hit.c` "
+                        "have numbering `%s`, `complete=False`.\n\n"
+                        % (count, len(alignment_results),
+                           nested_hit.get("numbering", "-")))
+                else:
+                    intro = ("Checks recorded at revision `%s`.\n\n"
+                             % revision)
+                    intro += ("Current alignment unavailable: the comparison "
+                              "of the two memexec runs of `nested-hit.c` is "
+                              "not in this directory.\n\n")
             sections.append("## %s\n\n%s```\n%s```\n"
                             % (title, intro, checks))
     md.write("\n".join(sections))

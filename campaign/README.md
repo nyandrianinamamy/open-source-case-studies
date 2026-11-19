@@ -103,10 +103,14 @@ families: `builtin` (`builtin-applied-*`), `memexec` (`memexec-*`),
 `collector` (`collector-*`) and `producer` (`cache-produced`,
 `cache-production-refused-*`). A family is measured by a run when the
 invocation that wrote its statistics file gives evidence for it. A valid
-counter row is evidence for its family. With exactly one analysis start
-in the Eva log, a collector or producer disposition is evidence for its
-family. With more than one start, only rows in the statistics file count,
-even when the log shows only one call tree.
+counter row is evidence for its family. A memexec, collector or producer
+disposition in the Eva log is evidence for its family only when the
+recorded command is a single stage and the log has exactly one analysis
+start. In every other case only rows in the statistics file count: a
+later analysis can be silent (`-eva-verbose 0`) and write the statistics,
+so the log does not show how many analyses ran. The supplied family is
+established by its rows only: each of its dispositions increments a
+counter, so a disposition without a row gives no count.
 
 For memexec, the unambiguous storage dispositions are `stored (entry N)`
 and `refused` with one of `not-cacheable`, `no-inout`, `footprint-top`,
