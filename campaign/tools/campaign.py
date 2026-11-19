@@ -1735,7 +1735,7 @@ def counts_command(args):
         else:
             with open_text(args.log) as f:
                 records = cache_records(f)
-    families = families_of_run(binary, args.flags.split() if args.flags else None,
+    families = families_of_run(binary, static_command(args.flags or ""),
                                args.stats, records, starts)
     for key, value in run_counts(args.stats, families).items():
         print("%s\t%s" % (key, cell(value)))
@@ -2273,35 +2273,92 @@ def preprocessing_digest(run):
     return None
 
 
+SHELL_WORD = re.compile(
+    r"""(?:[-A-Za-z0-9_./,:=+%@~]+|\\[ -~]|'[^'\r\n]*'|"""
+    r""""(?:[^"\\`$\r\n]|\\["\\])*")+(?=[ \t]|$)"""
+)
+CPP_VALUE_OPTIONS = {"-cpp-command", "-cpp-extra-args", "-cpp-extra-args-per-file"}
+CPP_SWITCHES = {"-cpp-frama-c-compliant", "-no-cpp-frama-c-compliant"}
+
+
+def static_command(text):
+    """Decode literal shell words, or return None for shell syntax such as
+    expansions, pipelines, wildcards, or an unterminated quote."""
+    text = text.strip(" \t")
+    args = []
+    while text:
+        match = SHELL_WORD.match(text)
+        if match is None:
+            return None
+        args.extend(shlex.split(match[0]))
+        text = text[match.end():].lstrip(" \t")
+    return tuple(args) or None
+
+
+def fixture_preprocessing(text):
+    """Decode the archived fixture's extra flags. The only analysis options
+    ignored here are the fixture's switches that suppress Eva results."""
+    if text == "-":
+        return ()
+    args = static_command(text or "")
+    if args is None:
+        return None
+    kept = []
+    i = 0
+    while i < len(args):
+        arg = args[i]
+        name, equals, _ = arg.partition("=")
+        if name in CPP_VALUE_OPTIONS or name == "-eva-no-results-domain":
+            if not equals:
+                if (i + 1 == len(args)
+                        or args[i + 1].startswith(("-cpp-", "-eva-", "-lib-entry"))):
+                    return None
+                i += 1
+            if name in CPP_VALUE_OPTIONS:
+                kept.append((arg,) if equals else (arg, args[i]))
+        elif arg in CPP_SWITCHES or arg in ("-lib-entry", "-no-lib-entry"):
+            kept.append((arg,))
+        elif arg != "-eva-no-results":
+            return None
+        i += 1
+    return tuple(kept)
+
+
 def recorded_preprocessing(run_dir, run):
-    """The preprocessing of a run as its commands record it, for a run that
-    has no preprocessing digest: the revision and patch of its binary, and
-    the Command lines of its parse log (parse.log, written by analysis.mk)
-    with the directory of its source snapshot written ${SRC}; for a run of a
-    fixture, which has no parse log, the SHA-256 of the copy of the fixture
-    kept in the run and the options -cpp* of its extra options. None when
-    the run recorded neither."""
-    binary = "%s %s" % (run.get("revision", "-"), run.get("patch_sha256", "-"))
+    """The archived binary provenance and preprocessing command arguments,
+    or None when the recorded command cannot be interpreted. Fixtures
+    record their source and extra flags in place of a parse log."""
+    revision = run.get("revision", "")
+    patch = run.get("patch_sha256", "-")
+    if not re.fullmatch(r"[0-9a-f]{40}", revision) or (
+            patch != "-" and not valid_sha256(patch)):
+        return None
+    binary = (revision, patch.lower())
     log = existing(os.path.join(run_dir, "parse.log"))
     case, mode = run.get("case", ""), run.get("mode", "")
     if log:
+        snapshot = re.compile(
+            r"(?:^|(?<=[= ]))~?/[^\s=\"']*?/runs/%s/%s/src(?=[/=\s]|$)"
+            % (re.escape(case), re.escape(mode)))
+        commands = []
         with open_text(log) as f:
-            lines = [l.rstrip("\n")[len("Command: "):] for l in f
-                     if l.startswith("Command: ")]
-        snapshot = re.compile(r"[^\s=\"']*/runs/%s/%s/src(?=[/=\s\"']|$)"
-                              % (re.escape(case), re.escape(mode)))
-        if lines:
-            return "\n".join([binary] + [snapshot.sub("${SRC}", l)
-                                         for l in lines])
-        return None
+            for line in f:
+                if not line.startswith("Command: "):
+                    continue
+                args = static_command(line[len("Command: "):].rstrip("\n"))
+                if (not args or not line.endswith("\n") or not single_stage(args)
+                        or os.path.basename(args[0]) not in ("frama-c", "frama-c-measure")):
+                    return None
+                commands.append(tuple(snapshot.sub("${SRC}", arg) for arg in args))
+        return (binary, tuple(commands)) if commands else None
     fixture = re.fullmatch(r"fixtures/([^/]+)/default", case)
     source = fixture and os.path.join(run_dir, fixture.group(1))
     if source and os.path.isfile(source):
-        with open(source, "rb") as f:
-            digest = hashlib.sha256(f.read()).hexdigest()
-        cpp = [x for x in run.get("extra_eva_flags", "").split()
-               if x.startswith("-cpp")]
-        return "\n".join([binary, digest] + cpp)
+        flags = fixture_preprocessing(run.get("extra_eva_flags"))
+        if flags is not None:
+            with open(source, "rb") as f:
+                digest = hashlib.sha256(f.read()).hexdigest()
+            return binary, digest, flags
     return None
 
 
@@ -2596,15 +2653,9 @@ def effective_options(run_dir, run):
         path = os.path.join(run_dir, name)
         if os.path.exists(path):
             with open_text(path) as f:
-                try:
-                    return shlex.split(f.read()) or None
-                except ValueError:
-                    return None
+                return static_command(f.read().rstrip("\n"))
     flags = " ".join(run.get(k, "") for k in ("flag", "extra_eva_flags"))
-    try:
-        return shlex.split(flags) or None
-    except ValueError:
-        return None
+    return static_command(flags)
 
 
 def records_of_run(run_dir):

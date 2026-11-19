@@ -1496,7 +1496,7 @@ class CompareRuns(unittest.TestCase):
         for mode, fields in (("x", fields_a), ("y", fields_b)):
             run = os.path.join(root, "runs", "c", mode)
             os.makedirs(run)
-            base = {"case": "c", "mode": mode, "revision": "r" * 40,
+            base = {"case": "c", "mode": mode, "revision": "a" * 40,
                     "patch_sha256": "-", "oscs_revision": "o" * 40,
                     "extra_eva_flags": "-", "outcome": "completed"}
             base.update(fields)
@@ -3111,6 +3111,43 @@ class FourthReview(unittest.TestCase):
                             code, _, error = run_main(args)
                         self.assertEqual((code, error), (1, None))
                         self.assertIn(reason + " column", stderr.getvalue())
+
+
+    def test_archived_cpp_option_operands_and_boundaries(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            write(os.path.join(tmp, "f.c"), "int main(void) { return 0; }\n")
+            run = {"case": "fixtures/f.c/default", "mode": "cache",
+                   "revision": "1" * 40, "patch_sha256": "-"}
+            def key(flags):
+                return campaign.recorded_preprocessing(
+                    tmp, dict(run, extra_eva_flags=flags))
+
+            a = key("-cpp-extra-args -DUNUSED=0")
+            b = key("-cpp-extra-args -DUNUSED=1")
+            self.assertIsNotNone(a)
+            self.assertIsNotNone(b)
+            self.assertNotEqual(a, b)
+            self.assertNotEqual(key('-cpp-extra-args "-DA=1 -DB=1"'),
+                                key("-cpp-extra-args -DA=1 -cpp-extra-args -DB=1"))
+            self.assertIsNone(key("-cpp-extra-args"))
+            self.assertIsNone(key("-cpp-command 'unterminated"))
+            self.assertIsNone(key("-cpp-extra-args -DA=1 -DB=1"))
+            self.assertIsNone(key('-cpp-extra-args "$EXTRA"'))
+            self.assertIsNone(key("-cpp-extra-args=foo; echo hidden"))
+            self.assertIsNone(key("-cpp-extra-args -cpp-command"))
+            self.assertIsNotNone(key("-cpp-extra-args-per-file 'f.c:-DDEBUG'"))
+            self.assertIsNotNone(key("-cpp-frama-c-compliant"))
+
+    def test_ambiguous_archived_parse_command(self):
+        imported = {"ast_format": "2", "ast_sha256": DIGEST_0,
+                    "ast_source": "imported"}
+        for text in ('frama-c "$SRC"\n', "frama-c *.c\n",
+                     "frama-c 'unterminated\n", "frama-c f.c | cat\n",
+                     "frama-c -commands-file=cmds f.c\n", "frama-c f.c"):
+            log = {"parse.log": "Command: " + text}
+            summary = PreprocessingNumbering.compare(self, imported, imported,
+                                                      log, log)
+            self.assertEqual(summary["numbering"], "not established", text)
 
 
 if __name__ == "__main__":

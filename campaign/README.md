@@ -672,8 +672,11 @@ of the run. Two imported runs without preprocessing digests are compared by
 the preprocessing that their commands record instead: the revision and patch
 of the binary and the `Command:` lines of `parse.log`, with the directory of
 the source snapshot written `${SRC}`; for a fixture, which has no parse log,
-the SHA-256 of the copy of the fixture kept in the run and the options
-`-cpp*` of its extra options. Equal AST digests and equal recorded
+the SHA-256 of the copy of the fixture kept in the run and its recorded
+preprocessing options, including separate operands. The command key keeps
+arguments in order and preserves their boundaries. Commands that cannot be
+decoded unambiguously, such as those with shell expansions, and fixture
+flags whose operands cannot be recovered leave the numbering unestablished. Equal AST digests and equal recorded
 preprocessing give the numbering `recorded command`: the calls are paired,
 the preprocessed text was not compared, and the alignment is not complete.
 Equal AST digests with different or missing recorded preprocessing give `not
