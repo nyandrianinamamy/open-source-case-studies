@@ -98,7 +98,8 @@ def records_of(text):
 
 
 # Two runs that completed, with equal AST digests.
-SAME_COMPLETED = {"numbering": "same", "outcomes": ("completed", "completed")}
+SAME_COMPLETED = {"numbering": "same", "outcomes": ("completed", "completed"),
+                  "entry_point": "main"}
 
 class Parser(unittest.TestCase):
 
@@ -1357,8 +1358,8 @@ class NumberingEvidence(unittest.TestCase):
                 paths.append(os.path.join(tmp, name + ".jsonl"))
                 run_main(["records", log_path, paths[-1]])
             prefix = os.path.join(tmp, "alignment-")
-            code, _, error = run_main(["align"] + list(options)
-                                      + paths + [prefix])
+            code, _, error = run_main(["align", "--entry-point", "main"]
+                                      + list(options) + paths + [prefix])
             summary = {}
             if os.path.exists(prefix + "summary.tsv"):
                 summary = read_summary(prefix + "summary.tsv")
@@ -1637,7 +1638,8 @@ class CutLogs(unittest.TestCase):
             code, _, error = run_main(
                 ["align", "--ast-a", DIGEST_0, "--ast-b", DIGEST_0,
                  "--outcome-a", "completed", "--outcome-b", "completed",
-                 out, out, prefix])
+                 "--entry-point", "main"] + campaign_numbering_options()
+                + [out, out, prefix])
             if error:
                 return "exception in align: " + error
             return read_summary(prefix + "summary.tsv")["verdict"]
@@ -2223,6 +2225,115 @@ class DedicatedScope(unittest.TestCase):
                     tmp, "out", "runs", "c", flag, "run.tsv"))["outcome"]
         self.assertEqual((code, error), (0, None))
         self.assertEqual(outcomes, {"yes": "oom", "no": "killed"})
+
+
+# A log whose every stack ends in another function than the configured
+# entry point, and a log with a tree of main followed by a tree of alien.
+ALIEN_LOG = """
+[eva:cache] alien.c:4:
+  call to f: lookup: no-candidate; execution: analysed; storage: stored (entry 1)
+  stack: f :: alien.c:4 (stmt 4) <- alien
+[eva:cache]
+  call to alien: lookup: no-candidate; execution: analysed; storage: stored (entry 2)
+  stack: alien
+"""
+MAIN_THEN_ALIEN = SITES_NUMBERED + ALIEN_LOG
+
+
+class EntryPoint(unittest.TestCase):
+    """Finding 6: the entry point configured for the target is passed to
+    the outcome and to the alignment: one root, equal to it, and every
+    stack ends in it."""
+
+    MEASURE = DedicatedScope.MEASURE.replace("signal\t9", "signal\t-") \
+        .replace("exit\t-", "exit\t0").replace("status\t137", "status\t0") \
+        .replace("oom_kill_events\t1", "oom_kill_events\t0")
+
+    def outcome(self, text, *options):
+        with tempfile.TemporaryDirectory() as tmp:
+            write(os.path.join(tmp, "measure"), self.MEASURE)
+            write(os.path.join(tmp, "eva.log"), text)
+            run_main(["records", os.path.join(tmp, "eva.log"),
+                      os.path.join(tmp, "records.jsonl")])
+            code, out, error = run_main(["outcome", tmp, "0", "0", "60"]
+                                        + list(options))
+        return code, error, out.split("\t")[0]
+
+    def test_outcome(self):
+        self.assertEqual(self.outcome(SITES_NUMBERED, "--entry-point", "main"),
+                         (0, None, "completed"))
+        for text in (ALIEN_LOG, MAIN_THEN_ALIEN):
+            self.assertEqual(self.outcome(text, "--entry-point", "main"),
+                             (0, None, "incomplete"))
+
+    def align(self, text, entry="main"):
+        with tempfile.TemporaryDirectory() as tmp:
+            write(os.path.join(tmp, "eva.log"), text)
+            records = os.path.join(tmp, "records.jsonl")
+            run_main(["records", os.path.join(tmp, "eva.log"), records])
+            prefix = os.path.join(tmp, "alignment-")
+            options = ["--ast-a", DIGEST_0, "--ast-b", DIGEST_0,
+                       "--outcome-a", "completed", "--outcome-b",
+                       "completed"] + campaign_numbering_options()
+            if entry:
+                options += ["--entry-point", entry]
+            code, _, error = run_main(["align"] + options
+                                      + [records, records, prefix])
+            summary = {}
+            if os.path.exists(prefix + "summary.tsv"):
+                summary = read_summary(prefix + "summary.tsv")
+        return code, error, summary
+
+    def test_alignment(self):
+        code, error, s = self.align(SITES_NUMBERED)
+        self.assertEqual((code, error, s.get("verdict")),
+                         (0, None, "complete"))
+        for text in (ALIEN_LOG, MAIN_THEN_ALIEN):
+            code, error, s = self.align(text)
+            self.assertEqual((code, error), (0, None))
+            self.assertEqual(s.get("complete"), "False", text)
+            self.assertIn("structural problems", s.get("verdict"))
+        _, _, s = self.align(SITES_NUMBERED, entry=None)
+        self.assertEqual(s.get("complete"), "False")
+        self.assertIn("entry point not given", s.get("verdict"))
+
+    def test_runs_of_an_output_directory(self):
+        # The entry point of a run comes from its run.tsv, or for a run
+        # recorded before the field existed from the manifest of the
+        # campaign.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = os.path.join(tmp, "out")
+            os.makedirs(os.path.join(root, "provenance"))
+            write(os.path.join(root, "provenance", "manifest.tsv"),
+                  "case\tentry_point\nc\tmain\n")
+            for mode, text in (("x", SITES_NUMBERED), ("y", MAIN_THEN_ALIEN)):
+                run = os.path.join(root, "runs", "c", mode)
+                os.makedirs(run)
+                write(os.path.join(run, "measure"), self.MEASURE)
+                write(os.path.join(run, "eva.log"), text)
+                write(os.path.join(run, "run.tsv"),
+                      "case\tc\nmode\t%s\nparse_exit\t0\nmake_exit\t0\n"
+                      "outcome\t-\n" % mode)
+            os.makedirs(os.path.join(root, "comparisons", "c", "x-vs-y"))
+            write(os.path.join(root, "comparisons", "c", "x-vs-y",
+                               "pair.tsv"),
+                  "case\tc\nbaseline\tx\ncandidate\ty\n")
+            code, _, error = run_main(["recompute", root])
+            outcomes = [read_summary(os.path.join(root, "runs", "c", m,
+                                                  "run.tsv"))["outcome"]
+                        for m in ("x", "y")]
+            s = read_summary(os.path.join(root, "comparisons", "c",
+                                          "x-vs-y", "alignment-summary.tsv"))
+        self.assertEqual((code, error), (0, None))
+        self.assertEqual(outcomes, ["completed", "incomplete"])
+        self.assertEqual(s.get("entry_point_b"), "False")
+        self.assertEqual(s.get("complete"), "False")
+
+
+def campaign_numbering_options():
+    """The options of align that give equal evidence of numbering besides
+    the AST digests, when the tools ask for it."""
+    return []
 
 
 if __name__ == "__main__":

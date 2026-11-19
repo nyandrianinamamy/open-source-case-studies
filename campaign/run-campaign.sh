@@ -196,7 +196,8 @@ field() { "${tool[@]}" manifest-get "$manifest" "$1" "$2"; }
 classify() {
   local scope=()
   if [[ $dedicated_scope == yes ]]; then scope=(--dedicated-scope); fi
-  "${tool[@]}" outcome "$1" "$2" "$3" "$timeout_s" "${scope[@]}"
+  "${tool[@]}" outcome "$1" "$2" "$3" "$timeout_s" "${scope[@]}" \
+    --entry-point "$4"
 }
 
 # A column of the row of a role in binaries.tsv.
@@ -217,10 +218,11 @@ run_one() {
   local tools="$output/tools/$role"
   local bin
   bin="$(cat "$tools/checkout")/_build/install/default/bin"
-  local directory target revision
+  local directory target revision entry_point
   directory=$(field directory "$id")
   target=$(field target "$id")
   revision=$(field oscs_revision "$id")
+  entry_point=$(field entry_point "$id")
   local run="$output/runs/$id/$mode" src
   src="$run/src"
   mkdir -p "$src"
@@ -260,7 +262,8 @@ run_one() {
       2> "$run/records-problems.log" || true
   fi
   local outcome evidence
-  IFS=$'\t' read -r outcome evidence < <(classify "$run" "$parse_exit" "$make_exit")
+  IFS=$'\t' read -r outcome evidence < <(classify "$run" "$parse_exit" \
+    "$make_exit" "$entry_point")
   # Untimed: the identity of the AST that Eva analysed, listed from the parse
   # session that the Eva step loads, with the same limits. It runs from the
   # directory of the analysis, as the Eva step does, so the locations are
@@ -298,7 +301,8 @@ run_one() {
     printf 'revision\t%s\n' "$(binary_field "$role" revision)"
     printf 'patch_sha256\t%s\n' "$(binary_field "$role" patch_sha256)"
     printf 'counter_families\t%s\n' "$(binary_field "$role" counter_families)"
-    printf 'oscs_revision\t%s\nstarted\t%s\n' "$revision" "$started"
+    printf 'oscs_revision\t%s\nentry_point\t%s\nstarted\t%s\n' "$revision" \
+      "$entry_point" "$started"
     printf 'outcome\t%s\noom_evidence\t%s\ndedicated_scope\t%s\n' \
       "$outcome" "$evidence" "$dedicated_scope"
     printf 'parse_exit\t%s\nmake_exit\t%s\n' "$parse_exit" "$make_exit"

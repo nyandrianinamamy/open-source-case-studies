@@ -187,10 +187,10 @@ used (`--manifest` may name another one than `manifest.tsv`) with its
 SHA-256. Paths under the home directory are written from `~`.
 
 `run.tsv` holds the case, mode, binary revision and patch SHA-256, counter
-families, case-study revision, start time, outcome and its out-of-memory
-evidence, whether the runner states a dedicated scope (`dedicated_scope`),
-exit status of each step, the measure, the limits, the extra options, and
-the SHA-256 and size of the AST listing.
+families, case-study revision, entry point, start time, outcome and its
+out-of-memory evidence, whether the runner states a dedicated scope
+(`dedicated_scope`), exit status of each step, the measure, the limits, the
+extra options, and the SHA-256 and size of the AST listing.
 
 ### Outcomes
 
@@ -202,14 +202,19 @@ the SHA-256 and size of the AST listing.
 | `oom` | Frama-C or the OCaml runtime reports exhausted memory; or a SIGKILL that the watchdog did not send, and the kernel log names the process, or `oom_kill` rose in a scope that the runner states it created for the measured invocation (`--dedicated-scope`) |
 | `killed` | killed by SIGKILL that the watchdog did not send, with no evidence that the out-of-memory killer chose this process: cause unknown |
 | `error` | any other nonzero status: 1 invalid input, 3 unimplemented, 4 internal error, 125 unexpected exception, another signal, or 124 |
-| `incomplete` | status 0, but the entry point has no analysed record |
+| `incomplete` | status 0, but the records are not one tree whose root is the analysed call of the entry point |
 | `completed` | status 0 and the entry point was analysed |
 
-The classes are tried in the order of the table. A signal is recorded as
-status 128 + N. A timeout is never inferred from the status or the elapsed
-time: a program can exit with 124, and a SIGKILL near the limit can come
-from elsewhere. The case-study options hide the `VALUES COMPUTED` banner, so
-completion is read from the per-call record of the entry point.
+The classes are tried in the order of the table. The entry point is the one
+configured for the target (the column `entry_point` of the manifest,
+recorded in `run.tsv`; `main` for the fixtures): the records of a completed
+run have one root, the analysed call of that function, and every callstack
+ends in it. A log whose stacks end in another function, or that holds a
+second tree after that of the entry point, is `incomplete`. A signal is
+recorded as status 128 + N. A timeout is never inferred from the status or
+the elapsed time: a program can exit with 124, and a SIGKILL near the limit
+can come from elsewhere. The case-study options hide the `VALUES COMPUTED`
+banner, so completion is read from the per-call record of the entry point.
 `tools/outcome-demo.sh` constructs one run for `timeout`, `oom`, `error` and
 `killed`.
 
@@ -330,11 +335,18 @@ listing is missing or cut. The numbering of two runs is:
 | `not established` | a digest is missing |
 | `asserted` | runs recorded before the digest existed, see Results |
 
-`align` takes the digests (`--ast-a`, `--ast-b`) and the outcomes of the runs
-(`--outcome-a`, `--outcome-b`); `campaign.py compare OUTPUT CASE A B` reads
-them from the `run.tsv` of two runs and writes all the comparisons of the
-pair, as the runner does. Unless the numbering is `same` or `asserted`,
-every group of calls below the entry point is undecided, with the reason
+`align` takes the digests (`--ast-a`, `--ast-b`), the outcomes of the runs
+(`--outcome-a`, `--outcome-b`) and the entry point configured for the target
+(`--entry-point`); `campaign.py compare OUTPUT CASE A B` reads them from the
+`run.tsv` of two runs and writes all the comparisons of the pair, as the
+runner does. A run recorded before `run.tsv` held the entry point takes the
+one of its case in `provenance/manifest.tsv`, else the last `-main` of its
+Eva command, else `main`. Each log must be one tree of that entry point:
+one root, its call, and every callstack ending in it. A second root, a root
+of another function or a stack that ends elsewhere is a structural problem
+of that log, and the alignment is not complete without the entry point.
+Unless the numbering is `same` or `asserted`, every group of calls below
+the entry point is undecided, with the reason
 `AST digests differ` or `numbering not established`, and none is aligned.
 Two calls align when their parents align and they have the same function and
 call site, and either the sequence of (function, site) of the siblings is the
@@ -360,11 +372,12 @@ a hit of B (`nested_under_hit_b`) and the converse (`nested_under_hit_a`),
 the unmatched records and the undecided groups. It also says whether each
 run was interrupted, how many structural problems each log has, whether the
 logs give the statement numbers (`all`, `none` or `some`) and whether the
-numbering is the same (`numbering`), whether each log has a record of the
-entry point and the outcome of each run. `accounted` is true when every
-record is in exactly one of these classes. `complete` is true when both runs
-completed, both logs have a record of the entry point, every record of both
-runs is aligned, no call is inferred or interrupted, no problem was found,
+numbering is the same (`numbering`), the entry point (`entry_point`),
+whether each log has the record of the entry point as its only root
+(`entry_point_a`, `entry_point_b`) and the outcome of each run. `accounted`
+is true when every record is in exactly one of these classes. `complete` is
+true when both runs completed, both logs have that record, every record of
+both runs is aligned, no call is inferred or interrupted, no problem was found,
 both logs give the statement numbers and the numbering is `same`; `verdict`
 is then `complete`. When the only reason against it is an `asserted`
 numbering, `verdict` is `numbering asserted from equal revision, patch,

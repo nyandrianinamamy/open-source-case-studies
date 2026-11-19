@@ -111,7 +111,7 @@ for fixture in frame nested-hit same-line sites; do
     flags="${cpp[*]} ${extra[*]}"
     flags=${flags# }
     {
-      printf 'case\t%s\nmode\t%s\nrole\ttest\nflag\t%s\nextra_eva_flags\t%s\nrevision\t%s\ncounter_families\t%s\noutcome\t%s\nexit\t%s\n' \
+      printf 'case\t%s\nmode\t%s\nrole\ttest\nflag\t%s\nextra_eva_flags\t%s\nrevision\t%s\ncounter_families\t%s\nentry_point\tmain\noutcome\t%s\nexit\t%s\n' \
         "$case_id" "$mode" "$flag" "${flags:--}" "$revision" "$families" \
         "$outcome" "$exit_code"
       "${tool[@]}" ast "$run/ast.tsv"

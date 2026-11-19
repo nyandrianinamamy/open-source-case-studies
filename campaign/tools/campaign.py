@@ -661,15 +661,42 @@ def statement_numbers(rows):
     return "none" if known == 0 else "some"
 
 
-def entry_point_recorded(rows):
-    """Whether the log has the record of an entry point: the message of a
-    call without a parent, not inferred from the stacks of its callees."""
-    return any(r["parent"] is None and not r.get("inferred") for r in rows)
+def entry_point_recorded(rows, entry=None):
+    """Whether the log has the record of the entry point [entry], or of any
+    entry point when [entry] is None: the message of a call without a
+    parent, not inferred from the stacks of its callees. With [entry], it
+    must be the only root."""
+    roots = [r for r in rows if r["parent"] is None]
+    if entry is None:
+        return any(not r.get("inferred") for r in roots)
+    return len(roots) == 1 and roots[0]["function"] == entry and \
+        not roots[0].get("inferred")
+
+
+def entry_point_problems(rows, entry):
+    """Why the records of a run are not one tree of the entry point
+    configured for its target: the run must have one root, the call of
+    [entry], and every callstack must end in [entry]."""
+    problems = []
+    roots = [r for r in rows if r["parent"] is None]
+    if len(roots) != 1:
+        problems.append("%d roots instead of the entry point %s alone"
+                        % (len(roots), entry))
+    for root in roots:
+        if root["function"] != entry:
+            problems.append("root %s is not the entry point %s"
+                            % (root["function"], entry))
+    others = sorted({r["entry_point"] for r in rows
+                     if r["entry_point"] != entry})
+    if others:
+        problems.append("callstacks end in %s, not in the entry point %s"
+                        % (", ".join(others), entry))
+    return problems
 
 
 def summarize_alignment(rows_a, rows_b, result, problems_a=(),
                         problems_b=(), numbering="not established",
-                        outcomes=(None, None)):
+                        outcomes=(None, None), entry_point=None):
     """Counts of an alignment and its verdict.
 
     The records of each run are counted apart from the calls inferred from
@@ -730,8 +757,9 @@ def summarize_alignment(rows_a, rows_b, result, problems_a=(),
     summary["statement_numbers_a"] = statement_numbers(rows_a)
     summary["statement_numbers_b"] = statement_numbers(rows_b)
     summary["numbering"] = numbering
-    summary["entry_point_a"] = entry_point_recorded(rows_a)
-    summary["entry_point_b"] = entry_point_recorded(rows_b)
+    summary["entry_point"] = entry_point or "-"
+    summary["entry_point_a"] = entry_point_recorded(rows_a, entry_point)
+    summary["entry_point_b"] = entry_point_recorded(rows_b, entry_point)
     summary["outcome_a"] = outcomes[0] or "-"
     summary["outcome_b"] = outcomes[1] or "-"
     accounted_a = (len(pairs) + summary["nested_under_hit_b"]
@@ -741,6 +769,8 @@ def summarize_alignment(rows_a, rows_b, result, problems_a=(),
     summary["accounted"] = (accounted_a == len(rows_a)
                             and accounted_b == len(rows_b))
     reasons = []
+    if entry_point is None:
+        reasons.append("entry point not given")
     for side, outcome in zip("AB", outcomes):
         if outcome is None:
             reasons.append("outcome of %s not given" % side)
@@ -783,14 +813,24 @@ def write_tsv(path, header, rows):
         writer.writerows(rows)
 
 
-def write_alignment(prefix, path_a, path_b, numbering, outcomes):
+def write_alignment(prefix, path_a, path_b, numbering, outcomes,
+                    entry_point=None, entry_point_b=None):
     """Aligns the records files of two runs and writes the summary and the
-    lists of an alignment under [prefix]. Returns the summary."""
+    lists of an alignment under [prefix]. [entry_point] is the entry point
+    configured for the target; [entry_point_b], when given, that of run B,
+    which must be the same. Returns the summary."""
     rows_a, problems_a = load_records_and_problems(path_a)
     rows_b, problems_b = load_records_and_problems(path_b)
+    if entry_point is not None:
+        problems_a += entry_point_problems(rows_a, entry_point)
+        problems_b += entry_point_problems(rows_b, entry_point)
+        if entry_point_b not in (None, entry_point):
+            problems_b.append("the entry point of B is %s, not %s"
+                              % (entry_point_b, entry_point))
     result = align(rows_a, rows_b, numbering)
     summary = summarize_alignment(rows_a, rows_b, result, problems_a,
-                                  problems_b, numbering, outcomes)
+                                  problems_b, numbering, outcomes,
+                                  entry_point)
     if prefix:
         with open_text(prefix + "summary.tsv", "w") as f:
             for key, value in summary.items():
@@ -818,7 +858,8 @@ def align_command(args):
     numbering = numbering_state(args.ast_a, args.ast_b,
                                 args.assert_numbering)
     summary = write_alignment(args.output, args.a, args.b, numbering,
-                              (args.outcome_a, args.outcome_b))
+                              (args.outcome_a, args.outcome_b),
+                              args.entry_point)
     for key, value in summary.items():
         print("%s\t%s" % (key, value))
     return 0
@@ -1838,10 +1879,14 @@ def existing(path):
     return None
 
 
-def run_outcome(run, parse_exit, make_exit, dedicated_scope=False):
+def run_outcome(run, parse_exit, make_exit, dedicated_scope=False,
+                entry_point="main"):
     """The outcome of a run and the evidence of exhausted memory, from its
-    measure, its log and its records, compressed or not, and the statement
-    of the runner that the command ran in a scope of its own."""
+    measure, its log and its records, compressed or not, the statement of
+    the runner that the command ran in a scope of its own, and the entry
+    point configured for its target. The entry point is analysed when the
+    records are one tree, whose root is the analysed call of [entry_point]
+    and whose callstacks all end in it."""
     measure = read_measure(os.path.join(run, "measure"))
     log_text = ""
     log = existing(os.path.join(run, "eva.log"))
@@ -1851,9 +1896,12 @@ def run_outcome(run, parse_exit, make_exit, dedicated_scope=False):
     entry_analysed = False
     records = existing(os.path.join(run, "records.jsonl"))
     if records:
-        entry_analysed = any(r["parent"] is None and
-                             r["execution"] == "analysed"
-                             for r in load_records(records))
+        rows = load_records(records)
+        entry_analysed = (
+            entry_point_recorded(rows, entry_point)
+            and not entry_point_problems(rows, entry_point)
+            and all(r["execution"] == "analysed" for r in rows
+                    if r["parent"] is None))
     outcome = classify_outcome(parse_exit, make_exit, measure, log_text,
                                entry_analysed, dedicated_scope=dedicated_scope)
     evidence = oom_evidence(measure, log_text, dedicated_scope) \
@@ -1863,7 +1911,7 @@ def run_outcome(run, parse_exit, make_exit, dedicated_scope=False):
 
 def outcome_command(args):
     print("%s\t%s" % run_outcome(args.run, args.parse_exit, args.make_exit,
-                                 args.dedicated_scope))
+                                 args.dedicated_scope, args.entry_point))
     return 0
 
 
@@ -1923,6 +1971,31 @@ def run_numbering(run_a, run_b):
                            asserted=same)
 
 
+MANIFESTS = {}
+
+
+def configured_entry_point(output, run_dir, run):
+    """The entry point configured for the target of a run: the field
+    entry_point of its run.tsv; for a run recorded before the field
+    existed, the column entry_point of the manifest that the campaign used
+    (provenance/manifest.tsv) for its case, else the last option -main of
+    its recorded Eva command (a fixture), else main, the default of
+    Frama-C."""
+    if run.get("entry_point") not in (None, "", "-"):
+        return run["entry_point"]
+    manifest = os.path.join(output, "provenance", "manifest.tsv")
+    if manifest not in MANIFESTS:
+        MANIFESTS[manifest] = {}
+        if os.path.exists(manifest):
+            MANIFESTS[manifest] = {r.get("case"): r.get("entry_point")
+                                   for r in read_manifest(manifest)}
+    entry = MANIFESTS[manifest].get(run.get("case"))
+    if entry:
+        return entry
+    mains = option_values(effective_options(run_dir, run), "-main")
+    return mains[-1] if mains else "main"
+
+
 def snapshot_pattern(case, mode):
     """The directory of the source snapshot of a run, wherever the output
     directory is: written ${SRC} in the alarms."""
@@ -1952,7 +2025,9 @@ def compare_runs(output, case, mode_a, mode_b):
     if records_a and records_b:
         write_alignment(os.path.join(out, "alignment-"), records_a,
                         records_b, run_numbering(tsv_a, tsv_b),
-                        (tsv_a.get("outcome"), tsv_b.get("outcome")))
+                        (tsv_a.get("outcome"), tsv_b.get("outcome")),
+                        configured_entry_point(output, run_a, tsv_a),
+                        configured_entry_point(output, run_b, tsv_b))
     queries_a = existing(os.path.join(run_a, "queries.tsv"))
     queries_b = existing(os.path.join(run_b, "queries.tsv"))
     if queries_a and queries_b:
@@ -2015,7 +2090,8 @@ def recompute_command(args):
             run["outcome"], run["oom_evidence"] = run_outcome(
                 dirpath, exit_status(run.get("parse_exit")),
                 exit_status(run.get("make_exit")),
-                run.get("dedicated_scope") == "yes")
+                run.get("dedicated_scope") == "yes",
+                configured_entry_point(args.run_dir, dirpath, run))
         row = digests.get((run.get("case"), run.get("mode")))
         if row:
             run["ast_sha256"] = row["ast_sha256"]
@@ -2437,6 +2513,8 @@ def main(argv=None):
                    "preprocessing")
     p.add_argument("--outcome-a", help="outcome of run A")
     p.add_argument("--outcome-b", help="outcome of run B")
+    p.add_argument("--entry-point",
+                   help="the entry point configured for the target")
     p.set_defaults(func=align_command)
     p = sub.add_parser("queries")
     p.add_argument("a")
@@ -2484,6 +2562,8 @@ def main(argv=None):
     p.add_argument("--dedicated-scope", action="store_true",
                    help="the runner started the watchdog in a scope of its "
                    "own")
+    p.add_argument("--entry-point", default="main",
+                   help="the entry point configured for the target (main)")
     p.set_defaults(func=outcome_command)
     p = sub.add_parser("tables")
     p.add_argument("run_dir")
