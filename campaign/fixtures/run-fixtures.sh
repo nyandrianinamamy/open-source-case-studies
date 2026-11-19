@@ -44,7 +44,9 @@
 # - sites.c, analysed twice with memexec, with SIDE 0 (side0) and SIDE 1
 #   (side1): the macro is the condition of the two calls, so the two runs
 #   give one statement number to different calls; the digests differ, and
-#   the alignment leaves the calls undecided and is not complete.
+#   the alignment leaves the calls undecided and is not complete. The
+#   queries under the callstack of that call are unpaired, not compared,
+#   and the comparison of the queries is not complete.
 # - branches.c, analysed as sites.c: if (SIDE) f(1); else f(1); on one line.
 #   The statement lines of the two listings differ in the columns only, the
 #   digests differ, and the calls are not aligned.
@@ -311,6 +313,13 @@ check "sites: only the entry point is aligned; the calls are undecided" \
   test "$(value "$sites" aligned)/$(value "$sites" undecided_groups)" = 1/1
 check "sites: the alignment is not complete" \
   test "$(value "$sites" complete)" = False
+sites_queries="${sites%alignment-summary.tsv}queries-"
+sites_call='main|f@main:9:0'
+sites_asked=$(gzip -dc "$output/runs/fixtures/sites.c/default/side0/queries.tsv.gz" |
+                grep -cF "$sites_call" || true)
+check "sites: the queries of the call of line 9 are unpaired, not compared, and the comparison is not complete" \
+  test "$(value "${sites_queries}summary.tsv" comparison)/$(grep -cF "$sites_call" "${sites_queries}differences.tsv")/$(grep -cF "$sites_call" "${sites_queries}unpaired.tsv")/$((sites_asked > 0))" \
+       = "incomplete: AST digests differ/0/$sites_asked/1"
 
 # The statement lines of a listing without their ranges, and its global
 # lines.

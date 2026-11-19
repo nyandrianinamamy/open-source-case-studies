@@ -221,12 +221,12 @@ ran them.
   the two calls on one line of `same-line.c` are unmatched. All 22 checks
   of the pilot pass. Recomputed with the listing of format 2, the two
   archived runs of `same-line.c` have different digests and their calls are
-  undecided. The fixtures of the current harness have 48 checks: they add
+  undecided. The fixtures of the current harness have 49 checks: they add
   the digests of the AST and of the preprocessing, `sites.c`, `branches.c`,
   `header.c`, an unused macro in `nested-hit.c`, a run with
   `-eva-no-results-domain cvalue`, and a `same-line.c` whose two runs differ
   by `-lib-entry`, which the archive does not have. Run apart from the pilot
-  with the same binary (`campaign/fixtures/run-fixtures.sh`), all 48 pass.
+  with the same binary (`campaign/fixtures/run-fixtures.sh`), all 49 pass.
 - Outcome classes: the constructed runs are classified `timeout` (the
   watchdog sent SIGTERM; status 143), `oom` (Frama-C reports exhausted
   memory; status 6), `error` (status 1) and `killed` (SIGKILL that the

@@ -614,7 +614,9 @@ of numbering:
 - `sites.c`: the same calls, with the macro `SIDE` as the condition itself;
   the runs with `SIDE` 0 and 1 give one call site and statement number to
   different calls. Their digests must differ, the calls must be undecided,
-  not aligned, and the alignment must not be complete;
+  not aligned, and the alignment must not be complete. The queries under
+  the callstack of that call (`main|f@main:9:0`) must be unpaired, not
+  compared, and the comparison of the queries must not be complete;
 - `branches.c`: `if (SIDE) f(1); else f(1);` on one line, with `SIDE` 0 and
   1. The statement lines of the two listings must have the same numbers,
   lines and texts, and differ in their columns only; the digests must differ
