@@ -12,6 +12,7 @@ import importlib.util
 import io
 import json
 import os
+import signal
 import subprocess
 import sys
 import tarfile
@@ -1641,6 +1642,36 @@ class SharedCgroup(unittest.TestCase):
         self.assertEqual(campaign.classify_outcome(0, 2, m, "", False), "oom")
         m = dict(self.KILLED, kernel_log_oom="yes")
         self.assertEqual(campaign.classify_outcome(0, 2, m, "", False), "oom")
+
+    def test_a_command_that_ends_before_the_first_poll_is_sampled(self):
+        # The test process is in the cgroup of the watchdog and outside the
+        # session of the command: the cgroup is shared, even when the
+        # command has ended at the first poll of the watchdog.
+        with open("/proc/self/cgroup") as f:
+            path = [l.rstrip("\n").split(":", 2)[2] for l in f
+                    if l.startswith("0::")]
+        base = "/sys/fs/cgroup" + (path[0] if path else "/nonexistent")
+        readable = all(os.access(os.path.join(base, name), os.R_OK)
+                       for name in ("memory.events", "cgroup.procs"))
+        spec = importlib.util.spec_from_file_location("watchdog_under_test",
+                                                      WATCHDOG)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        real_wait4 = os.wait4
+        handlers = {n: signal.getsignal(n)
+                    for n in (signal.SIGTERM, signal.SIGINT, signal.SIGHUP)}
+        try:
+            with tempfile.TemporaryDirectory() as tmp, \
+                 mock.patch.object(module.os, "wait4",
+                                   lambda pid, _: real_wait4(pid, 0)):
+                measure = os.path.join(tmp, "measure")
+                module.main([measure, "5", "1", "-", "--", "true"])
+                exclusive = campaign.read_measure(measure).get(
+                    "cgroup_exclusive")
+        finally:
+            for number, handler in handlers.items():
+                signal.signal(number, handler)
+        self.assertEqual(exclusive, "no" if readable else "unreadable")
 
     def test_watchdog_records_whether_the_cgroup_is_shared(self):
         with tempfile.TemporaryDirectory() as tmp:

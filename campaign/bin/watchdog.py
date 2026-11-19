@@ -146,20 +146,23 @@ def main(argv):
         signals.signal(signum, forward)
     procs = cgroup_procs(events)
     exclusive = "unreadable" if procs is None else "yes"
-    sampled = None
+
+    def sample(exclusive):
+        if exclusive != "yes":
+            return exclusive
+        foreign = foreign_processes(procs, child.pid)
+        return "unreadable" if foreign is None else "no" if foreign else "yes"
+
+    # A first sample before the command can end, then one every half second.
+    exclusive, sampled = sample(exclusive), 0.0
     watchdog, term_s, kill_s = "none", None, None
     while True:
         pid, status, usage = os.wait4(child.pid, os.WNOHANG)
         if pid == child.pid:
             break
         now = time.monotonic() - start
-        if exclusive == "yes" and (sampled is None or now >= sampled + 0.5):
-            sampled = now
-            foreign = foreign_processes(procs, child.pid)
-            if foreign is None:
-                exclusive = "unreadable"
-            elif foreign:
-                exclusive = "no"
+        if now >= sampled + 0.5:
+            exclusive, sampled = sample(exclusive), now
         if watchdog == "none" and now >= timeout_s:
             watchdog, term_s = "term", now
             try:
