@@ -34,15 +34,8 @@ bash "$campaign/fixtures/run-fixtures.sh" "$output" "$output/tools/test" \
 bash "$campaign/tools/outcome-demo.sh" "$output/outcome-demo" \
   "$test_checkout" "$switch" > "$output/outcome-demo.txt" || status=1
 
+# The tables, with the checks of fixtures.txt and outcome-demo.txt.
 python3 -I "$campaign/tools/campaign.py" tables "$output" \
   --recorded-set-a "$campaign/reference/set-a-recorded.tsv" > /dev/null
-{
-  printf '## Checks on the constructed cases\n\n```\n'
-  cat "$output/fixtures.txt"
-  printf '```\n\n## Outcome classes of the runner\n\n'
-  printf 'Constructed runs of tools/outcome-demo.sh, caching disabled.\n\n```\n'
-  cat "$output/outcome-demo.txt"
-  printf '```\n'
-} >> "$output/tables/tables.md"
 printf 'Tables: %s/tables/tables.md\n' "$output"
 exit "$status"

@@ -456,7 +456,11 @@ writes `tables/`, which `run-campaign.sh` does at the end:
 - `alignment.tsv`, `queries.tsv`, `alarms.tsv`: the comparison summaries,
   with `both_completed` for each pair, and for each comparison the number of
   pairs, of pairs compared, and of pairs whose two runs completed;
-- `tables.md`: all of the above but `functions.tsv`, as Markdown.
+  `queries.tsv` has a column per side for each reason of an unanswered
+  query;
+- `tables.md`: all of the above but `functions.tsv`, as Markdown, followed
+  by the checks of `fixtures.txt` and `outcome-demo.txt` when the output
+  directory holds them, as the pilot's does.
 
 A cell `-` is a value that was not measured, such as a memexec counter in
 the mode `nocache`. A list of counts by reason is `none` when the family is
@@ -471,9 +475,10 @@ campaign/pilot.sh OUTPUT TEST_CHECKOUT REFERENCE_CHECKOUT [SWITCH]
 runs the cases of `pilot-cases.txt` in the modes `nocache`, `cache`,
 `cache.2` and `reference`, with a limit of `PILOT_TIMEOUT` seconds (180 by
 default) and an address-space limit of `PILOT_MEMORY_LIMIT` bytes (8 GB by
-default). It then runs the fixtures and the outcome demonstration, and
-appends their checks to `tables/tables.md`. It exits with 1 when a check
-fails.
+default). It then runs the fixtures and the outcome demonstration, whose
+checks go to `fixtures.txt` and `outcome-demo.txt`, and writes the tables
+again, which adds these checks to `tables/tables.md`. It exits with 1 when
+a check fails.
 
 The fixtures (`fixtures/run-fixtures.sh`) run Frama-C directly on four
 programs, outside the manifest. Each run lists its AST from a parse alone

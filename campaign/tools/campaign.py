@@ -2122,13 +2122,13 @@ def tables_command(args):
                   "nested_under_hit_b", "unmatched_a", "unmatched_b",
                   "undecided_groups", "problems_a", "problems_b",
                   "numbering", "accounted", "complete", "verdict"]
-    query_keys = ["queries", "answered_both", "equal", "wider", "narrower",
-                  "incomparable", "undecided", "top_a", "top_b",
-                  "unavailable_a_no-callstack", "unavailable_b_no-callstack",
-                  "unavailable_a_unreached", "unavailable_b_unreached",
-                  "unavailable_a_no-results", "unavailable_b_no-results",
-                  "reached_a_only", "reached_b_only", "complete_a",
-                  "complete_b", "comparison"]
+    query_keys = (["queries", "answered_both", "equal", "wider", "narrower",
+                   "incomparable", "undecided", "top_a", "top_b"]
+                  + ["unavailable_%s_%s" % (side, reason)
+                     for reason in UNAVAILABLE_REASONS + ("other",)
+                     for side in ("a", "b")]
+                  + ["reached_a_only", "reached_b_only", "complete_a",
+                     "complete_b", "comparison"])
     alarm_keys = ["properties_a", "properties_b", "duplicate_keys_a",
                   "duplicate_keys_b", "same_status", "other_status",
                   "a_only", "b_only"]
@@ -2153,6 +2153,20 @@ def tables_command(args):
                  "Pairs: %d, compared: %d, with both runs completed: %d.\n\n"
                  % (title, len(comparisons), compared, both))
         md.write(markdown_table(header, rows) + "\n")
+    # The checks of the fixtures and of the outcome demonstration, which
+    # pilot.sh writes next to the runs.
+    sections = []
+    for name, title, intro in (
+            ("fixtures.txt", "Checks on the constructed cases", ""),
+            ("outcome-demo.txt", "Outcome classes of the runner",
+             "Constructed runs of tools/outcome-demo.sh, caching "
+             "disabled.\n\n")):
+        path = os.path.join(args.run_dir, name)
+        if os.path.exists(path):
+            with open_text(path) as f:
+                sections.append("## %s\n\n%s```\n%s```\n"
+                                % (title, intro, f.read()))
+    md.write("\n".join(sections))
     with open_text(os.path.join(out_dir, "tables.md"), "w") as f:
         f.write(md.getvalue())
     sys.stdout.write(md.getvalue())

@@ -939,6 +939,41 @@ class QueryAvailability(unittest.TestCase):
                       md)
 
 
+    def test_every_reason_of_an_unanswered_query_is_a_column(self):
+        # The summary counts every reason; a table that shows some of them
+        # hides the others (issue #54, second review).
+        with tempfile.TemporaryDirectory() as tmp:
+            pair = os.path.join(tmp, "comparisons", "c", "x-vs-y")
+            os.makedirs(pair)
+            write(os.path.join(pair, "pair.tsv"),
+                  "case\tc\nbaseline\tx\ncandidate\ty\n")
+            write(os.path.join(pair, "queries-summary.tsv"),
+                  "queries\t5\nunavailable_b_missing\t3\n"
+                  "unavailable_b_disabled-domain\t2\n")
+            with contextlib.redirect_stdout(io.StringIO()):
+                campaign.main(["tables", tmp])
+            with open(os.path.join(tmp, "tables", "queries.tsv")) as f:
+                rows = list(csv.DictReader(f, delimiter="\t"))
+        self.assertEqual(rows[0].get("unavailable_b_missing"), "3")
+        self.assertEqual(rows[0].get("unavailable_b_disabled-domain"), "2")
+
+    def test_the_checks_of_the_pilot_are_appended(self):
+        # The tables of the pilot come from one command, with the checks of
+        # the fixtures and of the outcome demonstration.
+        with tempfile.TemporaryDirectory() as tmp:
+            write(os.path.join(tmp, "fixtures.txt"), "PASS a\n")
+            write(os.path.join(tmp, "outcome-demo.txt"), "PASS b\n")
+            with contextlib.redirect_stdout(io.StringIO()):
+                campaign.main(["tables", tmp])
+            with open(os.path.join(tmp, "tables", "tables.md")) as f:
+                md = f.read()
+        self.assertTrue(md.endswith(
+            "## Checks on the constructed cases\n\n```\nPASS a\n```\n\n"
+            "## Outcome classes of the runner\n\nConstructed runs of "
+            "tools/outcome-demo.sh, caching disabled.\n\n```\nPASS b\n"
+            "```\n"), md[-300:])
+
+
 class MixedForms(unittest.TestCase):
     """H4: inclusion of mixed numeric forms and top answers."""
 
