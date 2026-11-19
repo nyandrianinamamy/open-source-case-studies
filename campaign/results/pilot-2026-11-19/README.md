@@ -17,7 +17,7 @@ campaign/pilot.sh ~/.t3/worktrees/campaign-pilot-2026-11-19 \
 - Harness: the runs were made at revision `12644c58` of this repository
   (`provenance/campaign-revision.txt`); the command it ran is
   `provenance/command.txt`. The tables were then recomputed from the raw
-  logs, last with the tools at `4d8096ff`; see "Recomputed tables" below.
+  logs, last with the tools at `97700152`; see "Recomputed tables" below.
 - Case studies: revision `168321b6306abdacee95b22c9c94996f1174ab2c`, the
   manifest `campaign/manifest.tsv` at the harness revision (its SHA-256 is
   `provenance/manifest.sha256`).
@@ -90,7 +90,7 @@ The fifth review found four inputs on which the tables printed a zero for a
 counter that has no row in the statistics file, on the evidence of the
 recorded command, of the mode of the run or of another row of the same
 family, and one on which `tables.md` printed `complete=False` for an
-alignment summary that has no such field. The tools at `4d8096ff` infer no
+alignment summary that has no such field. The tools at `97700152` infer no
 value: a statistics cell is a number only when the file holds a row of its
 counter, the disposition lines of the log are counted in a table of their
 own, and a comparison summary is read only when it is whole
@@ -361,7 +361,7 @@ ran them.
   cells of the two runs of `nested-hit.c` (`hits` 1 and `lookup_hit` 1
   with memexec; `hits` `-` and 0 `lookup: hit` among 7 lines with caching
   disabled). Run apart from the pilot with the same binary and the tools
-  at `4d8096ff` (`campaign/fixtures/run-fixtures.sh`), all 55 pass.
+  at `97700152` (`campaign/fixtures/run-fixtures.sh`), all 55 pass.
 - Outcome classes: the constructed runs are classified `timeout` (the
   watchdog sent SIGTERM; status 143), `oom` (Frama-C reports exhausted
   memory; status 6), `error` (status 1) and `killed` (SIGKILL that the
